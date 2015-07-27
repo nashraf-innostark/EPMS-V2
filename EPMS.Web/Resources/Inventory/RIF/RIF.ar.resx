@@ -118,87 +118,87 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreatePageBreadCrumb" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF)</value>
+    <value>نموذج طلب ترجيع منتج</value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
-    <value>Create Returned Item Form (RIF)</value>
+    <value>انشاء نموذج طلب ترجيع منتج</value>
   </data>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) Create</value>
+    <value>انشاء نموذج طلب ترجيع منتج</value>
   </data>
   <data name="CreateRFILink" xml:space="preserve">
-    <value>Create Returned Item Form (RIF) Form</value>
+    <value>انشاء نموذج طلب ترجيع منتج</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
   <data name="DetailsPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) View</value>
+    <value>معاينة نموذج طلب ترجيع منتج</value>
   </data>
   <data name="DetailsPageHeading" xml:space="preserve">
-    <value>Returned Item Form (RIF)</value>
+    <value>نموذج طلب ترجيع منتج</value>
   </data>
   <data name="DetailsPageTitle" xml:space="preserve">
-    <value>Details RIF (Returned Item Form)</value>
+    <value>تفاصيل نموذج طلب ترجيع منتج</value>
   </data>
   <data name="EditPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) Edit</value>
+    <value>تعديل نموذج طلب ترجيع منتج</value>
   </data>
   <data name="EditPageHeading" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) Edit</value>
+    <value>تعديل نموذج طلب ترجيع منتج</value>
   </data>
   <data name="EditPageTitle" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF)</value>
+    <value>تعديل نموذج طلب ترجيع منتج</value>
+  </data>
+  <data name="HistoryTableTitle" xml:space="preserve">
+    <value>سجل نموذج طلب ترجيع منتج</value>
   </data>
   <data name="InventoryManagerName" xml:space="preserve">
-    <value>Inventory Manager Name</value>
+    <value>مدير المستودع</value>
   </data>
   <data name="ListPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) List</value>
+    <value>قائمة نماذج طلب ترجيع منتج</value>
   </data>
   <data name="ListPageHeading" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) List</value>
+    <value>قائمة نماذج طلب ترجيع منتج</value>
   </data>
   <data name="ListPageTitle" xml:space="preserve">
-    <value>Inventory Returned Item Form (RIF) List</value>
+    <value>قائمة نماذج طلب ترجيع منتج</value>
   </data>
   <data name="Requester" xml:space="preserve">
-    <value>Requester</value>
+    <value>طالب</value>
   </data>
   <data name="RequesterName" xml:space="preserve">
-    <value>Requester Name</value>
+    <value>اسم الطالب</value>
   </data>
   <data name="RequestStatus" xml:space="preserve">
-    <value>Request Status</value>
+    <value>حالة الطلب</value>
   </data>
   <data name="ReturningReason" xml:space="preserve">
-    <value>Returning Reason</value>
+    <value>سبب الطلب</value>
   </data>
   <data name="ReturningReasonArabic" xml:space="preserve">
-    <value>Returning Reason in arabic</value>
+    <value>سبب الترجيع</value>
   </data>
   <data name="RFIUpdated" xml:space="preserve">
-    <value>Inventory Returned Item request has been updated.</value>
+    <value>تم تحديث نموذج طلب ترجيع منتج بنحاح .</value>
   </data>
   <data name="RIFCreated" xml:space="preserve">
-    <value>Inventory Returned Item request has been created.</value>
+    <value>تم اضافة نموذج طلب ترجيع منتج بنحاح.</value>
   </data>
   <data name="RifNo" xml:space="preserve">
-    <value>Returned Item Form (RIF) Number</value>
+    <value>رقم نموذج طلب ترجيع منتج</value>
   </data>
   <data name="RIFNumber" xml:space="preserve">
     <value>RIF#</value>
   </data>
   <data name="RIFReplied" xml:space="preserve">
-    <value>Inventory Returned Item request has been replied.</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
-  </data>
-  <data name="HistoryTableTitle" xml:space="preserve">
-    <value>Returned Item Form (RIF) History Ar</value>
+    <value>تم الرد على نموذج طلب ترجيع منتج</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial</value>
+    <value>تسلسل</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>حالة</value>
   </data>
 </root>

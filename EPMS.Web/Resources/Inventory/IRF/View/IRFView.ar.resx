@@ -117,88 +117,115 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AverageCost" xml:space="preserve">
-    <value>متوسط ​​التكلفة</value>
+  <data name="BCTitle" xml:space="preserve">
+    <value>قائمة نماذج طلب اخراج منتج</value>
   </data>
-  <data name="AveragePackagePrice" xml:space="preserve">
-    <value>متوسط ​​ السعر للرزمة</value>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم العميل</value>
   </data>
-  <data name="AveragePrice" xml:space="preserve">
-    <value>متوسط ​​السعر</value>
+  <data name="ContainerTitle" xml:space="preserve">
+    <value>نموذج طلب اخراج منتج</value>
   </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>انشاء جديد</value>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
-  <data name="CreateTitle" xml:space="preserve">
-    <value>انشاء منتج جديد</value>
+  <data name="EditIRF" xml:space="preserve">
+    <value>تعديل نموذج طلب اخراج منتج</value>
   </data>
-  <data name="DeptInfo" xml:space="preserve">
-    <value>معلومات الادارة</value>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>رقم الوطيفي</value>
   </data>
-  <data name="DescForQuotationAr" xml:space="preserve">
-    <value>تفاصيل عرض السعربالعربي</value>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>اسم الموظف</value>
   </data>
-  <data name="DescForQuotationEn" xml:space="preserve">
-    <value>تفاصيل عرض السعر بالانجليزي</value>
+  <data name="Header" xml:space="preserve">
+    <value>معاينة نموذج طلب اخراج منتج</value>
   </data>
-  <data name="DescriptionAr" xml:space="preserve">
-    <value>تفاصيل بالعربي</value>
+  <data name="HistoryHeader" xml:space="preserve">
+    <value>نموذج طلب اخراج منتج</value>
   </data>
-  <data name="DescriptionEn" xml:space="preserve">
-    <value>تفاصيل بالانجليزي</value>
+  <data name="HistoryTableHeader" xml:space="preserve">
+    <value>سجل نموذج طلب اخراج منتج</value>
   </data>
-  <data name="HazardousAr" xml:space="preserve">
-    <value>الاخطار بالعربي</value>
+  <data name="InventoryManagerName" xml:space="preserve">
+    <value>اسم مدير المستودع</value>
   </data>
-  <data name="HazardousEn" xml:space="preserve">
-    <value>الاخطار بالعربي</value>
+  <data name="IRF" xml:space="preserve">
+    <value>IRF : </value>
+  </data>
+  <data name="IRFFormNo" xml:space="preserve">
+    <value>رقم نموذج طلب اخراج منتج</value>
+  </data>
+  <data name="IRFNo" xml:space="preserve">
+    <value>IRF# : </value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>رقم المنتج</value>
   </data>
   <data name="ItemName" xml:space="preserve">
-    <value>اسم المنتج </value>
+    <value>اسم المنتج</value>
   </data>
-  <data name="ItemNameAr" xml:space="preserve">
-    <value>اسم المنتج بالعربي</value>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات بالانجليزي</value>
   </data>
-  <data name="ItemNameEn" xml:space="preserve">
-    <value>اسم المنتج بالانجليزي</value>
+  <data name="NotesAr" xml:space="preserve">
+    <value>ملاحظات بالعربي</value>
   </data>
-  <data name="Label" xml:space="preserve">
-    <value>قائمة المنتجات</value>
+  <data name="OrderNo" xml:space="preserve">
+    <value>رقم الطلب</value>
   </data>
-  <data name="QOnHand" xml:space="preserve">
-    <value>الكمية المتوفرة</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>معاينة نموذج طلب اخراج منتج</value>
   </data>
-  <data name="QSold" xml:space="preserve">
-    <value>الكمية المباعة</value>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
   </data>
-  <data name="QuantityInHand" xml:space="preserve">
-    <value>الكمية المتوفرة</value>
+  <data name="QuantityRelease" xml:space="preserve">
+    <value>الكمية المخرجة</value>
   </data>
-  <data name="QuantityInPackage" xml:space="preserve">
-    <value>كمية في الرزمة</value>
+  <data name="RecordUpdated" xml:space="preserve">
+    <value>تم تحديث نموذج طلب اخراج منتج بنجاح .</value>
   </data>
-  <data name="QuantitySold" xml:space="preserve">
-    <value>الكمية المباعة</value>
+  <data name="Requester" xml:space="preserve">
+    <value>طالب</value>
   </data>
-  <data name="ReorderPoint" xml:space="preserve">
-    <value>نقطة اعادة طلب</value>
+  <data name="RequesterName" xml:space="preserve">
+    <value>اسم الطالب</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>تسلسل</value>
   </data>
-  <data name="SkuDesc" xml:space="preserve">
-    <value>تفصيل منتج مختلف</value>
+  <data name="ShipmentDetails" xml:space="preserve">
+    <value>تفاصيل التوصيل</value>
   </data>
-  <data name="UpdateTitle" xml:space="preserve">
-    <value>تحديث منتج</value>
+  <data name="SKUCode" xml:space="preserve">
+    <value>SKU Code</value>
   </data>
-  <data name="UsageAr" xml:space="preserve">
-    <value>الاستخدام بالعربي</value>
+  <data name="Status" xml:space="preserve">
+    <value>حالة</value>
   </data>
-  <data name="UsageEn" xml:space="preserve">
-    <value>الاستخدام بالانجليزي</value>
+  <data name="StatusAccepted" xml:space="preserve">
+    <value>تم الموافقة</value>
+  </data>
+  <data name="StatusPending" xml:space="preserve">
+    <value>تحت الدراسة</value>
+  </data>
+  <data name="StatusRejected" xml:space="preserve">
+    <value>مرفوض</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="TableHeaderDate" xml:space="preserve">
+    <value>التاريخ</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+    <value>الاستخدام</value>
+  </data>
+  <data name="Warhouse" xml:space="preserve">
+    <value>مستودع</value>
   </data>
 </root>

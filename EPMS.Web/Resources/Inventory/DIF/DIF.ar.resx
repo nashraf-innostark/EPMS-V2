@@ -118,99 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="CreatePageBreadCrumb" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF)</value>
+    <value>نموذج المنتجات المعيبة</value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
-    <value>Create Defective Item Form (DIF)</value>
+    <value>انشاء نموذج المنتجات المعيبة</value>
   </data>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Create Defective Item Form (DIF) Create</value>
+    <value>انشاء نموذج المنتجات المعيبة</value>
   </data>
   <data name="CreateRFILink" xml:space="preserve">
-    <value>Create Defective Item Form (DIF)</value>
+    <value>نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
   <data name="Defectiveness" xml:space="preserve">
-    <value>Defectiveness</value>
+    <value>الخلل بالانجليزي</value>
   </data>
   <data name="DefectivenessArabic" xml:space="preserve">
-    <value>Defectiveness in arabic</value>
+    <value>الخلل بالعربي</value>
+  </data>
+  <data name="DefectiveQuantity" xml:space="preserve">
+    <value>كمية المعيبة</value>
   </data>
   <data name="DetailsPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) View</value>
+    <value>معاينة انشاء نموذج المنتجات المعيبة</value>
   </data>
   <data name="DetailsPageHeading" xml:space="preserve">
-    <value>Defective Item Form (DIF)</value>
+    <value>ا نموذج المنتجات المعيبة</value>
   </data>
   <data name="DetailsPageTitle" xml:space="preserve">
-    <value>Details DIF (Defective Item Form)</value>
+    <value>تفاصيل  نموذج المنتجات المعيبة</value>
   </data>
   <data name="DFIUpdated" xml:space="preserve">
-    <value>Inventory Defective Item request has been updated.</value>
+    <value>تم تحديث طلب نموذج المنتجات المعيبة</value>
   </data>
   <data name="DIFCreated" xml:space="preserve">
-    <value>Inventory Defective Item request has been created.</value>
+    <value>تم انشاء نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="DIFFormNo" xml:space="preserve">
+    <value>رقم نموذج المنتجات المعيبة</value>
   </data>
   <data name="DifNo" xml:space="preserve">
-    <value>Defective Item Form (DIF) Number</value>
+    <value>رقم موذج المنتجات المعيبة </value>
   </data>
   <data name="DIFNumber" xml:space="preserve">
     <value>DIF#</value>
   </data>
   <data name="DIFReplied" xml:space="preserve">
-    <value>Inventory Defective Item request has been replied.</value>
+    <value>تم الرد على انموذج المنتجات المعيبة</value>
   </data>
   <data name="EditPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) Edit</value>
+    <value>تعديل  نموذج المنتجات المعيبة</value>
   </data>
   <data name="EditPageHeading" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) Edit</value>
+    <value>تعديل  نموذج المنتجات المعيبة</value>
   </data>
   <data name="EditPageTitle" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) Edit</value>
-  </data>
-  <data name="InventoryManagerName" xml:space="preserve">
-    <value>Inventory Manager Name</value>
-  </data>
-  <data name="ListPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) List</value>
-  </data>
-  <data name="ListPageHeading" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) List</value>
-  </data>
-  <data name="ListPageTitle" xml:space="preserve">
-    <value>Inventory Defective Item Form (DIF) List</value>
-  </data>
-  <data name="Manager" xml:space="preserve">
-    <value>Manager</value>
-  </data>
-  <data name="Requester" xml:space="preserve">
-    <value>Requester</value>
-  </data>
-  <data name="RequesterName" xml:space="preserve">
-    <value>Requester Name</value>
-  </data>
-  <data name="RequestStatus" xml:space="preserve">
-    <value>Request Status</value>
-  </data>
-  <data name="DIFFormNo" xml:space="preserve">
-    <value>Defective Item Form (DIF) Number Ar</value>
-  </data>
-  <data name="DefectiveQuantity" xml:space="preserve">
-    <value>Defective Quantity Ar</value>
-  </data>
-  <data name="Date" xml:space="preserve">
-    <value>Date</value>
+    <value>تعديل  نموذج المنتجات المعيبة</value>
   </data>
   <data name="HistoryDifTableTitle" xml:space="preserve">
-    <value>Defective Item Form (DIF) History</value>
+    <value>سجل تعديل  نموذج المنتجات المعيبة</value>
   </data>
   <data name="HistoryPageTitle" xml:space="preserve">
-    <value>View Defective Item Form (DIF)</value>
+    <value>معاينة  نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="InventoryManagerName" xml:space="preserve">
+    <value>اسم مدير المستودع</value>
+  </data>
+  <data name="ListPageBreadCrumb" xml:space="preserve">
+    <value>قائمة  نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="ListPageHeading" xml:space="preserve">
+    <value>ائمة  نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="ListPageTitle" xml:space="preserve">
+    <value>ائمة  نموذج المنتجات المعيبة</value>
+  </data>
+  <data name="Manager" xml:space="preserve">
+    <value>مدير</value>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>طالب</value>
+  </data>
+  <data name="RequesterName" xml:space="preserve">
+    <value>اسم الطالب</value>
+  </data>
+  <data name="RequestStatus" xml:space="preserve">
+    <value>حالة الطلب</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial</value>
+    <value>تسلسل</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>حالة</value>
   </data>
 </root>

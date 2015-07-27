@@ -118,99 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewDepartment" xml:space="preserve">
-    <value>Add New Department</value>
+    <value>اضف ادارة جديدة</value>
+  </data>
+  <data name="AddNewNode" xml:space="preserve">
+    <value>اضف جديد</value>
   </data>
   <data name="AddNewSection" xml:space="preserve">
-    <value>Add New Section</value>
+    <value>اضف قسم جديد</value>
+  </data>
+  <data name="BCTitleCreate" xml:space="preserve">
+    <value>اضافة ادارة جديدة</value>
   </data>
   <data name="BCTitleIndex" xml:space="preserve">
-    <value>Inventory System Departments</value>
+    <value>ادارات برنامج المستودعات</value>
+  </data>
+  <data name="BtnCreate" xml:space="preserve">
+    <value>انشاء</value>
+  </data>
+  <data name="BtnEdit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>تحديث</value>
+  </data>
+  <data name="DepartmentColor" xml:space="preserve">
+    <value>لون الادارة</value>
+  </data>
+  <data name="DepartmentName" xml:space="preserve">
+    <value>اسم الادارة بالانجليزي</value>
+  </data>
+  <data name="DepartmentNameArabic" xml:space="preserve">
+    <value>اسم الادارة بالعربي</value>
   </data>
   <data name="DepartmentSaved" xml:space="preserve">
-    <value>تم حفظ قسم بنجاح.</value>
+    <value>تم حفظ القسم بنجاح.</value>
   </data>
   <data name="DeptColor" xml:space="preserve">
-    <value>Color</value>
+    <value>لون</value>
   </data>
   <data name="DeptDescription" xml:space="preserve">
-    <value>Description</value>
+    <value>تفاصيل</value>
   </data>
   <data name="DeptName" xml:space="preserve">
-    <value>Name</value>
+    <value>اسم</value>
   </data>
   <data name="DeptNumberOfSections" xml:space="preserve">
-    <value>Number of Sections</value>
+    <value>عدد الاقسام</value>
   </data>
   <data name="DeptNumberOfSubSections" xml:space="preserve">
-    <value>Number of Sub-Sections</value>
+    <value>عدد الاقسام الداخلية</value>
   </data>
   <data name="DeptSerial" xml:space="preserve">
-    <value>Serial</value>
+    <value>تسلسل</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>وصف</value>
+  </data>
+  <data name="InventoryDepartments" xml:space="preserve">
+    <value>ادارات برنامج المستودعات</value>
   </data>
   <data name="InventoryDepartmentsJSTreeTitle" xml:space="preserve">
     <value>جرد القسم</value>
   </data>
   <data name="NumberOfSubSections" xml:space="preserve">
-    <value>Number of Sub-Sections</value>
+    <value>عدد الاقسام الداخلية</value>
+  </data>
+  <data name="PGTitleCreate" xml:space="preserve">
+    <value>صفحة اضافة ادارة جديدة للبرنامج المستودعات</value>
   </data>
   <data name="PGTitleIndex" xml:space="preserve">
-    <value>Inventory Department's Page</value>
+    <value>صفحة الادارات لبرنامج المستودعات</value>
   </data>
   <data name="RecordUpdated" xml:space="preserve">
     <value>تم تحديث سجل بنجاح.</value>
   </data>
   <data name="SectDescription" xml:space="preserve">
-    <value>Description</value>
+    <value>وصف</value>
   </data>
   <data name="SectionSaved" xml:space="preserve">
     <value>تم حفظ المقطع بنجاح.</value>
   </data>
   <data name="SectName" xml:space="preserve">
-    <value>Name</value>
+    <value>اسم</value>
   </data>
   <data name="SectParentDepartment" xml:space="preserve">
-    <value>Parent Department</value>
+    <value>ادارة الام</value>
   </data>
   <data name="SectParentSection" xml:space="preserve">
-    <value>Parent Section</value>
+    <value>قسم الام</value>
   </data>
   <data name="TabDepartments" xml:space="preserve">
-    <value>Departments</value>
+    <value>ادارات</value>
   </data>
   <data name="TabSections" xml:space="preserve">
-    <value>Sections</value>
-  </data>
-  <data name="AddNewNode" xml:space="preserve">
-    <value>Add New</value>
-  </data>
-  <data name="BCTitleCreate" xml:space="preserve">
-    <value>Inventory Department Addition</value>
-  </data>
-  <data name="BtnCreate" xml:space="preserve">
-    <value>Create</value>
-  </data>
-  <data name="BtnEdit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="BtnUpdate" xml:space="preserve">
-    <value>Update</value>
-  </data>
-  <data name="DepartmentColor" xml:space="preserve">
-    <value>Department Color</value>
-  </data>
-  <data name="DepartmentName" xml:space="preserve">
-    <value>Department Name</value>
-  </data>
-  <data name="DepartmentNameArabic" xml:space="preserve">
-    <value>Department Name Arabic</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>Description</value>
-  </data>
-  <data name="InventoryDepartments" xml:space="preserve">
-    <value>Inventory Departments</value>
-  </data>
-  <data name="PGTitleCreate" xml:space="preserve">
-    <value>Inventory Department Addition Page</value>
+    <value>اقسام</value>
   </data>
 </root>
