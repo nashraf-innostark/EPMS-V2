@@ -976,6 +976,23 @@
           <Property Name="TaskId" Type="bigint" Nullable="false" />
           <Property Name="PreReqTaskId" Type="bigint" Nullable="false" />
         </EntityType>
+        <EntityType Name="ProductSection">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SectionNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="SectionContentEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="SectionContentAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="InventoyDepartmentId" Type="bigint" Nullable="false" />
+          <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="ParentSectionId" Type="bigint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Project">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -2423,6 +2440,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ProductSection_InventoryDepartment">
+          <End Role="InventoryDepartment" Type="Self.InventoryDepartment" Multiplicity="1" />
+          <End Role="ProductSection" Type="Self.ProductSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryDepartment">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="ProductSection">
+              <PropertyRef Name="InventoyDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Project_Customer">
           <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
           <End Role="Project" Type="Self.Project" Multiplicity="*" />
@@ -3118,6 +3147,7 @@
           <EntitySet Name="PhysicalCount" EntityType="Self.PhysicalCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicalCountItem" EntityType="Self.PhysicalCountItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRequisitTask" EntityType="Self.PreRequisitTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductSection" EntityType="Self.ProductSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocuments" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectTask" EntityType="Self.ProjectTask" Schema="dbo" store:Type="Tables" />
@@ -3449,6 +3479,10 @@
           <AssociationSet Name="FK_PreRequisitTask_ProjectTask" Association="Self.FK_PreRequisitTask_ProjectTask">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
             <End Role="PreRequisitTask" EntitySet="PreRequisitTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductSection_InventoryDepartment" Association="Self.FK_ProductSection_InventoryDepartment">
+            <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
+            <End Role="ProductSection" EntitySet="ProductSection" />
           </AssociationSet>
           <AssociationSet Name="FK_Project_Customer" Association="Self.FK_Project_Customer">
             <End Role="Customer" EntitySet="Customer" />
@@ -4098,6 +4132,7 @@
           <NavigationProperty Name="InventoryDepartments" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryDepartment1" />
           <NavigationProperty Name="ParentDepartment" Relationship="Self.FK_InventoryDepartment_InventoryDepartment" FromRole="InventoryDepartment1" ToRole="InventoryDepartment" />
           <NavigationProperty Name="InventoryItems" Relationship="EPMSInventoryModel.FK_InventoryItems_InventoryDepartment" FromRole="InventoryDepartment" ToRole="InventoryItem" />
+          <NavigationProperty Name="ProductSections" Relationship="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" FromRole="InventoryDepartment" ToRole="ProductSection" />
         </EntityType>
         <EntityType Name="ItemImage">
           <Key>
@@ -5886,6 +5921,11 @@
           <EntitySet Name="ImageSliders" EntityType="EPMSInventoryModel.ImageSlider" />
           <EntitySet Name="Partners" EntityType="EPMSInventoryModel.Partner" />
           <EntitySet Name="WebsiteDepartments" EntityType="EPMSInventoryModel.WebsiteDepartment" />
+          <EntitySet Name="ProductSections" EntityType="EPMSInventoryModel.ProductSection" />
+          <AssociationSet Name="FK_ProductSection_InventoryDepartment" Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment">
+            <End Role="InventoryDepartment" EntitySet="InventoryDepartments" />
+            <End Role="ProductSection" EntitySet="ProductSections" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7399,6 +7439,36 @@
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="ProductSection">
+          <Key>
+            <PropertyRef Name="SectionId" />
+          </Key>
+          <Property Name="SectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="SectionNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="SectionContentEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="SectionContentAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="InventoyDepartmentId" Type="Int64" Nullable="false" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="ParentSectionId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="InventoryDepartment" Relationship="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" FromRole="ProductSection" ToRole="InventoryDepartment" />
+        </EntityType>
+        <Association Name="FK_ProductSection_InventoryDepartment">
+          <End Type="EPMSInventoryModel.InventoryDepartment" Role="InventoryDepartment" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ProductSection" Role="ProductSection" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="InventoryDepartment">
+              <PropertyRef Name="DepartmentId" />
+            </Principal>
+            <Dependent Role="ProductSection">
+              <PropertyRef Name="InventoyDepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8996,6 +9066,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ProductSections">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ProductSection">
+              <MappingFragment StoreEntitySet="ProductSection">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ParentSectionId" ColumnName="ParentSectionId" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="InventoyDepartmentId" ColumnName="InventoyDepartmentId" />
+                <ScalarProperty Name="SectionContentAr" ColumnName="SectionContentAr" />
+                <ScalarProperty Name="SectionContentEn" ColumnName="SectionContentEn" />
+                <ScalarProperty Name="SectionNameAr" ColumnName="SectionNameAr" />
+                <ScalarProperty Name="SectionNameEn" ColumnName="SectionNameEn" />
+                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9227,6 +9315,8 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ImageSlider" Width="1.5" PointX="19.75" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Partner" Width="1.5" PointX="0.75" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.75" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ProductSection" Width="1.5" PointX="15" PointY="57.25" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" />
       </Diagram>
     </Diagrams>
   </Designer>
