@@ -327,6 +327,7 @@
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
     <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
+    <Compile Include="Areas\Website\Controllers\ProductController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
@@ -431,6 +432,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductSectionIndex.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Website\Product\ProductIndex.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductIndex.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -2069,6 +2075,7 @@
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Scripts\jsTreeCheckbox\jstree.core.js" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
+    <Content Include="Areas\Website\Views\Product\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4107,6 +4114,10 @@
     <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductSectionIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />

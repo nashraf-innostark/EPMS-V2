@@ -1,0 +1,134 @@
+﻿@model EPMS.Web.ViewModels.Product.ProductListViewModel
+
+@{
+    ViewBag.Title = EPMS.Web.Resources.Website.Product.ProductIndex.PageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var serial = 0;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+<form class="form-horizontal" id="validation_form">
+    <div class="container-fluid">
+        <div class="alert alert-info alert-block">
+            <i class="icon-alert icon-alert-info"></i>
+            <strong>@ViewBag.Title</strong><a href="~/Website/Product/Create">@EPMS.Web.Resources.Website.Product.ProductIndex.AddNew</a>
+        </div>
+
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="Product" class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Serial</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Name</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Price</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.DiscountedPrice</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Description</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Specification</th>
+                            <th>@EPMS.Web.Resources.Website.Product.ProductIndex.Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Products.ToList())
+                        {
+                            serial = serial + 1;
+                            <tr>
+                                <td>@serial</td>
+                                <td>@(direction == "ltr" ? item.ProductNameEn : item.ProductNameAr)</td>
+                                <td>@item.ProductPrice</td>
+                                <td>@item.DiscountedPrice</td>
+                                <td>@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
+                                <td>@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
+                                <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId)">Delete</a></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</form>
+
+<script>
+    var siteUrl = $('#siteURL').val();
+    $(document).ready(function() {
+        $('#Product').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "fnInitComplete": function() {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            },
+        });
+        $("#simpleSelectBox").select2({
+            dropdownCssClass: 'noSearch'
+        });
+    });
+
+    function deleteRow(abcd) {
+        debugger;
+        if (confirm("Are you sure to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Website/NewsAndArticle/DeleteIt';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                abcd: abcd
+            },
+            success: function () {
+                $.pnotify({
+                    title: 'Success',
+                    type: 'info',
+                    text: 'Record has been Deleted.'
+                });
+            },
+            error: function () {
+                $.pnotify({
+                    title: 'Failuer',
+                    type: 'error',
+                    text: 'Error deleting record.'
+                });
+            }
+        });
+    }
+
+</script>
