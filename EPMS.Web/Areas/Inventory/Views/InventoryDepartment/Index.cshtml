@@ -68,7 +68,7 @@
                             <h3> <small><a href="~/Inventory/InventoryDepartment/Create">@EPMS.Web.Resources.Inventory.InventoryDepartment.AddNewDepartment</a></small></h3>
                         }
                         <div class="container-fluid">
-                            <table class="table table-striped table-responsive" id="tableSortableResMed">
+                            <table class="table table-striped table-responsive" id="tableSortableDepartments">
                                 <thead>
                                     <tr>
                                         <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptSerial</th>
@@ -117,7 +117,7 @@
                         <div class="container-fluid">
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <table class="table table-striped table-responsive" id="tableSortableResMed2">
+                                    <table class="table table-striped table-responsive" id="tableSortableSections">
                                         <thead>
                                             <tr>
                                                 <th class="center"> @EPMS.Web.Resources.Inventory.InventoryDepartment.DeptSerial</th>
@@ -165,13 +165,13 @@
                                                     {
                                                         <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
                                                     }
-                                                    <td class="center @departments.DepartmentId"></td>
-                                                    <script>
+                                                    <td >Hello</td>
+                                                    @*<script>
                                                         var descpE = '@Html.Raw(departments.DepartmentDesc)';
                                                         var regex = /(<([^>]+)>)/ig;
                                                         var result = descpE.replace(regex, "");
                                                         $("." + '@departments.DepartmentId').text(result);
-                                                    </script>
+                                                    </script>*@
                                                     <td class="center">@departments.NoOfSubSections</td>
                                                 </tr>
                                             }
@@ -196,7 +196,7 @@
     var parsedSection = JSON.parse(inventorySections);
     $(document).ready(function () {
         $("#layoutMainContent").removeClass("main-content");
-        $('#tableSortableResMed').dataTable({
+        $('#tableSortableDepartments').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
@@ -207,8 +207,16 @@
                 subItemsOfDepartments();
             }
         });
-        $('#tableSortableResMed2').dataTable({
+        $('#tableSortableSections').dataTable({
             "sPaginationType": "bootstrap",
+            "aoColumns": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
             "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'

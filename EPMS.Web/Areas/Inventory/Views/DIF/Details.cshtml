@@ -37,6 +37,7 @@
 @using (Html.BeginForm("Details", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Dif.Id)
+    @Html.HiddenFor(x => x.Dif.FormNumber)
     @Html.HiddenFor(x => x.Dif.ManagerId)
     @Html.HiddenFor(x => x.Dif.DefectivenessA)
     @Html.HiddenFor(x => x.Dif.DefectivenessE)
