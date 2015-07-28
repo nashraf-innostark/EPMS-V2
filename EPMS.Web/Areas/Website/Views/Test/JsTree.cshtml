@@ -1,0 +1,131 @@
+﻿
+<!DOCTYPE HTML
+          PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta content="text/html;charset=utf-8" http-equiv="content-type" />
+    <title>jsTree native checkboxes demo</title>
+    <link rel="stylesheet" href="http://static.jstree.com/3.1.1/assets/bootstrap/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="http://static.jstree.com/3.1.1/assets/dist/themes/default/style.min.css" />
+    <link rel="stylesheet" href="http://static.jstree.com/3.1.1/assets/docs.css" />
+
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jquery.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jquery.hotkeys.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/vakata.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.core.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.themes.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.ui.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.state.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.html.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.json.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.checkbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jstree.nativecheckbox.js"></script>
+    <script type="text/javascript" src="~/Scripts/jsTreeCheckbox/jquery.support.checkboxindeterminate.js"></script>
+    <style type="text/css">
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: Verdana;
+            font-size: 10px;
+        }
+
+        #container {
+            width: 800px;
+            margin: 0 auto;
+        }
+
+        .demo {
+            width: 300px;
+            margin: 20px auto;
+            float: none;
+            border: 1px solid gray;
+            height: 200px;
+            overflow: auto;
+        }
+
+        .result-yes {
+            color: Green;
+        }
+
+        .result-no {
+            color: Red;
+        }
+
+        .result-error {
+            color: Blue;
+        }
+
+        #demo-table td {
+            text-align: center;
+        }
+    </style>
+    <script type="text/javascript">
+        $(function () {
+            // jsTree with native checkboxes
+            var tree = $("#jstree-nativecheckbox");
+            tree.bind('__loaded.jstree', function () {
+                tree.jstree('check_node', $('#ncb-c-pf'));
+                tree.jstree('check_node', $('#ncb-c-u-r-d'));
+            })
+	        .jstree({
+	            'plugins': ["themes", "html_data", "nativecheckbox", "sort", "ui"],
+	            "core": {
+	                "initially_open": ["ncb-c-pf"]
+	            }
+	        });
+        });
+    </script>
+</head>
+<body>
+    <div style="width:960px; margin:10px auto;">
+        <div style="width:45%; margin-left: 12%;">
+            <h2>Rendering as native checkboxes</h2>
+            <div id="jstree-nativecheckbox">
+                <ul>
+                    <li id="ncb-c" class="jstree-open">
+                        <a href="#">C:\ Windows</a>
+                        <ul>
+                            <li id="ncb-c-pf" class="jstree-open">
+                                <a href="#">Program Files</a>
+                                <ul>
+                                    <li class="jstree-open"><a href="#">Common Files</a></li>
+                                    <li class="jstree-open"><a href="#">Microsoft Office</a></li>
+                                    <li class="jstree-open"><a href="#">Windows Media Player</a></li>
+                                </ul>
+                            </li>
+                            <li id="ncb-c-u" class="jstree-open">
+                                <a href="#">Users</a>
+                                <ul>
+                                    <li class="jstree-open">
+                                        <a href="#">Rupert</a>
+                                        <ul>
+                                            <li class="jstree-open" id="ncb-c-u-r-d"><a href="#">Documents</a></li>
+                                            <li class="jstree-open"><a href="#">Music</a></li>
+                                            <li class="jstree-open"><a href="#">Videos</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li id="ncb-c-w" class="jstree-open">
+                                <a href="#">Windows</a>
+                                <ul>
+                                    <li class="jstree-open"><a href="#">Help</a></li>
+                                    <li class="jstree-open"><a href="#">System32</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    <li id="ncb-d" class="jstree-open">
+                        <a href="#">D:\ The Movie</a>
+                        <ul>
+                            <li id="ncb-d-ats" class="jstree-open"><a href="#">AUDIO_TS</a></li>
+                            <li id="ncb-d-vts" class="jstree-open"><a href="#">VIDEO_TS</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

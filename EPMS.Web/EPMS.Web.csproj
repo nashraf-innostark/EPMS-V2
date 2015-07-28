@@ -329,6 +329,7 @@
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
+    <Compile Include="Areas\Website\Controllers\TestController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -968,6 +969,9 @@
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\arabic1.css" />
     <Content Include="Content\CSS\help-photon.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\bootstrap.min.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\docs.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\style.min.css" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
     <Content Include="Content\CSS\print.css" />
@@ -1953,7 +1957,24 @@
     <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
     <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jquery.hotkeys.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jquery.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jquery.support.checkboxindeterminate.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.checkbox.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.html.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.json.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.nativecheckbox.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.state.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.themes.js" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.ui.js" />
+    <Content Include="Scripts\jsTreeCheckbox\vakata.js" />
+    <Content Include="Scripts\JsTree\docs.js" />
+    <Content Include="Scripts\JsTree\jquery-1.10.2.min.js" />
+    <Content Include="Scripts\JsTree\jquery.address-1.6.js" />
+    <Content Include="Scripts\JsTree\jstree.js" />
+    <Content Include="Scripts\JsTree\vakata.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
+    <Content Include="Scripts\plugins\themes\default\style.css" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
     <Content Include="Views\Notification\Index.cshtml" />
@@ -2041,6 +2062,9 @@
     <Content Include="Areas\Website\Views\Partner\Create.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Index.cshtml" />
+    <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
+    <Content Include="Scripts\jsTreeCheckbox\jstree.core.js" />
+    <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
