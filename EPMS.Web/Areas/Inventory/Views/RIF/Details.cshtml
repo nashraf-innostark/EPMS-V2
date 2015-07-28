@@ -37,6 +37,7 @@
 @using (Html.BeginForm("Details", "RIF", FormMethod.Post, new { @id = "RIFForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Rif.RIFId)
+    @Html.HiddenFor(x => x.Rif.FormNumber)
     @Html.HiddenFor(x => x.Rif.OrderId)
     @Html.HiddenFor(x => x.Rif.ManagerId)
     @Html.HiddenFor(x => x.Rif.ReasonE)

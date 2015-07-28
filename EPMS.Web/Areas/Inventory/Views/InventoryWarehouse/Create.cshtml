@@ -86,7 +86,6 @@
             @Html.HiddenFor(model => model.Warehouse.WarehouseId)
             @Html.HiddenFor(model => model.Warehouse.WarehouseNumber)
             @Html.HiddenFor(model => model.Warehouse.ParentId)
-            @Html.HiddenFor(model => model.Warehouse.IsFull)
             @Html.HiddenFor(model => model.Warehouse.WarehouseSize)
             @Html.HiddenFor(model => model.Warehouse.RecCreatedBy)
             @Html.HiddenFor(model => model.Warehouse.RecCreatedDt)
@@ -150,6 +149,16 @@
                         <div class="span9">
                             <div class="controls">
                                 <input type="text" id="LocationText" class="toBeDisabled" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="control-group row-fluid">
+                        <div class="span3">
+                            <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.IsFull</label>
+                        </div>
+                        <div class="span9 span-inset">
+                            <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                                @Html.CheckBoxFor(model => model.Warehouse.IsFull, new { @id = "IsMonetary" })
                             </div>
                         </div>
                     </div>
