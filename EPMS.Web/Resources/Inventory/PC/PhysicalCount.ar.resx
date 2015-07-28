@@ -117,88 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AverageCost" xml:space="preserve">
-    <value>متوسط ​​التكلفة</value>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
   </data>
-  <data name="AveragePackagePrice" xml:space="preserve">
-    <value>متوسط ​​ السعر للرزمة</value>
+  <data name="CreatePageHeading" xml:space="preserve">
+    <value>معاينة الجرد</value>
   </data>
-  <data name="AveragePrice" xml:space="preserve">
-    <value>متوسط ​​السعر</value>
+  <data name="CreatePageListBreadcrumbs" xml:space="preserve">
+    <value>قائمة الجرد</value>
   </data>
-  <data name="CreateNew" xml:space="preserve">
-    <value>انشاء جديد</value>
+  <data name="CreatePageTitle" xml:space="preserve">
+    <value>معاينة الجرد</value>
   </data>
-  <data name="CreateTitle" xml:space="preserve">
-    <value>انشاء منتج جديد</value>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
-  <data name="DeptInfo" xml:space="preserve">
-    <value>معلومات الادارة</value>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
-  <data name="DescForQuotationAr" xml:space="preserve">
-    <value>تفاصيل عرض السعربالعربي</value>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>رقم الموظف</value>
   </data>
-  <data name="DescForQuotationEn" xml:space="preserve">
-    <value>تفاصيل عرض السعر بالانجليزي</value>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>اسم الموظف</value>
   </data>
-  <data name="DescriptionAr" xml:space="preserve">
-    <value>تفاصيل بالعربي</value>
+  <data name="ItemBarcode" xml:space="preserve">
+    <value>Item Barcode</value>
   </data>
-  <data name="DescriptionEn" xml:space="preserve">
-    <value>تفاصيل بالانجليزي</value>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>Item Name - SKU Descriptoin</value>
   </data>
-  <data name="HazardousAr" xml:space="preserve">
-    <value>الاخطار بالعربي</value>
-  </data>
-  <data name="HazardousEn" xml:space="preserve">
-    <value>الاخطار بالعربي</value>
-  </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>رقم المنتج</value>
-  </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>اسم المنتج </value>
-  </data>
-  <data name="ItemNameAr" xml:space="preserve">
-    <value>اسم المنتج بالعربي</value>
-  </data>
-  <data name="ItemNameEn" xml:space="preserve">
-    <value>اسم المنتج بالانجليزي</value>
-  </data>
-  <data name="Label" xml:space="preserve">
-    <value>قائمة المنتجات</value>
-  </data>
-  <data name="QOnHand" xml:space="preserve">
-    <value>الكمية المتوفرة</value>
-  </data>
-  <data name="QSold" xml:space="preserve">
-    <value>الكمية المباعة</value>
-  </data>
-  <data name="QuantityInHand" xml:space="preserve">
-    <value>الكمية المتوفرة</value>
-  </data>
-  <data name="QuantityInPackage" xml:space="preserve">
+  <data name="ItemsInPackage" xml:space="preserve">
     <value>كمية في الرزمة</value>
   </data>
-  <data name="QuantitySold" xml:space="preserve">
-    <value>الكمية المباعة</value>
+  <data name="ItemsInWharewhouse" xml:space="preserve">
+    <value>الكمية المتواجدة في المستودع</value>
   </data>
-  <data name="ReorderPoint" xml:space="preserve">
-    <value>نقطة اعادة طلب</value>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات بالانجليزي</value>
+  </data>
+  <data name="NotesAr" xml:space="preserve">
+    <value>ملاحظات بالعربي</value>
+  </data>
+  <data name="NumberOfPackages" xml:space="preserve">
+    <value>عدد الرزم في المستودع</value>
+  </data>
+  <data name="PageTitleIndex" xml:space="preserve">
+    <value>قائمة الجرد</value>
+  </data>
+  <data name="PC" xml:space="preserve">
+    <value>الجرد</value>
+  </data>
+  <data name="PCNo" xml:space="preserve">
+    <value>PC#</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>تسلسل</value>
   </data>
-  <data name="SkuDesc" xml:space="preserve">
-    <value>تفصيل منتج مختلف</value>
+  <data name="TotalItemsCount" xml:space="preserve">
+    <value>عدد الكامل للتعداد</value>
   </data>
-  <data name="UpdateTitle" xml:space="preserve">
-    <value>تحديث منتج</value>
+  <data name="TotalItemsInPackages" xml:space="preserve">
+    <value>عدد الكامل للرزم</value>
   </data>
-  <data name="UsageAr" xml:space="preserve">
-    <value>الاستخدام بالعربي</value>
-  </data>
-  <data name="UsageEn" xml:space="preserve">
-    <value>الاستخدام بالانجليزي</value>
+  <data name="Warhouse" xml:space="preserve">
+    <value>مستودع</value>
   </data>
 </root>
