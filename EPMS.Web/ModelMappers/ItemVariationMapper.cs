@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.RequestModels;
 using iTextSharp.text.pdf.qrcode;
@@ -68,6 +69,16 @@ namespace EPMS.Web.ModelMappers
             model.ColorNameAr = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameAr: "";
             model.StatusNameEn = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameEn : "";
             model.StatusNameAr = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameAr : "";
+            var totalCost = source.ItemManufacturers.Sum(y => y.Quantity * Convert.ToInt64(y.Price));
+            var totalQuantity = source.ItemManufacturers.Sum(y => y.Quantity);
+            if (totalCost > 0 && totalQuantity > 0)
+            {
+                model.AverageCost = totalCost/totalQuantity;
+            }
+            else
+            {
+                model.AverageCost = 0;
+            }
             return model;
         }
         public static WebModels.ItemVariation CreateFromServerToClient(this DomainModels.ItemVariation source, IEnumerable<DomainModels.ItemWarehouse> itemWarehouses)
