@@ -164,6 +164,7 @@
     <Compile Include="Services\PhysicalCountService.cs" />
     <Compile Include="Services\PoItemService.cs" />
     <Compile Include="Services\PreRequisitTaskService.cs" />
+    <Compile Include="Services\ProductSectionService.cs" />
     <Compile Include="Services\ProjectDocumentService.cs" />
     <Compile Include="Services\ProjectService.cs" />
     <Compile Include="Services\ProjectTaskService.cs" />

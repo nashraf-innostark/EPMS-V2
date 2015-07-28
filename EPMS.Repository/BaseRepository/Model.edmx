@@ -976,6 +976,32 @@
           <Property Name="TaskId" Type="bigint" Nullable="false" />
           <Property Name="PreReqTaskId" Type="bigint" Nullable="false" />
         </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ItemVariationId" Type="bigint" />
+          <Property Name="ProductNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProductNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="ProductDescEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductDescAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductPrice" Type="nvarchar" MaxLength="50" />
+          <Property Name="DiscountedPrice" Type="nvarchar" MaxLength="50" />
+          <Property Name="ProductSize" Type="nvarchar" MaxLength="50" />
+          <Property Name="PdocutSpecificationsEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="PdocutSpecificationsAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ProductSection">
           <Key>
             <PropertyRef Name="SectionId" />
@@ -2440,6 +2466,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_ItemVariation">
+          <End Role="ItemVariation" Type="Self.ItemVariation" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductSection_InventoryDepartment">
           <End Role="InventoryDepartment" Type="Self.InventoryDepartment" Multiplicity="0..1" />
           <End Role="ProductSection" Type="Self.ProductSection" Multiplicity="*" />
@@ -3192,6 +3230,25 @@
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" store:Type="Tables" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [Product].[ProductId] AS [ProductId], 
+    [Product].[ItemVariationId] AS [ItemVariationId], 
+    [Product].[ProductNameEn] AS [ProductNameEn], 
+    [Product].[ProductNameAr] AS [ProductNameAr], 
+    [Product].[ProductDescEn] AS [ProductDescEn], 
+    [Product].[ProductDescAr] AS [ProductDescAr], 
+    [Product].[ProductPrice] AS [ProductPrice], 
+    [Product].[DiscountedPrice] AS [DiscountedPrice], 
+    [Product].[ProductSize] AS [ProductSize], 
+    [Product].[PdocutSpecificationsEn] AS [PdocutSpecificationsEn], 
+    [Product].[PdocutSpecificationsAr] AS [PdocutSpecificationsAr], 
+    [Product].[RecCreatedBy] AS [RecCreatedBy], 
+    [Product].[RecCreatedDt] AS [RecCreatedDt], 
+    [Product].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
+    [Product].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
+    FROM [dbo].[Product] AS [Product]</DefiningQuery>
+          </EntitySet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -3491,6 +3548,10 @@
           <AssociationSet Name="FK_PreRequisitTask_ProjectTask" Association="Self.FK_PreRequisitTask_ProjectTask">
             <End Role="ProjectTask" EntitySet="ProjectTask" />
             <End Role="PreRequisitTask" EntitySet="PreRequisitTask" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ItemVariation" Association="Self.FK_Product_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariation" />
+            <End Role="Product" EntitySet="Product" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductSection_InventoryDepartment" Association="Self.FK_ProductSection_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
@@ -4226,6 +4287,7 @@
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_ItemVariation" FromRole="ItemVariation" ToRole="VendorItem" />
           <NavigationProperty Name="PhysicalCountItems" Relationship="EPMSInventoryModel.FK_PhysicalCountItem_ItemVariation" FromRole="ItemVariation" ToRole="PhysicalCountItem" />
           <NavigationProperty Name="InventoryItem" Relationship="EPMSInventoryModel.FK_ItemVariation_InventoryItems" FromRole="ItemVariation" ToRole="InventoryItem" />
+          <NavigationProperty Name="Products" Relationship="EPMSInventoryModel.FK_Product_ItemVariation" FromRole="ItemVariation" ToRole="Product" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -5946,6 +6008,11 @@
             <End Role="ProductSection" EntitySet="ProductSections" />
             <End Role="ProductSection1" EntitySet="ProductSections" />
           </AssociationSet>
+          <EntitySet Name="Products" EntityType="EPMSInventoryModel.Product" />
+          <AssociationSet Name="FK_Product_ItemVariation" Association="EPMSInventoryModel.FK_Product_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7500,6 +7567,43 @@
             </Principal>
             <Dependent Role="ProductSection1">
               <PropertyRef Name="ParentSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Product">
+          <Key>
+            <PropertyRef Name="ProductId" />
+            <PropertyRef Name="RecCreatedBy" />
+            <PropertyRef Name="RecCreatedDt" />
+            <PropertyRef Name="RecLastUpdatedBy" />
+            <PropertyRef Name="RecLastUpdatedDt" />
+          </Key>
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" />
+          <Property Name="ProductNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProductNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ProductDescEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProductDescAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProductPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="DiscountedPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="PdocutSpecificationsEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="PdocutSpecificationsAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_Product_ItemVariation" FromRole="Product" ToRole="ItemVariation" />
+        </EntityType>
+        <Association Name="FK_Product_ItemVariation">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ItemVariationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9118,6 +9222,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Products">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Product">
+              <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="PdocutSpecificationsAr" ColumnName="PdocutSpecificationsAr" />
+                <ScalarProperty Name="PdocutSpecificationsEn" ColumnName="PdocutSpecificationsEn" />
+                <ScalarProperty Name="ProductSize" ColumnName="ProductSize" />
+                <ScalarProperty Name="DiscountedPrice" ColumnName="DiscountedPrice" />
+                <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
+                <ScalarProperty Name="ProductDescAr" ColumnName="ProductDescAr" />
+                <ScalarProperty Name="ProductDescEn" ColumnName="ProductDescEn" />
+                <ScalarProperty Name="ProductNameAr" ColumnName="ProductNameAr" />
+                <ScalarProperty Name="ProductNameEn" ColumnName="ProductNameEn" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9352,6 +9477,8 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ProductSection" Width="1.5" PointX="15" PointY="57" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_ProductSection1" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Product" Width="1.5" PointX="5.25" PointY="88.125" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Product_ItemVariation" />
       </Diagram>
     </Diagrams>
   </Designer>

@@ -327,6 +327,7 @@
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
     <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
+    <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -420,7 +421,14 @@
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
+    <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
+    <Compile Include="Models\ProductSection.cs" />
     <Compile Include="Models\WebsiteDepartment.cs" />
+    <Compile Include="Resources\Website\ProductSection\ProductSectionIndex.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductSectionIndex.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
@@ -902,6 +910,8 @@
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountListViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
+    <Compile Include="ViewModels\ProductSection\ProductSectionListViewModel.cs" />
+    <Compile Include="ViewModels\ProductSection\ProductSectionViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />
@@ -2030,6 +2040,7 @@
     <Content Include="Areas\Website\Views\NewsAndArticle\Create.cshtml" />
     <Content Include="Areas\Website\Views\Partner\Create.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
+    <Content Include="Areas\Website\Views\ProductSection\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4064,6 +4075,10 @@
     <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsAndArticlesList.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionIndex.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductSectionIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />

@@ -180,6 +180,7 @@
     <Compile Include="Repositories\POHistoryRepository.cs" />
     <Compile Include="Repositories\PoItemRepository.cs" />
     <Compile Include="Repositories\PreRequisitTaskRepository.cs" />
+    <Compile Include="Repositories\ProductSectionRepository.cs" />
     <Compile Include="Repositories\ProjectDocumentRepository.cs" />
     <Compile Include="Repositories\ProjectRepository.cs" />
     <Compile Include="Repositories\ProjectTaskRepository.cs" />
