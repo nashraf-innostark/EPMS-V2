@@ -28,7 +28,7 @@ namespace EPMS.Web.ModelMappers.Website.ProductSection
                 IsManuallyCreated = source.InventoyDepartmentId == null ? "Yes":"No"
             };
         }
-        public static DomainModels.ProductSection CreateFromServerToClient(this WebModels.ProductSection source)
+        public static DomainModels.ProductSection CreateFromClientToServer(this WebModels.ProductSection source)
         {
             return new DomainModels.ProductSection
             {

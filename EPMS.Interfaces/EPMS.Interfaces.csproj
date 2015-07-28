@@ -96,6 +96,7 @@
     <Compile Include="IServices\IPoItemService.cs" />
     <Compile Include="IServices\IPreRequisitTaskService.cs" />
     <Compile Include="IServices\IProductSectionService.cs" />
+    <Compile Include="IServices\IProductService.cs" />
     <Compile Include="IServices\IProjectDocumentService.cs" />
     <Compile Include="IServices\IProjectService.cs" />
     <Compile Include="IServices\IProjectTaskService.cs" />
@@ -168,6 +169,7 @@
     <Compile Include="Repository\IPOHistoryRepository.cs" />
     <Compile Include="Repository\IPoItemRepository.cs" />
     <Compile Include="Repository\IPreRequisitTaskRepository.cs" />
+    <Compile Include="Repository\IProductRepository.cs" />
     <Compile Include="Repository\IProductSectionRepository.cs" />
     <Compile Include="Repository\IProjectDocumentRepository.cs" />
     <Compile Include="Repository\IProjectRepository.cs" />

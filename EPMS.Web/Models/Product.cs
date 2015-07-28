@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class Product
     {
@@ -23,7 +19,5 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-
-        public virtual ItemVariation ItemVariation { get; set; }
     }
 }

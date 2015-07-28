@@ -423,6 +423,8 @@
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
+    <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
+    <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductSection.cs" />
     <Compile Include="Models\WebsiteDepartment.cs" />
     <Compile Include="Resources\Website\ProductSection\ProductSectionIndex.Designer.cs">
@@ -913,6 +915,8 @@
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionListViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductListViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectViewModel.cs" />
     <Compile Include="ViewModels\PurchaseOrder\POHistoryViewModel.cs" />

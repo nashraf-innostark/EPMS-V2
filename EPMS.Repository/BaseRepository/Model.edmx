@@ -995,8 +995,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <Property Name="ProductPrice" Type="nvarchar" MaxLength="50" />
           <Property Name="DiscountedPrice" Type="nvarchar" MaxLength="50" />
           <Property Name="ProductSize" Type="nvarchar" MaxLength="50" />
-          <Property Name="PdocutSpecificationsEn" Type="nvarchar" MaxLength="1000" />
-          <Property Name="PdocutSpecificationsAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductSpecificationEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductSpecificationAr" Type="nvarchar" MaxLength="1000" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -3241,8 +3241,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
     [Product].[ProductPrice] AS [ProductPrice], 
     [Product].[DiscountedPrice] AS [DiscountedPrice], 
     [Product].[ProductSize] AS [ProductSize], 
-    [Product].[PdocutSpecificationsEn] AS [PdocutSpecificationsEn], 
-    [Product].[PdocutSpecificationsAr] AS [PdocutSpecificationsAr], 
+    [Product].[ProductSpecificationEn] AS [ProductSpecificationEn], 
+    [Product].[ProductSpecificationAr] AS [ProductSpecificationAr], 
     [Product].[RecCreatedBy] AS [RecCreatedBy], 
     [Product].[RecCreatedDt] AS [RecCreatedDt], 
     [Product].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
@@ -7587,8 +7587,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <Property Name="ProductPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="DiscountedPrice" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProductSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="PdocutSpecificationsEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
-          <Property Name="PdocutSpecificationsAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSpecificationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSpecificationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -9229,8 +9229,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="PdocutSpecificationsAr" ColumnName="PdocutSpecificationsAr" />
-                <ScalarProperty Name="PdocutSpecificationsEn" ColumnName="PdocutSpecificationsEn" />
+                <ScalarProperty Name="ProductSpecificationAr" ColumnName="ProductSpecificationAr" />
+                <ScalarProperty Name="ProductSpecificationEn" ColumnName="ProductSpecificationEn" />
                 <ScalarProperty Name="ProductSize" ColumnName="ProductSize" />
                 <ScalarProperty Name="DiscountedPrice" ColumnName="DiscountedPrice" />
                 <ScalarProperty Name="ProductPrice" ColumnName="ProductPrice" />
