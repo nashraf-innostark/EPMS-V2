@@ -69,7 +69,10 @@
                 tree.jstree('check_node', $('#ncb-c-u-r-d'));
             })
 	        .jstree({
-	            'plugins': ["themes", "html_data", "nativecheckbox", "sort", "ui"]
+	            'plugins': ["themes", "html_data", "nativecheckbox", "sort", "ui"],
+	            "core": {
+	                "initially_open": ["ncb-c-pf"]
+	            }
 	        });
         });
     </script>
