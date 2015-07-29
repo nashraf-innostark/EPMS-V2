@@ -99,6 +99,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameA;
                     rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameA;
                 }
+                rfiViewModel.Rfi.EmpJobId = rfiresponse.EmpJobId;
                 rfiViewModel.Rfi.OrderNo = rfiresponse.OrderNo;
                 rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList();
             }

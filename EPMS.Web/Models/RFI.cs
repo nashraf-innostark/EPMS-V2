@@ -32,6 +32,7 @@ namespace EPMS.Web.Models
         public string ManagerNameAr { get; set; }
         public string ManagerId { get; set; }
         public string FormNumber { get; set; }
+        public string EmpJobId { get; set; }
 
         public string OrderNo { get; set; }
         public string RecCreatedBy { get; set; }
