@@ -132,8 +132,10 @@
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\NewsAndArticle.cs" />
     <Compile Include="DomainModels\Partner.cs" />
+    <Compile Include="DomainModels\ProductImage.cs" />
     <Compile Include="DomainModels\PhysicalCount.cs" />
     <Compile Include="DomainModels\PhysicalCountItem.cs" />
+    <Compile Include="DomainModels\Product.cs" />
     <Compile Include="DomainModels\ProductSection.cs" />
     <Compile Include="DomainModels\PurchaseOrder.cs" />
     <Compile Include="DomainModels\PurchaseOrderHistory.cs" />
@@ -167,6 +169,7 @@
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
+    <Compile Include="RequestModels\ProductRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
@@ -334,6 +337,7 @@
     <Compile Include="ResponseModels\POCreateResponse.cs" />
     <Compile Include="ResponseModels\PODetailResponse.cs" />
     <Compile Include="ResponseModels\PoHistoryResponse.cs" />
+    <Compile Include="ResponseModels\ProductResponse.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />

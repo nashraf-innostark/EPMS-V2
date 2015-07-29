@@ -77,6 +77,9 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<INewsAndArticleService, NewsAndArticleService>();
             unityContainer.RegisterType<IPartnerService, PartnerService>();
             unityContainer.RegisterType<IWebsiteDepartmentService, WebsiteDepartmentService>();
+            unityContainer.RegisterType<IProductSectionService, ProductSectionService>();
+            unityContainer.RegisterType<IProductService, ProductService>();
+            unityContainer.RegisterType<IProductImageService, ProductImageService>();
         }
     }
 }

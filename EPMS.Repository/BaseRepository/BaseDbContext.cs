@@ -153,5 +153,8 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<NewsAndArticle> NewsAndArticles { get; set; }
         public DbSet<Partner> Partners { get; set; }
         public DbSet<WebsiteDepartment> WebsiteDepartments { get; set; }
+        public DbSet<ProductSection> ProductSections { get; set; }
+        public DbSet<Product> Products { get; set; }
+        public DbSet<ProductImage> ProductImages { get; set; }
     }
 }
