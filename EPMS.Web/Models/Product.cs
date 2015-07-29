@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Web.Models
 {
@@ -20,5 +21,6 @@ namespace EPMS.Web.Models
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
+        public IEnumerable<ProductImage> ProductImages { get; set; }
     }
 }

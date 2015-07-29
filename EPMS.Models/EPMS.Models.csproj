@@ -169,6 +169,7 @@
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
+    <Compile Include="RequestModels\ProductRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
@@ -336,6 +337,7 @@
     <Compile Include="ResponseModels\POCreateResponse.cs" />
     <Compile Include="ResponseModels\PODetailResponse.cs" />
     <Compile Include="ResponseModels\PoHistoryResponse.cs" />
+    <Compile Include="ResponseModels\ProductResponse.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />

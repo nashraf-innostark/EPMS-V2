@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -11,5 +13,7 @@ namespace EPMS.Interfaces.IServices
         bool UpdateProduct(Product product);
         void DeleteProduct(Product product);
         bool Delete(long id);
+        ProductResponse ProductResponse(long id);
+        ProductResponse SaveProduct(ProductRequest productToSave);
     }
 }

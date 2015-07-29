@@ -12,9 +12,12 @@ namespace EPMS.Web.ViewModels.Product
         public ProductViewModel()
         {
             Product = new Models.Product();
+            ProductImage = new Models.ProductImage();
         }
 
         #endregion
         public Models.Product Product { get; set; }
+        public Models.ProductImage ProductImage { get; set; }
+        public List<Models.ProductSection> ProductSections { get; set; }
     }
 }

@@ -1,4 +1,8 @@
-﻿using WebModels = EPMS.Web.Models;
+﻿using System.Collections.Generic;
+using System.Linq;
+using EPMS.Models.RequestModels;
+using EPMS.Web.ModelMappers.Website.ProductImage;
+using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web.ModelMappers.Website.Product
@@ -28,9 +32,9 @@ namespace EPMS.Web.ModelMappers.Website.Product
             };
         }
 
-        public static DomainModels.Product CreateFromClientToServer(this WebModels.Product source)
+        public static ProductRequest CreateFromClientToServer(this WebModels.Product source)
         {
-            return new DomainModels.Product
+            var product = new DomainModels.Product
             {
                 ProductId = source.ProductId,
                 ProductNameEn = source.ProductNameEn,
@@ -49,6 +53,13 @@ namespace EPMS.Web.ModelMappers.Website.Product
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
+            var request = new ProductRequest
+            {
+                Product = product,
+                ProductImages =
+                    new List<DomainModels.ProductImage>(source.ProductImages.Select(x => x.CreateFromClientToServer()))
+            };
+            return request;
         }
     }
 }
