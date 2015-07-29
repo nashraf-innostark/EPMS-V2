@@ -976,17 +976,11 @@
           <Property Name="TaskId" Type="bigint" Nullable="false" />
           <Property Name="PreReqTaskId" Type="bigint" Nullable="false" />
         </EntityType>
-        <!--Errors Found During Generation:
-warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
           </Key>
-          <Property Name="ProductId" Type="bigint" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemVariationId" Type="bigint" />
           <Property Name="ProductNameEn" Type="nvarchar" MaxLength="200" />
           <Property Name="ProductNameAr" Type="nvarchar" MaxLength="200" />
@@ -997,10 +991,21 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <Property Name="ProductSize" Type="nvarchar" MaxLength="50" />
           <Property Name="ProductSpecificationEn" Type="nvarchar" MaxLength="1000" />
           <Property Name="ProductSpecificationAr" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ProductSectionId" Type="bigint" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="bigint" Nullable="false" />
+          <Property Name="ProductImagePath" Type="nvarchar" MaxLength="200" />
+          <Property Name="ImageOrder" Type="int" />
+          <Property Name="ShowImage" Type="bit" Nullable="false" />
+          <Property Name="ProductId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="ProductSection">
           <Key>
@@ -2478,6 +2483,30 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Product_ProductSection">
+          <End Role="ProductSection" Type="Self.ProductSection" Multiplicity="0..1" />
+          <End Role="Product" Type="Self.Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSection">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImage_Product">
+          <End Role="Product" Type="Self.Product" Multiplicity="1" />
+          <End Role="ProductImage" Type="Self.ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ProductSection_InventoryDepartment">
           <End Role="InventoryDepartment" Type="Self.InventoryDepartment" Multiplicity="0..1" />
           <End Role="ProductSection" Type="Self.ProductSection" Multiplicity="*" />
@@ -3197,6 +3226,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <EntitySet Name="PhysicalCount" EntityType="Self.PhysicalCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicalCountItem" EntityType="Self.PhysicalCountItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRequisitTask" EntityType="Self.PreRequisitTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Product" EntityType="Self.Product" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ProductImage" EntityType="Self.ProductImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProductSection" EntityType="Self.ProductSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Project" EntityType="Self.Project" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ProjectDocuments" EntityType="Self.ProjectDocuments" Schema="dbo" store:Type="Tables" />
@@ -3230,25 +3261,6 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Product" EntityType="Self.Product" store:Type="Tables" store:Schema="dbo">
-            <DefiningQuery>SELECT 
-    [Product].[ProductId] AS [ProductId], 
-    [Product].[ItemVariationId] AS [ItemVariationId], 
-    [Product].[ProductNameEn] AS [ProductNameEn], 
-    [Product].[ProductNameAr] AS [ProductNameAr], 
-    [Product].[ProductDescEn] AS [ProductDescEn], 
-    [Product].[ProductDescAr] AS [ProductDescAr], 
-    [Product].[ProductPrice] AS [ProductPrice], 
-    [Product].[DiscountedPrice] AS [DiscountedPrice], 
-    [Product].[ProductSize] AS [ProductSize], 
-    [Product].[ProductSpecificationEn] AS [ProductSpecificationEn], 
-    [Product].[ProductSpecificationAr] AS [ProductSpecificationAr], 
-    [Product].[RecCreatedBy] AS [RecCreatedBy], 
-    [Product].[RecCreatedDt] AS [RecCreatedDt], 
-    [Product].[RecLastUpdatedBy] AS [RecLastUpdatedBy], 
-    [Product].[RecLastUpdatedDt] AS [RecLastUpdatedDt]
-    FROM [dbo].[Product] AS [Product]</DefiningQuery>
-          </EntitySet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -3552,6 +3564,14 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <AssociationSet Name="FK_Product_ItemVariation" Association="Self.FK_Product_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariation" />
             <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSection" Association="Self.FK_Product_ProductSection">
+            <End Role="ProductSection" EntitySet="ProductSection" />
+            <End Role="Product" EntitySet="Product" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImage_Product" Association="Self.FK_ProductImage_Product">
+            <End Role="Product" EntitySet="Product" />
+            <End Role="ProductImage" EntitySet="ProductImage" />
           </AssociationSet>
           <AssociationSet Name="FK_ProductSection_InventoryDepartment" Association="Self.FK_ProductSection_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
@@ -6009,9 +6029,18 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
             <End Role="ProductSection1" EntitySet="ProductSections" />
           </AssociationSet>
           <EntitySet Name="Products" EntityType="EPMSInventoryModel.Product" />
+          <EntitySet Name="ProductImages" EntityType="EPMSInventoryModel.ProductImage" />
           <AssociationSet Name="FK_Product_ItemVariation" Association="EPMSInventoryModel.FK_Product_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Product_ProductSection" Association="EPMSInventoryModel.FK_Product_ProductSection">
+            <End Role="ProductSection" EntitySet="ProductSections" />
+            <End Role="Product" EntitySet="Products" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ProductImage_Product" Association="EPMSInventoryModel.FK_ProductImage_Product">
+            <End Role="Product" EntitySet="Products" />
+            <End Role="ProductImage" EntitySet="ProductImages" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
@@ -7545,6 +7574,7 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <NavigationProperty Name="InventoryDepartment" Relationship="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" FromRole="ProductSection" ToRole="InventoryDepartment" />
           <NavigationProperty Name="ProductSections" Relationship="EPMSInventoryModel.FK_ProductSection_ProductSection1" FromRole="ProductSection" ToRole="ProductSection1" />
           <NavigationProperty Name="ParentSection" Relationship="EPMSInventoryModel.FK_ProductSection_ProductSection1" FromRole="ProductSection1" ToRole="ProductSection" />
+          <NavigationProperty Name="Products" Relationship="EPMSInventoryModel.FK_Product_ProductSection" FromRole="ProductSection" ToRole="Product" />
         </EntityType>
         <Association Name="FK_ProductSection_InventoryDepartment">
           <End Type="EPMSInventoryModel.InventoryDepartment" Role="InventoryDepartment" Multiplicity="0..1" />
@@ -7573,12 +7603,8 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
         <EntityType Name="Product">
           <Key>
             <PropertyRef Name="ProductId" />
-            <PropertyRef Name="RecCreatedBy" />
-            <PropertyRef Name="RecCreatedDt" />
-            <PropertyRef Name="RecLastUpdatedBy" />
-            <PropertyRef Name="RecLastUpdatedDt" />
           </Key>
-          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ItemVariationId" Type="Int64" />
           <Property Name="ProductNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="ProductNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -7589,11 +7615,25 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
           <Property Name="ProductSize" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="ProductSpecificationEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
           <Property Name="ProductSpecificationAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ProductSectionId" Type="Int64" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_Product_ItemVariation" FromRole="Product" ToRole="ItemVariation" />
+          <NavigationProperty Name="ProductSection" Relationship="EPMSInventoryModel.FK_Product_ProductSection" FromRole="Product" ToRole="ProductSection" />
+          <NavigationProperty Name="ProductImages" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="Product" ToRole="ProductImage" />
+        </EntityType>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int64" Nullable="false" />
+          <Property Name="ProductImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageOrder" Type="Int32" />
+          <Property Name="ShowImage" Type="Boolean" Nullable="false" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="ProductImage" ToRole="Product" />
         </EntityType>
         <Association Name="FK_Product_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
@@ -7604,6 +7644,30 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
             </Principal>
             <Dependent Role="Product">
               <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Product_ProductSection">
+          <End Type="EPMSInventoryModel.ProductSection" Role="ProductSection" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ProductSection">
+              <PropertyRef Name="SectionId" />
+            </Principal>
+            <Dependent Role="Product">
+              <PropertyRef Name="ProductSectionId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ProductImage_Product">
+          <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ProductImage" Role="ProductImage" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Product">
+              <PropertyRef Name="ProductId" />
+            </Principal>
+            <Dependent Role="ProductImage">
+              <PropertyRef Name="ProductId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9229,6 +9293,7 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ProductSectionId" ColumnName="ProductSectionId" />
                 <ScalarProperty Name="ProductSpecificationAr" ColumnName="ProductSpecificationAr" />
                 <ScalarProperty Name="ProductSpecificationEn" ColumnName="ProductSpecificationEn" />
                 <ScalarProperty Name="ProductSize" ColumnName="ProductSize" />
@@ -9240,6 +9305,17 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
                 <ScalarProperty Name="ProductNameEn" ColumnName="ProductNameEn" />
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ProductImages">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ProductImage">
+              <MappingFragment StoreEntitySet="ProductImage">
+                <ScalarProperty Name="ProductId" ColumnName="ProductId" />
+                <ScalarProperty Name="ShowImage" ColumnName="ShowImage" />
+                <ScalarProperty Name="ImageOrder" ColumnName="ImageOrder" />
+                <ScalarProperty Name="ProductImagePath" ColumnName="ProductImagePath" />
+                <ScalarProperty Name="ImageId" ColumnName="ImageId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -9477,8 +9553,11 @@ warning 6002: The table/view 'EPMSWebsite.dbo.Product' does not have a primary k
         <EntityTypeShape EntityType="EPMSInventoryModel.ProductSection" Width="1.5" PointX="15" PointY="57" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_ProductSection1" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Product" Width="1.5" PointX="5.25" PointY="88.125" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Product" Width="1.5" PointX="20.25" PointY="38.125" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ProductImage" Width="1.5" PointX="22.5" PointY="39.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Product_ItemVariation" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Product_ProductSection" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ProductImage_Product" />
       </Diagram>
     </Diagrams>
   </Designer>

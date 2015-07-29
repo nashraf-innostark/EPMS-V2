@@ -89,6 +89,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IPartnerRepository, PartnerRepository>();
             unityContainer.RegisterType<IWebsiteDepartmentRepository, WebsiteDepartmentRepository>();
             unityContainer.RegisterType<IProductSectionRepository, ProductSectionRepository>();
+            unityContainer.RegisterType<IProductRepository, ProductRepository>();
         }
     }
 }
