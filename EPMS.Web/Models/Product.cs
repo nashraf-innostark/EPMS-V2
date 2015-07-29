@@ -15,6 +15,7 @@ namespace EPMS.Web.Models
         public string ProductSize { get; set; }
         public string ProductSpecificationEn { get; set; }
         public string ProductSpecificationAr { get; set; }
+        public long? ProductSectionId { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

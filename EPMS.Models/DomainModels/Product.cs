@@ -9,7 +9,7 @@ namespace EPMS.Models.DomainModels
     public class Product
     {
         public long ProductId { get; set; }
-        public Nullable<long> ItemVariationId { get; set; }
+        public long? ItemVariationId { get; set; }
         public string ProductNameEn { get; set; }
         public string ProductNameAr { get; set; }
         public string ProductDescEn { get; set; }
@@ -19,11 +19,11 @@ namespace EPMS.Models.DomainModels
         public string ProductSize { get; set; }
         public string ProductSpecificationEn { get; set; }
         public string ProductSpecificationAr { get; set; }
-        public Nullable<long> ProductSectionId { get; set; }
+        public long? ProductSectionId { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDt { get; set; }
+        public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public System.DateTime RecLastUpdatedDt { get; set; }
+        public DateTime RecLastUpdatedDt { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
         public virtual ProductSection ProductSection { get; set; }
