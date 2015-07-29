@@ -65,6 +65,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     }
                 }
             }
+            //details = departments.Select(x => x.CreateForJsTreeJson()).ToList();
             var serializer = new JavaScriptSerializer();
             var serializedResult = serializer.Serialize(details);
             return Json(serializedResult, JsonRequestBehavior.AllowGet);

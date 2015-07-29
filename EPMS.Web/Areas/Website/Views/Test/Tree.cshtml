@@ -29,12 +29,14 @@
             url = "/Website/Test/GetTreeData/";
             populateTreeJson(url, divId);
             $('button').on('click', function () {
+                selectedChildNodes = new Array();
                 var selectedNodes = $("#jstree").jstree("get_checked", true, true);
                 $.each(selectedNodes, function (key, value) {
                     if (value.children.length == 0) {
                         selectedChildNodes.push(value.id);
                     }
                 });
+                console.log(selectedChildNodes);
             });
         });
     </script>
