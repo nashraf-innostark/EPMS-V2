@@ -106,6 +106,23 @@ namespace EPMS.Implementation.Services
             return new ProductResponse();
         }
 
+        public bool SaveProducts(IList<Product> products)
+        {
+            try
+            {
+                foreach (var product in products)
+                {
+                    productRepository.Add(product);
+                    productRepository.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         private void AddProductImages(ProductRequest productToSave)
         {
             if (productToSave.ProductImages !=null)

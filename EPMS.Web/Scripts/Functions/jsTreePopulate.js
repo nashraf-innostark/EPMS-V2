@@ -89,6 +89,7 @@ function populateTreeJson(url, divId) {
                 },
                 "plugins": ["themes", "json_data", "ui", "checkbox"],
             });
+            $("#" + divId).jstree("refresh");
         },
         error: function (e) {
             alert('Error=' + e.toString());

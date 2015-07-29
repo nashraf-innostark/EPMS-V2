@@ -117,9 +117,9 @@ namespace EPMS.Web.ModelMappers
         {
             return new JsTreeJson
             {
-                id = source.DepartmentId.ToString(),
+                id = source.DepartmentId + "_department",
                 text = source.DepartmentNameEn,
-                parent = source.ParentId != null ? source.ParentId.ToString() : "#"
+                parent = source.ParentId != null ? source.ParentId + "_department" : "#"
             };
         }
     }

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
@@ -6,8 +8,10 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Website.Product;
 using EPMS.Web.ModelMappers.Website.ProductSection;
+using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Product;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
@@ -16,14 +20,16 @@ namespace EPMS.Web.Areas.Website.Controllers
         #region Private
 
         private readonly IProductService productService;
+        private readonly IProductSectionService productSectionService;
 
         #endregion
 
         #region Constructor
 
-        public ProductController(IProductService productService)
+        public ProductController(IProductService productService, IProductSectionService productSectionService)
         {
             this.productService = productService;
+            this.productSectionService = productSectionService;
         }
 
         #endregion
@@ -33,6 +39,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         #region Index
         public ActionResult Index()
         {
+            ViewBag.IsIncludeNewJsTree = true;
             return View(new ProductListViewModel
             {
                 Products = productService.GetAll().Select(x => x.CreateFromServerToClient())
@@ -87,6 +94,67 @@ namespace EPMS.Web.Areas.Website.Controllers
         #endregion
 
         #region Delete
+        #endregion
+
+        #region Import
+
+        [HttpPost]
+        public JsonResult ImportProducts(string[] itemVariationIds, string[] sectionIds)
+        {
+            bool isProductAdded = false;
+            bool isProductSectionAdded = false;
+            // save Products
+            IList<EPMS.Models.DomainModels.Product> productsToAdd = new List<EPMS.Models.DomainModels.Product>();
+            foreach (var product in itemVariationIds.ToList())
+            {
+                if (product.Contains("Item"))
+                {
+                    var id = Convert.ToInt64(product.Split('_')[0]);
+                    EPMS.Models.DomainModels.Product addToList = new EPMS.Models.DomainModels.Product
+                    {
+                        ItemVariationId = id,
+                        RecCreatedBy = User.Identity.GetUserId(),
+                        RecCreatedDt = DateTime.Now,
+                        RecLastUpdatedBy = User.Identity.GetUserId(),
+                        RecLastUpdatedDt = DateTime.Now
+                    };
+                    productsToAdd.Add(addToList);
+                }
+            }
+            if (productService.SaveProducts(productsToAdd))
+            {
+                isProductAdded = true;
+            }
+            // save Product Sections
+            IList<EPMS.Models.DomainModels.ProductSection> productSectionsToAdd = new List<EPMS.Models.DomainModels.ProductSection>();
+            foreach (var section in sectionIds.ToList())
+            {
+                if (section.Contains("department"))
+                {
+                    var id = Convert.ToInt64(section.Split('_')[0]);
+                    EPMS.Models.DomainModels.ProductSection addToList = new EPMS.Models.DomainModels.ProductSection
+                    {
+                        InventoyDepartmentId = id,
+                        ShowToPublic = true,
+                        RecCreatedBy = User.Identity.GetUserId(),
+                        RecCreatedDt = DateTime.Now,
+                        RecLastUpdatedBy = User.Identity.GetUserId(),
+                        RecLastUpdatedDt = DateTime.Now
+                    };
+                    productSectionsToAdd.Add(addToList);
+                }
+            }
+            if (productSectionService.SaveProductSections(productSectionsToAdd))
+            {
+                isProductSectionAdded = true;
+            }
+            if (isProductAdded && isProductSectionAdded)
+            {
+                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Error", JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #endregion

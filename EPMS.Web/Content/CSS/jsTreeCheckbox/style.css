@@ -411,7 +411,7 @@
   background-position: -68px -4px;
 }
 .jstree-default .jstree-themeicon {
-  background-position: -260px -4px;
+  background-position: -260px -7px !important;
 }
 .jstree-default > .jstree-no-dots .jstree-node,
 .jstree-default > .jstree-no-dots .jstree-leaf > .jstree-ocl {
@@ -433,21 +433,21 @@
   background: #efefef;
 }
 .jstree-default .jstree-checkbox {
-  background-position: -164px -4px;
+  background-position: -164px -4px !important;
 }
 .jstree-default .jstree-checkbox:hover {
   background-position: -164px -36px;
 }
 .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox,
 .jstree-default .jstree-checked > .jstree-checkbox {
-  background-position: -228px -4px;
+  background-position: -228px -7px !important;
 }
 .jstree-default.jstree-checkbox-selection .jstree-clicked > .jstree-checkbox:hover,
 .jstree-default .jstree-checked > .jstree-checkbox:hover {
   background-position: -228px -36px;
 }
 .jstree-default .jstree-anchor > .jstree-undetermined {
-  background-position: -196px -4px;
+  background-position: -196px -4px !important;
 }
 .jstree-default .jstree-anchor > .jstree-undetermined:hover {
   background-position: -196px -36px;

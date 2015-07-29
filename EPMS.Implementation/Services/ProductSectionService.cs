@@ -67,6 +67,23 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
+        public bool SaveProductSections(IList<ProductSection> productSections)
+        {
+            try
+            {
+                foreach (var productSection in productSections)
+                {
+                    productSectionRepository.Add(productSection);
+                    productSectionRepository.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
         #endregion
     }
 }
