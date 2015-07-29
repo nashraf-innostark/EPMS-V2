@@ -9,42 +9,32 @@
     <link href="~/Content/CSS/jsTreeCheckbox/docs.css" rel="stylesheet" />
 </head>
 <body>
-    <!-- 3 setup a container element -->
-    <div id="jstree">
-        <!-- in this example the tree is populated from inline HTML -->
-        <ul>
-            <li>
-                Root node 1
-                <ul>
-                    <li id="child_node_1">Child node 1</li>
-                    <li>Child node 2</li>
-                </ul>
-            </li>
-            <li>Root node 2</li>
-        </ul>
+    <div id="jstree" style="margin-left: 10%; margin-top: 5%">
     </div>
-    <button>demo button</button>
-
+    <button>Get Selected Childs</button>
     <!-- 4 include the jQuery library -->
-    <script src="~/Scripts/JsTree/jquery-1.10.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/jquery-1.8.3.min.js"></script>
     <!-- 5 include the minified jstree source -->
-    <script src="~/Scripts/JsTree/jstree.js"></script>
-    <script>
+    <script src="~/Scripts/jstree.min.js"></script>
+    <script src="~/Scripts/Functions/jsTreePopulate.js"></script>
+    <script type="text/javascript">
+        var dir = "ltr";
+        var treeInitialData;
+        var myTree;
+        var url;
+        var divId = "jstree";
+        var selectedChildNodes = new Array();
         $(function () {
             $.jstree.path = "/Scripts/plugins/";
-            // 6 create an instance when the DOM is ready
-            $('#jstree').jstree({
-                "plugins": ["themes", "json_data", "ui", "checkbox"],
-            });
-            // 7 bind to events triggered on the tree
-            $('#jstree').on("changed.jstree", function (e, data) {
-                //console.log(data.selected);
-            });
-            // 8 interact with the tree - either way is OK
+            url = "/Website/Test/GetTreeData/";
+            populateTreeJson(url, divId);
             $('button').on('click', function () {
-                $('#jstree').jstree(true).select_node('child_node_1');
-                $('#jstree').jstree('select_node', 'child_node_1');
-                $.jstree.reference('#jstree').select_node('child_node_1');
+                var selectedNodes = $("#jstree").jstree("get_checked", true, true);
+                $.each(selectedNodes, function (key, value) {
+                    if (value.children.length == 0) {
+                        selectedChildNodes.push(value.id);
+                    }
+                });
             });
         });
     </script>

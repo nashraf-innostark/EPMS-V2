@@ -113,5 +113,14 @@ namespace EPMS.Web.ModelMappers
                 ParentId = source.ParentId ?? 0
             };
         }
+        public static JsTreeJson CreateForJsTreeJson(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTreeJson
+            {
+                id = source.DepartmentId.ToString(),
+                text = source.DepartmentNameEn,
+                parent = source.ParentId != null ? source.ParentId.ToString() : "#"
+            };
+        }
     }
 }
