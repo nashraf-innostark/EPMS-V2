@@ -11,6 +11,7 @@ namespace EPMS.Models.ResponseModels
         public string ManagerNameE { get; set; }
         public string CustomerNameA { get; set; }
         public string RequesterNameA { get; set; }
+        public string EmpJobId { get; set; }
         public string ManagerNameA { get; set; }
         public string OrderNo { get; set; }
         public string LastFormNumber { get; set; }

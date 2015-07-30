@@ -93,6 +93,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rifViewModel.Dif.RequesterName = Difresponse.RequesterNameA;
                     rifViewModel.Dif.ManagerName = Difresponse.ManagerNameA;
                 }
+                rifViewModel.Dif.EmpJobId = Difresponse.EmpJobId;
                 rifViewModel.DifItem = Difresponse.DifItem.Select(x => x.CreateDifItemDetailsServerToClient()).ToList();
             }
             else

@@ -165,14 +165,14 @@
                                                     {
                                                         <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
                                                     }
-                                                    <td >Hello</td>
+                                                    <td >@departments.DepartmentDesc</td>
                                                     @*<script>
                                                         var descpE = '@Html.Raw(departments.DepartmentDesc)';
                                                         var regex = /(<([^>]+)>)/ig;
                                                         var result = descpE.replace(regex, "");
                                                         $("." + '@departments.DepartmentId').text(result);
                                                     </script>*@
-                                                    <td class="center">@departments.NoOfSubSections</td>
+                                                    <td class="center">@departments.NoOfSections</td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -210,7 +210,7 @@
         $('#tableSortableSections').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                null,
+                {"bVisible": false},
                 null,
                 null,
                 null,
