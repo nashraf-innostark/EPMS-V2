@@ -1,0 +1,477 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.Product.ProductViewModel
+
+@{
+    ViewBag.Title = Model.Product.ProductId > 0 ? EPMS.Web.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.Web.Resources.Website.Product.ProductCreate.AddPageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Website/Product/Index">
+                @EPMS.Web.Resources.Website.Product.ProductIndex.PageTitle
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @id = "ProductForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.Product.ProductId)
+        @Html.HiddenFor(m => m.Product.RecCreatedBy)
+        @Html.HiddenFor(m => m.Product.RecCreatedDt)
+        @*@Html.HiddenFor(model => model.Product.ImagePathPath new { @id = "ProductImage" })*@
+        @Html.HiddenFor(m => m.Product.ItemVariationId)
+        @*@Html.HiddenFor(m => m.Product.ProductSectionId, new { @id = "ProductSectionId" })*@
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductNameEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductNameEn, new { @dir = "ltr", id = "ProductNameEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductNameEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductNameAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductNameAr, new { @dir = "ltr", id = "ProductNameAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductNameAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductDescEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductDescEn, new { @dir = "ltr", id = "ProductDescEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductDescEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductDescAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductDescAr, new { @dir = "ltr", id = "ProductDescAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductDescAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductPrice</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductPrice, new { @dir = "ltr", id = "ProductPrice", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductPrice, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.DiscountedPrice</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.DiscountedPrice, new { @dir = "ltr", id = "DiscountedPrice", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.DiscountedPrice, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSize</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductSize, new { @dir = "ltr", id = "ProductSize", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductSize, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductSpecificationEn, new { @dir = "ltr", id = "ProductSpecificationEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductSpecificationEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.Product.ProductSpecificationAr, new { @dir = "ltr", id = "ProductSpecificationAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.Product.ProductSpecificationAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid jobTitleDDL">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSection</label>
+            </div>
+            <div class="span2">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameEn"), EPMS.Web.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameAr"), EPMS.Web.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
+                    </div>
+                }
+            </div>
+            <div class="span4">
+                <label id="departmentvalidate" style="margin-top: 20px; margin-left: 20px"></label>
+            </div>
+        </div>
+        
+        <div class="alert alert-info alert-block">
+            <i class="icon-alert icon-alert-info"></i>
+            <strong>@EPMS.Web.Resources.Website.Product.ProductCreate.ProductImages</strong>
+            <a href="#productImageModule" data-toggle="modal" class="addImageButton">@EPMS.Web.Resources.Website.Product.ProductCreate.AddProductImage</a>
+        </div>
+        <!--Sortable Responsive Table begin-->
+
+        <div class="row-fluid">
+            <div class="span12">
+                <table class="table table-striped table-responsive tableImage" id="tableSortableProductImg">
+                    <thead>
+                        <tr>
+                            <th style='display:none'></th>
+                            <th>Serial</th>
+                            <th>Image</th>
+                            <th>Order</th>
+                            <th>Show</th>
+                            <th>Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody id="imageDetails">
+                        @if (Model.Product.ProductImages.Any())
+                        {
+
+                            var serial = 0;
+                            for (int i = 0; i < Model.Product.ProductImages.Count(); i++)
+                            {
+
+                                serial = serial + 1;
+
+                                <tr data-id="@i">
+                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ProductImagePath)
+                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ImageId)
+                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ProductId)
+                                    <td style='display:none'><input name='Product.ProductImages.Index' type='hidden' value='@i' /></td>
+                                    <td>
+                                        <label class="control-label serialNumber">@serial</label>
+                                    </td>
+                                    <td>
+                                        <img class="itemImg" src='/Images/ProductImage/@Url.Content(Model.Product.ProductImages[i].ProductImagePath)' alt="user" />
+                                    </td>
+                                    <td>
+                                        <div class="span2">
+                                            <div class="controls">
+                                                @Html.TextBoxFor(model => model.Product.ProductImages[i].ImageOrder, new { @class = "auto-resize ImageOrder tbdisable" })
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        @Html.CheckBoxFor(model => model.Product.ProductImages[i].ShowImage, new { @class = "tbdisable" })
+                                        Show
+                                    </td>
+                                    <td><i class="icon-photon minus deleteImage"></i></td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!--Sortable Responsive Table end-->
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="edit" class="btn">@EPMS.Web.Resources.Website.Product.ProductCreate.Edit</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Website.Product.ProductCreate.Save</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Product/Index'" type="reset">@EPMS.Web.Resources.Website.Product.ProductCreate.Cancel</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    
+}
+
+@section popups
+{
+    <!--Add Item Image Starts-->
+<div id="productImageModule" class="modal hide fade treeSelector">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>@EPMS.Web.Resources.Website.Product.ProductCreate.AddProductImage</h3>
+    </div>
+    <div class="modal-body ">
+        <form class="form-horizontal">
+            <!--Drag And Drop Upload begin-->
+            <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
+                <div class="span2">
+                    <label class="control-label" for="inputField">
+                        @EPMS.Web.Resources.Website.Product.ProductCreate.ProductImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span10 row-fluid">
+                    <div class="upload-boxes row-fluid">
+                        <div class="span4" id="upload"></div>
+                        <div class="span8" id="uploaded"></div>
+                    </div>
+                </div>
+            </div>
+            <!--Drag And Drop Upload end-->
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="inputFieldaOrder">@EPMS.Web.Resources.Website.Product.ProductCreate.Order</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input id="inputFieldaOrder" type="text" name="inputField" class="imageOrder toClear">
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span1">
+                    @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear", @style = "margin: 23px 0 0 5px" })
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.Show</label>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <a type="button" class="btn trImageDetails">Add New Image</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+    </div>
+
+</div>
+<!--Add Item Image Ends-->
+}
+
+<script>
+    var productId = $('#Product_ProductId').val();
+    $(document).ready(function() {
+        $('#tableSortableProductImg').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+
+        if (productId == 0 || productId == null) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").hide();
+            $("#edit").show();
+            $(".deleteImage").hide();
+            $('#SectionId').select2('disable');
+            $('.addImageButton').hide();
+        }
+
+        $("#edit").click(function (event) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+            $('#SectionId').select2('enable');
+            $('.addImageButton').show();
+            $(".deleteImage").show();
+            event.preventDefault();
+        });
+
+        var imageRowNo = 0;
+        $('#ItemImagerModule').on('show', function () {
+            imageRowNo = $("#imageDetails").children("tr").length;
+            if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
+                imageRowNo = imageRowNo - 1;
+            }
+        });
+
+        var siteURL = $('#siteURL').val();
+        var url = siteURL + "/Website/Product/UploadImage";
+        var errors = "";
+        var imageName;
+        var imagePath;
+        $('#upload').mfupload({
+            type: 'jpg,png,tif,jpeg', // type: '', for all types
+            //maxsize: 1, //file size in MBs
+            post_upload: url,
+            folder: "./",
+            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                debugger;
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                //Inserted a Hidden field in the Form for Uploaded Image Name
+                imageName = "<input name='Product.ProductImages[" + imageRowNo + "].ProductImagePath' id='Product_ProductImages_" + imageRowNo + "__ProductImagePath' type='hidden' value=" + result.filename + ">";
+                imagePath = result.filename;
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
+
+        $('.trImageDetails').on("click", function (event) {
+
+            var index = $("#imageDetails").children("tr").length;
+            if ($("#imageDetails").children("tr").children("td").html() == "No data available in table") {
+                index = index - 1;
+            }
+            itemsCount = index + 1;
+            var order = $('.imageOrder').val();
+            var popupcb = $("#iCheckBox").is(':checked');
+
+            var html = ' <tr class="gradeX" data-id=' + index + '>' +
+                '<td style="display:none"><input name="Product.ProductImages.Index" type="hidden" value="' + index + '" /></td>' +
+                '<input id="Product_ProductImages_' + index + '__ImageId" name = "Product.ProductImages[' + index + '].ImageId type="hidden" />' +
+                '<input id="Product_ProductImages_' + index + '__ProductId" name = "Product.ProductImages[' + index + '].ProductId type="hidden"/>' +
+                imageName +
+                '<td>' + itemsCount +
+                '</td>' +
+                '</td>' +
+                '<td>' +
+                '<img class="itemImg" src="/Images/ProductImage/' + imagePath + '" alt="user" />' +
+                '</td>' +
+                '<td>' +
+                '<div class="span2"><div class="controls"><input  rows="2" class="auto-resize" name = "Product.ProductImages[' + index + '].ImageOrder" class = "auto-resize ImageOrder" value = "' + order + '"></div></div>' +
+                '</td>' +
+                '<td>' +
+                '<input type="checkbox" class="uniformCheckbox" name = "Product.ProductImages[' + index + '].ShowImage" id="Product_ProductImages_' + index + '__ShowImage"> Show' +
+                '</td>' +
+                '<td>' +
+                '<i class="icon-photon minus deleteImage"  data-id=' + index + '></i>' +
+                '</td>' +
+                '</tr>';
+            $('#imageDetails').append(html);
+            $('#Product_ProductImages_' + index + '__ProductId').val($('#Product_ProductId').val());
+            if (popupcb) {
+                $('#Product_ProductImages_' + index + '__ShowImage').prop('checked', true);
+                $('#Product_ProductImages_' + index + '__ShowImage').val("true");
+            }
+            else {
+                $('#Product_ProductImages_' + index + '__ShowImage').prop('checked', false);
+                $('#Product_ProductImages_' + index + '__ShowImage').val("false");
+            }
+            $('.tableImage').dataTable().fnDestroy();
+            $('.tableImage').dataTable({
+                "sPaginationType": "bootstrap",
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                }
+            });
+            event.preventDefault();
+            $('#productImageModule').modal('hide');
+        });
+
+        //Delete Image from the List
+        $('.deleteImage').live("click", function () {
+            var row = $(this).parent().parent().get(0);
+            var atable = $('#tableSortableProductImg').dataTable();
+            var pos = atable.fnGetPosition(row);
+            atable.fnDeleteRow(pos);
+            //row.remove();
+        });
+
+    });
+
+
+
+</script>

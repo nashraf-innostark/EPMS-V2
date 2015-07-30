@@ -1,4 +1,10 @@
-﻿using System.Linq;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
@@ -87,6 +93,48 @@ namespace EPMS.Web.Areas.Website.Controllers
         #endregion
 
         #region Delete
+        #endregion
+
+        #region Upload Image
+
+        public ActionResult UploadImage()
+        {
+            HttpPostedFileBase image = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((image != null))
+                {
+                    filename =
+                        (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + image.FileName)
+                            .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["ProductImage"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return
+                    Json(
+                        new
+                        {
+                            response = "Failed to upload. Error: " + exp.Message,
+                            status = (int)HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
+            }
+            return
+                Json(
+                    new
+                    {
+                        filename = filename,
+                        size = image.ContentLength / 1024 + "KB",
+                        response = "Successfully uploaded!",
+                        status = (int)HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #endregion

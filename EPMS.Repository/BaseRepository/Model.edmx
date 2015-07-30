@@ -1001,7 +1001,7 @@
           <Key>
             <PropertyRef Name="ImageId" />
           </Key>
-          <Property Name="ImageId" Type="bigint" Nullable="false" />
+          <Property Name="ImageId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ProductImagePath" Type="nvarchar" MaxLength="200" />
           <Property Name="ImageOrder" Type="int" />
           <Property Name="ShowImage" Type="bit" Nullable="false" />
@@ -6029,7 +6029,6 @@
             <End Role="ProductSection1" EntitySet="ProductSections" />
           </AssociationSet>
           <EntitySet Name="Products" EntityType="EPMSInventoryModel.Product" />
-          <EntitySet Name="ProductImages" EntityType="EPMSInventoryModel.ProductImage" />
           <AssociationSet Name="FK_Product_ItemVariation" Association="EPMSInventoryModel.FK_Product_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="Product" EntitySet="Products" />
@@ -6038,6 +6037,7 @@
             <End Role="ProductSection" EntitySet="ProductSections" />
             <End Role="Product" EntitySet="Products" />
           </AssociationSet>
+          <EntitySet Name="ProductImages" EntityType="EPMSInventoryModel.ProductImage" />
           <AssociationSet Name="FK_ProductImage_Product" Association="EPMSInventoryModel.FK_ProductImage_Product">
             <End Role="Product" EntitySet="Products" />
             <End Role="ProductImage" EntitySet="ProductImages" />
@@ -7624,17 +7624,6 @@
           <NavigationProperty Name="ProductSection" Relationship="EPMSInventoryModel.FK_Product_ProductSection" FromRole="Product" ToRole="ProductSection" />
           <NavigationProperty Name="ProductImages" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="Product" ToRole="ProductImage" />
         </EntityType>
-        <EntityType Name="ProductImage">
-          <Key>
-            <PropertyRef Name="ImageId" />
-          </Key>
-          <Property Name="ImageId" Type="Int64" Nullable="false" />
-          <Property Name="ProductImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ImageOrder" Type="Int32" />
-          <Property Name="ShowImage" Type="Boolean" Nullable="false" />
-          <Property Name="ProductId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="Product" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="ProductImage" ToRole="Product" />
-        </EntityType>
         <Association Name="FK_Product_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
           <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="*" />
@@ -7659,6 +7648,17 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ProductImage">
+          <Key>
+            <PropertyRef Name="ImageId" />
+          </Key>
+          <Property Name="ImageId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ProductImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ImageOrder" Type="Int32" />
+          <Property Name="ShowImage" Type="Boolean" Nullable="false" />
+          <Property Name="ProductId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="Product" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="ProductImage" ToRole="Product" />
+        </EntityType>
         <Association Name="FK_ProductImage_Product">
           <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="1" />
           <End Type="EPMSInventoryModel.ProductImage" Role="ProductImage" Multiplicity="*" />
@@ -9554,9 +9554,9 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_ProductSection1" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Product" Width="1.5" PointX="20.25" PointY="38.125" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ProductImage" Width="1.5" PointX="22.5" PointY="39.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Product_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Product_ProductSection" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ProductImage" Width="1.5" PointX="22.5" PointY="39.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductImage_Product" />
       </Diagram>
     </Diagrams>
