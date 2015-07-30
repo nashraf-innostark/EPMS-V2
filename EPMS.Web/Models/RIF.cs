@@ -34,5 +34,6 @@ namespace EPMS.Web.Models
         public System.DateTime RecUpdatedDate { get; set; }
         public string ManagerId { get; set; }
         public string FormNumber { get; set; }
+        public string EmpJobId { get; set; }
     }
 }

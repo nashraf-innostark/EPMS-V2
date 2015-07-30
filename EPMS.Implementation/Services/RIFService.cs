@@ -196,9 +196,13 @@ namespace EPMS.Implementation.Services
                 {
                     rifResponse.Rif = rif;
                     var employee = aspNetUserRepository.Find(rif.RecCreatedBy).Employee;
-                    rifResponse.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
-                    rifResponse.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
-
+                    if (employee != null)
+                    {
+                        rifResponse.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE ;
+                        rifResponse.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA ;
+                        rifResponse.EmpJobId = employee.EmployeeJobId;
+                    }
+                   
                     if (rif.Order != null)
                     {
                         rifResponse.OrderNo = rif.Order.OrderNo;

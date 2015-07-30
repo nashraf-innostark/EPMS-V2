@@ -13,6 +13,7 @@ namespace EPMS.Models.ResponseModels
         public string RequesterNameA { get; set; }
         public string ManagerNameA { get; set; }
         public string OrderNo { get; set; }
+        public string EmpJobId { get; set; }
         public string LastFormNumber { get; set; }
 
         public IEnumerable<RIFItem> RifItem { get; set; }

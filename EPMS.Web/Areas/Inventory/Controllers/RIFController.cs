@@ -81,25 +81,26 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "RIFDetails")]
         public ActionResult Details(int id, string from)
         {
-            var Rifresponse = rifService.LoadRifResponseData(id, false, from);
+            var rifresponse = rifService.LoadRifResponseData(id, false, from);
             RIFViewModel rifViewModel = new RIFViewModel();
-            if (Rifresponse.Rif != null)
+            if (rifresponse.Rif != null)
             {
-                rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
+                rifViewModel.Rif = rifresponse.Rif.CreateRifServerToClient();
                 if (Resources.Shared.Common.TextDirection == "ltr")
                 {
-                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameE;
-                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameE;
-                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameE;
+                    rifViewModel.Rif.RequesterName = rifresponse.RequesterNameE;
+                    rifViewModel.Rif.CustomerName = rifresponse.CustomerNameE;
+                    rifViewModel.Rif.ManagerName = rifresponse.ManagerNameE;
                 }
                 else
                 {
-                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameA;
-                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameA;
-                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameA;
+                    rifViewModel.Rif.RequesterName = rifresponse.RequesterNameA;
+                    rifViewModel.Rif.CustomerName = rifresponse.CustomerNameA;
+                    rifViewModel.Rif.ManagerName = rifresponse.ManagerNameA;
                 }
-                rifViewModel.Rif.OrderNo = Rifresponse.OrderNo;
-                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemDetailsServerToClient()).ToList();
+                rifViewModel.Rif.EmpJobId = rifresponse.EmpJobId;
+                rifViewModel.Rif.OrderNo = rifresponse.OrderNo;
+                rifViewModel.RifItem = rifresponse.RifItem.Select(x => x.CreateRifItemDetailsServerToClient()).ToList();
             }
             else
             {
@@ -109,7 +110,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 rifViewModel.RifItem = new List<Models.RIFItem>();
             }
-            rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            rifViewModel.ItemVariationDropDownList = rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
             return View(rifViewModel);
         }

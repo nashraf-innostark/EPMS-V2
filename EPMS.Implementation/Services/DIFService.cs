@@ -194,8 +194,13 @@ namespace EPMS.Implementation.Services
 
             response.Dif = dif;
             var employee = aspNetUserRepository.Find(dif.RecCreatedBy).Employee;
-            response.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
-            response.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
+            if (employee != null)
+            {
+                response.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+                response.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+                response.EmpJobId = employee.EmployeeJobId;
+            }
+            
 
             if (dif.Status != 6 && !string.IsNullOrEmpty(dif.ManagerId))
             {
