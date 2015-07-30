@@ -12,7 +12,7 @@ namespace EPMS.Web.ModelMappers.Website.ProductImage
                 ImageId = source.ImageId,
                 ImageOrder = source.ImageOrder,
                 ProductImagePath = source.ProductImagePath,
-                ProductId = source.ImageId,
+                ProductId = source.ProductId,
                 ShowImage = source.ShowImage,
                 ShowImageOnList = source.ShowImage ? "Yes" : "No"
             };
@@ -25,7 +25,7 @@ namespace EPMS.Web.ModelMappers.Website.ProductImage
                 ImageId = source.ImageId,
                 ImageOrder = source.ImageOrder,
                 ProductImagePath = source.ProductImagePath,
-                ProductId = source.ImageId,
+                ProductId = source.ProductId,
                 ShowImage = source.ShowImage
             };
         }

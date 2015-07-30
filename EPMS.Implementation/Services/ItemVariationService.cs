@@ -681,6 +681,14 @@ namespace EPMS.Implementation.Services
                         imageRepository.Add(itemImage);
                     }
                 }
+                //Delete Items that were removed from ClientList
+                foreach (ItemImage image in dbList)
+                {
+                    if (clientList.All(x => x.ImageId != image.ImageId))
+                    {
+                        imageRepository.Delete(image);
+                    }
+                }
             }
             else
             {

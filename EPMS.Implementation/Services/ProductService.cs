@@ -151,13 +151,21 @@ namespace EPMS.Implementation.Services
                         productImageRepository.Add(image);
                     }
                 }
+                //Delete Items that were removed from ClientList
+                foreach (ProductImage productImage in dbList)
+                {
+                    if (clientList.All(x => x.ImageId != productImage.ImageId))
+                    {
+                        productImageRepository.Delete(productImage);
+                    }
+                }
             }
             else
             {
                 //Delete All Images if ClientList is Null
                 foreach (ProductImage productImage in dbList)
                 {
-                    productImageRepository.Add(productImage);
+                    productImageRepository.Delete(productImage);
                 }
             }
             productImageRepository.SaveChanges();
