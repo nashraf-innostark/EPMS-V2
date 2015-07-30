@@ -116,6 +116,7 @@
     <Compile Include="Common\DifRequestByColumn.cs" />
     <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
+    <Compile Include="DomainModels\ContactUs.cs" />
     <Compile Include="DomainModels\DIF.cs" />
     <Compile Include="DomainModels\DIFHistory.cs" />
     <Compile Include="DomainModels\DIFItem.cs" />
