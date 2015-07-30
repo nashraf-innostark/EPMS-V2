@@ -6,12 +6,20 @@ namespace EPMS.Implementation.Services
 {
     public class ContactUsService : IContactUsService
     {
+        #region Private
+
         private readonly IContactUsRepository contactUsRepository;
 
+        #endregion
+
+        #region Constructor
+        
         public ContactUsService(IContactUsRepository contactUsRepository)
         {
             this.contactUsRepository = contactUsRepository;
         }
+
+        #endregion
 
         #region Public
 
