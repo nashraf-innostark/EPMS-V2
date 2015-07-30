@@ -20,5 +20,6 @@ namespace EPMS.Web.Models
         public string InventoryDepartmentNameAr { get; set; }
         public string IsManuallyCreated { get; set; }
         public string ShowToPublicForIndex { get; set; }
+        public InventoryDepartment InventoryDepartment { get; set; }
     }
 }

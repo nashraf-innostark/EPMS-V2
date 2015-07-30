@@ -44,7 +44,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             IList<JsTreeJson> details = new List<JsTreeJson>();
             foreach (var inventoryDepartment in departments)
             {
-                details.Add(inventoryDepartment.CreateForJsTreeJson());
+                details.Add(inventoryDepartment.CreateForJsTreeJsonEn());
                 if (inventoryDepartment.InventoryItems.Any())
                 {
                     foreach (var inventoryItem in inventoryDepartment.InventoryItems)
@@ -65,7 +65,6 @@ namespace EPMS.Web.Areas.Website.Controllers
                     }
                 }
             }
-            //details = departments.Select(x => x.CreateForJsTreeJson()).ToList();
             var serializer = new JavaScriptSerializer();
             var serializedResult = serializer.Serialize(details);
             return Json(serializedResult, JsonRequestBehavior.AllowGet);

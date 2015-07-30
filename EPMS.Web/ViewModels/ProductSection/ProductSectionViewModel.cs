@@ -1,4 +1,7 @@
-﻿namespace EPMS.Web.ViewModels.ProductSection
+﻿using System.Collections.Generic;
+using EPMS.Web.Models.Common;
+
+namespace EPMS.Web.ViewModels.ProductSection
 {
     public class ProductSectionViewModel
     {
@@ -7,5 +10,6 @@
             ProductSection = new Models.ProductSection();
         }
         public Models.ProductSection ProductSection{ get; set; }
+        public string JsTree { get; set; }
     }
 }

@@ -1,0 +1,154 @@
+﻿@model EPMS.Web.ViewModels.ProductSection.ProductSectionViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    if (Model.ProductSection.SectionId > 0)
+    {
+        ViewBag.Title = "Update";
+    }
+    else
+    {
+        ViewBag.Title = "Create";
+    }
+}
+
+<div class="main-content withPanel">
+    <div class="panel">
+        <div class="panel-content filler">
+            <div class="panel-logo"></div>
+            <div class="panel-header">
+                <h1><small>Product Sections</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>@EPMS.Web.Resources.Shared.Common.AddNewNode</button>
+            </div>
+            <div class="panel-search container-fluid">
+                <form class="form-horizontal" action="javascript:;">
+                    <input id="panelSearch" placeholder="Search" type="text" name="panelSearch">
+                    <button class="btn btn-search"></button>
+                </form>
+            </div>
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-slider">
+            <div class="panel-slider-center">
+                <div class="panel-slider-arrow"></div>
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb-container">
+        <ul class="xbreadcrumbs">
+            <li>
+                <a href="~/Dashboard/Index">
+                    <i class="icon-photon home"></i>
+                </a>
+            </li>
+            <li>
+                <a href="~/Inventory/InventoryWarehouse/Index">
+                    @EPMS.Web.Resources.Inventory.InventoryWarehouse.BCTitle
+                </a>
+            </li>
+            <li class="current">
+                <a href="javascript:;">
+                    @ViewBag.Title
+                </a>
+            </li>
+        </ul>
+    </div>
+
+
+    <header>
+        <i class="icon-big-notepad"></i>
+        <h2><small>@ViewBag.Title</small></h2>
+    </header>
+
+    @using (Html.BeginForm("Create", "InventoryWarehouse", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditWarehouseForm", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="container-fluid">
+            @Html.HiddenFor(model => model.ProductSection.SectionId)
+            @Html.HiddenFor(model => model.ProductSection.RecCreatedBy)
+            @Html.HiddenFor(model => model.ProductSection.RecCreatedDt)
+            
+            <div class="control-group row-fluid ">
+                <div class="span3">
+                    <label class="control-label" for="WarehouseNumber">Section Name</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionNameEn, new { id = "SectionNameEn", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid ">
+                <div class="span3">
+                    <label class="control-label" for="WarehouseNumber">Section Name Arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionNameAr, new { id = "SectionNameAr", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid" style="display: none">
+                <div class="span3">
+                    <label class="control-label" for="WarehouseNumber">Content</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionContentEn, new { id = "SectionContentEn", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid" style="display: none">
+                <div class="span3">
+                    <label class="control-label" for="WarehouseNumber">Content Arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionContentAr, new { id = "SectionContentAr", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="ShowToPublic">Show to public?</label>
+                </div>
+                <div class="span9 span-inset" id="ShowToPublicDiv">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.ProductSection.ShowToPublic, new { @id = "ShowToPublic" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<script>
+    var warehouseId;
+    var dir;
+    var jsTree;
+    var divId;
+    $().ready(function () {
+        dir = '@direction';
+        divId = "jstree";
+        $("#layoutMainContent").removeClass("main-content");
+        var list = '@Html.Raw(ViewBag.JsTree)';
+        debugger;
+        var treeData = JSON.parse(list);
+        jsTree = $("#" + divId).jstree({
+            'core': {
+                'check_callback': true,
+                'data': treeData
+            },
+            "plugins": ["themes", "json_data", "ui", "checkbox"],
+        });
+        //$("#" + divId).jstree("refresh");
+    });
+</script>

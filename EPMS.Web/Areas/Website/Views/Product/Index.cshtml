@@ -62,7 +62,8 @@
                             serial = serial + 1;
                             <tr>
                                 <td>@serial</td>
-                                <td>@(direction == "ltr" ? item.ProductNameEn : item.ProductNameAr)</td>
+                                @*<td>@(direction == "ltr" ? item.ProductNameEn : item.ProductNameAr)</td>*@
+                                <td>@(direction == "ltr" ? item.ItemNameEn : item.ItemNameAr)</td>
                                 <td>@item.ProductPrice</td>
                                 <td>@item.DiscountedPrice</td>
                                 <td>@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
@@ -91,7 +92,9 @@
     var selectedParentNodes;
     var url;
     var divId = "jstree";
+    var dir;
     $(function () {
+        dir = '@direction';
         siteUrl = $('#siteURL').val();
         $('#Product').dataTable({
             "sPaginationType": "bootstrap",
@@ -116,8 +119,8 @@
         
         
         $("#TreeSelector").click(function (event) {
-            url = siteUrl + "/Website/Test/GetTreeData/";
-            populateTreeJson(url, divId);
+            url = siteUrl + "/Website/Product/GetTreeData/";
+            populateTreeJson(url, divId, dir);
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
@@ -143,9 +146,6 @@
                 saveImportedProducts(url);
             }
         });
-        
-        
-        
     });
 
     function deleteRow(abcd) {

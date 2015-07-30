@@ -2084,6 +2084,7 @@
     <Content Include="Content\themes\default\Thumbs.db" />
     <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
     <Content Include="Views\Shared\_InventoryDepartmentItems.cshtml" />
+    <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

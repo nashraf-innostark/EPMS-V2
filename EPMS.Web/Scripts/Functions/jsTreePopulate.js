@@ -72,13 +72,14 @@ function populateTreeFromData(divId, data) {
     });
 
 }
-function populateTreeJson(url, divId) {
+function populateTreeJson(url, divId, dir) {
     $.ajax({
         url: url,
         type: 'GET',
         dataType: "json",
         data: {
-            id: 0
+            id: 0,
+            direction: dir
         },
         success: function (data) {
             var tree = JSON.parse(data);

@@ -2,16 +2,18 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Website.Product;
 using EPMS.Web.ModelMappers.Website.ProductSection;
-using EPMS.Web.Models;
+using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Product;
 using Microsoft.AspNet.Identity;
+using EPMS.Web.ModelMappers;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
@@ -21,15 +23,17 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         private readonly IProductService productService;
         private readonly IProductSectionService productSectionService;
+        private readonly IInventoryDepartmentService departmentService;
 
         #endregion
 
         #region Constructor
 
-        public ProductController(IProductService productService, IProductSectionService productSectionService)
+        public ProductController(IProductService productService, IProductSectionService productSectionService, IInventoryDepartmentService departmentService)
         {
             this.productService = productService;
             this.productSectionService = productSectionService;
+            this.departmentService = departmentService;
         }
 
         #endregion
@@ -155,6 +159,48 @@ namespace EPMS.Web.Areas.Website.Controllers
             return Json("Error", JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Get Tree Data
+        [HttpGet]
+        public JsonResult GetTreeData(long? id, string direction)
+        {
+            var departments = departmentService.GetAll();
+            IList<JsTreeJson> details = new List<JsTreeJson>();
+            foreach (var inventoryDepartment in departments)
+            {
+                if (direction == "ltr")
+                {
+                    details.Add(inventoryDepartment.CreateForJsTreeJsonEn());
+                }
+                else
+                {
+                    details.Add(inventoryDepartment.CreateForJsTreeJsonAr());
+                }
+                if (inventoryDepartment.InventoryItems.Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                JsTreeJson item = new JsTreeJson
+                                {
+                                    id = itemVariation.ItemVariationId + "_Item",
+                                    text = direction == "ltr" ? itemVariation.SKUDescriptionEn : itemVariation.SKUDescriptionAr,
+                                    parent = inventoryDepartment.DepartmentId + "_department"
+                                };
+                                details.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            var serializer = new JavaScriptSerializer();
+            var serializedResult = serializer.Serialize(details);
+            return Json(serializedResult, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #endregion
