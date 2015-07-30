@@ -121,6 +121,16 @@ namespace EPMS.Implementation
                 return false;
             }
         }
+
+        public static bool DeleteFile(string path)
+        {
+            if (File.Exists(path))
+            {
+                File.Delete(path);
+                return true;
+            }
+            return false;
+        }
     }
 
     public class SMS

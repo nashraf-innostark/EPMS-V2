@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -157,6 +158,9 @@ namespace EPMS.Implementation.Services
                     if (clientList.All(x => x.ImageId != productImage.ImageId))
                     {
                         productImageRepository.Delete(productImage);
+                        //var directory = ConfigurationManager.AppSettings["ProductImage"];
+                        //var path = "~" + directory + productImage.ProductImagePath;
+                        //Utility.DeleteFile(path);
                     }
                 }
             }
