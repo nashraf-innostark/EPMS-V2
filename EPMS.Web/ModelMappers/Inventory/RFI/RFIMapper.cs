@@ -198,6 +198,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             {
                 RFIId = source.RFIId,
                 OrderId = source.OrderId,
+                FormNumber = source.FormNumber,
                 //RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty,
