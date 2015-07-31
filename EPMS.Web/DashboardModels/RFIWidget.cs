@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace EPMS.Web.DashboardModels
+﻿namespace EPMS.Web.DashboardModels
 {
     public class RFIWidget
     {
         public long RFIId { get; set; }
+        public string FormNumber { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameShort { get; set; }
         public int Status { get; set; }

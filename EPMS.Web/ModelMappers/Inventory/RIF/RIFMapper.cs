@@ -104,6 +104,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             var rfi = new RIFWidget
             {
                 Id = source.RIFId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
