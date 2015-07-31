@@ -87,13 +87,45 @@ function populateTreeJson(url, divId, dir) {
                 'core': {
                     'check_callback': true,
                     'data': tree
-                },
+                    },
                 "plugins": ["themes", "json_data", "ui", "checkbox"],
             });
-            $("#" + divId).jstree("refresh");
+            //$("#" + divId).jstree("refresh");
         },
         error: function (e) {
             alert('Error=' + e.toString());
         }
     });
 }
+function populateTreeJsonWTCkb(url, divId, dir) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            id: 0,
+            direction: dir
+        },
+        success: function (data) {
+            var tree = JSON.parse(data);
+            $("#" + divId).jstree({
+                'core': {
+                    'check_callback': true,
+                    'data': tree
+                },
+                "plugins": ["themes", "json_data", "ui" ],
+            });
+            //$("#" + divId).jstree("refresh");
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+        }
+    });
+}
+
+//[
+//    { "id": "GrandPa", "parent": "#", "text": "Grand Father" },
+//    { "id": "Dad", "parent": "GrandPa", "text": "Dad", "state": { selected: true } },
+//    { "id": "Son", "parent": "Dad", "text": "Son", "state": { selected: false } },
+//    { "id": "Daughter", "parent": "Dad", "text": "Daughter", "state": { selected: true } },
+//]
