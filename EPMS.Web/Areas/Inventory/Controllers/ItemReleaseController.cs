@@ -170,6 +170,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.ItemWarehouses = response.ItemWarehouses.Any() ?
                 response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList() : new List<ItemWarehouse>();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(viewModel);
         }
 

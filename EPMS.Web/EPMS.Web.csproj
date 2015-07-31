@@ -930,6 +930,11 @@
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
     <Content Include="Content\CSS\arabic1.css" />
     <Content Include="Content\CSS\help-photon.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\32px.png" />
+    <Content Include="Content\CSS\jsTreeCheckbox\40px.png" />
+    <Content Include="Content\CSS\jsTreeCheckbox\style.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\style.min.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\throbber.gif" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
     <Content Include="Content\CSS\print.css" />
@@ -2008,6 +2013,7 @@
     <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Content\themes\default-dark\Thumbs.db" />
     <Content Include="Content\themes\default\Thumbs.db" />
+    <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
