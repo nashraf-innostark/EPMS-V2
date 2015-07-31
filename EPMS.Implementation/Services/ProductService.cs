@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -168,13 +169,24 @@ namespace EPMS.Implementation.Services
                         productImageRepository.Add(image);
                     }
                 }
+                //Delete Items that were removed from ClientList
+                foreach (ProductImage productImage in dbList)
+                {
+                    if (clientList.All(x => x.ImageId != productImage.ImageId))
+                    {
+                        productImageRepository.Delete(productImage);
+                        //var directory = ConfigurationManager.AppSettings["ProductImage"];
+                        //var path = "~" + directory + productImage.ProductImagePath;
+                        //Utility.DeleteFile(path);
+                    }
+                }
             }
             else
             {
                 //Delete All Images if ClientList is Null
                 foreach (ProductImage productImage in dbList)
                 {
-                    productImageRepository.Add(productImage);
+                    productImageRepository.Delete(productImage);
                 }
             }
             productImageRepository.SaveChanges();

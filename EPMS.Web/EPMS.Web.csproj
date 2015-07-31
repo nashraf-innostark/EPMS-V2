@@ -437,6 +437,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductSectionIndex.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\Product\ProductCreate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductCreate.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\Product\ProductIndex.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2092,6 +2097,7 @@
     <Content Include="Content\themes\default-dark\Thumbs.db" />
     <Content Include="Areas\Website\Views\Product\Index.cshtml" />
     <Content Include="Content\themes\default\Thumbs.db" />
+    <Content Include="Areas\Website\Views\Product\Create.cshtml" />
     <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
     <Content Include="Views\Shared\_InventoryDepartmentItems.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
@@ -4134,6 +4140,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductSectionIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Product\ProductCreate.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductCreate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
@@ -4590,6 +4600,7 @@
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
     <Folder Include="Images\NewsOrArticle\" />
+    <Folder Include="Images\ProductImage\" />
     <Folder Include="Migrations\" />
     <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
