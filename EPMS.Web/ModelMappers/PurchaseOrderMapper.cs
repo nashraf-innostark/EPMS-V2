@@ -197,6 +197,7 @@ namespace EPMS.Web.ModelMappers
             var rfi = new POWidget
             {
                 Id = source.PurchaseOrderId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,

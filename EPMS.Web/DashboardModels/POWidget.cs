@@ -1,10 +1,9 @@
-﻿using System;
-
-namespace EPMS.Web.DashboardModels
+﻿namespace EPMS.Web.DashboardModels
 {
     public class POWidget
     {
         public long Id { get; set; }
+        public string FormNumber { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameShort { get; set; }
         public int Status { get; set; }

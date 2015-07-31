@@ -935,7 +935,7 @@
                                             <li>
                                                 <a href="~/Inventory/RFI/Details/@item.RFIId">
                                                     <span>
-                                                        @item.RFIId
+                                                        @item.FormNumber
                                                     </span>
                                                 </a>
                                                 @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
@@ -1066,7 +1066,7 @@
                                             <li>
                                                 <a href="~/Inventory/RIF/Details/@item.Id">
                                                     <span>
-                                                        @item.Id
+                                                        @item.FormNumber
                                                     </span>
                                                 </a>
                                                 @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
@@ -1197,7 +1197,7 @@
                                             <li>
                                                 <a href="~/Inventory/ItemRelease/Detail/@item.Id">
                                                     <span>
-                                                        @item.Id
+                                                        @item.FormNumber
                                                     </span>
                                                 </a>
                                                 @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
@@ -1328,7 +1328,7 @@
                                             <li>
                                                 <a href="~/Inventory/DIF/Details/@item.Id">
                                                     <span>
-                                                        @item.Id
+                                                        @item.FormNumber
                                                     </span>
                                                 </a>
                                                 @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
@@ -1459,7 +1459,7 @@
                                                     <li>
                                                         <a href="~/Inventory/TransferItem/Detail/@item.Id">
                                                             <span>
-                                                                @item.Id
+                                                                @item.FormNumber
                                                             </span>
                                                         </a>
                                                         @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
@@ -1592,7 +1592,7 @@
                                             <li>
                                                 <a href="~/Inventory/PurchaseOrder/Details/@item.Id">
                                                     <span>
-                                                        @item.Id
+                                                        @item.FormNumber
                                                     </span>
                                                 </a>
                                                 @if (direction == "ltr" && (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) != UserRole.Employee)
