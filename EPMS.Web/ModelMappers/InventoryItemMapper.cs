@@ -38,21 +38,23 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.ItemVariations = source.ItemVariations.Select(x => x.CreateFromServerToClient()).ToList();
             inventoryItem.AveragePrice = 0;
             inventoryItem.AveragePrice = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
+            inventoryItem.AverageCost = 0;
+            inventoryItem.AverageCost = source.ItemVariations.Where(x => x.CostCalculation).Sum(y => y.UnitCost/ source.ItemVariations.Count(z => z.CostCalculation));
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
             inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
             inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantitySold));
             inventoryItem.DepartmentPath = source.DepartmentPath;
             inventoryItem.QuantityInPackage = source.QuantityInPackage;
-            var totalCost = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity * Convert.ToInt64(y.Price)));
-            var totalQuantity = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity));
-            if (totalCost > 0 && totalQuantity > 0)
-            {
-                inventoryItem.AverageCost = totalCost/totalQuantity;
-            }
-            else
-            {
-                inventoryItem.AverageCost = 0;
-            }
+            //var totalCost = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity * Convert.ToInt64(y.Price)));
+            //var totalQuantity = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity));
+            //if (totalCost > 0 && totalQuantity > 0)
+            //{
+            //    inventoryItem.AverageCost = totalCost/totalQuantity;
+            //}
+            //else
+            //{
+            //    inventoryItem.AverageCost = 0;
+            //}
             return inventoryItem;
         }
 

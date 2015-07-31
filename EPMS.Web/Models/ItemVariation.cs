@@ -13,6 +13,8 @@ namespace EPMS.Web.Models
         public long ItemVariationId { get; set; }
         public string ItemBarcode { get; set; }
         public string SKUCode { get; set; }
+        public double? UnitCost { get; set; }
+        public bool CostCalculation { get; set; }
         public double? UnitPrice { get; set; }
         public double? PackagePrice { get; set; }
         public bool PriceCalculation { get; set; }

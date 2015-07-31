@@ -1,5 +1,4 @@
 ﻿@using System.Configuration
-@using System.Configuration
 @model EPMS.Web.ViewModels.ItemVariation.ItemVariationViewModel
 
 @{
@@ -22,7 +21,7 @@
             </a>
         </li>
         <li>
-            <a href="~/Inventory/InventoryItem/Create">
+            <a href="~/Inventory/InventoryItem/Create/@Model.ItemVariation.InventoryItemId">
                 Inventory Item
             </a>
         </li>
@@ -77,6 +76,29 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.UnitCost</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.UnitCost, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.CostCalculation</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.ItemVariation.CostCalculation, new { @id = "CostCalculation" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -84,11 +106,12 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @dir = "ltr", id = "UnitPrice", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @dir = "ltr", @id = "UnitPrice", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitPrice, "", new { @class = "required" })
                 </div>
             </div>
         </div>
+
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -96,7 +119,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @dir = "ltr", id = "PackagePrice", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @dir = "ltr", @id = "PackagePrice", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.PackagePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -119,7 +142,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", id = "DescriptionEn", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", @id = "DescriptionEn", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionEn)
                 </div>
             </div>
@@ -131,7 +154,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", id = "DescriptionAr", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", @id = "DescriptionAr", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionAr)
                 </div>
             </div>
@@ -143,7 +166,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @dir = "ltr", id = "SKUDescriptionEn", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @dir = "ltr", @id = "SKUDescriptionEn", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionEn)
                 </div>
             </div>
@@ -155,7 +178,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @dir = "ltr", id = "SKUDescriptionAr", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @dir = "ltr", @id = "SKUDescriptionAr", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionAr)
                 </div>
             </div>
@@ -167,7 +190,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @dir = "ltr", @id = "QuantityInHand", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -179,7 +202,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
@@ -191,7 +214,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @dir = "ltr", id = "ReorderPoint", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @dir = "ltr", @id = "ReorderPoint", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.ReorderPoint, "", new { @class = "required" })
                 </div>
             </div>
@@ -203,7 +226,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @dir = "ltr", id = "QuantityInManufacturing", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @dir = "ltr", @id = "QuantityInManufacturing", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInManufacturing, "", new { @class = "required" })
                 </div>
             </div>
@@ -215,7 +238,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", id = "Weight", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", @id = "Weight", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
                 </div>
             </div>
@@ -227,7 +250,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @dir = "ltr", id = "Height", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @dir = "ltr", @id = "Height", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Height, "", new { @class = "required" })
                 </div>
             </div>
@@ -239,7 +262,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @dir = "ltr", id = "Width", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @dir = "ltr", @id = "Width", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Width, "", new { @class = "required" })
                 </div>
             </div>
@@ -251,56 +274,59 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @dir = "ltr", id = "Depth", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @dir = "ltr", @id = "Depth", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Depth, "", new { @class = "required" })
                 </div>
             </div>
         </div>
+        
+        <div id="CKEditorDescp">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.ItemVariation.NotesEn, new { @dir = "ltr", @id = "NotesEn", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.ItemVariation.NotesEn, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.ItemVariation.NotesAr, new { @dir = "ltr", @id = "NotesAr", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.ItemVariation.NotesAr, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", @id = "AdditionalInfoEn", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoEn, "", new { @class = "required" })
+                    </div>
+                </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesEn</label>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.NotesEn, new { @dir = "ltr", id = "NotesEn", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.NotesEn, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", @id = "AdditionalInfoAr", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.NotesAr, new { @dir = "ltr", id = "NotesAr", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.NotesAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div><div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", id = "AdditionalInfoEn", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoEn, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", id = "AdditionalInfoAr", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
-
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
             <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id ="addNewSize">Add New Size</a>
@@ -1108,7 +1134,7 @@
     <!--Add Item Image Ends-->
 }
 
-
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var siteUrl = $("#siteURL").val();
     var textTillParent = "";
@@ -1152,6 +1178,7 @@
             $("#cancel").show();
             $("#edit").hide();
             itemsCount = 0;
+            showCkEditors();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
@@ -1166,6 +1193,8 @@
             $("#edit").hide();
             $(".deleteRow").show();
             event.preventDefault();
+            $("#CKEditorDescp").show();
+            showCkEditors();
         });
         $('#tableSortableVariationsImg,#tableSortableItemStatus,#tableSortableVariationsManufacturer,#tableSortableVariationsWherehouse,#tableSortableVariationsSize,#tableSortableItemColor').dataTable({
             "sPaginationType": "bootstrap",
@@ -1356,47 +1385,56 @@
         });
         //Add Manufacturer to DB
         $('#addManufacturerToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveManufacturer";
             var nameEn = $("#ManufacturerNameEn").val();
             var nameAr = $("#ManufacturerNameAr").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-            };
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var manufacturerId = data.ManufacturerId;
-                    var snameEn = data.ManufacturerNameEn;
-                    var snameAr = data.ManufacturerNameAr;
-                    var htmlEn = '<option value=' + manufacturerId + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + manufacturerId + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.manufacturerDdl').append(htmlEn);
-                    } else {
-                        $('.manufacturerDdl').append(htmlAr);
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Manufacturer Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveManufacturer";
+
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var manufacturerId = data.ManufacturerId;
+                        var snameEn = data.ManufacturerNameEn;
+                        var snameAr = data.ManufacturerNameAr;
+                        var htmlEn = '<option value=' + manufacturerId + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + manufacturerId + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.manufacturerDdl').append(htmlEn);
+                        } else {
+                            $('.manufacturerDdl').append(htmlAr);
+                        }
+                        $('#manufacturModuleAdd').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var manufacturerToAdd = {
+                            ManufacturerId: data.ManufacturerId,
+                            ManufacturerNameEn: data.ManufacturerNameEn,
+                            ManufacturerNameAr: data.ManufacturerNameAr,
+                        };
+                        parsedManufacturer.push(manufacturerToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#manufacturModuleAdd').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var manufacturerToAdd = {
-                        ManufacturerId: data.ManufacturerId,
-                        ManufacturerNameEn: data.ManufacturerNameEn,
-                        ManufacturerNameAr: data.ManufacturerNameAr,
-                    };
-                    parsedManufacturer.push(manufacturerToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
 
         //Open Dialogue - Add Status to DB
@@ -1573,60 +1611,68 @@
 
         //Add Manufacturer from Dropdown to List
         $('.addManufacturerToList').on("click", function (event) {
-            debugger;
-            var index = $("#manufacturerDetails").children("tr").length;
-            if ($("#manufacturerDetails").children("tr").children("td").html() == "No data available in table") {
-                index = index - 1;
-                $("#manufacturerDetails").children("tr").children("td").hide();
-            }
-            itemsCount = index + 1;
             var price = $('#manufacturerPriceLable').val();
             var quantity = $('#manufacturerQuantityLable').val();
-            var manufacturerId = $('#manuId').val();
-            var manufacturerNameEn, manufacturerNameAr;
-            $.each(parsedManufacturer, function (key, value) {
-                if (value.ManufacturerId == manufacturerId) {
-                    manufacturerNameEn = value.ManufacturerNameEn;
-                    manufacturerNameAr = value.ManufacturerNameAr;
+            if (price == null || price == "" || quantity == null || quantity == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Price and Quantity'
+                });
+            } else {
+                var index = $("#manufacturerDetails").children("tr").length;
+                if ($("#manufacturerDetails").children("tr").children("td").html() == "No data available in table") {
+                    index = index - 1;
+                    $("#manufacturerDetails").children("tr").children("td").hide();
                 }
-            });
-            var html = ' <tr data-id=' + index + '>' +
-                '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
-                '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
-                '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
-                '<td>' + itemsCount +
-                '</td>' +
-                '<td>' +
-                '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
-                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                '<td>' +
-                '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
-                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
-                '</td>' +
-                '<td>' +
-                '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
-                '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                '</td>' +
-                '<td>' +
-                '<i class="icon-photon minus deleteManufacturer"></i>' +
-                '</td>' +
-                '</tr>';
-            $('#manufacturerDetails').append(html);
-            $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
-            $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
-            $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
-            event.preventDefault();
-            $('#manufacturModule').modal('hide');
-            $('.tableManufacturer').dataTable().fnDestroy();
-            $('.tableManufacturer').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            clearPopup();
+                itemsCount = index + 1;
+                var manufacturerId = $('#manuId').val();
+                var manufacturerNameEn, manufacturerNameAr;
+                $.each(parsedManufacturer, function (key, value) {
+                    if (value.ManufacturerId == manufacturerId) {
+                        manufacturerNameEn = value.ManufacturerNameEn;
+                        manufacturerNameAr = value.ManufacturerNameAr;
+                    }
+                });
+                var html = ' <tr data-id=' + index + '>' +
+                    '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
+                    '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
+                    '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
+                    '<td>' + itemsCount +
+                    '</td>' +
+                    '<td>' +
+                    '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
+                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                    '<td>' +
+                    '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
+                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
+                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<i class="icon-photon minus deleteManufacturer"></i>' +
+                    '</td>' +
+                    '</tr>';
+                $('#manufacturerDetails').append(html);
+                $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
+                $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
+                $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
+                event.preventDefault();
+                $('#manufacturModule').modal('hide');
+                $('.tableManufacturer').dataTable().fnDestroy();
+                $('.tableManufacturer').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                clearPopup();
+            }
+            
         });
 
         //Delete Manufacturer from the List
@@ -2000,4 +2046,36 @@
             ManageSizeList(hiddenId, 2);
         });
     }
+
+    $("#UnitPrice").focusout(function () {
+        debugger;
+        var unitPrice = $('#UnitPrice').val();
+        var unitCost = $('#UnitCost').val();
+        if (unitPrice < unitCost) {
+            $.pnotify({
+                title: 'error',
+                type: 'info',
+                text: 'Unit Price cannot be less than Unit Cost'
+            });
+            $('#UnitPrice').val("");
+            $('#UnitPrice').focus();
+        }
+    });
+
+    function showCkEditors() {
+        $("#CKEditorDescp").show();
+        CKEDITOR.replace('NotesEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('NotesAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('AdditionalInfoEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('AdditionalInfoAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+    }
+
 </script>

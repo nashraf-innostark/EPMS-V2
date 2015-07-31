@@ -2,7 +2,8 @@
 
 @{
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryItem.Label; ;
+    ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryItem.Label;
+    ViewBag.MessageVM = TempData["message"];
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 

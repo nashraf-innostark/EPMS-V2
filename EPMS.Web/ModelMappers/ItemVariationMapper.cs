@@ -17,6 +17,7 @@ namespace EPMS.Web.ModelMappers
             model.InventoryItemId = source.InventoryItemId;
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
+            model.CostCalculation = source.CostCalculation;
             model.UnitPrice = source.UnitPrice;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
@@ -73,12 +74,14 @@ namespace EPMS.Web.ModelMappers
             var totalQuantity = source.ItemManufacturers.Sum(y => y.Quantity);
             if (totalCost > 0 && totalQuantity > 0)
             {
-                model.AverageCost = totalCost/totalQuantity;
+                model.UnitCost = totalCost / totalQuantity;
             }
             else
             {
-                model.AverageCost = 0;
+                model.UnitCost = 0;
             }
+            var manufacturerCount = model.ItemManufacturers.Count;
+            model.AverageCost = model.UnitCost / manufacturerCount;
             return model;
         }
         public static WebModels.ItemVariation CreateFromServerToClient(this DomainModels.ItemVariation source, IEnumerable<DomainModels.ItemWarehouse> itemWarehouses)
@@ -88,6 +91,8 @@ namespace EPMS.Web.ModelMappers
             model.InventoryItemId = source.InventoryItemId;
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
+            model.UnitCost = source.UnitCost;
+            model.CostCalculation = source.CostCalculation;
             model.UnitPrice = source.UnitPrice;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
@@ -145,6 +150,8 @@ namespace EPMS.Web.ModelMappers
                 InventoryItemId = source.InventoryItemId,
                 ItemBarcode = source.ItemBarcode,
                 SKUCode = source.SKUCode,
+                UnitCost = source.UnitCost,
+                CostCalculation = source.CostCalculation,
                 UnitPrice = source.UnitPrice,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,

@@ -937,6 +937,7 @@
     <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
     <Content Include="Images\CKUploads\11106462_10152685879987657_1716894699_n.jpg" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\NoImageAvailable.jpg" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateEmail.txt" />
@@ -4475,6 +4476,8 @@
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
+    <Folder Include="Images\InventoryItemImage\" />
+    <Folder Include="Images\ItemImage\" />
     <Folder Include="Migrations\" />
     <Folder Include="Reports\" />
     <Folder Include="Views\Base\" />
