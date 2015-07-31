@@ -64,7 +64,7 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.Web.Resources.Inventory.PO.PO.EmployeeId:</th>
-                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        <td>@Model.PurchaseOrder.EmpJobId</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.Web.Resources.Inventory.PO.PO.PONumber:</th>

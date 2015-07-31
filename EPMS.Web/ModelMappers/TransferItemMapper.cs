@@ -33,6 +33,7 @@ namespace EPMS.Web.ModelMappers
                 retVal.RequesterName = direction == "ltr" ?
                 source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
                 : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA;
+                retVal.EmpJobId = source.AspNetUser.Employee.EmployeeJobId;
             }
             if (source.Manager != null)
             {
