@@ -62,11 +62,11 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
-                                            <td>@(Session["EmployeeID"] != null ? Session["EmployeeID"].ToString() : string.Empty)</td>
+                                            <td>@Model.ItemRelease.EmpJobId</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
-                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.FormNumber</td>
                                         </tr>
                                     }
                                     else

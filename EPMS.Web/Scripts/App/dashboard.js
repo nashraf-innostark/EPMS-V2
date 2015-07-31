@@ -1212,20 +1212,20 @@ function LoadRFIs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.RFIId + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rfiList').append('<li><a href="' + siteUrl + '/Inventory/RFI/Details/' + item.RFIId + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1242,7 +1242,6 @@ function LoadRFIs(control) {
         }
     });
 };
-
 function LoadRIFs(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
@@ -1282,20 +1281,20 @@ function LoadRIFs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#rifList').append('<li><a href="' + siteUrl + '/Inventory/RIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1351,20 +1350,20 @@ function LoadIRFs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#irfList').append('<li><a href="' + siteUrl + '/Inventory/ItemRelease/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1420,20 +1419,20 @@ function LoadDIFs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 6: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 3: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 2: $('#difList').append('<li><a href="' + siteUrl + '/Inventory/DIF/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1489,20 +1488,20 @@ function LoadPOs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#poList').append('<li><a href="' + siteUrl + '/Inventory/PurchaseOrder/Details/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }
@@ -1564,20 +1563,20 @@ function LoadTIRs(control) {
                 $.each(data, function (itemIndex, item) {
                     if (isAdmin) {
                         switch (item.Status) {
-                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a> <span title="' + item.RequesterName + '">' + item.RequesterNameShort + ' </span><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     } else {
                         switch (item.Status) {
-                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                            case 3: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                                 break;
-                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
+                            case 2: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Rejected" title="Rejected" class="status"></div></li>');
                                 break;
-                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.Id + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
+                            case 1: $('#tirList').append('<li><a href="' + siteUrl + '/Inventory/TransferItem/Detail/' + item.Id + '"><span>' + item.FormNumber + '</span></a><div>' + item.RecCreatedDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Accepted" title="Accepted" class="status"></div></li>');
                                 break;
                         }
                     }

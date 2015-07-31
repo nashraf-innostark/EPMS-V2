@@ -104,6 +104,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
             var rfi = new RFIWidget
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length>7?empName.Substring(0,7):empName,

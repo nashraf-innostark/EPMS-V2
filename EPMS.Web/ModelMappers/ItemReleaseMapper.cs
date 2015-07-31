@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.DashboardModels;
 using Employee = EPMS.Models.DomainModels.Employee;
@@ -32,6 +31,7 @@ namespace EPMS.Web.ModelMappers
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
+                EmpJobId = requester.EmployeeJobId,
                 RequesterNameE = requester.EmployeeFirstNameE + " " + requester.EmployeeMiddleNameE + " " + requester.EmployeeLastNameE,
                 RequesterNameA = requester.EmployeeFirstNameA + " " + requester.EmployeeMiddleNameA + " " + requester.EmployeeLastNameA,
                 ManagerName = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE,
@@ -127,6 +127,7 @@ namespace EPMS.Web.ModelMappers
             var rfi = new IRFWidget
             {
                 Id = source.ItemReleaseId,
+                FormNumber = source.FormNumber,
                 Status = Convert.ToInt32(source.Status),
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,

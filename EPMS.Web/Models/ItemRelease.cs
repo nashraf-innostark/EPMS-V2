@@ -5,6 +5,7 @@ namespace EPMS.Web.Models
     public class ItemRelease
     {
         public long ItemReleaseId { get; set; }
+        public string EmpJobId { get; set; }
         public string FormNumber { get; set; }
         public string CreatedBy { get; set; }
         public string ShipmentDetails { get; set; }
