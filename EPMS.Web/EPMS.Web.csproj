@@ -430,6 +430,7 @@
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductImage.cs" />
     <Compile Include="Models\ProductSection.cs" />
+    <Compile Include="Models\ProductSectionsListForTree.cs" />
     <Compile Include="Models\WebsiteDepartment.cs" />
     <Compile Include="Resources\Website\ProductSection\ProductSectionIndex.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -991,6 +992,10 @@
     <Content Include="Content\CSS\jsTreeCheckbox\style.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\style.min.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\throbber.gif" />
+    <Content Include="Content\CSS\newbootstrapswitch\bootstrap-switch.min.css" />
+    <Content Include="Content\CSS\newbootstrapswitch\bootstrap.min.css" />
+    <Content Include="Content\CSS\newbootstrapswitch\highlight.css" />
+    <Content Include="Content\CSS\newbootstrapswitch\main.css" />
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
     <Content Include="Content\CSS\print.css" />
@@ -1988,6 +1993,11 @@
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\jstree.js" />
     <Content Include="Scripts\jstree.min.js" />
+    <Content Include="Scripts\plugins\newbootstrapswitch\bootstrap.min.js" />
+    <Content Include="Scripts\plugins\newbootstrapswitch\highlight.js" />
+    <Content Include="Scripts\plugins\newbootstrapswitch\jquery.min.js" />
+    <Content Include="Scripts\plugins\newbootstrapswitch\main.js" />
+    <Content Include="Scripts\plugins\newbootstrapswitch\newBootstrap-switch.min.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Scripts\plugins\themes\default\style.css" />
     <Content Include="Views\Notification\Create.cshtml" />

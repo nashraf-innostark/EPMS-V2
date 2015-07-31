@@ -14,6 +14,7 @@ namespace EPMS.Web.Models
         public long? ParentSectionId { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public string InventoryDepartmentNameEn { get; set; }

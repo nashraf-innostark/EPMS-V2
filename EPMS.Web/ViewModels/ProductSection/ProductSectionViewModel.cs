@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EPMS.Web.Models.Common;
 
 namespace EPMS.Web.ViewModels.ProductSection
 {
@@ -10,6 +9,7 @@ namespace EPMS.Web.ViewModels.ProductSection
             ProductSection = new Models.ProductSection();
         }
         public Models.ProductSection ProductSection{ get; set; }
-        public string JsTree { get; set; }
+        public IList<Models.ProductSection> ProductSections{ get; set; }
+        public IList<Models.ProductSectionsListForTree> ProductSectionsChildList{ get; set; }
     }
 }

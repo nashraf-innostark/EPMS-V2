@@ -22,8 +22,8 @@ namespace EPMS.Web.ModelMappers.Website.ProductSection
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                InventoryDepartmentNameEn = source.InventoryDepartment.DepartmentNameEn,
-                InventoryDepartmentNameAr = source.InventoryDepartment.DepartmentNameAr,
+                InventoryDepartmentNameEn = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
+                InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
                 //if DepartmentId is null, it means the Section is Manually created.
                 IsManuallyCreated = source.InventoyDepartmentId == null ? "Yes":"No"
             };
@@ -40,9 +40,14 @@ namespace EPMS.Web.ModelMappers.Website.ProductSection
                 SectionContentEn = source.SectionContentEn,
                 SectionContentAr = source.SectionContentAr,
                 ShowToPublic = source.ShowToPublic,
-                InventoryDepartmentNameEn = source.InventoryDepartment.DepartmentNameEn,
-                InventoryDepartmentNameAr = source.InventoryDepartment.DepartmentNameAr,
-                InventoryDepartment = source.InventoryDepartment.CreateForProductSectionFromServerToClient()
+                InventoryDepartmentNameEn = source.InventoryDepartment !=null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
+                InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDate = source.RecCreatedDt.ToShortDateString(),
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                InventoryDepartment = source.InventoryDepartment != null ? source.InventoryDepartment.CreateForProductSectionFromServerToClient() : new WebModels.InventoryDepartment()
             };
         }
         public static DomainModels.ProductSection CreateFromClientToServer(this WebModels.ProductSection source)
