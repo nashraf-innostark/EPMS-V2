@@ -286,6 +286,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\TreeController.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
@@ -417,6 +419,7 @@
     <Compile Include="Models\Color.cs" />
     <Compile Include="Models\ApplicantQualification.cs" />
     <Compile Include="Models\Common\JsTree.cs" />
+    <Compile Include="Models\Common\JsTreeJson.cs" />
     <Compile Include="Models\CompanyBankDetail.cs" />
     <Compile Include="Models\CompanyDocumentDetail.cs" />
     <Compile Include="Models\CompanyLicenseInformation.cs" />
@@ -1990,6 +1993,7 @@
     <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
+    <Content Include="Areas\Api\Views\web.config" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4458,6 +4462,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
+    <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Areas\Api\Views\Tree\" />
     <Folder Include="Areas\CMS\Models\" />
     <Folder Include="Areas\CMS\Views\Shared\" />
     <Folder Include="Areas\Common\Models\" />
