@@ -935,6 +935,16 @@
     <Content Include="Content\CSS\print.css" />
     <Content Include="Content\CSS\screen.css" />
     <Content Include="Content\plugins\jstree\default\style.css" />
+    <Content Include="Content\themes\default-dark\32px.png" />
+    <Content Include="Content\themes\default-dark\40px.png" />
+    <Content Include="Content\themes\default-dark\style.css" />
+    <Content Include="Content\themes\default-dark\style.min.css" />
+    <Content Include="Content\themes\default-dark\throbber.gif" />
+    <Content Include="Content\themes\default\32px.png" />
+    <Content Include="Content\themes\default\40px.png" />
+    <Content Include="Content\themes\default\style.css" />
+    <Content Include="Content\themes\default\style.min.css" />
+    <Content Include="Content\themes\default\throbber.gif" />
     <Content Include="Images\CKUploads\10947672_10152685878817657_642879663_n.jpg" />
     <Content Include="Images\CKUploads\10966523_10152685879702657_1713565689_n.jpg" />
     <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
@@ -1914,6 +1924,8 @@
     <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
     <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
+    <Content Include="Scripts\jstree.js" />
+    <Content Include="Scripts\jstree.min.js" />
     <Content Include="Scripts\plugins\jquery.jstree.js" />
     <Content Include="Views\Notification\Create.cshtml" />
     <Content Include="Views\Notification\Details.cshtml" />
@@ -1994,6 +2006,8 @@
     <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Api\Views\web.config" />
+    <Content Include="Content\themes\default-dark\Thumbs.db" />
+    <Content Include="Content\themes\default\Thumbs.db" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

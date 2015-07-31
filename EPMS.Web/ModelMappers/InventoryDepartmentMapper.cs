@@ -113,5 +113,23 @@ namespace EPMS.Web.ModelMappers
                 ParentId = source.ParentId ?? 0
             };
         }
+        public static JsTreeJson CreateForJsTreeJsonEn(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTreeJson
+            {
+                id = source.DepartmentId + "_department",
+                text = source.DepartmentNameEn,
+                parent = source.ParentId != null ? source.ParentId + "_department" : "#"
+            };
+        }
+        public static JsTreeJson CreateForJsTreeJsonAr(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTreeJson
+            {
+                id = source.DepartmentId + "_department",
+                text = source.DepartmentNameAr,
+                parent = source.ParentId != null ? source.ParentId + "_department" : "#"
+            };
+        }
     }
 }

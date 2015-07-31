@@ -72,3 +72,28 @@ function populateTreeFromData(divId, data) {
     });
 
 }
+function populateTreeJson(url, divId, dir) {
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            id: 0,
+            direction: dir
+        },
+        success: function (data) {
+            var tree = JSON.parse(data);
+            $("#" + divId).jstree({
+                'core': {
+                    'check_callback': true,
+                    'data': tree
+                },
+                "plugins": ["themes", "json_data", "ui", "checkbox"],
+            });
+            $("#" + divId).jstree("refresh");
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+        }
+    });
+}

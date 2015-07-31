@@ -306,7 +306,8 @@
 <script>
     var siteUrl;
     var orderNo = [];
-    var dir = '@direction';
+    var dir;
+    var divId;
     var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
     var textTillParent = "";
     var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
@@ -321,6 +322,8 @@
     var selectedValues = new Array();
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
+        dir = '@direction';
+        divId = "jstree";
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
         CKEDITOR.replace('DeliveryInfoEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
@@ -446,8 +449,8 @@
                 textTillParent = textTillParent + $(".jstree-clicked").text();
             }
         });
-        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
-        populateTree(0, "jstree", requestUrl);
+        //var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
+        //populateTree(0, "jstree", requestUrl);
 
         $("#Add").on("click", function () {
             if (validateSelect2Ddl("#RFIItemVariationDropDownList", errorMessage)) {
@@ -514,6 +517,8 @@
                 $('#ItemSKUModalChk').attr('checked', true);
             }
             $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJson(itemTreeUrl, divId, dir);
         });
         $('#warhouseSelector').on('show', function () {
             // multi select empty
