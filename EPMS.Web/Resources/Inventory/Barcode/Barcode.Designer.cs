@@ -106,6 +106,15 @@ namespace EPMS.Web.Resources.Inventory.Barcode {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Item SKU Descriptoin.
+        /// </summary>
+        public static string ItemSKUDescriptoin {
+            get {
+                return ResourceManager.GetString("ItemSKUDescriptoin", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Barcode Printer.
         /// </summary>
         public static string PageTitle {

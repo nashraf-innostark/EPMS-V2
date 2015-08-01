@@ -88,7 +88,8 @@ namespace EPMS.Implementation.Services
                     ItemNameAr = item.InventoryItem.ItemNameAr,
                     SKUDescriptionEn = item.SKUDescriptionEn,
                     SKUDescriptionAr = item.SKUDescriptionAr,
-                    ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0
+                    ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0,
+                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity)
                 };
             }
             return null;

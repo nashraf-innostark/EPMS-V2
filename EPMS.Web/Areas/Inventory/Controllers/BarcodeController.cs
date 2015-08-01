@@ -27,6 +27,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             BarcodeViewModel viewModel = new BarcodeViewModel();
             viewModel.ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList().ToList();
+            ViewBag.IsIncludeNewJsTree = true;
             return View(viewModel);
         }
     }

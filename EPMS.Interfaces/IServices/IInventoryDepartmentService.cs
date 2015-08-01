@@ -13,6 +13,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateDepartment(InventoryDepartment department);
         void DeleteDepartment(InventoryDepartment department);
         SaveInventoryDepartmentResponse SaveDepartment(InventoryDepartmentRequest departmentToSave);
-
+        string DeleteInventoryDepartment(long id);
     }
 }

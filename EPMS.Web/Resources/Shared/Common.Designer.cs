@@ -331,6 +331,15 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please select an item.
+        /// </summary>
+        public static string RequiredTreeField {
+            get {
+                return ResourceManager.GetString("RequiredTreeField", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reset.
         /// </summary>
         public static string Reset {

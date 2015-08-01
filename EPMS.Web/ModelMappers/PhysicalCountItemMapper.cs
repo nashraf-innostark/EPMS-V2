@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Models;
 
@@ -27,6 +28,7 @@ namespace EPMS.Web.ModelMappers
 
                 ItemBarcode = source.ItemVariation.ItemBarcode,
                 ItemsInPackage = source.ItemVariation.InventoryItem.QuantityInPackage ?? 0,
+                TotalItemsCountInWarehouse = source.ItemVariation.ItemWarehouses.Sum(x=>x.Quantity)
             };
             retVal.TotalItemsInPackages = retVal.NoOfPackagesInWarehouse * Convert.ToInt64(retVal.ItemsInPackage);
             retVal.TotalItemsCount = retVal.TotalItemsInPackages + retVal.NoOfItemInWarehouse;

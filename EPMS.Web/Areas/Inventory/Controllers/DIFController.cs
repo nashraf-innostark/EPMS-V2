@@ -160,6 +160,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.DifItem = new List<Models.DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);
         }
 

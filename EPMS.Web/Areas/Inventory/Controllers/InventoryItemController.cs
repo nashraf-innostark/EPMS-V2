@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.Models.Common;
@@ -96,8 +97,13 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public JsonResult GetLastItemCode()
         {
-            var itemCode = inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault().ItemCode;
-            return Json(itemCode, JsonRequestBehavior.AllowGet);
+            InventoryItem inventoryItem = inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault();
+            if (inventoryItem != null)
+            {
+                var itemCode = inventoryItem.ItemCode;
+                return Json(itemCode, JsonRequestBehavior.AllowGet);
+            }
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

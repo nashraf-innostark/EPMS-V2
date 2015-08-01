@@ -2014,6 +2014,7 @@
     <Content Include="Content\themes\default-dark\Thumbs.db" />
     <Content Include="Content\themes\default\Thumbs.db" />
     <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
+    <Content Include="Views\Shared\_BarcodeItemsPopUp.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

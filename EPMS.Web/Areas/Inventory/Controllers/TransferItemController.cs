@@ -136,6 +136,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.TirItems = new List<TIRItem>();
             }
             viewModel.ItemVariationDropDownList = tirResponse.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(viewModel);
         }
 

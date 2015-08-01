@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -88,10 +87,41 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteWarehouse(Warehouse warehouse)
+        public string DeleteWarehouse(long id)
         {
-            warehouseRepository.Delete(warehouse);
-            warehouseRepository.SaveChanges();
+            Warehouse warehouse = warehouseRepository.Find(id);
+            if (warehouse != null)
+            {
+                if (IsAssociated(warehouse))
+                {
+                    return "Associated";
+                }
+                warehouseRepository.Delete(warehouse);
+                warehouseRepository.SaveChanges();
+                return "Success";
+            }
+            return "Error";
+        }
+
+        private bool IsAssociated(Warehouse warehouse)
+        {
+            if (warehouse.WarehouseDetails == null || !warehouse.WarehouseDetails.Any())
+            {
+                if (warehouse.ItemWarehouses == null || !warehouse.ItemWarehouses.Any())
+                {
+                    if (warehouse.ItemVariations == null || !warehouse.ItemVariations.Any())
+                    {
+                        if (warehouse.ItemReleaseQuantities == null || !warehouse.ItemReleaseQuantities.Any())
+                        {
+                            if (warehouse.PhysicalCountItems == null || !warehouse.PhysicalCountItems.Any())
+                            {
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+            return true;
         }
     }
 }

@@ -51,29 +51,50 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.Sections = sections;
             if (id != null)
             {
-                if (id == 1)
+                switch (id)
                 {
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = Resources.Inventory.InventoryDepartment.DepartmentSaved,
-                        IsUpdated = true
-                    };
-                }
-                if (id == 2)
-                {
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = Resources.Inventory.InventoryDepartment.SectionSaved,
-                        IsUpdated = true
-                    };
-                }
-                if (id == 3)
-                {
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = Resources.Inventory.InventoryDepartment.RecordUpdated,
-                        IsUpdated = true
-                    };
+                    case 1:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryDepartment.DepartmentSaved,
+                            IsUpdated = true
+                        };
+                        break;
+                    case 2:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryDepartment.SectionSaved,
+                            IsUpdated = true
+                        };
+                        break;
+                    case 3:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryDepartment.RecordUpdated,
+                            IsUpdated = true
+                        };
+                        break;
+                    case 4:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Inventory Department successfully deleted.",
+                            IsUpdated = true
+                        };
+                        break;
+                    case 5:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Unable to delete Inventory Department because it is associated with Inventory Item.",
+                            IsUpdated = true
+                        };
+                        break;
+                    case 6:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = "Unable to delete Inventory Department.",
+                            IsUpdated = true
+                        };
+                        break;
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -198,6 +219,23 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Delete Inventory Department
+        [HttpPost]
+        public ActionResult DeleteInventoryDepartment(long id)
+        {
+            try
+            {
+                string deleteStatus = departmentService.DeleteInventoryDepartment(id);
+                return Json(deleteStatus, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+            }
         }
 
         #endregion

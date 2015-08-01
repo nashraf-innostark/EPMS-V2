@@ -216,14 +216,21 @@
                 <div id="SaveNewNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Create</button>
+                            <button type="submit" class="btn" name="Create" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Create</button>
                         </div>
                     </div>
                 </div>
                 <div id="UpdateNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Update</button>
+                            <button type="submit" class="btn" name="Update" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Update</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="DeleteNode" style="display: none">
+                    <div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="submit" class="btn" name="Delete">@EPMS.Web.Resources.Shared.Common.Delete</button>
                         </div>
                     </div>
                 </div>
@@ -376,6 +383,7 @@
         $("#Location").hide();
         $("#SaveNewNode").css("display", "none");
         $("#UpdateNode").css("display", "block");
+        $("#DeleteNode").css("display", "block");
         $("#Edit").css("display", "none");
         CKEDITOR.replace('LocationCK', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
@@ -399,6 +407,7 @@
             $('#Manager').select2('disable');
             $("#SaveNewNode").css("display", "none");
             $("#UpdateNode").css("display", "none");
+            $("#DeleteNode").css("display", "none");
             $("#Edit").css("display", "none");
 
         } else {
@@ -412,7 +421,7 @@
                 $("#Edit").css("display", "none");
             }
             $("#UpdateNode").css("display", "none");
-
+            $("#DeleteNode").css("display", "none");
         }
         if (warehouseId == 0) {
             $("#CKEditorLocation").show();

@@ -36,6 +36,8 @@ namespace EPMS.Repository.Repositories
                 ItemVariationId = x.ItemVariationId,
                 ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
                 SKUCode = x.SKUCode,
+                ItemSKUDescriptoinEn = x.SKUDescriptionEn,
+                ItemSKUDescriptoinAr = x.SKUDescriptionAr,
                 ItemVariationDescriptionA = x.DescriptionAr,
                 ItemVariationDescriptionE = x.DescriptionEn,
                 ItemNameA = x.InventoryItem.ItemNameAr,

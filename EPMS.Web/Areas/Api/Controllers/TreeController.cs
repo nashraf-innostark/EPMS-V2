@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Api.Controllers
                                 JsTreeJson item = new JsTreeJson
                                 {
                                     id = itemVariation.ItemVariationId + "_Item",
-                                    text = direction == "ltr" ? itemVariation.SKUDescriptionEn : itemVariation.SKUDescriptionAr,
+                                    text = inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
                                     parent = inventoryDepartment.DepartmentId + "_department"
                                 };
                                 details.Add(item);

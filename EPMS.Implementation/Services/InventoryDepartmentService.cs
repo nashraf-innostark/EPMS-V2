@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -78,6 +79,22 @@ namespace EPMS.Implementation.Services
             #endregion
 
             return new SaveInventoryDepartmentResponse();
+        }
+
+        public string DeleteInventoryDepartment(long id)
+        {
+            InventoryDepartment department = departmentRepository.Find(id);
+            if (department != null)
+            {
+                if (department.InventoryItems != null && !department.InventoryItems.Any())
+                {
+                    departmentRepository.Delete(department);
+                    departmentRepository.SaveChanges();
+                    return "Success";
+                }
+                return "Associated";
+            }
+            return "Error";
         }
 
         private void SaveInventoryDepartment(InventoryDepartment department)

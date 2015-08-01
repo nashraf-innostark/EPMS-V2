@@ -178,6 +178,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
             }
             rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(rfiViewModel);
         }
 

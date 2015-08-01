@@ -175,6 +175,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);
         }
 

@@ -568,22 +568,22 @@
             $("#quotationControl").hide();
         }
         var siteUrl = $('#siteURL').val();
-        editor = CKEDITOR.replace('DescriptionE', {
+        CKEDITOR.replace('DescriptionE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        editor = CKEDITOR.replace('DescriptionA', {
+        CKEDITOR.replace('DescriptionA', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        editor = CKEDITOR.replace('NotesE', {
+        CKEDITOR.replace('NotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        editor = CKEDITOR.replace('NotesA', {
+        CKEDITOR.replace('NotesA', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        editor = CKEDITOR.replace('NotesForCustomerE', {
+        CKEDITOR.replace('NotesForCustomerE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        editor = CKEDITOR.replace('NotesForCustomerA', {
+        CKEDITOR.replace('NotesForCustomerA', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
         $('#TasksTable, #InstallmentTable').dataTable({

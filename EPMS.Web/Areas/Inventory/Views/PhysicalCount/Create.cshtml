@@ -116,6 +116,7 @@
                             <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsInPackages</th>
                             <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemsInWharewhouse</th>
                             <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsCount</th>
+                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsCountInWarehouse</th>
                             <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Delete</th>
                         </tr>
                     </thead>
@@ -166,6 +167,9 @@
                                     <td>
                                         <label class="n1 tableDbM" id='TotalItemsCount_@i'>@Model.PhysicalCountItems[i].TotalItemsCount</label>
                                     </td>
+                                    <td>
+                                        <label class="n1 tableDbM" id='TotalItemsCountInWarehouse_@i'>@Model.PhysicalCountItems[i].TotalItemsCountInWarehouse</label>
+                                    </td>
                                     <td class="delete">
                                         <i class="icon-photon minus deleteRow"></i>
                                     </td>
@@ -213,6 +217,9 @@
                                 </td>
                                 <td>
                                     <label class="n1 tableDbM" id='TotalItemsCount_0'></label>
+                                </td>
+                                <td>
+                                    <label class="n1 tableDbM" id='TotalItemsCountInWarehouse_0'></label>
                                 </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
@@ -293,8 +300,10 @@
             }
             $("#ItemDetailsEn_" + rowId).text(itemDetails);
             $("#ItemsInPackage_" + rowId).text(data.ItemsInPackage);
+            $("#TotalItemsCountInWarehouse_" + rowId).text(data.TotalItemsCountInWarehouse);
             $("#ItemDetailsEn_" + rowId).val(itemDetails);
             $("#ItemsInPackage_" + rowId).val(data.ItemsInPackage);
+            $("#TotalItemsCountInWarehouse_" + rowId).val(data.TotalItemsCountInWarehouse);
             $("#PhysicalCountItems_" + rowId + "__WarehouseId").val(warehouseId);
         }
     }
@@ -310,6 +319,7 @@
         $("#ItemsInPackage_" + rowId).val("");
         $("#TotalItemsInPackages_" + rowId).val("");
         $("#TotalItemsCount_" + rowId).val("");
+        $("#TotalItemsCountInWarehouse_" + rowId).val("");
     }
     function LoadDataByBarcode(barcode, rowId) {
         var siteUrl = $("#siteURL").val();

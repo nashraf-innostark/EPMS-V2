@@ -1,5 +1,5 @@
 ﻿@{
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    
 }
 <div id="itemSearcher" class="modal hide fade treeSelector">
     <div class="modal-header">
@@ -8,6 +8,22 @@
     </div>
     <div class="modal-body ">
         <form class="form-horizontal">
+            <div class="control-group row-fluid">
+                <div class="span3"></div>
+                <div class="span9">
+                    <div class="controls">
+                        <label>
+                            <input id="dropdown" type="radio" name="ItemFrom" value="dropdown">
+                            Dropdown
+                        </label>
+                        <br />
+                        <label>
+                            <input id="tree" type="radio" name="ItemFrom" value="tree">
+                            Tree
+                        </label>
+                    </div>
+                </div>
+            </div>
             <input id='ItemModalIndex' type='hidden' />
             <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
                 <div class="span3">
@@ -19,15 +35,16 @@
                     </div>
                     <label id="ItemVariationDropDownListValidation"></label>
                 </div>
+                <input type="hidden" id="ItemVariationTree" />
             </div>
 
-            <div class="control-group row-fluid tree-selector">
+            <div class="control-group row-fluid tree-selector" id="treeControl">
                 <div class="span4">
                     <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
                 </div>
                 <div class="span8 span-inset">
                     <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
-                    <label id="txtSelectedDepartmentName"></label>
+                    @*<label id="txtSelectedDepartmentName"></label>*@
                 </div>
 
             </div>
@@ -71,6 +88,7 @@
     </div>
 
     <div class="modal-footer">
+        <label id="selectedItemTreeValidation" style="float: left; margin-top: 5px;"></label>
         <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
         <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
     </div>

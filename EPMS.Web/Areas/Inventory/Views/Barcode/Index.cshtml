@@ -80,7 +80,7 @@
 
 @section popups
 {
-    @Html.Partial("_ItemsPopUp")
+    @Html.Partial("_BarcodeItemsPopUp")
 }
 
 <link href="http://www.jqueryscript.net/css/jquerysctipttop.css" rel="stylesheet" type="text/css">
@@ -88,18 +88,25 @@
 <script type="text/javascript" src="~/Scripts/App/Barcode/jquery-barcode.js"></script>
 <!-- jQuery Print Element -->
 <script type="text/javascript" src="~/Scripts/App/Barcode/jquery.printElement.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
+    var siteUrl;
+    var divId;
+    var dir = '@direction';
+    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
+        divId = "jstree";
+        siteUrl = $("#siteURL").val();
         $('.trAdder').on("click", function () {
             var index = $("#BarcodeTableBody").children("tr").length;
             var html = ' <tr data-id="' + index + '">' +
                 '<td ><div class="control-group row-fluid"><div class="span1">' +
-                    '<label class="control-label serialNumber"></label></div></div></td>' +
+                '<label class="control-label serialNumber"></label></div></div></td>' +
                 '<td><textarea rows="2" class="auto-resize" id="Barcodes_' + index + '__ItemDetails" name="Barcodes[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
-                    '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
-                    '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+                '<span class="field-validation-valid required" data-valmsg-for="Barcodes[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
                 '<td ><div id="BarcodeValue_' + index + '"></div>' +
-                    '<textarea rows="2" style="display: none" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue"></textarea></td>' +
+                '<textarea rows="2" style="display: none" class="auto-resize" id="Barcodes_' + index + '__BarcodeValue" name="Barcodes[' + index + '].BarcodeValue"></textarea></td>' +
                 '<td><button type="button" class="btn tableBtn print">Print</button> </td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
             $('.qouteAdd').append(html);
@@ -132,6 +139,41 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
+        $("#btnTreeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        $("#selectDepartment").on("click", function () {
+            var selectedItem = $(".jstree-clicked").text();
+            // validation
+            if (selectedItem == "" || selectedItem == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemCodeSKUCode == selectedItem) {
+                    $("#ItemVariationTree").val(value.ItemVariationId);
+                }
+            });
+            var item = $("#ItemVariationTree").val();
+            if (item == "" || item == 0 || item == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
         $('#itemSearcher').on('show', function () {
             $(".tree-selector").hide();
             //clear DDL required value label
@@ -146,15 +188,21 @@
             $('.select2me').select2({
                 //placeholder: "Select",
             });
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
         });
         $("#SaveChanges").on("click", function () {
-            if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
-                getModalControlsValues();
+            var createFrom = $("input[name=ItemFrom]:checked").val();
+            if (createFrom == "dropdown") {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                    getModalControlsValues();
+                }
+            } else {
+                getModalControlsValuesForTree();
             }
         });
         function getModalControlsValues() {
             //get item's values
-            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
             var isItemSku = $('#ItemSKUModalChk').is(':checked');
             var itemVariationId = $("#ItemVariationDropDownList").val();
 
@@ -176,13 +224,55 @@
                         textToAppend = textToAppend + "Name: " + value.ItemNameA;
                     }
                     if (isItemSku) {
-                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
-                    }
-                    if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinEn;
                         } else {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinAr;
+                        }
+                    }
+                    barcodeValue = value.ItemCodeSKUCode;
+                    $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
+                    $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
+                }
+            });
+            generateBarcode(index);
+            $('#itemSearcher').modal('toggle');
+        }
+        function getModalControlsValuesForTree() {
+            //get item's values
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationTree").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#Barcodes_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    var barcodeValue;
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemSKUDescriptoinEn == null) {
+                                textToAppend = textToAppend + "\nItem SKU description:";
+                            } else {
+                                textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinEn;
+                            }
+                        } else {
+                            if (value.ItemSKUDescriptoinAr == null) {
+                                textToAppend = textToAppend + "\nItem SKU description:";
+                            } else {
+                                textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinAr;
+                            }
                         }
                     }
                     barcodeValue = value.ItemCodeSKUCode;
@@ -205,6 +295,20 @@
                 }
             });
         }
+        var $radios = $('input:radio[name=ItemFrom]');
+        $radios.filter('[value=dropdown]').prop('checked', true);
+        $("#Simple_Select_Box_with_Filter_Search").show();
+        $("#treeControl").hide();
+        $("input[name=ItemFrom]:radio").change(function () {
+            if ($(this).val() == "dropdown") {
+                $("#Simple_Select_Box_with_Filter_Search").show();
+                $("#treeControl").hide();
+            }
+            if ($(this).val() == "tree") {
+                $("#Simple_Select_Box_with_Filter_Search").hide();
+                $("#treeControl").show();
+            }
+        });
     });
     $('#tiny').elrte({
         lang: "en",
