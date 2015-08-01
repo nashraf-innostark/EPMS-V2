@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Aisle">
           <Key>
             <PropertyRef Name="AisleId" />
@@ -629,6 +629,8 @@
           <Property Name="ItemVariationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ItemBarcode" Type="nvarchar" MaxLength="50" />
           <Property Name="SKUCode" Type="nvarchar" MaxLength="20" />
+          <Property Name="UnitCost" Type="float" />
+          <Property Name="CostCalculation" Type="bit" Nullable="false" />
           <Property Name="UnitPrice" Type="float" />
           <Property Name="PackagePrice" Type="float" />
           <Property Name="PriceCalculation" Type="bit" Nullable="false" />
@@ -1448,7 +1450,7 @@
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ItemDetails" Type="nvarchar(max)" />
+          <Property Name="ItemDetails" Type="nvarchar" MaxLength="300" />
           <Property Name="VendorId" Type="bigint" Nullable="false" />
           <Property Name="ItemVariationId" Type="bigint" />
           <Property Name="ItemQty" Type="bigint" Nullable="false" />
@@ -1857,18 +1859,6 @@
             </Principal>
             <Dependent Role="InventoryDepartment1">
               <PropertyRef Name="ParentId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_InventoryItems_InventoryDepartment">
-          <End Role="InventoryDepartment" Type="Self.InventoryDepartment" Multiplicity="0..1" />
-          <End Role="InventoryItems" Type="Self.InventoryItems" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="InventoryDepartment">
-              <PropertyRef Name="DepartmentId" />
-            </Principal>
-            <Dependent Role="InventoryItems">
-              <PropertyRef Name="DepartmentId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3283,10 +3273,6 @@
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
             <End Role="InventoryDepartment1" EntitySet="InventoryDepartment" />
           </AssociationSet>
-          <AssociationSet Name="FK_InventoryItems_InventoryDepartment" Association="Self.FK_InventoryItems_InventoryDepartment">
-            <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
-            <End Role="InventoryItems" EntitySet="InventoryItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_ItemColor_Color" Association="Self.FK_ItemColor_Color">
             <End Role="Color" EntitySet="Color" />
             <End Role="ItemColor" EntitySet="ItemColor" />
@@ -3688,8 +3674,7 @@
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetail" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -4214,6 +4199,8 @@
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_ItemVariation" FromRole="ItemVariation" ToRole="VendorItem" />
           <NavigationProperty Name="PhysicalCountItems" Relationship="EPMSInventoryModel.FK_PhysicalCountItem_ItemVariation" FromRole="ItemVariation" ToRole="PhysicalCountItem" />
           <NavigationProperty Name="InventoryItem" Relationship="EPMSInventoryModel.FK_ItemVariation_InventoryItems" FromRole="ItemVariation" ToRole="InventoryItem" />
+          <Property Name="UnitCost" Type="Double" />
+          <Property Name="CostCalculation" Type="Boolean" Nullable="false" />
         </EntityType>
         <EntityType Name="JobApplicant">
           <Key>
@@ -7099,7 +7086,7 @@
             <PropertyRef Name="ItemId" />
           </Key>
           <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ItemDetails" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemDetails" Type="String" MaxLength="300" FixedLength="false" Unicode="true" />
           <Property Name="VendorId" Type="Int64" Nullable="false" />
           <Property Name="ItemVariationId" Type="Int64" />
           <Property Name="ItemQty" Type="Int64" Nullable="false" />
@@ -7881,6 +7868,8 @@
           <EntitySetMapping Name="ItemVariations">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemVariation">
               <MappingFragment StoreEntitySet="ItemVariation">
+                <ScalarProperty Name="CostCalculation" ColumnName="CostCalculation" />
+                <ScalarProperty Name="UnitCost" ColumnName="UnitCost" />
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="ItemBarcode" ColumnName="ItemBarcode" />
                 <ScalarProperty Name="SKUCode" ColumnName="SKUCode" />
@@ -9052,7 +9041,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="52">
         <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
