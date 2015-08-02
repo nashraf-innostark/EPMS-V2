@@ -213,4 +213,13 @@
   <data name="IsUpdated" xml:space="preserve">
     <value>Inventory Item has been Updated.</value>
   </data>
+  <data name="IsAssociated" xml:space="preserve">
+    <value>Unable to Delete Inventory Item because it is Associated.</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>Inventory Item Successfully Deleted.</value>
+  </data>
+  <data name="IsError" xml:space="preserve">
+    <value>Unable to delete Inventory Item.</value>
+  </data>
 </root>

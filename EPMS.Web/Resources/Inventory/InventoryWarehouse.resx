@@ -135,6 +135,18 @@
   <data name="InventoryWarehouseEdit" xml:space="preserve">
     <value>Inventory Warehouse Edit</value>
   </data>
+  <data name="IsAdded" xml:space="preserve">
+    <value>Inventory Warehouse Added Successfully</value>
+  </data>
+  <data name="IsAssociated" xml:space="preserve">
+    <value>Unable to Delete Inventory Warehouse because it is associated.</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>Inventory Warehouse Deleted Successfully.</value>
+  </data>
+  <data name="IsError" xml:space="preserve">
+    <value>Unable to Delete Inventory Warehouse.</value>
+  </data>
   <data name="IsFull" xml:space="preserve">
     <value>Is Full</value>
   </data>
@@ -143,6 +155,9 @@
   </data>
   <data name="IsFullYes" xml:space="preserve">
     <value>Yes</value>
+  </data>
+  <data name="IsUpdated" xml:space="preserve">
+    <value>Inventory Warehouse Updated Successfully</value>
   </data>
   <data name="NumberOfAisles" xml:space="preserve">
     <value>Number of Aisles</value>

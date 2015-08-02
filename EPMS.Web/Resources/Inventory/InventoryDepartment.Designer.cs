@@ -259,6 +259,33 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to delete Inventory Department because it is associated with Inventory Item..
+        /// </summary>
+        public static string IsAssociated {
+            get {
+                return ResourceManager.GetString("IsAssociated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Department successfully deleted..
+        /// </summary>
+        public static string IsDeleted {
+            get {
+                return ResourceManager.GetString("IsDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to delete Inventory Department..
+        /// </summary>
+        public static string IsError {
+            get {
+                return ResourceManager.GetString("IsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Number of Sub-Sections.
         /// </summary>
         public static string NumberOfSubSections {

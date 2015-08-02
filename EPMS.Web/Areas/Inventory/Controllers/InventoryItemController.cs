@@ -72,27 +72,59 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(InventoryItemViewModel itemViewModel)
         {
-            if (itemViewModel.InventoryItem.ItemId > 0)
+            if (Request.Form["Save"] != null)
             {
-                //Update Case
-                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
-                inventoryItemService.SaveItem(itemToSave);
+                if (itemViewModel.InventoryItem.ItemId > 0)
                 {
-                    TempData["message"] = new MessageViewModel {Message = Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true};
-                    return RedirectToAction("Index");
+                    //Update Case
+                    InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                    inventoryItemService.SaveItem(itemToSave);
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true };
+                        return RedirectToAction("Index");
+                    }
+                }
+                else
+                {
+                    //Add Case
+                    InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                    inventoryItemService.SaveItem(itemToSave);
+                    {
+                        TempData["message"] = new MessageViewModel { Message = Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
+                        return RedirectToAction("Index");
+                    }
                 }
             }
-            else
+            if (Request.Form["Delete"] != null)
             {
-                //Add Case
-                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
-                inventoryItemService.SaveItem(itemToSave);
+                string deleteeStatus = inventoryItemService.DeleteItem(itemViewModel.InventoryItem.ItemId);
+                switch (deleteeStatus)
                 {
-                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
-                    return RedirectToAction("Index");
+                    case "Success":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryItem.IsDeleted, 
+                            IsUpdated = true
+                        };
+                        break;
+                    case "Associated":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryItem.IsAssociated, 
+                            IsError = true
+                        };
+                        break;
+                    case "Error":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = Resources.Inventory.InventoryItem.IsError, 
+                            IsError = true
+                        };
+                        break;
                 }
+                return RedirectToAction("Index");
             }
-            
+            return View(itemViewModel);
         }
 
         #endregion

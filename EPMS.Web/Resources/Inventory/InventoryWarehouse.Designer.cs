@@ -115,6 +115,42 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory Warehouse Added Successfully.
+        /// </summary>
+        public static string IsAdded {
+            get {
+                return ResourceManager.GetString("IsAdded", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to Delete Inventory Warehouse because it is associated..
+        /// </summary>
+        public static string IsAssociated {
+            get {
+                return ResourceManager.GetString("IsAssociated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Warehouse Deleted Successfully..
+        /// </summary>
+        public static string IsDeleted {
+            get {
+                return ResourceManager.GetString("IsDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to Delete Inventory Warehouse..
+        /// </summary>
+        public static string IsError {
+            get {
+                return ResourceManager.GetString("IsError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Is Full.
         /// </summary>
         public static string IsFull {
@@ -138,6 +174,15 @@ namespace EPMS.Web.Resources.Inventory {
         public static string IsFullYes {
             get {
                 return ResourceManager.GetString("IsFullYes", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Warehouse Updated Successfully.
+        /// </summary>
+        public static string IsUpdated {
+            get {
+                return ResourceManager.GetString("IsUpdated", resourceCulture);
             }
         }
         

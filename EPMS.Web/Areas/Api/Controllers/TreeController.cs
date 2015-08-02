@@ -40,11 +40,11 @@ namespace EPMS.Web.Areas.Api.Controllers
                 {
                     details.Add(inventoryDepartment.CreateForJsTreeJsonAr());
                 }
-                if (inventoryDepartment.InventoryItems.Any())
+                if (inventoryDepartment.InventoryItems.ToList().Any())
                 {
                     foreach (var inventoryItem in inventoryDepartment.InventoryItems)
                     {
-                        if (inventoryItem.ItemVariations.Any())
+                        if (inventoryItem.ItemVariations.ToList().Any())
                         {
                             foreach (var itemVariation in inventoryItem.ItemVariations)
                             {

@@ -153,6 +153,15 @@
   <data name="HazardousEn" xml:space="preserve">
     <value>الاخطار بالعربي</value>
   </data>
+  <data name="IsAssociated" xml:space="preserve">
+    <value>Unable to Delete Inventory Item because it is Associated.</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>Inventory Item Successfully Deleted.</value>
+  </data>
+  <data name="IsError" xml:space="preserve">
+    <value>Unable to delete Inventory Item.</value>
+  </data>
   <data name="ItemCode" xml:space="preserve">
     <value>رقم المنتج</value>
   </data>

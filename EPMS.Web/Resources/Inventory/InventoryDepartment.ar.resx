@@ -216,4 +216,13 @@
   <data name="BtnDelete" xml:space="preserve">
     <value>حذف</value>
   </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>Inventory Department successfully deleted.</value>
+  </data>
+  <data name="IsError" xml:space="preserve">
+    <value>Unable to delete Inventory Department.</value>
+  </data>
+  <data name="IsAssociated" xml:space="preserve">
+    <value>Unable to delete Inventory Department because it is associated with Inventory Item.</value>
+  </data>
 </root>

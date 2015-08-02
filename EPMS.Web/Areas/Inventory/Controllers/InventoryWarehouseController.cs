@@ -90,21 +90,21 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                         case "Associated":
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Unable to Delete Warehouse because it is associated.",
+                                Message = Resources.Inventory.InventoryWarehouse.IsAssociated,
                                 IsUpdated = true
                             };
                             break;
                         case "Success":
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Warehouse Deleted Successfully.",
+                                Message = Resources.Inventory.InventoryWarehouse.IsDeleted,
                                 IsUpdated = true
                             };
                             break;
                         case "Error":
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Unable to Delete Warehouse.",
+                                Message = Resources.Inventory.InventoryWarehouse.IsError,
                                 IsUpdated = true
                             };
                             break;
@@ -123,7 +123,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                         {
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Warehouse Updated Successfully",
+                                Message = Resources.Inventory.InventoryWarehouse.IsUpdated,
                                 IsUpdated = true
                             };
                             return RedirectToAction("Index");
@@ -141,7 +141,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                         {
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = "Warehouse Updated Successfully",
+                                Message = Resources.Inventory.InventoryWarehouse.IsAdded,
                                 IsUpdated = true
                             };
                             return RedirectToAction("Index");

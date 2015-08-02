@@ -77,22 +77,22 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     case 4:
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Inventory Department successfully deleted.",
+                            Message = Resources.Inventory.InventoryDepartment.IsDeleted,
                             IsUpdated = true
                         };
                         break;
                     case 5:
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Unable to delete Inventory Department because it is associated with Inventory Item.",
-                            IsUpdated = true
+                            Message = Resources.Inventory.InventoryDepartment.IsAssociated,
+                            IsError = true
                         };
                         break;
                     case 6:
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Unable to delete Inventory Department.",
-                            IsUpdated = true
+                            Message = Resources.Inventory.InventoryDepartment.IsError,
+                            IsError = true
                         };
                         break;
                 }
