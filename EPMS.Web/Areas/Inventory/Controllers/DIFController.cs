@@ -52,7 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllDifs(searchRequest);
             var data = requestResponse.Difs.Select(x => x.CreateDifServerToClient());
-            var responseData = data as IList<Models.DIF> ?? data.ToList();
+            var responseData = data as IList<DIF> ?? data.ToList();
             if (responseData.Any())
             {
                 viewModel.aaData = responseData;
@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<Models.DIF>();
+                viewModel.aaData = Enumerable.Empty<DIF>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -98,11 +98,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Dif = new Models.DIF
+                rifViewModel.Dif = new DIF
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rifViewModel.DifItem = new List<Models.DIFItem>();
+                rifViewModel.DifItem = new List<DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
             ViewBag.From = from;
@@ -152,12 +152,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Dif = new Models.DIF
+                rifViewModel.Dif = new DIF
                 {
                     FormNumber = Utility.GenerateFormNumber("DI", Difresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
-                rifViewModel.DifItem = new List<Models.DIFItem>();
+                rifViewModel.DifItem = new List<DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
             ViewBag.IsIncludeNewJsTree = true;

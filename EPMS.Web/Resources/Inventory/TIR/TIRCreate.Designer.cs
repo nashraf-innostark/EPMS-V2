@@ -178,7 +178,7 @@ namespace EPMS.Web.Resources.Inventory.TIR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transfer Item Request has been successfully Updated..
+        ///   Looks up a localized string similar to Transfer Item Request has been successfully Added..
         /// </summary>
         public static string RecordAdded {
             get {

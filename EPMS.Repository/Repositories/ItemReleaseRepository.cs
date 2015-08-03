@@ -132,7 +132,7 @@ namespace EPMS.Repository.Repositories
             ItemRelease itemRelease = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             if (itemRelease != null)
                 return itemRelease.FormNumber;
-            return "IR00000001";
+            return "IR00000000";
         }
 
         #endregion

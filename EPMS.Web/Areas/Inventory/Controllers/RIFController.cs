@@ -14,6 +14,7 @@ using EPMS.Web.ModelMappers.Inventory.RIF;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.RIF;
+using EPMS.WebBase.EncryptDecrypt;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -55,7 +56,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllRifs(searchRequest);
             var data = requestResponse.Rifs.Select(x => x.CreateRifServerToClient());
-            var responseData = data as IList<Models.RIF> ?? data.ToList();
+            var responseData = data as IList<RIF> ?? data.ToList();
             if (responseData.Any())
             {
                 viewModel.aaData = responseData;
@@ -66,7 +67,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<Models.RIF>();
+                viewModel.aaData = Enumerable.Empty<RIF>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -104,11 +105,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Rif = new Models.RIF
+                rifViewModel.Rif = new RIF
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rifViewModel.RifItem = new List<Models.RIFItem>();
+                rifViewModel.RifItem = new List<RIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
@@ -159,12 +160,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Rif = new Models.RIF
+                rifViewModel.Rif = new RIF
                 {
                     FormNumber = Utility.GenerateFormNumber("RI", Rifresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
-                rifViewModel.RifItem = new List<Models.RIFItem>();
+                rifViewModel.RifItem = new List<RIFItem>();
             }
             if (loadCustomersAndOrders)
             {
@@ -273,7 +274,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
             var splitLicenseKey = LicenseKey.Split('|');
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))

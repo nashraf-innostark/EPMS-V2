@@ -206,7 +206,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.RecentIrf.Notes, new { @id = "NotesEn", @class = "" })
+                        @Html.TextAreaFor(model => model.RecentIrf.Notes, new { @id = "NotesEn", @class = "toBeDisabledCK" })
                     </div>
                 </div>
             </div>
@@ -216,7 +216,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.RecentIrf.NotesAr, new { @id = "NotesAr", @class = "" })
+                        @Html.TextAreaFor(model => model.RecentIrf.NotesAr, new { @id = "NotesAr", @class = "toBeDisabledCK" })
                     </div>
                 </div>
             </div>
@@ -282,26 +282,27 @@
     $(document).ready(function () {
         if ('@Model.RecentIrf.Status' == '1') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.toBeDisabledCK:input').attr('disabled', true);
             $('.disableDdl').select2('disable');
-            var noteEn = '@Html.Raw(Model.RecentIrf.Notes)';
+            @*var noteEn = '@Html.Raw(Model.RecentIrf.Notes)';
             var regex = /(<([^>]+)>)/ig;
             var result = noteEn.replace(regex, "");
             $("#notesE").val(result);
             var noteAr = '@Html.Raw(Model.RecentIrf.NotesAr)';
             regex = /(<([^>]+)>)/ig;
             result = noteAr.replace(regex, "");
-            $("#notesA").val(result);
-            $("#Notes").show();
+            $("#notesA").val(result);*@
             $("#EditIrf").hide();
             $("#SubmitIrf").hide();
         } else {
-            CKEDITOR.replace('NotesEn', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            CKEDITOR.replace('NotesAr', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            $("#CKNotes").show();
+            
         }
+        CKEDITOR.replace('NotesEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('NotesAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#CKNotes").show();
     });
 </script>

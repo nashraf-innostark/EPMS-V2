@@ -204,6 +204,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RFI
                 CustomerName = source.Order.Customer.CustomerNameE,
                 OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty,
                 CustomerDeliveryInfo = (source.Order != null && source.Order.Customer != null) ? source.Order.Customer.CustomerAddress : string.Empty,
+                RFIItems = source.RFIItems.Select(x=>x.CreateRfiItemDetailsServerToClient())
             };
             return rfi;
         }
