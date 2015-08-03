@@ -65,6 +65,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 itemViewModel.InventoryItem = inventoryItemService.FindItemById((long)id).CreateFromServerToClient();
             }
+            //ViewBag.IsIncludeNewJsTree = true;
             return View(itemViewModel);
         }
 
