@@ -453,7 +453,7 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize idsofMan", @hidden = "true" })
                                     @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
@@ -822,7 +822,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.ManufacturersForDdl, "ManufacturerId", "ManufacturerNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
                             </div>
                         </div>
                     </div>
@@ -1148,7 +1148,7 @@
     var parsedSize = JSON.parse(sizeList);
     var statusList = '@Html.Raw(Json.Encode(Model.StatusesForDdl))';
     var parsedStatus = JSON.parse(statusList);
-    var manufacturerList = '@Html.Raw(Json.Encode(Model.ManufacturersForDdl))';
+    var manufacturerList = '@Html.Raw(Json.Encode(Model.VendorsForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
     $(document).ready(function () {
 
@@ -1408,9 +1408,9 @@
                     dataType: "json",
                     data: dataToPost,
                     success: function (data) {
-                        var manufacturerId = data.ManufacturerId;
-                        var snameEn = data.ManufacturerNameEn;
-                        var snameAr = data.ManufacturerNameAr;
+                        var manufacturerId = data.VendorId;
+                        var snameEn = data.VendorNameEn;
+                        var snameAr = data.VendorNameAr;
                         var htmlEn = '<option value=' + manufacturerId + '>' + snameEn + '</option>';
                         var htmlAr = '<option value=' + manufacturerId + '>' + snameAr + '</option>';
                         if ('@direction' == "ltr") {
@@ -1424,9 +1424,9 @@
                             placeholder: "Select",
                         });
                         var manufacturerToAdd = {
-                            ManufacturerId: data.ManufacturerId,
-                            ManufacturerNameEn: data.ManufacturerNameEn,
-                            ManufacturerNameAr: data.ManufacturerNameAr,
+                            ManufacturerId: data.VendorId,
+                            ManufacturerNameEn: data.VendorNameEn,
+                            ManufacturerNameAr: data.VendorNameAr,
                         };
                         parsedManufacturer.push(manufacturerToAdd);
                     },
@@ -1611,6 +1611,7 @@
 
         //Add Manufacturer from Dropdown to List
         $('.addManufacturerToList').on("click", function (event) {
+            debugger;
             var price = $('#manufacturerPriceLable').val();
             var quantity = $('#manufacturerQuantityLable').val();
             if (price == null || price == "" || quantity == null || quantity == "") {
@@ -1625,52 +1626,68 @@
                     index = index - 1;
                     $("#manufacturerDetails").children("tr").children("td").hide();
                 }
-                itemsCount = index + 1;
                 var manufacturerId = $('#manuId').val();
-                var manufacturerNameEn, manufacturerNameAr;
-                $.each(parsedManufacturer, function (key, value) {
-                    if (value.ManufacturerId == manufacturerId) {
-                        manufacturerNameEn = value.ManufacturerNameEn;
-                        manufacturerNameAr = value.ManufacturerNameAr;
-                    }
-                });
-                var html = ' <tr data-id=' + index + '>' +
-                    '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
-                    '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
-                    '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
-                    '<td>' + itemsCount +
-                    '</td>' +
-                    '<td>' +
-                    '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                    '<td>' +
-                    '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
-                    '</td>' +
-                    '<td>' +
-                    '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                    '</td>' +
-                    '<td>' +
-                    '<i class="icon-photon minus deleteManufacturer"></i>' +
-                    '</td>' +
-                    '</tr>';
-                $('#manufacturerDetails').append(html);
-                $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
-                $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
-                $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
-                event.preventDefault();
-                $('#manufacturModule').modal('hide');
-                $('.tableManufacturer').dataTable().fnDestroy();
-                $('.tableManufacturer').dataTable({
-                    "sPaginationType": "bootstrap",
-                    "fnInitComplete": function () {
-                        $(".dataTables_wrapper select").select2({
-                            dropdownCssClass: 'noSearch'
+                var isAlreadyExist = false;
+                var ids = $('.idsofMan').val();
+                $.each(ids, function (id, value) {
+                    if (value == manufacturerId) {
+                        isAlreadyExist = true;
+                        $.pnotify({
+                            title: 'error',
+                            type: 'info',
+                            text: 'Manufacturer has already been selected.'
                         });
+                        return false;
                     }
                 });
-                clearPopup();
+                if (!isAlreadyExist) {
+                    itemsCount = index + 1;
+
+                    var manufacturerNameEn, manufacturerNameAr;
+                    $.each(parsedManufacturer, function (key, value) {
+                        if (value.VendorId == manufacturerId) {
+                            manufacturerNameEn = value.VendorNameEn;
+                            manufacturerNameAr = value.VendorNameAr;
+                        }
+                    });
+                    var html = ' <tr data-id=' + index + '>' +
+                        '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
+                        '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
+                        '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
+                        '<td>' + itemsCount +
+                        '</td>' +
+                        '<td>' +
+                        '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                        '<td>' +
+                        '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                        '</td>' +
+                        '<td>' +
+                        '<i class="icon-photon minus deleteManufacturer"></i>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#manufacturerDetails').append(html);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
+                    event.preventDefault();
+                    $('#manufacturModule').modal('hide');
+                    $('.tableManufacturer').dataTable().fnDestroy();
+                    $('.tableManufacturer').dataTable({
+                        "sPaginationType": "bootstrap",
+                        "fnInitComplete": function () {
+                            $(".dataTables_wrapper select").select2({
+                                dropdownCssClass: 'noSearch'
+                            });
+                        }
+                    });
+                    clearPopup();
+                }
             }
             
         });

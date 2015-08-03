@@ -1910,12 +1910,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemManufacturer_Manufacturer">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+        <Association Name="FK_ItemManufacturer_Vendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Manufacturer">
-              <PropertyRef Name="ManufacturerId" />
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
             </Principal>
             <Dependent Role="ItemManufacturer">
               <PropertyRef Name="ManufacturerId" />
@@ -3289,8 +3289,8 @@
             <End Role="ItemVariation" EntitySet="ItemVariation" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemManufacturer_Manufacturer" Association="Self.FK_ItemManufacturer_Manufacturer">
-            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="Self.FK_ItemManufacturer_Vendor">
+            <End Role="Vendor" EntitySet="Vendor" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemRelease_Manager" Association="Self.FK_ItemRelease_Manager">
@@ -4143,8 +4143,8 @@
           <Property Name="ManufacturerId" Type="Int64" Nullable="false" />
           <Property Name="Price" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemVariation" Relationship="Self.FK_ItemManufacturer_ItemVariation" FromRole="ItemManufacturer" ToRole="ItemVariation" />
-          <NavigationProperty Name="Manufacturer" Relationship="Self.FK_ItemManufacturer_Manufacturer" FromRole="ItemManufacturer" ToRole="Manufacturer" />
           <Property Name="Quantity" Type="Int64" />
+          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_ItemManufacturer_Vendor" FromRole="ItemManufacturer" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="ItemVariation">
           <Key>
@@ -4322,7 +4322,6 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="ItemManufacturers" Relationship="Self.FK_ItemManufacturer_Manufacturer" FromRole="Manufacturer" ToRole="ItemManufacturer" />
         </EntityType>
         <EntityType Name="Meeting">
           <Key>
@@ -4732,6 +4731,7 @@
           <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItem" />
           <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItemHistory" />
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_Vendor" FromRole="Vendor" ToRole="VendorItem" />
+          <NavigationProperty Name="ItemManufacturers" Relationship="EPMSInventoryModel.FK_ItemManufacturer_Vendor" FromRole="Vendor" ToRole="ItemManufacturer" />
         </EntityType>
         <EntityType Name="WarehouseDetail">
           <Key>
@@ -6000,6 +6000,10 @@
           <AssociationSet Name="FK_RFIItemHistory_RFIHistory" Association="EPMSInventoryModel.FK_RFIItemHistory_RFIHistory">
             <End Role="RFIHistory" EntitySet="RFIHistories" />
             <End Role="RFIItemHistory" EntitySet="RFIItemHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="EPMSInventoryModel.FK_ItemManufacturer_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="ItemManufacturer" EntitySet="ItemManufacturers" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
@@ -7440,6 +7444,18 @@
             </Principal>
             <Dependent Role="RFIItemHistory">
               <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemManufacturer_Vendor">
+          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemManufacturer" Role="ItemManufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="ItemManufacturer">
+              <PropertyRef Name="ManufacturerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -9041,7 +9057,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="52">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="77">
         <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
@@ -9071,7 +9087,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.JobTitle" Width="1.5" PointX="3.75" PointY="4.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.JobTitleHistory" Width="1.5" PointX="6" PointY="20.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.LicenseControlPanel" Width="1.5" PointX="14.75" PointY="12.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Manufacturer" Width="1.5" PointX="3" PointY="10.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Manufacturer" Width="1.75" PointX="1.5" PointY="10.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Meeting" Width="1.5" PointX="9" PointY="32" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.MeetingAttendee" Width="1.5" PointX="11.25" PointY="3.75" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.MeetingDocument" Width="1.5" PointX="11.25" PointY="53.5" IsExpanded="true" />
@@ -9253,6 +9269,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIHistory_Orders" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItem_RFI" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItemHistory_RFIHistory" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemManufacturer_Vendor" />
       </Diagram>
     </Diagrams>
   </Designer>

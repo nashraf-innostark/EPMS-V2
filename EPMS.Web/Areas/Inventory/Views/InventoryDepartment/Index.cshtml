@@ -165,13 +165,13 @@
                                                     {
                                                         <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
                                                     }
-                                                    <td >@departments.DepartmentDesc</td>
-                                                    @*<script>
+                                                    <td class="@departments.DepartmentId"></td>
+                                                    <script>
                                                         var descpE = '@Html.Raw(departments.DepartmentDesc)';
                                                         var regex = /(<([^>]+)>)/ig;
                                                         var result = descpE.replace(regex, "");
                                                         $("." + '@departments.DepartmentId').text(result);
-                                                    </script>*@
+                                                    </script>
                                                     <td class="center">@departments.NoOfSections</td>
                                                 </tr>
                                             }
@@ -210,7 +210,7 @@
         $('#tableSortableSections').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
-                {"bVisible": false},
+                null,
                 null,
                 null,
                 null,
@@ -342,7 +342,7 @@
             var deptId = value.DepartmentId;
             var parent = $('#jstree').find("[id='" + deptId + "']");
             var childs = $(parent).find("li").length;
-            $("#" + deptId + "_tableSection td:eq( 4 )").text(childs);
+            $("#" + deptId + "_tableDepartment td:eq( 4 )").text(childs);
         });
     }
     function subItemsOfDepartments() {

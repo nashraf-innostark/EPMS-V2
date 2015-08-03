@@ -33,6 +33,7 @@ namespace EPMS.Implementation.Services
         private readonly ItemWarehouseService itemWarehouseService;
         private readonly ItemReleaseQuantityRepository itemReleaseQuantityRepository;
         private readonly InventoryDepartmentRepository inventoryDepartmentRepository;
+        private readonly IVendorRepository vendorRepository;
 
         #endregion
 
@@ -44,7 +45,7 @@ namespace EPMS.Implementation.Services
             IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
             INotificationService notificationService, IWarehouseService warehouseService,
             IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService,
-            ItemReleaseQuantityRepository itemReleaseQuantityRepository, InventoryDepartmentRepository inventoryDepartmentRepository)
+            ItemReleaseQuantityRepository itemReleaseQuantityRepository, InventoryDepartmentRepository inventoryDepartmentRepository, IVendorRepository vendorRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -60,6 +61,7 @@ namespace EPMS.Implementation.Services
             this.itemWarehouseService = itemWarehouseService;
             this.itemReleaseQuantityRepository = itemReleaseQuantityRepository;
             this.inventoryDepartmentRepository = inventoryDepartmentRepository;
+            this.vendorRepository = vendorRepository;
         }
 
         #endregion
@@ -138,7 +140,8 @@ namespace EPMS.Implementation.Services
             response.ItemVariation = id > 0 ? variationRepository.Find(id) : new ItemVariation();
             response.ColorsForDdl = colorRepository.GetAll();
             response.SizesForDdl = sizeRepository.GetAll();
-            response.ManufacturersForDdl = manufacturerRepository.GetAll();
+            //response.ManufacturersForDdl = manufacturerRepository.GetAll();
+            response.ManufacturersForDdl = vendorRepository.GetAll();
             response.StatusesForDdl = statusRepository.GetAll();
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
@@ -218,24 +221,24 @@ namespace EPMS.Implementation.Services
                 ? variationToSave.ItemVariation.InventoryItem.ItemNameAr
                 : variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
             Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
-            var colorEn = "000";
-            var colorAr = "000";
+            var colorEn = "Col";
+            var colorAr = "Col";
             if (color != null)
             {
                 colorEn = color.ColorNameEn.Length < 3 ? color.ColorNameEn : color.ColorNameEn.Substring(0, 3);
                 colorAr = color.ColorNameAr.Length < 3 ? color.ColorNameAr : color.ColorNameAr.Substring(0, 3);
             }
             Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
-            var sizeEn = "000";
-            var sizeAr = "000";
+            var sizeEn = "Siz";
+            var sizeAr = "Siz";
             if (size != null)
             {
                 sizeEn = size.SizeNameEn.Length < 3 ? size.SizeNameEn : size.SizeNameEn.Substring(0, 3);
                 sizeAr = size.SizeNameAr.Length < 3 ? size.SizeNameAr : size.SizeNameAr.Substring(0, 3);
             }
             InventoryDepartment department = null;
-            var deptnameEn = "000";
-            var deptnameAr = "000";
+            var deptnameEn = "Dep";
+            var deptnameAr = "Dep";
             if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
             {
                 department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
@@ -246,8 +249,8 @@ namespace EPMS.Implementation.Services
                 deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
-            var statusEn = "000";
-            var statusAr = "000";
+            var statusEn = "Sta";
+            var statusAr = "Sta";
             if (status != null)
             {
                 statusEn = status.StatusNameEn.Length < 3 ? status.StatusNameEn : status.StatusNameEn.Substring(0, 3);
@@ -276,24 +279,24 @@ namespace EPMS.Implementation.Services
                 ? variationToSave.ItemVariation.InventoryItem.ItemNameAr
                 : variationToSave.ItemVariation.InventoryItem.ItemNameAr.Substring(0, 6);
             Color color = colorRepository.Find(Convert.ToInt64(variationToSave.ColorArrayList));
-            var colorEn = "000";
-            var colorAr = "000";
+            var colorEn = "Col";
+            var colorAr = "Col";
             if (color != null)
             {
                 colorEn = color.ColorNameEn.Length < 3 ? color.ColorNameEn : color.ColorNameEn.Substring(0, 3);
                 colorAr = color.ColorNameAr.Length < 3 ? color.ColorNameAr : color.ColorNameAr.Substring(0, 3);
             }
             Size size = sizeRepository.Find(Convert.ToInt64(variationToSave.SizeArrayList));
-            var sizeEn = "000";
-            var sizeAr = "000";
+            var sizeEn = "Siz";
+            var sizeAr = "Siz";
             if (size != null)
             {
                 sizeEn = size.SizeNameEn.Length < 3 ? size.SizeNameEn : size.SizeNameEn.Substring(0, 3);
                 sizeAr = size.SizeNameAr.Length < 3 ? size.SizeNameAr : size.SizeNameAr.Substring(0, 3);
             }
             InventoryDepartment department = null;
-            var deptnameEn = "000";
-            var deptnameAr = "000";
+            var deptnameEn = "Dep";
+            var deptnameAr = "Dep";
             if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
             {
                 department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
@@ -304,8 +307,8 @@ namespace EPMS.Implementation.Services
                 deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
-            var statusEn = "000";
-            var statusAr = "000";
+            var statusEn = "Sta";
+            var statusAr = "Sta";
             if (status != null)
             {
                 statusEn = status.StatusNameEn.Length < 3 ? status.StatusNameEn : status.StatusNameEn.Substring(0, 3);
