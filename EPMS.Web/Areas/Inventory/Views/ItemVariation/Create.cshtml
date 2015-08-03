@@ -76,19 +76,19 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.UnitCost</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitCost, "", new { @class = "required" })
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.CostCalculation</label>
@@ -279,7 +279,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
@@ -329,7 +329,7 @@
         </div>
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id ="addNewSize">Add New Size</a>
+            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id="addNewSize">Add New Size</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -406,11 +406,11 @@
                                     </td>
                                     <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "WarehouseNo" })</td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity"})
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
                                         @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
                                     </td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse"})
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
                                         @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
                                     </td>
                                     <td><i class="icon-photon minus deleteWarehouse"></i></td>
@@ -590,7 +590,7 @@
                             var serial = 0;
                             for (int i = 0; i < Model.ItemVariation.ItemImages.Count(); i++)
                             {
-                                
+
                                 serial = serial + 1;
 
                                 <tr data-id="@i">
@@ -1272,7 +1272,7 @@
             itemsCount = index + 1;
             var order = $('.imageOrder').val();
             var popupcb = $("#iCheckBox").is(':checked');
-            
+
             var html = ' <tr class="gradeX" data-id=' + index + '>' +
                 '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ImageId" name = "ItemVariation.ItemImages[' + index + '].ImageId type="hidden" />' +
@@ -1629,17 +1629,20 @@
                 var manufacturerId = $('#manuId').val();
                 var isAlreadyExist = false;
                 var ids = $('.idsofMan').val();
-                $.each(ids, function (id, value) {
-                    if (value == manufacturerId) {
-                        isAlreadyExist = true;
-                        $.pnotify({
-                            title: 'error',
-                            type: 'info',
-                            text: 'Manufacturer has already been selected.'
-                        });
-                        return false;
-                    }
-                });
+                if ($("#manufacturerDetails").children("tr").children("td").html() != "No data available in table") {
+                    $.each(ids, function (id, value) {
+                        if (value == manufacturerId) {
+                            isAlreadyExist = true;
+                            $.pnotify({
+                                title: 'error',
+                                type: 'info',
+                                text: 'Manufacturer has already been selected.'
+                            });
+                            return false;
+                        }
+                    });
+                }
+
                 if (!isAlreadyExist) {
                     itemsCount = index + 1;
 
@@ -1651,7 +1654,7 @@
                         }
                     });
                     var html = ' <tr data-id=' + index + '>' +
-                        '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
+                        '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" class = "idsofMan" />' +
                         '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
                         '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
                         '<td>' + itemsCount +
@@ -1689,7 +1692,7 @@
                     clearPopup();
                 }
             }
-            
+
         });
 
         //Delete Manufacturer from the List
@@ -1863,7 +1866,7 @@
 
         //Add Warehouse from Popup to List
         $('.addWarehouseFromPopup').on("click", function (event) {
-       
+
             var index = $("#warehouseDetails").children("tr").length;
             if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;

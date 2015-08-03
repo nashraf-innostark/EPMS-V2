@@ -118,7 +118,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 itemVariationService.SaveItemVariation(itemToSave);
                 {
                     TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsSaved = true };
-                    return Redirect(variationViewModel.ItemVariation.ItemVariationId + "?inventoryItemId=" + variationViewModel.ItemVariation.InventoryItemId);
+                    return Redirect("Create/" + itemToSave.ItemVariation.ItemVariationId + "?inventoryItemId=" + variationViewModel.ItemVariation.InventoryItemId);
                 }
             }
         }

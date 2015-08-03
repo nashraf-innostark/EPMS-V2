@@ -200,7 +200,13 @@ namespace EPMS.Implementation.Services
                 AddImages(variationToSave);
             }
             variationRepository.SaveChanges();
-            return new ItemVariationResponse();
+            return new ItemVariationResponse
+            {
+                ItemVariation = new ItemVariation
+                {
+                    ItemVariationId = variationToSave.ItemVariation.ItemVariationId
+                }
+            };
         }
 
         /// <summary>

@@ -663,8 +663,8 @@
           </Key>
           <Property Name="WarehouseId" Type="bigint" Nullable="false" />
           <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
-          <Property Name="Quantity" Type="bigint" Nullable="false" />
-          <Property Name="PlaceInWarehouse" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="Quantity" Type="bigint" />
+          <Property Name="PlaceInWarehouse" Type="nvarchar(max)" />
         </EntityType>
         <EntityType Name="JobApplicants">
           <Key>
@@ -6746,8 +6746,8 @@
           </Key>
           <Property Name="WarehouseId" Type="Int64" Nullable="false" />
           <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
-          <Property Name="Quantity" Type="Int64" Nullable="false" />
-          <Property Name="PlaceInWarehouse" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Quantity" Type="Int64" />
+          <Property Name="PlaceInWarehouse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemWarehouse" ToRole="ItemVariation" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="ItemWarehouse" ToRole="Warehouse" />
         </EntityType>
