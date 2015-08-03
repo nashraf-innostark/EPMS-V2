@@ -964,6 +964,7 @@
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Services\ServicesCreateViewModel.cs" />
     <Compile Include="ViewModels\Services\ServicesViewModel.cs" />
     <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
@@ -2114,6 +2115,7 @@
     <Content Include="Views\Shared\_InventoryDepartmentItems.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
     <Content Include="Areas\Website\Views\Service\Index.cshtml" />
+    <Content Include="Areas\Website\Views\Service\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

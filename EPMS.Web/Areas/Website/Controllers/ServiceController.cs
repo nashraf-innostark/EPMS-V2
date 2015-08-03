@@ -16,5 +16,9 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             return View();
         }
+        public ActionResult Create()
+        {
+            return View();
+        }
     }
 }
