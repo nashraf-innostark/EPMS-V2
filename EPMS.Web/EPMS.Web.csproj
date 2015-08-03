@@ -330,6 +330,7 @@
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
+    <Compile Include="Areas\Website\Controllers\ServiceController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
@@ -963,6 +964,7 @@
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Services\ServicesViewModel.cs" />
     <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
@@ -2111,6 +2113,7 @@
     <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
     <Content Include="Views\Shared\_InventoryDepartmentItems.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
+    <Content Include="Areas\Website\Views\Service\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

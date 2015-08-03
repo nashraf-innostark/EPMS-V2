@@ -11273,3 +11273,6 @@ li.L9 {
 .tableDbM {
     margin: 0px !important;
 }
+.nav-side-menu > li.websiteSys:hover a {
+  background-color: rgba(113, 112, 110, 0.67) !important;
+}

@@ -1587,6 +1587,26 @@
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
         </EntityType>
+        <EntityType Name="WebsiteService">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ServiceNameEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="DescriptionEn" Type="nvarchar(max)" />
+          <Property Name="DescriptionAr" Type="nvarchar(max)" />
+          <Property Name="MetaKeywordsEn" Type="nchar" MaxLength="10" />
+          <Property Name="MetaKeywordsAr" Type="nchar" MaxLength="10" />
+          <Property Name="MetaDescriptionEn" Type="nchar" MaxLength="10" />
+          <Property Name="MetaDescriptionAr" Type="nchar" MaxLength="10" />
+          <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="ParentServiceId" Type="bigint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -3191,6 +3211,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_WebsiteService_WebsiteService">
+          <End Role="WebsiteService" Type="Self.WebsiteService" Multiplicity="0..1" />
+          <End Role="WebsiteService1" Type="Self.WebsiteService" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WebsiteService">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="WebsiteService1">
+              <PropertyRef Name="ParentServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="EPMSInventoryModelStoreContainer">
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantExperience" EntityType="Self.ApplicantExperience" Schema="dbo" store:Type="Tables" />
@@ -3286,6 +3318,7 @@
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebsiteService" EntityType="Self.WebsiteService" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -3817,6 +3850,10 @@
           <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="Self.FK_WarehouseDetail_WarehouseDetail">
             <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_WebsiteService_WebsiteService" Association="Self.FK_WebsiteService_WebsiteService">
+            <End Role="WebsiteService" EntitySet="WebsiteService" />
+            <End Role="WebsiteService1" EntitySet="WebsiteService" />
           </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
@@ -6068,6 +6105,11 @@
             <End Role="ProductImage" EntitySet="ProductImages" />
           </AssociationSet>
           <EntitySet Name="ContactUs1" EntityType="EPMSInventoryModel.ContactUs" />
+          <EntitySet Name="WebsiteServices" EntityType="EPMSInventoryModel.WebsiteService" />
+          <AssociationSet Name="FK_WebsiteService_WebsiteService" Association="EPMSInventoryModel.FK_WebsiteService_WebsiteService">
+            <End Role="WebsiteService" EntitySet="WebsiteServices" />
+            <End Role="WebsiteService1" EntitySet="WebsiteServices" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7721,6 +7763,40 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
+        <EntityType Name="WebsiteService">
+          <Key>
+            <PropertyRef Name="ServiceId" />
+          </Key>
+          <Property Name="ServiceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ServiceNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKeywordsEn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MetaKeywordsAr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MetaDescriptionEn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="MetaDescriptionAr" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="ParentServiceId" Type="Int64" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="WebsiteServices" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService" ToRole="WebsiteService1" />
+          <NavigationProperty Name="ParentWebsiteService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
+        </EntityType>
+        <Association Name="FK_WebsiteService_WebsiteService">
+          <End Type="EPMSInventoryModel.WebsiteService" Role="WebsiteService" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.WebsiteService" Role="WebsiteService1" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WebsiteService">
+              <PropertyRef Name="ServiceId" />
+            </Principal>
+            <Dependent Role="WebsiteService1">
+              <PropertyRef Name="ParentServiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9394,6 +9470,27 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteServices">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteService">
+              <MappingFragment StoreEntitySet="WebsiteService">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ParentServiceId" ColumnName="ParentServiceId" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="MetaDescriptionAr" ColumnName="MetaDescriptionAr" />
+                <ScalarProperty Name="MetaDescriptionEn" ColumnName="MetaDescriptionEn" />
+                <ScalarProperty Name="MetaKeywordsAr" ColumnName="MetaKeywordsAr" />
+                <ScalarProperty Name="MetaKeywordsEn" ColumnName="MetaKeywordsEn" />
+                <ScalarProperty Name="DescriptionAr" ColumnName="DescriptionAr" />
+                <ScalarProperty Name="DescriptionEn" ColumnName="DescriptionEn" />
+                <ScalarProperty Name="ServiceNameAr" ColumnName="ServiceNameAr" />
+                <ScalarProperty Name="ServiceNameEn" ColumnName="ServiceNameEn" />
+                <ScalarProperty Name="ServiceId" ColumnName="ServiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9634,6 +9731,8 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ProductImage" Width="1.5" PointX="22.5" PointY="39.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductImage_Product" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ContactUs" Width="1.5" PointX="25.375" PointY="0.75" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteService" Width="1.875" PointX="25.375" PointY="6.75" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_WebsiteService_WebsiteService" />
       </Diagram>
     </Diagrams>
   </Designer>
