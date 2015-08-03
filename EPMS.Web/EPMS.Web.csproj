@@ -323,6 +323,7 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
     <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
@@ -420,16 +421,23 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
+    <Compile Include="ModelMappers\Website\ContactUs\ContactUsMapper.cs" />
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductImage\ProductImageMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
     <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
+    <Compile Include="Models\ContactUs.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\ProductImage.cs" />
     <Compile Include="Models\ProductSection.cs" />
     <Compile Include="Models\WebsiteDepartment.cs" />
+    <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ContatUs.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ProductSection\ProductSectionIndex.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -445,6 +453,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductIndex.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\ContactUs\ContactUsViewModel.cs" />
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Allowance.cs" />
@@ -2085,6 +2094,7 @@
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
     <Content Include="Areas\Website\Views\Product\Index.cshtml" />
     <Content Include="Areas\Website\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -4108,6 +4118,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Users.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ContatUs.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\ImageSlider.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageSlider.Designer.cs</LastGenOutput>
@@ -4115,6 +4129,7 @@
     <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticleCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsAndArticleCreate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

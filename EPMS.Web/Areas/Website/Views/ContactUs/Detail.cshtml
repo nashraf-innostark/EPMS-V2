@@ -1,0 +1,273 @@
+﻿@using System.Configuration
+@model EPMS.Web.ViewModels.ContactUs.ContactUsViewModel
+@{
+    ViewBag.Title = Model.ContactUs.ContactUsId > 0 ? EPMS.Web.Resources.Website.ContactUs.ContatUs.UpdatePageTitle : EPMS.Web.Resources.Website.ContactUs.ContatUs.AddPageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Website/Home/Index">
+                @EPMS.Web.Resources.Website.ContactUs.ContatUs.MainPage
+            </a>
+        </li>
+        <li class="current">
+            <a href="">
+                @ViewBag.Title
+            </a>
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+@using (Html.BeginForm("Detail", "ContactUs", FormMethod.Post, new { @id = "ContactUsForm", @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        
+        @Html.AntiForgeryToken()
+        @Html.HiddenFor(m => m.ContactUs.ContactUsId)
+        @Html.HiddenFor(m => m.ContactUs.RecCreatedBy)
+        @Html.HiddenFor(m => m.ContactUs.RecCreatedDt)
+        @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Title</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Title, new { @dir = "ltr", id = "Title", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Title, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.TitleAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.TitleAr, new { @dir = "ltr", id = "TitleAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.TitleAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Addres</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Address, new { @dir = "ltr", id = "Address", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Address, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.AddressAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.AddressAr, new { @dir = "ltr", id = "AddressAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.AddressAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Mobile</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Mobile, new { @dir = "ltr", id = "Mobile", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Mobile, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Phone</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Phone, new { @dir = "ltr", id = "Phone", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Phone, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.POBox</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.POBox, new { @dir = "ltr", id = "POBox", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.POBox, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Website</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Website, new { @dir = "ltr", id = "Website", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Website, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.GoogleMap</label>
+            </div>
+            <div class="span4">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Latitude, new { @dir = "ltr", id = "Latitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.Web.Resources.Website.ContactUs.ContatUs.Latitude })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Latitude, "", new { @class = "required" })
+                </div>
+            </div>
+            <div class="span4">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.Longitude, new { @dir = "ltr", id = "Longitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.Web.Resources.Website.ContactUs.ContatUs.Longitude })
+                    @Html.ValidationMessageFor(m => m.ContactUs.Longitude, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.FormEmail</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.FormEmail, new { @dir = "ltr", id = "FormEmail", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.FormEmail, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Content</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.ContentEn, new { @dir = "ltr", id = "ContentEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.ContentEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.ContentAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ContactUs.ContentAr, new { @dir = "ltr", id = "ContentAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ContactUs.ContentAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.ShowToPublic</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.ContactUs.ShowToPublic, new { @id = "ShowToPublic", @class = "tbdisable toBeRequired" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <div class="span3 span-inset">
+                    <button id="savebtn" class="btn">@EPMS.Web.Resources.Website.ContactUs.ContatUs.CreateButton</button>
+                    <button id="edit" class="btn">@EPMS.Web.Resources.Website.ContactUs.ContatUs.EditButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Main/Index'" type="reset">@EPMS.Web.Resources.Website.ContactUs.ContatUs.CancelButton</button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+}
+
+<script>
+
+    $(document).ready(function () {
+
+        var contactUsId = $('#ContactUs_ContactUsId').val();
+
+        var siteUrl = $("#siteURL").val();
+        $("#JobTitleForm").validate({
+            errorElement: "span",
+            errorClass: "error",
+            onclick: true,
+            rules: {
+                "req": {
+                    required: true
+                },
+                "numbers": {
+                    required: false,
+                    digits: true
+                },
+                "email": {
+                    email: true
+                },
+                "url": {
+                    url: true
+                },
+                "date": {
+                    date: true
+                }
+            }
+        });
+
+        if (contactUsId == null || contactUsId == "" || contactUsId == 0) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+        } else {
+            $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $("#savebtn").hide();
+            $("#cancel").show();
+            $("#edit").show();
+        }
+
+        $("#edit").click(function (event) {
+            $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#savebtn").show();
+            $("#cancel").show();
+            $("#edit").hide();
+            event.preventDefault();
+        });
+
+    });
+
+</script>
