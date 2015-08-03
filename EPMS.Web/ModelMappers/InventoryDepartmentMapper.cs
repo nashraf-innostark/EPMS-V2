@@ -29,6 +29,27 @@ namespace EPMS.Web.ModelMappers
                 ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new Models.InventorySections(),
             };
         }
+        public static WebModels.InventoryDepartment CreateForProductSectionFromServerToClient(this DomainModels.InventoryDepartment source)
+        {
+            return new WebModels.InventoryDepartment
+            {
+                DepartmentId = source.DepartmentId,
+                DepartmentNameEn = source.DepartmentNameEn,
+                DepartmentNameAr = source.DepartmentNameAr,
+                ParentId = source.ParentId,
+                DepartmentColor = source.DepartmentColor,
+                DepartmentDesc = source.DepartmentDesc,
+                ParentDepartmentEn = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameEn : "",
+                ParentDepartmentAr = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameAr : "",
+                NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new Models.InventorySections(),
+                InventoryDepartments = source.InventoryDepartments.Select(x => x.CreateForProductSectionFromServerToClient()).ToList()
+            };
+        }
 
         public static WebModels.InventoryDepartment CreateFromServerToClientLv(this DomainModels.InventoryDepartment source)
         {
@@ -111,6 +132,24 @@ namespace EPMS.Web.ModelMappers
                 NodeTitleEn = source.DepartmentNameEn,
                 NodeTitleAr = source.DepartmentNameAr,
                 ParentId = source.ParentId ?? 0
+            };
+        }
+        public static JsTreeJson CreateForJsTreeJsonEn(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTreeJson
+            {
+                id = source.DepartmentId + "_department",
+                text = source.DepartmentNameEn,
+                parent = source.ParentId != null ? source.ParentId + "_department" : "#"
+            };
+        }
+        public static JsTreeJson CreateForJsTreeJsonAr(this DomainModels.InventoryDepartment source)
+        {
+            return new JsTreeJson
+            {
+                id = source.DepartmentId + "_department",
+                text = source.DepartmentNameAr,
+                parent = source.ParentId != null ? source.ParentId + "_department" : "#"
             };
         }
     }

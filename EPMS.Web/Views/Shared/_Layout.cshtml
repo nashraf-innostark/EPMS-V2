@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="~/Content/css/photon-pt2.css" media="all" />
     <link rel="stylesheet" href="~/Content/css/photon-responsive.css" media="all" />
     @*<link rel="stylesheet" href="~/Content/css/help-photon.css" media="all" />*@
-    
+
 
     @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
     {
@@ -30,13 +30,22 @@
     <!-- Calendar -->
     <link rel="stylesheet" href="~/Content/CSS/Admin/style/fullcalendar.css">
     <link href="~/Content/jquery.calendars.picker.css" rel="stylesheet" />
-    
+
     @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.js"></script>*@
     <script type="text/javascript" src="~/Scripts/jquery-1.8.3.min.js"></script>
     <script type="text/javascript" src="~/Scripts/jqueryui-1.10.0.min.js"></script>
     @*<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.10.0/jquery-ui.min.js"></script>*@
 
     <script type="text/javascript" src="~/Scripts/bootstrap/bootstrap.min.js"></script>
+    @*@if (ViewBag.IsIncludeNewSwitch != null)
+    {
+        <script src="~/Scripts/plugins/newBootstrap-switch.min.js"></script>
+        <link href="~/Content/CSS/bootstrap-switch.min.css" rel="stylesheet" />
+    }
+    else
+    {*@
+        <script type="text/javascript" src="~/Scripts/plugins/bootstrapSwitch.js"></script>
+    @*}*@
     <script type="text/javascript" src="~/Scripts/plugins/modernizr.custom.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/jquery.pnotify.min.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/less-1.3.1.min.js"></script>
@@ -63,6 +72,21 @@
     <script type="text/javascript" src="~/Scripts/plugins/jquery.timeentry.min.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables.min.js"></script>
     @*<script type="text/javascript" src="~/Scripts/plugins/jquery.dataTables-1.9.4.js"></script>*@
+    @if (ViewBag.IsIncludeNewJsTree != null)
+    {
+        if (ViewBag.IsIncludeNewJsTree)
+        {
+            <script src="~/Scripts/jstree.min.js"></script>
+        }
+        else
+        {
+            <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
+        }
+    }
+    else
+    {
+        <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
+    }
     <script type="text/javascript" src="~/Scripts/plugins/jquery.jstree.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/dataTables.bootstrap.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/jquery.mousewheel.min.js"></script>
@@ -80,7 +104,7 @@
     <script type="text/javascript" src="~/Scripts/plugins/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/bootstrap-fileupload.min.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/prettify/prettify.js"></script>
-    <script type="text/javascript" src="~/Scripts/plugins/bootstrapSwitch.js"></script>
+    
     <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
     <script type="text/javascript" src="~/Scripts/common.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.leanModal.min.js"></script>

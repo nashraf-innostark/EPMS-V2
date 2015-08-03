@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateProductSection(ProductSection productSection);
         void DeleteProductSection(ProductSection productSection);
         bool Delete(long id);
+        bool SaveProductSections(IList<ProductSection> productSections);
     }
 }

@@ -1,0 +1,365 @@
+﻿@model EPMS.Web.ViewModels.ProductSection.ProductSectionViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    if (Model.ProductSection.SectionId > 0)
+    {
+        ViewBag.Title = "Update";
+    }
+    else
+    {
+        ViewBag.Title = "Create";
+    }
+}
+
+<div class="main-content withPanel">
+    <div class="panel">
+        <div class="panel-content filler">
+            <div class="panel-logo"></div>
+            <div class="panel-header">
+                <h1><small>Product Sections</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>@EPMS.Web.Resources.Shared.Common.AddNewNode</button>
+            </div>
+            <div class="panel-search container-fluid">
+                <form class="form-horizontal" action="javascript:;">
+                    <input id="panelSearch" placeholder="Search" type="text" name="panelSearch">
+                    <button class="btn btn-search"></button>
+                </form>
+            </div>
+            <div class="sidebarMenuHolder">
+                <div class="JStree">
+                    <div class="Jstree_shadow_top"></div>
+                    <div id="jstree"></div>
+                    <div class="Jstree_shadow_bottom"></div>
+                </div>
+            </div>
+        </div>
+        <div class="panel-slider">
+            <div class="panel-slider-center">
+                <div class="panel-slider-arrow"></div>
+            </div>
+        </div>
+    </div>
+    <div class="breadcrumb-container">
+        <ul class="xbreadcrumbs">
+            <li>
+                <a href="~/Dashboard/Index">
+                    <i class="icon-photon home"></i>
+                </a>
+            </li>
+            <li>
+                <a href="~/Inventory/InventoryWarehouse/Index">
+                    @EPMS.Web.Resources.Inventory.InventoryWarehouse.BCTitle
+                </a>
+            </li>
+            <li class="current">
+                <a href="javascript:;">
+                    @ViewBag.Title
+                </a>
+            </li>
+        </ul>
+    </div>
+    <header>
+        <i class="icon-big-notepad"></i>
+        <h2><small>@ViewBag.Title</small></h2>
+    </header>
+    <!--Notifications begin-->
+    @Html.Partial("_Alert")
+    <!--Notifications end-->
+
+    @using (Html.BeginForm("Create", "ProductSection", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditProductSection", role = "form", enctype = "multipart/form-data" }))
+    {
+        <div class="container-fluid">
+            @Html.HiddenFor(model => model.ProductSection.SectionId, new { @id = "SectionId" })
+            @Html.HiddenFor(model => model.ProductSection.InventoyDepartmentId, new { @id = "InventoyDepartmentId" })
+            @Html.HiddenFor(model => model.ProductSection.ParentSectionId, new { @id = "ParentSectionId" })
+            @Html.HiddenFor(model => model.ProductSection.RecCreatedBy, new { @id = "RecCreatedBy" })
+            @Html.HiddenFor(model => model.ProductSection.RecCreatedDt, new { @id = "RecCreatedDt" })
+            
+            <div class="control-group row-fluid ">
+                <div class="span3">
+                    <label class="control-label" for="SectionNameEn">Section Name</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionNameEn, new { id = "SectionNameEn", @class = "toBeDisable" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid ">
+                <div class="span3">
+                    <label class="control-label" for="SectionNameAr">Section Name Arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ProductSection.SectionNameAr, new { id = "SectionNameAr", @class = "toBeDisable" })
+                    </div>
+                </div>
+            </div>
+            <div id="content">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="SectionContentEn">Content</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.ProductSection.SectionContentEn, new { id = "SectionContentEn", @class = "toBeDisable" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="SectionContentAr">Content Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(m => m.ProductSection.SectionContentAr, new { id = "SectionContentAr", @class = "toBeDisable" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid" id="ShowToPublicDiv">
+                <div class="span3">
+                    <label class="control-label" for="ShowToPublic">Show to public?</label>
+                </div>
+                <div class="span9 span-inset">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.ProductSection.ShowToPublic, new { @id = "ShowToPublic", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div id="Edit" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" id="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="SaveNewNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="validateForm(event)">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div id="UpdateNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="validateForm(event)">Update</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+
+</div>
+
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
+@* Bootstrap switch 3.3.2 *@
+
+@*<link href="~/Content/CSS/newbootstrapswitch/bootstrap-switch.min.css" rel="stylesheet" />
+<link href="~/Content/CSS/newbootstrapswitch/bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/CSS/newbootstrapswitch/highlight.css" rel="stylesheet" />
+<link href="~/Content/CSS/newbootstrapswitch/main.css" rel="stylesheet" />
+<script src="~/Scripts/plugins/newbootstrapswitch/bootstrap.min.js"></script>
+<script src="~/Scripts/plugins/newbootstrapswitch/highlight.js"></script>
+<script src="~/Scripts/plugins/newbootstrapswitch/jquery.min.js"></script>
+<script src="~/Scripts/plugins/newbootstrapswitch/main.js"></script>
+<script src="~/Scripts/plugins/newbootstrapswitch/newBootstrap-switch.min.js"></script>*@
+<script>
+    var warehouseId;
+    var dir;
+    var jsTree;
+    var divId;
+    var productToShow;
+    $().ready(function () {
+        dir = '@direction';
+        divId = "jstree";
+        $("#layoutMainContent").removeClass("main-content");
+        var list = '@Html.Raw(ViewBag.JsTree)';
+        var treeData = JSON.parse(list);
+        jsTree = $("#" + divId).on('changed.jstree', function (e, data) {
+            var m = $(".alert-error");
+            m.children("span").text("");
+            m.hide();
+            var i, j, r = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+            }
+            updateView(r[0]);
+        }).jstree({
+            'core': {
+                'check_callback': true,
+                'data': treeData
+            },
+            "types": {
+                "#": { "max_children": 2, "max_depth": 4, "valid_children": ["root"] }
+            },
+            "plugins": ["themes", "json_data", "ui"],
+        });
+        setTimeout(function () {
+            var temp = '@ViewBag.ProductId';
+            if (temp != '') {
+                productToShow = '@ViewBag.ProductId';
+            }
+            if (productToShow != "" && productToShow != undefined || productToShow != null) {
+                $('#jstree').jstree('select_node', productToShow);
+                updateView(productToShow);
+            } else {
+                $("#content").show();
+            }
+        }, 500);
+    });
+    function updateView(r) {
+        var id = r;
+        var productId;
+        var productSectionsList = '@Html.Raw(Json.Encode(Model.ProductSections))';
+        var sections = JSON.parse(productSectionsList);
+        var childList = '@Html.Raw(Json.Encode(Model.ProductSectionsChildList))';
+        var childs = JSON.parse(childList);
+        var isContains = id.indexOf("Imported") >= 0;
+        if (isContains) {
+            if (id.indexOf("SubSub") >= 0) {
+                productId = id;
+                $("#content").hide();
+                $("#ShowToPublicDiv").hide();
+                $.each(childs, function (key, value) {
+                    if (value.id == productId) {
+                        $("#SectionNameEn").val(value.textEn);
+                        $("#SectionNameAr").val(value.textAr);
+                        $("#InventoyDepartmentId").val(value.DepartmentId);
+                    }
+                });
+                $("#Edit").hide();
+                $("#UpdateNode").hide();
+                $("#SaveNewNode").hide();
+                disableControls();
+                
+            } else if (id.indexOf("Sub") >= 0) {
+                productId = id;
+                $("#content").hide();
+                $("#ShowToPublicDiv").hide();
+                $.each(childs, function (key, value) {
+                    if (value.id == productId) {
+                        $("#SectionNameEn").val(value.textEn);
+                        $("#SectionNameAr").val(value.textAr);
+                        $("#InventoyDepartmentId").val(value.DepartmentId);
+                    }
+                });
+                $("#Edit").hide();
+                $("#UpdateNode").hide();
+                $("#SaveNewNode").hide();
+                disableControls();
+            } else {
+                // parent department imported from inventory
+                productId = id.split('_')[0];
+                $.each(sections, function (key, value) {
+                    if (value.SectionId == productId) {
+                        updateValues(value);
+                    }
+                });
+                $("#content").show();
+                $("#ShowToPublicDiv").show();
+                $("#Edit").show();
+                $("#UpdateNode").hide();
+                $("#SaveNewNode").hide();
+                disableControls();
+            }
+        } else {
+            //Manually created
+            $.each(sections, function (key, value) {
+                if (value.SectionId == id) {
+                    updateValues(value);
+                }
+            });
+            $("#content").show();
+            $("#ShowToPublicDiv").show();
+            $("#Edit").show();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+            disableControls();
+        }
+    }
+
+    $("#edit").click(function(event) {
+        @*if ('@userPermissionsSet.Contains("")' == 'True') {
+            
+        }*@
+        enableControls();
+        $("#UpdateNode").show();
+        $("#Edit").hide();
+        $("#SaveNewNode").hide();
+    });
+    function disableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+        $("#ShowToPublicDiv").addClass("disableList");
+    }
+    function enableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+        $("#ShowToPublicDiv").removeClass("disableList");
+    }
+    function updateValues(value) {
+        $("#SectionId").val(value.SectionId);
+        $("#ParentSectionId").val(value.ParentSectionId);
+        $("#InventoyDepartmentId").val(value.InventoyDepartmentId);
+        $("#SectionNameEn").val(value.SectionNameEn);
+        $("#SectionNameAr").val(value.SectionNameAr);
+        $("#SectionContentEn").val(value.SectionContentEn);
+        $("#SectionContentAr").val(value.SectionContentAr);
+        //$("#ShowToPublic").val(value.ShowToPublic);
+        //$('#ShowToPublic').bootstrapSwitch('state', value.ShowToPublic);
+        $("#RecCreatedBy").val(value.RecCreatedBy);
+        $("#RecCreatedDt").val(value.RecCreatedDate);
+        return;
+    }
+    function setNullValues() {
+        $("#ParentSectionId").val($("#SectionId").val());
+        $("#SectionId").val("");
+        $("#InventoyDepartmentId").val("");
+        $("#SectionNameEn").val("");
+        $("#SectionNameAr").val("");
+        $("#SectionContentEn").val("");
+        $("#SectionContentAr").val("");
+        //$("#ShowToPublic").val(value.ShowToPublic);
+        //$('#ShowToPublic').bootstrapSwitch('state', value.ShowToPublic);
+        $("#RecCreatedBy").val("");
+        $("#RecCreatedDt").val("");
+        return;
+    }
+    function AddNewNode() {
+        var deptId = $("#InventoyDepartmentId").val();
+        if (deptId == "" || deptId == 0 || deptId == null) {
+            var parent = parseInt($("#SectionId").val());
+            if (parent == 0 || parent == "" || parent == null) {
+                var m = $(".alert-error");
+                m.children("span").text("Please select parent section");
+                m.show();
+                return;
+            } else {
+                var parentDiv = $('.jstree-clicked').parent().parent().parent().parent().parent().parent().parent();
+                if (parentDiv.is("div") && parentDiv.attr('id') == "jstree") {
+                    var m = $(".alert-error");
+                    m.children("span").text("Can't create further Product Section");
+                    m.show();
+                    return;
+                } else {
+                    var m = $(".alert-error");
+                    m.children("span").text("");
+                    m.hide();
+                    setNullValues();
+                    $("#SaveNewNode").show();
+                    $("#Edit").hide();
+                    $("#UpdateNode").hide();
+                    enableControls();
+                }
+                
+            }
+        } else {
+            var m = $(".alert-error");
+            m.children("span").text("Cannot Add Product Section in Imported Products from Inventory");
+            m.show();
+        }
+    }
+</script>

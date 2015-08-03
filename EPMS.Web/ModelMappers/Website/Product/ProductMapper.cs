@@ -29,7 +29,9 @@ namespace EPMS.Web.ModelMappers.Website.Product
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ItemNameEn = source.ItemVariation.SKUDescriptionEn,
                 ProductImages = source.ProductImages.Select(x=>x.CreateFromServerToClient()).ToList()
+                ItemNameAr = source.ItemVariation.SKUDescriptionAr
             };
         }
 
