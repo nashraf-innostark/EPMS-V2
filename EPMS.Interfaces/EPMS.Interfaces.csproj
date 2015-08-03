@@ -63,6 +63,7 @@
     <Compile Include="IServices\ICompanyProfileService.cs" />
     <Compile Include="IServices\ICompanySocialService.cs" />
     <Compile Include="IServices\IComplaintService.cs" />
+    <Compile Include="IServices\IContactUsService.cs" />
     <Compile Include="IServices\ICustomerService.cs" />
     <Compile Include="IServices\IDashboardWidgetPreferencesService.cs" />
     <Compile Include="IServices\IDepartmentService.cs" />
@@ -123,6 +124,7 @@
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />
     <Compile Include="Repository\IApplicantQualificationRepository.cs" />
     <Compile Include="Repository\IAspNetUserRepository.cs" />
+    <Compile Include="Repository\IContactUsRepository.cs" />
     <Compile Include="Repository\IImageSliderRepository.cs" />
     <Compile Include="Repository\IItemBarcodeRepository.cs" />
     <Compile Include="Repository\IBaseRepository.cs" />

@@ -156,5 +156,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<ProductSection> ProductSections { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductImage> ProductImages { get; set; }
+        public DbSet<ContactUs> ContactUs { get; set; }
     }
 }
