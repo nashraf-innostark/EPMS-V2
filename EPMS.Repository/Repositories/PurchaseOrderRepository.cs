@@ -213,7 +213,7 @@ namespace EPMS.Repository.Repositories
             PurchaseOrder po = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             if (po != null)
                 return po.FormNumber;
-            return "PO00000001";
+            return "PO00000000";
         }
     }
 }

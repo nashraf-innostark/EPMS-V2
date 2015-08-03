@@ -114,7 +114,7 @@ namespace EPMS.Repository.Repositories
             DIF dif = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             if (dif != null)
                 return dif.FormNumber;
-            return "DI00000001";
+            return "DI00000000";
         }
     }
 }
