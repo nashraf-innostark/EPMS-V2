@@ -240,6 +240,24 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Delete
+
+        public JsonResult Delete(long departmentId)
+        {
+            var message = departmentService.DeleteInventoryDepartment(departmentId);
+            if (message == "AssociatedDepartments")
+            {
+                return Json("AssociatedDepartments", JsonRequestBehavior.AllowGet);
+            }
+            if (message == "AssociatedInventoryItems")
+            {
+                return Json("AssociatedInventoryItems", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Save Inventory Section
         [HttpPost]
         [ValidateInput(false)]

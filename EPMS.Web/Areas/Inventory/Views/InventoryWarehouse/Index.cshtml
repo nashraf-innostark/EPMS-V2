@@ -50,6 +50,7 @@
                             <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfShalves</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSectionsOnShalves</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSpaces</th>
+                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,6 +88,7 @@
                                 <td class="center">@warehouse.NoOfShalves</td>
                                 <td class="center">@warehouse.NoOfSectoinsInShalves</td>
                                 <td class="center">@warehouse.NoOfSpaces</td>
+                                <td class="@warehouse.WarehouseId"><a href="#" id="delete" onclick="deleteRow(@warehouse.WarehouseId)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
                             </tr>
                         }
                     </tbody>
@@ -107,4 +109,40 @@
             }
         });
     });
+
+    function deleteRow(warehouseId) {
+        if (confirm("Are you sure you want to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Inventory/InventoryWarehouse/Delete';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                warehouseId: warehouseId
+            },
+            success: function (data) {
+                if (data == "Deleted") {
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'success',
+                        text: 'Record has been Deleted.'
+                    });
+                    var row = $("." + warehouseId).parent().get(0);
+                    var atable = $('#tableSortableResMed').dataTable();
+                    var pos = atable.fnGetPosition(row);
+                    atable.fnDeleteRow(pos);
+                } else {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, warehouse detail exists.'
+                    });
+                }
+            },
+        });
+    }
+
 </script>

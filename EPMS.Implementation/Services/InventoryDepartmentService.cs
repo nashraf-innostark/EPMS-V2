@@ -86,13 +86,17 @@ namespace EPMS.Implementation.Services
             InventoryDepartment department = departmentRepository.Find(id);
             if (department != null)
             {
-                if (department.InventoryItems != null && !department.InventoryItems.Any())
+                if (department.InventoryDepartments.Any())
                 {
-                    departmentRepository.Delete(department);
-                    departmentRepository.SaveChanges();
-                    return "Success";
+                    return "AssociatedDepartments";
                 }
-                return "Associated";
+                if (department.InventoryItems.Any())
+                {
+                    return "AssociatedInventoryItems";
+                }
+                departmentRepository.Delete(department);
+                departmentRepository.SaveChanges();
+                return "Success";
             }
             return "Error";
         }
