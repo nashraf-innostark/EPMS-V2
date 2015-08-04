@@ -153,7 +153,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" id="descpE" class="tbdisable" />
+                    <input type="text" id="descpE" readonly="true" />
                     <script>
                             var descpE = '@Html.Raw(Model.ItemVariation.DescriptionEn)';
                             var regex = /(<([^>]+)>)/ig;
@@ -170,7 +170,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    <input type="text" id="descpA" class="tbdisable" />
+                    <input type="text" id="descpA" readonly="true" />
                     <script>
                         var descpA = '@Html.Raw(Model.ItemVariation.DescriptionAr)';
                         var regex = /(<([^>]+)>)/ig;
@@ -763,7 +763,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), new { @class = "select2me sizeDdl toClear", id = "sizeId" })
+                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), "Select Size", new { @class = "select2me sizeDdl toClear", id = "sizeId" })
                         </div>
                     </div>
 
@@ -837,7 +837,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), new { @class = "select2me toClear", id = "warehouseDropdown" })
+                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me toClear", id = "warehouseDropdown" })
                         </div>
                     </div>
 
@@ -924,7 +924,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
                             </div>
                         </div>
                     </div>
@@ -1020,7 +1020,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), new { @class = "select2me statusDdl toClear", id = "statusId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), "Select Status", new { @class = "select2me statusDdl toClear", id = "statusId" })
                             </div>
                         </div>
                     </div>
@@ -1093,7 +1093,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), new { @class = "select2me colorDdl toClear", id = "colorId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), "Select Color", new { @class = "select2me colorDdl toClear", id = "colorId" })
                             </div>
                         </div>
                     </div>
@@ -1694,36 +1694,44 @@
         //Add Size from Dropdown to List
         $('.addSizeToList').on("click", function (event) {
             var sizeId = $('#sizeId').val();
-            var sizeNameEn;
-            var sizeNameAr;
-            $.each(parsedSize, function (key, value) {
-                if (value.SizeId == sizeId) {
-                    sizeNameEn = value.SizeNameEn;
-                    sizeNameAr = value.SizeNameAr;
+            if (sizeId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Size'
+                });
+            } else {
+                var sizeNameEn;
+                var sizeNameAr;
+                $.each(parsedSize, function (key, value) {
+                    if (value.SizeId == sizeId) {
+                        sizeNameEn = value.SizeNameEn;
+                        sizeNameAr = value.SizeNameAr;
+                    }
+                });
+                var html = '<tr class="gradeX sizeTableRow">' +
+                    '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
+                    '<td>' + sizeNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteSize"></i></td>' +
+                    '</tr>';
+                $('.sizeTable').append(html);
+                ManageSizeList(sizeId);
+                $('#sizeModule').modal('hide');
+                $('.tableSize').dataTable().fnDestroy();
+                $('.tableSize').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".sizeTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX sizeTableRow">' +
-                '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
-                '<td>' + sizeNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteSize"></i></td>' +
-                '</tr>';
-            $('.sizeTable').append(html);
-            ManageSizeList(sizeId);
-            $('#sizeModule').modal('hide');
-            $('.tableSize').dataTable().fnDestroy();
-            $('.tableSize').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
-                $(".sizeTable").children("tr").children("td").hide();
+                $("#addNewSize").hide();
+                clearPopup();
             }
-            $("#addNewSize").hide();
-            clearPopup();
         });
 
         //Delete Size from the List
@@ -1741,13 +1749,14 @@
         //Add Manufacturer from Dropdown to List
         $('.addManufacturerToList').on("click", function (event) {
             debugger;
+            var manufacturerId = $('#manuId').val();
             var price = $('#manufacturerPriceLable').val();
             var quantity = $('#manufacturerQuantityLable').val();
-            if (price == null || price == "" || quantity == null || quantity == "") {
+            if (price == null || price == "" || quantity == null || quantity == "" || manufacturerId == "") {
                 $.pnotify({
                     title: 'error',
                     type: 'info',
-                    text: 'Please select Price and Quantity'
+                    text: 'Please select Manufacturer, Price and Quantity'
                 });
             } else {
                 var index = $("#manufacturerDetails").children("tr").length;
@@ -1755,7 +1764,6 @@
                     index = index - 1;
                     $("#manufacturerDetails").children("tr").children("td").hide();
                 }
-                var manufacturerId = $('#manuId').val();
                 var isAlreadyExist = false;
                 var ids = $('.idsofMan').val();
                 if ($("#manufacturerDetails").children("tr").children("td").html() != "No data available in table") {
@@ -1835,36 +1843,44 @@
         //Add Status from Dropdown to List
         $('.addStatusToList').on("click", function (event) {
             var statusId = $('#statusId').val();
-            var statusNameEn;
-            var statusNameAr;
-            $.each(parsedStatus, function (key, value) {
-                if (value.StatusId == statusId) {
-                    statusNameEn = value.StatusNameEn;
-                    statusNameAr = value.StatusNameAr;
+            if (statusId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Status'
+                });
+            } else {
+                var statusNameEn;
+                var statusNameAr;
+                $.each(parsedStatus, function (key, value) {
+                    if (value.StatusId == statusId) {
+                        statusNameEn = value.StatusNameEn;
+                        statusNameAr = value.StatusNameAr;
+                    }
+                });
+                var html = '<tr class="gradeX statusTableRow">' +
+                    '<input type="hidden" class="statusIdHidden" value=' + statusId + '/>+' +
+                    '<td>' + statusNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteStatus"></i></td>' +
+                    '</tr>';
+                $('.statusTable').append(html);
+                ManageStatusList(statusId);
+                $('#itemStatusModule').modal('hide');
+                $('.tableStatus').dataTable().fnDestroy();
+                $('.tableStatus').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".statusTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX statusTableRow">' +
-                '<input type="hidden" class="statusIdHidden" value=' + statusId + '/>+' +
-                '<td>' + statusNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteStatus"></i></td>' +
-                '</tr>';
-            $('.statusTable').append(html);
-            ManageStatusList(statusId);
-            $('#itemStatusModule').modal('hide');
-            $('.tableStatus').dataTable().fnDestroy();
-            $('.tableStatus').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
-                $(".statusTable").children("tr").children("td").hide();
+                $("#addNewStatus").hide();
+                clearPopup();
             }
-            $("#addNewStatus").hide();
-            clearPopup();
         });
 
         //Delete Status from the List
@@ -1881,36 +1897,44 @@
         //Add Color from Dropdown to List
         $('.addColorToList').on("click", function (event) {
             var colorId = $('#colorId').val();
-            var colorNameEn;
-            var colorNameAr;
-            $.each(parsedColor, function (key, value) {
-                if (value.ColorId == colorId) {
-                    colorNameEn = value.ColorNameEn;
-                    colorNameAr = value.ColorName;
+            if (colorId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Color'
+                });
+            } else {
+                var colorNameEn;
+                var colorNameAr;
+                $.each(parsedColor, function (key, value) {
+                    if (value.ColorId == colorId) {
+                        colorNameEn = value.ColorNameEn;
+                        colorNameAr = value.ColorName;
+                    }
+                });
+                var html = '<tr class="gradeX colorTableRow">' +
+                    '<input type="hidden" class="colorIdHidden" value=' + colorId + '/>+' +
+                    '<td>' + colorNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteColor"></i></td>' +
+                    '</tr>';
+                $('.colorTable').append(html);
+                ManageColorList(colorId);
+                $('#itemColorModule').modal('hide');
+                $('.tableColor').dataTable().fnDestroy();
+                $('.tableColor').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".colorTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX colorTableRow">' +
-                '<input type="hidden" class="colorIdHidden" value=' + colorId + '/>+' +
-                '<td>' + colorNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteColor"></i></td>' +
-                '</tr>';
-            $('.colorTable').append(html);
-            ManageColorList(colorId);
-            $('#itemColorModule').modal('hide');
-            $('.tableColor').dataTable().fnDestroy();
-            $('.tableColor').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
-                $(".colorTable").children("tr").children("td").hide();
+                $("#addNewColor").hide();
+                clearPopup();
             }
-            $("#addNewColor").hide();
-            clearPopup();
         });
 
         //Delete Color from the List
@@ -2001,55 +2025,64 @@
                 index = index - 1;
                 $("#warehouseDetails").children("tr").children("td").hide();
             }
-            itemsCount = itemsCount + 1;
             var locationInWarehouse = $('#textTillParent').text();
             var quantity = $('#inputFieldQuantity').val();
             var warehouseId = $('#warehouseDropdown').val();
-            var warehouseList = '@Html.Raw(Json.Encode(Model.WarehousesForDdl))';
-            var parsed = JSON.parse(warehouseList);
-            var warehouseNumber;
-            $.each(parsed, function (key, value) {
-                if (value.WarehouseId == warehouseId) {
-                    warehouseNumber = value.WarehouseNumber;
-                }
-            });
-            var html = ' <tr data-id=' + index + '>' +
-                '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
-                '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
-                '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
-                '<td>' + itemsCount +
-                '</td>' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
-                '</td>' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
-                '</td>' +
-                '<td>' +
-                '<i class="icon-photon minus deleteWarehouse"></i>' +
-                '</td>' +
-                '</tr>';
-            $('#warehouseDetails').append(html);
-            $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
-            $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
-            $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
-            event.preventDefault();
-            $('#wherehouseModule').modal('hide');
-            $('.tableWarehouse').dataTable().fnDestroy();
-            $('.tableWarehouse').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            clearPopup();
+            if (quantity == "" || warehouseId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Warehouse and Quantity'
+                });
+            } else {
+                itemsCount = itemsCount + 1;
+
+                var warehouseList = '@Html.Raw(Json.Encode(Model.WarehousesForDdl))';
+                var parsed = JSON.parse(warehouseList);
+                var warehouseNumber;
+                $.each(parsed, function (key, value) {
+                    if (value.WarehouseId == warehouseId) {
+                        warehouseNumber = value.WarehouseNumber;
+                    }
+                });
+                var html = ' <tr data-id=' + index + '>' +
+                    '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
+                    '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
+                    '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
+                    '<td>' + itemsCount +
+                    '</td>' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
+                    '</td>' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<i class="icon-photon minus deleteWarehouse"></i>' +
+                    '</td>' +
+                    '</tr>';
+                $('#warehouseDetails').append(html);
+                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
+                $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
+                $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+                event.preventDefault();
+                $('#wherehouseModule').modal('hide');
+                $('.tableWarehouse').dataTable().fnDestroy();
+                $('.tableWarehouse').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                clearPopup();
+            }
         });
 
         //Delete Warehouse from the List

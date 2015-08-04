@@ -75,8 +75,22 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 response = itemVariationService.ItemVariationResponse(0, inventoryItemId);
                 variationViewModel.ItemVariation.InventoryItemId = inventoryItemId;
-                variationViewModel.ItemVariation.DescriptionEn = response.InventoryItem.ItemDescriptionEn;
-                variationViewModel.ItemVariation.DescriptionAr = response.InventoryItem.ItemDescriptionAr;
+                var descE = response.InventoryItem.ItemDescriptionEn;
+                if (!string.IsNullOrEmpty(descE))
+                {
+                    descE = descE.Replace("\r", "");
+                    descE = descE.Replace("\t", "");
+                    descE = descE.Replace("\n", "");
+                }
+                var descA = response.InventoryItem.ItemDescriptionAr;
+                if (!string.IsNullOrEmpty(descE))
+                {
+                    descA = descA.Replace("\r", "");
+                    descA = descA.Replace("\t", "");
+                    descA = descA.Replace("\n", "");
+                }
+                variationViewModel.ItemVariation.DescriptionEn = descE;
+                variationViewModel.ItemVariation.DescriptionAr = descA;
             }
             variationViewModel.ColorsForDdl = response.ColorsForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.SizesForDdl = response.SizesForDdl.Select(x => x.CreateFromServerToClient()).ToList();

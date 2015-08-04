@@ -106,6 +106,15 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Department Information.
         /// </summary>
         public static string DeptInfo {
