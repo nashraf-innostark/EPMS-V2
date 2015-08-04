@@ -394,6 +394,15 @@ namespace EPMS.Web.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity in Package.
+        /// </summary>
+        public static string QuantityInPackage {
+            get {
+                return ResourceManager.GetString("QuantityInPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reorder Point.
         /// </summary>
         public static string ReorderPoint {
@@ -453,6 +462,15 @@ namespace EPMS.Web.Resources.Inventory {
         public static string SKUDescEn {
             get {
                 return ResourceManager.GetString("SKUDescEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Quantity In Hand.
+        /// </summary>
+        public static string TotalQuantity {
+            get {
+                return ResourceManager.GetString("TotalQuantity", resourceCulture);
             }
         }
         

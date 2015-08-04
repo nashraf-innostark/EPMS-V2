@@ -11,6 +11,7 @@ namespace EPMS.Models.DomainModels
         public double? UnitCost { get; set; }
         public bool CostCalculation { get; set; }
         public double? UnitPrice { get; set; }
+        public double? QuantityInPackage { get; set; }
         public double? PackagePrice { get; set; }
         public bool PriceCalculation { get; set; }
         public string DescriptionEn { get; set; }

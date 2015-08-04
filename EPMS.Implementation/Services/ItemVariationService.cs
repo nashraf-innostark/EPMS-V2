@@ -467,7 +467,8 @@ namespace EPMS.Implementation.Services
                     {
                         ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
                         Price = itemManufacturer.Price,
-                        ManufacturerId = itemManufacturer.ManufacturerId
+                        ManufacturerId = itemManufacturer.ManufacturerId,
+                        Quantity = itemManufacturer.Quantity
                     };
                     itemManufacturerRepository.Add(manufacturer);
                 }

@@ -270,4 +270,10 @@
   <data name="UnitCost" xml:space="preserve">
     <value>Unit Cost</value>
   </data>
+  <data name="TotalQuantity" xml:space="preserve">
+    <value>Total Quantity In Hand</value>
+  </data>
+  <data name="QuantityInPackage" xml:space="preserve">
+    <value>Quantity in Package</value>
+  </data>
 </root>

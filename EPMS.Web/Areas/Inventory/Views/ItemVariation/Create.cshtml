@@ -111,7 +111,29 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.ItemVariation.PriceCalculation, new { @id = "PriceCalculation" })
+                </div>
+            </div>
+        </div>
 
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.QuantityInPackage</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInPackage, new { @dir = "ltr", @id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInPackage, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -127,23 +149,17 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
-            </div>
-            <div class="span9 span-inset">
-                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
-                    @Html.CheckBoxFor(model => model.ItemVariation.PriceCalculation, new { @id = "PriceCalculation" })
-                </div>
-            </div>
-        </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.DescriptionEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", @id = "DescriptionEn", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionEn)
+                    <input type="text" id="descpE" class="tbdisable" />
+                    <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.DescriptionEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descpE').val(result);
+                    </script>
                 </div>
             </div>
         </div>
@@ -154,8 +170,14 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", @id = "DescriptionAr", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionAr)
+                    <input type="text" id="descpA" class="tbdisable" />
+                    <script>
+                        var descpA = '@Html.Raw(Model.ItemVariation.DescriptionAr)';
+                        var regex = /(<([^>]+)>)/ig;
+                        var result = descpE.replace(regex, "");
+                        $("#" + 'descpA').val(result);
+                    </script>
+
                 </div>
             </div>
         </div>
@@ -195,6 +217,18 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.TotalQuantity</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @dir = "ltr", @id = "TotalQuantityInHand", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.TotalQuantityInHand, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -202,7 +236,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
@@ -323,6 +357,74 @@
                     <div class="controls">
                         @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", @id = "AdditionalInfoAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoAr, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id ="noCkEditor">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.NotesEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'notesE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.NotesAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'notesA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="addInfoE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.AdditionalInfoEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'addInfoE').val(result);
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="addInfoA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.AdditionalInfoAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'addInfoA').val(result);
+                        </script>
                     </div>
                 </div>
             </div>
@@ -661,7 +763,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), "Select Size", new { @class = "select2me sizeDdl toClear", id = "sizeId" })
+                            @Html.DropDownListFor(x => x.ItemVariation.Sizes, new SelectList(Model.SizesForDdl, "SizeId", "SizeNameEn"), new { @class = "select2me sizeDdl toClear", id = "sizeId" })
                         </div>
                     </div>
 
@@ -735,7 +837,7 @@
                     </div>
                     <div class="span4">
                         <div class="controls">
-                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), "Select Warehouse", new { @class = "select2me toClear", id = "warehouseDropdown" })
+                            @Html.DropDownListFor(x => x.ItemVariation.ItemWarehouses, new SelectList(Model.WarehousesForDdl, "WarehouseId", "WarehouseNumber"), new { @class = "select2me toClear", id = "warehouseDropdown" })
                         </div>
                     </div>
 
@@ -822,7 +924,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
                             </div>
                         </div>
                     </div>
@@ -918,7 +1020,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), "Select Status", new { @class = "select2me statusDdl toClear", id = "statusId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Statuses, new SelectList(Model.StatusesForDdl, "StatusId", "StatusNameEn"), new { @class = "select2me statusDdl toClear", id = "statusId" })
                             </div>
                         </div>
                     </div>
@@ -991,7 +1093,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), "Select Color", new { @class = "select2me colorDdl toClear", id = "colorId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.Colors, new SelectList(Model.ColorsForDdl, "ColorId", "ColorNameEn"), new { @class = "select2me colorDdl toClear", id = "colorId" })
                             </div>
                         </div>
                     </div>
@@ -1084,7 +1186,7 @@
                 <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
                     <div class="span2">
                         <label class="control-label" for="inputField">
-                            Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                            Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
                         </label>
                     </div>
                     <div class="span10 row-fluid">
@@ -1179,11 +1281,13 @@
             $("#edit").hide();
             itemsCount = 0;
             showCkEditors();
+            $('#noCkEditor').hide();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
+            $('#CKEditorDescp').hide();
             itemsCount = parseInt('@Model.ItemVariation.ItemImages.Count');
         }
         $("#edit").click(function (event) {
@@ -1194,6 +1298,7 @@
             $(".deleteRow").show();
             event.preventDefault();
             $("#CKEditorDescp").show();
+            $('#noCkEditor').hide();
             showCkEditors();
         });
         $('#tableSortableVariationsImg,#tableSortableItemStatus,#tableSortableVariationsManufacturer,#tableSortableVariationsWherehouse,#tableSortableVariationsSize,#tableSortableItemColor').dataTable({
@@ -1222,10 +1327,10 @@
         var imagePath;
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
-            maxsize: 1, //file size in MBs
+            maxsize: 10, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            ini_text: "Drag your file here or click (max: 10MB)",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
@@ -1334,47 +1439,55 @@
         });
         //Add Size to DB
         $('#addSizeToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
             var nameEn = $("#SizeNameEn").val();
             var nameAr = $("#SizeNameAr").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-            };
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var sizeid = data.SizeId;
-                    var snameEn = data.SizeNameEn;
-                    var snameAr = data.SizeNameAr;
-                    var htmlEn = '<option value=' + sizeid + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + sizeid + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.sizeDdl').append(htmlEn);
-                    } else {
-                        $('.sizeDdl').append(htmlAr);
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Size Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var sizeid = data.SizeId;
+                        var snameEn = data.SizeNameEn;
+                        var snameAr = data.SizeNameAr;
+                        var htmlEn = '<option value=' + sizeid + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + sizeid + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.sizeDdl').append(htmlEn);
+                        } else {
+                            $('.sizeDdl').append(htmlAr);
+                        }
+                        $('#sizeAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var sizeToAdd = {
+                            SizeId: data.SizeId,
+                            SizeNameEn: data.SizeNameEn,
+                            SizeNameAr: data.SizeNameAr,
+                        };
+                        parsedSize.push(sizeToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#sizeAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var sizeToAdd = {
-                        SizeId: data.SizeId,
-                        SizeNameEn: data.SizeNameEn,
-                        SizeNameAr: data.SizeNameAr,
-                    };
-                    parsedSize.push(sizeToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
 
         //Open Dialogue - Add Manufacturer to DB
@@ -1445,47 +1558,55 @@
         });
         //Add Status to DB
         $('#addStatusToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveStatus";
             var nameEn = $("#StatusNameEn").val();
             var nameAr = $("#StatusNameAr").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-            };
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var statusId = data.StatusId;
-                    var snameEn = data.StatusNameEn;
-                    var snameAr = data.StatusNameAr;
-                    var htmlEn = '<option value=' + statusId + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + statusId + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.statusDdl').append(htmlEn);
-                    } else {
-                        $('.statusDdl').append(htmlAr);
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Status Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveStatus";
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var statusId = data.StatusId;
+                        var snameEn = data.StatusNameEn;
+                        var snameAr = data.StatusNameAr;
+                        var htmlEn = '<option value=' + statusId + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + statusId + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.statusDdl').append(htmlEn);
+                        } else {
+                            $('.statusDdl').append(htmlAr);
+                        }
+                        $('#itemStatusAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var statusToAdd = {
+                            StatusId: data.StatusId,
+                            StatusNameEn: data.StatusNameEn,
+                            StatusNameAr: data.StatusNameAr,
+                        };
+                        parsedStatus.push(statusToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#itemStatusAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var statusToAdd = {
-                        StatusId: data.StatusId,
-                        StatusNameEn: data.StatusNameEn,
-                        StatusNameAr: data.StatusNameAr,
-                    };
-                    parsedStatus.push(statusToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
 
         //Open Dialogue - Add Color to DB
@@ -1496,51 +1617,59 @@
         });
         //Add Color to DB
         $('#addColorToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveColor";
             var nameEn = $("#ColorNameEn").val();
             var nameAr = $("#ColorNameAr").val();
-            var code = $("#color").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-                code: code,
-            };
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Color Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveColor";
+                var code = $("#color").val();
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                    code: code,
+                };
 
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var colorId = data.ColorId;
-                    var snameEn = data.ColorNameEn;
-                    var snameAr = data.ColorNameAr;
-                    var htmlEn = '<option value=' + colorId + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + colorId + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.colorDdl').append(htmlEn);
-                    } else {
-                        $('.colorDdl').append(htmlAr);
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var colorId = data.ColorId;
+                        var snameEn = data.ColorNameEn;
+                        var snameAr = data.ColorNameAr;
+                        var htmlEn = '<option value=' + colorId + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + colorId + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.colorDdl').append(htmlEn);
+                        } else {
+                            $('.colorDdl').append(htmlAr);
+                        }
+                        $('#itemColorAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var colorToAdd = {
+                            ColorId: data.ColorId,
+                            ColorNameAr: data.ColorNameAr,
+                            ColorNameEn: data.ColorNameEn,
+                            ColorCode: data.ColorCode,
+                        };
+                        parsedColor.push(colorToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#itemColorAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var colorToAdd = {
-                        ColorId: data.ColorId,
-                        ColorNameAr: data.ColorNameAr,
-                        ColorNameEn: data.ColorNameEn,
-                        ColorCode: data.ColorCode,
-                    };
-                    parsedColor.push(colorToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
         //Set Color and Text on Color DDL
         $(".colorDdl").on("change", function () {

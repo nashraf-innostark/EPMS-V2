@@ -20,14 +20,56 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.ItemNameEn = source.ItemNameEn;
             inventoryItem.ItemNameAr = source.ItemNameAr;
             inventoryItem.ItemImagePath = source.ItemImagePath;
-            inventoryItem.ItemDescriptionEn = source.ItemDescriptionEn;
-            inventoryItem.ItemDescriptionAr = source.ItemDescriptionAr;
+            var descE = source.ItemDescriptionEn;
+            if (!string.IsNullOrEmpty(descE))
+            {
+                descE = descE.Replace("\r", "");
+                descE = descE.Replace("\t", "");
+                descE = descE.Replace("\n", "");
+            }
+            inventoryItem.ItemDescriptionEn = descE;
+            var descA = source.ItemDescriptionAr;
+            if (!string.IsNullOrEmpty(descA))
+            {
+                descA = descA.Replace("\r", "");
+                descA = descA.Replace("\t", "");
+                descA = descA.Replace("\n", "");
+            }
+            inventoryItem.ItemDescriptionAr = descA;
             inventoryItem.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
             inventoryItem.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
-            inventoryItem.HazardousEn = source.HazardousEn;
-            inventoryItem.HazardousAr = source.HazardousAr;
-            inventoryItem.UsageEn = source.UsageEn;
-            inventoryItem.UsageAr = source.UsageAr;
+            var hazE = source.HazardousEn;
+            if (!string.IsNullOrEmpty(hazE))
+            {
+                hazE = hazE.Replace("\r", "");
+                hazE = hazE.Replace("\t", "");
+                hazE = hazE.Replace("\n", "");
+            }
+            inventoryItem.HazardousEn = hazE;
+            var hazA = source.HazardousAr;
+            if (!string.IsNullOrEmpty(hazA))
+            {
+                hazA = hazA.Replace("\r", "");
+                hazA = hazA.Replace("\t", "");
+                hazA = hazA.Replace("\n", "");
+            }
+            inventoryItem.HazardousAr = hazA;
+            var usageE = source.UsageEn;
+            if (!string.IsNullOrEmpty(usageE))
+            {
+                usageE = usageE.Replace("\r", "");
+                usageE = usageE.Replace("\t", "");
+                usageE = usageE.Replace("\n", "");
+            }
+            inventoryItem.UsageEn = usageE;
+            var usageA = source.UsageAr;
+            if (!string.IsNullOrEmpty(usageA))
+            {
+                usageA = usageA.Replace("\r", "");
+                usageA = usageA.Replace("\t", "");
+                usageA = usageA.Replace("\n", "");
+            }
+            inventoryItem.UsageAr = usageA;
             inventoryItem.ReorderLevel = source.ReorderLevel;
             inventoryItem.DepartmentId = source.DepartmentId;
             inventoryItem.WarehouseID = source.WarehouseID;
@@ -37,24 +79,18 @@ namespace EPMS.Web.ModelMappers
             inventoryItem.RecLastUpdatedDt = source.RecLastUpdatedDt;
             inventoryItem.ItemVariations = source.ItemVariations.Select(x => x.CreateFromServerToClient()).ToList();
             inventoryItem.AveragePrice = 0;
-            inventoryItem.AveragePrice = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
+            double? sum = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
+            if (
+                sum != null)
+                inventoryItem.AveragePrice = Math.Round((double) sum, 2);
             inventoryItem.AverageCost = 0;
-            inventoryItem.AverageCost = source.ItemVariations.Where(x => x.CostCalculation).Sum(y => y.UnitCost/ source.ItemVariations.Count(z => z.CostCalculation));
+            inventoryItem.AverageCost = Math.Round((double) (source.ItemVariations.Where(x => x.CostCalculation).Sum(y => y.UnitCost/ source.ItemVariations.Count(z => z.CostCalculation))), 2);
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
-            inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
-            inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantitySold));
+            inventoryItem.QuantityInHand = source.QuantityInHand;
+            //inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
+            inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.ItemReleaseQuantities.Sum(y=>y.Quantity)));
             inventoryItem.DepartmentPath = source.DepartmentPath;
-            inventoryItem.QuantityInPackage = source.QuantityInPackage;
-            //var totalCost = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity * Convert.ToInt64(y.Price)));
-            //var totalQuantity = source.ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity));
-            //if (totalCost > 0 && totalQuantity > 0)
-            //{
-            //    inventoryItem.AverageCost = totalCost/totalQuantity;
-            //}
-            //else
-            //{
-            //    inventoryItem.AverageCost = 0;
-            //}
+            inventoryItem.QuantityInPackage = source.ItemVariations.Sum(x=>x.QuantityInPackage);
             return inventoryItem;
         }
 
