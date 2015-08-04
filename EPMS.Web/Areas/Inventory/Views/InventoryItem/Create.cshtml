@@ -709,6 +709,10 @@
         var requestUrl = "/Inventory/InventoryItem/GetAllDepartments";
         populateTree(0, "jstree", requestUrl);
 
+        //// new version of jsTree
+        //var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+        //populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
+
         $("#selectDepartment").on("click", function () {
             debugger;
             $('#DepartmentPath').val("Selected: " + textTillParent);
