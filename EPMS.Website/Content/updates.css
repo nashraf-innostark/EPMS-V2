@@ -1,0 +1,54 @@
+/*
+Title:   UPDATES Css File
+Author:  http://themeforest.net/user/hogash // Marius Hogas
+This is  where the updates will be located  */
+
+/* MENU CHASER STYLES */
+.chaser {background:#111; background:rgba(0,0,0,0.75); padding:0; position:fixed; left:0; right:0; top:0; width:100%; z-index: 9999;}
+.chaser .row {margin-bottom:0;}
+.chaser ul.sf-menu {float:none; display:block;}
+.chaser ul.sf-menu > li {float:left;}
+.chaser ul.sf-menu li a {color:#ddd; font-size:12px; line-height:1; padding:7px 25px 7px 15px;
+-webkit-transition: all 0.2s ease-out; -moz-transition: all 0.2s ease-out; -o-transition: all 0.2s ease-out; -ms-transition: all 0.2s ease-out; transition: all 0.2s ease-out;}
+.chaser ul.sf-menu li a.sf-with-ul {}
+.chaser ul.sf-menu li .sf-sub-indicator {top:7px; background-image:url(../images/arrows-ffffff.png);}
+.chaser ul.sf-menu li.sfHover > a,
+.chaser ul.sf-menu li:hover > a,
+.chaser ul.sf-menu li a:hover {color:#fff; background:#000;}
+.chaser ul.sf-menu li ul { background:#111; background:rgba(0,0,0,0.75); width:13em !important; }
+.chaser ul.sf-menu li li:hover ul,
+.chaser ul.sf-menu li li.sfHover ul {left:13.1em !important;}
+.chaser ul.sf-menu li:hover ul,
+.chaser ul.sf-menu li.sfHover ul {top: 26px;padding-bottom: 5px;}
+.chaser ul.sf-menu li li:hover ul,
+.chaser ul.sf-menu li li.sfHover ul {top:0;}
+
+/* BOXED VERSION */
+body.boxed {background:#fff url(../images/patterns/pat1.png);}
+body.boxed #page_wrapper {width:1200px; border-left: 3px solid #fff; border-right: 3px solid #fff; margin:0 auto; background:#f5f5f5; box-shadow: 0 0 10px rgba(0, 0, 0, 0.4);}
+
+
+
+/* TOOLTIP FADE */
+.fade {opacity: 0; -webkit-transition: opacity 0.15s linear; -moz-transition: opacity 0.15s linear; -o-transition: opacity 0.15s linear; transition: opacity 0.15s linear; }
+.fade.in { opacity: 1; }
+
+
+@media (max-width: 767px) {
+	.chaser {display:none !important;}
+}
+
+/* Updates 1.2 */
+
+
+/* Updates 1.2 */
+
+#action_box {max-height: 100px;}
+#twitterFeed .timePosted {display:inline-block; color:#9d9d9d; padding-left:10px; border-left:1px solid #707070; font-size:11px; position:absolute; right: 15px; top: 15px; bottom: 15px; width: 45px; vertical-align: middle;line-height: 1;}
+#sidebar ul.menu li > ul {list-style:none;}
+
+/* activate sidebar submenu show animation - simply uncomment these 2 rules below:
+#sidebar ul.menu li > ul {height:0; overflow:hidden; -webkit-transition: all 0.2s ease-out; -moz-transition: all 0.2s ease-out; -o-transition: all 0.2s ease-out; -ms-transition: all 0.2s ease-out; transition: all 0.2s ease-out;}
+#sidebar ul.menu li:hover > ul {display: block; height:200px;}
+*/
+

@@ -87,6 +87,7 @@
     <Compile Include="IServices\IMeetingAttendeeService.cs" />
     <Compile Include="IServices\IMeetingDocumentService.cs" />
     <Compile Include="IServices\IMeetingService.cs" />
+    <Compile Include="IServices\IWebsiteMenuService.cs" />
     <Compile Include="IServices\IMenuRightService.cs" />
     <Compile Include="IServices\INewsAndArticleService.cs" />
     <Compile Include="IServices\INotificationService.cs" />

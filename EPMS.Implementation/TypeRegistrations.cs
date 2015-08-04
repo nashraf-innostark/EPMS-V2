@@ -81,6 +81,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IProductService, ProductService>();
             unityContainer.RegisterType<IProductImageService, ProductImageService>();
             unityContainer.RegisterType<IContactUsService, ContactUsService>();
+            unityContainer.RegisterType<IWebsiteMenuService, WebsiteMenuService>();
         }
     }
 }
