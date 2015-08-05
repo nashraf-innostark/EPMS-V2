@@ -33,11 +33,11 @@
                     <div class="controls">
                         @if (direction == "ltr")
                         {
-                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinEn"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinEn"), "", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
                         }
                         else
                         {
-                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinAr"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinAr"), "", new { @class = "select2me", @id = "RFIItemVariationDropDownList" })
                         }
                     </div>
                     <label id="RFIItemVariationDropDownListValidation"></label>

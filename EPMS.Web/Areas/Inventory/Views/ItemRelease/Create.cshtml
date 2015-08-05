@@ -12,7 +12,6 @@
         ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-
 }
 
 <div class="breadcrumb-container">
@@ -180,13 +179,14 @@
 
         <div class="row-fluid" id="ress">
             <div class="span12">
-                <table class="table table-striped table-responsive ">
+                <table id="IRFTable" class="table table-striped table-responsive">
                     <thead class="">
                         <tr>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Serial</th>
                             <th style="width:50%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
+                            <th style="display: none">Requested Quantity</th>
                             <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
@@ -542,10 +542,11 @@
                 $("#selectedItemTreeValidation").text("");
                 $("#selectedItemTreeValidation").removeClass("Error");
             }
+            $("#RFIItemVariationTree").val("");
             var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
             var parsedRfiItems = JSON.parse(rfiItems);
             $.each(parsedRfiItems, function(key, value) {
-                if (value.ItemCodeSKUCode == selectedItem) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
                     $("#RFIItemVariationTree").val(value.ItemVariationId);
                 }
             });
@@ -955,6 +956,7 @@
                 $("#MultiWarehouse").append(html);
             }
         });
+        $('#IRFTable thead th:nth-child(5)').show()
         var html1 = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
@@ -983,6 +985,9 @@
                             "<td class=\"quantity\">" +
                                 "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + 0 + "\" readonly class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
+                            "</td>" +
+                            "<td>" +
+                                "<label id='RequestedQuantity_" + index + "' class='tableLabel'>" + value.ItemQty + "</label>" +
                             "</td>" +
                             "<td class='delete'>" +
                                 "<i class='icon-photon minus deleteRow btnDisable'></i>" +
