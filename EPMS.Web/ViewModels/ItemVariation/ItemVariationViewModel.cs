@@ -26,6 +26,7 @@ namespace EPMS.Web.ViewModels.ItemVariation
             ManufacturersForDdl = new List<Manufacturer>();
             StatusesForDdl = new List<Status>();
             WarehousesForDdl = new List<Warehouse>();
+            VendorsForDdl = new List<Models.Vendor>();
         }
         public Models.ItemVariation ItemVariation { get; set; }
         public IEnumerable<Models.ItemVariation> ItemVariations { get; set; }
@@ -40,6 +41,7 @@ namespace EPMS.Web.ViewModels.ItemVariation
         public List<Color> ColorsForDdl { get; set; }
         public List<Size> SizesForDdl { get; set; }
         public List<Manufacturer> ManufacturersForDdl { get; set; }
+        public List<Models.Vendor> VendorsForDdl { get; set; }
         public List<Status> StatusesForDdl { get; set; }
         public List<Warehouse> WarehousesForDdl { get; set; }
 

@@ -58,7 +58,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (id != null)
             {
                 vendorViewModel.Vendor = vendorService.FindVendorById((long)id).CreateFromServerToClient();
-                vendorViewModel.Vendor.VendorItems = vendorItemsService.GetItemsByVendorId((long)id).ToList();
+                if (vendorViewModel.Vendor.VendorItems.Count > 0)
+                {
+                    vendorViewModel.Vendor.VendorItems = vendorItemsService.GetItemsByVendorId((long)id).ToList();
+                }
                 vendorViewModel.PurchaseOrders = purchaseOrderService.FindPoByVendorId(id).Select(x=>x.CreateFromServerToClient());
             }
             vendorViewModel.ItemVariationDropDownList = itemVariationService.GetItemVariationDropDownList();

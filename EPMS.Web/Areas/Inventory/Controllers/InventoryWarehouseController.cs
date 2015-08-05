@@ -159,6 +159,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Delete
+
+        public JsonResult Delete(long warehouseId)
+        {
+            if (warehouseService.DeleteWarehouse(warehouseId) == "Success")
+            {
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Associated", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #region Get Warehouse Number
 
         public string GenerateWarehouseNumber()

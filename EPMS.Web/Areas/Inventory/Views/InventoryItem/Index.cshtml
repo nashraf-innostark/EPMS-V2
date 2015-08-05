@@ -51,6 +51,7 @@
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.AveragePrice</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.AverageCost</th>
                             <th>@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</th>
+                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -82,6 +83,7 @@
                                 <td>@item.AveragePrice</td>
                                 <td>@item.AverageCost</td>
                                 <td>@item.ReorderLevel</td>
+                                <td class="@item.ItemId"><a href="#" id="delete" onclick="deleteRow(@item.ItemId)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
 
                             </tr>
                         }
@@ -108,6 +110,7 @@
                 null,
                 null,
                 null,
+                null,
                 null
             ],
             "fnInitComplete": function () {
@@ -120,4 +123,40 @@
             dropdownCssClass: 'noSearch'
         });
     });
+
+    function deleteRow(inventoryItemId) {
+        if (confirm("Are you sure you want to delete this row ?") == false) {
+            return;
+        }
+
+        var serviceUrl = '/Inventory/InventoryItem/Delete';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                inventoryItemId: inventoryItemId
+            },
+            success: function (data) {
+                if (data == "Deleted") {
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'success',
+                        text: 'Record has been Deleted.'
+                    });
+                    var row = $("." + inventoryItemId).parent().get(0);
+                    var atable = $('#InventoryItems').dataTable();
+                    var pos = atable.fnGetPosition(row);
+                    atable.fnDeleteRow(pos);
+                } else {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, Variation exists.'
+                    });
+                }
+            },
+        });
+    }
+
 </script>

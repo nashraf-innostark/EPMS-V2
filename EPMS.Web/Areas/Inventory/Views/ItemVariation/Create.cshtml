@@ -76,19 +76,19 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.UnitCost</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitCost, "", new { @class = "required" })
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.CostCalculation</label>
@@ -111,7 +111,29 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
+            </div>
+            <div class="span9 span-inset">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.ItemVariation.PriceCalculation, new { @id = "PriceCalculation" })
+                </div>
+            </div>
+        </div>
 
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.QuantityInPackage</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInPackage, new { @dir = "ltr", @id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInPackage, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -127,23 +149,17 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
-            </div>
-            <div class="span9 span-inset">
-                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
-                    @Html.CheckBoxFor(model => model.ItemVariation.PriceCalculation, new { @id = "PriceCalculation" })
-                </div>
-            </div>
-        </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.DescriptionEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionEn, new { @dir = "ltr", @id = "DescriptionEn", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionEn)
+                    <input type="text" id="descpE" readonly="true" />
+                    <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.DescriptionEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descpE').val(result);
+                    </script>
                 </div>
             </div>
         </div>
@@ -154,8 +170,14 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionAr, new { @dir = "ltr", @id = "DescriptionAr", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionAr)
+                    <input type="text" id="descpA" readonly="true" />
+                    <script>
+                        var descpA = '@Html.Raw(Model.ItemVariation.DescriptionAr)';
+                        var regex = /(<([^>]+)>)/ig;
+                        var result = descpE.replace(regex, "");
+                        $("#" + 'descpA').val(result);
+                    </script>
+
                 </div>
             </div>
         </div>
@@ -195,6 +217,18 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.TotalQuantity</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @dir = "ltr", @id = "TotalQuantityInHand", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.TotalQuantityInHand, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -202,7 +236,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
@@ -279,7 +313,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
@@ -327,9 +361,77 @@
                 </div>
             </div>
         </div>
+        
+        <div id ="noCkEditor">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.NotesEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'notesE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="notesA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.NotesAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'notesA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="addInfoE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.AdditionalInfoEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'addInfoE').val(result);
+                        </script>
+                    </div>
+                </div>
+
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="addInfoA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.ItemVariation.AdditionalInfoAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'addInfoA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id ="addNewSize">Add New Size</a>
+            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id="addNewSize">Add New Size</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -406,11 +508,11 @@
                                     </td>
                                     <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "WarehouseNo" })</td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity"})
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
                                         @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
                                     </td>
                                     <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse"})
+                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
                                         @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
                                     </td>
                                     <td><i class="icon-photon minus deleteWarehouse"></i></td>
@@ -453,7 +555,7 @@
                                 serial = serial + 1;
 
                                 <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize idsofMan", @hidden = "true" })
                                     @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
                                     <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
                                     <td>
@@ -590,7 +692,7 @@
                             var serial = 0;
                             for (int i = 0; i < Model.ItemVariation.ItemImages.Count(); i++)
                             {
-                                
+
                                 serial = serial + 1;
 
                                 <tr data-id="@i">
@@ -822,7 +924,7 @@
                     <div class="span4">
                         <div class="controls">
                             <div class="controls">
-                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.ManufacturersForDdl, "ManufacturerId", "ManufacturerNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
+                                @Html.DropDownListFor(x => x.ItemVariation.ItemManufacturers, new SelectList(Model.VendorsForDdl, "VendorId", "VendorNameEn"), "Select Manufacturer", new { @class = "select2me manufacturerDdl toClear", id = "manuId" })
                             </div>
                         </div>
                     </div>
@@ -1084,7 +1186,7 @@
                 <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
                     <div class="span2">
                         <label class="control-label" for="inputField">
-                            Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                            Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
                         </label>
                     </div>
                     <div class="span10 row-fluid">
@@ -1148,7 +1250,7 @@
     var parsedSize = JSON.parse(sizeList);
     var statusList = '@Html.Raw(Json.Encode(Model.StatusesForDdl))';
     var parsedStatus = JSON.parse(statusList);
-    var manufacturerList = '@Html.Raw(Json.Encode(Model.ManufacturersForDdl))';
+    var manufacturerList = '@Html.Raw(Json.Encode(Model.VendorsForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
     $(document).ready(function () {
 
@@ -1179,11 +1281,13 @@
             $("#edit").hide();
             itemsCount = 0;
             showCkEditors();
+            $('#noCkEditor').hide();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
+            $('#CKEditorDescp').hide();
             itemsCount = parseInt('@Model.ItemVariation.ItemImages.Count');
         }
         $("#edit").click(function (event) {
@@ -1194,6 +1298,7 @@
             $(".deleteRow").show();
             event.preventDefault();
             $("#CKEditorDescp").show();
+            $('#noCkEditor').hide();
             showCkEditors();
         });
         $('#tableSortableVariationsImg,#tableSortableItemStatus,#tableSortableVariationsManufacturer,#tableSortableVariationsWherehouse,#tableSortableVariationsSize,#tableSortableItemColor').dataTable({
@@ -1222,10 +1327,10 @@
         var imagePath;
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
-            maxsize: 1, //file size in MBs
+            maxsize: 10, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            ini_text: "Drag your file here or click (max: 10MB)",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
@@ -1272,7 +1377,7 @@
             itemsCount = index + 1;
             var order = $('.imageOrder').val();
             var popupcb = $("#iCheckBox").is(':checked');
-            
+
             var html = ' <tr class="gradeX" data-id=' + index + '>' +
                 '<td style="display:none"><input name="ItemVariation.ItemImages.Index" type="hidden" value="' + index + '" /></td>' +
                 '<input id="ItemVariation_ItemImages_' + index + '__ImageId" name = "ItemVariation.ItemImages[' + index + '].ImageId type="hidden" />' +
@@ -1334,47 +1439,55 @@
         });
         //Add Size to DB
         $('#addSizeToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
             var nameEn = $("#SizeNameEn").val();
             var nameAr = $("#SizeNameAr").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-            };
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var sizeid = data.SizeId;
-                    var snameEn = data.SizeNameEn;
-                    var snameAr = data.SizeNameAr;
-                    var htmlEn = '<option value=' + sizeid + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + sizeid + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.sizeDdl').append(htmlEn);
-                    } else {
-                        $('.sizeDdl').append(htmlAr);
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Size Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveSize";
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var sizeid = data.SizeId;
+                        var snameEn = data.SizeNameEn;
+                        var snameAr = data.SizeNameAr;
+                        var htmlEn = '<option value=' + sizeid + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + sizeid + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.sizeDdl').append(htmlEn);
+                        } else {
+                            $('.sizeDdl').append(htmlAr);
+                        }
+                        $('#sizeAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var sizeToAdd = {
+                            SizeId: data.SizeId,
+                            SizeNameEn: data.SizeNameEn,
+                            SizeNameAr: data.SizeNameAr,
+                        };
+                        parsedSize.push(sizeToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#sizeAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var sizeToAdd = {
-                        SizeId: data.SizeId,
-                        SizeNameEn: data.SizeNameEn,
-                        SizeNameAr: data.SizeNameAr,
-                    };
-                    parsedSize.push(sizeToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
 
         //Open Dialogue - Add Manufacturer to DB
@@ -1408,9 +1521,9 @@
                     dataType: "json",
                     data: dataToPost,
                     success: function (data) {
-                        var manufacturerId = data.ManufacturerId;
-                        var snameEn = data.ManufacturerNameEn;
-                        var snameAr = data.ManufacturerNameAr;
+                        var manufacturerId = data.VendorId;
+                        var snameEn = data.VendorNameEn;
+                        var snameAr = data.VendorNameAr;
                         var htmlEn = '<option value=' + manufacturerId + '>' + snameEn + '</option>';
                         var htmlAr = '<option value=' + manufacturerId + '>' + snameAr + '</option>';
                         if ('@direction' == "ltr") {
@@ -1424,9 +1537,9 @@
                             placeholder: "Select",
                         });
                         var manufacturerToAdd = {
-                            ManufacturerId: data.ManufacturerId,
-                            ManufacturerNameEn: data.ManufacturerNameEn,
-                            ManufacturerNameAr: data.ManufacturerNameAr,
+                            ManufacturerId: data.VendorId,
+                            ManufacturerNameEn: data.VendorNameEn,
+                            ManufacturerNameAr: data.VendorNameAr,
                         };
                         parsedManufacturer.push(manufacturerToAdd);
                     },
@@ -1445,47 +1558,55 @@
         });
         //Add Status to DB
         $('#addStatusToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveStatus";
             var nameEn = $("#StatusNameEn").val();
             var nameAr = $("#StatusNameAr").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-            };
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var statusId = data.StatusId;
-                    var snameEn = data.StatusNameEn;
-                    var snameAr = data.StatusNameAr;
-                    var htmlEn = '<option value=' + statusId + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + statusId + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.statusDdl').append(htmlEn);
-                    } else {
-                        $('.statusDdl').append(htmlAr);
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Status Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveStatus";
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                };
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var statusId = data.StatusId;
+                        var snameEn = data.StatusNameEn;
+                        var snameAr = data.StatusNameAr;
+                        var htmlEn = '<option value=' + statusId + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + statusId + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.statusDdl').append(htmlEn);
+                        } else {
+                            $('.statusDdl').append(htmlAr);
+                        }
+                        $('#itemStatusAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var statusToAdd = {
+                            StatusId: data.StatusId,
+                            StatusNameEn: data.StatusNameEn,
+                            StatusNameAr: data.StatusNameAr,
+                        };
+                        parsedStatus.push(statusToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#itemStatusAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var statusToAdd = {
-                        StatusId: data.StatusId,
-                        StatusNameEn: data.StatusNameEn,
-                        StatusNameAr: data.StatusNameAr,
-                    };
-                    parsedStatus.push(statusToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
 
         //Open Dialogue - Add Color to DB
@@ -1496,51 +1617,59 @@
         });
         //Add Color to DB
         $('#addColorToDb').click(function (e) {
-            e.preventDefault();
-            var siteUrl = $('#siteURL').val();
-            var url = siteUrl + "/Inventory/ItemVariation/SaveColor";
             var nameEn = $("#ColorNameEn").val();
             var nameAr = $("#ColorNameAr").val();
-            var code = $("#color").val();
-            var dataToPost = {
-                nameEn: nameEn,
-                nameAr: nameAr,
-                code: code,
-            };
+            if (nameEn == "" || nameAr == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Color Name'
+                });
+            } else {
+                e.preventDefault();
+                var siteUrl = $('#siteURL').val();
+                var url = siteUrl + "/Inventory/ItemVariation/SaveColor";
+                var code = $("#color").val();
+                var dataToPost = {
+                    nameEn: nameEn,
+                    nameAr: nameAr,
+                    code: code,
+                };
 
-            $.ajax({
-                url: url,
-                type: "POST",
-                dataType: "json",
-                data: dataToPost,
-                success: function (data) {
-                    var colorId = data.ColorId;
-                    var snameEn = data.ColorNameEn;
-                    var snameAr = data.ColorNameAr;
-                    var htmlEn = '<option value=' + colorId + '>' + snameEn + '</option>';
-                    var htmlAr = '<option value=' + colorId + '>' + snameAr + '</option>';
-                    if ('@direction' == "ltr") {
-                        $('.colorDdl').append(htmlEn);
-                    } else {
-                        $('.colorDdl').append(htmlAr);
+                $.ajax({
+                    url: url,
+                    type: "POST",
+                    dataType: "json",
+                    data: dataToPost,
+                    success: function (data) {
+                        var colorId = data.ColorId;
+                        var snameEn = data.ColorNameEn;
+                        var snameAr = data.ColorNameAr;
+                        var htmlEn = '<option value=' + colorId + '>' + snameEn + '</option>';
+                        var htmlAr = '<option value=' + colorId + '>' + snameAr + '</option>';
+                        if ('@direction' == "ltr") {
+                            $('.colorDdl').append(htmlEn);
+                        } else {
+                            $('.colorDdl').append(htmlAr);
+                        }
+                        $('#itemColorAddModule').modal('hide');
+                        $(".select2me").select2("destroy");
+                        $('.select2me').select2({
+                            placeholder: "Select",
+                        });
+                        var colorToAdd = {
+                            ColorId: data.ColorId,
+                            ColorNameAr: data.ColorNameAr,
+                            ColorNameEn: data.ColorNameEn,
+                            ColorCode: data.ColorCode,
+                        };
+                        parsedColor.push(colorToAdd);
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                    $('#itemColorAddModule').modal('hide');
-                    $(".select2me").select2("destroy");
-                    $('.select2me').select2({
-                        placeholder: "Select",
-                    });
-                    var colorToAdd = {
-                        ColorId: data.ColorId,
-                        ColorNameAr: data.ColorNameAr,
-                        ColorNameEn: data.ColorNameEn,
-                        ColorCode: data.ColorCode,
-                    };
-                    parsedColor.push(colorToAdd);
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
         });
         //Set Color and Text on Color DDL
         $(".colorDdl").on("change", function () {
@@ -1565,36 +1694,44 @@
         //Add Size from Dropdown to List
         $('.addSizeToList').on("click", function (event) {
             var sizeId = $('#sizeId').val();
-            var sizeNameEn;
-            var sizeNameAr;
-            $.each(parsedSize, function (key, value) {
-                if (value.SizeId == sizeId) {
-                    sizeNameEn = value.SizeNameEn;
-                    sizeNameAr = value.SizeNameAr;
+            if (sizeId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Size'
+                });
+            } else {
+                var sizeNameEn;
+                var sizeNameAr;
+                $.each(parsedSize, function (key, value) {
+                    if (value.SizeId == sizeId) {
+                        sizeNameEn = value.SizeNameEn;
+                        sizeNameAr = value.SizeNameAr;
+                    }
+                });
+                var html = '<tr class="gradeX sizeTableRow">' +
+                    '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
+                    '<td>' + sizeNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteSize"></i></td>' +
+                    '</tr>';
+                $('.sizeTable').append(html);
+                ManageSizeList(sizeId);
+                $('#sizeModule').modal('hide');
+                $('.tableSize').dataTable().fnDestroy();
+                $('.tableSize').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".sizeTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX sizeTableRow">' +
-                '<input type="hidden" class="sizeIdHidden" value=' + sizeId + '/>+' +
-                '<td>' + sizeNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteSize"></i></td>' +
-                '</tr>';
-            $('.sizeTable').append(html);
-            ManageSizeList(sizeId);
-            $('#sizeModule').modal('hide');
-            $('.tableSize').dataTable().fnDestroy();
-            $('.tableSize').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".sizeTable").children("tr").children("td").html() == "No data available in table") {
-                $(".sizeTable").children("tr").children("td").hide();
+                $("#addNewSize").hide();
+                clearPopup();
             }
-            $("#addNewSize").hide();
-            clearPopup();
         });
 
         //Delete Size from the List
@@ -1611,13 +1748,15 @@
 
         //Add Manufacturer from Dropdown to List
         $('.addManufacturerToList').on("click", function (event) {
+            debugger;
+            var manufacturerId = $('#manuId').val();
             var price = $('#manufacturerPriceLable').val();
             var quantity = $('#manufacturerQuantityLable').val();
-            if (price == null || price == "" || quantity == null || quantity == "") {
+            if (price == null || price == "" || quantity == null || quantity == "" || manufacturerId == "") {
                 $.pnotify({
                     title: 'error',
                     type: 'info',
-                    text: 'Please select Price and Quantity'
+                    text: 'Please select Manufacturer, Price and Quantity'
                 });
             } else {
                 var index = $("#manufacturerDetails").children("tr").length;
@@ -1625,54 +1764,72 @@
                     index = index - 1;
                     $("#manufacturerDetails").children("tr").children("td").hide();
                 }
-                itemsCount = index + 1;
-                var manufacturerId = $('#manuId').val();
-                var manufacturerNameEn, manufacturerNameAr;
-                $.each(parsedManufacturer, function (key, value) {
-                    if (value.ManufacturerId == manufacturerId) {
-                        manufacturerNameEn = value.ManufacturerNameEn;
-                        manufacturerNameAr = value.ManufacturerNameAr;
-                    }
-                });
-                var html = ' <tr data-id=' + index + '>' +
-                    '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" />' +
-                    '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
-                    '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
-                    '<td>' + itemsCount +
-                    '</td>' +
-                    '<td>' +
-                    '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                    '<td>' +
-                    '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
-                    '</td>' +
-                    '<td>' +
-                    '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
-                    '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
-                    '</td>' +
-                    '<td>' +
-                    '<i class="icon-photon minus deleteManufacturer"></i>' +
-                    '</td>' +
-                    '</tr>';
-                $('#manufacturerDetails').append(html);
-                $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
-                $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
-                $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
-                event.preventDefault();
-                $('#manufacturModule').modal('hide');
-                $('.tableManufacturer').dataTable().fnDestroy();
-                $('.tableManufacturer').dataTable({
-                    "sPaginationType": "bootstrap",
-                    "fnInitComplete": function () {
-                        $(".dataTables_wrapper select").select2({
-                            dropdownCssClass: 'noSearch'
-                        });
-                    }
-                });
-                clearPopup();
+                var isAlreadyExist = false;
+                var ids = $('.idsofMan').val();
+                if ($("#manufacturerDetails").children("tr").children("td").html() != "No data available in table") {
+                    $.each(ids, function (id, value) {
+                        if (value == manufacturerId) {
+                            isAlreadyExist = true;
+                            $.pnotify({
+                                title: 'error',
+                                type: 'info',
+                                text: 'Manufacturer has already been selected.'
+                            });
+                            return false;
+                        }
+                    });
+                }
+
+                if (!isAlreadyExist) {
+                    itemsCount = index + 1;
+
+                    var manufacturerNameEn, manufacturerNameAr;
+                    $.each(parsedManufacturer, function (key, value) {
+                        if (value.VendorId == manufacturerId) {
+                            manufacturerNameEn = value.VendorNameEn;
+                            manufacturerNameAr = value.VendorNameAr;
+                        }
+                    });
+                    var html = ' <tr data-id=' + index + '>' +
+                        '<input style="display:none" name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + manufacturerId + '" class = "idsofMan" />' +
+                        '<td style="display:none"><input name="ItemVariation.ItemManufacturers.Index" type="hidden" value="' + index + '" /></td>' +
+                        '<input name="ItemVariation.ItemManufacturers[' + index + '].ManufacturerId" type="hidden" value="' + index + '" />' +
+                        '<td>' + itemsCount +
+                        '</td>' +
+                        '<td>' +
+                        '<input  type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize Price">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn" name = "ItemVariation.ItemManufacturers[' + index + '].ManufacturerNameEn" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                        '<td>' +
+                        '<input type = "hidden" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize Price" value = "' + price + '">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Price" name = "ItemVariation.ItemManufacturers[' + index + '].Price" class = "auto-resize PlaceInWarehouse" value = "' + price + '">' +
+                        '</td>' +
+                        '<td>' +
+                        '<input type = "hidden" rows="2" class="auto-resize" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize Price" value = "' + quantity + '">' +
+                        '<label class="auto-resize" id="ItemVariation_ItemManufacturers_' + index + '__Quantity" name = "ItemVariation.ItemManufacturers[' + index + '].Quantity" class = "auto-resize PlaceInWarehouse" value = "' + quantity + '">' +
+                        '</td>' +
+                        '<td>' +
+                        '<i class="icon-photon minus deleteManufacturer"></i>' +
+                        '</td>' +
+                        '</tr>';
+                    $('#manufacturerDetails').append(html);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__ManufacturerNameEn').text(manufacturerNameEn);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__Price').text(price);
+                    $('#ItemVariation_ItemManufacturers_' + index + '__Quantity').text(quantity);
+                    event.preventDefault();
+                    $('#manufacturModule').modal('hide');
+                    $('.tableManufacturer').dataTable().fnDestroy();
+                    $('.tableManufacturer').dataTable({
+                        "sPaginationType": "bootstrap",
+                        "fnInitComplete": function () {
+                            $(".dataTables_wrapper select").select2({
+                                dropdownCssClass: 'noSearch'
+                            });
+                        }
+                    });
+                    clearPopup();
+                }
             }
-            
+
         });
 
         //Delete Manufacturer from the List
@@ -1686,36 +1843,44 @@
         //Add Status from Dropdown to List
         $('.addStatusToList').on("click", function (event) {
             var statusId = $('#statusId').val();
-            var statusNameEn;
-            var statusNameAr;
-            $.each(parsedStatus, function (key, value) {
-                if (value.StatusId == statusId) {
-                    statusNameEn = value.StatusNameEn;
-                    statusNameAr = value.StatusNameAr;
+            if (statusId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Status'
+                });
+            } else {
+                var statusNameEn;
+                var statusNameAr;
+                $.each(parsedStatus, function (key, value) {
+                    if (value.StatusId == statusId) {
+                        statusNameEn = value.StatusNameEn;
+                        statusNameAr = value.StatusNameAr;
+                    }
+                });
+                var html = '<tr class="gradeX statusTableRow">' +
+                    '<input type="hidden" class="statusIdHidden" value=' + statusId + '/>+' +
+                    '<td>' + statusNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteStatus"></i></td>' +
+                    '</tr>';
+                $('.statusTable').append(html);
+                ManageStatusList(statusId);
+                $('#itemStatusModule').modal('hide');
+                $('.tableStatus').dataTable().fnDestroy();
+                $('.tableStatus').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".statusTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX statusTableRow">' +
-                '<input type="hidden" class="statusIdHidden" value=' + statusId + '/>+' +
-                '<td>' + statusNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteStatus"></i></td>' +
-                '</tr>';
-            $('.statusTable').append(html);
-            ManageStatusList(statusId);
-            $('#itemStatusModule').modal('hide');
-            $('.tableStatus').dataTable().fnDestroy();
-            $('.tableStatus').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".statusTable").children("tr").children("td").html() == "No data available in table") {
-                $(".statusTable").children("tr").children("td").hide();
+                $("#addNewStatus").hide();
+                clearPopup();
             }
-            $("#addNewStatus").hide();
-            clearPopup();
         });
 
         //Delete Status from the List
@@ -1732,36 +1897,44 @@
         //Add Color from Dropdown to List
         $('.addColorToList').on("click", function (event) {
             var colorId = $('#colorId').val();
-            var colorNameEn;
-            var colorNameAr;
-            $.each(parsedColor, function (key, value) {
-                if (value.ColorId == colorId) {
-                    colorNameEn = value.ColorNameEn;
-                    colorNameAr = value.ColorName;
+            if (colorId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Color'
+                });
+            } else {
+                var colorNameEn;
+                var colorNameAr;
+                $.each(parsedColor, function (key, value) {
+                    if (value.ColorId == colorId) {
+                        colorNameEn = value.ColorNameEn;
+                        colorNameAr = value.ColorName;
+                    }
+                });
+                var html = '<tr class="gradeX colorTableRow">' +
+                    '<input type="hidden" class="colorIdHidden" value=' + colorId + '/>+' +
+                    '<td>' + colorNameEn + '</td>' +
+                    '<td><i class="icon-photon minus deleteColor"></i></td>' +
+                    '</tr>';
+                $('.colorTable').append(html);
+                ManageColorList(colorId);
+                $('#itemColorModule').modal('hide');
+                $('.tableColor').dataTable().fnDestroy();
+                $('.tableColor').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
+                    $(".colorTable").children("tr").children("td").hide();
                 }
-            });
-            var html = '<tr class="gradeX colorTableRow">' +
-                '<input type="hidden" class="colorIdHidden" value=' + colorId + '/>+' +
-                '<td>' + colorNameEn + '</td>' +
-                '<td><i class="icon-photon minus deleteColor"></i></td>' +
-                '</tr>';
-            $('.colorTable').append(html);
-            ManageColorList(colorId);
-            $('#itemColorModule').modal('hide');
-            $('.tableColor').dataTable().fnDestroy();
-            $('.tableColor').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            if ($(".colorTable").children("tr").children("td").html() == "No data available in table") {
-                $(".colorTable").children("tr").children("td").hide();
+                $("#addNewColor").hide();
+                clearPopup();
             }
-            $("#addNewColor").hide();
-            clearPopup();
         });
 
         //Delete Color from the List
@@ -1846,61 +2019,70 @@
 
         //Add Warehouse from Popup to List
         $('.addWarehouseFromPopup').on("click", function (event) {
-       
+
             var index = $("#warehouseDetails").children("tr").length;
             if ($("#warehouseDetails").children("tr").children("td").html() == "No data available in table") {
                 index = index - 1;
                 $("#warehouseDetails").children("tr").children("td").hide();
             }
-            itemsCount = itemsCount + 1;
             var locationInWarehouse = $('#textTillParent').text();
             var quantity = $('#inputFieldQuantity').val();
             var warehouseId = $('#warehouseDropdown').val();
-            var warehouseList = '@Html.Raw(Json.Encode(Model.WarehousesForDdl))';
-            var parsed = JSON.parse(warehouseList);
-            var warehouseNumber;
-            $.each(parsed, function (key, value) {
-                if (value.WarehouseId == warehouseId) {
-                    warehouseNumber = value.WarehouseNumber;
-                }
-            });
-            var html = ' <tr data-id=' + index + '>' +
-                '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
-                '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
-                '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
-                '<td>' + itemsCount +
-                '</td>' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
-                '</td>' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
-                '<td>' +
-                '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
-                '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
-                '</td>' +
-                '<td>' +
-                '<i class="icon-photon minus deleteWarehouse"></i>' +
-                '</td>' +
-                '</tr>';
-            $('#warehouseDetails').append(html);
-            $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
-            $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
-            $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
-            event.preventDefault();
-            $('#wherehouseModule').modal('hide');
-            $('.tableWarehouse').dataTable().fnDestroy();
-            $('.tableWarehouse').dataTable({
-                "sPaginationType": "bootstrap",
-                "fnInitComplete": function () {
-                    $(".dataTables_wrapper select").select2({
-                        dropdownCssClass: 'noSearch'
-                    });
-                }
-            });
-            clearPopup();
+            if (quantity == "" || warehouseId == "") {
+                $.pnotify({
+                    title: 'error',
+                    type: 'info',
+                    text: 'Please select Warehouse and Quantity'
+                });
+            } else {
+                itemsCount = itemsCount + 1;
+
+                var warehouseList = '@Html.Raw(Json.Encode(Model.WarehousesForDdl))';
+                var parsed = JSON.parse(warehouseList);
+                var warehouseNumber;
+                $.each(parsed, function (key, value) {
+                    if (value.WarehouseId == warehouseId) {
+                        warehouseNumber = value.WarehouseNumber;
+                    }
+                });
+                var html = ' <tr data-id=' + index + '>' +
+                    '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
+                    '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
+                    '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
+                    '<td>' + itemsCount +
+                    '</td>' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" type="hidden" class = "auto-resize Number">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber" name = "ItemVariation.ItemWarehouses[' + index + '].WarehouseNumber" class = "auto-resize Number">' +
+                    '</td>' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Price" type="hidden" value = "' + quantity + '">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__Quantity" name = "ItemVariation.ItemWarehouses[' + index + '].Quantity" class = "auto-resize Quantity" value = "' + quantity + '">' +
+                    '<td>' +
+                    '<input rows="2" class="auto-resize" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" type="hidden" value = "' + locationInWarehouse + '">' +
+                    '<label rows="2" class="auto-resize" id="ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse" name = "ItemVariation.ItemWarehouses[' + index + '].PlaceInWarehouse" class = "auto-resize PlaceInWarehouse" value = "' + locationInWarehouse + '">' +
+                    '</td>' +
+                    '<td>' +
+                    '<i class="icon-photon minus deleteWarehouse"></i>' +
+                    '</td>' +
+                    '</tr>';
+                $('#warehouseDetails').append(html);
+                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
+                $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
+                $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+                event.preventDefault();
+                $('#wherehouseModule').modal('hide');
+                $('.tableWarehouse').dataTable().fnDestroy();
+                $('.tableWarehouse').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                clearPopup();
+            }
         });
 
         //Delete Warehouse from the List

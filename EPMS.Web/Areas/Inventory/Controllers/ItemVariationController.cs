@@ -33,6 +33,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         private readonly IWarehouseService warehouseService;
         private readonly IWarehouseDetailService warehouseDetailService;
         private readonly IInventoryItemService inventoryItemService;
+        private readonly IVendorService vendorService;
 
         #endregion
 
@@ -40,7 +41,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public ItemVariationController(IItemVariationService itemVariationService, IColorService colorService,
             ISizeService sizeService, IManufacturerService manufacturerService, IStatusService statusService,
-            IItemImageService itemImageService, IWarehouseService warehouseService, IWarehouseDetailService warehouseDetailService, IInventoryItemService inventoryItemService)
+            IItemImageService itemImageService, IWarehouseService warehouseService,
+            IWarehouseDetailService warehouseDetailService, IInventoryItemService inventoryItemService, IVendorService vendorService)
         {
             this.itemVariationService = itemVariationService;
             this.colorService = colorService;
@@ -51,6 +53,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             this.warehouseService = warehouseService;
             this.warehouseDetailService = warehouseDetailService;
             this.inventoryItemService = inventoryItemService;
+            this.vendorService = vendorService;
         }
 
         #endregion
@@ -72,12 +75,27 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 response = itemVariationService.ItemVariationResponse(0, inventoryItemId);
                 variationViewModel.ItemVariation.InventoryItemId = inventoryItemId;
-                variationViewModel.ItemVariation.DescriptionEn = response.InventoryItem.ItemDescriptionEn;
-                variationViewModel.ItemVariation.DescriptionAr = response.InventoryItem.ItemDescriptionAr;
+                var descE = response.InventoryItem.ItemDescriptionEn;
+                if (!string.IsNullOrEmpty(descE))
+                {
+                    descE = descE.Replace("\r", "");
+                    descE = descE.Replace("\t", "");
+                    descE = descE.Replace("\n", "");
+                }
+                var descA = response.InventoryItem.ItemDescriptionAr;
+                if (!string.IsNullOrEmpty(descE))
+                {
+                    descA = descA.Replace("\r", "");
+                    descA = descA.Replace("\t", "");
+                    descA = descA.Replace("\n", "");
+                }
+                variationViewModel.ItemVariation.DescriptionEn = descE;
+                variationViewModel.ItemVariation.DescriptionAr = descA;
             }
             variationViewModel.ColorsForDdl = response.ColorsForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.SizesForDdl = response.SizesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.ManufacturersForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            //variationViewModel.ManufacturersForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.VendorsForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.StatusesForDdl = response.StatusesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.WarehousesForDdl = response.WarehousesForDdl.Select(x => x.CreateFromItemVariationDropDown()).ToList();
 
@@ -114,7 +132,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 itemVariationService.SaveItemVariation(itemToSave);
                 {
                     TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsSaved = true };
-                    return Redirect(variationViewModel.ItemVariation.ItemVariationId + "?inventoryItemId=" + variationViewModel.ItemVariation.InventoryItemId);
+                    return Redirect("Create/" + itemToSave.ItemVariation.ItemVariationId + "?inventoryItemId=" + variationViewModel.ItemVariation.InventoryItemId);
                 }
             }
         }
@@ -138,19 +156,35 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
+        //#region Save Manufacturer
+
+        //public JsonResult SaveManufacturer(string nameEn, string nameAr)
+        //{
+        //    Manufacturer manufacturerToSave = new Manufacturer();
+        //    manufacturerToSave.ManufacturerNameEn = nameEn;
+        //    manufacturerToSave.ManufacturerNameAr = nameAr;
+        //    manufacturerToSave.RecCreatedBy = User.Identity.GetUserId();
+        //    manufacturerToSave.RecCreatedDt = DateTime.Now;
+        //    manufacturerToSave.RecLastUpdatedBy = User.Identity.GetUserId();
+        //    manufacturerToSave.RecLastUpdatedDt = DateTime.Now;
+        //    manufacturerService.AddManufacturer(manufacturerToSave);
+        //    return Json(manufacturerToSave, JsonRequestBehavior.AllowGet);
+        //}
+        //#endregion
+
         #region Save Manufacturer
 
         public JsonResult SaveManufacturer(string nameEn, string nameAr)
         {
-            Manufacturer manufacturerToSave = new Manufacturer();
-            manufacturerToSave.ManufacturerNameEn = nameEn;
-            manufacturerToSave.ManufacturerNameAr = nameAr;
-            manufacturerToSave.RecCreatedBy = User.Identity.GetUserId();
-            manufacturerToSave.RecCreatedDt = DateTime.Now;
-            manufacturerToSave.RecLastUpdatedBy = User.Identity.GetUserId();
-            manufacturerToSave.RecLastUpdatedDt = DateTime.Now;
-            manufacturerService.AddManufacturer(manufacturerToSave);
-            return Json(manufacturerToSave, JsonRequestBehavior.AllowGet);
+            Vendor vendorToSave = new Vendor();
+            vendorToSave.VendorNameEn = nameEn;
+            vendorToSave.VendorNameAr= nameAr;
+            vendorToSave.RecCreatedBy = User.Identity.GetUserId();
+            vendorToSave.RecCreatedDt = DateTime.Now;
+            vendorToSave.RecLastUpdatedBy = User.Identity.GetUserId();
+            vendorToSave.RecLastUpdatedDt = DateTime.Now;
+            vendorService.AddVendor(vendorToSave);
+            return Json(vendorToSave, JsonRequestBehavior.AllowGet);
         }
         #endregion
 

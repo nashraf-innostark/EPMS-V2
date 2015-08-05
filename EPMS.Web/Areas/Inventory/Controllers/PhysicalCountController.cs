@@ -9,10 +9,13 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.PhysicalCount;
+using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
+    [Authorize]
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class PhysicalCountController : BaseController
     {
         #region Private
@@ -31,6 +34,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         // GET: Inventory/PhysicalCount
+        [SiteAuthorize(PermissionKey = "PhysicalCountIndex")]
         public ActionResult Index()
         {
             PhysicalCountListViewModel viewModel = new PhysicalCountListViewModel
@@ -56,6 +60,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(countListViewModel, JsonRequestBehavior.AllowGet);
         }
 
+        [SiteAuthorize(PermissionKey = "PhysicalCountCreate")]
         public ActionResult Create(long? id)
         {
             PhysicalCountViewModel physicalCountViewModel = new PhysicalCountViewModel

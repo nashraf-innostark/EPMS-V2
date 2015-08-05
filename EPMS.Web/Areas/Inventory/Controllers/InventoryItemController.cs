@@ -157,6 +157,19 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
         #endregion
 
+        #region Delete
+
+        public JsonResult Delete(long inventoryItemId)
+        {
+            if (inventoryItemService.DeleteItem(inventoryItemId) == "Success")
+            {
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Associated", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         #endregion
 
         #region Upload Image

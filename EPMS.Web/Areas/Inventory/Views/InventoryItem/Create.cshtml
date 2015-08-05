@@ -97,7 +97,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid ignore">
             <div class="span3">
                 <label class="control-label">
-                    Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -109,7 +109,7 @@
         </div>
         <!--Drag And Drop Upload end-->
 
-        <div id="CKEditorDescp">
+        <div id="CKEditorDescpD">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
@@ -134,6 +134,45 @@
                 </div>
             </div>
         </div>
+        
+        <div id="noCkEditorD">
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.ItemDescriptionEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.ItemDescriptionAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
@@ -200,7 +239,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new {id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new {id = "QuantityInPackage", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
@@ -230,7 +269,7 @@
             </div>
         </div>
 
-        <div id="CKEditorDescp">
+        <div id="CKEditorDescpH">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
@@ -279,6 +318,79 @@
                 </div>
             </div>
         </div>
+        
+        <div id="noCkEditorH">
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="hazE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.HazardousEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'hazE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="hazA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.HazardousAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'hazA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="usageE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.UsageEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'usageE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="usageA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.UsageAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'usageA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</label>
@@ -290,7 +402,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputFielda">Department Information</label>
@@ -306,7 +418,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         @if (Model.InventoryItem.ItemId > 0)
         {
@@ -330,7 +442,7 @@
                                     <th>Condition</th>
                                     <th>Color</th>
                                     <th>Unit Price</th>
-                                    <th>Avrage Cost</th>
+                                    <th>Average Cost</th>
                                     <th>Package Price</th>
                                     <th>On-hand Quantity</th>
                                     <th>Quantity Sold</th>
@@ -380,7 +492,7 @@
                                             <td>@item.UnitPrice</td>
                                             @if (direction == "ltr")
                                             {
-                                                <td>@item.AverageCost</td>
+                                                <td>@item.UnitCost</td>
                                             }
                                             else
                                             {
@@ -489,12 +601,16 @@
             $("#delete").hide();
             $('.treeSelectorButton').show();
             showCkEditors();
+            $('#noCkEditorD').hide();
+            $('#noCkEditorH').hide();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#delete").hide();
             $("#edit").show();
+            $("#CKEditorDescpD").hide();
+            $("#CKEditorDescpH").hide();
             $('.treeSelectorButton').hide();
         }
 
@@ -504,10 +620,10 @@
         var url = siteUrl + "/Inventory/InventoryItem/UploadImage";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', //all types
-            maxsize: 1,
+            maxsize: 10,
             post_upload: url,
             folder: "./",
-            ini_text: "Drag your file here or click (max: 1MB)",
+            ini_text: "Drag your file here or click (max: 10MB)",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
@@ -615,7 +731,10 @@
         $("#cancel").show();
         $("#edit").hide();
         $("#itemVariationTable").hide();
-        $("#CKEditorDescp").show();
+        $("#CKEditorDescpD").show();
+        $("#CKEditorDescpH").show();
+        $('#noCkEditorD').hide();
+        $('#noCkEditorH').hide();
         showCkEditors();
         $('.treeSelectorButton').show();
         event.preventDefault();

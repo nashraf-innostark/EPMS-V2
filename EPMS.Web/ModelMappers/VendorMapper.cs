@@ -1,4 +1,5 @@
-﻿using EPMS.Models.RequestModels;
+﻿using System.Linq;
+using EPMS.Models.RequestModels;
 using WebModels = EPMS.Web.Models;
 using DomainModels = EPMS.Models.DomainModels;
 
@@ -24,7 +25,7 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                
+                PurchaseOrderItems = source.PurchaseOrderItems.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
 

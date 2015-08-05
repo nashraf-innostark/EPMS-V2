@@ -172,6 +172,10 @@ namespace EPMS.Implementation.Services
                 }
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
+                RFI rfiToUpdate = rfiRepository.Find((long)itemRelease.RFIId);
+                rfiToUpdate.Status = 2;
+                rfiRepository.Update(rfiToUpdate);
+                rfiRepository.SaveChanges();
 
 
 
