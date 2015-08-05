@@ -34,7 +34,8 @@ namespace EPMS.Repository.Repositories
             return DbSet.Select(x => new ItemVariationDropDownListItem
             {
                 ItemVariationId = x.ItemVariationId,
-                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinEn = x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinAr = x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
                 SKUCode = x.SKUCode,
                 ItemSKUDescriptoinEn = x.SKUDescriptionEn,
                 ItemSKUDescriptoinAr = x.SKUDescriptionAr,
