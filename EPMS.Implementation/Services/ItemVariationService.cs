@@ -82,6 +82,7 @@ namespace EPMS.Implementation.Services
             var item = variationRepository.FindVariationByBarcode(barcode);
             if (item != null)
             {
+                
                 return new PCFromBarcodeResponse
                 {
                     ItemBarcode = barcode,
@@ -91,7 +92,8 @@ namespace EPMS.Implementation.Services
                     SKUDescriptionEn = item.SKUDescriptionEn,
                     SKUDescriptionAr = item.SKUDescriptionAr,
                     ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0,
-                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity)
+                    //TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity)
+                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity) - item.ItemReleaseQuantities.Sum(x=>x.Quantity),
                 };
             }
             return null;
