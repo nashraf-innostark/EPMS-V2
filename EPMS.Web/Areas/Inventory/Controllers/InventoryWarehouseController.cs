@@ -161,13 +161,40 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #region Delete
 
-        public JsonResult Delete(long warehouseId)
+        public JsonResult Delete(string id)
         {
-            if (warehouseService.DeleteWarehouse(warehouseId) == "Success")
+            long idToPass;
+            if (!id.Contains("_Parent"))
             {
-                return Json("Deleted", JsonRequestBehavior.AllowGet);
+                idToPass = Convert.ToInt64(id);
+                var message = detailService.DeleteWarehouseDetail(idToPass);
+                if (message == "Success")
+                {
+                    return Json("Deleted", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "Associateditems")
+                {
+                    return Json("Associateditems", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "AssociatedDetails")
+                {
+                    return Json("AssociatedDetails", JsonRequestBehavior.AllowGet);
+                }
             }
-            return Json("Associated", JsonRequestBehavior.AllowGet);
+            else
+            {
+                idToPass = Convert.ToInt64(id.Replace("_Parent", ""));
+                var message = warehouseService.DeleteWarehouse(idToPass);
+                if (message == "Success")
+                {
+                    return Json("Deleted", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "Associated")
+                {
+                    return Json("AssociatedDetails", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Error", JsonRequestBehavior.AllowGet);
         }
 
         #endregion

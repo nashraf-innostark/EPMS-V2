@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -51,6 +52,26 @@ namespace EPMS.Implementation.Services
             {
                 return false;
             }
+        }
+
+        public string DeleteWarehouseDetail(long id)
+        {
+            WarehouseDetail warehouseDetail = detailRepository.Find(id);
+            if (warehouseDetail != null)
+            {
+                if (warehouseDetail.ItemWarehouses.Any())
+                {
+                    return "AssociatedItems";
+                }
+                if (warehouseDetail.WarehouseDetails.Any())
+                {
+                    return "AssociatedDetails";
+                }
+                detailRepository.Delete(warehouseDetail);
+                detailRepository.SaveChanges();
+                return "Success";
+            }
+            return "Error";
         }
     }
 }

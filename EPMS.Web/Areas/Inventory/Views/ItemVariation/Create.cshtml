@@ -181,6 +181,30 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionForQuotationEn, new { id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionForQuotationEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionForQuotationAr, new { id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionForQuotationAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -502,6 +526,7 @@
                                 <tr class="gradeX" data-id="@i">
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseDetailId, new { @class = "auto-resize", @hidden = "true" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
@@ -1252,6 +1277,7 @@
     var parsedStatus = JSON.parse(statusList);
     var manufacturerList = '@Html.Raw(Json.Encode(Model.VendorsForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
+    var selectedNodeId;
     $(document).ready(function () {
 
         if (itemVarId == 0 || itemVarId == "") {
@@ -1954,6 +1980,7 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
 
+        //Warehouse Tree
         var treeInitialData;
         if (dir == "ltr") {
             treeInitialData = [
@@ -2049,6 +2076,7 @@
                     '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
                     '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
                     '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
+                    '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseDetailId" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId" type="hidden" />' +
                     '<td>' + itemsCount +
                     '</td>' +
                     '<td>' +
@@ -2067,9 +2095,11 @@
                     '</td>' +
                     '</tr>';
                 $('#warehouseDetails').append(html);
+                debugger;
                 $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
                 $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
                 $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId').val($('#jstree').jstree('get_selected').attr('id'));
                 event.preventDefault();
                 $('#wherehouseModule').modal('hide');
                 $('.tableWarehouse').dataTable().fnDestroy();

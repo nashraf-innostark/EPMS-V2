@@ -67,16 +67,23 @@ namespace EPMS.Implementation.Services
         #endregion
 
         #region Public
+        /// <summary>
+        /// Get All Item Variations
+        /// </summary>
         public IEnumerable<ItemVariation> GetAll()
         {
             return variationRepository.GetAll();
         }
-
+        /// <summary>
+        /// Find Variation By Id
+        /// </summary>
         public ItemVariation FindVariationById(long id)
         {
             return variationRepository.Find(id);
         }
-
+        /// <summary>
+        /// Find Variation By BarCode
+        /// </summary>
         public PCFromBarcodeResponse FindVariationByBarcode(string barcode)
         {
             var item = variationRepository.FindVariationByBarcode(barcode);
@@ -110,32 +117,42 @@ namespace EPMS.Implementation.Services
             }
             return variationIds;
         }
-
+        /// <summary>
+        /// Add Variation
+        /// </summary>
         public bool AddVariation(ItemVariation itemVariation)
         {
             variationRepository.Add(itemVariation);
             variationRepository.SaveChanges();
             return true;
         }
-
+        /// <summary>
+        /// Update Variation
+        /// </summary>
         public bool UpdateVariation(ItemVariation itemVariation)
         {
             variationRepository.Update(itemVariation);
             variationRepository.SaveChanges();
             return true;
         }
-
+        /// <summary>
+        /// Delete Variation
+        /// </summary>
         public void DeleteVartiation(ItemVariation itemVariation)
         {
             variationRepository.Delete(itemVariation);
             variationRepository.SaveChanges();
         }
-
+        /// <summary>
+        /// Get Variations for Dropdown List
+        /// </summary>
         public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
         {
             return variationRepository.GetItemVariationDropDownList();
         }
-
+        /// <summary>
+        /// Item Variation Response
+        /// </summary>
         public ItemVariationResponse ItemVariationResponse(long id, long itemVariationId)
         {
             ItemVariationResponse response = new ItemVariationResponse();
@@ -169,7 +186,9 @@ namespace EPMS.Implementation.Services
             }
             return response;
         }
-
+        /// <summary>
+        /// Get all variations by ItemVariationId
+        /// </summary>
         public IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId)
         {
             return variationRepository.GetVariationsByInventoryItemId(inventoryItemId);
@@ -401,7 +420,8 @@ namespace EPMS.Implementation.Services
                         ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
                         WarehouseId = itemWarehouse.WarehouseId,
                         Quantity = itemWarehouse.Quantity,
-                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
+                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse,
+                        WarehouseDetailId = itemWarehouse.WarehouseDetailId
                     };
                     itemWarehouseRepository.Add(warehouse);
                 }
@@ -431,7 +451,8 @@ namespace EPMS.Implementation.Services
                         ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
                         WarehouseId = itemWarehouse.WarehouseId,
                         Quantity = itemWarehouse.Quantity,
-                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse
+                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse,
+                        WarehouseDetailId = itemWarehouse.WarehouseDetailId
                     };
                     itemWarehouseRepository.Add(itemToAdd);
 
@@ -650,7 +671,9 @@ namespace EPMS.Implementation.Services
                 }
             }
         }
-
+        /// <summary>
+        /// Add Images List from Client
+        /// </summary>
         private void AddImages(ItemVariationRequest variationToSave)
         {
             if (variationToSave.ItemImages != null)
@@ -669,7 +692,9 @@ namespace EPMS.Implementation.Services
                 imageRepository.SaveChanges();
             }
         }
-
+        /// <summary>
+        /// Update Images List from Client
+        /// </summary>
         private void UpdateImages(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
         {
             IEnumerable<ItemImage> dbList = itemVariationFromDatabase.ItemImages.ToList();

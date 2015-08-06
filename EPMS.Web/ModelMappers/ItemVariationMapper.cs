@@ -37,6 +37,8 @@ namespace EPMS.Web.ModelMappers
                 descA = descA.Replace("\n", "");
             }
             model.DescriptionAr = descA;
+            model.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
+            model.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
             model.QuantityInHand = source.QuantityInHand;
@@ -147,6 +149,8 @@ namespace EPMS.Web.ModelMappers
             model.PriceCalculation = source.PriceCalculation;
             model.DescriptionEn = source.InventoryItem.ItemDescriptionEn;
             model.DescriptionAr = source.InventoryItem.ItemDescriptionAr;
+            model.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
+            model.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
             model.QuantityInHand = source.QuantityInHand;
@@ -205,6 +209,8 @@ namespace EPMS.Web.ModelMappers
                 QuantityInPackage = source.QuantityInPackage,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
+                DescriptionForQuotationEn = source.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = source.DescriptionForQuotationAr,
                 SKUDescriptionEn = source.SKUDescriptionEn,
                 SKUDescriptionAr = source.SKUDescriptionAr,
                 QuantityInHand = source.QuantityInHand,
@@ -265,7 +271,8 @@ namespace EPMS.Web.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehouseId = source.WarehouseId
+                WarehouseId = source.WarehouseId,
+                WarehouseDetailId = source.WarehouseDetailId
             };
         }
     }

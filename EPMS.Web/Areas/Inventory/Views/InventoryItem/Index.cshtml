@@ -5,6 +5,7 @@
     ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryItem.Label;
     ViewBag.MessageVM = TempData["message"];
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var serial = 0;
 }
 
 <div class="breadcrumb-container">
@@ -57,8 +58,9 @@
                     <tbody>
                         @foreach (var item in Model.InventoryItems.ToList())
                         {
+                            serial = serial + 1;
                             <tr>
-                                <td>@item.ItemId</td>
+                                <td>@serial</td>
                                 <td>@item.ItemCode</td>
                                 @if (direction == "ltr")
                                 {

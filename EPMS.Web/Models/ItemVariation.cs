@@ -36,6 +36,8 @@ namespace EPMS.Web.Models
         public string NotesAr { get; set; }
         public string AdditionalInfoEn { get; set; }
         public string AdditionalInfoAr { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
@@ -54,8 +56,6 @@ namespace EPMS.Web.Models
         public string ColorNameAr { get; set; }
         public double? AverageCost { get; set; }
         public double? TotalQuantityInHand { get; set; }
-        public string DescriptionForQuotationEn { get; set; }
-        public string DescriptionForQuotationAr { get; set; }
 
         public List<ItemManufacturer> ItemManufacturers { get; set; }
         public List<Status> Statuses { get; set; }
