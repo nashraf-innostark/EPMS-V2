@@ -76,11 +76,13 @@ namespace EPMS.Implementation.Services
             foreach (var itemWarehouse in response.ItemWarehouses)
             {
                 ItemWarehouse warehouse = itemWarehouse;
-                var item = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehouseId && x.ItemVariationId == warehouse.ItemVariationId);
-                var quantity = item.Sum(x => x.Quantity);
+                var itemReleasedQty = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehouseId && x.ItemVariationId == warehouse.ItemVariationId);
+                var rifQty = itemWarehouse.ItemVariation.RIFItems.Sum(x => x.ItemQty);
+                var difQty = itemWarehouse.ItemVariation.DIFItems.Sum(x => x.ItemQty);
+                var quantity = itemReleasedQty.Sum(x => x.Quantity);
                 if (quantity != null)
                 {
-                    itemWarehouse.Quantity -= quantity;
+                    itemWarehouse.Quantity = itemWarehouse.Quantity + rifQty - (quantity + difQty);
                 }
             }
             return response;

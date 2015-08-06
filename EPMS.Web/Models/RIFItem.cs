@@ -23,6 +23,8 @@ namespace EPMS.Web.Models
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
+        [Required]
+        [Display(ResourceType = typeof (Resources.Inventory.RIF.RIF), Name = "RIFItem_WarehouseId_Warehouse")]
         public long WarehouseId { get; set; }
     }
 }

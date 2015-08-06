@@ -44,6 +44,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
+                WarehouseId = source.WarehouseId,
 
                 RecCreatedBy = createdBy,
                 RecCreatedDate = createdDate,
@@ -151,7 +152,8 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+                RecUpdatedDate = source.RecUpdatedDate,
+                WarehouseId = source.WarehouseId
             };
             if (source.ItemVariation != null)
             {
@@ -177,7 +179,8 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+                RecUpdatedDate = source.RecUpdatedDate,
+                WarehouseId = source.WarehouseId
             };
             if (source.ItemVariation != null)
             {

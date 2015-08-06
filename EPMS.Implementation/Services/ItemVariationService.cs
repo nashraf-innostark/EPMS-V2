@@ -82,7 +82,7 @@ namespace EPMS.Implementation.Services
             var item = variationRepository.FindVariationByBarcode(barcode);
             if (item != null)
             {
-                
+
                 return new PCFromBarcodeResponse
                 {
                     ItemBarcode = barcode,
@@ -93,7 +93,7 @@ namespace EPMS.Implementation.Services
                     SKUDescriptionAr = item.SKUDescriptionAr,
                     ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0,
                     //TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity)
-                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity) - item.ItemReleaseQuantities.Sum(x=>x.Quantity),
+                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity) - item.ItemReleaseQuantities.Sum(x => x.Quantity),
                 };
             }
             return null;
@@ -159,9 +159,11 @@ namespace EPMS.Implementation.Services
                             x =>
                                 x.WarehouseId == itemWarehouse.WarehouseId &&
                                 x.ItemVariationId == itemWarehouse.ItemVariationId).Sum(y => y.Quantity);
+                    var rifQty = itemWarehouse.ItemVariation.RIFItems.Sum(x => x.ItemQty);
+                    var difQty = itemWarehouse.ItemVariation.DIFItems.Sum(x => x.ItemQty);
                     if (itemReleaseQuantity != null)
                     {
-                        itemWarehouse.Quantity = itemWarehouse.Quantity - itemReleaseQuantity;
+                        itemWarehouse.Quantity = itemWarehouse.Quantity + rifQty - (itemReleaseQuantity + difQty);
                     }
                 }
             }
@@ -322,7 +324,7 @@ namespace EPMS.Implementation.Services
                 statusEn = status.StatusNameEn.Length < 3 ? status.StatusNameEn : status.StatusNameEn.Substring(0, 3);
                 statusAr = status.StatusNameAr.Length < 3 ? status.StatusNameAr : status.StatusNameAr.Substring(0, 3);
             }
-            variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn+sizeEn+statusEn;
+            variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
             variationRepository.Update(variationToSave.ItemVariation);
         }
@@ -698,7 +700,7 @@ namespace EPMS.Implementation.Services
             else
             {
                 //Delete All Items if List from Client is Empty
-                foreach (ItemImage image in  dbList)
+                foreach (ItemImage image in dbList)
                 {
                     imageRepository.Delete(image);
                 }

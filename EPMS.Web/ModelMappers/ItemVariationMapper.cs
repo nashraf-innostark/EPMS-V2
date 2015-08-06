@@ -89,6 +89,7 @@ namespace EPMS.Web.ModelMappers
             model.Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemManufacturers = source.ItemManufacturers.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()).ToList();
+            
             model.ItemWarehouses = source.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
             var descEn = source.InventoryItem.ItemDescriptionEn;
             if (!string.IsNullOrEmpty(descEn))
@@ -125,7 +126,10 @@ namespace EPMS.Web.ModelMappers
             }
             var manufacturerCount = model.ItemManufacturers.Count;
             model.AverageCost = model.UnitCost / manufacturerCount;
-            model.TotalQuantityInHand = Convert.ToDouble(source.QuantityInHand) + source.ItemManufacturers.Sum(x => x.Quantity) - qtySold;
+            var defectedItemQuantity = source.DIFItems.Sum(x => x.ItemQty);
+            var returnItemQuantity = source.RIFItems.Sum(x => x.ItemQty);
+            model.TotalQuantityInHand = (Convert.ToDouble(source.QuantityInHand) +
+                                        source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity) - (qtySold + defectedItemQuantity);
             return model;
         }
         public static WebModels.ItemVariation CreateFromServerToClient(this DomainModels.ItemVariation source, IEnumerable<DomainModels.ItemWarehouse> itemWarehouses)

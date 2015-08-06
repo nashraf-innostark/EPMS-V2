@@ -286,6 +286,15 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string RIFItem_WarehouseId_Warehouse {
+            get {
+                return ResourceManager.GetString("RIFItem_WarehouseId_Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returned Item Form (RIF) Number.
         /// </summary>
         public static string RifNo {

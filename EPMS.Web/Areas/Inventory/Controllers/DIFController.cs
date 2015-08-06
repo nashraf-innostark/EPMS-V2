@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
+using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.DIF;
 using EPMS.Web.Models;
 using EPMS.Web.ViewModels.Common;
@@ -159,6 +160,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 rifViewModel.DifItem = new List<DIFItem>();
             }
+            rifViewModel.Warehouses = Difresponse.Warehouses.Select(x => x.CreateDDL());
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
             ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);

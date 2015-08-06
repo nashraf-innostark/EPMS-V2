@@ -111,7 +111,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 rifViewModel.RifItem = new List<RIFItem>();
             }
-            rifViewModel.Warehouses = rifresponse.Warehouses.Select(x => x.CreateDDL());
+            //rifViewModel.Warehouses = rifresponse.Warehouses.Select(x => x.CreateDDL());
             rifViewModel.ItemVariationDropDownList = rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
             return View(rifViewModel);
@@ -176,6 +176,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 if (rifViewModel.Rif.OrderId>0)
                     rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
+            rifViewModel.Warehouses = Rifresponse.Warehouses.Select(x => x.CreateDDL());
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
             ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);

@@ -18,6 +18,7 @@ namespace EPMS.Implementation.Services
         private readonly IDIFItemRepository itemRepository;
         private readonly IDIFItemHistoryRepository itemHistoryRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IWarehouseRepository warehouseRepository;
 
         #region Constructor
 
@@ -28,7 +29,7 @@ namespace EPMS.Implementation.Services
         /// <param name="itemVariationRepository"></param>
         /// <param name="itemRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public DIFService(IDIFRepository repository, IItemVariationRepository itemVariationRepository, IDIFItemRepository itemRepository,IAspNetUserRepository aspNetUserRepository, IDIFHistoryRepository historyRepository, IDIFItemHistoryRepository itemHistoryRepository)
+        public DIFService(IDIFRepository repository, IItemVariationRepository itemVariationRepository, IDIFItemRepository itemRepository,IAspNetUserRepository aspNetUserRepository, IDIFHistoryRepository historyRepository, IDIFItemHistoryRepository itemHistoryRepository, IWarehouseRepository warehouseRepository)
         {
             this.repository = repository;
             this.itemVariationRepository = itemVariationRepository;
@@ -36,6 +37,7 @@ namespace EPMS.Implementation.Services
             this.aspNetUserRepository = aspNetUserRepository;
             this.historyRepository = historyRepository;
             this.itemHistoryRepository = itemHistoryRepository;
+            this.warehouseRepository = warehouseRepository;
         }
 
         #endregion
@@ -177,7 +179,8 @@ namespace EPMS.Implementation.Services
             DifCreateResponse response=new DifCreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
-                LastFormNumber = repository.GetLastFormNumber()
+                LastFormNumber = repository.GetLastFormNumber(),
+                Warehouses = warehouseRepository.GetAll()
             };
             if (id == null) return response;
 

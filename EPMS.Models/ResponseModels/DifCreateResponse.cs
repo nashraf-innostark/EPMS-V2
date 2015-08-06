@@ -14,5 +14,6 @@ namespace EPMS.Models.ResponseModels
         public string EmpJobId { get; set; }
         public IEnumerable<DIFItem> DifItem { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+        public IEnumerable<Warehouse> Warehouses { get; set; }
     }
 }

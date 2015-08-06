@@ -40,7 +40,6 @@
     @Html.HiddenFor(x => x.Dif.RecCreatedBy)
     @Html.HiddenFor(x => x.Dif.RecCreatedDate)
     <div class="container-fluid">
-        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="createdBy">@EPMS.Web.Resources.RFI.RFI.CreatedBy  </label>
@@ -51,8 +50,25 @@
                 </div>
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
+            </div>
+            <div class="span2">
+                @if (direction == "ltr")
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                    </div>
+                }
+                else
+                {
+                    <div class="controls">
+                        @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                    </div>
+                }
+            </div>
+        </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="greeting">@EPMS.Web.Resources.Inventory.DIF.DIF.Defectiveness</label>
@@ -62,11 +78,8 @@
                     @Html.TextBoxFor(model => model.Dif.DefectivenessE)
                 </div>
                 @Html.ValidationMessageFor(m => m.Dif.DefectivenessE, String.Empty, new { @class = "required" })
-
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="greetinga">@EPMS.Web.Resources.Inventory.DIF.DIF.DefectivenessArabic</label>
@@ -78,9 +91,6 @@
                 @Html.ValidationMessageFor(m => m.Dif.DefectivenessA, String.Empty, new { @class = "required" })
             </div>
         </div>
-        <!--Input Field end-->
-        
-        <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
                 <table class="table table-striped table-responsive ">
