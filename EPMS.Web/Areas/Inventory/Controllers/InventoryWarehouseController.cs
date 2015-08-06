@@ -163,10 +163,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public JsonResult Delete(string id)
         {
-            long idToPass = 0;
-            if (id.Contains("_Parent"))
+            long idToPass;
+            if (!id.Contains("_Parent"))
             {
-                idToPass = Convert.ToInt64(id.Replace("_Parent", ""));
+                idToPass = Convert.ToInt64(id);
                 var message = detailService.DeleteWarehouseDetail(idToPass);
                 if (message == "Success")
                 {
@@ -183,7 +183,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                idToPass = Convert.ToInt64(id);
+                idToPass = Convert.ToInt64(id.Replace("_Parent", ""));
                 var message = warehouseService.DeleteWarehouse(idToPass);
                 if (message == "Success")
                 {
