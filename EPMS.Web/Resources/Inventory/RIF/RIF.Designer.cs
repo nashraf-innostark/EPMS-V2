@@ -329,5 +329,23 @@ namespace EPMS.Web.Resources.Inventory.RIF {
                 return ResourceManager.GetString("Status", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
+            }
+        }
     }
 }

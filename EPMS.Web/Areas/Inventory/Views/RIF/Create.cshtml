@@ -121,7 +121,7 @@
                             <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                             <th style="width: 85%">@EPMS.Web.Resources.RFI.RFI.ItemDetails</th>
                             <th>@EPMS.Web.Resources.RFI.RFI.Quantity</th>
-
+                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.Warehouse</th>
                             <th style="width: 4%">@EPMS.Web.Resources.RFI.RFI.Delete</th>
                         </tr>
                     </thead>
@@ -157,6 +157,24 @@
                                         @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2 })
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty, null, new { @class = "required" })
                                     </td>
+                                    <td>
+                                        <div class="span9 VendorError_@(i +1)">
+                                            @if (direction == "ltr")
+                                            {
+                                                <div class="controls">
+                                                    @Html.DropDownListFor(m => m.RifItem[po].VendorId, new SelectList(Model.Warehouses, "VendorId", "VendorNameEn", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                                                </div>
+                                            }
+                                            else
+                                            {
+                                                <div class="controls">
+                                                    @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Warehouses, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                                                </div>
+                                            }
+                                            <label id="VendorError_@(i + 1)" class="required"></label>
+                                        </div>
+                                    </td>
+
 
 
                                     <td class="delete">

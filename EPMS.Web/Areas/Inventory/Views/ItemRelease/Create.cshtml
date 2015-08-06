@@ -186,7 +186,7 @@
                             <th style="width:50%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
-                            <th style="display: none">Requested Quantity</th>
+                            <th style="display: none">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RequestedQuantity</th>
                             <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
@@ -411,84 +411,7 @@
             //reactivateCount();
         });
         reActivateDelete();
-        $("#importEx").on("click", function () {
-            var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
-            var coln = $(excel).find("tr:first td").length;
-            var count = 0;
-            var x = 0;
-            if (coln == 3) {
-                var index = 0;
-                $(excel).find("tr").each(function () {
-                    var y = 0;
-                    var t1 = "";
-                    var t2 = 0;
-                    var t3 = 0;
-                    var t4 = 0;
-                    $(this).find("td").each(function () {
-                        if (y == 0) {
-                            t1 = $(this).text();
-                        }
-                        else if (y == 1) {
-                            t2 = $(this).text();
-                        }
-                        else if (y == 2) {
-                            t3 = parseInt($(this).text());
-                        }
-                        y++;
-                    });
-                    t4 = t3 * t2;
-                    var html1 = "<tr data-id=" + index + ">" +
-                            "<td style='display:none'>" +
-                                "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
-                                "<input name='ItemReleaseDetails[" + index + "].IsItemDescription' id='ItemReleaseDetails_" + index + "__IsItemDescription' type='hidden' />" +
-                                "<input name='ItemReleaseDetails[" + index + "].IsItemSKU' id='ItemReleaseDetails_" + index + "__IsItemSKU' type='hidden' />" +
-                                "<input name='ItemReleaseDetails[" + index + "].ItemVariationId' id='ItemReleaseDetails_" + index + "__ItemVariationId' type='hidden' />" +
-                                "<input name='ItemReleaseDetails[" + index + "].PlaceInDepartment' id='ItemReleaseDetails_" + index + "__PlaceInDepartment' type='hidden' />" +
-                            "</td>" +
-                            "<td>" +
-                                "<div class=\"control-group row-fluid\">" +
-                                    "<div class=\"span1\">" +
-                                        "<label class=\"control-label serialNumber\">" + index + "</label>" +
-                                    "</div>" +
-                                "</div>" +
-                            "</td>" +
-                            "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + t1 + "</textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
-                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
-                            "</td>" +
-                            "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + t2 + "</textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
-                                "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
-                            "</td>" +
-                            "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + t3 + "\" class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
-                                "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
-                            "</td>" +
-                            "<td class='delete'>" +
-                                "<i class='icon-photon minus deleteRow btnDisable'></i>" +
-                            "</td>" +
-                        "</tr>";
-                    index = index + 1;
-                    if (count == 0) {
-                        $('.qouteAdd').html("");
-                    }
-                    $('.qouteAdd').append(html1);
-                    reActivateDelete();
-                    //reactivateCount();
-                    count++;
-                });
-                activateSerial();
-            }
-            else {
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The sheet you are trying to import is not supported, please check if the feilds match.'
-                });
-            }
-        });
+        
         $("#Add").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
@@ -956,7 +879,7 @@
                 $("#MultiWarehouse").append(html);
             }
         });
-        $('#IRFTable thead th:nth-child(5)').show()
+        $('#IRFTable thead th:nth-child(5)').show();
         var html1 = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
@@ -997,6 +920,11 @@
         activateSerial();
         reActivateDelete();
         //reactivateCount();
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
     }
     function AddEdit() {
         var isDetail;
@@ -1211,6 +1139,27 @@
             return false;
         } else {
             $("#rfiValidationError").text("");
+        }
+        var count = $('.qouteAdd tr').length;
+        var qtyValidStatus;
+        for (var x = 0; x < count; x++) {
+            if (!$("#ItemReleaseDetails_" + x + "__ItemQty").valid()) {
+                event.preventDefault();
+                return false;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            var requestedQty = parseInt($("#RequestedQuantity_" + i).text());
+            var enteredQty = parseInt($("#ItemReleaseDetails_" + i + "__ItemQty").val());
+            if (enteredQty > requestedQty) {
+                event.preventDefault();
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: 'Please enter quantity less than or equal to requested quantity.'
+                });
+                return false;
+            }
         }
         return true;
     }
