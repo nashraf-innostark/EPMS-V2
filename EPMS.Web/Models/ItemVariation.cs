@@ -36,6 +36,8 @@ namespace EPMS.Web.Models
         public string NotesAr { get; set; }
         public string AdditionalInfoEn { get; set; }
         public string AdditionalInfoAr { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

@@ -181,6 +181,30 @@
                 </div>
             </div>
         </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionForQuotationEn, new { id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionForQuotationEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.ItemVariation.DescriptionForQuotationAr, new { id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.ItemVariation.DescriptionForQuotationAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
 
         <div class="control-group row-fluid">
             <div class="span3">

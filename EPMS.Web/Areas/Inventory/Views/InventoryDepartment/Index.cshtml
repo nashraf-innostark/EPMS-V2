@@ -15,6 +15,7 @@
             <div class="panel-logo"></div>
             <div class="panel-header">
                 <h1><small>@EPMS.Web.Resources.Inventory.InventoryDepartment.InventoryDepartmentsJSTreeTitle</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="deleteRow();">@EPMS.Web.Resources.Shared.Common.DeleteNode</button>
             </div>
             <div class="panel-search container-fluid">
                 <form class="form-horizontal" action="javascript:;">
@@ -104,7 +105,7 @@
                                             </script>
                                             <td class="center">@departments.NoOfSections</td>
                                             <td class="center">-</td>
-                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteRow(@departments.DepartmentId)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
+                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteRow()">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -196,16 +197,16 @@
     var parsed = JSON.parse(inventoryDepartments);
     var inventorySections = '@Html.Raw(Json.Encode(Model.Sections))';
     var parsedSection = JSON.parse(inventorySections);
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#layoutMainContent").removeClass("main-content");
         $('#tableSortableDepartments').dataTable({
             "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
+            "fnInitComplete": function() {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
             },
-            "fnDrawCallback": function (oSettings) {
+            "fnDrawCallback": function(oSettings) {
                 subItemsOfDepartments();
             }
         });
@@ -219,12 +220,12 @@
                 null,
                 null
             ],
-            "fnInitComplete": function () {
+            "fnInitComplete": function() {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
             },
-            "fnDrawCallback": function (oSettings) {
+            "fnDrawCallback": function(oSettings) {
                 subItemsOfSections();
             }
         });
@@ -275,10 +276,10 @@
         var parentNode;
         var mainParent;
         var newNode;
-        setTimeout(function () {
-            $.each(parsed, function (key, value) {
+        setTimeout(function() {
+            $.each(parsed, function(key, value) {
                 if (value.ParentId != null) {
-                    $('ul li').each(function () {
+                    $('ul li').each(function() {
                         if ($(this).attr('id') == value.ParentId) {
                             parentNode = this;
                         }
@@ -333,22 +334,24 @@
             $('#jstree').jstree('open_node', '#parentNode');
             $('.panel, .main-content').toggleClass('retracted');
         }, 0);
-        setTimeout(function () {
+        setTimeout(function() {
             subItemsOfSections();
             subItemsOfDepartments();
         }, 1);
         //$(".dataTables_paginate").on("click", "a", function () { alert("clicked"); });
     });
+
     function subItemsOfSections() {
-        $.each(parsedSection, function (key, value) {
+        $.each(parsedSection, function(key, value) {
             var deptId = value.DepartmentId;
             var parent = $('#jstree').find("[id='" + deptId + "']");
             var childs = $(parent).find("li").length;
             $("#" + deptId + "_tableDepartment td:eq( 4 )").text(childs);
         });
     }
+
     function subItemsOfDepartments() {
-        $.each(parsed, function (key, value) {
+        $.each(parsed, function(key, value) {
             var deptId = value.DepartmentId;
             var parent = $('#jstree').find("[id='" + deptId + "']");
             var childs = $(parent).find("li").length;
@@ -356,10 +359,16 @@
         });
     }
 
-    function deleteRow(departmentId) {
+    function deleteRow() {
         if (confirm("Are you sure you want to delete this row ?") == false) {
             return;
         }
+
+        debugger;
+        if (parseInt($("#Warehouse_WarehouseId").val()) == 0) {
+            return false;
+        }
+        var parentId = $('#jstree').jstree('get_selected').attr('id');
 
         var serviceUrl = '/Inventory/InventoryDepartment/Delete';
         $.ajax({
@@ -367,9 +376,9 @@
             type: "POST",
             dataType: "json",
             data: {
-                departmentId: departmentId
+                departmentId: parentId
             },
-            success: function (data) {
+            success: function(data) {
                 if (data == "Deleted") {
                     $.pnotify({
                         title: 'Success',
@@ -398,4 +407,9 @@
             },
         });
     }
+
+    function jsTreeClick(event) {
+        return true;
+    }
+
 </script>
