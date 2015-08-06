@@ -385,10 +385,11 @@
                         type: 'success',
                         text: 'Record has been Deleted.'
                     });
-                    var row = $("." + departmentId).parent().get(0);
-                    var atable = $('#tableSortableDepartments').dataTable();
-                    var pos = atable.fnGetPosition(row);
-                    atable.fnDeleteRow(pos);
+                    //var row = $("." + departmentId).parent().get(0);
+                    //var atable = $('#tableSortableDepartments').dataTable();
+                    //var pos = atable.fnGetPosition(row);
+                    //atable.fnDeleteRow(pos);
+                    location.reload();
                 } else if (data == "AssociatedDepartments") {
                     $.pnotify({
                         title: 'Failure',

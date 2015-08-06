@@ -16,8 +16,10 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
+        public long WarehouseId { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
+        public virtual ItemWarehouse ItemWarehouse { get; set; }
         public virtual RIFHistory RIFHistory { get; set; }
     }
 }

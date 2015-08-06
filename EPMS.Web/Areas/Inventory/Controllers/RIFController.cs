@@ -111,6 +111,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 rifViewModel.RifItem = new List<RIFItem>();
             }
+            rifViewModel.Warehouses = rifresponse.Warehouses.Select(x => x.CreateDDL());
             rifViewModel.ItemVariationDropDownList = rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
             return View(rifViewModel);

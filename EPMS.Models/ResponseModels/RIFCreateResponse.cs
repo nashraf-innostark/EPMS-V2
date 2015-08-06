@@ -21,5 +21,6 @@ namespace EPMS.Models.ResponseModels
 
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<Order> Orders { get; set; }
+        public IEnumerable<Warehouse> Warehouses { get; set; }
     }
 }

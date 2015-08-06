@@ -2099,7 +2099,7 @@
                 $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
                 $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
                 $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
-                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId').val(selectedNodeId);
+                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId').val($('#jstree').jstree('get_selected').attr('id'));
                 event.preventDefault();
                 $('#wherehouseModule').modal('hide');
                 $('.tableWarehouse').dataTable().fnDestroy();
@@ -2239,7 +2239,7 @@
     }
 
     function jsTreeClick(event) {
-        selectedNodeId = $('#jstree').jstree('get_selected').attr('id');
+        return true;
     }
     function clearPopup() {
         $('.toClear').val("");

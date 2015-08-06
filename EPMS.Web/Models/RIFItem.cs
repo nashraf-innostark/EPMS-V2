@@ -23,5 +23,6 @@ namespace EPMS.Web.Models
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
+        public long WarehouseId { get; set; }
     }
 }

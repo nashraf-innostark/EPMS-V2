@@ -313,6 +313,15 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Requested Quantity.
+        /// </summary>
+        public static string RequestedQuantity {
+            get {
+                return ResourceManager.GetString("RequestedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {

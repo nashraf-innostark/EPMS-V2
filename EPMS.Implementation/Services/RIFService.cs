@@ -19,6 +19,7 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerRepository customerRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IWarehouseRepository warehouseRepository;
 
         #region Constructor
 
@@ -31,7 +32,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository)
+        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository, IWarehouseRepository warehouseRepository)
         {
             this.rifRepository = rifRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -40,6 +41,7 @@ namespace EPMS.Implementation.Services
             this.ordersRepository = ordersRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.historyRepository = historyRepository;
+            this.warehouseRepository = warehouseRepository;
         }
 
         #endregion
@@ -179,7 +181,8 @@ namespace EPMS.Implementation.Services
             RifCreateResponse rifResponse = new RifCreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
-                LastFormNumber = rifRepository.GetLastFormNumber()
+                LastFormNumber = rifRepository.GetLastFormNumber(),
+                Warehouses = warehouseRepository.GetAll()
             };
             if (id != null)
             {
