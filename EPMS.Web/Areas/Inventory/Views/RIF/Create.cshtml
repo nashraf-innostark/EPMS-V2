@@ -162,16 +162,16 @@
                                             @if (direction == "ltr")
                                             {
                                                 <div class="controls">
-                                                    @Html.DropDownListFor(m => m.RifItem[po].VendorId, new SelectList(Model.Warehouses, "VendorId", "VendorNameEn", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                                                    @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                 </div>
                                             }
                                             else
                                             {
                                                 <div class="controls">
-                                                    @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Warehouses, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
+                                                    @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                 </div>
                                             }
-                                            <label id="VendorError_@(i + 1)" class="required"></label>
+                                            <label id="WarehouseError_@(i + 1)" class="required"></label>
                                         </div>
                                     </td>
 

@@ -35,6 +35,8 @@ namespace EPMS.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public long InventoryItemId { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
 
         public virtual ICollection<ItemImage> ItemImages { get; set; }
         public virtual ICollection<ItemManufacturer> ItemManufacturers { get; set; }

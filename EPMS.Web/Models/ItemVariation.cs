@@ -54,6 +54,8 @@ namespace EPMS.Web.Models
         public string ColorNameAr { get; set; }
         public double? AverageCost { get; set; }
         public double? TotalQuantityInHand { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
 
         public List<ItemManufacturer> ItemManufacturers { get; set; }
         public List<Status> Statuses { get; set; }

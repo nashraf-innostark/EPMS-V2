@@ -14,8 +14,10 @@
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
+        public long WarehouseId { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
+        public virtual ItemWarehouse ItemWarehouse { get; set; }
         public virtual RIF RIF { get; set; }
     }
 }
