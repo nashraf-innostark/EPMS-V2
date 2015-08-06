@@ -526,6 +526,7 @@
                                 <tr class="gradeX" data-id="@i">
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
                                     @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
+                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseDetailId, new { @class = "auto-resize", @hidden = "true" })
                                     <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
                                     <td>
                                         <label class="control-label serialNumber">@serial</label>
@@ -1276,6 +1277,7 @@
     var parsedStatus = JSON.parse(statusList);
     var manufacturerList = '@Html.Raw(Json.Encode(Model.VendorsForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
+    var selectedNodeId;
     $(document).ready(function () {
 
         if (itemVarId == 0 || itemVarId == "") {
@@ -1978,6 +1980,7 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
 
+        //Warehouse Tree
         var treeInitialData;
         if (dir == "ltr") {
             treeInitialData = [
@@ -2073,6 +2076,7 @@
                     '<input style="display:none" name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + warehouseId + '" />' +
                     '<td style="display:none"><input name="ItemVariation.ItemWarehouses.Index" type="hidden" value="' + index + '" /></td>' +
                     '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseId" type="hidden" value="' + index + '" />' +
+                    '<input name="ItemVariation.ItemWarehouses[' + index + '].WarehouseDetailId" id="ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId" type="hidden" />' +
                     '<td>' + itemsCount +
                     '</td>' +
                     '<td>' +
@@ -2091,9 +2095,11 @@
                     '</td>' +
                     '</tr>';
                 $('#warehouseDetails').append(html);
+                debugger;
                 $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseNumber').text(warehouseNumber);
                 $('#ItemVariation_ItemWarehouses_' + index + '__Quantity').text(quantity);
                 $('#ItemVariation_ItemWarehouses_' + index + '__PlaceInWarehouse').text(locationInWarehouse);
+                $('#ItemVariation_ItemWarehouses_' + index + '__WarehouseDetailId').val(selectedNodeId);
                 event.preventDefault();
                 $('#wherehouseModule').modal('hide');
                 $('.tableWarehouse').dataTable().fnDestroy();
@@ -2233,7 +2239,7 @@
     }
 
     function jsTreeClick(event) {
-        return true;
+        selectedNodeId = $('#jstree').jstree('get_selected').attr('id');
     }
     function clearPopup() {
         $('.toClear').val("");

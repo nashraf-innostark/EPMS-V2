@@ -625,6 +625,8 @@
           <Property Name="PriceCalculation" Type="bit" Nullable="false" />
           <Property Name="DescriptionEn" Type="nvarchar" MaxLength="500" />
           <Property Name="DescriptionAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="DescriptionForQuotationEn" Type="nvarchar" MaxLength="500" />
+          <Property Name="DescriptionForQuotationAr" Type="nvarchar" MaxLength="500" />
           <Property Name="SKUDescriptionEn" Type="nvarchar" MaxLength="500" />
           <Property Name="SKUDescriptionAr" Type="nvarchar" MaxLength="500" />
           <Property Name="QuantityInHand" Type="nvarchar" MaxLength="50" />
@@ -654,6 +656,7 @@
           <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
           <Property Name="Quantity" Type="bigint" />
           <Property Name="PlaceInWarehouse" Type="nvarchar(max)" />
+          <Property Name="WarehouseDetailId" Type="bigint" />
         </EntityType>
         <EntityType Name="JobApplicants">
           <Key>
@@ -2141,6 +2144,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemWarehouse_WarehouseDetail">
+          <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="0..1" />
+          <End Role="ItemWarehouse" Type="Self.ItemWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseDetailId" />
+            </Principal>
+            <Dependent Role="ItemWarehouse">
+              <PropertyRef Name="WarehouseDetailId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_JobApplicants_Department">
           <End Role="Department" Type="Self.Department" Multiplicity="0..1" />
           <End Role="JobApplicants" Type="Self.JobApplicants" Multiplicity="*" />
@@ -3294,6 +3309,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_ItemWarehouse_Warehouse" Association="Self.FK_ItemWarehouse_Warehouse">
             <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemWarehouse_WarehouseDetail" Association="Self.FK_ItemWarehouse_WarehouseDetail">
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetail" />
             <End Role="ItemWarehouse" EntitySet="ItemWarehouse" />
           </AssociationSet>
           <AssociationSet Name="FK_JobApplicants_Department" Association="Self.FK_JobApplicants_Department">
@@ -4543,6 +4562,7 @@
           <NavigationProperty Name="WarehouseDetails" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail" ToRole="WarehouseDetail1" />
           <NavigationProperty Name="ParentDetail" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
+          <NavigationProperty Name="ItemWarehouses" Relationship="EPMSInventoryModel.FK_ItemWarehouse_WarehouseDetail" FromRole="WarehouseDetail" ToRole="ItemWarehouse" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -5710,6 +5730,10 @@
             <End Role="Vendor" EntitySet="Vendors" />
             <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
           </AssociationSet>
+          <AssociationSet Name="FK_ItemWarehouse_WarehouseDetail" Association="EPMSInventoryModel.FK_ItemWarehouse_WarehouseDetail">
+            <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
+            <End Role="ItemWarehouse" EntitySet="ItemWarehouses" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -6323,6 +6347,8 @@
           <Property Name="PlaceInWarehouse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="ItemWarehouse" ToRole="Warehouse" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemWarehouse" ToRole="ItemVariation" />
+          <Property Name="WarehouseDetailId" Type="Int64" />
+          <NavigationProperty Name="WarehouseDetail" Relationship="EPMSInventoryModel.FK_ItemWarehouse_WarehouseDetail" FromRole="ItemWarehouse" ToRole="WarehouseDetail" />
         </EntityType>
         <Association Name="FK_ItemWarehouse_Warehouse">
           <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
@@ -6926,6 +6952,8 @@
           <NavigationProperty Name="Status" Relationship="EPMSInventoryModel.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
           <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItem" />
           <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItemHistory" />
+          <Property Name="DescriptionForQuotationEn" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="DescriptionForQuotationAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_DIFItem_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
@@ -7256,6 +7284,18 @@
             </Principal>
             <Dependent Role="PurchaseOrderItemHistory">
               <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ItemWarehouse_WarehouseDetail">
+          <End Type="EPMSInventoryModel.WarehouseDetail" Role="WarehouseDetail" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.ItemWarehouse" Role="ItemWarehouse" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="WarehouseDetail">
+              <PropertyRef Name="WarehouseDetailId" />
+            </Principal>
+            <Dependent Role="ItemWarehouse">
+              <PropertyRef Name="WarehouseDetailId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -8479,6 +8519,7 @@
           <EntitySetMapping Name="ItemWarehouses">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemWarehouse">
               <MappingFragment StoreEntitySet="ItemWarehouse">
+                <ScalarProperty Name="WarehouseDetailId" ColumnName="WarehouseDetailId" />
                 <ScalarProperty Name="PlaceInWarehouse" ColumnName="PlaceInWarehouse" />
                 <ScalarProperty Name="Quantity" ColumnName="Quantity" />
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
@@ -8689,6 +8730,8 @@
           <EntitySetMapping Name="ItemVariations">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemVariation">
               <MappingFragment StoreEntitySet="ItemVariation">
+                <ScalarProperty Name="DescriptionForQuotationAr" ColumnName="DescriptionForQuotationAr" />
+                <ScalarProperty Name="DescriptionForQuotationEn" ColumnName="DescriptionForQuotationEn" />
                 <ScalarProperty Name="InventoryItemId" ColumnName="InventoryItemId" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -8808,7 +8851,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="59">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="74">
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9014,6 +9057,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_WarehouseDetail" />
       </Diagram>
     </Diagrams>
   </Designer>
