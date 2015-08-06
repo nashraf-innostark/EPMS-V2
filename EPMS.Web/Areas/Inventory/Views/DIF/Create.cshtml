@@ -352,10 +352,11 @@
                 $("#selectedItemTreeValidation").text("");
                 $("#selectedItemTreeValidation").removeClass("Error");
             }
+            $("#ItemVariationTree").val("");
             var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
             var parsedRfiItems = JSON.parse(rfiItems);
             $.each(parsedRfiItems, function (key, value) {
-                if (value.ItemCodeSKUCode == selectedItem) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
                     $("#ItemVariationTree").val(value.ItemVariationId);
                 }
             });

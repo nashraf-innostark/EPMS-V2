@@ -32,14 +32,9 @@ namespace EPMS.Web.Areas.Api.Controllers
             IList<JsTreeJson> details = new List<JsTreeJson>();
             foreach (var inventoryDepartment in departments)
             {
-                if (direction == "ltr")
-                {
-                    details.Add(inventoryDepartment.CreateForJsTreeJsonEn());
-                }
-                else
-                {
-                    details.Add(inventoryDepartment.CreateForJsTreeJsonAr());
-                }
+                details.Add(direction == "ltr"
+                    ? inventoryDepartment.CreateForJsTreeJsonEn()
+                    : inventoryDepartment.CreateForJsTreeJsonAr());
                 if (inventoryDepartment.InventoryItems.ToList().Any())
                 {
                     foreach (var inventoryItem in inventoryDepartment.InventoryItems)
@@ -51,7 +46,9 @@ namespace EPMS.Web.Areas.Api.Controllers
                                 JsTreeJson item = new JsTreeJson
                                 {
                                     id = itemVariation.ItemVariationId + "_Item",
-                                    text = inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
+                                    text = direction == "ltr" ? 
+                                        itemVariation.SKUDescriptionEn + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode :
+                                        itemVariation.SKUDescriptionAr + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
                                     parent = inventoryDepartment.DepartmentId + "_department"
                                 };
                                 details.Add(item);

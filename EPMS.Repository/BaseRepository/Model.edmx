@@ -5,18 +5,6 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="Aisle">
-          <Key>
-            <PropertyRef Name="AisleId" />
-          </Key>
-          <Property Name="AisleId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="AisleName" Type="nvarchar" MaxLength="200" />
-          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -1045,6 +1033,7 @@
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="VendorId" Type="bigint" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="PurchaseOrderItemHistory">
           <Key>
@@ -1063,6 +1052,7 @@
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="VendorId" Type="bigint" />
+          <Property Name="UnitPrice" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="QuickLaunchItems">
           <Key>
@@ -1278,42 +1268,6 @@
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Section">
-          <Key>
-            <PropertyRef Name="SectionId" />
-          </Key>
-          <Property Name="SectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="SectionName" Type="nvarchar" MaxLength="200" />
-          <Property Name="AisleId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="Shelf">
-          <Key>
-            <PropertyRef Name="ShelfId" />
-          </Key>
-          <Property Name="ShelfId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ShelfName" Type="nvarchar" MaxLength="200" />
-          <Property Name="SectionId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-        </EntityType>
-        <EntityType Name="ShelfSection">
-          <Key>
-            <PropertyRef Name="ShelfSectionId" />
-          </Key>
-          <Property Name="ShelfSectionId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ShelfSectionName" Type="nvarchar" MaxLength="200" />
-          <Property Name="ShelfId" Type="bigint" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
-          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="Size">
           <Key>
@@ -2835,42 +2789,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Section_Aisle">
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Aisle">
-              <PropertyRef Name="AisleId" />
-            </Principal>
-            <Dependent Role="Section">
-              <PropertyRef Name="AisleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Shelf_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ShelfSection_Shelf">
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="1" />
-          <End Role="ShelfSection" Type="Self.ShelfSection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Principal>
-            <Dependent Role="ShelfSection">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TaskEmployee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -3064,7 +2982,6 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EPMSInventoryModelStoreContainer">
-          <EntitySet Name="Aisle" EntityType="Self.Aisle" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantExperience" EntityType="Self.ApplicantExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantQualification" EntityType="Self.ApplicantQualification" Schema="dbo" store:Type="Tables" />
@@ -3139,9 +3056,6 @@
           <EntitySet Name="RIFHistory" EntityType="Self.RIFHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItem" EntityType="Self.RIFItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItemHistory" EntityType="Self.RIFItemHistory" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Section" EntityType="Self.Section" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Shelf" EntityType="Self.Shelf" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="ShelfSection" EntityType="Self.ShelfSection" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Size" EntityType="Self.Size" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Status" EntityType="Self.Status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TaskEmployee" EntityType="Self.TaskEmployee" Schema="dbo" store:Type="Tables" />
@@ -3598,18 +3512,6 @@
             <End Role="RIFHistory" EntitySet="RIFHistory" />
             <End Role="RIFItemHistory" EntitySet="RIFItemHistory" />
           </AssociationSet>
-          <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
-            <End Role="Aisle" EntitySet="Aisle" />
-            <End Role="Section" EntitySet="Section" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
-            <End Role="Section" EntitySet="Section" />
-            <End Role="Shelf" EntitySet="Shelf" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShelfSection_Shelf" Association="Self.FK_ShelfSection_Shelf">
-            <End Role="Shelf" EntitySet="Shelf" />
-            <End Role="ShelfSection" EntitySet="ShelfSection" />
-          </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="TaskEmployee" EntitySet="TaskEmployee" />
@@ -3679,19 +3581,6 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="EPMSInventoryModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Aisle">
-          <Key>
-            <PropertyRef Name="AisleId" />
-          </Key>
-          <Property Name="AisleId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AisleName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Sections" Relationship="Self.FK_Section_Aisle" FromRole="Aisle" ToRole="Section" />
-        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -4566,47 +4455,6 @@
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
           <NavigationProperty Name="EmployeeRequest" Relationship="Self.FK_RequestDetails_EmployeeRequests" FromRole="RequestDetails" ToRole="EmployeeRequests" />
         </EntityType>
-        <EntityType Name="Section">
-          <Key>
-            <PropertyRef Name="SectionId" />
-          </Key>
-          <Property Name="SectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="SectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="AisleId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Aisle" Relationship="Self.FK_Section_Aisle" FromRole="Section" ToRole="Aisle" />
-          <NavigationProperty Name="Shelf" Relationship="Self.FK_Shelf_Section" FromRole="Section" ToRole="Shelf" />
-        </EntityType>
-        <EntityType Name="Shelf">
-          <Key>
-            <PropertyRef Name="ShelfId" />
-          </Key>
-          <Property Name="ShelfId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShelfName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="SectionId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Section" Relationship="Self.FK_Shelf_Section" FromRole="Shelf" ToRole="Section" />
-          <NavigationProperty Name="ShelfSections" Relationship="Self.FK_ShelfSection_Shelf" FromRole="Shelf" ToRole="ShelfSection" />
-        </EntityType>
-        <EntityType Name="ShelfSection">
-          <Key>
-            <PropertyRef Name="ShelfSectionId" />
-          </Key>
-          <Property Name="ShelfSectionId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ShelfSectionName" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ShelfId" Type="Int64" Nullable="false" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="Shelf" Relationship="Self.FK_ShelfSection_Shelf" FromRole="ShelfSection" ToRole="Shelf" />
-        </EntityType>
         <EntityType Name="Size">
           <Key>
             <PropertyRef Name="SizeId" />
@@ -4673,10 +4521,10 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItem" />
-          <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItemHistory" />
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_Vendor" FromRole="Vendor" ToRole="VendorItem" />
           <NavigationProperty Name="ItemManufacturers" Relationship="EPMSInventoryModel.FK_ItemManufacturer_Vendor" FromRole="Vendor" ToRole="ItemManufacturer" />
+          <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItem" />
+          <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItemHistory" />
         </EntityType>
         <EntityType Name="WarehouseDetail">
           <Key>
@@ -4696,18 +4544,6 @@
           <NavigationProperty Name="ParentDetail" Relationship="Self.FK_WarehouseDetail_WarehouseDetail" FromRole="WarehouseDetail1" ToRole="WarehouseDetail" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" FromRole="WarehouseDetail" ToRole="Warehouse" />
         </EntityType>
-        <Association Name="FK_Section_Aisle">
-          <End Role="Aisle" Type="Self.Aisle" Multiplicity="1" />
-          <End Role="Section" Type="Self.Section" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Aisle">
-              <PropertyRef Name="AisleId" />
-            </Principal>
-            <Dependent Role="Section">
-              <PropertyRef Name="AisleId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -5276,30 +5112,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Shelf_Section">
-          <End Role="Section" Type="Self.Section" Multiplicity="1" />
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="0..1" />
-          <ReferentialConstraint>
-            <Principal Role="Section">
-              <PropertyRef Name="SectionId" />
-            </Principal>
-            <Dependent Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ShelfSection_Shelf">
-          <End Role="Shelf" Type="Self.Shelf" Multiplicity="1" />
-          <End Role="ShelfSection" Type="Self.ShelfSection" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Shelf">
-              <PropertyRef Name="ShelfId" />
-            </Principal>
-            <Dependent Role="ShelfSection">
-              <PropertyRef Name="ShelfId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_WarehouseDetail_WarehouseDetail">
           <End Role="WarehouseDetail" Type="Self.WarehouseDetail" Multiplicity="0..1" />
           <End Role="WarehouseDetail1" Type="Self.WarehouseDetail" Multiplicity="*" />
@@ -5321,7 +5133,6 @@
           <End Role="ProjectTask1" Type="Self.ProjectTask" Multiplicity="*" />
         </Association>
         <EntityContainer Name="Entities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Aisles" EntityType="Self.Aisle" />
           <EntitySet Name="Allowances" EntityType="Self.Allowance" />
           <EntitySet Name="ApplicantExperiences" EntityType="Self.ApplicantExperience" />
           <EntitySet Name="ApplicantQualifications" EntityType="Self.ApplicantQualification" />
@@ -5365,19 +5176,12 @@
           <EntitySet Name="Quotations" EntityType="Self.Quotation" />
           <EntitySet Name="QuotationItemDetails" EntityType="Self.QuotationItemDetail" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetail" />
-          <EntitySet Name="Sections" EntityType="Self.Section" />
-          <EntitySet Name="Shelves" EntityType="Self.Shelf" />
-          <EntitySet Name="ShelfSections" EntityType="Self.ShelfSection" />
           <EntitySet Name="Sizes" EntityType="Self.Size" />
           <EntitySet Name="Status" EntityType="Self.Status" />
           <EntitySet Name="TaskEmployees" EntityType="Self.TaskEmployee" />
           <EntitySet Name="UserPrefrences" EntityType="Self.UserPrefrence" />
           <EntitySet Name="Vendors" EntityType="Self.Vendor" />
           <EntitySet Name="WarehouseDetails" EntityType="Self.WarehouseDetail" />
-          <AssociationSet Name="FK_Section_Aisle" Association="Self.FK_Section_Aisle">
-            <End Role="Aisle" EntitySet="Aisles" />
-            <End Role="Section" EntitySet="Sections" />
-          </AssociationSet>
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Allowance" EntitySet="Allowances" />
@@ -5566,14 +5370,6 @@
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
           </AssociationSet>
-          <AssociationSet Name="FK_Shelf_Section" Association="Self.FK_Shelf_Section">
-            <End Role="Section" EntitySet="Sections" />
-            <End Role="Shelf" EntitySet="Shelves" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ShelfSection_Shelf" Association="Self.FK_ShelfSection_Shelf">
-            <End Role="Shelf" EntitySet="Shelves" />
-            <End Role="ShelfSection" EntitySet="ShelfSections" />
-          </AssociationSet>
           <AssociationSet Name="FK_WarehouseDetail_WarehouseDetail" Association="Self.FK_WarehouseDetail_WarehouseDetail">
             <End Role="WarehouseDetail" EntitySet="WarehouseDetails" />
             <End Role="WarehouseDetail1" EntitySet="WarehouseDetails" />
@@ -5693,20 +5489,6 @@
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="ItemWarehouse" EntitySet="ItemWarehouses" />
           </AssociationSet>
-          <EntitySet Name="PurchaseOrderItems" EntityType="EPMSInventoryModel.PurchaseOrderItem" />
-          <AssociationSet Name="FK_PurchaseOrderItem_PurchaseOrder" Association="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder">
-            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
-            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderItem_Vendor" Association="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor">
-            <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
-          </AssociationSet>
-          <EntitySet Name="PurchaseOrderItemHistories" EntityType="EPMSInventoryModel.PurchaseOrderItemHistory" />
-          <AssociationSet Name="FK_PurchaseOrderItemHistory_Vendor" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor">
-            <End Role="Vendor" EntitySet="Vendors" />
-            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
-          </AssociationSet>
           <EntitySet Name="PurchaseOrderHistories" EntityType="EPMSInventoryModel.PurchaseOrderHistory" />
           <AssociationSet Name="FK_PurchaseOrderHistory_AspNetUsers" Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
@@ -5715,10 +5497,6 @@
           <AssociationSet Name="FK_PurchaseOrderHistory_AspNetUsers1" Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers1">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="PurchaseOrderHistory" EntitySet="PurchaseOrderHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderItemHistory_PurchaseOrderHistory" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory">
-            <End Role="PurchaseOrderHistory" EntitySet="PurchaseOrderHistories" />
-            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
           </AssociationSet>
           <EntitySet Name="ItemReleases" EntityType="EPMSInventoryModel.ItemRelease" />
           <EntitySet Name="ItemReleaseHistories" EntityType="EPMSInventoryModel.ItemReleaseHistory" />
@@ -5866,14 +5644,6 @@
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="PhysicalCountItem" EntitySet="PhysicalCountItems" />
           </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderItem_ItemVariation" Association="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
-          </AssociationSet>
-          <AssociationSet Name="FK_PurchaseOrderItemHistory_ItemVariation" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation">
-            <End Role="ItemVariation" EntitySet="ItemVariations" />
-            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
-          </AssociationSet>
           <AssociationSet Name="FK_RFIItem_ItemVariation" Association="EPMSInventoryModel.FK_RFIItem_ItemVariation">
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="RFIItem" EntitySet="RFIItems" />
@@ -5914,7 +5684,33 @@
             <End Role="ItemVariation" EntitySet="ItemVariations" />
             <End Role="Status" EntitySet="Status" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="PurchaseOrderItems" EntityType="EPMSInventoryModel.PurchaseOrderItem" />
+          <EntitySet Name="PurchaseOrderItemHistories" EntityType="EPMSInventoryModel.PurchaseOrderItemHistory" />
+          <AssociationSet Name="FK_PurchaseOrderItem_ItemVariation" Association="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderItemHistory_ItemVariation" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation">
+            <End Role="ItemVariation" EntitySet="ItemVariations" />
+            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderItem_PurchaseOrder" Association="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder">
+            <End Role="PurchaseOrder" EntitySet="PurchaseOrders" />
+            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderItemHistory_PurchaseOrderHistory" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory">
+            <End Role="PurchaseOrderHistory" EntitySet="PurchaseOrderHistories" />
+            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderItem_Vendor" Association="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="PurchaseOrderItem" EntitySet="PurchaseOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_PurchaseOrderItemHistory_Vendor" Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="PurchaseOrderItemHistory" EntitySet="PurchaseOrderItemHistories" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
             <PropertyRef Name="WarehouseId" />
@@ -6540,84 +6336,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="PurchaseOrderItem">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PurchaseOrderId" Type="Int64" Nullable="false" />
-          <Property Name="ItemVariationId" Type="Int64" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQty" Type="Int64" Nullable="false" />
-          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
-          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
-          <Property Name="PlaceInDepartment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="VendorId" Type="Int64" />
-          <NavigationProperty Name="PurchaseOrder" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder" FromRole="PurchaseOrderItem" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="PurchaseOrderItem" ToRole="Vendor" />
-          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="PurchaseOrderItem" ToRole="ItemVariation" />
-        </EntityType>
-        <Association Name="FK_PurchaseOrderItem_PurchaseOrder">
-          <End Type="EPMSInventoryModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseOrder">
-              <PropertyRef Name="PurchaseOrderId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItem">
-              <PropertyRef Name="PurchaseOrderId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderItem_Vendor">
-          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vendor">
-              <PropertyRef Name="VendorId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItem">
-              <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <EntityType Name="PurchaseOrderItemHistory">
-          <Key>
-            <PropertyRef Name="ItemId" />
-          </Key>
-          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="PurchaseOrderId" Type="Int64" Nullable="false" />
-          <Property Name="ItemVariationId" Type="Int64" />
-          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ItemQty" Type="Int64" Nullable="false" />
-          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
-          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
-          <Property Name="PlaceInDepartment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="VendorId" Type="Int64" />
-          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="PurchaseOrderItemHistory" ToRole="Vendor" />
-          <NavigationProperty Name="PurchaseOrderHistory" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" FromRole="PurchaseOrderItemHistory" ToRole="PurchaseOrderHistory" />
-          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="PurchaseOrderItemHistory" ToRole="ItemVariation" />
-        </EntityType>
-        <Association Name="FK_PurchaseOrderItemHistory_Vendor">
-          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Vendor">
-              <PropertyRef Name="VendorId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItemHistory">
-              <PropertyRef Name="VendorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="PurchaseOrderHistory">
           <Key>
             <PropertyRef Name="PurchaseOrderId" />
@@ -6658,18 +6376,6 @@
             </Principal>
             <Dependent Role="PurchaseOrderHistory">
               <PropertyRef Name="RecCreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderItemHistory_PurchaseOrderHistory">
-          <End Type="EPMSInventoryModel.PurchaseOrderHistory" Role="PurchaseOrderHistory" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="PurchaseOrderHistory">
-              <PropertyRef Name="PurchaseOrderId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItemHistory">
-              <PropertyRef Name="PurchaseOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7208,8 +6914,6 @@
           <NavigationProperty Name="ItemReleaseQuantities" Relationship="EPMSInventoryModel.FK_ItemReleaseQuantity_ItemVariation" FromRole="ItemVariation" ToRole="ItemReleaseQuantity" />
           <NavigationProperty Name="ItemWarehouses" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemVariation" ToRole="ItemWarehouse" />
           <NavigationProperty Name="PhysicalCountItems" Relationship="EPMSInventoryModel.FK_PhysicalCountItem_ItemVariation" FromRole="ItemVariation" ToRole="PhysicalCountItem" />
-          <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItem" />
-          <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItemHistory" />
           <NavigationProperty Name="RFIItems" Relationship="EPMSInventoryModel.FK_RFIItem_ItemVariation" FromRole="ItemVariation" ToRole="RFIItem" />
           <NavigationProperty Name="RFIItemHistories" Relationship="EPMSInventoryModel.FK_RFIItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="RFIItemHistory" />
           <NavigationProperty Name="RIFItems" Relationship="EPMSInventoryModel.FK_RIFItem_ItemVariation" FromRole="ItemVariation" ToRole="RIFItem" />
@@ -7220,6 +6924,8 @@
           <NavigationProperty Name="Colors" Relationship="EPMSInventoryModel.ItemColor" FromRole="ItemVariation" ToRole="Color" />
           <NavigationProperty Name="Sizes" Relationship="EPMSInventoryModel.ItemSize" FromRole="ItemVariation" ToRole="Size" />
           <NavigationProperty Name="Status" Relationship="EPMSInventoryModel.ItemStatus" FromRole="ItemVariation" ToRole="Status" />
+          <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItem" />
+          <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="ItemVariation" ToRole="PurchaseOrderItemHistory" />
         </EntityType>
         <Association Name="FK_DIFItem_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
@@ -7341,30 +7047,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_PurchaseOrderItem_ItemVariation">
-          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemVariation">
-              <PropertyRef Name="ItemVariationId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItem">
-              <PropertyRef Name="ItemVariationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_PurchaseOrderItemHistory_ItemVariation">
-          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="ItemVariation">
-              <PropertyRef Name="ItemVariationId" />
-            </Principal>
-            <Dependent Role="PurchaseOrderItemHistory">
-              <PropertyRef Name="ItemVariationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_RFIItem_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
           <End Type="EPMSInventoryModel.RFIItem" Role="RFIItem" Multiplicity="*" />
@@ -7461,25 +7143,128 @@
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="*" />
           <End Type="EPMSInventoryModel.Status" Role="Status" Multiplicity="*" />
         </Association>
-      </Schema>
+        <EntityType Name="PurchaseOrderItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQty" Type="Int64" Nullable="false" />
+          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
+          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
+          <Property Name="PlaceInDepartment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VendorId" Type="Int64" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" FromRole="PurchaseOrderItem" ToRole="ItemVariation" />
+          <NavigationProperty Name="PurchaseOrder" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder" FromRole="PurchaseOrderItem" ToRole="PurchaseOrder" />
+          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="PurchaseOrderItem" ToRole="Vendor" />
+        </EntityType>
+        <EntityType Name="PurchaseOrderItemHistory">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PurchaseOrderId" Type="Int64" Nullable="false" />
+          <Property Name="ItemVariationId" Type="Int64" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQty" Type="Int64" Nullable="false" />
+          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
+          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
+          <Property Name="PlaceInDepartment" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="VendorId" Type="Int64" />
+          <Property Name="UnitPrice" Type="Decimal" Precision="18" Scale="2" />
+          <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" FromRole="PurchaseOrderItemHistory" ToRole="ItemVariation" />
+          <NavigationProperty Name="PurchaseOrderHistory" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" FromRole="PurchaseOrderItemHistory" ToRole="PurchaseOrderHistory" />
+          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="PurchaseOrderItemHistory" ToRole="Vendor" />
+        </EntityType>
+        <Association Name="FK_PurchaseOrderItem_ItemVariation">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItem">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderItemHistory_ItemVariation">
+          <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ItemVariation">
+              <PropertyRef Name="ItemVariationId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItemHistory">
+              <PropertyRef Name="ItemVariationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderItem_PurchaseOrder">
+          <End Type="EPMSInventoryModel.PurchaseOrder" Role="PurchaseOrder" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrder">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItem">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderItemHistory_PurchaseOrderHistory">
+          <End Type="EPMSInventoryModel.PurchaseOrderHistory" Role="PurchaseOrderHistory" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="PurchaseOrderHistory">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItemHistory">
+              <PropertyRef Name="PurchaseOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderItem_Vendor">
+          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItem" Role="PurchaseOrderItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItem">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_PurchaseOrderItemHistory_Vendor">
+          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.PurchaseOrderItemHistory" Role="PurchaseOrderItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="PurchaseOrderItemHistory">
+              <PropertyRef Name="VendorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="EPMSInventoryModelStoreContainer" CdmEntityContainer="Entities">
-          <EntitySetMapping Name="Aisles">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Aisle">
-              <MappingFragment StoreEntitySet="Aisle">
-                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
-                <ScalarProperty Name="AisleName" ColumnName="AisleName" />
-                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Allowances">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Allowance">
               <MappingFragment StoreEntitySet="Allowance">
@@ -8272,45 +8057,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Sections">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Section">
-              <MappingFragment StoreEntitySet="Section">
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="SectionName" ColumnName="SectionName" />
-                <ScalarProperty Name="AisleId" ColumnName="AisleId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Shelves">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.Shelf">
-              <MappingFragment StoreEntitySet="Shelf">
-                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
-                <ScalarProperty Name="ShelfName" ColumnName="ShelfName" />
-                <ScalarProperty Name="SectionId" ColumnName="SectionId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="ShelfSections">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.ShelfSection">
-              <MappingFragment StoreEntitySet="ShelfSection">
-                <ScalarProperty Name="ShelfSectionId" ColumnName="ShelfSectionId" />
-                <ScalarProperty Name="ShelfSectionName" ColumnName="ShelfSectionName" />
-                <ScalarProperty Name="ShelfId" ColumnName="ShelfId" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
-                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
-                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Sizes">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Size">
               <MappingFragment StoreEntitySet="Size">
@@ -8740,44 +8486,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrderItems">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.PurchaseOrderItem">
-              <MappingFragment StoreEntitySet="PurchaseOrderItem">
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="PlaceInDepartment" ColumnName="PlaceInDepartment" />
-                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
-                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
-                <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
-                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
-                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="PurchaseOrderItemHistories">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.PurchaseOrderItemHistory">
-              <MappingFragment StoreEntitySet="PurchaseOrderItemHistory">
-                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="PlaceInDepartment" ColumnName="PlaceInDepartment" />
-                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
-                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
-                <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
-                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
-                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
-                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
-                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="PurchaseOrderHistories">
             <EntityTypeMapping TypeName="EPMSInventoryModel.PurchaseOrderHistory">
               <MappingFragment StoreEntitySet="PurchaseOrderHistory">
@@ -9038,6 +8746,46 @@
               <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="PurchaseOrderItems">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.PurchaseOrderItem">
+              <MappingFragment StoreEntitySet="PurchaseOrderItem">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="PlaceInDepartment" ColumnName="PlaceInDepartment" />
+                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
+                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
+                <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="PurchaseOrderItemHistories">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.PurchaseOrderItemHistory">
+              <MappingFragment StoreEntitySet="PurchaseOrderItemHistory">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="VendorId" ColumnName="VendorId" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="PlaceInDepartment" ColumnName="PlaceInDepartment" />
+                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
+                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
+                <ScalarProperty Name="ItemQty" ColumnName="ItemQty" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
+                <ScalarProperty Name="PurchaseOrderId" ColumnName="PurchaseOrderId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9061,7 +8809,6 @@
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
       <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="59">
-        <EntityTypeShape EntityType="EPMSInventoryModel.Aisle" Width="1.5" PointX="22.75" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9105,9 +8852,6 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.Quotation" Width="1.5" PointX="3.75" PointY="49.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.QuotationItemDetail" Width="1.5" PointX="6" PointY="51" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RequestDetail" Width="1.5" PointX="10.5" PointY="47.75" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Section" Width="1.5" PointX="25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.Shelf" Width="1.5" PointX="27.25" PointY="4.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ShelfSection" Width="1.5" PointX="29.5" PointY="4.5" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Size" Width="1.5" PointX="5.25" PointY="23.375" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Status" Width="1.5" PointX="5.25" PointY="26.625" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TaskEmployee" Width="1.5" PointX="13.5" PointY="21.25" IsExpanded="true" />
@@ -9116,7 +8860,6 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.WarehouseDetail" Width="1.5" PointX="10.5" PointY="11" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Warehouse" Width="1.5" PointX="8.25" PointY="10.875" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RIF" Width="1.5" PointX="6" PointY="39" IsExpanded="true" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_Section_Aisle" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Allowance_Employee" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantExperience_JobApplicants" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ApplicantQualification_JobApplicants" ManuallyRouted="false" />
@@ -9164,8 +8907,6 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_ProjectTask" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TaskEmployee_Task" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_Shelf_Section" ManuallyRouted="false" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_ShelfSection_Shelf" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_WarehouseDetail_WarehouseDetail" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.AspNetUserRoles" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.PreRequisitTask" ManuallyRouted="false" />
@@ -9208,15 +8949,9 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemWarehouse" Width="1.5" PointX="15.75" PointY="17.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderItem" Width="1.5" PointX="17.125" PointY="41.125" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderItemHistory" Width="1.5" PointX="18" PointY="28.25" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" />
         <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderHistory" Width="2" PointX="5.875" PointY="83" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers1" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemRelease" Width="1.875" PointX="22.625" PointY="43.375" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseHistory" Width="2.5" PointX="27.375" PointY="42.125" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemRelease_Manager" />
@@ -9261,8 +8996,6 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PhysicalCountItem_ItemVariation" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItem_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RFIItemHistory_ItemVariation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItem_ItemVariation" />
@@ -9273,6 +9006,14 @@
         <AssociationConnector Association="EPMSInventoryModel.ItemColor" />
         <AssociationConnector Association="EPMSInventoryModel.ItemSize" />
         <AssociationConnector Association="EPMSInventoryModel.ItemStatus" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderItem" Width="1.5" PointX="27.25" PointY="35" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrderItemHistory" Width="1.5" PointX="31.25" PointY="39.375" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_ItemVariation" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_ItemVariation" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_PurchaseOrder" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_PurchaseOrderHistory" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" />
       </Diagram>
     </Diagrams>
   </Designer>

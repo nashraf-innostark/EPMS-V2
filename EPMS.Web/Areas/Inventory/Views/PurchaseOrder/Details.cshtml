@@ -148,13 +148,13 @@
                                         @Html.HiddenFor(m => m.OrderItems[po].PlaceInDepartment)
                                         @Html.HiddenFor(m => m.OrderItems[po].RecCreatedBy)
                                         @Html.HiddenFor(m => m.OrderItems[po].RecCreatedDate)
-                                        <tr>
-                                            <td>@(i += 1)</td>
+                                        <tr id="@i">
+                                            <td>@(i + 1)</td>
                                             <td>@Html.DisplayFor(m => m.OrderItems[po].ItemName)</td>
                                             <td>@Html.DisplayFor(m => m.OrderItems[po].ItemCode)</td>
                                             <td>@Html.DisplayFor(m => m.OrderItems[po].ItemSKUCode)</td>
                                             <td>
-                                                <div class="span9 VendorError_@i">
+                                                <div class="span9 VendorError_@(i +1)">
                                                     @if (direction == "ltr")
                                                     {
                                                         <div class="controls">
@@ -167,15 +167,20 @@
                                                             @Html.DropDownListFor(m => m.OrderItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.OrderItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                         </div>
                                                     }
-                                                    <label id="VendorError_@i" class="required"></label>
+                                                    <label id="VendorError_@(i + 1)" class="required"></label>
                                                 </div>
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(m => m.OrderItems[po].ItemQty, new { @class = "tableDbM" })
+                                                @Html.TextBoxFor(m => m.OrderItems[po].ItemQty, new { @class = "tableDbM toBeDisabled" })
                                             </td>
-                                            <td>@Html.DisplayFor(m => m.OrderItems[po].UnitPrice)</td>
-                                            <td>@(Model.OrderItems[po].ItemQty * Model.OrderItems[po].UnitPrice)</td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.OrderItems[po].UnitPrice, new { @class = "tableDbM UnitPrice toBeDisabled" })
+                                                @Html.ValidationMessageFor(m => m.OrderItems[po].UnitPrice, String.Empty, new { @class = "required" })
+                                            </td>
+                                            <td><label id="Total_@i">@Model.OrderItems[po].Total</label></td>
+                                            @*<td>@(Model.OrderItems[po].ItemQty * Model.OrderItems[po].UnitPrice)</td>*@
                                         </tr>
+                                                    i = i + 1;
                                     }
                                 }
                                 else
@@ -329,6 +334,19 @@
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
         }
+        $(document).on('focusout', '.UnitPrice', function (ev) {
+            debugger;
+            if ('@ViewBag.IsManager' == 'True') {
+                var rowId = $(this).parent().parent().attr("id");
+                var itemQty = parseInt($("#OrderItems_" + rowId + "__ItemQty").val());
+                var unitPrice = parseInt($("#OrderItems_" + rowId + "__UnitPrice").val());
+                if (!isNaN(itemQty) && !isNaN(unitPrice)) {
+                    $("#Total_" + rowId).text(itemQty * unitPrice);
+                }
+                return true;
+            }
+            return;
+        });
     });
 
     function validateVendors(event) {

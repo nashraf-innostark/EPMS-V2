@@ -4,6 +4,8 @@
     {
         public long ItemVariationId { get; set; }
         public string ItemCodeSKUCode { get; set; }
+        public string ItemCodeSKUCodeDescriptoinEn { get; set; }
+        public string ItemCodeSKUCodeDescriptoinAr { get; set; }
         public string SKUCode { get; set; }
         public string ItemSKUDescriptoinEn { get; set; }
         public string ItemSKUDescriptoinAr { get; set; }
