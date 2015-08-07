@@ -214,16 +214,18 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             var departments = departmentService.GetAll();
             IList<JsTreeJson> details = new List<JsTreeJson>();
+            //JsTreeJson parent = new JsTreeJson
+            //{
+            //    id = "parentNode",
+            //    text = Resources.Website.Product.ProductIndex.Departments,
+            //    parent = "#"
+            //};
+            //details.Add(parent);
             foreach (var inventoryDepartment in departments)
             {
-                if (direction == "ltr")
-                {
-                    details.Add(inventoryDepartment.CreateForJsTreeJsonEn());
-                }
-                else
-                {
-                    details.Add(inventoryDepartment.CreateForJsTreeJsonAr());
-                }
+                details.Add(direction == "ltr"
+                    ? inventoryDepartment.CreateForJsTreeJsonEn()
+                    : inventoryDepartment.CreateForJsTreeJsonAr());
                 if (inventoryDepartment.InventoryItems.Any())
                 {
                     foreach (var inventoryItem in inventoryDepartment.InventoryItems)

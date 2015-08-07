@@ -123,11 +123,17 @@
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
+  <data name="Departments" xml:space="preserve">
+    <value>Departments</value>
+  </data>
   <data name="Description" xml:space="preserve">
     <value>Product Description</value>
   </data>
   <data name="DiscountedPrice" xml:space="preserve">
     <value>Discounted Price</value>
+  </data>
+  <data name="ImportFromInventory" xml:space="preserve">
+    <value>Import From Inventory</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Product Name</value>

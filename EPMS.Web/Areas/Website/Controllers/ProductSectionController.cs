@@ -50,95 +50,16 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         public ActionResult Create(long? id)
         {
-            ProductSectionViewModel viewModel = new ProductSectionViewModel();
             var productSections = productSectionService.GetAll().Select(x => x.CreateFromServerToClientForTree());
-            string direction = Resources.Shared.Common.TextDirection;
-            IList<JsTreeJson> jsTreeJson = new List<JsTreeJson>();
-            viewModel.ProductSections = new List<ProductSection>();
-            viewModel.ProductSectionsChildList = new List<ProductSectionsListForTree>();
-            foreach (var productSection in productSections)
+            var productSectionCreate = ProductSectionCreate(productSections);
+            ProductSectionViewModel viewModel = new ProductSectionViewModel
             {
-                // add root node
-                JsTreeJson jsTree;
-                if (productSection.InventoyDepartmentId != null)
-                {
-                    jsTree = new JsTreeJson
-                    {
-                        id = productSection.SectionId + "_Imported",
-                        parent = productSection.ParentSectionId != null ? productSection.ParentSectionId.ToString() : "#",
-                        text = direction == "ltr" ? productSection.InventoryDepartmentNameEn : productSection.InventoryDepartmentNameAr
-                    };
-                }
-                else
-                {
-                    jsTree = new JsTreeJson
-                    {
-                        id = productSection.SectionId.ToString(),
-                        parent = productSection.ParentSectionId != null ? productSection.ParentSectionId.ToString() : "#",
-                        text = direction == "ltr" ? productSection.SectionNameEn : productSection.SectionNameAr
-                    };
-                }
-                jsTreeJson.Add(jsTree);
-                viewModel.ProductSections.Add(productSection);
-                // check if child department exist
-                if (productSection.InventoryDepartment != null)
-                {
-                    // check if have 1st level child
-                    if (productSection.InventoryDepartment.InventoryDepartments != null &&
-                        productSection.InventoryDepartment.InventoryDepartments.Any())
-                    {
-                        var subDepartments = productSection.InventoryDepartment.InventoryDepartments;
-                        // add all 1st level childs 
-                        foreach (var subDepartment in subDepartments)
-                        {
-                            JsTreeJson jsTreeSub = new JsTreeJson
-                            {
-                                id = subDepartment.DepartmentId + "_ImportedSub",
-                                parent = jsTree.id,
-                                text = direction == "ltr" ? subDepartment.DepartmentNameEn : subDepartment.DepartmentNameAr
-                            };
-                            jsTreeJson.Add(jsTreeSub);
-                            ProductSectionsListForTree subSectionToAdd = new ProductSectionsListForTree
-                            {
-                                id = subDepartment.DepartmentId + "_ImportedSub",
-                                parent = jsTree.id,
-                                textEn = subDepartment.DepartmentNameEn,
-                                textAr = subDepartment.DepartmentNameAr,
-                                DepartmentId = subDepartment.DepartmentId
-                            };
-                            viewModel.ProductSectionsChildList.Add(subSectionToAdd);
-                            // check if 2nd level child
-                            if (subDepartment.InventoryDepartments != null && subDepartment.InventoryDepartments.Any())
-                            {
-                                var subSubDepartments = subDepartment.InventoryDepartments;
-                                // add all second level childs
-                                foreach (var subSubDepartment in subSubDepartments)
-                                {
-                                    JsTreeJson jsTreeSubSub = new JsTreeJson
-                                    {
-                                        id = subSubDepartment.DepartmentId + "_ImportedSubSub",
-                                        parent = jsTreeSub.id,
-                                        text = direction == "ltr" ? subSubDepartment.DepartmentNameEn : subSubDepartment.DepartmentNameAr
-                                    };
-                                    jsTreeJson.Add(jsTreeSubSub);
-                                    ProductSectionsListForTree subSubSectionToAdd = new ProductSectionsListForTree
-                                    {
-                                        id = subSubDepartment.DepartmentId + "_ImportedSubSub",
-                                        parent = jsTreeSub.id,
-                                        textEn = subSubDepartment.DepartmentNameEn,
-                                        textAr = subSubDepartment.DepartmentNameAr,
-                                        DepartmentId = subSubDepartment.DepartmentId
-                                    };
-                                    viewModel.ProductSectionsChildList.Add(subSubSectionToAdd);
-                                }
-                            }
-                        }
-                    }
-                }
-            }
+                ProductSections = productSectionCreate.ProductSections,
+                ProductSectionsChildList = productSectionCreate.ProductSectionsChildList
+            };
             // Javascript Serializer
             var serializer = new JavaScriptSerializer();
-            ViewBag.JsTree = serializer.Serialize(jsTreeJson);
+            ViewBag.JsTree = serializer.Serialize(productSectionCreate.JsTreeJsons);
             // use new version of JsTree
             ViewBag.IsIncludeNewJsTree = true;
             // use new version of jQuery switch
@@ -195,6 +116,109 @@ namespace EPMS.Web.Areas.Website.Controllers
         #endregion
 
         #region Delete
+        #endregion
+
+        #region JsTree
+
+        private ProductSectionCreateViewModel ProductSectionCreate(IEnumerable<ProductSection> productSections)
+        {
+            ProductSectionCreateViewModel model = new ProductSectionCreateViewModel
+            {
+                JsTreeJsons = new List<JsTreeJson>(),
+                ProductSections = new List<ProductSection>(),
+                ProductSectionsChildList = new List<ProductSectionsListForTree>()
+            };
+            JsTreeJson parent = new JsTreeJson
+            {
+                id = "parentNode",
+                text = Resources.Website.Product.ProductIndex.Departments,
+                parent = "#"
+            };
+            model.JsTreeJsons.Add(parent);
+            string direction = Resources.Shared.Common.TextDirection;
+            foreach (var productSection in productSections)
+            {
+                // add root node
+                JsTreeJson jsTree;
+                if (productSection.InventoyDepartmentId != null)
+                {
+                    jsTree = new JsTreeJson
+                    {
+                        id = productSection.SectionId + "_Imported",
+                        parent = productSection.ParentSectionId != null ? productSection.ParentSectionId.ToString() : "parentNode",
+                        text = direction == "ltr" ? productSection.InventoryDepartmentNameEn : productSection.InventoryDepartmentNameAr
+                    };
+                }
+                else
+                {
+                    jsTree = new JsTreeJson
+                    {
+                        id = productSection.SectionId.ToString(),
+                        parent = productSection.ParentSectionId != null ? productSection.ParentSectionId.ToString() : "parentNode",
+                        text = direction == "ltr" ? productSection.SectionNameEn : productSection.SectionNameAr
+                    };
+                }
+                model.JsTreeJsons.Add(jsTree);
+                model.ProductSections.Add(productSection);
+                // check if child department exist
+                if (productSection.InventoryDepartment != null)
+                {
+                    // check if have 1st level child
+                    if (productSection.InventoryDepartment.InventoryDepartments != null &&
+                        productSection.InventoryDepartment.InventoryDepartments.Any())
+                    {
+                        var subDepartments = productSection.InventoryDepartment.InventoryDepartments;
+                        // add all 1st level childs 
+                        foreach (var subDepartment in subDepartments)
+                        {
+                            JsTreeJson jsTreeSub = new JsTreeJson
+                            {
+                                id = subDepartment.DepartmentId + "_ImportedSub",
+                                parent = jsTree.id,
+                                text = direction == "ltr" ? subDepartment.DepartmentNameEn : subDepartment.DepartmentNameAr
+                            };
+                            model.JsTreeJsons.Add(jsTreeSub);
+                            ProductSectionsListForTree subSectionToAdd = new ProductSectionsListForTree
+                            {
+                                id = subDepartment.DepartmentId + "_ImportedSub",
+                                parent = jsTree.id,
+                                textEn = subDepartment.DepartmentNameEn,
+                                textAr = subDepartment.DepartmentNameAr,
+                                DepartmentId = subDepartment.DepartmentId
+                            };
+                            model.ProductSectionsChildList.Add(subSectionToAdd);
+                            // check if 2nd level child
+                            if (subDepartment.InventoryDepartments != null && subDepartment.InventoryDepartments.Any())
+                            {
+                                var subSubDepartments = subDepartment.InventoryDepartments;
+                                // add all second level childs
+                                foreach (var subSubDepartment in subSubDepartments)
+                                {
+                                    JsTreeJson jsTreeSubSub = new JsTreeJson
+                                    {
+                                        id = subSubDepartment.DepartmentId + "_ImportedSubSub",
+                                        parent = jsTreeSub.id,
+                                        text = direction == "ltr" ? subSubDepartment.DepartmentNameEn : subSubDepartment.DepartmentNameAr
+                                    };
+                                    model.JsTreeJsons.Add(jsTreeSubSub);
+                                    ProductSectionsListForTree subSubSectionToAdd = new ProductSectionsListForTree
+                                    {
+                                        id = subSubDepartment.DepartmentId + "_ImportedSubSub",
+                                        parent = jsTreeSub.id,
+                                        textEn = subSubDepartment.DepartmentNameEn,
+                                        textAr = subSubDepartment.DepartmentNameAr,
+                                        DepartmentId = subSubDepartment.DepartmentId
+                                    };
+                                    model.ProductSectionsChildList.Add(subSubSectionToAdd);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return model;
+        }
+
         #endregion
 
         #endregion

@@ -941,6 +941,7 @@
     <Compile Include="ViewModels\ProductImage\ProductImageViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionListViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionViewModel.cs" />
+    <Compile Include="ViewModels\ProductSection\ProductSectionCreateViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductListViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />

@@ -214,6 +214,14 @@
     });
     function updateView(r) {
         var id = r;
+        if (id == "parentNode") {
+            setNullValues();
+            $("#Edit").hide();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+            disableControls();
+            return;
+        }
         var productId;
         var productSectionsList = '@Html.Raw(Json.Encode(Model.ProductSections))';
         var sections = JSON.parse(productSectionsList);
@@ -338,7 +346,7 @@
                 m.show();
                 return;
             } else {
-                var parentDiv = $('.jstree-clicked').parent().parent().parent().parent().parent().parent().parent();
+                var parentDiv = $('.jstree-clicked').parent().parent().parent().parent().parent().parent().parent().parent().parent();
                 if (parentDiv.is("div") && parentDiv.attr('id') == "jstree") {
                     var m = $(".alert-error");
                     m.children("span").text("Can't create further Product Section");
