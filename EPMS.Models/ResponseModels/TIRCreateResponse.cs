@@ -14,5 +14,6 @@ namespace EPMS.Models.ResponseModels
 
         public IEnumerable<TIRItem> TirItems { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+        public IEnumerable<Warehouse> Warehouses { get; set; }
     }
 }

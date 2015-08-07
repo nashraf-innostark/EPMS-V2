@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Web.Script.Serialization;
 using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using System.Web.Mvc;
@@ -10,6 +11,7 @@ using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers;
 using EPMS.Web.ModelMappers.Inventory.DIF;
 using EPMS.Web.Models;
+using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.DIF;
 using EPMS.WebBase.Mvc;
@@ -22,10 +24,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     public class DIFController : BaseController
     {
         private readonly IDIFService rifService;
+        private readonly IItemVariationService itemVariationService;
 
-        public DIFController(IDIFService rifService)
+        public DIFController(IDIFService rifService, IItemVariationService itemVariationService)
         {
             this.rifService = rifService;
+            this.itemVariationService = itemVariationService;
         }
 
         // GET: Inventory/Dif
@@ -79,7 +83,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "DIFDetails")]
         public ActionResult Details(int id, string from)
         {
-            var Difresponse = rifService.LoadDifResponseData(id,from);
+            var Difresponse = rifService.LoadDifResponseData(id, from);
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {
@@ -131,11 +135,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch (Exception)
             {
-                return View(); 
+                return View();
             }
         }
 
@@ -143,7 +147,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "DIFCreate")]
         public ActionResult Create(long? id)
         {
-            var Difresponse = rifService.LoadDifResponseData(id,"");
+            var Difresponse = rifService.LoadDifResponseData(id, "");
             DIFViewModel rifViewModel = new DIFViewModel();
             if (Difresponse.Dif != null)
             {
@@ -197,15 +201,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                         IsSaved = true
                     };
                 }
-                
+
                 var DifToBeSaved = rifViewModel.CreateDifClientToServer();
-                if(rifService.SaveDIF(DifToBeSaved))
+                if (rifService.SaveDIF(DifToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch
             {
@@ -261,5 +265,23 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
+
+        #region GetWarehouseItems
+        [HttpGet]
+        public JsonResult GetWarehouseItems(long warehouseId, string direction)
+        {
+            ItemVariationForWarehouse warehouseItems = itemVariationService.GetItemVariationByWarehouseId(warehouseId);
+            WarehouseItems items = new WarehouseItems
+            {
+                ItemVariationDropDownListItems = warehouseItems.ItemVariationDropDownListItems
+            };
+            IList<JsTreeJson> details = Utility.InventoryDepartmentTreeByWarehouse(warehouseItems.InventoryDepartments, warehouseId, direction);
+            var serializer = new JavaScriptSerializer();
+            var serializedResult = serializer.Serialize(details);
+            items.InventoryDepartments = serializedResult;
+            return Json(items, JsonRequestBehavior.AllowGet);
+        }
+        
+        #endregion
     }
 }

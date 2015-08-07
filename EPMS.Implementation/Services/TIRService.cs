@@ -17,6 +17,7 @@ namespace EPMS.Implementation.Services
         private readonly ITIRItemRepository itemRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IWarehouseRepository warehouseRepository;
 
         #region Constructor
 
@@ -25,13 +26,14 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="itemVariationRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository, ITIRHistoryRepository historyRepository)
+        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository, ITIRHistoryRepository historyRepository, IWarehouseRepository warehouseRepository)
         {
             this.itemVariationRepository = itemVariationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.repository = repository;
             this.itemRepository = itemRepository;
             this.historyRepository = historyRepository;
+            this.warehouseRepository = warehouseRepository;
         }
 
         #endregion
@@ -40,7 +42,8 @@ namespace EPMS.Implementation.Services
 
             TIRCreateResponse response = new TIRCreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
+                Warehouses = warehouseRepository.GetAll()
             };
             if (id == null)
             {

@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Script.Serialization;
 using EPMS.Implementation;
+using EPMS.Web.ModelMappers;
+using EPMS.Web.Models.Common;
+using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web
 {
@@ -119,6 +124,77 @@ namespace EPMS.Web
                 return true;
             }
             return false;
+        }
+
+        public static IList<JsTreeJson> InventoryDepartmentTree(IEnumerable<DomainModels.InventoryDepartment> departments, string direction)
+        {
+            IList<JsTreeJson> details = new List<JsTreeJson>();
+            foreach (var inventoryDepartment in departments)
+            {
+                details.Add(direction == "ltr"
+                    ? inventoryDepartment.CreateForJsTreeJsonEn()
+                    : inventoryDepartment.CreateForJsTreeJsonAr());
+                if (inventoryDepartment.InventoryItems.ToList().Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.ToList().Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                JsTreeJson item = new JsTreeJson
+                                {
+                                    id = itemVariation.ItemVariationId + "_Item",
+                                    text = direction == "ltr" ?
+                                        itemVariation.SKUDescriptionEn + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode :
+                                        itemVariation.SKUDescriptionAr + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
+                                    parent = inventoryDepartment.DepartmentId + "_department"
+                                };
+                                details.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return details;
+        }
+        public static IList<JsTreeJson> InventoryDepartmentTreeByWarehouse(IEnumerable<DomainModels.InventoryDepartment> departments, long warehouseId, string direction)
+        {
+            IList<JsTreeJson> details = new List<JsTreeJson>();
+            foreach (var inventoryDepartment in departments)
+            {
+                details.Add(direction == "ltr"
+                    ? inventoryDepartment.CreateForJsTreeJsonEn()
+                    : inventoryDepartment.CreateForJsTreeJsonAr());
+                if (inventoryDepartment.InventoryItems.ToList().Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.ToList().Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                foreach (var itemWarehouse in itemVariation.ItemWarehouses)
+                                {
+                                    if (itemWarehouse.WarehouseId == warehouseId)
+                                    {
+                                        JsTreeJson item = new JsTreeJson
+                                        {
+                                            id = itemVariation.ItemVariationId + "_Item",
+                                            text = direction == "ltr" ?
+                                                itemVariation.SKUDescriptionEn + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode :
+                                                itemVariation.SKUDescriptionAr + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
+                                            parent = inventoryDepartment.DepartmentId + "_department"
+                                        };
+                                        details.Add(item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return details;
         }
     }
 }

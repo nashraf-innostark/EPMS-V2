@@ -848,6 +848,7 @@
     <Compile Include="DashboardModels\Employee.cs" />
     <Compile Include="ViewModels\Department\DepartmentListViewModel.cs" />
     <Compile Include="ViewModels\DIF\DifHistoryViewModel.cs" />
+    <Compile Include="ViewModels\DIF\WarehouseItems.cs" />
     <Compile Include="ViewModels\Employee\EmployeeAjaxViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeDetailViewModel.cs" />
     <Compile Include="ViewModels\Employee\EmployeeViewModel.cs" />

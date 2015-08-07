@@ -19,6 +19,8 @@ namespace EPMS.Web.Models
         public string NotesE { get; set; }
         public int Status { get; set; }
         public string ManagerId { get; set; }
+        public long FromWarehouseId { get; set; }
+        public long ToWarehouseId { get; set; }
         public string RequesterName { get; set; }
         public string RequesterNameAr { get; set; }
         public string ManagerName { get; set; }

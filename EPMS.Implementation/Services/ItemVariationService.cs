@@ -186,6 +186,36 @@ namespace EPMS.Implementation.Services
             }
             return response;
         }
+
+        public ItemVariationForWarehouse GetItemVariationByWarehouseId(long warehouseId)
+        {
+            ItemVariationForWarehouse response = new ItemVariationForWarehouse();
+            IEnumerable<ItemVariation> itemVariations = variationRepository.GetItemVariationByWarehouseId(warehouseId);
+            if (itemVariations != null)
+            {
+                IEnumerable<ItemVariation> variations = itemVariations as IList<ItemVariation> ?? itemVariations.ToList();
+                response.ItemVariationDropDownListItems =
+                    variations
+                        .Select(x => new ItemVariationDropDownListItem
+                        {
+                            ItemVariationId = x.ItemVariationId,
+                            ItemCodeSKUCodeDescriptoinEn =
+                                x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                            ItemCodeSKUCodeDescriptoinAr =
+                                x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                            SKUCode = x.SKUCode,
+                            ItemSKUDescriptoinEn = x.SKUDescriptionEn,
+                            ItemSKUDescriptoinAr = x.SKUDescriptionAr,
+                            ItemVariationDescriptionA = x.DescriptionAr,
+                            ItemVariationDescriptionE = x.DescriptionEn,
+                            ItemNameA = x.InventoryItem.ItemNameAr,
+                            ItemNameE = x.InventoryItem.ItemNameEn
+                        });
+                response.InventoryDepartments = variations.Select(x => x.InventoryItem.InventoryDepartment).Distinct();
+            }
+            return response;
+        }
+
         /// <summary>
         /// Get all variations by ItemVariationId
         /// </summary>

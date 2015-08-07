@@ -13,5 +13,6 @@ namespace EPMS.Web.ViewModels.TIR
         public Models.TIR Tir { get; set; }
         public IList<Models.TIRItem> TirItems { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+        public IEnumerable<DashboardModels.WarehousDDL> Warehouses { get; set; }
     }
 }

@@ -347,5 +347,14 @@ namespace EPMS.Web.Resources.Inventory.DIF {
                 return ResourceManager.GetString("Status", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
+            }
+        }
     }
 }

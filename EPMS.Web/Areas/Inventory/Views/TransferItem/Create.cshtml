@@ -62,6 +62,48 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.FromWarehouse</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ToWarehouse</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
                 <label class="control-label" for="TransferReasonEn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferReason</label>
             </div>
             <div class="span9">

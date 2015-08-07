@@ -321,6 +321,7 @@
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
           <Property Name="FormNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="DIFHistory">
           <Key>
@@ -339,6 +340,7 @@
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
           <Property Name="ParentId" Type="bigint" Nullable="false" />
           <Property Name="FormNumber" Type="nvarchar" MaxLength="50" />
+          <Property Name="WarehouseId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="DIFItem">
           <Key>
@@ -1326,6 +1328,8 @@
           <Property Name="NotesE" Type="nvarchar(max)" />
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
+          <Property Name="FromWarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="ToWarehouseId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="TIRHistory">
           <Key>
@@ -1344,6 +1348,8 @@
           <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="ManagerId" Type="nvarchar" MaxLength="128" />
           <Property Name="ParentId" Type="bigint" Nullable="false" />
+          <Property Name="FromWarehouseId" Type="bigint" Nullable="false" />
+          <Property Name="ToWarehouseId" Type="bigint" Nullable="false" />
         </EntityType>
         <EntityType Name="TIRItem">
           <Key>
@@ -1690,6 +1696,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_DIF_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="DIF" Type="Self.DIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="DIF">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_DIFHistory_CreatedBy">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="DIFHistory" Type="Self.DIFHistory" Multiplicity="*" />
@@ -1711,6 +1729,18 @@
             </Principal>
             <Dependent Role="DIFHistory">
               <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFHistory_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="DIFHistory" Type="Self.DIFHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="DIFHistory">
+              <PropertyRef Name="WarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2882,6 +2912,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_TIRFromWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="TIR" Type="Self.TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="FromWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TIRHistory_AspNetUsers">
           <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="1" />
           <End Role="TIRHistory" Type="Self.TIRHistory" Multiplicity="*" />
@@ -2903,6 +2945,30 @@
             </Principal>
             <Dependent Role="TIRHistory">
               <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRHistoryFromWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="TIRHistory" Type="Self.TIRHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIRHistory">
+              <PropertyRef Name="FromWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRHistoryToWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="TIRHistory" Type="Self.TIRHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIRHistory">
+              <PropertyRef Name="ToWarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -2951,6 +3017,18 @@
             </Principal>
             <Dependent Role="TIRItemHistory">
               <PropertyRef Name="TIRId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRToWarehouse_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="1" />
+          <End Role="TIR" Type="Self.TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="ToWarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3189,12 +3267,20 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="DIF" EntitySet="DIF" />
           </AssociationSet>
+          <AssociationSet Name="FK_DIF_Warehouse" Association="Self.FK_DIF_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="DIF" EntitySet="DIF" />
+          </AssociationSet>
           <AssociationSet Name="FK_DIFHistory_CreatedBy" Association="Self.FK_DIFHistory_CreatedBy">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="DIFHistory" EntitySet="DIFHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_DIFHistory_Manager" Association="Self.FK_DIFHistory_Manager">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="DIFHistory" EntitySet="DIFHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFHistory_Warehouse" Association="Self.FK_DIFHistory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="DIFHistory" EntitySet="DIFHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_DIFItem_DIF" Association="Self.FK_DIFItem_DIF">
@@ -3585,12 +3671,24 @@
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TIR" EntitySet="TIR" />
           </AssociationSet>
+          <AssociationSet Name="FK_TIRFromWarehouse_Warehouse" Association="Self.FK_TIRFromWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="TIR" EntitySet="TIR" />
+          </AssociationSet>
           <AssociationSet Name="FK_TIRHistory_AspNetUsers" Association="Self.FK_TIRHistory_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="TIRHistory" EntitySet="TIRHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_TIRHistory_AspNetUsers1" Association="Self.FK_TIRHistory_AspNetUsers1">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="TIRHistory" EntitySet="TIRHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRHistoryFromWarehouse_Warehouse" Association="Self.FK_TIRHistoryFromWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="TIRHistory" EntitySet="TIRHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRHistoryToWarehouse_Warehouse" Association="Self.FK_TIRHistoryToWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="TIRHistory" EntitySet="TIRHistory" />
           </AssociationSet>
           <AssociationSet Name="FK_TIRItem_ItemVariation" Association="Self.FK_TIRItem_ItemVariation">
@@ -3608,6 +3706,10 @@
           <AssociationSet Name="FK_TIRItemHistory_TIRHistory" Association="Self.FK_TIRItemHistory_TIRHistory">
             <End Role="TIRHistory" EntitySet="TIRHistory" />
             <End Role="TIRItemHistory" EntitySet="TIRItemHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRToWarehouse_Warehouse" Association="Self.FK_TIRToWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
+            <End Role="TIR" EntitySet="TIR" />
           </AssociationSet>
           <AssociationSet Name="FK_UserPrefrences_AspNetUsers" Association="Self.FK_UserPrefrences_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -3758,13 +3860,10 @@
           <NavigationProperty Name="UserPrefrences" Relationship="Self.FK_UserPrefrences_AspNetUsers" FromRole="AspNetUsers" ToRole="UserPrefrences" />
           <NavigationProperty Name="AspNetRoles" Relationship="Self.AspNetUserRoles" FromRole="AspNetUsers" ToRole="AspNetRoles" />
           <NavigationProperty Name="RIFs" Relationship="EPMSInventoryModel.FK_RIF_AspNetUsers" FromRole="AspNetUser" ToRole="RIF" />
-          <NavigationProperty Name="DIFs" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="AspNetUser" ToRole="DIF" />
-          <NavigationProperty Name="DIFManager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="AspNetUser" ToRole="DIF" />
           <NavigationProperty Name="TIRs" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="AspNetUser" ToRole="TIR" />
           <NavigationProperty Name="TIRManager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="AspNetUser" ToRole="TIR" />
           <NavigationProperty Name="PurchaseOrders" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers" FromRole="AspNetUser" ToRole="PurchaseOrder" />
           <NavigationProperty Name="PurchaseOrderManager" Relationship="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" FromRole="AspNetUser" ToRole="PurchaseOrder" />
-          <NavigationProperty Name="DIFHistories" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="AspNetUser" ToRole="DIFHistory" />
           <NavigationProperty Name="TIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistory_AspNetUsers" FromRole="AspNetUser" ToRole="TIRHistory" />
           <NavigationProperty Name="PurchaseOrderHistoryManager" Relationship="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers" FromRole="AspNetUser" ToRole="PurchaseOrderHistory" />
           <NavigationProperty Name="PurchaseOrderHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderHistory_AspNetUsers1" FromRole="AspNetUser" ToRole="PurchaseOrderHistory" />
@@ -3777,7 +3876,11 @@
           <NavigationProperty Name="RIFHistories" Relationship="EPMSInventoryModel.FK_RIFHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RIFHistory" />
           <NavigationProperty Name="RFIs" Relationship="EPMSInventoryModel.FK_RFI_AspNetUsers" FromRole="AspNetUser" ToRole="RFI" />
           <NavigationProperty Name="RFIHistories" Relationship="EPMSInventoryModel.FK_RFIHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RFIHistory" />
-        </EntityType>
+          <NavigationProperty Name="DIFs" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="AspNetUser" ToRole="DIF" />
+          <NavigationProperty Name="DIFManager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="AspNetUser" ToRole="DIF" />
+          <NavigationProperty Name="DIFHistories" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="AspNetUser" ToRole="DIFHistory" />
+          <NavigationProperty Name="DIFHistoriesManager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="AspNetUser" ToRole="DIFHistory" />
+          </EntityType>
         <EntityType Name="Color">
           <Key>
             <PropertyRef Name="ColorId" />
@@ -5458,15 +5561,6 @@
             <End Role="Order" EntitySet="Orders" />
             <End Role="RIF" EntitySet="RIFs" />
           </AssociationSet>
-          <EntitySet Name="DIFs" EntityType="EPMSInventoryModel.DIF" />
-          <AssociationSet Name="FK_DIF_CreatedBy" Association="EPMSInventoryModel.FK_DIF_CreatedBy">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="DIF" EntitySet="DIFs" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DIF_Manager" Association="EPMSInventoryModel.FK_DIF_Manager">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="DIF" EntitySet="DIFs" />
-          </AssociationSet>
           <EntitySet Name="ItemReleaseDetails" EntityType="EPMSInventoryModel.ItemReleaseDetail" />
           <EntitySet Name="TIRs" EntityType="EPMSInventoryModel.TIR" />
           <AssociationSet Name="FK_TIR_CreatedBy" Association="EPMSInventoryModel.FK_TIR_CreatedBy">
@@ -5489,10 +5583,6 @@
           <EntitySet Name="DIFItems" EntityType="EPMSInventoryModel.DIFItem" />
           <EntitySet Name="RFIItems" EntityType="EPMSInventoryModel.RFIItem" />
           <EntitySet Name="TIRItems" EntityType="EPMSInventoryModel.TIRItem" />
-          <AssociationSet Name="FK_DIFItem_DIF" Association="EPMSInventoryModel.FK_DIFItem_DIF">
-            <End Role="DIF" EntitySet="DIFs" />
-            <End Role="DIFItem" EntitySet="DIFItems" />
-          </AssociationSet>
           <AssociationSet Name="FK_TIRItem_TIR" Association="EPMSInventoryModel.FK_TIRItem_TIR">
             <End Role="TIR" EntitySet="TIRs" />
             <End Role="TIRItem" EntitySet="TIRItems" />
@@ -5508,18 +5598,9 @@
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="ItemReleaseQuantity" EntitySet="ItemReleaseQuantities" />
           </AssociationSet>
-          <EntitySet Name="DIFHistories" EntityType="EPMSInventoryModel.DIFHistory" />
           <EntitySet Name="RFIItemHistories" EntityType="EPMSInventoryModel.RFIItemHistory" />
           <EntitySet Name="TIRHistories" EntityType="EPMSInventoryModel.TIRHistory" />
           <EntitySet Name="TIRItemHistories" EntityType="EPMSInventoryModel.TIRItemHistory" />
-          <AssociationSet Name="FK_DIFHistory_CreatedBy" Association="EPMSInventoryModel.FK_DIFHistory_CreatedBy">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="DIFHistory" EntitySet="DIFHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DIFHistory_Manager" Association="EPMSInventoryModel.FK_DIFHistory_Manager">
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-            <End Role="DIFHistory" EntitySet="DIFHistories" />
-          </AssociationSet>
           <AssociationSet Name="FK_TIRHistory_AspNetUsers" Association="EPMSInventoryModel.FK_TIRHistory_AspNetUsers">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="TIRHistory" EntitySet="TIRHistories" />
@@ -5527,10 +5608,6 @@
           <AssociationSet Name="FK_TIRHistory_AspNetUsers1" Association="EPMSInventoryModel.FK_TIRHistory_AspNetUsers1">
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
             <End Role="TIRHistory" EntitySet="TIRHistories" />
-          </AssociationSet>
-          <AssociationSet Name="FK_DIFItemHistory_DIFHistory" Association="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory">
-            <End Role="DIFHistory" EntitySet="DIFHistories" />
-            <End Role="DIFItemHistory" EntitySet="DIFItemHistories" />
           </AssociationSet>
           <AssociationSet Name="FK_TIRItemHistory_TIRHistory" Association="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory">
             <End Role="TIRHistory" EntitySet="TIRHistories" />
@@ -5780,6 +5857,56 @@
             <End Role="RIFHistory" EntitySet="RIFHistories" />
             <End Role="RIFItemHistory" EntitySet="RIFItemHistories" />
           </AssociationSet>
+          <EntitySet Name="DIFs" EntityType="EPMSInventoryModel.DIF" />
+          <EntitySet Name="DIFHistories" EntityType="EPMSInventoryModel.DIFHistory" />
+          <AssociationSet Name="FK_DIF_CreatedBy" Association="EPMSInventoryModel.FK_DIF_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="DIF" EntitySet="DIFs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIF_Manager" Association="EPMSInventoryModel.FK_DIF_Manager">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="DIF" EntitySet="DIFs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFHistory_CreatedBy" Association="EPMSInventoryModel.FK_DIFHistory_CreatedBy">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="DIFHistory" EntitySet="DIFHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFHistory_Manager" Association="EPMSInventoryModel.FK_DIFHistory_Manager">
+            <End Role="AspNetUser" EntitySet="AspNetUsers" />
+            <End Role="DIFHistory" EntitySet="DIFHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIF_Warehouse" Association="EPMSInventoryModel.FK_DIF_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="DIF" EntitySet="DIFs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFItem_DIF" Association="EPMSInventoryModel.FK_DIFItem_DIF">
+            <End Role="DIF" EntitySet="DIFs" />
+            <End Role="DIFItem" EntitySet="DIFItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFHistory_Warehouse" Association="EPMSInventoryModel.FK_DIFHistory_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="DIFHistory" EntitySet="DIFHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DIFItemHistory_DIFHistory" Association="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory">
+            <End Role="DIFHistory" EntitySet="DIFHistories" />
+            <End Role="DIFItemHistory" EntitySet="DIFItemHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRFromWarehouse_Warehouse" Association="EPMSInventoryModel.FK_TIRFromWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TIR" EntitySet="TIRs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRToWarehouse_Warehouse" Association="EPMSInventoryModel.FK_TIRToWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TIR" EntitySet="TIRs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRHistoryFromWarehouse_Warehouse" Association="EPMSInventoryModel.FK_TIRHistoryFromWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TIRHistory" EntitySet="TIRHistories" />
+          </AssociationSet>
+          <AssociationSet Name="FK_TIRHistoryToWarehouse_Warehouse" Association="EPMSInventoryModel.FK_TIRHistoryToWarehouse_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="TIRHistory" EntitySet="TIRHistories" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -5802,6 +5929,12 @@
           <NavigationProperty Name="ItemReleaseQuantities" Relationship="EPMSInventoryModel.FK_ItemReleaseQuantity_Warehouse" FromRole="Warehouse" ToRole="ItemReleaseQuantity" />
           <NavigationProperty Name="ItemWarehouses" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="Warehouse" ToRole="ItemWarehouse" />
           <NavigationProperty Name="PhysicalCountItems" Relationship="EPMSInventoryModel.FK_PhysicalCountItem_Warehouse" FromRole="Warehouse" ToRole="PhysicalCountItem" />
+          <NavigationProperty Name="DIFs" Relationship="EPMSInventoryModel.FK_DIF_Warehouse" FromRole="Warehouse" ToRole="DIF" />
+          <NavigationProperty Name="DIFHistories" Relationship="EPMSInventoryModel.FK_DIFHistory_Warehouse" FromRole="Warehouse" ToRole="DIFHistory" />
+          <NavigationProperty Name="FromTIRs" Relationship="EPMSInventoryModel.FK_TIRFromWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIR" />
+          <NavigationProperty Name="ToTIRs" Relationship="EPMSInventoryModel.FK_TIRToWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIR" />
+          <NavigationProperty Name="FromTIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistoryFromWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIRHistory" />
+          <NavigationProperty Name="ToTIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistoryToWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIRHistory" />
         </EntityType>
         <Association Name="FK_Warehouse_Employee">
           <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -5872,50 +6005,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DIF">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="DIF" ToRole="AspNetUser" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="DIF" ToRole="AspNetUser" />
-          <NavigationProperty Name="DIFItems" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIF" ToRole="DIFItem" />
-          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
-        <Association Name="FK_DIF_CreatedBy">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIF">
-              <PropertyRef Name="RecCreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DIF_Manager">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIF">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ItemReleaseDetail">
           <Key>
             <PropertyRef Name="IRFDetailId" />
@@ -5956,6 +6045,10 @@
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIR_CreatedBy" FromRole="TIR" ToRole="AspNetUser" />
           <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_TIR_Manager" FromRole="TIR" ToRole="AspNetUser" />
           <NavigationProperty Name="TIRItems" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIR" ToRole="TIRItem" />
+          <Property Name="FromWarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="ToWarehouseId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="FromWarehouse" Relationship="EPMSInventoryModel.FK_TIRFromWarehouse_Warehouse" FromRole="TIR" ToRole="Warehouse" />
+          <NavigationProperty Name="ToWarehouse" Relationship="EPMSInventoryModel.FK_TIRToWarehouse_Warehouse" FromRole="TIR" ToRole="Warehouse" />
         </EntityType>
         <Association Name="FK_TIR_CreatedBy">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -6039,8 +6132,8 @@
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DIF" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIFItem" ToRole="DIF" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_DIFItem_ItemVariation" FromRole="DIFItem" ToRole="ItemVariation" />
+          <NavigationProperty Name="DIF" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIFItem" ToRole="DIF" />
         </EntityType>
         <EntityType Name="RFIItem">
           <Key>
@@ -6080,18 +6173,6 @@
           <NavigationProperty Name="TIR" Relationship="EPMSInventoryModel.FK_TIRItem_TIR" FromRole="TIRItem" ToRole="TIR" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_TIRItem_ItemVariation" FromRole="TIRItem" ToRole="ItemVariation" />
         </EntityType>
-        <Association Name="FK_DIFItem_DIF">
-          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.DIFItem" Role="DIFItem" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DIF">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIFItem">
-              <PropertyRef Name="DIFId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TIRItem_TIR">
           <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="1" />
           <End Type="EPMSInventoryModel.TIRItem" Role="TIRItem" Multiplicity="*" />
@@ -6120,8 +6201,8 @@
           <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <NavigationProperty Name="DIFHistory" Relationship="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" FromRole="DIFItemHistory" ToRole="DIFHistory" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_DIFItemHistory_ItemVariation" FromRole="DIFItemHistory" ToRole="ItemVariation" />
+          <NavigationProperty Name="DIFHistory" Relationship="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" FromRole="DIFItemHistory" ToRole="DIFHistory" />
         </EntityType>
         <EntityType Name="ItemReleaseDetailHistory">
           <Key>
@@ -6180,27 +6261,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="DIFHistory">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Int32" Nullable="false" />
-          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="ParentId" Type="Int64" Nullable="false" />
-          <NavigationProperty Name="CreatedBy" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="DIFHistory" ToRole="AspNetUser" />
-          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="DIFHistory" ToRole="AspNetUser" />
-          <NavigationProperty Name="DIFItemHistories" Relationship="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" FromRole="DIFHistory" ToRole="DIFItemHistory" />
-          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="RFIItemHistory">
           <Key>
             <PropertyRef Name="RFIItemId" />
@@ -6240,6 +6300,10 @@
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_TIRHistory_AspNetUsers" FromRole="TIRHistory" ToRole="AspNetUser" />
           <NavigationProperty Name="AspNetUser1" Relationship="EPMSInventoryModel.FK_TIRHistory_AspNetUsers1" FromRole="TIRHistory" ToRole="AspNetUser" />
           <NavigationProperty Name="TIRItemHistories" Relationship="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory" FromRole="TIRHistory" ToRole="TIRItemHistory" />
+          <Property Name="FromWarehouseId" Type="Int64" Nullable="false" />
+          <Property Name="ToWarehouseId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="FromWarehouse" Relationship="EPMSInventoryModel.FK_TIRHistoryFromWarehouse_Warehouse" FromRole="TIRHistory" ToRole="Warehouse" />
+          <NavigationProperty Name="ToWarehouse" Relationship="EPMSInventoryModel.FK_TIRHistoryToWarehouse_Warehouse" FromRole="TIRHistory" ToRole="Warehouse" />
         </EntityType>
         <EntityType Name="TIRItemHistory">
           <Key>
@@ -6260,30 +6324,6 @@
           <NavigationProperty Name="TIRHistory" Relationship="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory" FromRole="TIRItemHistory" ToRole="TIRHistory" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_TIRItemHistory_ItemVariation" FromRole="TIRItemHistory" ToRole="ItemVariation" />
         </EntityType>
-        <Association Name="FK_DIFHistory_CreatedBy">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIFHistory">
-              <PropertyRef Name="RecCreatedBy" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DIFHistory_Manager">
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="AspNetUser">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIFHistory">
-              <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_TIRHistory_AspNetUsers">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
           <End Type="EPMSInventoryModel.TIRHistory" Role="TIRHistory" Multiplicity="*" />
@@ -6305,18 +6345,6 @@
             </Principal>
             <Dependent Role="TIRHistory">
               <PropertyRef Name="ManagerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_DIFItemHistory_DIFHistory">
-          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="1" />
-          <End Type="EPMSInventoryModel.DIFItemHistory" Role="DIFItemHistory" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="DIFHistory">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="DIFItemHistory">
-              <PropertyRef Name="DIFId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -7379,6 +7407,195 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="DIF">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_DIF_CreatedBy" FromRole="DIF" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIF_Manager" FromRole="DIF" ToRole="AspNetUser" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_DIF_Warehouse" FromRole="DIF" ToRole="Warehouse" />
+          <NavigationProperty Name="DIFItems" Relationship="EPMSInventoryModel.FK_DIFItem_DIF" FromRole="DIF" ToRole="DIFItem" />
+        </EntityType>
+        <EntityType Name="DIFHistory">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="DefectivenessE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="DefectivenessA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <Property Name="ManagerId" Type="String" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="ParentId" Type="Int64" Nullable="false" />
+          <Property Name="FormNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="WarehouseId" Type="Int64" Nullable="false" />
+          <NavigationProperty Name="CreatedBy" Relationship="EPMSInventoryModel.FK_DIFHistory_CreatedBy" FromRole="DIFHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Manager" Relationship="EPMSInventoryModel.FK_DIFHistory_Manager" FromRole="DIFHistory" ToRole="AspNetUser" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_DIFHistory_Warehouse" FromRole="DIFHistory" ToRole="Warehouse" />
+          <NavigationProperty Name="DIFItemHistories" Relationship="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" FromRole="DIFHistory" ToRole="DIFItemHistory" />
+        </EntityType>
+        <Association Name="FK_DIF_CreatedBy">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIF">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIF_Manager">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIF">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFHistory_CreatedBy">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIFHistory">
+              <PropertyRef Name="RecCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFHistory_Manager">
+          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AspNetUser">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIFHistory">
+              <PropertyRef Name="ManagerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIF_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="DIF">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFItem_DIF">
+          <End Type="EPMSInventoryModel.DIF" Role="DIF" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIFItem" Role="DIFItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIF">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIFItem">
+              <PropertyRef Name="DIFId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFHistory_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="DIFHistory">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DIFItemHistory_DIFHistory">
+          <End Type="EPMSInventoryModel.DIFHistory" Role="DIFHistory" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.DIFItemHistory" Role="DIFItemHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="DIFHistory">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="DIFItemHistory">
+              <PropertyRef Name="DIFId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRFromWarehouse_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="FromWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRToWarehouse_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIR" Role="TIR" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIR">
+              <PropertyRef Name="ToWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRHistoryFromWarehouse_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIRHistory" Role="TIRHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIRHistory">
+              <PropertyRef Name="FromWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_TIRHistoryToWarehouse_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.TIRHistory" Role="TIRHistory" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="TIRHistory">
+              <PropertyRef Name="ToWarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -8313,24 +8530,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DIFs">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.DIF">
-              <MappingFragment StoreEntitySet="DIF">
-                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
-                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ItemReleaseDetails">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ItemReleaseDetail">
               <MappingFragment StoreEntitySet="ItemReleaseDetail">
@@ -8353,6 +8552,8 @@
           <EntitySetMapping Name="TIRs">
             <EntityTypeMapping TypeName="EPMSInventoryModel.TIR">
               <MappingFragment StoreEntitySet="TIR">
+                <ScalarProperty Name="ToWarehouseId" ColumnName="ToWarehouseId" />
+                <ScalarProperty Name="FromWarehouseId" ColumnName="FromWarehouseId" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="NotesE" ColumnName="NotesE" />
@@ -8486,25 +8687,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="DIFHistories">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.DIFHistory">
-              <MappingFragment StoreEntitySet="DIFHistory">
-                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
-                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
-                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
-                <ScalarProperty Name="Status" ColumnName="Status" />
-                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
-                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
-                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
-                <ScalarProperty Name="Id" ColumnName="Id" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="RFIItemHistories">
             <EntityTypeMapping TypeName="EPMSInventoryModel.RFIItemHistory">
               <MappingFragment StoreEntitySet="RFIItemHistory">
@@ -8526,6 +8708,8 @@
           <EntitySetMapping Name="TIRHistories">
             <EntityTypeMapping TypeName="EPMSInventoryModel.TIRHistory">
               <MappingFragment StoreEntitySet="TIRHistory">
+                <ScalarProperty Name="ToWarehouseId" ColumnName="ToWarehouseId" />
+                <ScalarProperty Name="FromWarehouseId" ColumnName="FromWarehouseId" />
                 <ScalarProperty Name="ParentId" ColumnName="ParentId" />
                 <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
                 <ScalarProperty Name="Status" ColumnName="Status" />
@@ -8911,6 +9095,45 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="DIFs">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.DIF">
+              <MappingFragment StoreEntitySet="DIF">
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
+                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DIFHistories">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.DIFHistory">
+              <MappingFragment StoreEntitySet="DIFHistory">
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
+                <ScalarProperty Name="FormNumber" ColumnName="FormNumber" />
+                <ScalarProperty Name="ParentId" ColumnName="ParentId" />
+                <ScalarProperty Name="ManagerId" ColumnName="ManagerId" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="NotesE" ColumnName="NotesE" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="DefectivenessA" ColumnName="DefectivenessA" />
+                <ScalarProperty Name="DefectivenessE" ColumnName="DefectivenessE" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -8933,7 +9156,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="64">
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9039,9 +9262,6 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_WarehouseDetail_Warehouse" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIF_AspNetUsers" ManuallyRouted="false" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIF_Orders" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.DIF" Width="1.5" PointX="14" PointY="41.75" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIF_CreatedBy" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIF_Manager" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseDetail" Width="1.5" PointX="20.5" PointY="28.125" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TIR" Width="1.5" PointX="6" PointY="61.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIR_CreatedBy" />
@@ -9049,25 +9269,20 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.PurchaseOrder" Width="1.5" PointX="6" PointY="66.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_PurchaseOrder_AspNetUsers1" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.DIFItem" Width="1.5" PointX="21.25" PointY="32.875" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.DIFItem" Width="1.5" PointX="21.125" PointY="34.25" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIItem" Width="1.5" PointX="8.25" PointY="21.125" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TIRItem" Width="1.5" PointX="13.25" PointY="46.625" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIFItem_DIF" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRItem_TIR" />
         <EntityTypeShape EntityType="EPMSInventoryModel.DIFItemHistory" Width="1.5" PointX="16.25" PointY="50.625" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseDetailHistory" Width="1.875" PointX="22.625" PointY="23.5" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemReleaseQuantity" Width="2.125" PointX="27.625" PointY="20.125" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_ItemReleaseDetail" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemReleaseQuantity_Warehouse" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.DIFHistory" Width="1.5" PointX="5.25" PointY="77.125" />
         <EntityTypeShape EntityType="EPMSInventoryModel.RFIItemHistory" Width="1.5" PointX="23.5" PointY="28.25" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TIRHistory" Width="1.5" PointX="5.25" PointY="71.625" />
         <EntityTypeShape EntityType="EPMSInventoryModel.TIRItemHistory" Width="1.5" PointX="13.5" PointY="51.875" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_CreatedBy" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_Manager" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRHistory_AspNetUsers" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRHistory_AspNetUsers1" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TIRItemHistory_TIRHistory" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ItemWarehouse" Width="1.875" PointX="15.375" PointY="17.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" />
@@ -9142,6 +9357,20 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItemHistory_ItemWarehouse" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItem_RIF" />
         <AssociationConnector Association="EPMSInventoryModel.FK_RIFItemHistory_RIFHistory" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.DIF" Width="1.5" PointX="22.5" PointY="17.625" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.DIFHistory" Width="1.5" PointX="23.5" PointY="33.5" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIF_CreatedBy" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIF_Manager" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_CreatedBy" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_Manager" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIF_Warehouse" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIFItem_DIF" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIFHistory_Warehouse" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_DIFItemHistory_DIFHistory" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIRFromWarehouse_Warehouse" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIRToWarehouse_Warehouse" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIRHistoryFromWarehouse_Warehouse" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_TIRHistoryToWarehouse_Warehouse" />
       </Diagram>
     </Diagrams>
   </Designer>

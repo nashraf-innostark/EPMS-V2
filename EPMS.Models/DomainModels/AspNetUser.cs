@@ -27,19 +27,13 @@ namespace EPMS.Models.DomainModels
         public virtual Customer Customer { get; set; }
         public virtual Employee Employee { get; set; }
         public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
-        public virtual ICollection<RFI> RFIs { get; set; }
         public virtual ICollection<UserPrefrence> UserPrefrences { get; set; }
         public virtual ICollection<AspNetRole> AspNetRoles { get; set; }
         public virtual ICollection<RIF> RIFs { get; set; }
-        public virtual ICollection<DIF> DIFs { get; set; }
-        public virtual ICollection<DIF> DIFManager { get; set; }
         public virtual ICollection<TIR> TIRs { get; set; }
         public virtual ICollection<TIR> TIRManager { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrders { get; set; }
         public virtual ICollection<PurchaseOrder> PurchaseOrderManager { get; set; }
-        public virtual ICollection<DIFHistory> DIFHistories { get; set; }
-        public virtual ICollection<RFIHistory> RFIHistories { get; set; }
-        public virtual ICollection<RIFHistory> RIFHistories { get; set; }
         public virtual ICollection<TIRHistory> TIRHistories { get; set; }
         public virtual ICollection<PurchaseOrderHistory> PurchaseOrderHistoryManager { get; set; }
         public virtual ICollection<PurchaseOrderHistory> PurchaseOrderHistories { get; set; }
@@ -49,5 +43,13 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesManager { get; set; }
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesCreatedBy { get; set; }
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesRequester { get; set; }
+        public virtual ICollection<RIFHistory> RIFHistories { get; set; }
+        public virtual ICollection<RFI> RFIs { get; set; }
+        public virtual ICollection<RFIHistory> RFIHistories { get; set; }
+        public virtual ICollection<DIF> DIFs { get; set; }
+        public virtual ICollection<DIF> DIFManager { get; set; }
+        public virtual ICollection<DIFHistory> DIFHistories { get; set; }
+        public virtual ICollection<DIFHistory> DIFHistoriesManager { get; set; }
+
     }
 }

@@ -52,21 +52,23 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.OrderNameOrderNo </label>
+                <label class="control-label">@EPMS.Web.Resources.Inventory.DIF.DIF.Warehouse</label>
             </div>
             <div class="span2">
-                @if (direction == "ltr")
-                {
-                    <div class="controls">
-                        @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me tableDbM disableDdl" })
-                    </div>
-                }
-                else
-                {
-                    <div class="controls">
-                        @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me tableDbM disableDdl" })
-                    </div>
-                }
+                <div class="controls">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id="Warehouse", @class = "select2me" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "Warehouse", @class = "select2me" })
+                        </div>
+                    }
+                </div>
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -502,6 +504,32 @@
                 $("#treeControl").show();
             }
         });
+        
+        $("#Warehouse").on("change", function () {
+            var warehouseId = parseInt($(this).val());
+            if (isNaN(warehouseId)) {
+                return false;
+            }
+            var url = siteUrl + "/Inventory/DIF/GetWarehouseItems";
+            ajaxLoader();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    warehouseId: warehouseId,
+                    direction: dir
+                },
+                success: function (data) {
+                    populateDDItems(data.ItemVariationDropDownListItems);
+                    reDrawTree(data.InventoryDepartments);
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('Error=' + e.toString());
+                }
+            });
+        });
     });
 
     $('#tiny').elrte({
@@ -512,5 +540,39 @@
     });
     function jsTreeClick(event) {
         return true;
+    }
+    function populateDDItems(data) {
+        $("#ItemVariationDropDownList").empty();
+        if (data.length > 0) {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+            for (var i = 0; i < data.length; i++) {
+                $("#ItemVariationDropDownList").append(
+                    $('<option></option>').val(data[i].ItemVariationId).html(data[i].ItemCodeSKUCodeDescriptoinEn)
+                );
+            }
+        } else {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
+        return true;
+    }
+    function reDrawTree(data)
+    {
+        var tree = JSON.parse(data);
+        $("#" + divId).jstree({
+            'core': {
+                'check_callback': true,
+                'data': tree
+            },
+            "plugins": ["themes", "json_data", "ui" ],
+        });
     }
 </script>

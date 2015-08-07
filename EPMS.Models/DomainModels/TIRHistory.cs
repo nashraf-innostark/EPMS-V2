@@ -18,9 +18,13 @@ namespace EPMS.Models.DomainModels
         public int Status { get; set; }
         public string ManagerId { get; set; }
         public long ParentId { get; set; }
+        public long FromWarehouseId { get; set; }
+        public long ToWarehouseId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser AspNetUser1 { get; set; }
         public virtual ICollection<TIRItemHistory> TIRItemHistories { get; set; }
+        public virtual Warehouse FromWarehouse { get; set; }
+        public virtual Warehouse ToWarehouse { get; set; }
     }
 }

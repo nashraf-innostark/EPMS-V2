@@ -1,5 +1,5 @@
 ﻿@{
-    
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <div id="itemSearcher" class="modal hide fade treeSelector">
     <div class="modal-header">
@@ -29,9 +29,16 @@
                 <div class="span3">
                     <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.SelectItem</label>
                 </div>
-                <div class="span6">
+                <div class="span7">
                     <div class="controls">
-                        @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCode"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                        @if (direction == "ltr")
+                        {
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinEn"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                        }
+                        else
+                        {
+                            @Html.DropDownList("ItemVariationDropDownList", new SelectList(Model.ItemVariationDropDownList, "ItemVariationId", "ItemCodeSKUCodeDescriptoinAr"), "", new { @class = "select2me", @id = "ItemVariationDropDownList" })
+                        }
                     </div>
                     <label id="ItemVariationDropDownListValidation"></label>
                 </div>
