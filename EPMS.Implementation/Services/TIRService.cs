@@ -18,6 +18,7 @@ namespace EPMS.Implementation.Services
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IWarehouseRepository warehouseRepository;
+        private readonly IItemWarehouseRepository itemWarehouseRepository;
 
         #region Constructor
 
@@ -26,7 +27,7 @@ namespace EPMS.Implementation.Services
         /// </summary>
         /// <param name="itemVariationRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository, ITIRHistoryRepository historyRepository, IWarehouseRepository warehouseRepository)
+        public TIRService(IItemVariationRepository itemVariationRepository, IAspNetUserRepository aspNetUserRepository, ITIRRepository repository, ITIRItemRepository itemRepository, ITIRHistoryRepository historyRepository, IWarehouseRepository warehouseRepository, IItemWarehouseRepository itemWarehouseRepository)
         {
             this.itemVariationRepository = itemVariationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -34,6 +35,7 @@ namespace EPMS.Implementation.Services
             this.itemRepository = itemRepository;
             this.historyRepository = historyRepository;
             this.warehouseRepository = warehouseRepository;
+            this.itemWarehouseRepository = itemWarehouseRepository;
         }
 
         #endregion
@@ -120,22 +122,35 @@ namespace EPMS.Implementation.Services
 
         public bool UpdateTirStatus(TransferItemStatus status)
         {
+            bool deductStatus = false;
+            bool addStatus = false;
             try
             {
                 var tir = repository.Find(status.Id);
-                tir.NotesE = status.NotesEn;
-                tir.NotesA = status.NotesAr;
-                tir.ManagerId = status.ManagerId;
-                if (tir.Status != status.Status && status.Status != 3)
+                if (status.Status == 1)
                 {
-                    tir.Status = status.Status;
-                    var tirHistoryToAdd = tir.CreateFromTirToTirHistory();
-                    historyRepository.Add(tirHistoryToAdd);
-                    historyRepository.SaveChanges();
+                    // deduct quantity from warehouse
+                    deductStatus = DeductQuantityFromWarehouse(tir.TIRItems, tir.FromWarehouseId);
+                    // add quantity to warehouse
+                    addStatus = AddQuantityToWarehouse(tir.TIRItems, tir.ToWarehouseId);
                 }
-                repository.Update(tir);
-                repository.SaveChanges();
-                return true;
+                if (deductStatus && addStatus)
+                {
+                    tir.NotesE = status.NotesEn;
+                    tir.NotesA = status.NotesAr;
+                    tir.ManagerId = status.ManagerId;
+                    if (tir.Status != status.Status && status.Status != 3)
+                    {
+                        tir.Status = status.Status;
+                        var tirHistoryToAdd = tir.CreateFromTirToTirHistory();
+                        historyRepository.Add(tirHistoryToAdd);
+                        historyRepository.SaveChanges();
+                    }
+                    repository.Update(tir);
+                    repository.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {
@@ -143,7 +158,7 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public bool SavePO(TIR tir)
+        public bool SaveTIR(TIR tir)
         {
             if (tir.Id > 0)
             {
@@ -227,6 +242,63 @@ namespace EPMS.Implementation.Services
             {
                 itemRepository.Delete(item);
                 itemRepository.SaveChanges();
+            }
+        }
+
+        private bool DeductQuantityFromWarehouse(IEnumerable<TIRItem> tirItem, long warehouseId)
+        {
+            try
+            {
+                foreach (TIRItem item in tirItem)
+                {
+                    ItemWarehouse deductQuantity =
+                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId((long)item.ItemVariationId, warehouseId);
+                    if (deductQuantity != null)
+                    {
+                        deductQuantity.Quantity -= item.ItemQty;
+                        itemWarehouseRepository.Update(deductQuantity);
+                        itemWarehouseRepository.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        private bool AddQuantityToWarehouse(IEnumerable<TIRItem> tirItem, long warehouseId)
+        {
+            try
+            {
+                foreach (TIRItem item in tirItem)
+                {
+                    ItemWarehouse addQuantity =
+                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId((long)item.ItemVariationId, warehouseId);
+                    if (addQuantity != null)
+                    {
+                        addQuantity.Quantity += item.ItemQty;
+                        itemWarehouseRepository.Update(addQuantity);
+                        itemWarehouseRepository.SaveChanges();
+                    }
+                    else
+                    {
+                        ItemWarehouse addItemWarehouse = new ItemWarehouse
+                        {
+                            WarehouseId = warehouseId,
+                            ItemVariationId = (long)item.ItemVariationId,
+                            Quantity = item.ItemQty,
+                            PlaceInWarehouse = "",
+                        };
+                        itemWarehouseRepository.Add(addItemWarehouse);
+                        itemWarehouseRepository.SaveChanges();
+                    }
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
             }
         }
     }

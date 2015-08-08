@@ -177,7 +177,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
 
                 var tirToBeSaved = viewModel.CreateFromClientToServer();
-                if (tirService.SavePO(tirToBeSaved))
+                if (tirService.SaveTIR(tirToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");

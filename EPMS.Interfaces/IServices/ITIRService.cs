@@ -13,7 +13,7 @@ namespace EPMS.Interfaces.IServices
         TirHistoryResponse GetTirHistoryData(long? id);
         TIR FindTirById(long id, string from);
         bool UpdateTirStatus(TransferItemStatus status);
-        bool SavePO(TIR tir);
+        bool SaveTIR(TIR tir);
         bool AddTIR(TIR tir);
         bool UpdateTIR(TIR tir);
         void DeleteTIR(TIR tir);

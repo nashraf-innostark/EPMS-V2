@@ -105,7 +105,7 @@
                                             </script>
                                             <td class="center">@departments.NoOfSections</td>
                                             <td class="center">-</td>
-                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteRow()">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
+                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteTableRow(this)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -405,11 +405,59 @@
                 }
 
             },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
         });
     }
 
     function jsTreeClick(event) {
         return true;
     }
+    function deleteTableRow(elem) {
+        debugger;
+        var rowId = $(elem).parent().parent().attr('id');
+        var departmentId = rowId.split('_')[0];
+        var serviceUrl = '/Inventory/InventoryDepartment/Delete';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                departmentId: departmentId
+            },
+            success: function (data) {
+                if (data == "Deleted") {
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'success',
+                        text: 'Record has been Deleted.'
+                    });
+                    //var row = $("." + departmentId).parent().get(0);
+                    //var atable = $('#tableSortableDepartments').dataTable();
+                    //var pos = atable.fnGetPosition(row);
+                    //atable.fnDeleteRow(pos);
+                    location.reload();
+                } else if (data == "AssociatedDepartments") {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, sections exist.'
+                    });
+                } else {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, inventory items exist.'
+                    });
+                }
 
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
+    }
 </script>
