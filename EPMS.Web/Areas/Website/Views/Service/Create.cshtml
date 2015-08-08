@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Website Services Addition";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="main-content withPanel">
@@ -155,5 +157,6 @@
 <script type="text/javascript">
     $(document).ready(function() {
         $("#layoutMainContent").removeClass("main-content");
+        $('.panel, .main-content').toggleClass('retracted');
     });
 </script>
