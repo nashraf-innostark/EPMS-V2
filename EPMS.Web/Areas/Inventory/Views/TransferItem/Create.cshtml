@@ -60,7 +60,7 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid warehouseDDLFrom">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.FromWarehouse</label>
             </div>
@@ -69,19 +69,20 @@
                     @if (direction == "ltr")
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me" })
+                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me disableDdl" })
                         </div>
                     }
                     else
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me" })
+                            @Html.DropDownListFor(model => model.Tir.FromWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "FromWarehouse", @class = "select2me disableDdl" })
                         </div>
                     }
+                    <label id="warehousetValidationFrom"></label>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid warehouseDDLTo">
             <div class="span3">
                 <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ToWarehouse</label>
             </div>
@@ -90,15 +91,16 @@
                     @if (direction == "ltr")
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me" })
+                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me disableDdl" })
                         </div>
                     }
                     else
                     {
                         <div class="controls">
-                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me" })
+                            @Html.DropDownListFor(model => model.Tir.ToWarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "ToWarehouse", @class = "select2me disableDdl" })
                         </div>
                     }
+                    <label id="warehousetValidationTo"></label>
                 </div>
             </div>
         </div>
@@ -269,7 +271,7 @@
             </div>
             <div id="SubmitRecord" class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnSubmit</button>
+                    <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnSubmit</button>
                 </div>
             </div>
         </div>
@@ -292,11 +294,13 @@
         siteUrl = $("#siteURL").val();
         divId = "jstree";
         $('.' + 'disableOnLoad' + ':input').attr('readonly', true);
+        
         var itemId = parseInt('@Model.Tir.Id');
         if (itemId > 0) {
             // disable on load section
             $('.btnDisable').addClass('disableList');
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.disableDdl').select2('disable');
             // CK Editor to simple textbox
             var notesE = '@Html.Raw(Model.Tir.NotesE)';
             var regex = /(<([^>]+)>)/ig;
@@ -568,6 +572,58 @@
                 $("#treeControl").show();
             }
         });
+        $("#FromWarehouse").on("change", function () {
+            var warehouseId = parseInt($(this).val());
+            if (isNaN(warehouseId)) {
+                return false;
+            } else {
+                $("#warehousetValidationFrom").text("");
+                $("#warehousetValidationFrom").removeClass("Error");
+            }
+            var url = siteUrl + "/Inventory/DIF/GetWarehouseItems";
+            ajaxLoader();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    warehouseId: warehouseId,
+                    direction: dir
+                },
+                success: function (data) {
+                    populateDDItems(data.ItemVariationDropDownListItems);
+                    reDrawTree(data.InventoryDepartments);
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('Error=' + e.toString());
+                }
+            });
+        });
+        $("#ToWarehouse").on("change", function () {
+            var warehouseIdTo = parseInt($(this).val());
+            if (warehouseIdTo == 0 || warehouseIdTo == "" || warehouseIdTo == null || isNaN(warehouseIdTo)) {
+                $("#warehousetValidationTo").text("Please Select Warehouse to which items to transfer");
+                $("#warehousetValidationTo").addClass("Error");
+                $('html,body').animate({
+                    scrollTop: $(".warehouseDDLTo").offset().top
+                },
+                'slow');
+                return false;
+            } else {
+                $("#warehousetValidationTo").text("");
+                $("#warehousetValidationTo").removeClass("Error");
+            }
+            var warehouseIdFrom = parseInt($("#FromWarehouse").val());
+            if (warehouseIdTo == warehouseIdFrom) {
+                $("#warehousetValidationTo").text("Please Select different Warehouse");
+                $("#warehousetValidationTo").addClass("Error");
+            } else {
+                $("#warehousetValidationTo").text("");
+                $("#warehousetValidationTo").removeClass("Error");
+            }
+            return true;
+        });
     });
     $("#edit").on('click', function () {
         AddEdit();
@@ -606,6 +662,7 @@
         } else {
             $('.btnDisable').removeClass('disableList');
             $('.' + 'toBeDisable' + ':input').attr('readonly', false);
+            $('.disableDdl').select2('enable');
             $("#Notes").hide();
             $("#CKNotes").show();
             CKEDITOR.replace('NotesEn', {
@@ -619,6 +676,83 @@
         }
     }
     function jsTreeClick(event) {
+        return true;
+    }
+    function populateDDItems(data) {
+        $("#ItemVariationDropDownList").empty();
+        if (data.length > 0) {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+            for (var i = 0; i < data.length; i++) {
+                $("#ItemVariationDropDownList").append(
+                    $('<option></option>').val(data[i].ItemVariationId).html(data[i].ItemCodeSKUCodeDescriptoinEn)
+                );
+            }
+        } else {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
+        return true;
+    }
+    function reDrawTree(data) {
+        var tree = JSON.parse(data);
+        $("#" + divId).jstree({
+            'core': {
+                'check_callback': true,
+                'data': tree
+            },
+            "plugins": ["themes", "json_data", "ui"],
+        });
+    }
+    function validateForm(event) {
+        var warehouseIdFrom = $("#FromWarehouse").val();
+        if (warehouseIdFrom == null || warehouseIdFrom == "" || warehouseIdFrom == 0) {
+            $("#warehousetValidationFrom").text("Please Select Warehouse from which items to transfer");
+            $("#warehousetValidationFrom").addClass("Error");
+            $('html,body').animate({
+                scrollTop: $(".warehouseDDLFrom").offset().top
+            },
+            'slow');
+            event.preventDefault();
+            return false;
+        } else {
+            $("#warehousetValidationFrom").text("");
+            $("#warehousetValidationFrom").removeClass("Error");
+        }
+        var warehouseIdTo = $("#ToWarehouse").val();
+        if (warehouseIdTo == null || warehouseIdTo == "" || warehouseIdTo == 0) {
+            $("#warehousetValidationTo").text("Please Select Warehouse to which items to transfer");
+            $("#warehousetValidationTo").addClass("Error");
+            $('html,body').animate({
+                scrollTop: $(".warehouseDDLTo").offset().top
+            },
+            'slow');
+            event.preventDefault();
+            return false;
+        } else {
+            $("#warehousetValidationTo").text("");
+            $("#warehousetValidationTo").removeClass("Error");
+        }
+        if (warehouseIdTo == warehouseIdFrom) {
+            $("#warehousetValidationTo").text("Please Select different Warehouse");
+            $("#warehousetValidationTo").addClass("Error");
+            $('html,body').animate({
+                scrollTop: $(".warehouseDDLTo").offset().top
+            },
+            'slow');
+            event.preventDefault();
+            return false;
+        } else {
+            $("#warehousetValidationTo").text("");
+            $("#warehousetValidationTo").removeClass("Error");
+        }
         return true;
     }
 </script>
