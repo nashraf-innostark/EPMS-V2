@@ -16,6 +16,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             return View();
         }
+        [SiteAuthorize(PermissionKey = "ServiceCreate,ServiceView")]
         public ActionResult Create()
         {
             return View();

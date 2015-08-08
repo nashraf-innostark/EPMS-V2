@@ -3,6 +3,8 @@
 @{
     ViewBag.Title = "Website Services's Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="main-content withPanel">
@@ -51,14 +53,67 @@
     @Html.Partial("_Alert")
     <form class="form-horizontal" id="validation_form">
         <div class="container-fluid">
-            
+            <div class="control-group row-fluid span-inset">
+                <ul class="nav nav-tabs" id="myTab">
+                    <li class="active"><a data-toggle="tab" href="#tab-example1">Services</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-example2">Sections</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-example1" class="tab-pane fade active in">
+                        @if (userPermissionsSet.Contains("ServiceCreate"))
+                        {
+                            <h3><small><a href="~/Website/Service/Create">Add New Service</a></small></h3>
+                        }
+                        <div class="container-fluid">
+                            <table class="table table-striped table-responsive" id="tableSortableResMed">
+                                <thead class="cf sorthead">
+                                    <tr>
+                                        <th class="center"> Serial</th>
+                                        <th class="center"> Name</th>
+                                        <th class="center">Description</th>
+                                        <th class="center">Number of Sections</th>
+                                        <th class="center"> Number of Sub-Sections</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div id="tab-example2" class="tab-pane fade">
+                        @if (userPermissionsSet.Contains("ServiceCreate"))
+                        {
+                            <h3><small><a href="~/Website/Service/Create">Add New Section</a></small></h3>
+                        }
+                        <div class="container-fluid">
+                            <div class="row-fluid">
+                                <div class="span12">
+                                    <table class="table table-striped table-responsive" id="tableSortableResMed2">
+                                        <thead class="cf sorthead">
+                                            <tr>
+                                                <th class="center">Parent Service</th>
+                                                <th class="center">Parent Section</th>
+                                                <th class="center">Name</th>
+                                                <th class="center"> Description</th>
+                                                <th class="center">Number of Sub-Sections</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </div>
         <!-- end container -->
     </form>
 </div>
 
 <script type="text/javascript">
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#layoutMainContent").removeClass("main-content");
+        $('.panel, .main-content').toggleClass('retracted');
     });
 </script>
