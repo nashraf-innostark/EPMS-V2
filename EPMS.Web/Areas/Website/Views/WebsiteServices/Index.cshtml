@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.Services.ServicesViewModel
+﻿@model EPMS.Web.ViewModels.Website.WebsiteServices.ServicesViewModel
 
 @{
     ViewBag.Title = "Website Services's Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
@@ -62,7 +62,7 @@
                     <div id="tab-example1" class="tab-pane fade active in">
                         @if (userPermissionsSet.Contains("ServiceCreate"))
                         {
-                            <h3><small><a href="~/Website/Service/Create">Add New Service</a></small></h3>
+                            <h3><small><a href="~/Website/WebsiteServices/Create">Add New Service</a></small></h3>
                         }
                         <div class="container-fluid">
                             <table class="table table-striped table-responsive" id="tableSortableResMed">
@@ -82,7 +82,7 @@
                     <div id="tab-example2" class="tab-pane fade">
                         @if (userPermissionsSet.Contains("ServiceCreate"))
                         {
-                            <h3><small><a href="~/Website/Service/Create">Add New Section</a></small></h3>
+                            <h3><small><a href="~/Website/WebsiteServices/Create">Add New Section</a></small></h3>
                         }
                         <div class="container-fluid">
                             <div class="row-fluid">

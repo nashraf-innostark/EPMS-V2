@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -71,6 +72,16 @@ namespace EPMS.Implementation.Services
                 servicesRepository.Delete(dataToDelete);
                 servicesRepository.SaveChanges();
             }
+        }
+
+        public WebsiteServicesCreateResponse LoadWebsiteServices(long id)
+        {
+            WebsiteServicesCreateResponse response = new WebsiteServicesCreateResponse
+            {
+                WebsiteService = id > 0 ? servicesRepository.Find(id) : null,
+                WebsiteServices = servicesRepository.GetAll()
+            };
+            return response;
         }
     }
 }

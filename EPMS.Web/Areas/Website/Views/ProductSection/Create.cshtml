@@ -4,13 +4,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    if (Model.ProductSection.SectionId > 0)
+    if (ViewBag.ProductId > 0)
     {
-        ViewBag.Title = "Update";
+        ViewBag.Title = "Website Product Section Updation";
     }
     else
     {
-        ViewBag.Title = "Create";
+        ViewBag.Title = "Website Product Section Addition";
     }
 }
 
@@ -50,8 +50,8 @@
                 </a>
             </li>
             <li>
-                <a href="~/Inventory/InventoryWarehouse/Index">
-                    @EPMS.Web.Resources.Inventory.InventoryWarehouse.BCTitle
+                <a href="~/Website/ProductSection/Index">
+                    Product Sections
                 </a>
             </li>
             <li class="current">
@@ -63,7 +63,8 @@
     </div>
     <header>
         <i class="icon-big-notepad"></i>
-        <h2><small>@ViewBag.Title</small></h2>
+        <h2><small>@(ViewBag.ProductId > 0 ? EPMS.Web.Resources.Website.Product.ProductCreate.WebsiteProductSectionEdit :
+              EPMS.Web.Resources.Website.Product.ProductCreate.WebsiteProductSectionAdd)</small></h2>
     </header>
     <!--Notifications begin-->
     @Html.Partial("_Alert")
@@ -157,17 +158,6 @@
 </div>
 
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
-@* Bootstrap switch 3.3.2 *@
-
-@*<link href="~/Content/CSS/newbootstrapswitch/bootstrap-switch.min.css" rel="stylesheet" />
-<link href="~/Content/CSS/newbootstrapswitch/bootstrap.min.css" rel="stylesheet" />
-<link href="~/Content/CSS/newbootstrapswitch/highlight.css" rel="stylesheet" />
-<link href="~/Content/CSS/newbootstrapswitch/main.css" rel="stylesheet" />
-<script src="~/Scripts/plugins/newbootstrapswitch/bootstrap.min.js"></script>
-<script src="~/Scripts/plugins/newbootstrapswitch/highlight.js"></script>
-<script src="~/Scripts/plugins/newbootstrapswitch/jquery.min.js"></script>
-<script src="~/Scripts/plugins/newbootstrapswitch/main.js"></script>
-<script src="~/Scripts/plugins/newbootstrapswitch/newBootstrap-switch.min.js"></script>*@
 <script>
     var warehouseId;
     var dir;
@@ -216,12 +206,14 @@
         var id = r;
         if (id == "parentNode") {
             setNullValues();
+            $("#ShowToPublicDiv").hide();
             $("#Edit").hide();
             $("#UpdateNode").hide();
             $("#SaveNewNode").hide();
             disableControls();
             return;
         }
+        $("#ShowToPublicDiv").show();
         var productId;
         var productSectionsList = '@Html.Raw(Json.Encode(Model.ProductSections))';
         var sections = JSON.parse(productSectionsList);
@@ -316,8 +308,15 @@
         $("#SectionNameAr").val(value.SectionNameAr);
         $("#SectionContentEn").val(value.SectionContentEn);
         $("#SectionContentAr").val(value.SectionContentAr);
-        //$("#ShowToPublic").val(value.ShowToPublic);
-        //$('#ShowToPublic').bootstrapSwitch('state', value.ShowToPublic);
+        if (value.ShowToPublic) {
+            if (!$('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        } else {
+            if ($('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        }
         $("#RecCreatedBy").val(value.RecCreatedBy);
         $("#RecCreatedDt").val(value.RecCreatedDate);
         return;

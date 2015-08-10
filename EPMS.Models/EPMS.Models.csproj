@@ -363,6 +363,7 @@
     <Compile Include="ResponseModels\TIRListResponse.cs" />
     <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteServicesCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

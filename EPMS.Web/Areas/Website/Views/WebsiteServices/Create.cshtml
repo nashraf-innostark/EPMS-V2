@@ -1,4 +1,4 @@
-﻿@model EPMS.Web.ViewModels.Services.ServicesCreateViewModel
+﻿@model EPMS.Web.ViewModels.Website.WebsiteServices.ServicesCreateViewModel
 
 @{
     ViewBag.Title = "Website Services Addition";
@@ -51,112 +51,357 @@
         <i class="icon-big-notepad"></i>
         <h2><small>Website Services</small></h2>
     </header>
+    <!--Notifications begin-->
     @Html.Partial("_Alert")
-    <form class="form-horizontal" id="validation_form">
+    <!--Notifications end-->
+
+    @using (Html.BeginForm("Create", "WebsiteServices", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditProductSection", role = "form", enctype = "multipart/form-data"}))
+    {
         <div class="container-fluid">
+            @Html.HiddenFor(model => model.WebsiteService.ServiceId, new { @id = "ServiceId" })
+            @Html.HiddenFor(model => model.WebsiteService.ParentServiceId, new {@id = "ParentService"})
+            @Html.HiddenFor(model => model.WebsiteService.RecCreatedBy, new {@id = "RecCreatedBy"})
+            @Html.HiddenFor(model => model.WebsiteService.RecCreatedDate, new { @id = "RecCreatedDate" })
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="inputFieldName">Service Name</label>
+                    <label class="control-label" for="">Service Name</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input id="inputFieldName" type="text" name="inputField" class="required ">
+                        @Html.TextBoxFor(model => model.WebsiteService.ServiceNameEn, new {@id = "ServiceNameEn", @class = "toBeDisable"})
+                        @Html.ValidationMessageFor(m => m.WebsiteService.ServiceNameEn, String.Empty, new {@class = "required"})
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="inputFieldaarabic">Service Name Arabic</label>
+                    <label class="control-label" for="">Service Name Arabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input id="inputFieldaarabic" type="text" name="inputField" class="required ">
+                        @Html.TextBoxFor(model => model.WebsiteService.ServiceNameAr, new {@id = "ServiceNameAr", @class = "toBeDisable"})
+                        @Html.ValidationMessageFor(m => m.WebsiteService.ServiceNameAr, String.Empty, new {@class = "required"})
+                    </div>
+                </div>
+            </div>
+            <div id="CKDescp" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="">Description </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextAreaFor(model => model.WebsiteService.DescriptionEn, new { @id = "DescriptionEn", @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="">Description Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextAreaFor(model => model.WebsiteService.DescriptionAr, new { @id = "DescriptionAr", @class = "" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Descp" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Notes">Description</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="descpEn" class="toBeDisable" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="NotesAr">Description Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="descpAr" class="toBeDisable" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">
+                        Meta keywords
+                        <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="words seperated with comma"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaKeywordsEn, new {@id = "MetaKeywordsEn", @class = "toBeDisable"})
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="inputFieldaDescription">Description </label>
+                    <label class="control-label" for="">
+                        Meta keywords Arabic
+                        <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="words seperated with comma"><i class="icon-photon info-circle"></i></a>
+                    </label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input id="inputFieldaDescription" type="text" name="inputField" class="required " value="CKEditor">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaKeywordsAr, new {@id = "MetaKeywordsAr", @class = "toBeDisable"})
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="inputFieldaDescriptionar">Description Arabic</label>
+                    <label class="control-label" for="">Meta description</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input id="inputFieldaDescriptionar" type="text" name="inputField" class="required " value="CKEditor">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaDescriptionEn, new {@id = "MetaDescriptionEn", @class = "toBeDisable"})
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="meta">Meta keywords</label>
+                    <label class="control-label" for="">Meta description Arabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input id="meta" type="text" name="inputField" class="required " value="words seperated with ,">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaDescriptionAr, new {@id = "MetaDescriptionAr", @class = "toBeDisable"})
                     </div>
                 </div>
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid" id="ShowToPublicDiv">
                 <div class="span3">
-                    <label class="control-label" for="meta">Meta keywords Arabic</label>
+                    <label class="control-label" for="">Show to public?</label>
                 </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="meta" type="text" name="inputField" class="required " value="words seperated with ,">
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="metad">Meta description</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="metad" type="text" name="inputField" class="required " value="text">
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="metadar">Meta description Arabic</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="metadar" type="text" name="inputField" class="required " value="text">
-                    </div>
-                </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="EmployedNow">Show to public?</label>
-                </div>
-                <div class="span9 span-inset">
+                <div class="span9 span-inset" id="ShowToPublicDiv">
                     <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
-                        <input checked="checked" data-val="true" data-val-required="The EmployedNow field is required." id="EmployedNow" name="JobApplicant.EmployedNow" type="checkbox" value="true" /><input name="JobApplicant.EmployedNow" type="hidden" value="false" />
+                        @Html.CheckBoxFor(model => model.WebsiteService.ShowToPublic, new {@id = "ShowToPublic"})
                     </div>
                 </div>
             </div>
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button type="submit" class="btn">Create</button>
+            <div id="Edit" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" id="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="SaveNewNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="validateForm(event)">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div id="UpdateNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">Update</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- end container -->
-    </form>
+    }
 </div>
 
+<script src="~/RTE/ckeditor.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script type="text/javascript">
-    $(document).ready(function() {
+    var divId;
+
+    $(document).ready(function () {
+        divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
         $('.panel, .main-content').toggleClass('retracted');
+        if (parseInt('@Model.WebsiteService.ServiceId') > 0 || '@userPermissionsSet.Contains("ServiceCreate")' == 'False') {
+            disableControls();
+            var descEn = '@Html.Raw(Model.WebsiteService.DescriptionEn)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = descEn.replace(regex, "");
+            $("#descpEn").val(result);
+            var descAr = '@Html.Raw(Model.WebsiteService.DescriptionAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = descAr.replace(regex, "");
+            $("#descpAr").val(result);
+            $("#Descp").show();
+            $("#Edit").show();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+        } else {
+            CKEDITOR.replace('DescriptionEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('DescriptionAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#CKDescp").show();
+            $("#SaveNewNode").hide();
+            $("#UpdateNode").hide();
+            $("#Edit").hide();
+        }
+
+        var list = '@Html.Raw(ViewBag.JsTree)';
+        var tree = JSON.parse(list);
+        $("#" + divId).on('changed.jstree', function (e, data) {
+            var m = $(".alert-error");
+            m.children("span").text("");
+            m.hide();
+            var i, j, r = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+            }
+            updateView(r[0]);
+        }).jstree({
+            'core': {
+                'check_callback': true,
+                'data': tree
+            },
+            "plugins": ["themes", "json_data", "ui"],
+        });
+        var serviceToShow;
+        setTimeout(function () {
+            var temp = '@ViewBag.ServiceId';
+            if (temp != '') {
+                serviceToShow = temp;
+            }
+            if (serviceToShow != "" && serviceToShow != undefined || serviceToShow != null) {
+                $('#jstree').jstree('select_node', serviceToShow);
+            }
+        }, 500);
     });
+    $("#edit").click(function (event) {
+        enableControls();
+        $("#CKDescp").show();
+        $("#UpdateNode").show();
+        $("#Descp").hide();
+        $("#Edit").hide();
+        $("#SaveNewNode").hide();
+    });
+
+    function disableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+        $("#ShowToPublicDiv").addClass("disableList");
+    }
+
+    function enableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+        $("#ShowToPublicDiv").removeClass("disableList");
+    }
+    function removeCkEditor() {
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy();
+        }
+    }
+    function assignCkEditor() {
+        CKEDITOR.replace('DescriptionEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DescriptionAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+    }
+    function updateView(r) {
+        var id = r;
+        if (id == "parentNode") {
+            setNullValues();
+            $("#Edit").hide();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+            disableControls();
+            $("#ShowToPublicDiv").hide();
+            return;
+        }
+        $("#ShowToPublicDiv").show();
+        var serviceId = id;
+        var servicesList = '@Html.Raw(Json.Encode(Model.WebsiteServices))';
+        var services = JSON.parse(servicesList);
+        $.each(services, function (key, value) {
+            if (value.ServiceId == serviceId) {
+                setValues(value);
+                disableControls();
+                $("#Edit").show();
+                $("#Descp").show();
+                $("#UpdateNode").hide();
+                $("#CKDescp").hide();
+                $("#SaveNewNode").hide();
+            }
+        });
+    }
+    function setNullValues() {
+        removeCkEditor();
+        $("#ParentService").val($("#ServiceId").val());
+        $("#ServiceId").val("");
+        $("#ServiceNameEn").val("");
+        $("#ServiceNameAr").val("");
+        $("#DescriptionEn").val("");
+        $("#DescriptionAr").val("");
+        $("#descpEn").val("");
+        $("#descpAr").val("");
+        $("#MetaKeywordsEn").val("");
+        $("#MetaKeywordsAr").val("");
+        $("#MetaDescriptionEn").val("");
+        $("#MetaDescriptionAr").val("");
+        $("#RecCreatedBy").val("");
+        $("#RecCreatedDate").val("");
+        assignCkEditor();
+        return true;
+    }
+    function setValues(value) {
+        removeCkEditor();
+        $("#ParentService").val(value.ParentServiceId);
+        $("#ServiceId").val(value.ServiceId);
+        $("#ServiceNameEn").val(value.ServiceNameEn);
+        $("#ServiceNameAr").val(value.ServiceNameAr);
+        $("#DescriptionEn").val(value.DescriptionEn);
+        $("#DescriptionAr").val(value.DescriptionAr);
+        var descEn = value.DescriptionEn;
+        var regex = /(<([^>]+)>)/ig;
+        var result = descEn.replace(regex, "");
+        $("#descpEn").val(result);
+        var descAr = value.DescriptionAr;
+        regex = /(<([^>]+)>)/ig;
+        result = descAr.replace(regex, "");
+        $("#descpAr").val(result);
+        $("#MetaKeywordsEn").val(value.MetaKeywordsEn);
+        $("#MetaKeywordsAr").val(value.MetaKeywordsAr);
+        $("#MetaDescriptionEn").val(value.MetaDescriptionEn);
+        $("#MetaDescriptionAr").val(value.MetaDescriptionAr);
+        if (value.ShowToPublic) {
+            if (!$('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        } else {
+            if ($('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        }
+        $("#RecCreatedBy").val(value.RecCreatedBy);
+        $("#RecCreatedDate").val(value.RecCreatedDateStr);
+        assignCkEditor()
+        return true;
+    }
+    function AddNewNode() {
+        var parentId = $('#' + divId).jstree('get_selected')[0];
+        if (parentId == "" || parentId == null || parentId == undefined) {
+            var m = $(".alert-error");
+            m.children("span").text("Please select Parent Service");
+            m.show();
+            return false;
+        }
+        setNullValues();
+        enableControls();
+        $("#SaveNewNode").show();
+        $("#CKDescp").show();
+        $("#ShowToPublicDiv").show();
+        $("#UpdateNode").hide();
+        $("#Descp").hide();
+        $("#Edit").hide();
+        return true;
+    }
 </script>

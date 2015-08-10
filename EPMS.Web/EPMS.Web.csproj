@@ -426,6 +426,7 @@
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
+    <Compile Include="ModelMappers\Website\WebsiteServices\WebsiteServicesMapper.cs" />
     <Compile Include="Models\Common\JsTreeJson.cs" />
     <Compile Include="ModelMappers\Website\ProductImage\ProductImageMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
@@ -456,6 +457,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductIndex.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Website\WebsiteService\Service.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Service.resx</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\ContactUs\ContactUsViewModel.cs" />
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
@@ -966,8 +972,8 @@
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
-    <Compile Include="ViewModels\Services\ServicesCreateViewModel.cs" />
-    <Compile Include="ViewModels\Services\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\Website\WebsiteServices\ServicesCreateViewModel.cs" />
+    <Compile Include="ViewModels\Website\WebsiteServices\ServicesViewModel.cs" />
     <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
@@ -4169,6 +4175,11 @@
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\WebsiteService\Service.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\WebsiteService\Service.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Service.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
