@@ -214,6 +214,15 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Released Quantity.
+        /// </summary>
+        public static string ReleasedQuantity {
+            get {
+                return ResourceManager.GetString("ReleasedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {

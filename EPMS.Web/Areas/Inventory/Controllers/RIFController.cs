@@ -24,13 +24,23 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RIFController : BaseController
     {
+        #region Private
+
         private readonly IRIFService rifService;
 
+        #endregion
+
+        #region Constructor
         public RIFController(IRIFService rifService)
         {
             this.rifService = rifService;
         }
 
+        #endregion
+
+        #region Public
+
+        #region Index
         // GET: Inventory/Rif
         [SiteAuthorize(PermissionKey = "RIFIndex")]
         public ActionResult Index()
@@ -77,6 +87,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             Session["PageMetaData"] = searchRequest;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
+
+        #endregion
+
+        #region Details
 
         // GET: Inventory/Rif/Details/5
         [SiteAuthorize(PermissionKey = "RIFDetails")]
@@ -138,13 +152,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch (Exception)
             {
-                return View(); 
+                return View();
             }
         }
+
+        #endregion
+
+        #region Create
 
         // GET: Inventory/Rif/Create
         [SiteAuthorize(PermissionKey = "RIFCreate")]
@@ -173,7 +191,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.Customers = Rifresponse.Customers.Select(x => x.CreateForDashboard());
                 rifViewModel.Orders = Rifresponse.Orders.Select(x => x.CreateForDashboard());
                 //set customerId
-                if (rifViewModel.Rif.OrderId>0)
+                if (rifViewModel.Rif.OrderId > 0)
                     rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
             rifViewModel.Warehouses = Rifresponse.Warehouses.Select(x => x.CreateDDL());
@@ -209,21 +227,26 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel { Message = Resources.Inventory.RIF.RIF.RIFCreated, IsSaved = true };
                 }
-                
+
                 var RifToBeSaved = rifViewModel.CreateRifClientToServer();
-                if(rifService.SaveRIF(RifToBeSaved))
+                if (rifService.SaveRIF(RifToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch
             {
                 return View();
             }
         }
+
+        #endregion
+
+        #region History
+
         [SiteAuthorize(PermissionKey = "RIFHistory")]
         public ActionResult History(long? id)
         {
@@ -272,6 +295,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
+        #endregion
         private bool CheckHasCustomerModule()
         {
             // check license
@@ -290,5 +314,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return false;
             }
         }
+
+        #endregion
     }
 }

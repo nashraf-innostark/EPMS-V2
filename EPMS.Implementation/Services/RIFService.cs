@@ -20,6 +20,7 @@ namespace EPMS.Implementation.Services
         private readonly IOrdersRepository ordersRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IWarehouseRepository warehouseRepository;
+        private readonly IEmployeeRepository employeeRepository;
 
         #region Constructor
 
@@ -32,7 +33,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository, IWarehouseRepository warehouseRepository)
+        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository)
         {
             this.rifRepository = rifRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -42,6 +43,7 @@ namespace EPMS.Implementation.Services
             this.aspNetUserRepository = aspNetUserRepository;
             this.historyRepository = historyRepository;
             this.warehouseRepository = warehouseRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         #endregion
@@ -182,7 +184,7 @@ namespace EPMS.Implementation.Services
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
                 LastFormNumber = rifRepository.GetLastFormNumber(),
-                Warehouses = warehouseRepository.GetAll()
+                Warehouses = warehouseRepository.GetAll(),
             };
             if (id != null)
             {

@@ -38,6 +38,12 @@ namespace EPMS.Web.ModelMappers
                 retVal.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
                 retVal.ItemSKUCode = source.ItemVariation.SKUCode;
             }
+            var rfi = source.ItemRelease.RFI;
+            if (rfi != null && rfi.RFIItems.Any())
+            {
+                retVal.RequestedQuantity =
+                    rfi.RFIItems.FirstOrDefault(x => x.ItemVariationId == retVal.ItemVariationId).ItemQty;
+            }
             return retVal;
         }
         public static ItemReleaseDetail CreateFromClientToServer(this Models.ItemReleaseDetail source)

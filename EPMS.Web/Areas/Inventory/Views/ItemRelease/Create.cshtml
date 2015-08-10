@@ -186,7 +186,7 @@
                             <th style="width:50%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
                             <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
-                            <th style="display: none">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RequestedQuantity</th>
+                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RequestedQuantity</th>
                             <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
@@ -238,6 +238,9 @@
                                         @Html.TextBoxFor(m => m.ItemReleaseDetails[i].ItemQty, new { @class = "n1 disableOnLoad" })
                                         @Html.ValidationMessageFor(m => m.ItemReleaseDetails[i].ItemQty, null, new { @class = "required" })
                                     </td>
+                                    <td>
+                                        <label class="tableLabel">@Model.ItemReleaseDetails[i].RequestedQuantity</label>
+                                    </td>
                                     <td class="delete">
                                         <i class="icon-photon minus deleteRow btnDisable"></i>
                                     </td>
@@ -275,6 +278,7 @@
                                     <input id='ItemReleaseDetails_0__ItemQty' class="n1 disableOnLoad" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
                                     <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
+                                <td></td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow btnDisable"></i>
                                 </td>
@@ -879,7 +883,7 @@
                 $("#MultiWarehouse").append(html);
             }
         });
-        $('#IRFTable thead th:nth-child(5)').show();
+        //$('#IRFTable thead th:nth-child(5)').show();
         var html1 = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +

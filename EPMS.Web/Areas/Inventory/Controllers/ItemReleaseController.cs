@@ -44,6 +44,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Public
+
+        #region Index
         // GET List View: Inventory/IRF
         [SiteAuthorize(PermissionKey = "ItemReleaseIndex")]
         public ActionResult Index()
@@ -84,6 +86,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Details
         // GET Details: Inventory/IRF
         [SiteAuthorize(PermissionKey = "IRFViewComplete,ItemReleaseDetail")]
         public ActionResult Detail(long? id, string from)
@@ -130,6 +135,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View(viewModel);
         }
 
+        #endregion
+
+        #region Create
         /// <summary>
         /// GET: Inventory/IRF
         /// </summary>
@@ -245,6 +253,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+
+        #endregion
+
+        #region History
         [SiteAuthorize(PermissionKey = "IRFHistory")]
         public ActionResult History(long? id)
         {
@@ -284,6 +296,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #endregion
+
         #region Get Customer RFIs
 
         [HttpGet]
@@ -293,6 +307,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             IList<RFI> requesterRfis = rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
             return Json(requesterRfis, JsonRequestBehavior.AllowGet);
         }
+
         #endregion
     }
 }
