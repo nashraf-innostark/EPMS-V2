@@ -141,15 +141,7 @@
                 @{Html.RenderAction("Index", "WebsiteMenu", new { area = "" });}
             </div>
         </header> 
-        @{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}
-
-        <div id="action_box" data-arrowpos="center">
-            <div class="container">
-                <div class="row">
-
-                </div>
-            </div>
-        </div><!-- end action box -->
+    
         @RenderBody()
         @{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}
     </div>

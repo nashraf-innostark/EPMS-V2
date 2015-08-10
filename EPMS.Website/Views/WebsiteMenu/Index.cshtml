@@ -40,7 +40,7 @@
                                     childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                                 }
                             }
-                            <a href="#">@childName</a>
+                            <a href="~Product/Details/">@childName</a>
                             
                             @{
                                 //Check if there are departments, then show them all, up to 2nd level
@@ -69,7 +69,7 @@
                                                                     //put check for culture for eng or arabic field
                                                                     childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 }
-                                                                <a href="#">@childName</a>
+                                                                <a href="~/Product/Details/@childDepartment.DepartmentId">@childName</a>
                                                             </li>
                                                         }
                                                     </ul>

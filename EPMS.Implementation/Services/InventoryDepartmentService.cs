@@ -24,6 +24,16 @@ namespace EPMS.Implementation.Services
             return departmentRepository.GetAllDepartments();
         }
 
+        public IEnumerable<InventoryDepartment> GetAllItemOfDepartmentByDepartmentId(long departmentId)
+        {
+            var parentDepartment=departmentRepository.Find(departmentId);
+            foreach (var department in parentDepartment.InventoryDepartments)
+            {
+                
+            }
+            return null;
+        }
+
         public InventoryDepartment FindInventoryDepartmentById(long id)
         {
             return departmentRepository.Find(id);
