@@ -330,7 +330,7 @@
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
-    <Compile Include="Areas\Website\Controllers\ServiceController.cs" />
+    <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
@@ -436,6 +436,7 @@
     <Compile Include="Models\ProductSection.cs" />
     <Compile Include="Models\ProductSectionsListForTree.cs" />
     <Compile Include="Models\WebsiteDepartment.cs" />
+    <Compile Include="Models\WebsiteService.cs" />
     <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -2115,8 +2116,8 @@
     <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
     <Content Include="Views\Shared\_InventoryDepartmentItems.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
-    <Content Include="Areas\Website\Views\Service\Index.cshtml" />
-    <Content Include="Areas\Website\Views\Service\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

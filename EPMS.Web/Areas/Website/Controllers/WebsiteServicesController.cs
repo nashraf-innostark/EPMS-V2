@@ -8,7 +8,7 @@ using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
-    public class ServiceController : BaseController
+    public class WebsiteServicesController : BaseController
     {
         // GET: Website/Service
         [SiteAuthorize(PermissionKey = "ServiceIndex")]

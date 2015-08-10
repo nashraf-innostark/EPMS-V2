@@ -1592,8 +1592,8 @@
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceNameEn" Type="nvarchar" MaxLength="200" />
-          <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="ServiceNameEn" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DescriptionEn" Type="nvarchar(max)" />
           <Property Name="DescriptionAr" Type="nvarchar(max)" />
           <Property Name="MetaKeywordsEn" Type="nchar" MaxLength="10" />
@@ -7768,8 +7768,8 @@
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceNameEn" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceNameAr" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MetaKeywordsEn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
@@ -7783,7 +7783,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="WebsiteServices" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService" ToRole="WebsiteService1" />
-          <NavigationProperty Name="ParentWebsiteService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
+          <NavigationProperty Name="ParentService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
         </EntityType>
         <Association Name="FK_WebsiteService_WebsiteService">
           <End Type="EPMSInventoryModel.WebsiteService" Role="WebsiteService" Multiplicity="0..1" />
@@ -9513,7 +9513,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="75">
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9731,7 +9731,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ProductImage" Width="1.5" PointX="22.5" PointY="39.375" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ProductImage_Product" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ContactUs" Width="1.5" PointX="25.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteService" Width="1.875" PointX="25.375" PointY="6.75" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteService" Width="1.75" PointX="25.375" PointY="6.75" />
         <AssociationConnector Association="EPMSInventoryModel.FK_WebsiteService_WebsiteService" />
       </Diagram>
     </Diagrams>

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.Web.Models
 {
     public class WebsiteService
     {
@@ -20,8 +19,5 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
-
-        public virtual ICollection<WebsiteService> WebsiteServices { get; set; }
-        public virtual WebsiteService ParentService { get; set; }
     }
 }
