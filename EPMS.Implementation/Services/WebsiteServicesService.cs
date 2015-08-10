@@ -1,35 +1,76 @@
 ﻿using System;
 using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
+using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Implementation.Services
 {
     public class WebsiteServicesService : IWebsiteServicesService
     {
+        #region Private
+
+        private readonly IWebsiteServicesRepository servicesRepository;
+        
+        #endregion
+        
+        #region Constructor
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        public WebsiteServicesService(IWebsiteServicesRepository servicesRepository)
+        {
+            this.servicesRepository = servicesRepository;
+        }
+
+        #endregion
+
         public WebsiteService FindWebsiteServiceById(long id)
         {
-            throw new NotImplementedException();
+            return servicesRepository.Find(id);
         }
 
         public IEnumerable<WebsiteService> GetAll()
         {
-            throw new NotImplementedException();
+            return servicesRepository.GetAll();
         }
 
         public bool AddWebsiteService(WebsiteService service)
         {
-            throw new NotImplementedException();
+            try
+            {
+                servicesRepository.Add(service);
+                servicesRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool UpdateWebsiteService(WebsiteService service)
         {
-            throw new NotImplementedException();
+            try
+            {
+                servicesRepository.Update(service);
+                servicesRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void DeleteWebsiteService(long serviceId)
         {
-            throw new NotImplementedException();
+            WebsiteService dataToDelete = servicesRepository.Find(serviceId);
+            if (dataToDelete != null)
+            {
+                servicesRepository.Delete(dataToDelete);
+                servicesRepository.SaveChanges();
+            }
         }
     }
 }
