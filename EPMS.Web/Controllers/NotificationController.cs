@@ -4,7 +4,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
 using EPMS.Models.RequestModels.NotificationRequestModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
-using EPMS.Web.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using System.Linq;
 using Microsoft.AspNet.Identity;
@@ -106,7 +106,7 @@ namespace EPMS.Web.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Notification.Notification.NotificationSentMsg,
+                        Message = WebModels.Resources.Notification.Notification.NotificationSentMsg,
                         IsSaved = true
                     };
                     return RedirectToAction("Sent");

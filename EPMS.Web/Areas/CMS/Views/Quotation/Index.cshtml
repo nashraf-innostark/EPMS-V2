@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.Quotation.QuotationListViewModel
+﻿@model EPMS.WebModels.ViewModels.Quotation.QuotationListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.PTIndex;
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Quotation.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var userRole = (string)Session["RoleName"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
@@ -17,17 +17,17 @@
             </a>
         </li>
         <li>
-            @EPMS.Web.Resources.CMS.Quotation.QuotList
+            @EPMS.WebModels.Resources.CMS.Quotation.QuotList
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.CMS.Quotation.QuotList</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.CMS.Quotation.QuotList</small></h2>
     @if (userPermissionsSet.Contains("QuotationsCreate"))
     {
-        <h3> <small><a href="~/CMS/Quotation/Create">@EPMS.Web.Resources.CMS.Quotation.CreateNew</a></small></h3>
+        <h3> <small><a href="~/CMS/Quotation/Create">@EPMS.WebModels.Resources.CMS.Quotation.CreateNew</a></small></h3>
     }
 </header>
 
@@ -44,9 +44,9 @@
                 <table id="QuotationTable" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                            <th>@EPMS.Web.Resources.CMS.Quotation.Quot</th>
-                            <th>@EPMS.Web.Resources.CMS.Quotation.ClientName</th>
+                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Quotation.Quot</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Quotation.ClientName</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

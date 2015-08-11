@@ -1,15 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Website.ContactUs;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.ContactUs;
+using EPMS.WebModels.ModelMappers.Website.ContactUs;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.ContactUs;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
@@ -59,7 +55,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     ContactUs detailToUpdate = contactUsViewModel.ContactUs.CreateFromClientToServer();
                     if (contactUsService.UpdateDetail(detailToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.Website.ContactUs.ContatUs.Updated, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Updated, IsUpdated = true };
                         return RedirectToAction("Detail");
                     }
                 }
@@ -72,7 +68,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     ContactUs detailToUpdate = contactUsViewModel.ContactUs.CreateFromClientToServer();
                     if (contactUsService.UpdateDetail(detailToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.Website.ContactUs.ContatUs.Saved, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Saved, IsUpdated = true };
                         return RedirectToAction("Detail");
                     }
                 }

@@ -1,24 +1,24 @@
-﻿@model EPMS.Web.ViewModels.InventoryWarehouse.InventoryWarehouseCreateViewModel
+﻿@model EPMS.WebModels.ViewModels.InventoryWarehouse.InventoryWarehouseCreateViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     string[] userModules = (string[])HttpContext.Current.Session["UserModules"];
     if (Model.Warehouse.WarehouseId > 0)
     {
         if (userPermissionsSet.Contains("InventoryWarehouseCreate"))
         {
-            ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryWarehouse.InventoryWarehouseEdit;
+            ViewBag.Title = EPMS.WebModels.Resources.Inventory.InventoryWarehouse.InventoryWarehouseEdit;
         }
         else
         {
-            ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseView;
+            ViewBag.Title = EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseView;
         }
     }
     else
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryWarehouse.InventoryWarehouseCreate;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.InventoryWarehouse.InventoryWarehouseCreate;
     }
 }
 
@@ -33,8 +33,8 @@
         <div class="panel-content filler">
             <div class="panel-logo"></div>
             <div class="panel-header">
-                <h1><small>@EPMS.Web.Resources.Inventory.InventoryWarehouse.TreeTitle</small></h1>
-                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>@EPMS.Web.Resources.Shared.Common.AddNewNode</button>
+                <h1><small>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.TreeTitle</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>@EPMS.WebModels.Resources.Shared.Common.AddNewNode</button>
             </div>
             <div class="panel-search container-fluid">
                 <form class="form-horizontal" action="javascript:;">
@@ -65,7 +65,7 @@
             </li>
             <li>
                 <a href="~/Inventory/InventoryWarehouse/Index">
-                    @EPMS.Web.Resources.Inventory.InventoryWarehouse.BCTitle
+                    @EPMS.WebModels.Resources.Inventory.InventoryWarehouse.BCTitle
                 </a>
             </li>
             <li class="current">
@@ -94,7 +94,7 @@
                 <div id="Warehouse" style="display: none">
                     <div class="control-group row-fluid ">
                         <div class="span3">
-                            <label class="control-label" for="WarehouseNumber">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseNumber</label>
+                            <label class="control-label" for="WarehouseNumber">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseNumber</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -105,7 +105,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="Manager">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseManager</label>
+                            <label class="control-label" for="Manager">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseManager</label>
                         </div>
                         @if (userModules.Contains("HRS"))
                         {
@@ -135,7 +135,7 @@
                     </div>
                     <div class="control-group row-fluid" id="CKEditorLocation">
                         <div class="span3">
-                            <label class="control-label" for="LocationCK">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseLocation</label>
+                            <label class="control-label" for="LocationCK">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseLocation</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -145,7 +145,7 @@
                     </div>
                     <div class="control-group row-fluid" id="Location">
                         <div class="span3">
-                            <label class="control-label" for="LocationText">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseLocation</label>
+                            <label class="control-label" for="LocationText">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseLocation</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -157,7 +157,7 @@
                 <div id="WarehouseDetails" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfAisles</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfAisles</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -167,7 +167,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSections</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfSections</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -177,7 +177,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfShalves</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfShalves</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -187,7 +187,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSectionsOnShalves</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfSectionsOnShalves</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -200,21 +200,21 @@
                 <div id="Edit" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" id="edit">@EPMS.Web.Resources.Shared.Common.Edit</button>
+                            <button type="button" class="btn" id="edit">@EPMS.WebModels.Resources.Shared.Common.Edit</button>
                         </div>
                     </div>
                 </div>
                 <div id="SaveNewNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Create</button>
+                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.Shared.Common.Create</button>
                         </div>
                     </div>
                 </div>
                 <div id="UpdateNode" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Shared.Common.Update</button>
+                            <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.Shared.Common.Update</button>
                         </div>
                     </div>
                 </div>
@@ -231,12 +231,12 @@
             <input id="CreatedDt" type="hidden" />
             <header>
                 <i class="icon-big-notepad"></i>
-                <h2><small>@EPMS.Web.Resources.Inventory.InventoryWarehouse.InventoryWarehouseDetail</small></h2>
+                <h2><small>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.InventoryWarehouseDetail</small></h2>
             </header>
             <div class="container-fluid">
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.DetailNameEn</label>
+                        <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.DetailNameEn</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -246,7 +246,7 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.DetailNameAr</label>
+                        <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.DetailNameAr</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -256,18 +256,18 @@
                 </div>
                 <div class="control-group row-fluid" id="divShelfOrSpace" style="display: none">
                     <div class="span3">
-                        <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryWarehouse.ShelfSpace</label>
+                        <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.ShelfSpace</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
                             <label>
                                 <input id="shelf" type="radio" name="shelfspace" value="Shelf">
-                                @EPMS.Web.Resources.Inventory.InventoryWarehouse.Shelf
+                                @EPMS.WebModels.Resources.Inventory.InventoryWarehouse.Shelf
                             </label>
                             <br />
                             <label>
                                 <input id="space" type="radio" name="shelfspace" value="Space">
-                                @EPMS.Web.Resources.Inventory.InventoryWarehouse.Space
+                                @EPMS.WebModels.Resources.Inventory.InventoryWarehouse.Space
                             </label>
                         </div>
                     </div>
@@ -275,21 +275,21 @@
                 <div id="EditDetail" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn" id="editDetail">@EPMS.Web.Resources.Shared.Common.Edit</button>
+                            <button type="button" class="btn" id="editDetail">@EPMS.WebModels.Resources.Shared.Common.Edit</button>
                         </div>
                     </div>
                 </div>
                 <div id="AddDetail" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.Web.Resources.Shared.Common.Create</button>
+                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.WebModels.Resources.Shared.Common.Create</button>
                         </div>
                     </div>
                 </div>
                 <div id="UpdateDetail" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.Web.Resources.Shared.Common.Update</button>
+                            <button type="button" class="btn disableBtn" onclick="SaveNode(); ">@EPMS.WebModels.Resources.Shared.Common.Update</button>
                         </div>
                     </div>
                 </div>

@@ -3,12 +3,12 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.InventoryItem;
 using EPMS.Web.Controllers;
-using EPMS.Web.Models.Common;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.InventoryItem;
-using EPMS.Web.ModelMappers;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.WebsiteModels.Common;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -71,7 +71,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
                 inventoryItemService.SaveItem(itemToSave);
                 {
-                    TempData["message"] = new MessageViewModel {Message = Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true};
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true };
                     return RedirectToAction("Index");
                 }
             }
@@ -81,7 +81,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
                 inventoryItemService.SaveItem(itemToSave);
                 {
-                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
                     return RedirectToAction("Index");
                 }
             }

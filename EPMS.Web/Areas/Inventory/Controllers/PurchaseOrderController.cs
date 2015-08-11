@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.PurchaseOrder;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.PurchaseOrder;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
-            searchRequest.Direction = Resources.Shared.Common.TextDirection;
+            searchRequest.Direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             PurchaseOrderListResponse response = orderService.GetAllPoS(searchRequest);
             IEnumerable<PurchaseOrder> ordersList = response.Orders.Any() ?
                 response.Orders.Select(x => x.CreateFromServerToClient()) : new List<PurchaseOrder>();
@@ -106,7 +106,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.PO.PO.POStatusUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.PO.PO.POStatusUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");
@@ -129,7 +129,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                var direction = Resources.Shared.Common.TextDirection;
+                var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
                 viewModel.Order = new PurchaseOrder
                 {
                     FormNumber = Utility.GenerateFormNumber("PO", response.LastFormNumber),
@@ -156,7 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.PO.PO.POUpdated,
+                        Message = EPMS.WebModels.Resources.Inventory.PO.PO.POUpdated,
                         IsUpdated = true
                     };
                 }
@@ -171,7 +171,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Order.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.PO.PO.POAdded,
+                        Message = EPMS.WebModels.Resources.Inventory.PO.PO.POAdded,
                         IsSaved = true
                     };
                 }
@@ -230,7 +230,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.PO.PO.POStatusUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.PO.PO.POStatusUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");

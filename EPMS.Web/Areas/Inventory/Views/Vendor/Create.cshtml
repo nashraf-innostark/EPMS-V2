@@ -1,11 +1,11 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.Vendor.VendorViewModel
+@model EPMS.WebModels.ViewModels.Vendor.VendorViewModel
 
 @{
-    ViewBag.Title = Model.Vendor.VendorId > 0 ? EPMS.Web.Resources.Inventory.Vendor.UpdatPageTitle : EPMS.Web.Resources.Inventory.Vendor.CreatePageTitle;
+    ViewBag.Title = Model.Vendor.VendorId > 0 ? EPMS.WebModels.Resources.Inventory.Vendor.UpdatPageTitle : EPMS.WebModels.Resources.Inventory.Vendor.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -17,7 +17,7 @@
         </li>
         <li>
             <a href="~/Inventory/Vendor/Index">
-                @EPMS.Web.Resources.Inventory.Vendor.Label
+                @EPMS.WebModels.Resources.Inventory.Vendor.Label
             </a>
         </li>
         <li class="current">
@@ -48,7 +48,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.VendorNameEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.VendorNameEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -60,7 +60,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.VendorNameAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.VendorNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -72,7 +72,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.ContactPerson</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.ContactPerson</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -84,7 +84,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Email</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -96,7 +96,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Number</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.Number</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -108,7 +108,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.FieldOnCreate</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.FieldOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -120,7 +120,7 @@
 
         <div class="control-group row-fluid NotesCK">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.Notes</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.Notes</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -132,7 +132,7 @@
         
         <div class="control-group row-fluid ckDetails">
             <div class="span3">
-                <label class="control-label" for="LocationText">@EPMS.Web.Resources.Inventory.Vendor.Notes</label>
+                <label class="control-label" for="LocationText">@EPMS.WebModels.Resources.Inventory.Vendor.Notes</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -143,7 +143,7 @@
 
         <div class="control-group row-fluid NotesCK">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.Vendor.NotesAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.Vendor.NotesAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -155,7 +155,7 @@
         
         <div class="control-group row-fluid ckDetails">
             <div class="span3">
-                <label class="control-label" for="LocationText">@EPMS.Web.Resources.Inventory.Vendor.NotesAr</label>
+                <label class="control-label" for="LocationText">@EPMS.WebModels.Resources.Inventory.Vendor.NotesAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -369,11 +369,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.Inventory.Vendor.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Vendor/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/Vendor/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -386,14 +386,14 @@
     <div id="itemSearcher" class="modal hide fade treeSelector">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>@EPMS.Web.Resources.RFI.RFI.ItemSearch</h3>
+            <h3>@EPMS.WebModels.Resources.RFI.RFI.ItemSearch</h3>
         </div>
         <div class="modal-body ">
             <form class="form-horizontal">
                 <input id='ItemModalIndex' type='hidden' />
                 <div id="Simple_Select_Box_with_Filter_Search" class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.SelectItem</label>
+                        <label class="control-label" for="selectBoxFilter">@EPMS.WebModels.Resources.RFI.RFI.SelectItem</label>
                     </div>
                     <div class="span6">
                         <div class="controls">
@@ -405,7 +405,7 @@
 
                 <div class="control-group row-fluid">
                     <div class="span4">
-                        <label class="control-label" for="selectBoxFilter">@EPMS.Web.Resources.RFI.RFI.ItemTreeSelector</label>
+                        <label class="control-label" for="selectBoxFilter">@EPMS.WebModels.Resources.RFI.RFI.ItemTreeSelector</label>
                     </div>
                     <div class="span8 span-inset">
                         <button type="button" id="btnTreeSelector" class="btn itemAdder">+</button>
@@ -417,11 +417,11 @@
 
                     <div class="span9 ">
                         <label class="control-label">
-                            <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemDescription
+                            <input type="checkbox" id="ItemDescriptionModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.WebModels.Resources.RFI.RFI.AddItemDescription
                         </label>
 
                         <label class="control-label">
-                            <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.Web.Resources.RFI.RFI.AddItemSKU
+                            <input type="checkbox" id="ItemSKUModalChk" class="uniformCheckbox" style="margin: -1px 2px 0 0;">@EPMS.WebModels.Resources.RFI.RFI.AddItemSKU
                         </label>
                     </div>
 
@@ -430,15 +430,15 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a href="javascript:;" class="btn btn-primary" id="SaveChanges">@EPMS.Web.Resources.RFI.RFI.SaveChanges</a>
-            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+            <a href="javascript:;" class="btn btn-primary" id="SaveChanges">@EPMS.WebModels.Resources.RFI.RFI.SaveChanges</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.WebModels.Resources.RFI.RFI.Cancel</a>
         </div>
     </div>
 
     <div id="itemTreeSelector" class="modal hide fade treeSelector">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h3>@EPMS.Web.Resources.RFI.RFI.PlaceInWarehouseTree</h3>
+            <h3>@EPMS.WebModels.Resources.RFI.RFI.PlaceInWarehouseTree</h3>
         </div>
         <div class="modal-body ">
             <form class="form-horizontal">
@@ -453,8 +453,8 @@
         </div>
 
         <div class="modal-footer">
-            <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
-            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+            <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.WebModels.Resources.RFI.RFI.Select</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.WebModels.Resources.RFI.RFI.Cancel</a>
         </div>
     </div>
 

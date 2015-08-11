@@ -7,11 +7,11 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Inventory.DIF;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.DIF;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers.Inventory.DIF;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.DIF;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -52,7 +52,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllDifs(searchRequest);
             var data = requestResponse.Difs.Select(x => x.CreateDifServerToClient());
-            var responseData = data as IList<Models.DIF> ?? data.ToList();
+            var responseData = data as IList<DIF> ?? data.ToList();
             if (responseData.Any())
             {
                 viewModel.aaData = responseData;
@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<Models.DIF>();
+                viewModel.aaData = Enumerable.Empty<DIF>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -83,7 +83,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (Difresponse.Dif != null)
             {
                 rifViewModel.Dif = Difresponse.Dif.CreateDifServerToClient();
-                if (Resources.Shared.Common.TextDirection == "ltr")
+                if (EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr")
                 {
                     rifViewModel.Dif.RequesterName = Difresponse.RequesterNameE;
                     rifViewModel.Dif.ManagerName = Difresponse.ManagerNameE;
@@ -97,11 +97,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Dif = new Models.DIF
+                rifViewModel.Dif = new DIF
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rifViewModel.DifItem = new List<Models.DIFItem>();
+                rifViewModel.DifItem = new List<DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
             ViewBag.From = from;
@@ -146,17 +146,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (Difresponse.Dif != null)
             {
                 rifViewModel.Dif = Difresponse.Dif.CreateDifServerToClient();
-                rifViewModel.Dif.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? Difresponse.RequesterNameE : Difresponse.RequesterNameA;
+                rifViewModel.Dif.RequesterName = EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr" ? Difresponse.RequesterNameE : Difresponse.RequesterNameA;
                 rifViewModel.DifItem = Difresponse.DifItem.Select(x => x.CreateDifItemServerToClient()).ToList();
             }
             else
             {
-                rifViewModel.Dif = new Models.DIF
+                rifViewModel.Dif = new DIF
                 {
                     FormNumber = Utility.GenerateFormNumber("DI", Difresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
-                rifViewModel.DifItem = new List<Models.DIFItem>();
+                rifViewModel.DifItem = new List<DIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Difresponse.ItemVariationDropDownList;
             return View(rifViewModel);

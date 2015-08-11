@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.Customer.CustomerViewModel
+﻿@model EPMS.WebModels.ViewModels.Customer.CustomerViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Customer.Title;
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Customer.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     int i = 0;
 }
 
@@ -15,7 +15,7 @@
         </li>
         <li>
             <a href="">
-                @EPMS.Web.Resources.CMS.Customer.IndexLabel
+                @EPMS.WebModels.Resources.CMS.Customer.IndexLabel
             </a>
         </li>
     </ul>
@@ -24,7 +24,7 @@
 <!--Header begin-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.CMS.Customer.IndexLabel</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.CMS.Customer.IndexLabel</small></h2>
 </header>
 <!--Header end-->
 <form class="form-horizontal">
@@ -34,18 +34,18 @@
                 <table id="CustomerList" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
                             @if(direction == "ltr"){
-                            <th>@EPMS.Web.Resources.CMS.Customer.NameEn</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.NameEn</th>
                             }
                             else{
-                            <th>@EPMS.Web.Resources.CMS.Customer.NameAr</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.NameAr</th>
                             }
-                            <th>@EPMS.Web.Resources.CMS.Customer.NoOfOrders</th>
-                            <th>@EPMS.Web.Resources.CMS.Customer.LatestComplaint</th>
-                            <th>@EPMS.Web.Resources.CMS.Customer.LatestOrder</th>
-                            <th>@EPMS.Web.Resources.CMS.Customer.CustomerAddress</th>
-                            <th>@EPMS.Web.Resources.CMS.Customer.CustomerMobile</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.NoOfOrders</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.LatestComplaint</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.LatestOrder</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.CustomerAddress</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Customer.CustomerMobile</th>
                         </tr>
                     </thead>
                     <tbody>

@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.InventoryItem.InventoryItemViewModel
+﻿@model EPMS.WebModels.ViewModels.InventoryItem.InventoryItemViewModel
 
 @{
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryItem.Label; ;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.InventoryItem.Label; ;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -15,7 +15,7 @@
         </li>
         <li>
             <a href="">
-                @EPMS.Web.Resources.Inventory.InventoryItem.Label
+                @EPMS.WebModels.Resources.Inventory.InventoryItem.Label
             </a>
         </li>
     </ul>
@@ -24,7 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Inventory/InventoryItem/Create">@EPMS.Web.Resources.Inventory.InventoryItem.CreateNew</a></small></h3>
+    <h3> <small><a href="~/Inventory/InventoryItem/Create">@EPMS.WebModels.Resources.Inventory.InventoryItem.CreateNew</a></small></h3>
 </header>
 
 <!--Notifications begin-->
@@ -39,11 +39,11 @@
                 <table id="InventoryItems" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.Serial</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.ItemCode</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.ItemName</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.DeptInfo</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemCode</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemName</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.DescriptionEn</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.DeptInfo</th>
                             <th>Item Variation (SkU) Description</th>
                             <th>On Hand Quantity</th>
                             <th>Quantity Sold</th>

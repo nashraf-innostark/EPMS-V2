@@ -7,17 +7,17 @@ using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.Inventory.RFI;
 using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.IRF;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Inventory.RFI;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.IRF;
 using Microsoft.AspNet.Identity;
-using ItemRelease = EPMS.Web.Models.ItemRelease;
-using ItemReleaseDetail = EPMS.Web.Models.ItemReleaseDetail;
-using ItemWarehouse = EPMS.Web.Models.ItemWarehouse;
-using RFI = EPMS.Web.Models.RFI;
+using ItemRelease = EPMS.WebModels.WebsiteModels.ItemRelease;
+using ItemReleaseDetail = EPMS.WebModels.WebsiteModels.ItemReleaseDetail;
+using ItemWarehouse = EPMS.WebModels.WebsiteModels.ItemWarehouse;
+using RFI = EPMS.WebModels.WebsiteModels.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -121,7 +121,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");
@@ -156,7 +156,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             else
             {
                 response = itemReleaseService.GetCreateResponse(0);
-                var direction = Resources.Shared.Common.TextDirection;
+                var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
                 viewModel.ItemRelease = new ItemRelease
                 {
                     CreatedBy = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString(),
@@ -206,7 +206,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.IRF.AddEdit.IRFCreate.RecordUpdated,
+                        Message = EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.RecordUpdated,
                         IsUpdated = true
                     };
                     return RedirectToAction("Index");
@@ -235,7 +235,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.IRF.AddEdit.IRFCreate.RecordAdded,
+                        Message = EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.RecordAdded,
                         IsUpdated = true
                     };
                     return RedirectToAction("Index");
@@ -272,7 +272,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.IRF.View.IRFView.RecordUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.RecordUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");

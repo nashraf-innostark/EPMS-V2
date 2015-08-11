@@ -1,11 +1,12 @@
 ﻿@using System.Configuration
+@using EPMS.Models.WebsiteModels
 @using EPMS.Web.Models
-@model EPMS.Web.ViewModels.HomePage.HomePageViewModel
+@model EPMS.WebModels.ViewModels.HomePage.HomePageViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Website Main Page Create";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
     int j = 0;

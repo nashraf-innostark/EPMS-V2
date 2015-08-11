@@ -9,13 +9,13 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.ItemVariation;
+using EPMS.WebModels.WebsiteModels.Common;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.Models.Common;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.ItemVariation;
+using EPMS.WebModels.ViewModels.Common;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -100,7 +100,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
                 itemVariationService.SaveItemVariation(itemToSave);
                 {
-                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.ItemVariation.IsUpdated, IsUpdated = true };
                     return RedirectToAction("Create", "InventoryItem",
                         new {id = variationViewModel.ItemVariation.InventoryItemId});
                 }
@@ -114,7 +114,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 itemToSave.ColorArrayList = variationViewModel.ColorArrayList;
                 itemVariationService.SaveItemVariation(itemToSave);
                 {
-                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.ItemVariation.IsUpdated, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.ItemVariation.IsUpdated, IsSaved = true };
                     return RedirectToAction("Create", "InventoryItem",
                         new {id = variationViewModel.ItemVariation.InventoryItemId});
                 }

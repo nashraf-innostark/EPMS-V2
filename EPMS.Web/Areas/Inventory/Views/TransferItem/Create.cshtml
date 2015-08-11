@@ -1,16 +1,16 @@
-﻿@model EPMS.Web.ViewModels.TIR.TransferItemCreateViewModel
+﻿@model EPMS.WebModels.ViewModels.TIR.TransferItemCreateViewModel
 
 @{
     if (Model.Tir.Id > 0)
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitleEdit;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.PageTitleEdit;
     }
     else
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRCreate.PageTitle;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.PageTitle;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
@@ -23,7 +23,7 @@
         </li>
         <li>
             <a href="~/Inventory/TransferItem/Index">
-                @EPMS.Web.Resources.Inventory.TIR.TIRCreate.BCTitle
+                @EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.BCTitle
             </a>
         </li>
         <li class="current">
@@ -36,7 +36,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Header</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.Header</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -52,7 +52,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.CreatedBy</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -62,7 +62,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TransferReasonEn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferReason</label>
+                <label class="control-label" for="TransferReasonEn">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.TransferReason</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -73,7 +73,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TransferReasonAr">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferReasonAr</label>
+                <label class="control-label" for="TransferReasonAr">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.TransferReasonAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -88,10 +88,10 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Serial</th>
-                            <th style="width:85%">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ItemDetails</th>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRCreate.TransferQuantity</th>
-                            <th style="width:4%">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.Serial</th>
+                            <th style="width:85%">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.ItemDetails</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.TransferQuantity</th>
+                            <th style="width:4%">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="TirItemsTableBody">
@@ -170,7 +170,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnAdd</button>
+                    <button type="button" class="btn trAdder btnDisable">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.BtnAdd</button>
                 </div>
             </div>
             @if (Model.Tir.Id > 0)
@@ -178,7 +178,7 @@
                 <div id="Notes">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="NotesE">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+                            <label class="control-label" for="NotesE">@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Notes</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -188,7 +188,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="NotesA">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+                            <label class="control-label" for="NotesA">@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -200,7 +200,7 @@
                 <div id="CKNotes" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="NotesEn">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Notes</label>
+                            <label class="control-label" for="NotesEn">@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Notes</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -210,7 +210,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
+                            <label class="control-label" for="NotesAr">@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.NotesAr</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -222,12 +222,12 @@
             }
             <div id="EditRecord" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
-                    <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnEdit</button>
+                    <button id="edit" type="button" class="btn">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.BtnEdit</button>
                 </div>
             </div>
             <div id="SubmitRecord" class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.BtnSubmit</button>
+                    <button type="submit" class="btn">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.BtnSubmit</button>
                 </div>
             </div>
         </div>

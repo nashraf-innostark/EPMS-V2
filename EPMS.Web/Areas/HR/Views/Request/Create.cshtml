@@ -1,8 +1,8 @@
-﻿@model  EPMS.Web.ViewModels.Request.RequestViewModel
+﻿@model  EPMS.WebModels.ViewModels.Request.RequestViewModel
 @{
-    ViewBag.Title = Model.Request.RequestId > 0 ? EPMS.Web.Resources.HR.Request.UpdatePageTitle : EPMS.Web.Resources.HR.Request.CreatePageTitle;
+    ViewBag.Title = Model.Request.RequestId > 0 ? EPMS.WebModels.Resources.HR.Request.UpdatePageTitle : EPMS.WebModels.Resources.HR.Request.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container" dir="ltr">
@@ -14,7 +14,7 @@
         </li>
         <li>
             <a href="~/HR/Request/Index">
-                @EPMS.Web.Resources.HR.Request.Label
+                @EPMS.WebModels.Resources.HR.Request.Label
             </a>
         </li>
         <li class="current">
@@ -44,7 +44,7 @@
         <!--Input Field of Request begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.EmployeeName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.EmployeeName</label>
             </div>
             <div class="span9">
                 @if (direction == "ltr")
@@ -64,7 +64,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.EmployeeJobId</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.EmployeeJobId</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -75,7 +75,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.DepartmentName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.DepartmentName</label>
             </div>
             <div class="span9">
                 @if (direction == "ltr")
@@ -96,7 +96,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestDate</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.RequestDate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -107,7 +107,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestTopic</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.RequestTopic</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -119,7 +119,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.RequestDesc</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.RequestDesc</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -130,7 +130,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.HR.Request.Monetary</label>
+                <label class="control-label">@EPMS.WebModels.Resources.HR.Request.Monetary</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -143,7 +143,7 @@
         <div id="monetaryRequestControls" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanAmount</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanAmount</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -155,7 +155,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateHj</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanDateHj</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -165,7 +165,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateGr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanDateGr</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -177,7 +177,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.InstallmentAmount</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.InstallmentAmount</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -189,7 +189,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.NumberOfMonths</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.NumberOfMonths</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -201,7 +201,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.FirstInstallmentDate</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.FirstInstallmentDate</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -214,7 +214,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.LastInstallmentDate</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LastInstallmentDate</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -240,13 +240,13 @@
     <div id="requestReplyControls" class="requestReply" style="display: none">
         <header>
             <i class="icon-big-notepad"></i>
-            <h2><small>@EPMS.Web.Resources.HR.Request.RequestReply</small></h2>
+            <h2><small>@EPMS.WebModels.Resources.HR.Request.RequestReply</small></h2>
         </header>
 
         <div class="container-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.HR.Request.Status</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.HR.Request.Status</label>
                 </div>
                 <div class="span9 span-inset">
                     <div data-on-label="Accept" data-off-label="Decline" class="switch switch-small" data-on="success" data-off="danger">
@@ -257,7 +257,7 @@
             <div id="requestDetailReplyControls">
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label">@EPMS.Web.Resources.HR.Request.ReplyDesc</label>
+                        <label class="control-label">@EPMS.WebModels.Resources.HR.Request.ReplyDesc</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -269,7 +269,7 @@
                 <div id="monetaryRequestReplyControls" style="display: none">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanAmount</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanAmount</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -281,7 +281,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateHj</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanDateHj</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -291,7 +291,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LoanDateGr</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LoanDateGr</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -303,7 +303,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.InstallmentAmount</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.InstallmentAmount</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -315,7 +315,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.NumberOfMonths</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.NumberOfMonths</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -327,7 +327,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.FirstInstallmentDate</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.FirstInstallmentDate</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -339,7 +339,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label">@EPMS.Web.Resources.HR.Request.LastInstallmentDate</label>
+                            <label class="control-label">@EPMS.WebModels.Resources.HR.Request.LastInstallmentDate</label>
                         </div>
                         <div class="span2">
                             <div class="controls">
@@ -352,7 +352,7 @@
             </div>
             <div class="control-group row-fluid replyBtn">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn toBeDisabled">@EPMS.Web.Resources.HR.Request.ReplyBtn</button>
+                    <button type="submit" class="btn toBeDisabled">@EPMS.WebModels.Resources.HR.Request.ReplyBtn</button>
                 </div>
             </div>
         </div>

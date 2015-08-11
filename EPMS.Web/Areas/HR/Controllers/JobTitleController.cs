@@ -3,10 +3,10 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.JobTitle;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.JobTitle;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -85,7 +85,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var jobTitleToUpdate = jobTitleViewModel.JobTitle.CreateFrom();
                     if (jobTitleService.UpdateJob(jobTitleToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.UpdateJobTitle, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobTitle.UpdateJobTitle, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -101,7 +101,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobTitleService.AddJob(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobTitle.SaveJobTitle, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobTitle.SaveJobTitle, IsSaved = true };
                         jobTitleViewModel.JobTitle.JobTitleId = modelToSave.JobTitleId;
                         return RedirectToAction("Index");
                     }

@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.RightsManagement.RightsManagementViewModel
+﻿@model EPMS.WebModels.ViewModels.RightsManagement.RightsManagementViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.UserManagement.RightsManagement.RightsManagementText;
+    ViewBag.Title = EPMS.WebModels.Resources.UserManagement.RightsManagement.RightsManagementText;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <style>
@@ -44,7 +44,7 @@
         <div class="form-horizontal">
             <div class="control-group row-fluid">
                 <div class="span1">
-                    <label class="control-label" style="font-weight: bold">@EPMS.Web.Resources.UserManagement.RightsManagement.Role</label>
+                    <label class="control-label" style="font-weight: bold">@EPMS.WebModels.Resources.UserManagement.RightsManagement.Role</label>
                 </div>
                 <div class="span3">
                     @Html.DropDownListFor(x => x.SelectedRoleId, new SelectList(Model.Roles, "Id", "Name"), new { @class = " mandatory form-control", onchange = "this.form.submit();" })
@@ -107,7 +107,7 @@
             }
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    @Html.ActionLink( EPMS.Web.Resources.UserManagement.RightsManagement.Btn_Save, "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
+                    @Html.ActionLink( EPMS.WebModels.Resources.UserManagement.RightsManagement.Btn_Save, "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
                 </div>
             </div>
         </div>

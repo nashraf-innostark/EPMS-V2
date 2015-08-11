@@ -11,11 +11,11 @@
 ﻿using EPMS.Models.RequestModels;
 ﻿using EPMS.Models.ResponseModels;
 ﻿using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-﻿using EPMS.Web.Models;
-﻿using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.JobApplicant;
 ﻿using EPMS.WebBase.Mvc;
+﻿using EPMS.WebModels.ModelMappers;
+﻿using EPMS.WebModels.ViewModels.Common;
+﻿using EPMS.WebModels.ViewModels.JobApplicant;
+﻿using EPMS.WebModels.WebsiteModels;
 ﻿using Microsoft.AspNet.Identity;
 ﻿using JobApplicant = EPMS.Models.DomainModels.JobApplicant;
 
@@ -110,7 +110,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     JobApplicant modelToSave = jobApplicantViewModel.JobApplicant.CreateFrom(jobApplicantViewModel.Qualifications.ToList(), jobApplicantViewModel.Experiences.ToList());
                     if (jobApplicantService.AddJobApplicant(modelToSave))
                     {
-                        ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.JobApplicant.SuccessJobApplicant, IsSaved = true };
+                        ViewBag.MessageVM = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobApplicant.SuccessJobApplicant, IsSaved = true };
                         jobApplicantViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
                         jobApplicantViewModel.JobApplicant.AcceptAgreement = false;
                         return View(jobApplicantViewModel);
@@ -126,7 +126,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 return View(jobApplicantViewModel);
             }
             jobApplicantViewModel.Departments = departmentService.GetAll().Select(x => x.CreateFrom());
-            ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.JobApplicant.ErrorJobApplicant, IsError = true };
+            ViewBag.MessageVM = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobApplicant.ErrorJobApplicant, IsError = true };
             return View(jobApplicantViewModel);
         }
         public ActionResult UploadCv()

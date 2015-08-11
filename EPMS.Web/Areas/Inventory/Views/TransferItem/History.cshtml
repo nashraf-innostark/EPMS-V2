@@ -1,10 +1,10 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.TIR.TirHistoryViewModel
+@model EPMS.WebModels.ViewModels.TIR.TirHistoryViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRDetail.HistoryPageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.HistoryPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     var counter1 = 1;
     var counter2 = 1;
@@ -19,12 +19,12 @@
         </li>
         <li>
             <a href="~/Inventory/TransferItem/Index">
-                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.BCTitleIndex
+                @EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.BCTitleIndex
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">
-                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.BCTitleView
+                @EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.BCTitleView
             </a>
         </li>
     </ul>
@@ -32,7 +32,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Header</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Header</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -43,11 +43,11 @@
         @Html.HiddenFor(model => model.RecentTir.Id)
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                @EPMS.Web.Resources.Inventory.TIR.TIRDetail.Title
+                @EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Title
             </div>
             <div class="invoice-info">
                 <div class="controls">
-                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Print</a>
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Print</a>
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span6">
@@ -55,19 +55,19 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ManagerName</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.ManagerName</th>
                                         <td>@(direction == "ltr" ? Model.RecentTir.ManagerName : Model.RecentTir.ManagerNameAr)</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.EmployeeId</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.EmployeeId</th>
                                         <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TIRNo</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.TIRNo</th>
                                         <td>@Model.RecentTir.FormNumber</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TransferReason</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.TransferReason</th>
                                         <td>@(direction == "ltr" ? Model.RecentTir.DefectivenessE : Model.RecentTir.DefectivenessA)</td>
                                     </tr>
                                 </tbody>
@@ -79,11 +79,11 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Date</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Date</th>
                                         <td>@Model.RecentTir.RecCreatedDate.ToShortDateString()</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequesterName</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.RequesterName</th>
                                         <td>@Model.RecentTir.RequesterName</td>
                                     </tr>
                                 </tbody>
@@ -98,11 +98,11 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.Serial</th>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ItemName</th>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.ItemCode</th>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.SKUCode</th>
-                            <th>@EPMS.Web.Resources.Inventory.TIR.TIRDetail.TransferQuantity</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.ItemName</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.ItemCode</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.SKUCode</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.TransferQuantity</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd">
@@ -195,7 +195,7 @@
         <div id="CKNotes" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                    <label class="control-label" for="Notes">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -205,7 +205,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                    <label class="control-label" for="NotesAr">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -217,7 +217,7 @@
         <div id="Notes" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                    <label class="control-label" for="Notes">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -227,7 +227,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                    <label class="control-label" for="NotesAr">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -239,14 +239,14 @@
         <div class="control-group row-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.TIR.TIRDetail.RequestStatus</label>
+                    <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.RequestStatus</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.RecentTir.Status, new[] {
-                        new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
-                        new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
-                        new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
+                        new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Pending, Value = "3" },
+                        new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Accepted, Value = "1" },
+                        new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Rejected, Value = "2" } },
                         new { @id = "Status", @class = "select2me disableDdl" })
                     </div>
                 </div>
@@ -256,14 +256,14 @@
         {
             <div id="SubmitIrf" class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
+                    <button type="submit" class="btn">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Submit</button>
                 </div>
             </div>
             if (userPermissionsSet.Contains("TIRCreate"))
             {
                 <div id="EditIrf" class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.RecentTir.Id" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/TransferItem/Create/@Model.RecentTir.Id" class="btn">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
                     </div>
                 </div>
             }

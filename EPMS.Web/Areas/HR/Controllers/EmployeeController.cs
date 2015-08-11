@@ -11,16 +11,15 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.PMS;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Employee;
 using Microsoft.AspNet.Identity;
-using Allowance = EPMS.Web.Models.Allowance;
-using Employee = EPMS.Web.Models.Employee;
-using EmployeeRequest = EPMS.Web.Models.Request;
+using Allowance = EPMS.WebModels.WebsiteModels.Allowance;
+using Employee = EPMS.WebModels.WebsiteModels.Employee;
+using EmployeeRequest = EPMS.WebModels.WebsiteModels.Request;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -129,7 +128,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         [SiteAuthorize(PermissionKey = "EmployeeCreate,EmployeeDetails")]
         public ActionResult Create(long? id)
         {
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             if (id == null)
             {
                 EmployeeDetailViewModel viewModel = new EmployeeDetailViewModel
@@ -142,9 +141,9 @@ namespace EPMS.Web.Areas.HR.Controllers
                 string employeeJobId = GetEmployeeJobId();
                 viewModel.EmployeeViewModel.Employee.EmployeeJobId = employeeJobId;
                 viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
-                viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-                viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
-                viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
+                viewModel.EmployeeViewModel.EmployeeName = EPMS.WebModels.Resources.HR.Employee.AddNew;
+                viewModel.EmployeeViewModel.BtnText = EPMS.WebModels.Resources.HR.Employee.BtnSave;
+                viewModel.EmployeeViewModel.PageTitle = EPMS.WebModels.Resources.HR.Employee.PTAdd;
                 return View(viewModel);
             }
             if (id > 0)
@@ -174,13 +173,13 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
                 if (Convert.ToString(Session["RoleName"]) == "Admin")
                 {
-                    viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTList;
-                    viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
+                    viewModel.EmployeeViewModel.PageTitle = EPMS.WebModels.Resources.HR.Employee.PTList;
+                    viewModel.EmployeeViewModel.BtnText = EPMS.WebModels.Resources.HR.Employee.BtnUpdate;
                 }
                 else
                 {
-                    viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTProfile;
-                    viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnUpdate;
+                    viewModel.EmployeeViewModel.PageTitle = EPMS.WebModels.Resources.HR.Employee.PTProfile;
+                    viewModel.EmployeeViewModel.BtnText = EPMS.WebModels.Resources.HR.Employee.BtnUpdate;
                 }
                 // get Employee requests
                 var requests = employeeResponse.EmployeeMonetaryRequests.Select(x => x.CreateFromServerToClientEmpDetail()).ToList();
@@ -215,7 +214,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     viewModel.RequestListViewModel.aaData = employeeRequests;
                 }
                 var taskData = employeeResponse.EmployeeTasks.Select(x => x.CreateFromServerToClient());
-                var employeeTasks = taskData as IList<TaskEmployee> ?? taskData.ToList();
+                var employeeTasks = taskData as IList<WebModels.WebsiteModels.TaskEmployee> ?? taskData.ToList();
                 if (employeeTasks.Any())
                 {
                     viewModel.TaskEmployees = employeeTasks;
@@ -268,7 +267,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         {
                             TempData["message"] = new MessageViewModel
                             {
-                                Message = Resources.HR.Employee.UpdateMessage,
+                                Message = EPMS.WebModels.Resources.HR.Employee.UpdateMessage,
                                 IsUpdated = true
                             };
                             return RedirectToAction("Index");
@@ -277,12 +276,12 @@ namespace EPMS.Web.Areas.HR.Controllers
                         viewModel.EmployeeViewModel.JobTitleDeptList =
                             viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
                         viewModel.Role = Convert.ToString(Session["RoleName"]);
-                        viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-                        viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
-                        viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
+                        viewModel.EmployeeViewModel.EmployeeName = EPMS.WebModels.Resources.HR.Employee.AddNew;
+                        viewModel.EmployeeViewModel.BtnText = EPMS.WebModels.Resources.HR.Employee.BtnSave;
+                        viewModel.EmployeeViewModel.PageTitle = EPMS.WebModels.Resources.HR.Employee.PTAdd;
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = Resources.HR.Employee.ProblemSaving,
+                            Message = EPMS.WebModels.Resources.HR.Employee.ProblemSaving,
                             IsError = true
                         };
                         return View(viewModel);
@@ -312,7 +311,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = Resources.HR.Employee.AddMessage,
+                            Message = EPMS.WebModels.Resources.HR.Employee.AddMessage,
                             IsSaved = true
                         };
                         viewModel.EmployeeViewModel.Employee.EmployeeId = employeeToSave.EmployeeId;
@@ -329,7 +328,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = Resources.HR.Employee.DeactivateMessage,
+                            Message = EPMS.WebModels.Resources.HR.Employee.DeactivateMessage,
                             IsUpdated = true
                         };
                         return RedirectToAction("Index");
@@ -343,7 +342,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = Resources.HR.Employee.ActivateMessage,
+                            Message = EPMS.WebModels.Resources.HR.Employee.ActivateMessage,
                             IsUpdated = true
                         };
                         return RedirectToAction("Index");
@@ -354,17 +353,17 @@ namespace EPMS.Web.Areas.HR.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.HR.Employee.ProblemSaving,
+                    Message = EPMS.WebModels.Resources.HR.Employee.ProblemSaving,
                     IsError = true
                 };
             }
             viewModel.EmployeeViewModel.JobTitleList = JobTitleService.GetAll();
             viewModel.EmployeeViewModel.JobTitleDeptList = viewModel.EmployeeViewModel.JobTitleList.Select(x => x.CreateFromServerToClient());
             viewModel.Role = Convert.ToString(Session["RoleName"]);
-            viewModel.EmployeeViewModel.EmployeeName = Resources.HR.Employee.AddNew;
-            viewModel.EmployeeViewModel.BtnText = Resources.HR.Employee.BtnSave;
-            viewModel.EmployeeViewModel.PageTitle = Resources.HR.Employee.PTAdd;
-            TempData["message"] = new MessageViewModel { Message = Resources.HR.Employee.ProblemSaving, IsError = true };
+            viewModel.EmployeeViewModel.EmployeeName = EPMS.WebModels.Resources.HR.Employee.AddNew;
+            viewModel.EmployeeViewModel.BtnText = EPMS.WebModels.Resources.HR.Employee.BtnSave;
+            viewModel.EmployeeViewModel.PageTitle = EPMS.WebModels.Resources.HR.Employee.PTAdd;
+            TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Employee.ProblemSaving, IsError = true };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }

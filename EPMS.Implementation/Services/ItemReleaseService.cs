@@ -10,8 +10,6 @@ using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
-using FaceSharp.Api.Objects;
-using Microsoft.Practices.EnterpriseLibrary.Common.Properties;
 
 namespace EPMS.Implementation.Services
 {

@@ -2,9 +2,9 @@
 @using System.Configuration
 @using System.Linq
 @using EPMS.Models.MenuModels
-@model EPMS.Web.ViewModels.Common.MenuViewModel
+@model EPMS.WebModels.ViewModels.Common.MenuViewModel
 @{
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     Layout = null;
     string[] module = (string[])Session["UserModules"];
     if (module != null)

@@ -1,10 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Vendor;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Vendor;
 using EPMS.Models.RequestModels;
 using EPMS.WebBase.Mvc;
 

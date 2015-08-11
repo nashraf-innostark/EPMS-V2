@@ -1,10 +1,10 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.Product.ProductViewModel
+@model EPMS.WebModels.ViewModels.Product.ProductViewModel
 
 @{
-    ViewBag.Title = Model.Product.ProductId > 0 ? EPMS.Web.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.Web.Resources.Website.Product.ProductCreate.AddPageTitle;
+    ViewBag.Title = Model.Product.ProductId > 0 ? EPMS.WebModels.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.WebModels.Resources.Website.Product.ProductCreate.AddPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -16,7 +16,7 @@
         </li>
         <li>
             <a href="~/Website/Product/Index">
-                @EPMS.Web.Resources.Website.Product.ProductIndex.PageTitle
+                @EPMS.WebModels.Resources.Website.Product.ProductIndex.PageTitle
             </a>
         </li>
         <li class="current">
@@ -50,7 +50,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductNameEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductNameEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -62,7 +62,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductNameAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -74,7 +74,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductDescEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -86,7 +86,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductDescAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -98,7 +98,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductPrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductPrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -110,7 +110,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.DiscountedPrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.DiscountedPrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -122,7 +122,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSize</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSize</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -134,7 +134,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -146,7 +146,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -158,19 +158,19 @@
         
         <div class="control-group row-fluid jobTitleDDL">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.ProductSection</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSection</label>
             </div>
             <div class="span2">
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameEn"), EPMS.Web.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
+                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameEn"), EPMS.WebModels.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameAr"), EPMS.Web.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
+                        @Html.DropDownListFor(x => x.Product.ProductSectionId, new SelectList(Model.ProductSections, "SectionId", "SectionNameAr"), EPMS.WebModels.Resources.Website.Product.ProductCreate.SelectSection, new { @class = "select2me", id = "SectionId" })
                     </div>
                 }
             </div>
@@ -181,8 +181,8 @@
         
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>@EPMS.Web.Resources.Website.Product.ProductCreate.ProductImages</strong>
-            <a href="#productImageModule" data-toggle="modal" class="addImageButton">@EPMS.Web.Resources.Website.Product.ProductCreate.AddProductImage</a>
+            <strong>@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImages</strong>
+            <a href="#productImageModule" data-toggle="modal" class="addImageButton">@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -244,11 +244,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.Website.Product.ProductCreate.Edit</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Website.Product.ProductCreate.Save</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Edit</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Save</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Product/Index'" type="reset">@EPMS.Web.Resources.Website.Product.ProductCreate.Cancel</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Product/Index'" type="reset">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Cancel</button>
                 </div>
             </div>
         </div>
@@ -263,7 +263,7 @@
 <div id="productImageModule" class="modal hide fade treeSelector">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>@EPMS.Web.Resources.Website.Product.ProductCreate.AddProductImage</h3>
+        <h3>@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</h3>
     </div>
     <div class="modal-body ">
         <form class="form-horizontal">
@@ -271,7 +271,7 @@
             <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
                 <div class="span2">
                     <label class="control-label" for="inputField">
-                        @EPMS.Web.Resources.Website.Product.ProductCreate.ProductImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                        @EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
                     </label>
                 </div>
                 <div class="span10 row-fluid">
@@ -284,7 +284,7 @@
             <!--Drag And Drop Upload end-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="inputFieldaOrder">@EPMS.Web.Resources.Website.Product.ProductCreate.Order</label>
+                    <label class="control-label" for="inputFieldaOrder">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Order</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -298,7 +298,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <label class="control-label">@EPMS.Web.Resources.Website.Product.ProductCreate.Show</label>
+                        <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Show</label>
                     </div>
                 </div>
             </div>
@@ -369,7 +369,7 @@
             //maxsize: 1, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',

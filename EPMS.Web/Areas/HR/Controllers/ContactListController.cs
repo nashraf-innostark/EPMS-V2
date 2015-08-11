@@ -3,10 +3,9 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Employee;
 using EPMS.WebBase.Mvc;
-using ContactList = EPMS.Web.Models.ContactList;
+using EPMS.WebModels.ModelMappers;
+using ContactList = EPMS.WebModels.WebsiteModels.ContactList;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {

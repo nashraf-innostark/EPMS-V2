@@ -1,10 +1,10 @@
 ﻿@using EPMS.Models.Common
-@model EPMS.Web.ViewModels.PurchaseOrder.PurchaseOrderListViewModel
+@model EPMS.WebModels.ViewModels.PurchaseOrder.PurchaseOrderListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.PO.PO.PageTitleIndex;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.PO.PO.PageTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
@@ -25,7 +25,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userPermissionsSet.Contains("POCreate"))
     {
-        <h3><small><a href="~/Inventory/PurchaseOrder/Create">@EPMS.Web.Resources.Inventory.PO.PO.CreateNew</a></small></h3>
+        <h3><small><a href="~/Inventory/PurchaseOrder/Create">@EPMS.WebModels.Resources.Inventory.PO.PO.CreateNew</a></small></h3>
     }
 </header>
 <!--Notifications begin-->
@@ -42,21 +42,21 @@
                         @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Requester</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Date</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Status</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Requester</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Date</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Status</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.InventoryManager</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Date</th>
-                                <th>@EPMS.Web.Resources.Inventory.PO.PO.Status</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.PurchaseOrderNumber</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.InventoryManager</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Date</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Status</th>
                             </tr>
                         }
                     </thead>
@@ -117,13 +117,13 @@
                         "mRender": function (data, type, full) {
                             var val = "";
                             if (full["Status"] == 3) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             }
                             else if (full["Status"] == 1) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             else if (full["Status"] == 2) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
@@ -191,13 +191,13 @@
                         "mRender": function (data, type, full) {
                             var val = "";
                             if (full["Status"] == 3) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             }
                             else if (full["Status"] == 1) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             else if (full["Status"] == 2) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }

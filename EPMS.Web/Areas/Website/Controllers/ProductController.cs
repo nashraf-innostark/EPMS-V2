@@ -9,16 +9,16 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Website.Product;
+using EPMS.WebModels.ModelMappers.Website.ProductSection;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.Product;
+using EPMS.WebModels.WebsiteModels.Common;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Website.Product;
-using EPMS.Web.ModelMappers.Website.ProductSection;
-using EPMS.Web.Models.Common;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Product;
+using EPMS.WebModels.ViewModels.Common;
 using Microsoft.AspNet.Identity;
-using EPMS.Web.ModelMappers;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {

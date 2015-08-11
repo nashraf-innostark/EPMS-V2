@@ -1,11 +1,11 @@
 ﻿@using EPMS.Models.Common
-@model EPMS.Web.ViewModels.TIR.TransferItemListViewModel
+@model EPMS.WebModels.ViewModels.TIR.TransferItemListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.TIR.TIRIndex.PageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container" dir="ltr">
@@ -26,7 +26,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userPermissionsSet.Contains("TIRCreate"))
     {
-        <h3><small><a href="~/Inventory/TransferItem/Create">@EPMS.Web.Resources.Inventory.TIR.TIRIndex.CreateNew</a></small></h3>
+        <h3><small><a href="~/Inventory/TransferItem/Create">@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.CreateNew</a></small></h3>
     }
 </header>
 
@@ -44,21 +44,21 @@
                         @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.FormNumber</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Requester</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Date</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Status</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.FormNumber</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Requester</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Date</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Status</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.FormNumber</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Customer</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Date</th>
-                                <th>@EPMS.Web.Resources.Inventory.TIR.TIRIndex.Status</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.FormNumber</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Customer</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Date</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.TIR.TIRIndex.Status</th>
                             </tr>
                         }
                     </thead>
@@ -119,13 +119,13 @@
                         "mRender": function (data, type, full) {
                             var val = "";
                             if (full["Status"] == 3) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             }
                             else if (full["Status"] == 1) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             else if (full["Status"] == 2) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }
@@ -194,13 +194,13 @@
                         "mRender": function (data, type, full) {
                             var val = "";
                             if (full["Status"] == 3) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             }
                             else if (full["Status"] == 1) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             else if (full["Status"] == 2) {
-                                val = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                val = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             return val;
                         }

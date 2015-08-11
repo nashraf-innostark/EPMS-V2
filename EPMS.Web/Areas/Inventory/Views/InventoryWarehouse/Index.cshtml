@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.InventoryWarehouse.InventoryWarehouseListViewModel
+﻿@model EPMS.WebModels.ViewModels.InventoryWarehouse.InventoryWarehouseListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.InventoryWarehouse.PGTitleIndex;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.InventoryWarehouse.PGTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
 }
@@ -25,7 +25,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userPermissionsSet.Contains("InventoryWarehouseCreate"))
     {
-        <h3><small><a href="~/Inventory/InventoryWarehouse/Create">@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseCreate</a></small></h3>
+        <h3><small><a href="~/Inventory/InventoryWarehouse/Create">@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseCreate</a></small></h3>
     }
 </header>
 <!--Notifications begin-->
@@ -40,16 +40,16 @@
                 <table class="table table-striped table-responsive" id="tableSortableResMed">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.Serial</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseNumber</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseManager</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.WarehouseSize</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.IsFull</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfAisles</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSections</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfShalves</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSectionsOnShalves</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryWarehouse.NumberOfSpaces</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseNumber</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseManager</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.WarehouseSize</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.IsFull</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfAisles</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfSections</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfShalves</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfSectionsOnShalves</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.NumberOfSpaces</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -76,11 +76,11 @@
                                 <td>@warehouse.WarehouseSize</td>
                                 @if (warehouse.IsFull)
                                 {
-                                    <td>@EPMS.Web.Resources.Inventory.InventoryWarehouse.IsFullYes</td>
+                                    <td>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.IsFullYes</td>
                                 }
                                 else
                                 {
-                                    <td>@EPMS.Web.Resources.Inventory.InventoryWarehouse.IsFullNo</td>
+                                    <td>@EPMS.WebModels.Resources.Inventory.InventoryWarehouse.IsFullNo</td>
                                 }
                                 <td class="center">@warehouse.NoOfAisles</td>
                                 <td class="center">@warehouse.NoOfSections</td>

@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.Repository;
+using EPMS.WebModels.ViewModels.Barcode;
 using EPMS.Web.Controllers;
-using EPMS.Web.ViewModels.Barcode;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {

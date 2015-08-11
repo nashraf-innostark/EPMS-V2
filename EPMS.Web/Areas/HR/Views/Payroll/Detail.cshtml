@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.Payroll.PayrollViewModel
+﻿@model EPMS.WebModels.ViewModels.Payroll.PayrollViewModel
 
 @{
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = direction == "ltr" ? Model.Employee.EmployeeFullNameE + " " + EPMS.Web.Resources.HR.Payroll.Payrolls : Model.Employee.EmployeeFullNameA + " " + EPMS.Web.Resources.HR.Payroll.Payrolls;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = direction == "ltr" ? Model.Employee.EmployeeFullNameE + " " + EPMS.WebModels.Resources.HR.Payroll.Payrolls : Model.Employee.EmployeeFullNameA + " " + EPMS.WebModels.Resources.HR.Payroll.Payrolls;
     var empName = direction == "ltr" ? Model.Employee.EmployeeFullNameE : Model.Employee.EmployeeFullNameA;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -17,7 +17,7 @@
         </li>
         <li>
             <a href="~/HR/Payroll/Index">
-                @EPMS.Web.Resources.HR.Payroll.PayrollList
+                @EPMS.WebModels.Resources.HR.Payroll.PayrollList
             </a>
         </li>
         <li>
@@ -33,7 +33,7 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.HR.Payroll.Payrolls</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.HR.Payroll.Payrolls</small></h2>
     <h3><small>@empName</small></h3>
 </header>
 <!-- Page heading ends -->
@@ -44,7 +44,7 @@
         @Html.HiddenFor(model => model.Id)
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Date">@EPMS.Web.Resources.HR.Payroll.Date</label>
+                <label class="control-label" for="Date">@EPMS.WebModels.Resources.HR.Payroll.Date</label>
             </div>
             <div class="span3">
                 <div class="controls">
@@ -54,7 +54,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="EmployeeName">@EPMS.Web.Resources.HR.Payroll.EmpId</label>
+                <label class="control-label" for="EmployeeName">@EPMS.WebModels.Resources.HR.Payroll.EmpId</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -64,7 +64,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitle">@EPMS.Web.Resources.HR.Employee.JobTitle</label>
+                <label class="control-label" for="JobTitle">@EPMS.WebModels.Resources.HR.Employee.JobTitle</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -74,7 +74,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.Employee.BasicSal</label>
+                <label class="control-label" for="BasicSalary">@EPMS.WebModels.Resources.HR.Employee.BasicSal</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -84,7 +84,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Allowance1">@EPMS.Web.Resources.HR.Employee.Allow1</label>
+                <label class="control-label" for="Allowance1">@EPMS.WebModels.Resources.HR.Employee.Allow1</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -94,7 +94,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Allowance2">@EPMS.Web.Resources.HR.Employee.Allow2</label>
+                <label class="control-label" for="Allowance2">@EPMS.WebModels.Resources.HR.Employee.Allow2</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -104,7 +104,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Allowance3">@EPMS.Web.Resources.HR.Employee.Allow3</label>
+                <label class="control-label" for="Allowance3">@EPMS.WebModels.Resources.HR.Employee.Allow3</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -114,7 +114,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Allowance4">@EPMS.Web.Resources.HR.Employee.Allow4</label>
+                <label class="control-label" for="Allowance4">@EPMS.WebModels.Resources.HR.Employee.Allow4</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -124,7 +124,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Allowance5">@EPMS.Web.Resources.HR.Employee.Allow5</label>
+                <label class="control-label" for="Allowance5">@EPMS.WebModels.Resources.HR.Employee.Allow5</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -134,7 +134,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Deduction1">@EPMS.Web.Resources.HR.Employee.Deduc1</label>
+                <label class="control-label" for="Deduction1">@EPMS.WebModels.Resources.HR.Employee.Deduc1</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -144,7 +144,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Deduction2">@EPMS.Web.Resources.HR.Employee.Deduc2</label>
+                <label class="control-label" for="Deduction2">@EPMS.WebModels.Resources.HR.Employee.Deduc2</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -154,7 +154,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Total">@EPMS.Web.Resources.HR.Payroll.Total</label>
+                <label class="control-label" for="Total">@EPMS.WebModels.Resources.HR.Payroll.Total</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -164,7 +164,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn" onclick="printDiv('PayrollForm')">@EPMS.Web.Resources.HR.Payroll.Print</button>
+                <button type="button" class="btn" onclick="printDiv('PayrollForm')">@EPMS.WebModels.Resources.HR.Payroll.Print</button>
             </div>
         </div>
     </div>

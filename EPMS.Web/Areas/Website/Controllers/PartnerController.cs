@@ -5,11 +5,11 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ModelMappers.Website.Partner;
+using EPMS.WebModels.ViewModels.Partner;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Website.Partner;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Partner;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 

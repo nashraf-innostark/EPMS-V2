@@ -5,15 +5,16 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Quotation;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.Resources.CMS;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Quotation;
+using EPMS.WebModels.Resources.CMS;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Order = EPMS.Web.Models.Order;
+using Order = EPMS.WebModels.WebsiteModels.Order;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -92,7 +93,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
             ViewBag.ShowExcelImport = CheckInventoryModule() != true;
             var users = AspNetUserService.FindById(User.Identity.GetUserId());
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             var createdByName = "";
             if (users.Employee != null && direction == "ltr")
             {
@@ -290,7 +291,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Order.Canceled,
+                        Message = EPMS.WebModels.Resources.CMS.Order.Canceled,
                         IsSaved = true
                     };
                 }
@@ -298,7 +299,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Order.Updated,
+                        Message = EPMS.WebModels.Resources.CMS.Order.Updated,
                         IsSaved = true
                     };
                 }

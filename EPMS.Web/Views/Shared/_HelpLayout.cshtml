@@ -3,7 +3,7 @@
     var url = Session["CompWebsiteUrl"];
 }
 <!DOCTYPE html>
-@*<html dir="@EPMS.Web.Resources.Shared.Common.TextDirection">*@
+@*<html dir="@EPMS.WebModels.Resources.Shared.Common.TextDirection">*@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
@@ -112,17 +112,17 @@
         <ul class="nav nav-user-menu">
             <li class="user-sub-menu-container">
                 <a href="javascript:;">
-                    <i class="user-icon"></i><span class="nav-user-selection">@EPMS.Web.Resources.Shared.Common.ThemeOptions</span><i class="icon-menu-arrow"></i>
+                    <i class="user-icon"></i><span class="nav-user-selection">@EPMS.WebModels.Resources.Shared.Common.ThemeOptions</span><i class="icon-menu-arrow"></i>
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="light">
                         <a href="javascript:;">
-                            <i class='icon-photon stop'></i>@EPMS.Web.Resources.Shared.Common.LightVersion
+                            <i class='icon-photon stop'></i>@EPMS.WebModels.Resources.Shared.Common.LightVersion
                         </a>
                     </li>
                     <li class="dark">
                         <a href="javascript:;">
-                            <i class='icon-photon stop'></i>@EPMS.Web.Resources.Shared.Common.DarkVersion
+                            <i class='icon-photon stop'></i>@EPMS.WebModels.Resources.Shared.Common.DarkVersion
                         </a>
                     </li>
                 </ul>
@@ -131,22 +131,22 @@
                 <a href="javascript:;">
                     @if (Session["Culture"] == null || Session["Culture"].ToString() == "en")
                     {
-                        <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.EN</i>
+                        <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.WebModels.Resources.Shared.Common.EN</i>
                     }
                     else
                     {
-                        <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.AR</i>
+                        <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>@EPMS.WebModels.Resources.Shared.Common.AR</i>
                     }
                 </a>
                 <ul class="nav user-sub-menu">
                     <li class="">
                         <a href="~/Culture/Set/EN">
-                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN
+                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.WebModels.Resources.Shared.Common.EN
                         </a>
                     </li>
                     <li class="">
                         <a href="~/Culture/Set/AR">
-                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR
+                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.WebModels.Resources.Shared.Common.AR
                         </a>
                     </li>
                 </ul>
@@ -177,7 +177,7 @@
                 @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
                 <li class="nav-logout">
                     <a href="~/Account/Logoff">
-                        <i class="icon-photon key_stroke"></i><span class="nav-selection">@EPMS.Web.Resources.Shared.Common.LogOut @User.Identity.Name</span>
+                        <i class="icon-photon key_stroke"></i><span class="nav-selection">@EPMS.WebModels.Resources.Shared.Common.LogOut @User.Identity.Name</span>
                     </a>
                 </li>
             </ul>

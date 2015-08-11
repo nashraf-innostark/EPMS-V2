@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.Project.ProjectListViewModel
+﻿@model EPMS.WebModels.ViewModels.Project.ProjectListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Project.ListPageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.PMS.Project.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     int i = 0;
 }
 <!-- Navigation Bar Start-->
@@ -15,7 +15,7 @@
             </a>
         </li>
         <li class ="current">
-            @EPMS.Web.Resources.PMS.Project.ProjectsList
+            @EPMS.WebModels.Resources.PMS.Project.ProjectsList
         </li>
     </ul>
 </div>
@@ -23,12 +23,12 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.PMS.Project.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.PMS.Project.ListPageHeading</small></h2>
     @if (ViewBag.UserRole != "Customer")
     {
-        <h3> <small><a href="~/PMS/Project/Create">@EPMS.Web.Resources.PMS.Project.AddNew</a></small></h3>
+        <h3> <small><a href="~/PMS/Project/Create">@EPMS.WebModels.Resources.PMS.Project.AddNew</a></small></h3>
     }
-    <h3> <small><a href="~/PMS/Project/Finished">@EPMS.Web.Resources.PMS.Project.FinishedProjects</a></small></h3>
+    <h3> <small><a href="~/PMS/Project/Finished">@EPMS.WebModels.Resources.PMS.Project.FinishedProjects</a></small></h3>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -42,13 +42,13 @@
                     <table id="ProjectsTable" class="table table-striped table-responsive">
                         <thead>
                             <tr>
-                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.ProjectName</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.ClientName</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.StartDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.DeliveryDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Price</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.ProjectName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.ClientName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.Price</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.Progress</th>
                             </tr>
                         </thead>
                         <tbody>

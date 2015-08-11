@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.Tasks.TaskListViewModel
+﻿@model EPMS.WebModels.ViewModels.Tasks.TaskListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Task.PageTitleIndex;
+    ViewBag.Title = EPMS.WebModels.Resources.PMS.Task.PageTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string date = "";
 }
 
@@ -23,13 +23,13 @@
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.PMS.Task.Tasks</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.PMS.Task.Tasks</small></h2>
     @if (Session["RoleName"].ToString() != "Customer")
     {
-        <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>
+        <h3><small><a href="~/PMS/Task/Create">@EPMS.WebModels.Resources.PMS.Task.AddNewTask</a></small></h3>
         if (Session["EmployeeID"] != null)
         {
-            <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
+            <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.WebModels.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
         }
     }
 </header>
@@ -49,14 +49,14 @@
                     <table class="table table-striped table-responsive" id="projectTaskTable" style="width: 100% !important;">
                         <thead class="">
                             <tr>
-                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.PMS.Task.TaskName</th>
-                                <th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>
-                                <th>@EPMS.Web.Resources.PMS.Task.StartDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Task.Cost</th>
-                                <th>@EPMS.Web.Resources.PMS.Task.Progress</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.TaskName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.ProjectName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.Cost</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.Progress</th>
                             </tr>
                         </thead>
                         <tbody></tbody>
@@ -349,13 +349,13 @@
                 '<table class="table table-striped table-responsive subProjectTaskTable" id="' + oData.TaskId + "_Parent" + '" style="width: 100% !important;">' +
                 '<thead class="">' +
                 '<tr>' +
-                '<th style="width:34px !important">@EPMS.Web.Resources.Shared.Common.Serial</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.TaskName</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.ProjectName</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.StartDate</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.DeliveryDate</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.Cost</th>' +
-                '<th>@EPMS.Web.Resources.PMS.Task.Progress</th>' +
+                '<th style="width:34px !important">@EPMS.WebModels.Resources.Shared.Common.Serial</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.TaskName</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.ProjectName</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.StartDate</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.DeliveryDate</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.Cost</th>' +
+                '<th>@EPMS.WebModels.Resources.PMS.Task.Progress</th>' +
                 '</tr>' +
                 '</thead>' +
                 '<tbody></tbody>' +

@@ -1,9 +1,9 @@
 ﻿@using EPMS.Models.Common
-@model  EPMS.Web.ViewModels.DIF.DIFViewModel
+@model  EPMS.WebModels.ViewModels.DIF.DIFViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.DIF.DIF.DetailsPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var counter = 1;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
@@ -17,18 +17,18 @@
         </li>
         <li>
             <a href="~/Inventory/DIF/Index">
-                @EPMS.Web.Resources.Inventory.DIF.DIF.ListPageBreadCrumb
+                @EPMS.WebModels.Resources.Inventory.DIF.DIF.ListPageBreadCrumb
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageBreadCrumb</a>
+            <a href="javascript:;">@EPMS.WebModels.Resources.Inventory.DIF.DIF.DetailsPageBreadCrumb</a>
         </li>
     </ul>
 </div>
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Inventory.DIF.DIF.DetailsPageHeading</small></h2>
 </header>
 
 <!--Notifications begin-->
@@ -49,7 +49,7 @@
         <div class="control-group row-fluid">
 
             <div class="form-legend centTitle">
-                @EPMS.Web.Resources.Inventory.DIF.DIF.DetailsPageHeading
+                @EPMS.WebModels.Resources.Inventory.DIF.DIF.DetailsPageHeading
             </div>
 
             <div class="invoice-info">
@@ -65,19 +65,19 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@(((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager) ? EPMS.Web.Resources.RFI.RFI.InventoryManagerName : EPMS.Web.Resources.RFI.RFI.EmployeeName):</th>
+                                        <th>@(((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager) ? EPMS.WebModels.Resources.RFI.RFI.InventoryManagerName : EPMS.WebModels.Resources.RFI.RFI.EmployeeName):</th>
                                         <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.RFI.RFI.EmployeeId:</th>
+                                        <th>@EPMS.WebModels.Resources.RFI.RFI.EmployeeId:</th>
                                         <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.DIF.DIF.DIFNumber:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.DIF.DIF.DIFNumber:</th>
                                         <td>@Model.Dif.Id</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.DIF.DIF.Defectiveness:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.DIF.DIF.Defectiveness:</th>
                                         <td>@(direction == "ltr" ? Model.Dif.DefectivenessE : Model.Dif.DefectivenessA)</td>
                                     </tr>
                                 </tbody>
@@ -92,22 +92,22 @@
                                     @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
+                                            <th>@EPMS.WebModels.Resources.RFI.RFI.Date:</th>
                                             <td>@Model.Dif.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.RFI.RFI.RequesterName:</th>
+                                            <th>@EPMS.WebModels.Resources.RFI.RFI.RequesterName:</th>
                                             <td>@Model.Dif.RequesterName</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.RFI.RFI.Date:</th>
+                                            <th>@EPMS.WebModels.Resources.RFI.RFI.Date:</th>
                                             <td>@Model.Dif.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.RFI.RFI.InventoryManagerName:</th>
+                                            <th>@EPMS.WebModels.Resources.RFI.RFI.InventoryManagerName:</th>
                                             <td>@Model.Dif.ManagerName</td>
                                         </tr>
                                     }
@@ -126,11 +126,11 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.RFI.RFI.Serial</th>
-                            <th>@EPMS.Web.Resources.RFI.RFI.ItemName</th>
-                            <th>@EPMS.Web.Resources.RFI.RFI.ItemCode</th>
-                            <th>@EPMS.Web.Resources.RFI.RFI.SKUCode</th>
-                            <th>@EPMS.Web.Resources.Inventory.DIF.DIF.DefectiveQuantity</th>
+                            <th>@EPMS.WebModels.Resources.RFI.RFI.Serial</th>
+                            <th>@EPMS.WebModels.Resources.RFI.RFI.ItemName</th>
+                            <th>@EPMS.WebModels.Resources.RFI.RFI.ItemCode</th>
+                            <th>@EPMS.WebModels.Resources.RFI.RFI.SKUCode</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.DIF.DIF.DefectiveQuantity</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd">
@@ -170,7 +170,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.RFI.RFI.NotesE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -180,7 +180,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.RFI.RFI.NotesA</label>
+                <label class="control-label">@EPMS.WebModels.Resources.RFI.RFI.NotesA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -193,15 +193,15 @@
         <div class="control-group row-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="jobTitle">@EPMS.Web.Resources.RFI.RFI.RequestStatus</label>
+                    <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.RFI.RFI.RequestStatus</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.Dif.Status, new[]
                             {
-                                new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                new SelectListItem { Value = "6" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                             }, new { @id = "RFIStatusDDL", @class = "toBeDisabled" })
                     </div>
                 </div>
@@ -212,12 +212,12 @@
         {
             <div id="submitDiv" class="control-group row-fluid" style="display: none">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                    <button type="submit" class="btn">@EPMS.WebModels.Resources.RFI.RFI.Submit</button>
                 </div>
             </div>
             <div id="editDiv" class="control-group row-fluid" style="display: none">
                 <div class="span1 span-inset">
-                    <a href="~/Inventory/DIF/Create/@Model.Dif.Id" class="btn">@EPMS.Web.Resources.Shared.Common.Edit</a>
+                    <a href="~/Inventory/DIF/Create/@Model.Dif.Id" class="btn">@EPMS.WebModels.Resources.Shared.Common.Edit</a>
                 </div>
             </div>
         }

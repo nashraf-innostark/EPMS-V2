@@ -1,7 +1,7 @@
-﻿@model EPMS.Web.ViewModels.CompanyProfile.CompanyProfileViewModel
+﻿@model EPMS.WebModels.ViewModels.CompanyProfile.CompanyProfileViewModel
 
 @{
-    ViewBag.Title = @EPMS.Web.Resources.CP.Profile.CompanyProfile;
+    ViewBag.Title = @EPMS.WebModels.Resources.CP.Profile.CompanyProfile;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
 }
@@ -14,7 +14,7 @@
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.CP.Profile.CompanyProfile</a>
+            <a href="javascript:;">@EPMS.WebModels.Resources.CP.Profile.CompanyProfile</a>
         </li>
     </ul>
 </div>
@@ -41,7 +41,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputField">
-                    @EPMS.Web.Resources.CP.Profile.CompanyLogo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.CP.Profile.CompanyLogo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -54,11 +54,11 @@
         <!--Tabs-->
         <div class="control-group row-fluid">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active"><a data-toggle="tab" href="#tab-1">@EPMS.Web.Resources.CP.Profile.CompanyInformation</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-2">@EPMS.Web.Resources.CP.Profile.CompanyDocuments</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-3">@EPMS.Web.Resources.CP.Profile.LicenseInformation</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-4">@EPMS.Web.Resources.CP.Profile.BankInformation</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-5">@EPMS.Web.Resources.CP.Profile.SocialMedia</a></li>
+                <li class="active"><a data-toggle="tab" href="#tab-1">@EPMS.WebModels.Resources.CP.Profile.CompanyInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-2">@EPMS.WebModels.Resources.CP.Profile.CompanyDocuments</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-3">@EPMS.WebModels.Resources.CP.Profile.LicenseInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-4">@EPMS.WebModels.Resources.CP.Profile.BankInformation</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-5">@EPMS.WebModels.Resources.CP.Profile.SocialMedia</a></li>
             </ul>
             <div class="tab-content">
                 <!--Company Information-->
@@ -72,7 +72,7 @@
                         <!--Input Field begin-->
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Name</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Name</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -82,7 +82,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.NameAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.NameAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -92,7 +92,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Website</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Website</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -102,7 +102,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Mail</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Mail</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -112,7 +112,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Address</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Address</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -122,7 +122,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AddressAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.AddressAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -132,7 +132,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Location</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Location</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -142,7 +142,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Number</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Number</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -152,7 +152,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Mobile</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Mobile</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -162,7 +162,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button id="savebtn" class="btn" type="submit" onclick="SetTabId(1)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                                <button id="savebtn" class="btn" type="submit" onclick="SetTabId(1)">@EPMS.WebModels.Resources.CP.Profile.SaveButton</button>
                             </div>
 
                         </div>
@@ -178,7 +178,7 @@
 
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.CommercialRegister</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.CommercialRegister</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -189,7 +189,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -204,7 +204,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -219,7 +219,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.InsuranceCertificate</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.InsuranceCertificate</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -230,7 +230,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -245,7 +245,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -262,7 +262,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.ChamberCertificate</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.ChamberCertificate</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -273,7 +273,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -288,7 +288,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -303,7 +303,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IncomeCertificate</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.IncomeCertificate</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -314,7 +314,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -329,7 +329,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -344,7 +344,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.SaudilizationCertificate</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.SaudilizationCertificate</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -355,7 +355,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.IssueDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -370,7 +370,7 @@
                         <div id="Date_Picker" class="control-group row-fluid">
                             <div class="span3">
                                 <label class="control-label">
-                                    @EPMS.Web.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                                    @EPMS.WebModels.Resources.CP.Profile.ExpiryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                                 </label>
                             </div>
                             <div class="span9">
@@ -385,7 +385,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2,event)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(2,event)">@EPMS.WebModels.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
                     }
@@ -395,7 +395,7 @@
                 <div id="tab-3" class="tab-pane fade">
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="pnumber">@EPMS.Web.Resources.CP.Profile.ProductNo</label>
+                            <label class="control-label" for="pnumber">@EPMS.WebModels.Resources.CP.Profile.ProductNo</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -405,7 +405,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="unumber">@EPMS.Web.Resources.CP.Profile.NoOfUsers</label>
+                            <label class="control-label" for="unumber">@EPMS.WebModels.Resources.CP.Profile.NoOfUsers</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -415,7 +415,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="lnumber">@EPMS.Web.Resources.CP.Profile.LicenseNo</label>
+                            <label class="control-label" for="lnumber">@EPMS.WebModels.Resources.CP.Profile.LicenseNo</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -426,7 +426,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="snumberl">@EPMS.Web.Resources.CP.Profile.StartDate</label>
+                            <label class="control-label" for="snumberl">@EPMS.WebModels.Resources.CP.Profile.StartDate</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -438,7 +438,7 @@
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="enumberl">@EPMS.Web.Resources.CP.Profile.ExpiryDate</label>
+                            <label class="control-label" for="enumberl">@EPMS.WebModels.Resources.CP.Profile.ExpiryDate</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -450,7 +450,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="help">@EPMS.Web.Resources.CP.Profile.HelpUrl</label>
+                            <label class="control-label" for="help">@EPMS.WebModels.Resources.CP.Profile.HelpUrl</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -475,7 +475,7 @@
                         @Html.HiddenFor(m => m.BankMobileNo, new { @class = "BankMobileNo" })
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankName</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -485,7 +485,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankNameAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -495,7 +495,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.AccountNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -505,7 +505,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.IbanNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -515,7 +515,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankMobileNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -525,12 +525,12 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn" onclick="SetDetail(1)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(1)">@EPMS.WebModels.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankName</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -540,7 +540,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankNameAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -550,7 +550,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.AccountNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -560,7 +560,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.IbanNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -570,7 +570,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankMobileNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -580,12 +580,12 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn" onclick="SetDetail(2)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(2)">@EPMS.WebModels.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankName</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -595,7 +595,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankNameAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -605,7 +605,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.AccountNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -615,7 +615,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.IbanNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -625,7 +625,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankMobileNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -635,12 +635,12 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn" onclick="SetDetail(3)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(3)">@EPMS.WebModels.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankName</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankName</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -650,7 +650,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankNameAr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankNameAr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -660,7 +660,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.AccountNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.AccountNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -670,7 +670,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.IbanNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.IbanNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -680,7 +680,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.BankMobileNo</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.BankMobileNo</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -690,7 +690,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button type="button" class="btn" onclick="SetDetail(4)">@EPMS.Web.Resources.CP.Profile.SendButton</button>
+                                <button type="button" class="btn" onclick="SetDetail(4)">@EPMS.WebModels.Resources.CP.Profile.SendButton</button>
                             </div>
                         </div>
                         <div class="control-group row-fluid">
@@ -710,7 +710,7 @@
                         @Html.HiddenFor(m => m.TabId, new { @class = "TabId" })
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Twitter</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Twitter</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -720,7 +720,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -730,7 +730,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -741,7 +741,7 @@
 
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Facebook</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Facebook</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -751,7 +751,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -761,7 +761,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -771,7 +771,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Youtube</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Youtube</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -782,7 +782,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -792,7 +792,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -802,7 +802,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.LinkedIn</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.LinkedIn</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -813,7 +813,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -823,7 +823,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -833,7 +833,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.GooglePlus</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.GooglePlus</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -843,7 +843,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -853,7 +853,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -863,7 +863,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Instagram</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Instagram</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -873,7 +873,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -883,7 +883,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -893,7 +893,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Tumblr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Tumblr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -904,7 +904,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -914,7 +914,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -924,7 +924,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Flickr</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Flickr</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -934,7 +934,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -944,7 +944,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -954,7 +954,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Pinterest</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Pinterest</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -964,7 +964,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -974,7 +974,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -984,7 +984,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Social1</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Social1</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -995,7 +995,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -1005,7 +1005,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -1015,7 +1015,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Social2</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Social2</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -1025,7 +1025,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Username</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Username</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -1035,7 +1035,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3">
-                                <label class="control-label">@EPMS.Web.Resources.CP.Profile.Password</label>
+                                <label class="control-label">@EPMS.WebModels.Resources.CP.Profile.Password</label>
                             </div>
                             <div class="span9">
                                 <div class="controls">
@@ -1045,7 +1045,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(5)">@EPMS.Web.Resources.CP.Profile.SaveButton</button>
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick="SetTabId(5)">@EPMS.WebModels.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
                     }
@@ -1170,7 +1170,7 @@
             maxsize: 1, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',

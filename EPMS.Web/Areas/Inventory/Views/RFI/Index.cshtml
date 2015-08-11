@@ -1,9 +1,9 @@
 ﻿@using EPMS.Models.Common
-@model  EPMS.Web.ViewModels.RFI.RfiListViewModel
+@model  EPMS.WebModels.ViewModels.RFI.RfiListViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.RFI.RFI.ListPageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.RFI.RFI.ListPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 
@@ -16,7 +16,7 @@
         </li>
         <li class="current">
             <a href="~/Inventory/RFI/Index">
-                @EPMS.Web.Resources.RFI.RFI.ListPageBreadCrumb
+                @EPMS.WebModels.Resources.RFI.RFI.ListPageBreadCrumb
             </a>
         </li>
     </ul>
@@ -24,10 +24,10 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.RFI.RFI.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.RFI.RFI.ListPageHeading</small></h2>
 @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee)
 {
-    <h3><small><a href="~/Inventory/RFI/Create">@EPMS.Web.Resources.RFI.RFI.CreateRFILink</a></small></h3>
+    <h3><small><a href="~/Inventory/RFI/Create">@EPMS.WebModels.Resources.RFI.RFI.CreateRFILink</a></small></h3>
 }
     
 </header>
@@ -47,22 +47,22 @@
                         {
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.RfiNo</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Requester</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Date</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Status</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.RfiNo</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Requester</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Date</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Status</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.RfiNo</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Customer</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Date</th>
-                                <th>@EPMS.Web.Resources.RFI.RFI.Status</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.RfiNo</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Customer</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Date</th>
+                                <th>@EPMS.WebModels.Resources.RFI.RFI.Status</th>
                             </tr>
                         }
                     </thead>
@@ -127,12 +127,12 @@
                         "mRender": function (data, type, full) {
                             var value = "";
                             if (full["Status"] == 6) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             else if (full["Status"] == 2) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             return value;
                         },
@@ -206,12 +206,12 @@
                         "mRender": function (data, type, full) {
                             var value = "";
                             if (full["Status"] == 6) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Pending';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                             } else if (full["Status"] == 3) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Rejected';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Rejected';
                             }
                             else if (full["Status"] == 2) {
-                                value = '@EPMS.Web.Resources.CMS.Order.Accepted';
+                                value = '@EPMS.WebModels.Resources.CMS.Order.Accepted';
                             }
                             return value;
                         },

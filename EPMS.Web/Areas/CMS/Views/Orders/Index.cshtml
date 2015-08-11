@@ -1,9 +1,9 @@
-﻿@model EPMS.Web.ViewModels.Orders.OrdersListViewModel
+﻿@model EPMS.WebModels.ViewModels.Orders.OrdersListViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Order.PTIndex;
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Order.PTIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var userRole = (string)Session["RoleName"];
 }
 
@@ -26,7 +26,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userRole == "Customer")
     {
-        <h3><small><a href="~/CMS/Orders/Create">@EPMS.Web.Resources.CMS.Order.CreateNew</a></small></h3>
+        <h3><small><a href="~/CMS/Orders/Create">@EPMS.WebModels.Resources.CMS.Order.CreateNew</a></small></h3>
     }
 </header>
 <!--Notifications begin-->
@@ -43,13 +43,13 @@
                 <table class="table table-striped table-responsive" id="OrdersListTable">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.OrderNo</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.ClientName</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.Quotation</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.Invoice</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.Reciept</th>
-                            <th>@EPMS.Web.Resources.CMS.Order.Status</th>
+                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.OrderNo</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.ClientName</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.Quotation</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.Invoice</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.Reciept</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Order.Status</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -145,17 +145,17 @@
                     "mRender": function (data, type, full) {
                         var value = "";
                         if (full["OrderStatus"] == 1) {
-                            value = '@EPMS.Web.Resources.CMS.Order.OnGoing';
+                            value = '@EPMS.WebModels.Resources.CMS.Order.OnGoing';
                         } else if (full["OrderStatus"] == 2) {
-                            value = '@EPMS.Web.Resources.CMS.Order.Pending';
+                            value = '@EPMS.WebModels.Resources.CMS.Order.Pending';
                         } else if (full["OrderStatus"] == 3) {
-                            value = '@EPMS.Web.Resources.CMS.Order.Canceled';
+                            value = '@EPMS.WebModels.Resources.CMS.Order.Canceled';
                         }
                         else if (full["OrderStatus"] == 4) {
-                            value = '@EPMS.Web.Resources.CMS.Order.Finished';
+                            value = '@EPMS.WebModels.Resources.CMS.Order.Finished';
                         }
                         else if (full["OrderStatus"] == 5) {
-                            value = '@EPMS.Web.Resources.CMS.Order.Completed';
+                            value = '@EPMS.WebModels.Resources.CMS.Order.Completed';
                         }
                         return value;
                     }

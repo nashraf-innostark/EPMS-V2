@@ -1,10 +1,10 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.ContactUs.ContactUsViewModel
+@model EPMS.WebModels.ViewModels.ContactUs.ContactUsViewModel
 @{
-    ViewBag.Title = Model.ContactUs.ContactUsId > 0 ? EPMS.Web.Resources.Website.ContactUs.ContatUs.UpdatePageTitle : EPMS.Web.Resources.Website.ContactUs.ContatUs.AddPageTitle;
+    ViewBag.Title = Model.ContactUs.ContactUsId > 0 ? EPMS.WebModels.Resources.Website.ContactUs.ContatUs.UpdatePageTitle : EPMS.WebModels.Resources.Website.ContactUs.ContatUs.AddPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -16,7 +16,7 @@
         </li>
         <li>
             <a href="~/Website/Home/Index">
-                @EPMS.Web.Resources.Website.ContactUs.ContatUs.MainPage
+                @EPMS.WebModels.Resources.Website.ContactUs.ContatUs.MainPage
             </a>
         </li>
         <li class="current">
@@ -48,7 +48,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Title</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Title</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -60,7 +60,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.TitleAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.TitleAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -72,7 +72,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Addres</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Addres</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -84,7 +84,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.AddressAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.AddressAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -96,7 +96,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Mobile</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Mobile</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -107,7 +107,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Phone</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Phone</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -119,7 +119,7 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.POBox</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.POBox</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -130,7 +130,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Website</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Website</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -141,24 +141,24 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.GoogleMap</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.GoogleMap</label>
             </div>
             <div class="span4">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ContactUs.Latitude, new { @dir = "ltr", id = "Latitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.Web.Resources.Website.ContactUs.ContatUs.Latitude })
+                    @Html.TextBoxFor(m => m.ContactUs.Latitude, new { @dir = "ltr", id = "Latitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Latitude })
                     @Html.ValidationMessageFor(m => m.ContactUs.Latitude, "", new { @class = "required" })
                 </div>
             </div>
             <div class="span4">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ContactUs.Longitude, new { @dir = "ltr", id = "Longitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.Web.Resources.Website.ContactUs.ContatUs.Longitude })
+                    @Html.TextBoxFor(m => m.ContactUs.Longitude, new { @dir = "ltr", id = "Longitude", @class = "tbdisable toBeRequired", @placeholder = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Longitude })
                     @Html.ValidationMessageFor(m => m.ContactUs.Longitude, "", new { @class = "required" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.FormEmail</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.FormEmail</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -169,7 +169,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.Content</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Content</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -181,7 +181,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.ContentAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.ContentAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -193,7 +193,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Website.ContactUs.ContatUs.ShowToPublic</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.ShowToPublic</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -205,11 +205,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="savebtn" class="btn">@EPMS.Web.Resources.Website.ContactUs.ContatUs.CreateButton</button>
-                    <button id="edit" class="btn">@EPMS.Web.Resources.Website.ContactUs.ContatUs.EditButton</button>
+                    <button id="savebtn" class="btn">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.CreateButton</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.EditButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Main/Index'" type="reset">@EPMS.Web.Resources.Website.ContactUs.ContatUs.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/Main/Index'" type="reset">@EPMS.WebModels.Resources.Website.ContactUs.ContatUs.CancelButton</button>
                 </div>
             </div>
         </div>

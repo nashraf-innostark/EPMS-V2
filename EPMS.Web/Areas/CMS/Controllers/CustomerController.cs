@@ -2,16 +2,14 @@
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
-using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Customer;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Customer;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 

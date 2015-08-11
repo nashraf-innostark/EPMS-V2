@@ -8,10 +8,10 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
+using EPMS.WebModels.ViewModels.NewsAndArticle;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Website.NewsAndArticles;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.NewsAndArticle;
+using EPMS.WebModels.ViewModels.Common;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
@@ -75,7 +75,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                         newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
                     if (newsAndArticleService.UpdateNewsAndArticle(newsAndArticleToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.Website.NewsAndArticles.NewsAndArticlesList.Updated, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.Updated, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -90,7 +90,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                         newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
                     if (newsAndArticleService.AddNewsAndArticle(newsAndArticleToAdd))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.Website.NewsAndArticles.NewsAndArticlesList.Added, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.Added, IsSaved = true };
                         return RedirectToAction("Index");
                     }
                 }

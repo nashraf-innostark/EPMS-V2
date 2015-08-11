@@ -1,11 +1,11 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.JobTitle.JobTitleViewModel
+@model EPMS.WebModels.ViewModels.JobTitle.JobTitleViewModel
 
 @{
-    ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.Web.Resources.HR.JobTitle.UpdatePageTitle : EPMS.Web.Resources.HR.JobTitle.CreatePageTitle;
+    ViewBag.Title = Model.JobTitle.JobTitleId > 0 ? EPMS.WebModels.Resources.HR.JobTitle.UpdatePageTitle : EPMS.WebModels.Resources.HR.JobTitle.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -16,7 +16,7 @@
         </li>
         <li>
             <a href="~/HR/Jobtitle/Index">
-                @EPMS.Web.Resources.HR.JobTitle.Label
+                @EPMS.WebModels.Resources.HR.JobTitle.Label
             </a>
         </li>
         <li class="current">
@@ -45,7 +45,7 @@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreateE</label>
+                <label class="control-label" for="JobTitleName">@EPMS.WebModels.Resources.HR.JobTitle.NameOnCreateE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -56,7 +56,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="JobTitleName">@EPMS.Web.Resources.HR.JobTitle.NameOnCreateA</label>
+                <label class="control-label" for="JobTitleName">@EPMS.WebModels.Resources.HR.JobTitle.NameOnCreateA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -67,19 +67,19 @@
         </div>
         <div class="control-group row-fluid jobTitleDDL">
             <div class="span3">
-                <label class="control-label" for="departmentId">@EPMS.Web.Resources.HR.JobTitle.DepartmentOnCreate</label>
+                <label class="control-label" for="departmentId">@EPMS.WebModels.Resources.HR.JobTitle.DepartmentOnCreate</label>
             </div>
             <div class="span2">
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameE"), EPMS.WebModels.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameA"), EPMS.Web.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
+                        @Html.DropDownListFor(x => x.JobTitle.DepartmentId, new SelectList(Model.DepartmentList, "DepartmentId", "DepartmentNameA"), EPMS.WebModels.Resources.HR.JobTitle.SelectDepartment, new { @class = "select2me", id = "departmentId" })
                     </div>
                 }
             </div>
@@ -90,7 +90,7 @@
         <div id="Descp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+                    <label class="control-label" for="JobTitleDesc">@EPMS.WebModels.Resources.HR.JobTitle.DescriptionOnCreateE</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -100,7 +100,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+                    <label class="control-label" for="JobTitleDesc">@EPMS.WebModels.Resources.HR.JobTitle.DescriptionOnCreateA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -112,7 +112,7 @@
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateE</label>
+                    <label class="control-label" for="JobTitleDesc">@EPMS.WebModels.Resources.HR.JobTitle.DescriptionOnCreateE</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -123,7 +123,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="JobTitleDesc">@EPMS.Web.Resources.HR.JobTitle.DescriptionOnCreateA</label>
+                    <label class="control-label" for="JobTitleDesc">@EPMS.WebModels.Resources.HR.JobTitle.DescriptionOnCreateA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -135,7 +135,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="BasicSalary">@EPMS.Web.Resources.HR.JobTitle.BasicSalaryOnCreate</label>
+                <label class="control-label" for="BasicSalary">@EPMS.WebModels.Resources.HR.JobTitle.BasicSalaryOnCreate</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -147,11 +147,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.HR.JobTitle.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit" onclick="validateJobTitle(event)">@EPMS.Web.Resources.HR.JobTitle.SaveButton</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.HR.JobTitle.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit" onclick="validateJobTitle(event)">@EPMS.WebModels.Resources.HR.JobTitle.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobTitle/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/HR/JobTitle/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>

@@ -13,7 +13,6 @@ using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
-using EPMS.Repository.Repositories;
 
 namespace EPMS.Implementation.Services
 {

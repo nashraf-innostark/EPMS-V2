@@ -1,24 +1,24 @@
 ﻿@model  EPMS.Models.ResponseModels.NotificationResponseModel.NotificationViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NewNotification;
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = EPMS.WebModels.Resources.Notification.Notification.NewNotification;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var pageheading = "";
     var breadcrumb = "";
     var submitBtn = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Model.NotificationResponse.NotificationId > 0)
     {
-        ViewBag.Title = EPMS.Web.Resources.Notification.Notification.Edit + " " + (direction == "ltr" ? " " + Model.NotificationResponse.TitleE : " " + Model.NotificationResponse.TitleA);
+        ViewBag.Title = EPMS.WebModels.Resources.Notification.Notification.Edit + " " + (direction == "ltr" ? " " + Model.NotificationResponse.TitleE : " " + Model.NotificationResponse.TitleA);
         pageheading = ViewBag.Title;
         breadcrumb = ViewBag.Title;
-        submitBtn = EPMS.Web.Resources.Notification.Notification.SaveChanges;
+        submitBtn = EPMS.WebModels.Resources.Notification.Notification.SaveChanges;
     }
     else
     {
-        ViewBag.Title = EPMS.Web.Resources.Notification.Notification.NewNotification;
+        ViewBag.Title = EPMS.WebModels.Resources.Notification.Notification.NewNotification;
         breadcrumb = ViewBag.Title;
-        pageheading = EPMS.Web.Resources.Notification.Notification.CreateNewNotification;
-        submitBtn = EPMS.Web.Resources.Notification.Notification.Create;
+        pageheading = EPMS.WebModels.Resources.Notification.Notification.CreateNewNotification;
+        submitBtn = EPMS.WebModels.Resources.Notification.Notification.Create;
     }
 }
 
@@ -32,7 +32,7 @@
         </li>
         <li>
             <a href="~/Notification/Index">
-                @EPMS.Web.Resources.Notification.Notification.NotificationList
+                @EPMS.WebModels.Resources.Notification.Notification.NotificationList
             </a>
         </li>
         <li class="current">
@@ -56,7 +56,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.NotificationNameE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -67,7 +67,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationNameA</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.NotificationNameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -80,17 +80,17 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.CategoryName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.CategoryName</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.NotificationResponse.CategoryId, new[]
                     {
-                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Notification.Notification.Documents },
-                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Notification.Notification.Employees },
-                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Notification.Notification.Meetings },
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Company },
-                        new SelectListItem { Value = "5" , Text = EPMS.Web.Resources.Notification.Notification.Other }
+                        new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.Notification.Notification.Documents },
+                        new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.Notification.Notification.Employees },
+                        new SelectListItem { Value = "4" , Text = EPMS.WebModels.Resources.Notification.Notification.Meetings },
+                        new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.Notification.Notification.Company },
+                        new SelectListItem { Value = "5" , Text = EPMS.WebModels.Resources.Notification.Notification.Other }
                     }, new { @id = "NotificationCategory", @class = "select2me" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.CategoryId, "", new { @class = "required" })
                 </div>
@@ -99,15 +99,15 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.AlertTime</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.AlertTime</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.NotificationResponse.AlertBefore, new[]
                     {
-                        new SelectListItem { Value = "30" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneMonth },
-                        new SelectListItem { Value = "7" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneWeek },
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.BeforeOneDay }
+                        new SelectListItem { Value = "30" , Text = EPMS.WebModels.Resources.Notification.Notification.BeforeOneMonth },
+                        new SelectListItem { Value = "7" , Text = EPMS.WebModels.Resources.Notification.Notification.BeforeOneWeek },
+                        new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.Notification.Notification.BeforeOneDay }
                     }, new { @id = "NotificationAlertBefore", @class = "select2me" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.AlertBefore, "", new { @class = "required" })
                 </div>
@@ -115,14 +115,14 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.NotificationType</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.NotificationType</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.NotificationResponse.AlertDateType, new[]
                     {
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Notification.Notification.Gregorian },
-                        new SelectListItem { Value = "0" , Text = EPMS.Web.Resources.Notification.Notification.Hijri }
+                        new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.Notification.Notification.Gregorian },
+                        new SelectListItem { Value = "0" , Text = EPMS.WebModels.Resources.Notification.Notification.Hijri }
                     }, new { @id = "dateTypeDDl", @class = "select2me", onchange = "AlertDateType('#dateTypeDDl');" })
                     @Html.ValidationMessageFor(m => m.NotificationResponse.AlertDateType, "", new { @class = "required" })
                 </div>
@@ -131,7 +131,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">
-                    @EPMS.Web.Resources.Notification.Notification.AlertEndDate
+                    @EPMS.WebModels.Resources.Notification.Notification.AlertEndDate
                     <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
@@ -144,7 +144,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.EmployeeName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.EmployeeName</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -156,7 +156,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.MobileNumber</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.MobileNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -169,7 +169,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Email</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -183,7 +183,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Notification.Notification.Notified</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Notification.Notification.Notified</label>
                 </div>
                 <div class="span9 span-inset">
                     <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">

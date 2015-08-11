@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.PhysicalCount.PhysicalCountViewModel
+﻿@model EPMS.WebModels.ViewModels.PhysicalCount.PhysicalCountViewModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle;
-    string direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.CreatePageTitle;
+    string direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -14,18 +14,18 @@
         </li>
         <li>
             <a href="~/Inventory/PhysicalCount/Index">
-                @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageListBreadcrumbs
+                @EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.CreatePageListBreadcrumbs
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</a>
+            <a href="javascript:;">@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</a>
         </li>
     </ul>
 </div>
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.CreatePageTitle</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -38,7 +38,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                @EPMS.Web.Resources.Inventory.PC.PhysicalCount.CreatePageHeading
+                @EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.CreatePageHeading
             </div>
 
             <div class="invoice-info">
@@ -51,15 +51,15 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.EmployeeName:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.EmployeeName:</th>
                                         <td>@Model.PhysicalCount.RequesterName</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.EmployeeId:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.EmployeeId:</th>
                                         <td>@Model.PhysicalCount.RequesterEmpId</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.PCNo:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.PCNo:</th>
                                         <td>@Model.PhysicalCount.PCId</td>
                                     </tr>
                                 </tbody>
@@ -74,12 +74,12 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Date:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Date:</th>
                                         <td>@Model.PhysicalCount.RecCreatedDate.ToShortDateString()</td>
                                     </tr>
 
                                     <tr>
-                                        <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Warhouse:</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Warhouse:</th>
                                         <td>
                                             <div class="control-group row-fluid">
                                                 <div class="span11">
@@ -108,15 +108,15 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Serial</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemBarcode</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemDetails</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemsInPackage</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.NumberOfPackages</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsInPackages</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.ItemsInWharewhouse</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.TotalItemsCount</th>
-                            <th>@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.ItemBarcode</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.ItemDetails</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.ItemsInPackage</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.NumberOfPackages</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.TotalItemsInPackages</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.ItemsInWharewhouse</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.TotalItemsCount</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="PCItemsTableBody">
@@ -225,7 +225,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder disableBtn">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Add</button>
+                    <button type="button" class="btn trAdder disableBtn">@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Add</button>
                 </div>
 
             </div>
@@ -234,7 +234,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.Notes</label>
+                <label class="control-label" for="ExtraInformation">@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Notes</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -246,7 +246,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="ExtraInformation">@EPMS.Web.Resources.Inventory.PC.PhysicalCount.NotesAr</label>
+                <label class="control-label" for="ExtraInformation">@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.NotesAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -257,7 +257,7 @@
         <!--Input Field end-->
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn disableBtn" onclick="validateForm(event)">@EPMS.Web.Resources.RFI.RFI.Submit</button>
+                <button type="submit" class="btn disableBtn" onclick="validateForm(event)">@EPMS.WebModels.Resources.RFI.RFI.Submit</button>
             </div>
         </div>
     </div>

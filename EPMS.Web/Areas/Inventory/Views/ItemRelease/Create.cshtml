@@ -1,15 +1,15 @@
-﻿@model EPMS.Web.ViewModels.IRF.ItemReleaseCreateViewModel
+﻿@model EPMS.WebModels.ViewModels.IRF.ItemReleaseCreateViewModel
 
 @{
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     if (Model.ItemRelease.ItemReleaseId > 0)
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitleEdit;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitleEdit;
     }
     else
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.PageTitle;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -24,7 +24,7 @@
         </li>
         <li>
             <a href="~/Inventory/ItemRelease/Index">
-                @EPMS.Web.Resources.Inventory.IRF.Index.IRFIndex.Header
+                @EPMS.WebModels.Resources.Inventory.IRF.Index.IRFIndex.Header
             </a>
         </li>
         <li class="current">
@@ -39,11 +39,11 @@
     <i class="icon-big-notepad"></i>
     @if (Model.ItemRelease.ItemReleaseId > 0)
     {
-        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.HeaderEdit</small></h2>
+        <h2><small>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.HeaderEdit</small></h2>
     }
     else
     {
-        <h2><small>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Header</small></h2>
+        <h2><small>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Header</small></h2>
     }
 </header>
 <!--Notifications begin-->
@@ -62,7 +62,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="FormNumber">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemReleaseFormNumber</label>
+                <label class="control-label" for="FormNumber">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemReleaseFormNumber</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -72,7 +72,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="Requester">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Requester</label>
+                <label class="control-label" for="Requester">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Requester</label>
             </div>
             <div class="span2">
                 <div class="controls requesterDDL">
@@ -90,7 +90,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="RfiId">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RFI</label>
+                <label class="control-label" for="RfiId">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.RFI</label>
             </div>
             <div class="span2">
                 <div class="controls rfiDDL">
@@ -109,7 +109,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="OrderNumber">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Order</label>
+                <label class="control-label" for="OrderNumber">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Order</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -119,7 +119,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="CreatedBy">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.CreatedBy</label>
+                <label class="control-label" for="CreatedBy">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -130,7 +130,7 @@
         <div id="detailEditor">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfo">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
+                    <label class="control-label" for="DeliveryInfo">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -140,7 +140,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfoArabic">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
+                    <label class="control-label" for="DeliveryInfoArabic">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -152,7 +152,7 @@
         <div id="CKEditor" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfo">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
+                    <label class="control-label" for="DeliveryInfo">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfo</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -162,7 +162,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DeliveryInfoAr">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
+                    <label class="control-label" for="DeliveryInfoAr">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.DeliveryInfoArabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -177,11 +177,11 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Serial</th>
-                            <th style="width:50%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
-                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
-                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
-                            <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Serial</th>
+                            <th style="width:50%">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
+                            <th style="width:4%">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
                     <tbody id="ItemReleaseDetailsTableBody" class="qouteAdd">
@@ -279,18 +279,18 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Add</button>
+                    <button type="button" class="btn trAdder btnDisable">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Add</button>
                 </div>
             </div>
         </div>
         <div id="EditRecord" class="control-group row-fluid" style="display: none">
             <div class="span3 span-inset">
-                <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Edit</button>
+                <button id="edit" type="button" class="btn">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Edit</button>
             </div>
         </div>
         <div id="SubmitRecord" class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Submit</button>
+                <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Submit</button>
             </div>
         </div>
     </div>
@@ -307,7 +307,7 @@
     var siteUrl;
     var orderNo = [];
     var dir = '@direction';
-    var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
+    var errorMessage = '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField';
     var textTillParent = "";
     var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
     var parsedWarehouses = JSON.parse(itemWarehouses);

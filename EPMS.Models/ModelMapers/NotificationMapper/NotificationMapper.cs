@@ -168,7 +168,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                 case 5: notificationListResponse.CategoryName = Resources.Notification.Other; break;
                 case 6: notificationListResponse.CategoryName = Resources.Notification.JobApplication; break;
                 case 7: notificationListResponse.CategoryName = Resources.Notification.Inventory; break;
-                
+
                 default: notificationListResponse.CategoryName = Resources.Notification.Other; break;
             }
             switch (notification.AlertBefore)
@@ -216,7 +216,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                     notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;
                 }
                 if (notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId)!=null)
-                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault(x=>x.UserId==userId||x.EmployeeId==employeeId).IsRead ? Resources.Notification.Yes : Resources.Notification.No;
+                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId).IsRead ? Resources.Notification.Yes : Resources.Notification.No;
                 else
                     notificationListResponse.Notified = Resources.Notification.No;
             }

@@ -25,35 +25,35 @@
                         @Html.HiddenFor(model => model.CustomerId)
                         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                         <div>
-                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.UserName, @id = "Username" })
+                            @Html.TextBoxFor(model => model.UserName, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.UserName, @id = "Username" })
                             @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.TextBoxFor(model => model.CustomerNameE, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.NameEn })
+                            @Html.TextBoxFor(model => model.CustomerNameE, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.NameEn })
                             @Html.ValidationMessageFor(model => model.CustomerNameE, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.TextBoxFor(model => model.CustomerNameA, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.NameAr })
+                            @Html.TextBoxFor(model => model.CustomerNameA, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.NameAr })
                             @Html.ValidationMessageFor(model => model.CustomerNameA, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.Password })
+                            @Html.PasswordFor(model => model.Password, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.Password })
                             @Html.ValidationMessageFor(model => model.Password, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.ConfirmPassword })
+                            @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.ConfirmPassword })
                             @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.Email })
+                            @Html.TextBoxFor(model => model.Email, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.Email })
                             @Html.ValidationMessageFor(model => model.Email, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.CustomerMobile })
+                            @Html.TextBoxFor(model => model.MobileNumber, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.CustomerMobile })
                             @Html.ValidationMessageFor(model => model.MobileNumber, "", new { @class = "required" })
                         </div>
                         <div>
-                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control ", @placeholder = @EPMS.Web.Resources.CMS.Customer.CustomerAddress })
+                            @Html.TextBoxFor(model => model.Address, new { @class = "form-control ", @placeholder = @EPMS.WebModels.Resources.CMS.Customer.CustomerAddress })
                             @Html.ValidationMessageFor(model => model.Address, "", new { @class = "required" })
                         </div>
                         

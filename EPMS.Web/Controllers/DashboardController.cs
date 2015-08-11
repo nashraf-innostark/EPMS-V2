@@ -6,25 +6,27 @@ using System.Security.Claims;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
+using EPMS.Models.DashboardModels;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
-using EPMS.Web.DashboardModels;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.Inventory.DIF;
-using EPMS.Web.ModelMappers.Inventory.RFI;
-using EPMS.Web.ModelMappers.Inventory.RIF;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Dashboard;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Inventory.DIF;
+using EPMS.WebModels.ModelMappers.Inventory.RFI;
+using EPMS.WebModels.ModelMappers.Inventory.RIF;
+using EPMS.WebModels.ViewModels.Dashboard;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
-using Complaint = EPMS.Web.DashboardModels.Complaint;
-using Customer = EPMS.Web.DashboardModels.Customer;
-using Department = EPMS.Web.DashboardModels.Department;
-using Employee = EPMS.Web.DashboardModels.Employee;
-using Meeting = EPMS.Web.DashboardModels.Meeting;
-using Order = EPMS.Web.DashboardModels.Order;
-using Payroll = EPMS.Web.DashboardModels.Payroll;
-using EmployeeRequest = EPMS.Web.DashboardModels.EmployeeRequest;
+using Complaint = EPMS.Models.DashboardModels.Complaint;
+using Customer = EPMS.Models.DashboardModels.Customer;
+using DashboardWidgetPreference = EPMS.WebModels.WebsiteModels.DashboardWidgetPreference;
+using Department = EPMS.Models.DashboardModels.Department;
+using Employee = EPMS.Models.DashboardModels.Employee;
+using Meeting = EPMS.Models.DashboardModels.Meeting;
+using Order = EPMS.Models.DashboardModels.Order;
+using Payroll = EPMS.Models.DashboardModels.Payroll;
+using EmployeeRequest = EPMS.Models.DashboardModels.EmployeeRequest;
+using Project = EPMS.Models.DashboardModels.Project;
 
 namespace EPMS.Web.Controllers
 {
@@ -338,7 +340,7 @@ namespace EPMS.Web.Controllers
 
             ViewBag.UserName = Session["FullName"].ToString();
             ViewBag.UserRole = Session["RoleName"].ToString();
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             ViewBag.ReorderTitle = direction == "ltr" ? "Drag & Drop" : "سحب و افلات";
             ViewBag.ReorderBody = direction == "ltr" ? "Reorder Widgets or Quicklaunch bar items by dragging & dropping them." : ".إعادة ترتيب القطع أو عناصر شريط عن طريق سحب و إفلاتها";
             dashboardViewModel.Employees = GetAllEmployees();
@@ -462,13 +464,13 @@ namespace EPMS.Web.Controllers
             return Enumerable.Empty<ProjectTaskResponse>();
         }
 
-        private IEnumerable<DashboardModels.Project> GetProjectsDDL(string requester, int status)
+        private IEnumerable<Project> GetProjectsDDL(string requester, int status)
         {
             return projectService.LoadAllProjects(requester, status).Select(x => x.CreateForDashboardDDL());
         }
-        private IEnumerable<DashboardModels.Project> GetTaskProjectsDDL()
+        private IEnumerable<Project> GetTaskProjectsDDL()
         {
-            IEnumerable<DashboardModels.Project> list = Enumerable.Empty<DashboardModels.Project>();
+            IEnumerable<Project> list = Enumerable.Empty<Project>();
             if (Session["EmployeeID"] != null)
             {
                 var projectsDdl =
@@ -513,7 +515,7 @@ namespace EPMS.Web.Controllers
         /// <summary>
         /// Loads All Quick Launch Items
         /// </summary>
-        private IEnumerable<Models.QuickLaunchMenuItems> LoadQuickLaunchMenuItems()
+        private IEnumerable<QuickLaunchMenuItems> LoadQuickLaunchMenuItems()
         {
             string userName = HttpContext.User.Identity.Name;
             if (!String.IsNullOrEmpty(userName))
@@ -542,7 +544,7 @@ namespace EPMS.Web.Controllers
                     }
                 }
             }
-            return Enumerable.Empty<Models.QuickLaunchMenuItems>();
+            return Enumerable.Empty<QuickLaunchMenuItems>();
 
         }
         public IEnumerable<QuickLaunchUserItems> LoadQuickLaunchUserItems()
@@ -600,7 +602,7 @@ namespace EPMS.Web.Controllers
                 int i = 1;
                 foreach (var pref in userPreferences)
                 {
-                    Models.DashboardWidgetPreference preference = new Models.DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
+                    DashboardWidgetPreference preference = new DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
                     var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
                     if (PreferencesService.AddPreferences(preferenceToUpdate))
                     {

@@ -2,13 +2,13 @@
 @using System.Web.UI.WebControls
 @using iTextSharp.text.pdf.qrcode
 @using EPMS.Models.Common
-@model EPMS.Web.ViewModels.Dashboard.DashboardViewModel
+@model EPMS.WebModels.ViewModels.Dashboard.DashboardViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Dashboard.Dashboard.DashboardTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Dashboard.Dashboard.DashboardTitle;
     Layout = "~/Views/Shared/_DashboardLayout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     object userPermissionSet = HttpContext.Current.Session["UserPermissionSet"];
     string[] userPermissionsSet = (string[])userPermissionSet;
     if (userPermissionsSet.Contains("ComplaintCreate"))
@@ -21,13 +21,13 @@
     <div class="row-fluid">
         <div class="span12">
             <h1>
-                @EPMS.Web.Resources.Dashboard.Dashboard.DashboardTitle
+                @EPMS.WebModels.Resources.Dashboard.Dashboard.DashboardTitle
             </h1>
             <div class="btn-group">
                 <button type="button" class="btn btn-gear dropdown-toggle" data-toggle="dropdown"></button>
                 <ul class="dropdown-menu">
-                    <li><a href="~/Culture/Set/EN">  <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN</a></li>
-                    <li><a href="~/Culture/Set/AR">  <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR</a></li>
+                    <li><a href="~/Culture/Set/EN">  <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.WebModels.Resources.Shared.Common.EN</a></li>
+                    <li><a href="~/Culture/Set/AR">  <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.WebModels.Resources.Shared.Common.AR</a></li>
 
                 </ul>
             </div>
@@ -35,8 +35,8 @@
     </div>
 </div>
 <input type="hidden" id="userRole" value="@ViewBag.UserRole" />
-<input type="hidden" id="makeComplaint" value="@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint" />
-<input type="hidden" id="makeMeeting" value="@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting" />
+<input type="hidden" id="makeComplaint" value="@EPMS.WebModels.Resources.Dashboard.Dashboard.MakeComplaint" />
+<input type="hidden" id="makeMeeting" value="@EPMS.WebModels.Resources.Dashboard.Dashboard.AddMeeting" />
 
 
 <!-- dashboard-quick-launch box -->
@@ -85,7 +85,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/HR/Request/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.EmployeeRequests</a>
+                                            <a href="~/HR/Request/Index" class="lightOrange">@EPMS.WebModels.Resources.Dashboard.Dashboard.EmployeeRequests</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadEmployeeRequests(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 @if (ViewBag.UserRole == "Admin")
@@ -140,13 +140,13 @@
                                                 <div class="container-fluid widget-settings">
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                            <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
                                                         </div>
                                                     </div>
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
                                                             <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -157,13 +157,13 @@
                                                 <div class="container-fluid widget-settings">
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
+                                                            <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByEmployee:</label>
                                                         </div>
                                                     </div>
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
                                                             <div class="controls">
-                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
+                                                                @Html.DropDownListFor(x => x.employeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeId" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -185,7 +185,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/CMS/Orders/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Orders</a>
+                                            <a href="~/CMS/Orders/Index" class="darkGreen">@EPMS.WebModels.Resources.Dashboard.Dashboard.Orders</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadOrders(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -236,13 +236,13 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
+                                                            @Html.DropDownListFor(x => x.customerIdForOrder, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "customerIdForOrder" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -252,7 +252,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -286,7 +286,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.Web.Resources.Dashboard.Dashboard.Complaints</a>
+                                            <a href="~/CMS/Complaint/Index" class="darkGreen">@EPMS.WebModels.Resources.Dashboard.Dashboard.Complaints</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadComplaints(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 @if (ViewBag.UserRole != "Customer")
@@ -332,7 +332,7 @@
                                             @if (ViewBag.UserRole == "Customer")
                                             {
                                                 <li>
-                                                    <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.MakeComplaint</a>
+                                                    <a href="~/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">@EPMS.WebModels.Resources.Dashboard.Dashboard.MakeComplaint</a>
                                                 </li>
                                             }
 
@@ -348,13 +348,13 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.customerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "customerId" })
+                                                            @Html.DropDownListFor(x => x.customerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "customerId" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -375,7 +375,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/HR/JobOffered/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Recruitment</a>
+                                            <a href="~/HR/JobOffered/Index" class="lightOrange">@EPMS.WebModels.Resources.Dashboard.Dashboard.Recruitment</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick="LoadRecruitments(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <i class="icon-photon hash opc1"></i>
@@ -422,7 +422,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Meeting/Meeting/Index" class="lightYellow">@EPMS.Web.Resources.Dashboard.Dashboard.Meeting</a>
+                                            <a href="~/Meeting/Meeting/Index" class="lightYellow">@EPMS.WebModels.Resources.Dashboard.Dashboard.Meeting</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick="LoadMeetings(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <i class="icon-photon calendar_alt_stroke opc1"></i>
@@ -455,7 +455,7 @@
                                             @if (ViewBag.UserRole == "Admin")
                                             {
                                                 <li>
-                                                    <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.Web.Resources.Dashboard.Dashboard.AddMeeting</a>
+                                                    <a href="~/Meeting/Meeting/Create" class="btn" style="margin-left: 32%; color: black">@EPMS.WebModels.Resources.Dashboard.Dashboard.AddMeeting</a>
                                                 </li>
                                             }
                                         </ul>
@@ -474,7 +474,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front profile">
                                         <div class="widget-head ">
-                                            <a href="~/HR/Employee/Create/@Session["EmployeeID"]" class="lightPurpule">@EPMS.Web.Resources.Dashboard.Dashboard.MyProfile</a>
+                                            <a href="~/HR/Employee/Create/@Session["EmployeeID"]" class="lightPurpule">@EPMS.WebModels.Resources.Dashboard.Dashboard.MyProfile</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadMyProfile(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <i class="icon-photon folder_stroke opc1"></i>
@@ -537,7 +537,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/HR/Payroll/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Payroll</a>
+                                            <a href="~/HR/Payroll/Index" class="lightOrange">@EPMS.WebModels.Resources.Dashboard.Dashboard.Payroll</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick="LoadPayroll(this);"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <a href="javascript:;" onclick="flipit(this)"><i class='icon-photon cog' title="configure"></i></a>
@@ -546,25 +546,25 @@
                                         </div>
                                         <ul id="mypayroll">
                                             <li id="basicSal">
-                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.BasicSalary</span>
+                                                <span>@EPMS.WebModels.Resources.Dashboard.Dashboard.BasicSalary</span>
                                                 <div>
                                                     @Model.Payroll.BasicSalary
                                                 </div>
                                             </li>
                                             <li id="totalAllownces">
-                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Allowances</span>
+                                                <span>@EPMS.WebModels.Resources.Dashboard.Dashboard.Allowances</span>
                                                 <div>
                                                     @Model.Payroll.Allowances
                                                 </div>
                                             </li>
                                             <li id="totalDeductions">
-                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Deductions</span>
+                                                <span>@EPMS.WebModels.Resources.Dashboard.Dashboard.Deductions</span>
                                                 <div>
                                                     @Model.Payroll.Deductions
                                                 </div>
                                             </li>
                                             <li id="totalSal">
-                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.Total</span>
+                                                <span>@EPMS.WebModels.Resources.Dashboard.Dashboard.Total</span>
                                                 <div>
                                                     @Model.Payroll.Total
                                                 </div>
@@ -579,15 +579,15 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterbyMonth:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterbyMonth:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
                                                             <select id="selectedmonth">
-                                                                <option selected="" value="1">@EPMS.Web.Resources.Dashboard.Dashboard.CurrentMonth</option>
-                                                                <option value="2">@EPMS.Web.Resources.Dashboard.Dashboard.PreviousMonth</option>
+                                                                <option selected="" value="1">@EPMS.WebModels.Resources.Dashboard.Dashboard.CurrentMonth</option>
+                                                                <option value="2">@EPMS.WebModels.Resources.Dashboard.Dashboard.PreviousMonth</option>
                                                             </select>
                                                         </div>
                                                     </div>
@@ -610,7 +610,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-latest-users widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.Web.Resources.Dashboard.Dashboard.Employees</a>
+                                            <a href="~/HR/Employee/Index" class="lightOrange">@EPMS.WebModels.Resources.Dashboard.Dashboard.Employees</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadRecentEmployees(this); "><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -656,13 +656,13 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDepartment:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
+                                                            @Html.DropDownListFor(x => x.departmentId, new SelectList(Model.Departments, "DepartmentId", "DepartmentNameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "departmentId" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -687,16 +687,16 @@
                                             {
                                                 if (direction == "ltr")
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort </a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue">@EPMS.WebModels.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue" style="width: 45%;">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA) </a>
+                                                    <a href="~/PMS/Project/Details/@Model.Project.Project.ProjectId" id="projectDetailId" class="lightBlue" style="width: 45%;">...@EPMS.WebModels.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA) </a>
                                                 }
                                             }
                                             else
                                             {
-                                                <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.Project</a>
+                                                <a href="~/PMS/Project/Index" id="projectDetailId" class="lightBlue">@EPMS.WebModels.Resources.Dashboard.Dashboard.Project</a>
                                             }
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick="LoadProjects(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
@@ -710,11 +710,11 @@
                                                 <li class="dashProject dashTask">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@EPMS.Web.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameE">@EPMS.WebModels.Resources.Dashboard.Dashboard.Project - @Model.Project.Project.NameEShort</a>
                                                     }
                                                     else
                                                     {
-                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
+                                                        <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">...@EPMS.WebModels.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
                                                     }
                                                 </li>
                                                 if (Model.Project.ProjectTasks != null)
@@ -743,11 +743,11 @@
                                                 <li class="processed-pct" style="">
                                                     @if (direction == "ltr")
                                                     {
-                                                        <span title="@Model.Project.Project.NameE" class="pText">@EPMS.Web.Resources.Dashboard.Dashboard.Project-@Model.Project.Project.NameEShort</span>
+                                                        <span title="@Model.Project.Project.NameE" class="pText">@EPMS.WebModels.Resources.Dashboard.Dashboard.Project-@Model.Project.Project.NameEShort</span>
                                                     }
                                                     else
                                                     {
-                                                        <span title="@Model.Project.Project.NameA" class="pText" style="display: block; width: 100%; direction: ltr">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</span>
+                                                        <span title="@Model.Project.Project.NameA" class="pText" style="display: block; width: 100%; direction: ltr">...@EPMS.WebModels.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</span>
                                                     }
                                                     <div class="progress progress-info" style="clear: both;">
                                                         <div class="bar" data-target="@Model.Project.Project.ProgressTotal" style="width: @Model.Project.Project.ProgressTotal;">@Model.Project.Project.ProgressTotal%</div>
@@ -770,7 +770,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByProjectProgress:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -789,7 +789,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByProjects:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -797,11 +797,11 @@
                                                         <div class="controls">
                                                             @if (direction == "ltr")
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
                                                             }
                                                             else
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.ProjectsDDL, "ProjectId", "NameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdFilter" })
                                                             }
                                                         </div>
                                                     </div>
@@ -822,7 +822,7 @@
                                 <div class="widget-flipper">
                                     <div class="widget-area task-completion widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.Web.Resources.Dashboard.Dashboard.MyTasks</a>
+                                            <a href="~/PMS/Task/MyTasks" class="lightBlue">@EPMS.WebModels.Resources.Dashboard.Dashboard.MyTasks</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick="LoadMyTasks(this)"><i class='icon-photon reload_alt' title="Refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -883,7 +883,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByProjects:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByProjects:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -891,11 +891,11 @@
                                                         <div class="controls">
                                                             @if (direction == "ltr")
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
                                                             }
                                                             else
                                                             {
-                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
+                                                                @Html.DropDownListFor(x => x.projectId, new SelectList(Model.TaskProjectsDDL, "ProjectId", "NameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "projectIdTaskFilter" })
                                                             }
                                                         </div>
                                                     </div>
@@ -920,7 +920,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/RFI/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RFI)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/RFI/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.RFI)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadRFIs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -953,13 +953,13 @@
                                                     @switch (item.Status)
                                                             {
                                                                 case 6:
-                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 3:
-                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 2:
-                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                 </div>
@@ -984,7 +984,7 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1000,13 +1000,13 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
+                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRFI" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1016,7 +1016,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1025,9 +1025,9 @@
                                                             @Html.DropDownList("RFIStatus", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "rfiStatus" })
                                                         </div>
                                                     </div>
@@ -1051,7 +1051,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/RIF/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.RIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/RIF/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.RIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadRIFs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -1084,13 +1084,13 @@
                                                     @switch (item.Status)
                                                             {
                                                                 case 6:
-                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 3:
-                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 2:
-                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                 </div>
@@ -1115,7 +1115,7 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1131,13 +1131,13 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRIF" })
+                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForRIF" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1147,7 +1147,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1156,9 +1156,9 @@
                                                             @Html.DropDownList("Status", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "rifStatus" })
                                                         </div>
                                                     </div>
@@ -1182,7 +1182,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/ItemRelease/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.IRF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/ItemRelease/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.IRF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadIRFs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -1215,13 +1215,13 @@
                                                     @switch (item.Status)
                                                             {
                                                                 case 3:
-                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 2:
-                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 1:
-                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                 </div>
@@ -1246,7 +1246,7 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1262,13 +1262,13 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForIRF" })
+                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForIRF" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1278,7 +1278,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1287,9 +1287,9 @@
                                                             @Html.DropDownList("Status", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "irfStatus" })
                                                         </div>
                                                     </div>
@@ -1313,7 +1313,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/DIF/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.DIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/DIF/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.DIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadDIFs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -1346,13 +1346,13 @@
                                                     @switch (item.Status)
                                                             {
                                                                 case 6:
-                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 3:
-                                                    <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                    <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 2:
-                                                    <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                    <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                 </div>
@@ -1377,7 +1377,7 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1393,13 +1393,13 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForDIF" })
+                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForDIF" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1409,7 +1409,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1418,9 +1418,9 @@
                                                             @Html.DropDownList("Status", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "6" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "6" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "difStatus" })
                                                         </div>
                                                     </div>
@@ -1444,7 +1444,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/TransferItem/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.TIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/TransferItem/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.TIF)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadTIRs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -1477,13 +1477,13 @@
                                                             @switch (item.Status)
                                                             {
                                                                 case 3:
-                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                                    <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 2:
-                                                                <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                                <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 1:
-                                                                <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                                <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                         </div>
@@ -1508,7 +1508,7 @@
                                                 {
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByWarehouseDestination:</label>
+                                                            <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByWarehouseDestination:</label>
                                                         </div>
                                                     </div>
                                                     <div class="control-group row-fluid">
@@ -1516,7 +1516,7 @@
                                                             <div class="controls">
                                                                 @*<input type="date" id="rfiDate"/>*@
                                                                 @*@Html.TextBox("Date", null, new { @class = "datepickerDOB cursorHand", @id = "tirDate", @readonly = true, @placeholder = "Select Date" })*@
-                                                                @Html.DropDownList("Warehouses", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "warNumberForTIR" })
+                                                                @Html.DropDownList("Warehouses", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "warNumberForTIR" })
                                                             </div>
                                                         </div>
                                                     </div>
@@ -1525,13 +1525,13 @@
                                                 {
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
-                                                            <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                            <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                         </div>
                                                     </div>
                                                     <div class="control-group row-fluid">
                                                         <div class="span12">
                                                             <div class="controls">
-                                                                @Html.DropDownList("Employees", new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForTIR" })
+                                                                @Html.DropDownList("Employees", new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForTIR" })
 
                                                             </div>
                                                         </div>
@@ -1542,7 +1542,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1551,9 +1551,9 @@
                                                             @Html.DropDownList("Status", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "tirStatus" })
                                                         </div>
                                                     </div>
@@ -1577,7 +1577,7 @@
                                     <!-- Front -->
                                     <div class="widget-area widget-general-stats widget-front">
                                         <div class="widget-head ">
-                                            <a href="~/Inventory/PurchaseOrder/Index" class="lighterOrange">@(EPMS.Web.Resources.Dashboard.Dashboard.PO)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.Web.Resources.Shared.Common.Employee : EPMS.Web.Resources.Shared.Common.Manager))</a>
+                                            <a href="~/Inventory/PurchaseOrder/Index" class="lighterOrange">@(EPMS.WebModels.Resources.Dashboard.Dashboard.PO)(@((((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee) ? EPMS.WebModels.Resources.Shared.Common.Employee : EPMS.WebModels.Resources.Shared.Common.Manager))</a>
                                             <div>
                                                 <a href="javascript:;" class="refresher" onclick=" LoadPOs(this); "><i class='icon-photon reload_alt' title=" refresh"></i></a>
                                                 <a href="javascript:;" onclick=" flipit(this) "><i class='icon-photon cog' title="configure"></i></a>
@@ -1610,13 +1610,13 @@
                                                     @switch (item.Status)
                                                             {
                                                                 case 3:
-                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.Web.Resources.CMS.Order.Pending" class="status" />
+                                                            <img src="~/Images/photon/pending.png" alt="Pending" title="@EPMS.WebModels.Resources.CMS.Order.Pending" class="status" />
                                                                     break;
                                                                 case 2:
-                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.Web.Resources.CMS.Order.Rejected" class="status" />
+                                                            <img src="~/Images/photon/notDone.png" alt="Rejected" title="@EPMS.WebModels.Resources.CMS.Order.Rejected" class="status" />
                                                                     break;
                                                                 case 1:
-                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.Web.Resources.CMS.Order.Accepted" class="status" />
+                                                            <img src="~/Images/photon/workDone.png" alt="Accepted" title="@EPMS.WebModels.Resources.CMS.Order.Accepted" class="status" />
                                                                     break;
                                                             }
                                                 </div>
@@ -1641,7 +1641,7 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByDate:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByDate:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1657,13 +1657,13 @@
                                                 {
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByClient:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByClient:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
                                                         <div class="controls">
-                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.Web.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForPO" })
+                                                            @Html.DropDownList("Employees", @direction == "ltr" ? new SelectList(Model.Employees, "EmployeeUserId", "EmployeeNameE") : new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.Dashboard.Dashboard.Any, new { @id = "employeeIdForPO" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1672,7 +1672,7 @@
                                             <div class="container-fluid widget-settings">
                                                 <div class="control-group row-fluid">
                                                     <div class="span12">
-                                                        <label class="control-label">@EPMS.Web.Resources.Dashboard.Dashboard.FilterByStatus:</label>
+                                                        <label class="control-label">@EPMS.WebModels.Resources.Dashboard.Dashboard.FilterByStatus:</label>
                                                     </div>
                                                 </div>
                                                 <div class="control-group row-fluid">
@@ -1681,9 +1681,9 @@
                                                             @Html.DropDownList("Status", new[]
                                                                 {
                                                                     new SelectListItem { Value = "0" , Text = "Any" },
-                                                                    new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.CMS.Order.Pending },
-                                                                    new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.CMS.Order.Rejected },
-                                                                    new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.CMS.Order.Accepted }
+                                                                    new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.CMS.Order.Pending },
+                                                                    new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.CMS.Order.Rejected },
+                                                                    new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.CMS.Order.Accepted }
                                                                 }, new { @id = "poStatus" })
                                                         </div>
                                                     </div>
@@ -1751,11 +1751,11 @@
 <div id="modal-add-quick-launch-custom" class="modal hide fade">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>@EPMS.Web.Resources.Dashboard.QuickLaunch.CreateText</h3>
+        <h3>@EPMS.WebModels.Resources.Dashboard.QuickLaunch.CreateText</h3>
     </div>
     <div class="modal-body">
 
-        <p class="alternative">@EPMS.Web.Resources.Dashboard.QuickLaunch.SelectText</p>
+        <p class="alternative">@EPMS.WebModels.Resources.Dashboard.QuickLaunch.SelectText</p>
     </div>
     <div class="modal-body predefined-icons">
         <ul>
@@ -1767,8 +1767,8 @@
         </ul>
     </div>
     <div class="modal-footer">
-        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>@EPMS.Web.Resources.Dashboard.QuickLaunch.AddButton</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.Dashboard.QuickLaunch.CancelButton</a>
+        <a href="javascript:;" id="addSelectedQuickLink" class="btn btn-primary" data-dismiss="modal" @*onclick="loadItems()"*@>@EPMS.WebModels.Resources.Dashboard.QuickLaunch.AddButton</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.WebModels.Resources.Dashboard.QuickLaunch.CancelButton</a>
     </div>
 </div>
 <script type="text/javascript">

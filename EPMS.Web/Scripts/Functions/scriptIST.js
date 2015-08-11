@@ -223,7 +223,7 @@ function validateSelect2Ddl(control, errorMessage) {
     control = $(control);
     var selectedId = $(control).val();
     if (selectedId == null || selectedId == "" || selectedId == 0) {
-        //$("#" + control.attr('id') + "Validation").text('@EPMS.Web.Resources.Shared.Common.RequiredDdlField');
+        //$("#" + control.attr('id') + "Validation").text('@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField');
         $("#" + control.attr('id') + "Validation").text(errorMessage);
         $("#" + control.attr('id') + "Validation").addClass("Error");
         counter++;

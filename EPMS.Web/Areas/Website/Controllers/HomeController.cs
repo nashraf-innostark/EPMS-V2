@@ -4,13 +4,13 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Website.Department;
+using EPMS.WebModels.ModelMappers.Website.Partner;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.HomePage;
 using EPMS.Web.Controllers;
 using EPMS.Web.EnumForDropDown;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.Website.Department;
-using EPMS.Web.ModelMappers.Website.Partner;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.HomePage;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {

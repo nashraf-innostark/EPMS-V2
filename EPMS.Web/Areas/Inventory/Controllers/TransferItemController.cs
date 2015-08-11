@@ -7,13 +7,11 @@ using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.TIR;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.TIR;
 using Microsoft.AspNet.Identity;
-using TIR = EPMS.Web.Models.TIR;
-using TIRItem = EPMS.Web.Models.TIRItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -53,10 +51,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.SearchString = Request["search"];
             ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
-            searchRequest.Direction = Resources.Shared.Common.TextDirection;
+            searchRequest.Direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             TIRListResponse response = tirService.GetAllTirs(searchRequest);
-            IEnumerable<TIR> transferItemList =
-                response.TirItems.Any() ? response.TirItems.Select(x => x.CreateFromServerToClient()) : new List<TIR>();
+            IEnumerable<WebModels.WebsiteModels.TIR> transferItemList =
+                response.TirItems.Any() ? response.TirItems.Select(x => x.CreateFromServerToClient()) : new List<WebModels.WebsiteModels.TIR>();
             TransferItemListViewModel viewModel = new TransferItemListViewModel
             {
                 aaData = transferItemList,
@@ -83,8 +81,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 }
                 else
                 {
-                    viewModel.Tir = new TIR();
-                    viewModel.TirItems = new List<TIRItem>();
+                    viewModel.Tir = new WebModels.WebsiteModels.TIR();
+                    viewModel.TirItems = new List<WebModels.WebsiteModels.TIRItem>();
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -104,7 +102,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.TIR.TIRDetail.RecordUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.RecordUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");
@@ -117,23 +115,23 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "TIRCreate,TIRDetail")]
         public ActionResult Create(long? id)
         {
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             var tirResponse = tirService.LoadTirResponseData(id);
             TransferItemCreateViewModel viewModel = new TransferItemCreateViewModel();
             if (tirResponse.Tir != null)
             {
                 viewModel.Tir = tirResponse.Tir.CreateFromServerToClient();
                 viewModel.TirItems = tirResponse.Tir.TIRItems.Any() ?
-                    tirResponse.Tir.TIRItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<TIRItem>();
+                    tirResponse.Tir.TIRItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebModels.WebsiteModels.TIRItem>();
             }
             else
             {
-                viewModel.Tir = new TIR
+                viewModel.Tir = new WebModels.WebsiteModels.TIR
                 {
                     FormNumber = Utility.GenerateFormNumber("TI", tirResponse.LastFormNumber),
                     RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
-                viewModel.TirItems = new List<TIRItem>();
+                viewModel.TirItems = new List<WebModels.WebsiteModels.TIRItem>();
             }
             viewModel.ItemVariationDropDownList = tirResponse.ItemVariationDropDownList;
             return View(viewModel);
@@ -154,7 +152,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.TIR.TIRCreate.RecordUpdated,
+                        Message = EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.RecordUpdated,
                         IsUpdated = true
                     };
                 }
@@ -169,7 +167,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.TIR.TIRCreate.RecordAdded,
+                        Message = EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.RecordAdded,
                         IsSaved = true
                     };
                 }
@@ -199,9 +197,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             TirHistoryResponse response = tirService.GetTirHistoryData(id);
             TirHistoryViewModel viewModel = new TirHistoryViewModel
             {
-                Tirs = response.Tirs.Any() ? response.Tirs.Select(x => x.CreateFromServerToClient()).ToList() : new List<TIR>(),
-                RecentTir = response.RecentTir != null ? response.RecentTir.CreateFromServerToClient() : new TIR(),
-                TirItems = response.TirItems.Any() ? response.TirItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<TIRItem>()
+                Tirs = response.Tirs.Any() ? response.Tirs.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebModels.WebsiteModels.TIR>(),
+                RecentTir = response.RecentTir != null ? response.RecentTir.CreateFromServerToClient() : new WebModels.WebsiteModels.TIR(),
+                TirItems = response.TirItems.Any() ? response.TirItems.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebModels.WebsiteModels.TIRItem>()
             };
             viewModel.RecentTir.RequesterName = response.RequesterNameEn;
             viewModel.RecentTir.RequesterNameAr = response.RequesterNameAr;
@@ -221,7 +219,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.TIR.TIRDetail.RecordUpdated,
+                    Message = EPMS.WebModels.Resources.Inventory.TIR.TIRDetail.RecordUpdated,
                     IsUpdated = true
                 };
                 return RedirectToAction("Index");

@@ -2,21 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.Orders;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Orders;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using Order = EPMS.Web.Models.Order;
+using Order = EPMS.WebModels.WebsiteModels.Order;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -110,18 +106,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
                 if (Session["RoleName"].ToString() == "Customer")
                 {
-                    viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
+                    viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateUpdate;
                 }
                 else if (Session["RoleName"].ToString() == "Admin")
                 {
-                    viewModel.PageTitle = Resources.CMS.Order.OrderDetail;
+                    viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.OrderDetail;
                 }
-                viewModel.BtnText = Resources.CMS.Order.BtnUpdate;
+                viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnUpdate;
                 return View(viewModel);
             }
             viewModel.Orders.OrderNo = GetOrderNumber();
-            viewModel.PageTitle = Resources.CMS.Order.PTCreateSave;
-            viewModel.BtnText = Resources.CMS.Order.BtnSave;
+            viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateSave;
+            viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnSave;
             return View(viewModel);
         }
 
@@ -134,7 +130,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [ValidateInput(false)]
         public ActionResult Create(OrdersCreateViewModel viewModel)
         {
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             if (viewModel.Orders.OrderId > 0)
             {
                 // Update Case
@@ -145,7 +141,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Order.Updated,
+                        Message = EPMS.WebModels.Resources.CMS.Order.Updated,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -166,7 +162,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Order.Added,
+                        Message = EPMS.WebModels.Resources.CMS.Order.Added,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -174,16 +170,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
             }
             if (Session["RoleName"].ToString() == "Admin")
             {
-                viewModel.PageTitle = Resources.CMS.Order.PTCreateUpdate;
+                viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateUpdate;
             }
             if (Session["RoleName"].ToString() == "Customer")
             {
-                viewModel.PageTitle = Resources.CMS.Order.PTCreateSave;
+                viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateSave;
             }
-            viewModel.BtnText = Resources.CMS.Order.BtnSave;
+            viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnSave;
             TempData["message"] = new MessageViewModel
             {
-                Message = Resources.CMS.Order.Error,
+                Message = EPMS.WebModels.Resources.CMS.Order.Error,
                 IsError = true
             };
             return View(viewModel);

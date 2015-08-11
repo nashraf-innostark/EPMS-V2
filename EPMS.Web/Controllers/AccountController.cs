@@ -2,6 +2,9 @@
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Admin;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
 using iTextSharp.text.pdf.qrcode;
@@ -17,14 +20,14 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using System.Collections.Generic;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Admin;
+using EPMS.WebModels.ViewModels.Common;
 using System.Net;
-using EPMS.Web.ModelMappers;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.ModelMapers;
 using EPMS.WebBase.Mvc;
 using System.Globalization;
 using EPMS.WebBase.UnityConfiguration;
+using DashboardWidgetPreference = EPMS.WebModels.WebsiteModels.DashboardWidgetPreference;
 
 namespace IdentitySample.Controllers
 {
@@ -194,7 +197,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Login(LoginViewModel model, string returnUrl)
+        public async Task<ActionResult> Login(EPMS.Models.IdentityModels.ViewModels.LoginViewModel model, string returnUrl)
         {
             try
             {
@@ -275,7 +278,7 @@ namespace IdentitySample.Controllers
         [SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
-            RegisterViewModel Result = new RegisterViewModel();
+            EPMS.Models.IdentityModels.ViewModels.RegisterViewModel Result = new EPMS.Models.IdentityModels.ViewModels.RegisterViewModel();
             // Check allowed no of users
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
@@ -289,7 +292,7 @@ namespace IdentitySample.Controllers
                 if (!string.IsNullOrEmpty(userName))
                 {
                     AspNetUser userToEdit = UserManager.FindByName(userName);
-                    Result = new RegisterViewModel
+                    Result = new EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
                     {
                         UserId = userToEdit.Id,
                         SelectedRole = userToEdit.AspNetRoles.ToList()[0].Id,
@@ -309,7 +312,7 @@ namespace IdentitySample.Controllers
             else
             {
                 ViewBag.UserLimitReach = "Yes";
-                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UserLimitMessage, IsError = true };
+                TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.UserLimitMessage, IsError = true };
                 Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
                 Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                 return View(Result);
@@ -359,7 +362,7 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
         //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public async Task<ActionResult> Create(RegisterViewModel model)
+        public async Task<ActionResult> Create(EPMS.Models.IdentityModels.ViewModels.RegisterViewModel model)
         {
             if (!string.IsNullOrEmpty(model.UserId))
             {
@@ -377,7 +380,7 @@ namespace IdentitySample.Controllers
                     // Update User Role
                     UserManager.RemoveFromRole(model.UserId, userRoleName);
                     UserManager.AddToRole(model.UserId, roleName);
-                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UpdateUser, IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.UpdateUser, IsUpdated = true };
                 }
                 // Password Reset
                 if (!String.IsNullOrEmpty(model.Password))
@@ -394,7 +397,7 @@ namespace IdentitySample.Controllers
                         }
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = EPMS.Web.Resources.HR.Account.UpdatePass,
+                            Message = EPMS.WebModels.Resources.HR.Account.UpdatePass,
                             IsUpdated = true
                         };
                     }
@@ -410,7 +413,7 @@ namespace IdentitySample.Controllers
                         {
                             model.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
                             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-                            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                            TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.EmpError, IsError = true };
                             return View(model);
                         }
                     }
@@ -429,7 +432,7 @@ namespace IdentitySample.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = EPMS.Web.Resources.HR.Account.UpdateUser,
+                            Message = EPMS.WebModels.Resources.HR.Account.UpdateUser,
                             IsUpdated = true
                         };
                     }
@@ -449,7 +452,7 @@ namespace IdentitySample.Controllers
                 {
                     model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                     model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.EmpError, IsError = true };
                     return View(model);
                 }
                 var userName = AspNetUserService.GetAllUsers().Select(x => x.UserName);
@@ -457,7 +460,7 @@ namespace IdentitySample.Controllers
                 {
                     model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                     model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-                    TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.UsernameError, IsError = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.UsernameError, IsError = true };
                     return View(model);
                 }
                 var user = new AspNetUser { UserName = model.UserName, Email = model.Email };
@@ -475,7 +478,7 @@ namespace IdentitySample.Controllers
                         // Add User Preferences for Dashboards Widgets
                         roleName = "All";
                         UserWidgets(user, roleName);
-                        TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.AddUser, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.AddUser, IsSaved = true };
                         return RedirectToAction("Users");
                     }
                 }
@@ -483,7 +486,7 @@ namespace IdentitySample.Controllers
             // If we got this far, something failed, redisplay form
             model.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
             model.Roles = HttpContext.GetOwinContext().Get<ApplicationRoleManager>().Roles.ToList();
-            TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.ChkFields, IsError = true };
+            TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.ChkFields, IsError = true };
             return View(model);
         }
 
@@ -513,7 +516,7 @@ namespace IdentitySample.Controllers
                 case "Admin":
                     for (int i = 0; i < 10; i++)
                     {
-                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
                             UserId = userId,
                             WidgetId = adminWidgets[i],
@@ -526,7 +529,7 @@ namespace IdentitySample.Controllers
                 case "Employee":
                     for (int i = 0; i < 5; i++)
                     {
-                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
                             UserId = userId,
                             WidgetId = employeeWidgets[i],
@@ -539,7 +542,7 @@ namespace IdentitySample.Controllers
                 case "Customer":
                     for (int i = 0; i < 3; i++)
                     {
-                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
                             UserId = userId,
                             WidgetId = customerWidgets[i],
@@ -552,7 +555,7 @@ namespace IdentitySample.Controllers
                 case "All":
                     for (int i = 0; i < allWidgets.Length; i++)
                     {
-                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
                             UserId = userId,
                             WidgetId = allWidgets[i],
@@ -584,7 +587,7 @@ namespace IdentitySample.Controllers
             if (usernames.Contains(signupViewModel.UserName))
             {
                 // it means username is already taken
-                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.EmpError, IsError = true };
                 ModelState.AddModelError("", "UserName already exist");
                 return View(signupViewModel);
             }
@@ -592,7 +595,7 @@ namespace IdentitySample.Controllers
             if (emails.Contains(signupViewModel.Email))
             {
                 // it means username is already taken
-                TempData["message"] = new MessageViewModel { Message = EPMS.Web.Resources.HR.Account.EmpError, IsError = true };
+                TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.EmpError, IsError = true };
                 ModelState.AddModelError("", "Email already registered");
                 return View(signupViewModel);
             }
@@ -630,7 +633,7 @@ namespace IdentitySample.Controllers
                     string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
                     for (int i = 0; i < 3; i++)
                     {
-                        EPMS.Web.Models.DashboardWidgetPreference preferences = new EPMS.Web.Models.DashboardWidgetPreference
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
                             UserId = user.Id,
                             WidgetId = customerWidgets[i],
@@ -691,7 +694,7 @@ namespace IdentitySample.Controllers
                     ViewBag.ReturnUrl = returnUrl;
                     ViewBag.LoginProvider = loginInfo.Login.LoginProvider;
                     return View("ExternalLoginConfirmation",
-                        new ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
+                        new EPMS.Models.IdentityModels.ViewModels.ExternalLoginConfirmationViewModel { Email = loginInfo.Email });
             }
         }
 
@@ -700,7 +703,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ExternalLoginConfirmation(ExternalLoginConfirmationViewModel model,
+        public async Task<ActionResult> ExternalLoginConfirmation(EPMS.WebModels.WebsiteModels.ExternalLoginConfirmationViewModel model,
             string returnUrl)
         {
             if (User.Identity.IsAuthenticated)
@@ -772,7 +775,7 @@ namespace IdentitySample.Controllers
                 ViewBag.Status = "For DEMO purposes the current " + provider + " code is: " +
                                  await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
             }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl });
+            return View(new EPMS.Models.IdentityModels.ViewModels.VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl });
         }
 
         //
@@ -780,7 +783,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
+        public async Task<ActionResult> VerifyCode(EPMS.Models.IdentityModels.ViewModels.VerifyCodeViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -841,7 +844,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword(EPMS.WebModels.WebsiteModels.ForgotPasswordViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -890,7 +893,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(EPMS.WebModels.WebsiteModels.ResetPasswordViewModel model)
         {
             if (!ModelState.IsValid)
             {
@@ -937,7 +940,7 @@ namespace IdentitySample.Controllers
             var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
             var factorOptions =
                 userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl });
+            return View(new EPMS.Models.IdentityModels.ViewModels.SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl });
         }
 
         //
@@ -945,7 +948,7 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
+        public async Task<ActionResult> SendCode(EPMS.Models.IdentityModels.ViewModels.SendCodeViewModel model)
         {
             if (!ModelState.IsValid)
             {

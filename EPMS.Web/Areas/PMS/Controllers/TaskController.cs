@@ -5,13 +5,13 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ViewModels.Tasks;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.PMS;
-using EPMS.Web.Models;
-using EPMS.Web.Resources.PMS;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Tasks;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.WebsiteModels;
+using EPMS.WebModels.Resources.PMS;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -154,7 +154,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public ActionResult Create(long? id)
         {
             TaskCreateViewModel viewModel = new TaskCreateViewModel();
-            var direction = Resources.Shared.Common.TextDirection;
+            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             TaskResponse response = id != null
                 ? TaskService.GetResponseForAddEdit((long) id)
                 : TaskService.GetResponseForAddEdit(0);

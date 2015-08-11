@@ -1,16 +1,16 @@
-﻿@model EPMS.Web.ViewModels.PurchaseOrder.PurchaseOrderCreateViewModel
+﻿@model EPMS.WebModels.ViewModels.PurchaseOrder.PurchaseOrderCreateViewModel
 
 @{
     if (Model.Order.PurchaseOrderId > 0)
     {
-        ViewBag.Title = EPMS.Web.Resources.Inventory.PO.PO.PageTitleCreate;
+        ViewBag.Title = EPMS.WebModels.Resources.Inventory.PO.PO.PageTitleCreate;
     }
     else
     {
-        ViewBag.Title = @EPMS.Web.Resources.Inventory.PO.PO.PageTitleEdit;
+        ViewBag.Title = @EPMS.WebModels.Resources.Inventory.PO.PO.PageTitleEdit;
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
@@ -23,7 +23,7 @@
         </li>
         <li>
             <a href="~/Inventory/PurchaseOrder/Index">
-                @EPMS.Web.Resources.Inventory.PO.PO.PageTitleIndex
+                @EPMS.WebModels.Resources.Inventory.PO.PO.PageTitleIndex
             </a>
         </li>
         <li class="current">
@@ -38,11 +38,11 @@
     <i class="icon-big-notepad"></i>
     @if (Model.Order.PurchaseOrderId > 0)
     {
-        <h2><small>@EPMS.Web.Resources.Inventory.PO.PO.POCreate</small></h2>
+        <h2><small>@EPMS.WebModels.Resources.Inventory.PO.PO.POCreate</small></h2>
     }
     else
     {
-        <h2><small>@EPMS.Web.Resources.Inventory.PO.PO.POEdit</small></h2>
+        <h2><small>@EPMS.WebModels.Resources.Inventory.PO.PO.POEdit</small></h2>
     }
 </header>
 <!--Notifications begin-->
@@ -61,7 +61,7 @@
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="createdBy">@EPMS.Web.Resources.Inventory.PO.PO.CreatedBy</label>
+                <label class="control-label" for="createdBy">@EPMS.WebModels.Resources.Inventory.PO.PO.CreatedBy</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -75,10 +75,10 @@
                 <table class="table table-striped table-responsive ">
                     <thead class="">
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.PO.PO.Serial</th>
-                            <th style="width:75%">@EPMS.Web.Resources.Inventory.PO.PO.ItemDetails</th>
-                            <th>@EPMS.Web.Resources.Inventory.PO.PO.NeededQuantity</th>
-                            <th style="width:4%">@EPMS.Web.Resources.Inventory.PO.PO.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Serial</th>
+                            <th style="width:75%">@EPMS.WebModels.Resources.Inventory.PO.PO.ItemDetails</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.PO.PO.NeededQuantity</th>
+                            <th style="width:4%">@EPMS.WebModels.Resources.Inventory.PO.PO.Delete</th>
                         </tr>
                     </thead>
                     <tbody id="PoItemsTableBody" class="qouteAdd">
@@ -155,18 +155,18 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="button" class="btn trAdder btnDisable">@EPMS.Web.Resources.Inventory.PO.PO.Add</button>
+                    <button type="button" class="btn trAdder btnDisable">@EPMS.WebModels.Resources.Inventory.PO.PO.Add</button>
                 </div>
             </div>
         </div>
         <div id="EditRecord" class="control-group row-fluid" style="display: none">
             <div class="span3 span-inset">
-                <button id="edit" type="button" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.Edit</button>
+                <button id="edit" type="button" class="btn">@EPMS.WebModels.Resources.Inventory.PO.PO.Edit</button>
             </div>
         </div>
         <div id="SubmitRecord" class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.PO.PO.Submit</button>
+                <button type="submit" class="btn">@EPMS.WebModels.Resources.Inventory.PO.PO.Submit</button>
             </div>
         </div>
     </div>

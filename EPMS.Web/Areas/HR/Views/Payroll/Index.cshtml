@@ -1,10 +1,10 @@
-﻿@model EPMS.Web.ViewModels.Employee.EmployeeViewModel
+﻿@model EPMS.WebModels.ViewModels.Employee.EmployeeViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.HR.Payroll.Title;
+    ViewBag.Title = EPMS.WebModels.Resources.HR.Payroll.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar -->
 <div class="breadcrumb-container">
@@ -15,14 +15,14 @@
             </a>
         </li>
         <li>
-            @EPMS.Web.Resources.HR.Payroll.PayrollList
+            @EPMS.WebModels.Resources.HR.Payroll.PayrollList
         </li>
     </ul>
 </div>
 <!-- Page heading -->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.Web.Resources.HR.Payroll.PayrollList</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.HR.Payroll.PayrollList</small></h2>
 </header>
 <!-- Page heading ends -->
 
@@ -34,12 +34,12 @@
                 <table id="employeeTable" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.Image</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.NameIndex</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.JobId</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.JobTitle</th>
-                            <th>@EPMS.Web.Resources.HR.Employee.Department</th>
+                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.HR.Employee.Image</th>
+                            <th>@EPMS.WebModels.Resources.HR.Employee.NameIndex</th>
+                            <th>@EPMS.WebModels.Resources.HR.Employee.JobId</th>
+                            <th>@EPMS.WebModels.Resources.HR.Employee.JobTitle</th>
+                            <th>@EPMS.WebModels.Resources.HR.Employee.Department</th>
                         </tr>
                     </thead>
                     <tbody></tbody>

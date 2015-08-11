@@ -5,11 +5,10 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Complaint;
-using EPMS.Web.ViewModels.Department;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Complaint;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
@@ -86,7 +85,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         requestViewModel.DeptId = requestViewModel.Complaint.DepartmentId;
                         requestViewModel.OdrId = requestViewModel.Complaint.OrderId;
                         if (!requestViewModel.Complaint.IsReplied)
-                            ViewBag.MessageVM = new MessageViewModel { Message = Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
+                            ViewBag.MessageVM = new MessageViewModel { Message = EPMS.WebModels.Resources.CMS.Complaint.NotReplyInfoMsg, IsInfo = true };
                     }
                 }
                 else if (Session["RoleName"].ToString()=="Customer")
@@ -123,7 +122,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     complaintService.UpdateComplaint(viewModel.Complaint.CreateFromClientToServer());
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Complaint.ComplaintRepliedMsg,
+                        Message = EPMS.WebModels.Resources.CMS.Complaint.ComplaintRepliedMsg,
                         IsUpdated = true
                     };
                 }
@@ -138,7 +137,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     complaintService.AddComplaint(viewModel.Complaint.CreateFromClientToServer());
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.CMS.Complaint.ComplaintCreatedMsg,
+                        Message = EPMS.WebModels.Resources.CMS.Complaint.ComplaintCreatedMsg,
                         IsUpdated = true
                     };
                 }

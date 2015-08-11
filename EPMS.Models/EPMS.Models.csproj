@@ -62,6 +62,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Helpers, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
@@ -116,6 +117,25 @@
     <Compile Include="Common\DifRequestByColumn.cs" />
     <Compile Include="Common\RifRequestByColumn.cs" />
     <Compile Include="Common\RfiRequestByColumn.cs" />
+    <Compile Include="DashboardModels\Complaint.cs" />
+    <Compile Include="DashboardModels\Customer.cs" />
+    <Compile Include="DashboardModels\Department.cs" />
+    <Compile Include="DashboardModels\DIFWidget.cs" />
+    <Compile Include="DashboardModels\Employee.cs" />
+    <Compile Include="DashboardModels\EmployeeRequest.cs" />
+    <Compile Include="DashboardModels\IRFWidget.cs" />
+    <Compile Include="DashboardModels\Meeting.cs" />
+    <Compile Include="DashboardModels\Order.cs" />
+    <Compile Include="DashboardModels\Payment.cs" />
+    <Compile Include="DashboardModels\Payroll.cs" />
+    <Compile Include="DashboardModels\POWidget.cs" />
+    <Compile Include="DashboardModels\Profile.cs" />
+    <Compile Include="DashboardModels\Project.cs" />
+    <Compile Include="DashboardModels\Recruitment.cs" />
+    <Compile Include="DashboardModels\RFIWidget.cs" />
+    <Compile Include="DashboardModels\RIFWidget.cs" />
+    <Compile Include="DashboardModels\TIRWidget.cs" />
+    <Compile Include="DashboardModels\WarehousDDL.cs" />
     <Compile Include="DomainModels\ContactUs.cs" />
     <Compile Include="DomainModels\DIF.cs" />
     <Compile Include="DomainModels\DIFHistory.cs" />
@@ -159,15 +179,21 @@
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
+    <Compile Include="ModelMapers\EmployeeMapper.cs" />
     <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />
+    <Compile Include="ModelMapers\OrderMapper.cs" />
     <Compile Include="ModelMapers\PoHistoryMapper.cs" />
     <Compile Include="ModelMapers\PoItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\ProjectMapper.cs" />
+    <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
     <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
+    <Compile Include="ModelMapers\RFIItemMapper.cs" />
     <Compile Include="ModelMapers\RifHistoryMapper.cs" />
     <Compile Include="ModelMapers\RifItemHistoryMapper.cs" />
-    <Compile Include="ModelMapers\RfiItemMapper.cs" />
+    <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
@@ -254,12 +280,6 @@
     <Compile Include="MenuModels\MenuRight.cs" />
     <Compile Include="MenuModels\Rights.cs" />
     <Compile Include="MenuModels\UserMenuResponse.cs" />
-    <Compile Include="ModelMapers\EmployeeMapper.cs" />
-    <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />
-    <Compile Include="ModelMapers\OrderMapper.cs" />
-    <Compile Include="ModelMapers\ProjectMapper.cs" />
-    <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
-    <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RequestModels\DepartmentSearchRequest.cs" />
     <Compile Include="RequestModels\EmployeeRequestSearchRequest.cs" />
@@ -294,14 +314,14 @@
       <DependentUpon>General.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Notification.ar.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Notification.ar.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Resources\Notification.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>Notification.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="ResponseModels\AvailableOrdersDDL.cs" />
     <Compile Include="ResponseModels\ComplaintResponse.cs" />
@@ -388,6 +408,7 @@
       <LastGenOutput>Notification.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

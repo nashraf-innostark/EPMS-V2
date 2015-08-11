@@ -1,12 +1,12 @@
 ﻿@using System.Configuration
 @using EPMS.Models.ResponseModels
-@model EPMS.Web.ViewModels.InventoryItem.InventoryItemViewModel
+@model EPMS.WebModels.ViewModels.InventoryItem.InventoryItemViewModel
 
 @{
-    ViewBag.Title = Model.InventoryItem.ItemId > 0 ? EPMS.Web.Resources.Inventory.InventoryItem.UpdateTitle : EPMS.Web.Resources.Inventory.InventoryItem.CreateTitle;
+    ViewBag.Title = Model.InventoryItem.ItemId > 0 ? EPMS.WebModels.Resources.Inventory.InventoryItem.UpdateTitle : EPMS.WebModels.Resources.Inventory.InventoryItem.CreateTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -18,7 +18,7 @@
         </li>
         <li>
             <a href="~/Inventory/InventoryItem/Index">
-                @EPMS.Web.Resources.Inventory.InventoryItem.Label
+                @EPMS.WebModels.Resources.Inventory.InventoryItem.Label
             </a>
         </li>
         <li class="current">
@@ -50,7 +50,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemCode</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemCode</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -62,7 +62,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemNameEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemNameEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -74,7 +74,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ItemNameAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -87,7 +87,7 @@
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionEn</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescriptionEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -99,7 +99,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescriptionAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -111,7 +111,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -123,7 +123,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescForQuotationAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescForQuotationAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -135,7 +135,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AveragePrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.AveragePrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -147,7 +147,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AverageCost</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.AverageCost</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -159,7 +159,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.AveragePackagePrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.AveragePackagePrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -171,7 +171,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantityInPackage</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.QuantityInPackage</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -183,7 +183,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantityInHand</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.QuantityInHand</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -195,7 +195,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.QuantitySold</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.QuantitySold</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -208,7 +208,7 @@
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.HazardousEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -220,7 +220,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.HazardousAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -232,7 +232,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.UsageEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -244,7 +244,7 @@
 
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.UsageAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -256,7 +256,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.ReorderPoint</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -380,11 +380,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.Inventory.Vendor.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -412,8 +412,8 @@
     </div>
 
     <div class="modal-footer">
-        <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.Web.Resources.RFI.RFI.Select</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.Web.Resources.RFI.RFI.Cancel</a>
+        <a href="javascript:;" class="btn btn-primary" id="selectDepartment">@EPMS.WebModels.Resources.RFI.RFI.Select</a>
+        <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.WebModels.Resources.RFI.RFI.Cancel</a>
     </div>
 </div>
 }

@@ -4,17 +4,17 @@ using System.Linq;
 using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
-using EPMS.Web.ModelMappers;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Inventory.RIF;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.RIF;
 using System.Configuration;
 using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Inventory.RIF;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.RIF;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -55,7 +55,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rifService.LoadAllRifs(searchRequest);
             var data = requestResponse.Rifs.Select(x => x.CreateRifServerToClient());
-            var responseData = data as IList<Models.RIF> ?? data.ToList();
+            var responseData = data as IList<RIF> ?? data.ToList();
             if (responseData.Any())
             {
                 viewModel.aaData = responseData;
@@ -66,7 +66,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<Models.RIF>();
+                viewModel.aaData = Enumerable.Empty<RIF>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -86,7 +86,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (Rifresponse.Rif != null)
             {
                 rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
-                if (Resources.Shared.Common.TextDirection == "ltr")
+                if (EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr")
                 {
                     rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameE;
                     rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameE;
@@ -103,11 +103,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rifViewModel.Rif = new Models.RIF
+                rifViewModel.Rif = new RIF
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rifViewModel.RifItem = new List<Models.RIFItem>();
+                rifViewModel.RifItem = new List<RIFItem>();
             }
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
@@ -124,7 +124,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.Rif.ManagerId = User.Identity.GetUserId();
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.RIF.RIF.RIFReplied,
+                    Message = EPMS.WebModels.Resources.Inventory.RIF.RIF.RIFReplied,
                     IsUpdated = true
                 };
 
@@ -153,17 +153,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (Rifresponse.Rif != null)
             {
                 rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
-                rifViewModel.Rif.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? Rifresponse.RequesterNameE : Rifresponse.RequesterNameA;
+                rifViewModel.Rif.RequesterName = EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr" ? Rifresponse.RequesterNameE : Rifresponse.RequesterNameA;
                 rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient()).ToList();
             }
             else
             {
-                rifViewModel.Rif = new Models.RIF
+                rifViewModel.Rif = new RIF
                 {
                     FormNumber = Utility.GenerateFormNumber("RI", Rifresponse.LastFormNumber),
                     RequesterName = Session["UserFullName"].ToString()
                 };
-                rifViewModel.RifItem = new List<Models.RIFItem>();
+                rifViewModel.RifItem = new List<RIFItem>();
             }
             if (loadCustomersAndOrders)
             {
@@ -191,7 +191,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.RIF.RIF.RFIUpdated,
+                        Message = EPMS.WebModels.Resources.Inventory.RIF.RIF.RFIUpdated,
                         IsUpdated = true
                     };
                 }
@@ -202,7 +202,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
                     rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
-                    TempData["message"] = new MessageViewModel { Message = Resources.Inventory.RIF.RIF.RIFCreated, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.RIF.RIF.RIFCreated, IsSaved = true };
                 }
                 
                 var RifToBeSaved = rifViewModel.CreateRifClientToServer();
@@ -249,7 +249,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.RecentRif.ManagerId = User.Identity.GetUserId();
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.Inventory.RIF.RIF.RIFReplied,
+                    Message = EPMS.WebModels.Resources.Inventory.RIF.RIF.RIFReplied,
                     IsUpdated = true
                 };
 

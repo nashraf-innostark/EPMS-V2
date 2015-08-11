@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.JobOffered;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.JobOffered;
-using EPMS.Web.ViewModels.JobTitle;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -81,7 +80,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var jobOffereToUpdate = jobOfferedViewModel.JobOffered.CreateFrom();
                     if (jobOfferedService.UpdateJobOffered(jobOffereToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobOffered.UpdateJobOffered, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobOffered.UpdateJobOffered, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -97,7 +96,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (jobOfferedService.AddJobOffered(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.JobOffered.SaveJobOffered, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobOffered.SaveJobOffered, IsSaved = true };
                         jobOfferedViewModel.JobOffered.JobOfferedId = modelToSave.JobOfferedId;
                         return RedirectToAction("Index");
                     }

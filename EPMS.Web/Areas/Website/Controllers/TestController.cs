@@ -3,10 +3,9 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.Models.Common;
 using System.Linq;
-using EPMS.Web.ModelMappers;
-using Newtonsoft.Json;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.WebsiteModels.Common;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {

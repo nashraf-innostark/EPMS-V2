@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.Tasks.TaskCreateViewModel
+﻿@model EPMS.WebModels.ViewModels.Tasks.TaskCreateViewModel
 
 @{
     string userRole = (string)Session["RoleName"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] module = (string[])Session["UserModules"];
@@ -19,7 +19,7 @@
         </li>
         <li>
             <a href="~/PMS/Task/Index">
-                @EPMS.Web.Resources.PMS.Task.PageTitleIndex
+                @EPMS.WebModels.Resources.PMS.Task.PageTitleIndex
             </a>
         </li>
         <li>
@@ -65,7 +65,7 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Client">@EPMS.Web.Resources.PMS.Task.ClientName</label>
+                    <label class="control-label" for="Client">@EPMS.WebModels.Resources.PMS.Task.ClientName</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -84,7 +84,7 @@
         }
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ProjectName</label>
+                <label class="control-label" for="">@EPMS.WebModels.Resources.PMS.Task.ProjectName</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -102,7 +102,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Task.IsParent</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Task.IsParent</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -112,7 +112,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="">@EPMS.Web.Resources.PMS.Task.ParentTask</label>
+                <label class="control-label" for="">@EPMS.WebModels.Resources.PMS.Task.ParentTask</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -129,7 +129,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TaskNameE">@EPMS.Web.Resources.PMS.Task.TaskName</label>
+                <label class="control-label" for="TaskNameE">@EPMS.WebModels.Resources.PMS.Task.TaskName</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -140,7 +140,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TaskNameA">@EPMS.Web.Resources.PMS.Task.TaskNameA</label>
+                <label class="control-label" for="TaskNameA">@EPMS.WebModels.Resources.PMS.Task.TaskNameA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -152,7 +152,7 @@
         <div id="Descp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="descpEn">@EPMS.Web.Resources.PMS.Task.Description</label>
+                    <label class="control-label" for="descpEn">@EPMS.WebModels.Resources.PMS.Task.Description</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -162,7 +162,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="descpAr">@EPMS.Web.Resources.PMS.Task.DescriptionA</label>
+                    <label class="control-label" for="descpAr">@EPMS.WebModels.Resources.PMS.Task.DescriptionA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -174,7 +174,7 @@
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DescriptionE">@EPMS.Web.Resources.PMS.Task.Description</label>
+                    <label class="control-label" for="DescriptionE">@EPMS.WebModels.Resources.PMS.Task.Description</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -184,7 +184,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="DescriptionA">@EPMS.Web.Resources.PMS.Task.DescriptionA</label>
+                    <label class="control-label" for="DescriptionA">@EPMS.WebModels.Resources.PMS.Task.DescriptionA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -195,7 +195,7 @@
         </div>
         <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="dualMulti">@EPMS.Web.Resources.PMS.Task.Pre_ReqTask</label>
+                <label class="control-label" for="dualMulti">@EPMS.WebModels.Resources.PMS.Task.Pre_ReqTask</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -220,7 +220,7 @@
         <div id="Date_Picker" class="control-group row-fluid startDate">
             <div class="span3">
                 <label class="control-label" for="TaskStartDate">
-                    @EPMS.Web.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.PMS.Task.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             @if (direction == "rtl")
@@ -247,7 +247,7 @@
         <div id="Date_Picker2" class="control-group row-fluid endDate">
             <div class="span3">
                 <label class="control-label" for="TaskEndDate">
-                    @EPMS.Web.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.PMS.Task.DeliveryDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             @if (direction == "rtl")
@@ -275,7 +275,7 @@
         {
             <div id="Dual_Multi_Select_with_Filter_Search" class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="dualMulti2">@EPMS.Web.Resources.PMS.Task.AssignEmployee</label>
+                    <label class="control-label" for="dualMulti2">@EPMS.WebModels.Resources.PMS.Task.AssignEmployee</label>
                 </div>
                 <div class="span9" id="checked">
                     <div class="controls">
@@ -307,7 +307,7 @@
         }
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TotalCost">@EPMS.Web.Resources.PMS.Task.TotalCost</label>
+                <label class="control-label" for="TotalCost">@EPMS.WebModels.Resources.PMS.Task.TotalCost</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -318,7 +318,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TotalWeight">@EPMS.Web.Resources.PMS.Task.TaskWeight</label>
+                <label class="control-label" for="TotalWeight">@EPMS.WebModels.Resources.PMS.Task.TaskWeight</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -329,7 +329,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="TaskProgress">@EPMS.Web.Resources.PMS.Task.TaskProgeress</label>
+                <label class="control-label" for="TaskProgress">@EPMS.WebModels.Resources.PMS.Task.TaskProgeress</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -341,7 +341,7 @@
         <div id="Notes">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="notesEn">@EPMS.Web.Resources.PMS.Task.Notes</label>
+                    <label class="control-label" for="notesEn">@EPMS.WebModels.Resources.PMS.Task.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -351,7 +351,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="notesAr">@EPMS.Web.Resources.PMS.Task.NotesA</label>
+                    <label class="control-label" for="notesAr">@EPMS.WebModels.Resources.PMS.Task.NotesA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -363,7 +363,7 @@
         <div id="CKEditorNotes">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesE">@EPMS.Web.Resources.PMS.Task.Notes</label>
+                    <label class="control-label" for="NotesE">@EPMS.WebModels.Resources.PMS.Task.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -373,7 +373,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesA">@EPMS.Web.Resources.PMS.Task.NotesA</label>
+                    <label class="control-label" for="NotesA">@EPMS.WebModels.Resources.PMS.Task.NotesA</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -386,14 +386,14 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn" name="Save" onclick="validateForm(event)">@EPMS.Web.Resources.PMS.Task.BtnCreate</button>
+                    <button type="submit" class="btn" name="Save" onclick="validateForm(event)">@EPMS.WebModels.Resources.PMS.Task.BtnCreate</button>
                 </div>
             </div>
             if (Model.ProjectTask.TaskId > 0)
             {
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" name="Delete">@EPMS.Web.Resources.PMS.Task.BtnDelete</button>
+                        <button type="submit" class="btn" name="Delete">@EPMS.WebModels.Resources.PMS.Task.BtnDelete</button>
                     </div>
                 </div>
             }

@@ -2,21 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.Common;
+using EPMS.Models.DashboardModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
-using EPMS.Web.ModelMappers;
 using System.Configuration;
 using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Inventory.RFI;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.RFI;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Inventory.RFI;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.RFI;
 using Microsoft.AspNet.Identity;
-using RFI = EPMS.Web.Models.RFI;
-using RFIItem = EPMS.Web.Models.RFIItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -56,7 +55,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             searchRequest.Requester = (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Employee ? Session["UserID"].ToString() : "Admin";
             var requestResponse = rfiService.LoadAllRfis(searchRequest);
             var data = requestResponse.Rfis.Select(x => x.CreateRfiServerToClient());
-            var responseData = data as IList<RFI> ?? data.ToList();
+            var responseData = data as IList<WebModels.WebsiteModels.RFI> ?? data.ToList();
             if (responseData.Any())
             {
                 viewModel.aaData = responseData;
@@ -67,7 +66,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                viewModel.aaData = Enumerable.Empty<RFI>();
+                viewModel.aaData = Enumerable.Empty<WebModels.WebsiteModels.RFI>();
                 viewModel.iTotalRecords = requestResponse.TotalCount;
                 viewModel.iTotalDisplayRecords = requestResponse.TotalCount;
                 viewModel.sEcho = searchRequest.sEcho;
@@ -87,7 +86,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (rfiresponse.Rfi != null)
             {
                 rfiViewModel.Rfi = rfiresponse.Rfi.CreateRfiServerToClient();
-                if (Resources.Shared.Common.TextDirection == "ltr")
+                if (EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr")
                 {
                     rfiViewModel.Rfi.RequesterName = rfiresponse.RequesterNameE;
                     rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameE;
@@ -104,11 +103,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rfiViewModel.Rfi = new RFI
+                rfiViewModel.Rfi = new WebModels.WebsiteModels.RFI
                 {
                     RequesterName = Session["FullName"].ToString()
                 };
-                rfiViewModel.RfiItem = new List<RFIItem>();
+                rfiViewModel.RfiItem = new List<WebModels.WebsiteModels.RFIItem>();
             }
             rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
             ViewBag.From = from;
@@ -126,7 +125,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.RFI.RFI.RFIReplied,
+                    Message = EPMS.WebModels.Resources.RFI.RFI.RFIReplied,
                     IsUpdated = true
                 };
 
@@ -149,7 +148,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "RFICreate")]
         public ActionResult Create(long? id)
         {
-            string direction = Resources.Shared.Common.TextDirection;
+            string direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             bool loadCustomersAndOrders = CheckHasCustomerModule();
             var rfiresponse = rfiService.LoadRfiResponseData(id, loadCustomersAndOrders, "");
             RFIViewModel rfiViewModel = new RFIViewModel();
@@ -161,17 +160,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
-                rfiViewModel.Rfi = new RFI
+                rfiViewModel.Rfi = new WebModels.WebsiteModels.RFI
                 {
                     FormNumber = Utility.GenerateFormNumber("RF", rfiresponse.LastFormNumber),
                     RequesterName = direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString()
                 };
-                rfiViewModel.RfiItem = new List<RFIItem>();
+                rfiViewModel.RfiItem = new List<WebModels.WebsiteModels.RFIItem>();
             }
             if (loadCustomersAndOrders)
             {
-                rfiViewModel.Customers = rfiresponse.Customers.Any()?rfiresponse.Customers.Select(x => x.CreateForDashboard()):new List<DashboardModels.Customer>();
-                rfiViewModel.Orders = rfiresponse.Orders.Any()?rfiresponse.Orders.Select(x => x.CreateForDashboard()):new List<DashboardModels.Order>();
+                rfiViewModel.Customers = rfiresponse.Customers.Any()?rfiresponse.Customers.Select(x => x.CreateForDashboard()):new List<Customer>();
+                rfiViewModel.Orders = rfiresponse.Orders.Any()?rfiresponse.Orders.Select(x => x.CreateForDashboard()):new List<Order>();
                 //set customerId
                 if (rfiViewModel.Rfi.OrderId > 0)
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
@@ -194,7 +193,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.RFI.RFI.RFIUpdated,
+                        Message = EPMS.WebModels.Resources.RFI.RFI.RFIUpdated,
                         IsUpdated = true
                     };
                 }
@@ -205,7 +204,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                     rfiViewModel.Rfi.RecUpdatedBy = User.Identity.GetUserId();
                     rfiViewModel.Rfi.RecUpdatedDate = DateTime.Now;
-                    TempData["message"] = new MessageViewModel { Message = Resources.RFI.RFI.RFICreated, IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.RFI.RFI.RFICreated, IsSaved = true };
                 }
 
                 var rfiToBeSaved = rfiViewModel.CreateRfiClientToServer();
@@ -228,9 +227,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             RfiHistoryResponse response = rfiService.GetRfiHistoryData(id);
             RFIHistoryViewModel viewModel = new RFIHistoryViewModel();
-            viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<RFI>();
-            viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<RFIItem>();
-            viewModel.RecentRfi = (response.RecentRfi != null && response.RecentRfi.RFIId > 0) ? response.RecentRfi.CreateRfiServerToClient() : new RFI();
+            viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<WebModels.WebsiteModels.RFI>();
+            viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<WebModels.WebsiteModels.RFIItem>();
+            viewModel.RecentRfi = (response.RecentRfi != null && response.RecentRfi.RFIId > 0) ? response.RecentRfi.CreateRfiServerToClient() : new WebModels.WebsiteModels.RFI();
             
             if (viewModel.RecentRfi != null)
             {
@@ -253,7 +252,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
                 TempData["message"] = new MessageViewModel
                 {
-                    Message = Resources.RFI.RFI.RFIReplied,
+                    Message = EPMS.WebModels.Resources.RFI.RFI.RFIReplied,
                     IsUpdated = true
                 };
 

@@ -1,5 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using EPMS.Web.Resources.Shared;
+using EPMS.WebModels.Resources.Shared;
 
 namespace EPMS.Web.EnumForDropDown
 {

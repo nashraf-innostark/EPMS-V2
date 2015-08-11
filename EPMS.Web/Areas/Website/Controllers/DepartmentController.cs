@@ -6,10 +6,11 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers.Website.Department;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Website.Department;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers.Website.Department;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Website.Department;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
@@ -37,7 +38,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             DepartmentViewModel viewModel = new DepartmentViewModel
             {
-                WebsiteDepartment = id != null ? departmentService.FindDepartmentById((long)id).CreateFromServerToClient() : new Models.WebsiteDepartment()
+                WebsiteDepartment = id != null ? departmentService.FindDepartmentById((long)id).CreateFromServerToClient() : new WebsiteDepartment()
             };
             return View(viewModel);
         }

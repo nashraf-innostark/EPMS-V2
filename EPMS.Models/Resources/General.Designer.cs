@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Models.Resources {
+namespace EPMS.WebModels.Resources {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EPMS.Models.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Models.Resources.General", typeof(General).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.General", typeof(General).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

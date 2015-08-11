@@ -2,22 +2,17 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ViewModels.Employee;
+using EPMS.WebModels.ViewModels.Payroll;
 using EPMS.Web.Controllers;
-using EPMS.Web.ViewModels.Employee;
-using EPMS.Web.ViewModels.Payroll;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.Owin;
-using EPMS.Web.ModelMappers;
 using EPMS.Models.ResponseModels;
-using Org.BouncyCastle.Ocsp;
-using Employee = EPMS.Web.Models.Employee;
+using Employee = EPMS.WebModels.WebsiteModels.Employee;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {

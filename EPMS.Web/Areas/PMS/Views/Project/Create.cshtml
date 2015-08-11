@@ -1,24 +1,24 @@
 ﻿@using System.Configuration
 @using System.Globalization
-@model EPMS.Web.ViewModels.Project.ProjectViewModel
+@model EPMS.WebModels.ViewModels.Project.ProjectViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = EPMS.WebModels.Resources.PMS.Project.NewProject;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var pageheading = "";
     var breadcrumb = "";
     Layout = "~/Views/Shared/_Layout.cshtml";
     if (Model.Project.ProjectId > 0)
     {
-        ViewBag.Title = EPMS.Web.Resources.PMS.Project.Edit + " " + (direction == "ltr" ? " " + Model.Project.NameE : " " + Model.Project.NameA);
+        ViewBag.Title = EPMS.WebModels.Resources.PMS.Project.Edit + " " + (direction == "ltr" ? " " + Model.Project.NameE : " " + Model.Project.NameA);
         pageheading = ViewBag.Title;
         breadcrumb = ViewBag.Title;
     }
     else
     {
-        ViewBag.Title = EPMS.Web.Resources.PMS.Project.NewProject;
+        ViewBag.Title = EPMS.WebModels.Resources.PMS.Project.NewProject;
         breadcrumb = ViewBag.Title;
-        pageheading = EPMS.Web.Resources.PMS.Project.AddNewProject;
+        pageheading = EPMS.WebModels.Resources.PMS.Project.AddNewProject;
     }
     string[] module = (string[])Session["UserModules"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
@@ -37,7 +37,7 @@
             </a>
         </li>
         <li>
-            <a href="~/PMS/Project/Index">@EPMS.Web.Resources.PMS.Project.ProjectsList</a>
+            <a href="~/PMS/Project/Index">@EPMS.WebModels.Resources.PMS.Project.ProjectsList</a>
         </li>
         <li class="current">
             @breadcrumb
@@ -70,19 +70,19 @@
                 <div class="controls">
                     <label>
                         <input id="order" type="radio" name="CreateFrom" value="order">
-                        @EPMS.Web.Resources.PMS.Project.CreateFromOrder
+                        @EPMS.WebModels.Resources.PMS.Project.CreateFromOrder
                     </label>
                     <br />
                     <label>
                         <input id="quotation" type="radio" name="CreateFrom" value="quotation">
-                        @EPMS.Web.Resources.PMS.Project.CreateFromQuotation
+                        @EPMS.WebModels.Resources.PMS.Project.CreateFromQuotation
                     </label>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ProjectNameE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -93,7 +93,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectNameAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ProjectNameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -106,18 +106,18 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.ClientName</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ClientName</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.Web.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
+                        @(direction == "ltr" ? Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameE"), EPMS.WebModels.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }) : Html.DropDownListFor(x => x.Project.CustomerId, new SelectList(Model.Customers, "CustomerId", "CustomerNameA"), EPMS.WebModels.Resources.PMS.Project.SelectClientName, new { @class = "select2me", @id = "Client" }))
                     </div>
                 </div>
 
             </div>
             <div class="control-group row-fluid" id="quotationControl">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Quotation</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.Quotation</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -135,7 +135,7 @@
             </div>
             <div class="control-group row-fluid" id="orderControl">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.OrderNo</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.OrderNo</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
@@ -155,7 +155,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectSerialNo</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ProjectSerialNo</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -165,7 +165,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.DescriptionE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.DescriptionE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -175,7 +175,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.DescriptionA</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.DescriptionA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -188,7 +188,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">
-                    @EPMS.Web.Resources.PMS.Project.StartDate
+                    @EPMS.WebModels.Resources.PMS.Project.StartDate
                     <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
@@ -215,7 +215,7 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">
-                    @EPMS.Web.Resources.PMS.Project.EndDate
+                    @EPMS.WebModels.Resources.PMS.Project.EndDate
                     <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
@@ -241,7 +241,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectPrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ProjectPrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -254,7 +254,7 @@
         {
             <div class="alert alert-info alert-block">
                 <i class="icon-alert icon-alert-info"></i>
-                <strong><a>@EPMS.Web.Resources.PMS.Project.Tasks</a></strong>
+                <strong><a>@EPMS.WebModels.Resources.PMS.Project.Tasks</a></strong>
             </div>
 
         <!--Sortable Responsive Table begin-->
@@ -264,11 +264,11 @@
                         <thead>
                             <tr>
                                 <th></th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Tasks</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskDate</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.TaskPreReq</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Employees</th>
-                                <th>@EPMS.Web.Resources.PMS.Project.Progress</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.Tasks</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.TaskDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.TaskPreReq</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.Employees</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Project.Progress</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -295,7 +295,7 @@
         <!--Input Field begin-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.TotalTasksCost</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.TotalTasksCost</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -307,7 +307,7 @@
         <!--Input Field begin-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.OtherCost</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.OtherCost</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -319,7 +319,7 @@
         <!--Input Field begin-->
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Profit</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.Profit</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -329,7 +329,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label">@EPMS.Web.Resources.PMS.Project.Progress</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.Progress</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -342,7 +342,7 @@
             {
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
-                    <strong>@EPMS.Web.Resources.PMS.Project.InstallmentPlan</strong>
+                    <strong>@EPMS.WebModels.Resources.PMS.Project.InstallmentPlan</strong>
                 </div>
 
 
@@ -356,18 +356,18 @@
                                     <th>
                                         @if (Model.Installment != null)
                                         {
-                                            <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.Web.Resources.PMS.Project.Installment</a>
+                                            <a href="~/CMS/Orders/Create/@Model.Installment.OrderId">@EPMS.WebModels.Resources.PMS.Project.Installment</a>
                                         }
                                         else
                                         {
-                                            @EPMS.Web.Resources.PMS.Project.Installment
+                                            @EPMS.WebModels.Resources.PMS.Project.Installment
                                         }
 
                                     </th>
-                                    <th>@EPMS.Web.Resources.PMS.Project.DueAtProjectPorgress</th>
-                                    <th>@EPMS.Web.Resources.PMS.Project.MethodOfPayment</th>
-                                    <th>@EPMS.Web.Resources.PMS.Project.Paid</th>
-                                    <th>@EPMS.Web.Resources.PMS.Project.CreateShowReceipt</th>
+                                    <th>@EPMS.WebModels.Resources.PMS.Project.DueAtProjectPorgress</th>
+                                    <th>@EPMS.WebModels.Resources.PMS.Project.MethodOfPayment</th>
+                                    <th>@EPMS.WebModels.Resources.PMS.Project.Paid</th>
+                                    <th>@EPMS.WebModels.Resources.PMS.Project.CreateShowReceipt</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -435,16 +435,16 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.ProjectStatus</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ProjectStatus</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @Html.DropDownListFor(model => model.Project.Status, new[]
                     {
-                        new SelectListItem { Value = "1" , Text = EPMS.Web.Resources.Shared.Common.OnGoing },
-                        new SelectListItem { Value = "2" , Text = EPMS.Web.Resources.Shared.Common.OnHold },
-                        new SelectListItem { Value = "3" , Text = EPMS.Web.Resources.Shared.Common.Canceled },
-                        new SelectListItem { Value = "4" , Text = EPMS.Web.Resources.Shared.Common.Finished }
+                        new SelectListItem { Value = "1" , Text = EPMS.WebModels.Resources.Shared.Common.OnGoing },
+                        new SelectListItem { Value = "2" , Text = EPMS.WebModels.Resources.Shared.Common.OnHold },
+                        new SelectListItem { Value = "3" , Text = EPMS.WebModels.Resources.Shared.Common.Canceled },
+                        new SelectListItem { Value = "4" , Text = EPMS.WebModels.Resources.Shared.Common.Finished }
                     }, new { @id = "ProjectStatusDDL" })
                 </div>
             </div>
@@ -456,7 +456,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.NotesE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.NotesE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -467,7 +467,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.NotesA</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.NotesA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -480,7 +480,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.NotesCustomerE</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.NotesCustomerE</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -491,7 +491,7 @@
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.PMS.Project.NotesCustomerA</label>
+                <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.NotesCustomerA</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -504,7 +504,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputField">
-                    @EPMS.Web.Resources.PMS.Project.Documents<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.Web.Resources.PMS.Project.FileSize"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.PMS.Project.Documents<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="@EPMS.WebModels.Resources.PMS.Project.FileSize"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -522,7 +522,7 @@
                 {
                     <div class="controls">
                         <div class="span-inset">
-                            <button type="button" class="btn" onclick="DeleteDoc(this,@doc.Id)">@EPMS.Web.Resources.PMS.Project.DeleteFile @doc.FileName</button>
+                            <button type="button" class="btn" onclick="DeleteDoc(this,@doc.Id)">@EPMS.WebModels.Resources.PMS.Project.DeleteFile @doc.FileName</button>
                         </div>
                     </div>
                 }
@@ -533,11 +533,11 @@
             <div class="span3 span-inset">
                 @if (Model.Project.ProjectId > 0)
                 {
-                    <button type="submit" class="btn" onclick="validateDate(event)">@EPMS.Web.Resources.PMS.Project.UpdateProject</button>
+                    <button type="submit" class="btn" onclick="validateDate(event)">@EPMS.WebModels.Resources.PMS.Project.UpdateProject</button>
                 }
                 else
                 {
-                    <button type="submit" class="btn" onclick="validateDate(event)">@EPMS.Web.Resources.PMS.Project.CreateProject</button>
+                    <button type="submit" class="btn" onclick="validateDate(event)">@EPMS.WebModels.Resources.PMS.Project.CreateProject</button>
                 }
             </div>
 
@@ -616,8 +616,8 @@
             maxsize: 1,
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.PMS.Project.DocumentUpload",
-            over_text: "@EPMS.Web.Resources.PMS.Project.DocumentHoverText",
+            ini_text: "@EPMS.WebModels.Resources.PMS.Project.DocumentUpload",
+            over_text: "@EPMS.WebModels.Resources.PMS.Project.DocumentHoverText",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
 

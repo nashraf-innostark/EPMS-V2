@@ -1,12 +1,12 @@
 ﻿@using System.Configuration
-@model EPMS.Web.ViewModels.IRF.ItemReleaseDetailViewModel
+@model EPMS.WebModels.ViewModels.IRF.ItemReleaseDetailViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.IRF.View.IRFView.PageTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    var header = EPMS.Web.Resources.Inventory.IRF.View.IRFView.Header;
+    var header = EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Header;
     int i = 0;
 }
 
@@ -19,7 +19,7 @@
         </li>
         <li>
             <a href="~/Inventory/ItemRelease/Index">
-                @EPMS.Web.Resources.Inventory.IRF.View.IRFView.BCTitle
+                @EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.BCTitle
             </a>
         </li>
         <li class="current">
@@ -43,11 +43,11 @@
         @Html.HiddenFor(model => model.ItemRelease.ItemReleaseId)
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
-                @EPMS.Web.Resources.Inventory.IRF.View.IRFView.ContainerTitle
+                @EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ContainerTitle
             </div>
             <div class="invoice-info">
                 <div class="controls">
-                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Print</a>
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Print</a>
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span6">
@@ -57,34 +57,34 @@
                                     @if (ViewBag.IsAllowedCompleteView)
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
                                             <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
                                             <td>@(Session["EmployeeID"] != null ? Session["EmployeeID"].ToString() : string.Empty)</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
-                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
+                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeName</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EmployeeName</th>
                                             <td>@(direction == "ltr" ? Session["UserFullName"].ToString() : Session["UserFullNameA"].ToString())</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
                                             <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
-                                            <td>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
+                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Usage</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Usage</th>
                                             <td>customer related</td>
                                         </tr>
                                     }
@@ -99,34 +99,34 @@
                                     @if (ViewBag.IsAllowedCompleteView)
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Date</th>
                                             <td>@Model.ItemRelease.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.RequesterName</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.RequesterName</th>
                                             <td>@(direction == "ltr" ? Model.ItemRelease.RequesterNameE : Model.ItemRelease.RequesterNameA)</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
                                             <td>@Model.ItemRelease.OrderNo</td>
                                         </tr>
                                     }
                                     else
                                     {
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Date</th>
                                             <td>@Model.ItemRelease.RecCreatedDate.ToShortDateString()</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ClientName</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ClientName</th>
                                             <td>@(direction == "ltr" ? Model.ItemRelease.RequesterNameE : Model.ItemRelease.RequesterNameA)</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.OrderNo</th>
                                             <td>@Model.ItemRelease.OrderNo</td>
                                         </tr>
                                         <tr>
-                                            <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
+                                            <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.InventoryManagerName</th>
                                             <td>@(direction == "ltr" ? Model.ItemRelease.ManagerName : Model.ItemRelease.ManagerNameAr)</td>
                                         </tr>
                                     }
@@ -145,24 +145,24 @@
                         @if (ViewBag.IsAllowedCompleteView)
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemName</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Warhouse</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ItemName</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Warhouse</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Serial</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemName</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
-                                <th>@EPMS.Web.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ItemName</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ItemCode</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.SKUCode</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.QuantityRelease</th>
+                                <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.ShipmentDetails</th>
                             </tr>
                         }
                     </thead>
@@ -231,7 +231,7 @@
         <div id="CKNotes" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                    <label class="control-label" for="Notes">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -241,7 +241,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                    <label class="control-label" for="NotesAr">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -253,7 +253,7 @@
         <div id="Notes" style="display: none">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="Notes">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Notes</label>
+                    <label class="control-label" for="Notes">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Notes</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -263,7 +263,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="NotesAr">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
+                    <label class="control-label" for="NotesAr">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.NotesAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -275,14 +275,14 @@
         <div class="control-group row-fluid">
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="jobTitle">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.RequestStatus</label>
+                    <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.RequestStatus</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
                         @Html.DropDownListFor(model => model.ItemRelease.Status, new[] {
-                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Pending, Value = "3" },
-                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Accepted, Value = "1" },
-                            new SelectListItem { Text = EPMS.Web.Resources.CMS.Order.Rejected, Value = "2" } },
+                            new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Pending, Value = "3" },
+                            new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Accepted, Value = "1" },
+                            new SelectListItem { Text = EPMS.WebModels.Resources.CMS.Order.Rejected, Value = "2" } },
                             new { @id = "Status", @class = "select2me disableDdl" })
                     </div>
                 </div>
@@ -292,14 +292,14 @@
         {
             <div id="SubmitIrf" class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    <button type="submit" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.Submit</button>
+                    <button type="submit" class="btn">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Submit</button>
                 </div>
             </div>
             if (userPermissionsSet.Contains("ItemReleaseCreate"))
             {
                 <div id="EditIrf" class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.Web.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
+                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/ItemRelease/Create/@Model.ItemRelease.ItemReleaseId" class="btn">@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EditIRF</a>
                     </div>
                 </div>
             }

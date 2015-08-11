@@ -4,14 +4,14 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.InventoryDepartment;
+using EPMS.WebModels.ViewModels.InventorySection;
 using EPMS.Web.Controllers;
-using EPMS.Web.Models;
-using EPMS.Web.Models.Common;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.InventoryDepartment;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.InventorySection;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.WebsiteModels;
+using EPMS.WebModels.WebsiteModels.Common;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -55,7 +55,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.InventoryDepartment.DepartmentSaved,
+                        Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.DepartmentSaved,
                         IsUpdated = true
                     };
                 }
@@ -63,7 +63,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.InventoryDepartment.SectionSaved,
+                        Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.SectionSaved,
                         IsUpdated = true
                     };
                 }
@@ -71,7 +71,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.Inventory.InventoryDepartment.RecordUpdated,
+                        Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.RecordUpdated,
                         IsUpdated = true
                     };
                 }
@@ -282,7 +282,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #region Sections SubSections
 
-        IEnumerable<InventoryDepartment> MakeSectionSubSections(IEnumerable<InventoryDepartment> Sections)
+        IEnumerable<WebModels.WebsiteModels.InventoryDepartment> MakeSectionSubSections(IEnumerable<InventoryDepartment> Sections)
         {
             List<InventoryDepartment> listOfNodes = new List<InventoryDepartment>();
             List<InventoryDepartment> listOfChilds = new List<InventoryDepartment>();

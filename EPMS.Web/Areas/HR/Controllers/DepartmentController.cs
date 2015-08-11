@@ -4,10 +4,10 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Department;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Department;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.HR.Controllers
@@ -75,7 +75,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                     var departmentToUpdate = departmentListViewModel.Department.CreateFrom();
                     if (oService.UpdateDepartment(departmentToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Department.UpdateDepartment, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Department.UpdateDepartment, IsUpdated = true };
                         return RedirectToAction("Index");
                     }
                 }
@@ -91,7 +91,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     if (oService.AddDepartment(modelToSave))
                     {
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Department.SaveDepartment, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Department.SaveDepartment, IsSaved = true };
                         departmentListViewModel.Department.DepartmentId = modelToSave.DepartmentId;
                         return RedirectToAction("Index");
                     }

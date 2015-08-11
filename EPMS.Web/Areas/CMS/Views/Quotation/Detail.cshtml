@@ -1,8 +1,8 @@
-﻿@model EPMS.Web.ViewModels.Quotation.QuotationDetailViewModel
+﻿@model EPMS.WebModels.ViewModels.Quotation.QuotationDetailViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.CMS.Quotation.Quot;
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Quotation.Quot;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var discount = Model.Quotation.QuotationDiscount;
     string date = Model.Quotation.RecCreatedDt.ToString();
     string[] str = date.Split(' ');
@@ -19,7 +19,7 @@
         </li>
         <li>
             <a href="~/CMS/Quotation/Index">
-                @EPMS.Web.Resources.CMS.Quotation.QuotList
+                @EPMS.WebModels.Resources.CMS.Quotation.QuotList
             </a>
         </li>
         <li>
@@ -45,7 +45,7 @@
         <div class="control-group row-fluid">
 
             <div class="form-legend centTitle">
-                @EPMS.Web.Resources.CMS.Quotation.Quot
+                @EPMS.WebModels.Resources.CMS.Quotation.Quot
             </div>
             <div class="invoice-info">
                 <div class="invoice-name">
@@ -59,7 +59,7 @@
                     }
                 </div>
                 <div class="controls">
-                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> @EPMS.Web.Resources.CMS.Quotation.Print</a>
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> @EPMS.WebModels.Resources.CMS.Quotation.Print</a>
                 </div>
                 @if (!(string.IsNullOrEmpty(ViewBag.LogoPath)))
                 {
@@ -72,27 +72,27 @@
                 <div class="control-group row-fluid">
                     <div class="span3">
                         <div class="invoice-from">
-                            <span>@EPMS.Web.Resources.CMS.Quotation.EmpName</span>
+                            <span>@EPMS.WebModels.Resources.CMS.Quotation.EmpName</span>
                             <strong>@Model.Profile.CompanyNameE</strong>
                             <address>
-                                @EPMS.Web.Resources.CMS.Quotation.StreetAddress
+                                @EPMS.WebModels.Resources.CMS.Quotation.StreetAddress
                                 @Model.Profile.CompanyAddressE <br />
-                                <abbr title="Phone">@EPMS.Web.Resources.CMS.Quotation.Phone:</abbr> @Model.Profile.CompanyNumber <br>
-                                <abbr title="Website">@EPMS.Web.Resources.CMS.Quotation.Website:</abbr> @Model.Profile.CompanyWebsite <br>
-                                <abbr title="invoiceMail">@EPMS.Web.Resources.CMS.Quotation.Email:</abbr> @Model.Profile.CompanyEmail <br>
+                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Quotation.Phone:</abbr> @Model.Profile.CompanyNumber <br>
+                                <abbr title="Website">@EPMS.WebModels.Resources.CMS.Quotation.Website:</abbr> @Model.Profile.CompanyWebsite <br>
+                                <abbr title="invoiceMail">@EPMS.WebModels.Resources.CMS.Quotation.Email:</abbr> @Model.Profile.CompanyEmail <br>
                             </address>
                         </div>
                     </div>
 
                     <div class="span3">
                         <div class="invoice-to">
-                            <span>@EPMS.Web.Resources.CMS.Quotation.ClientName</span>
+                            <span>@EPMS.WebModels.Resources.CMS.Quotation.ClientName</span>
                             <strong>@Model.Quotation.Customers.CustomerNameE</strong>
                             <address>
-                                @EPMS.Web.Resources.CMS.Quotation.StreetAddress
+                                @EPMS.WebModels.Resources.CMS.Quotation.StreetAddress
                                 @Model.Quotation.Customers.CustomerAddress <br>
-                                <abbr title="Phone">@EPMS.Web.Resources.CMS.Quotation.Phone:</abbr> @Model.Quotation.Customers.CustomerMobile <br>
-                                <abbr title="Fax">@EPMS.Web.Resources.CMS.Quotation.Email:</abbr> @Model.Quotation.Customers.Email
+                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Quotation.Phone:</abbr> @Model.Quotation.Customers.CustomerMobile <br>
+                                <abbr title="Fax">@EPMS.WebModels.Resources.CMS.Quotation.Email:</abbr> @Model.Quotation.Customers.Email
                             </address>
                         </div>
                     </div>
@@ -101,11 +101,11 @@
                             <table>
                                 <tbody>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.CMS.Quotation.Date:</th>
+                                        <th>@EPMS.WebModels.Resources.CMS.Quotation.Date:</th>
                                         <td>@date</td>
                                     </tr>
                                     <tr>
-                                        <th>@EPMS.Web.Resources.CMS.Quotation.QuotationNo:</th>
+                                        <th>@EPMS.WebModels.Resources.CMS.Quotation.QuotationNo:</th>
                                         <td>@Model.Quotation.QuotationId</td>
                                     </tr>
                                 </tbody>
@@ -115,7 +115,7 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="GreetingEn">@EPMS.Web.Resources.CMS.Quotation.Greetings</label>
+                        <label class="control-label" for="GreetingEn">@EPMS.WebModels.Resources.CMS.Quotation.Greetings</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -125,7 +125,7 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="GreetingAr">@EPMS.Web.Resources.CMS.Quotation.GreetingsAr</label>
+                        <label class="control-label" for="GreetingAr">@EPMS.WebModels.Resources.CMS.Quotation.GreetingsAr</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -138,10 +138,10 @@
                         <table class="table table-striped table-responsive ">
                             <thead class="">
                                 <tr>
-                                    <th style="width:70%">@EPMS.Web.Resources.CMS.Quotation.ItemDetails</th>
-                                    <th>@EPMS.Web.Resources.CMS.Quotation.Quantity</th>
-                                    <th>@EPMS.Web.Resources.CMS.Quotation.UnitPrice</th>
-                                    <th>@EPMS.Web.Resources.CMS.Quotation.Total</th>
+                                    <th style="width:70%">@EPMS.WebModels.Resources.CMS.Quotation.ItemDetails</th>
+                                    <th>@EPMS.WebModels.Resources.CMS.Quotation.Quantity</th>
+                                    <th>@EPMS.WebModels.Resources.CMS.Quotation.UnitPrice</th>
+                                    <th>@EPMS.WebModels.Resources.CMS.Quotation.Total</th>
                                 </tr>
                             </thead>
                             <tbody class="qouteAdd">
@@ -165,7 +165,7 @@
                                 <tr class="invoiceCal">
                                     <td colspan="2"></td>
                                     <td class="sub">
-                                        @EPMS.Web.Resources.CMS.Quotation.Subtotal :
+                                        @EPMS.WebModels.Resources.CMS.Quotation.Subtotal :
                                     </td>
                                     <td id="subtotal">
                                         10
@@ -174,7 +174,7 @@
                                 <tr class="invoiceCal">
                                     <td colspan="2"></td>
                                     <td class="disc">
-                                        @EPMS.Web.Resources.CMS.Quotation.Discount :
+                                        @EPMS.WebModels.Resources.CMS.Quotation.Discount :
                                     </td>
                                     <td id="Discount">
                                         @discount
@@ -183,7 +183,7 @@
                                 <tr class="invoiceCal">
                                     <td colspan="2"></td>
                                     <td class="gTotal">
-                                        @EPMS.Web.Resources.CMS.Quotation.GrandTotal :
+                                        @EPMS.WebModels.Resources.CMS.Quotation.GrandTotal :
                                     </td>
                                     <td id="GrandTotal">
                                         10
@@ -194,7 +194,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="inWord">@EPMS.Web.Resources.CMS.Quotation.InWords</label>
+                            <label class="control-label" for="inWord">@EPMS.WebModels.Resources.CMS.Quotation.InWords</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -204,12 +204,12 @@
                     </div>
                     <div class="alert alert-info alert-block">
                         <i class="icon-alert icon-alert-info"></i>
-                        <strong><a>@EPMS.Web.Resources.CMS.Quotation.InstallmentPlan</a></strong>
+                        <strong><a>@EPMS.WebModels.Resources.CMS.Quotation.InstallmentPlan</a></strong>
                     </div>
 
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="Installment1">@EPMS.Web.Resources.CMS.Quotation.FirstInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Quotation.FirstInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -219,7 +219,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="DueAt1">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="DueAt1">@EPMS.WebModels.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span4 span-inset">
                             <div class="progress progress-info">
@@ -229,7 +229,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="Installment2">@EPMS.Web.Resources.CMS.Quotation.SecondInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="Installment2">@EPMS.WebModels.Resources.CMS.Quotation.SecondInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -239,7 +239,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="DueAt2">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="DueAt2">@EPMS.WebModels.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span4 span-inset">
                             <div class="progress progress-info">
@@ -249,7 +249,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="Installment3">@EPMS.Web.Resources.CMS.Quotation.ThirdInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="Installment3">@EPMS.WebModels.Resources.CMS.Quotation.ThirdInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -259,7 +259,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="DueAt3">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="DueAt3">@EPMS.WebModels.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span4 span-inset">
                             <div class="progress progress-info">
@@ -269,7 +269,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="Installment4">@EPMS.Web.Resources.CMS.Quotation.FourthInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="Installment4">@EPMS.WebModels.Resources.CMS.Quotation.FourthInstallment<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -279,7 +279,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="DueAt4">@EPMS.Web.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                            <label class="control-label" for="DueAt4">@EPMS.WebModels.Resources.CMS.Quotation.DueAt<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
                         </div>
                         <div class="span4 span-inset">
                             <div class="progress progress-info">
@@ -289,7 +289,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="ExtraInformationEn">@EPMS.Web.Resources.CMS.Quotation.Notes</label>
+                            <label class="control-label" for="ExtraInformationEn">@EPMS.WebModels.Resources.CMS.Quotation.Notes</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -299,7 +299,7 @@
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
-                            <label class="control-label" for="ExtraInformationaAr">@EPMS.Web.Resources.CMS.Quotation.NotesAr</label>
+                            <label class="control-label" for="ExtraInformationaAr">@EPMS.WebModels.Resources.CMS.Quotation.NotesAr</label>
                         </div>
                         <div class="span9">
                             <div class="controls">
@@ -312,12 +312,12 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="placeOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnPlaceOrder</button>
+                <button type="submit" class="btn" onclick="placeOrder()">@EPMS.WebModels.Resources.CMS.Quotation.BtnPlaceOrder</button>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="cancelOrder()">@EPMS.Web.Resources.CMS.Quotation.BtnCancelOrder</button>
+                <button type="submit" class="btn" onclick="cancelOrder()">@EPMS.WebModels.Resources.CMS.Quotation.BtnCancelOrder</button>
             </div>
         </div>
     </div>

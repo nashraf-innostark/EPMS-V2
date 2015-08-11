@@ -10,10 +10,10 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
 using EPMS.Web.EnumForDropDown;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Slider;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.Slider;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
@@ -42,7 +42,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             SliderViewModel viewModel = new SliderViewModel
             {
-                ImageSlider = id != null ? sliderService.FindImageSliderById((long)id).CreateFromServerToClient() : new Models.ImageSlider()
+                ImageSlider = id != null ? sliderService.FindImageSliderById((long)id).CreateFromServerToClient() : new WebModels.WebsiteModels.ImageSlider()
             };
             IEnumerable<Position> positions = Enum.GetValues(typeof(Position))
                                                        .Cast<Position>();

@@ -5,10 +5,10 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.PhysicalCount;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.PhysicalCount;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
@@ -70,7 +70,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             if (pcResponse.RequesterEmpId != null)
             {
                 physicalCountViewModel.PhysicalCount.RequesterEmpId = pcResponse.RequesterEmpId;
-                physicalCountViewModel.PhysicalCount.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? pcResponse.RequesterNameE : pcResponse.RequesterNameA;
+                physicalCountViewModel.PhysicalCount.RequesterName = EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr" ? pcResponse.RequesterNameE : pcResponse.RequesterNameA;
             }
 
 

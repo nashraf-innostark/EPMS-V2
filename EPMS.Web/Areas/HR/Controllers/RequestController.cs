@@ -6,15 +6,16 @@ using System.Web.Mvc;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ViewModels.Request;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Request;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
-using EmployeeRequest = EPMS.Web.Models.Request;
+using EmployeeRequest = EPMS.WebModels.WebsiteModels.Request;
 
 namespace EPMS.Web.Areas.HR.Controllers
 {
@@ -124,7 +125,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 }
             }
             if (requestViewModel.RequestDetail.IsApproved)
-                ViewBag.MessageVM = new MessageViewModel { Message = Resources.HR.Request.RequestAccepted, IsInfo = true };
+                ViewBag.MessageVM = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Request.RequestAccepted, IsInfo = true };
             return View(requestViewModel);
         }
         // Post: HR/Request/Create
@@ -150,7 +151,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Resources.HR.Request.RequestReplied,
+                        Message = EPMS.WebModels.Resources.HR.Request.RequestReplied,
                         IsUpdated = true
                     };
                 }
@@ -176,7 +177,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                         requestViewModel.RequestDetail.RecLastUpdatedDt = DateTime.Now;
                         requestViewModel.RequestDetail.IsMonetaryLocalFlag = requestViewModel.Request.IsMonetary;
                         employeeRequestService.AddRequestDetail(requestViewModel.RequestDetail.CreateFromClientToServer());
-                        TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestCreated, IsSaved = true };
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Request.RequestCreated, IsSaved = true };
                     }
                 }
                 return RedirectToAction("Index","Request");
@@ -194,7 +195,7 @@ namespace EPMS.Web.Areas.HR.Controllers
                 bool deleted = employeeRequestService.DeleteRequest((long)id);
                 if (deleted)
                 {
-                    TempData["message"] = new MessageViewModel { Message = Resources.HR.Request.RequestDeleted, IsInfo = true };
+                    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Request.RequestDeleted, IsInfo = true };
                 }
             }
             return RedirectToAction("Index");

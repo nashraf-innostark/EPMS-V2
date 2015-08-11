@@ -1,10 +1,10 @@
-﻿@model EPMS.Web.ViewModels.Vendor.VendorViewModel
+﻿@model EPMS.WebModels.ViewModels.Vendor.VendorViewModel
 
 @{
-    ViewBag.Title = EPMS.Web.Resources.Inventory.Vendor.Label;
+    ViewBag.Title = EPMS.WebModels.Resources.Inventory.Vendor.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -16,7 +16,7 @@
         </li>
         <li>
             <a href="">
-                @EPMS.Web.Resources.Inventory.Vendor.Label
+                @EPMS.WebModels.Resources.Inventory.Vendor.Label
             </a>
         </li>
     </ul>
@@ -24,7 +24,7 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Inventory/Vendor/Create">@EPMS.Web.Resources.Inventory.Vendor.AddNew</a></small></h3>
+    <h3> <small><a href="~/Inventory/Vendor/Create">@EPMS.WebModels.Resources.Inventory.Vendor.AddNew</a></small></h3>
 </header>
 
 <!--Notifications begin-->
@@ -39,9 +39,9 @@
                 <table id="Vendors" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.Web.Resources.Inventory.Vendor.Serial</th>
-                            <th>@EPMS.Web.Resources.Inventory.Vendor.Name</th>
-                            <th>@EPMS.Web.Resources.Inventory.Vendor.Field</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.Vendor.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.Vendor.Name</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.Vendor.Field</th>
                         </tr>
                     </thead>
                     <tbody>

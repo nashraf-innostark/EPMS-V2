@@ -2,7 +2,7 @@
 using System.Web;
 using System.Web.Mvc;
 using System.IO;
-using EPMS.Web.ViewModels.CKEditor;
+using EPMS.WebModels.ViewModels.CKEditor;
 
 namespace EPMS.Web.Areas.Common.Controllers
 {

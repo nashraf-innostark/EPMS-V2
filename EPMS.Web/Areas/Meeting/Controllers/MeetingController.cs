@@ -10,13 +10,13 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
+using EPMS.WebModels.ViewModels.Meeting;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Meeting;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 
 namespace EPMS.Web.Areas.Meeting.Controllers

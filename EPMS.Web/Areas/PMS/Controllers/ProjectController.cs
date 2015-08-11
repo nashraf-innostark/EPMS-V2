@@ -10,11 +10,12 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ViewModels.Project;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
-using EPMS.Web.ModelMappers.PMS;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.Project;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
 
@@ -161,7 +162,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     SaveProjectDocuments(projectViewModel);
                     TempData["MessageVm"] = new MessageViewModel
                     {
-                        Message = Resources.PMS.Project.ProjectUpdatedMsg,
+                        Message = EPMS.WebModels.Resources.PMS.Project.ProjectUpdatedMsg,
                         IsUpdated = true
                     };
                 }
@@ -180,7 +181,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
                     TempData["MessageVm"] = new MessageViewModel
                     {
-                        Message = Resources.PMS.Project.ProjectCreatedMsg,
+                        Message = EPMS.WebModels.Resources.PMS.Project.ProjectCreatedMsg,
                         IsSaved = true
                     };
                 }

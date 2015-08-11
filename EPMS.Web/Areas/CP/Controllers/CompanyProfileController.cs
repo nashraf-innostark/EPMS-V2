@@ -8,12 +8,16 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.CompanyProfile;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Web.Models;
-using EPMS.Web.ViewModels.Common;
-using EPMS.Web.ViewModels.CompanyProfile;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ViewModels.Common;
+using EPMS.WebModels.ViewModels.CompanyProfile;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CP.Controllers

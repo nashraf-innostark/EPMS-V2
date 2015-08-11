@@ -1,6 +1,6 @@
-﻿@model EPMS.Web.ViewModels.Request.RequestListViewModel
+﻿@model EPMS.WebModels.ViewModels.Request.RequestListViewModel
 @{
-    ViewBag.Title = EPMS.Web.Resources.HR.Request.Label;
+    ViewBag.Title = EPMS.WebModels.Resources.HR.Request.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
     int i = 0;
 }
@@ -23,7 +23,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (ViewBag.UserRole != "Admin")
     {
-        <h3> <small><a href="~/HR/Request/Create">@EPMS.Web.Resources.HR.Request.CreateRequest</a></small></h3>
+        <h3> <small><a href="~/HR/Request/Create">@EPMS.WebModels.Resources.HR.Request.CreateRequest</a></small></h3>
     }
 </header>
 <!--Notifications begin-->
@@ -40,22 +40,22 @@
                         @if (ViewBag.UserRole == "Admin")
                         {
                             <tr>
-                                <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
-                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
-                                <th>@EPMS.Web.Resources.HR.Request.EmployeeName</th>
-                                <th>@EPMS.Web.Resources.HR.Request.EmployeeJobId</th>
-                                <th>@EPMS.Web.Resources.HR.Request.DepartmentName</th>
-                                <th>@EPMS.Web.Resources.HR.Request.RequestDate</th>
-                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
-                                <th>@EPMS.Web.Resources.HR.Request.Replied</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.EmployeeName</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.EmployeeJobId</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.DepartmentName</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.RequestDate</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.Status</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.Replied</th>
                             </tr>
                         }
                         else
                         {
                             <tr>
                                 <th>@(i += 1)</th>
-                                <th>@EPMS.Web.Resources.HR.Request.RequestTopic</th>
-                                <th>@EPMS.Web.Resources.HR.Request.Status</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.RequestTopic</th>
+                                <th>@EPMS.WebModels.Resources.HR.Request.Status</th>
                             </tr>
                         }
                     </thead>

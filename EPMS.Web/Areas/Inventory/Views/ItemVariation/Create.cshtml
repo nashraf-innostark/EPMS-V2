@@ -1,12 +1,12 @@
 ﻿@using System.Configuration
 @using System.Configuration
-@model EPMS.Web.ViewModels.ItemVariation.ItemVariationViewModel
+@model EPMS.WebModels.ViewModels.ItemVariation.ItemVariationViewModel
 
 @{
-    ViewBag.Title = Model.ItemVariation.ItemVariationId > 0 ? EPMS.Web.Resources.Inventory.ItemVariation.UpdatePageTitle : EPMS.Web.Resources.Inventory.ItemVariation.CreatePageTitle;
+    ViewBag.Title = Model.ItemVariation.ItemVariationId > 0 ? EPMS.WebModels.Resources.Inventory.ItemVariation.UpdatePageTitle : EPMS.WebModels.Resources.Inventory.ItemVariation.CreatePageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
-    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -56,7 +56,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Barcode</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.Barcode</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -68,7 +68,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.SKUCode</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.SKUCode</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -80,7 +80,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.UnitPrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.UnitPrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -92,7 +92,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.PackagePrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.PackagePrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -104,7 +104,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -115,7 +115,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.DescriptionEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.DescriptionEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -127,7 +127,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.DescriptionAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.DescriptionAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -139,7 +139,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.SKUDescEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.SKUDescEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -151,7 +151,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.SKUDescAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.SKUDescAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -163,7 +163,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.QtyInHand</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.QtyInHand</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -175,7 +175,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.QtySold</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.QtySold</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -187,7 +187,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.ReorderPoint</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.ReorderPoint</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -199,7 +199,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.QtyUsedInManufacturing</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.QtyUsedInManufacturing</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -211,7 +211,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Weight</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.Weight</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -223,7 +223,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Height</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.Height</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -235,7 +235,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Width</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.Width</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -247,7 +247,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.Depth</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.Depth</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -259,7 +259,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -270,7 +270,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.NotesAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -280,7 +280,7 @@
             </div>
         </div><div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -291,7 +291,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -605,11 +605,11 @@
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.Web.Resources.Inventory.Vendor.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.Web.Resources.Inventory.Vendor.SaveButton</button>
+                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
+                    <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
                 </div>
                 <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.Web.Resources.HR.JobTitle.CancelButton</button>
+                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
                 </div>
             </div>
         </div>
@@ -1196,7 +1196,7 @@
             maxsize: 1, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "@EPMS.Web.Resources.CP.Profile.UploadBox",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
             over_text: "Drop Here",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
