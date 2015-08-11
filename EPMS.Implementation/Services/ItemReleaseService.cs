@@ -334,6 +334,11 @@ namespace EPMS.Implementation.Services
             itemReleaseRepository.SaveChanges();
         }
 
+        public IEnumerable<ItemRelease> GetItemReleaseByOrder(long orderId)
+        {
+            return itemReleaseRepository.GetItemReleaseByOrder(orderId);
+        }
+
         public IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date)
         {
             return itemReleaseRepository.GetRecentIRFs(status, requester, date);

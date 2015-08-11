@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using EPMS.Models.DomainModels;
 using EPMS.Web.DashboardModels;
-using EPMS.Web.Models;
 using EPMS.Web.ViewModels.RIF;
+using RIFItem = EPMS.Web.Models.RIFItem;
 
 namespace EPMS.Web.ModelMappers.Inventory.RIF
 {
@@ -23,6 +25,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
                 ManagerId = source.Rif.ManagerId,
+                IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -66,6 +69,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
                 ManagerId = source.Rif.ManagerId,
+                IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -86,6 +90,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 ManagerId = source.ManagerId,
+                IRFId = source.IRFId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -126,6 +131,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
+                IRFId = source.IRFId,
                 RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
@@ -138,7 +144,7 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
             return rif;
         }
 
-        public static RIFItem CreateRifItemServerToClient(this EPMS.Models.DomainModels.RIFItem source)
+        public static RIFItem CreateRifItemServerToClient(this EPMS.Models.DomainModels.RIFItem source, IList<Models.ItemWarehouse> itemWarehouses)
         {
             var rifItem = new RIFItem
             {
@@ -153,13 +159,20 @@ namespace EPMS.Web.ModelMappers.Inventory.RIF
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
-                WarehouseId = source.WarehouseId
+                WarehouseId = source.WarehouseId,
+                ItemWarehouses = itemWarehouses.Where(x=>x.ItemVariationId == source.ItemVariationId)
             };
             if (source.ItemVariation != null)
             {
                 rifItem.ItemVariationId = source.ItemVariationId;
                 rifItem.ItemSKUCode = source.ItemVariation.SKUCode;
             }
+            ItemReleaseDetail itemReleaseDetail = source.RIF.ItemRelease.ItemReleaseDetails.FirstOrDefault(x => x.ItemVariationId == source.ItemVariationId);
+            if (
+                itemReleaseDetail != null)
+                rifItem.ReleasedQty =
+                    itemReleaseDetail.ItemQty;
+
             return rifItem;
         }
         #endregion

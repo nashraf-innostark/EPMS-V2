@@ -170,12 +170,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
             var Rifresponse = rifService.LoadRifResponseData(id, loadCustomersAndOrders, "");
-            RIFViewModel rifViewModel = new RIFViewModel();
+            RIFViewModel rifViewModel = new RIFViewModel
+            {
+                ItemWarehouses = Rifresponse.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList()
+            };
             if (Rifresponse.Rif != null)
             {
                 rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
                 rifViewModel.Rif.RequesterName = Resources.Shared.Common.TextDirection == "ltr" ? Rifresponse.RequesterNameE : Rifresponse.RequesterNameA;
-                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient()).ToList();
+                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient(rifViewModel.ItemWarehouses)).ToList();
+                rifViewModel.ItemReleases = 
+                    Rifresponse.ItemReleases != null ? Rifresponse.ItemReleases.Select(x=>x.CreateForRif()).ToList() : new List<ItemReleaseForRif>();
             }
             else
             {
@@ -194,8 +199,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 if (rifViewModel.Rif.OrderId > 0)
                     rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
-            rifViewModel.Warehouses = Rifresponse.Warehouses.Select(x => x.CreateDDL());
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            
             ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);
         }
@@ -235,11 +240,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View();
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = Resources.Inventory.RIF.RIF.RIFError, 
+                    IsSaved = true
+                };
+                return View(rifViewModel);
             }
             catch
             {
-                return View();
+                return View(rifViewModel);
             }
         }
 

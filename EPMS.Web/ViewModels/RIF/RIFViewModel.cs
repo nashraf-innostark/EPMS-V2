@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using EPMS.Models.Common;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Models;
 
@@ -16,6 +15,7 @@ namespace EPMS.Web.ViewModels.RIF
         public Models.RIF Rif { get; set; }
         public List<RIFItem> RifItem { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
-        public IEnumerable<DashboardModels.WarehousDDL> Warehouses { get; set; }
+        public IList<ItemWarehouse> ItemWarehouses { get; set; }
+        public IList<ItemReleaseForRif> ItemReleases { get; set; }
     }
 }

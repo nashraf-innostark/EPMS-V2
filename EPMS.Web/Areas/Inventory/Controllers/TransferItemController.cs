@@ -19,8 +19,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 {
     public class TransferItemController : BaseController
     {
+        #region Private
+
         private readonly ITIRService tirService;
         private readonly IItemVariationService itemVariationService;
+
+        #endregion
 
         #region Construcor
         public TransferItemController(ITIRService tirService, IItemVariationService itemVariationService)
@@ -31,6 +35,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #region Public
+
+        #region Index
         // GET: Inventory/TransferItem
         [SiteAuthorize(PermissionKey = "TIRListView")]
         public ActionResult Index()
@@ -66,7 +73,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Detail
         [SiteAuthorize(PermissionKey = "TIRDetailUpdate,TIRDetail")]
         public ActionResult Detail(long? id, string from)
         {
@@ -112,7 +121,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+        #endregion
 
+        #region Create
         // GET: Inventory/Dif/Create
         [SiteAuthorize(PermissionKey = "TIRCreate,TIRDetail")]
         public ActionResult Create(long? id)
@@ -195,6 +206,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View(viewModel);
             }
         }
+        #endregion
+
+        #region History
         [SiteAuthorize(PermissionKey = "TIRHistory")]
         public ActionResult History(long? id)
         {
@@ -230,5 +244,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+        #endregion
+
+        #endregion
     }
 }

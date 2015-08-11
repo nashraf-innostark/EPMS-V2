@@ -135,6 +135,11 @@ namespace EPMS.Repository.Repositories
             return "IR00000000";
         }
 
+        public IEnumerable<ItemRelease> GetItemReleaseByOrder(long orderId)
+        {
+            return DbSet.Where(x => x.RFI.OrderId == orderId && x.Status == 1);
+        }
+
         #endregion
     }
 }

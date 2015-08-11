@@ -22,6 +22,6 @@ namespace EPMS.Models.ResponseModels
         public IEnumerable<ItemRelease> ItemReleases { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         public IEnumerable<Order> Orders { get; set; }
-        public IEnumerable<Warehouse> Warehouses { get; set; }
+        public IEnumerable<ItemWarehouse> ItemWarehouses { get; set; }
     }
 }

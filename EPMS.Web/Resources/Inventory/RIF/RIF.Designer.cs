@@ -295,6 +295,15 @@ namespace EPMS.Web.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error in saving Returned Item Form..
+        /// </summary>
+        public static string RIFError {
+            get {
+                return ResourceManager.GetString("RIFError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Warehouse.
         /// </summary>
         public static string RIFItem_WarehouseId_Warehouse {

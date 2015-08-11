@@ -171,8 +171,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             if (loadCustomersAndOrders)
             {
-                rfiViewModel.Customers = rfiresponse.Customers.Any()?rfiresponse.Customers.Select(x => x.CreateForDashboard()):new List<DashboardModels.Customer>();
-                rfiViewModel.Orders = rfiresponse.Orders.Any()?rfiresponse.Orders.Select(x => x.CreateForDashboard()):new List<DashboardModels.Order>();
+                rfiViewModel.Customers = rfiresponse.Customers.Any() ? rfiresponse.Customers.Select(x => x.CreateForDashboard()) : new List<DashboardModels.Customer>();
+                rfiViewModel.Orders = rfiresponse.Orders.Any() ? rfiresponse.Orders.Select(x => x.CreateForDashboard()) : new List<DashboardModels.Order>();
                 //set customerId
                 if (rfiViewModel.Rfi.OrderId > 0)
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
@@ -233,7 +233,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<RFI>();
             viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<RFIItem>();
             viewModel.RecentRfi = (response.RecentRfi != null && response.RecentRfi.RFIId > 0) ? response.RecentRfi.CreateRfiServerToClient() : new RFI();
-            
+
             if (viewModel.RecentRfi != null)
             {
                 viewModel.RecentRfi.RequesterName = response.RequesterNameEn;

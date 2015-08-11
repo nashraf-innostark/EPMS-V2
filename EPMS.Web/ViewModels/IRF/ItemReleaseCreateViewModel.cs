@@ -10,6 +10,7 @@ namespace EPMS.Web.ViewModels.IRF
         public ItemReleaseCreateViewModel()
         {
             Rfis = new List<Models.RFI>();
+            ItemReleaseDetails = new List<ItemReleaseDetail>();
             ItemVariationDropDownList = new List<ItemVariationDropDownListItem>();
         }
 

@@ -443,6 +443,7 @@
     <Compile Include="Models\ItemManufacturer.cs" />
     <Compile Include="Models\ItemRelease.cs" />
     <Compile Include="Models\ItemReleaseDetail.cs" />
+    <Compile Include="Models\ItemReleaseForRif.cs" />
     <Compile Include="Models\ItemReleaseQuantity.cs" />
     <Compile Include="Models\ItemVariation.cs" />
     <Compile Include="Models\ItemWarehouse.cs" />

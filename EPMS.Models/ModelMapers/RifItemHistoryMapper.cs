@@ -16,6 +16,7 @@ namespace EPMS.Models.ModelMapers
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
+                WarehouseId = source.WarehouseId,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -36,6 +37,7 @@ namespace EPMS.Models.ModelMapers
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
+                WarehouseId = source.WarehouseId,
 
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,

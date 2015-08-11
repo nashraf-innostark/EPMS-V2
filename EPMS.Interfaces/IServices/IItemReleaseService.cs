@@ -18,5 +18,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateItemRelease(ItemRelease itemRelease, List<ItemReleaseDetail> itemDetails);
         void DeleteItemRelease(ItemRelease itemRelease);
         IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date);
+        IEnumerable<ItemRelease> GetItemReleaseByOrder(long orderId);
     }
 }

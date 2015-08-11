@@ -295,7 +295,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form has successfully Added..
+        ///   Looks up a localized string similar to Item Release Form has added successfully..
         /// </summary>
         public static string RecordAdded {
             get {
@@ -304,7 +304,7 @@ namespace EPMS.Web.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form has successfully Updated..
+        ///   Looks up a localized string similar to Item Release Form has updated successfully..
         /// </summary>
         public static string RecordUpdated {
             get {

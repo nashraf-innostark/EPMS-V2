@@ -278,7 +278,9 @@
                                     <input id='ItemReleaseDetails_0__ItemQty' class="n1 disableOnLoad" type="text" name="ItemReleaseDetails[0].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
                                     <span class="field-validation-valid required" data-valmsg-for="ItemReleaseDetails[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
-                                <td></td>
+                                <td>
+                                    <label id="RequestedQuantity_0" class="tableLabel"></label>
+                                </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow btnDisable"></i>
                                 </td>
@@ -399,6 +401,9 @@
                             "<td class=\"quantity\">" +
                                 "<input id='ItemReleaseDetails_" + index + "__ItemQty' readonly='true' class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
+                            "</td>" +
+                            "<td>" +
+                                "<label id='RequestedQuantity_" + index + "' class='tableLabel'></label>" +
                             "</td>" +
                             "<td class='delete'>" +
                                 "<i class='icon-photon minus deleteRow btnDisable'></i>" +
@@ -883,7 +888,9 @@
                 $("#MultiWarehouse").append(html);
             }
         });
-        //$('#IRFTable thead th:nth-child(5)').show();
+        var details = value.ItemDetails;
+        var regex = new RegExp(",", 'g');
+        details = details.replace(regex, '\n');
         var html1 = "<tr data-id=" + index + ">" +
                             "<td style='display:none'>" +
                                 "<input name='ItemReleaseDetails.Index' type='hidden' value='" + index + "' />" +
@@ -900,7 +907,7 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + value.ItemDetails + "</textarea>" +
+                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + details + "</textarea>" +
                                 "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +

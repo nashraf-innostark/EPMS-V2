@@ -28,7 +28,6 @@
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.Inventory.RIF.RIF.CreatePageHeading</small></h2>
 </header>
-
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
@@ -72,6 +71,26 @@
                 </div>
             </div>
         }
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">IRF #</label>
+            </div>
+            <div class="span2">
+                <div class="controls irfDDL">
+                    @if (Model.Rif.RIFId > 0)
+                    {
+                        @Html.DropDownListFor(m => m.Rif.IRFId, new SelectList(Model.ItemReleases, "ItemReleaseId", "FormNumber"), "--Select--", new { @class = "select2me", @id = "IRFId" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.Rif.IRFId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "IRFId" })
+                    }
+                    <label id="irfValidationError" class="required"></label>
+                </div>
+            </div>
+        </div>
+
+
 
         <!--Input Field begin-->
         <div class="control-group row-fluid">
@@ -95,7 +114,6 @@
                     @Html.TextBoxFor(model => model.Rif.ReasonE)
                 </div>
                 @Html.ValidationMessageFor(m => m.Rif.ReasonE, String.Empty, new { @class = "required" })
-
             </div>
         </div>
         <!--Input Field end-->
@@ -122,7 +140,7 @@
                             <th style="width: 55%">@EPMS.Web.Resources.RFI.RFI.ItemDetails</th>
                             <th style="width: 15%">@EPMS.Web.Resources.RFI.RFI.Quantity</th>
                             <th>@EPMS.Web.Resources.Inventory.RIF.RIF.Warehouse</th>
-                            <th style="display: none">@EPMS.Web.Resources.Inventory.RIF.RIF.ReleasedQuantity</th>
+                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.ReleasedQuantity</th>
                             <th style="width: 4%">@EPMS.Web.Resources.RFI.RFI.Delete</th>
                         </tr>
                     </thead>
@@ -155,25 +173,17 @@
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2 })
+                                        @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2, data_val_range_max = Model.RifItem[i].ReleasedQty, data_val_range = "Please enter quantity equal or less than Released quantity" })
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty, null, new { @class = "required" })
                                     </td>
                                     <td>
                                         <div class="span9 WarehouseError_@(i +1)">
-                                            @if (direction == "ltr")
-                                            {
-                                                <div class="controls">
-                                                    @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me disableDdl" })
-                                                </div>
-                                            }
-                                            else
-                                            {
-                                                <div class="controls">
-                                                    @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me disableDdl" })
-                                                </div>
-                                            }
+                                            @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.RifItem[i].ItemWarehouses, "WarehouseId", "WarehouseNo", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me disableDdl" })
                                             <label id="WarehouseError_@(i + 1)" class="required"></label>
                                         </div>
+                                    </td>
+                                    <td>
+                                        <label id="ReleasedQuantity_@i" class="tableLabel">@Model.RifItem[i].ReleasedQty</label>
                                     </td>
                                     <td class="delete">
                                         <i class="icon-photon minus deleteRow"></i>
@@ -209,20 +219,14 @@
                                 </td>
                                 <td>
                                     <div class="span9 WarehouseError_0">
-                                        @if (direction == "ltr")
-                                        {
-                                            <div class="controls">
-                                                @Html.DropDownList("RifItem[0].WarehouseId", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me disableDdl" })
-                                            </div>
-                                        }
-                                        else
-                                        {
-                                            <div class="controls">
-                                                @Html.DropDownList("RifItem[0].WarehouseId", new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @class = "select2me disableDdl" })
-                                            </div>
-                                        }
+                                        <div class="controls">
+                                            @Html.DropDownList("RifItem[0].WarehouseId", Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me disableDdl" })
+                                        </div>
                                         <label id="WarehouseError_0" class="required"></label>
                                     </div>
+                                </td>
+                                <td>
+                                    <label id="ReleasedQuantity_0" class="tableLabel"></label>
                                 </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
@@ -283,11 +287,12 @@
 <script>
     var siteUrl;
     var divId;
+    var IRFItems = new Array();
     var textTillParent = "";
     var dir = '@direction';
     var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
-    var warehouseList = '@Html.Raw(Json.Encode(Model.Warehouses))';
-    var warehouses = JSON.parse(warehouseList);
+    var itemWarehousesList = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
+    var itemWarehouses = JSON.parse(itemWarehousesList);
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         divId = "jstree";
@@ -327,7 +332,43 @@
                 placeholder: "Select",
             });
         });
-
+        $("#OrderNo").on("change", function () {
+            var orderId = $(this).val();
+            if (orderId != "" && orderId != 0) {
+                ajaxLoader();
+                var url = siteUrl + "/Inventory/ItemRelease/GetIrfByOrder";
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        orderId: orderId
+                    },
+                    success: function (data) {
+                        populateIRFDDL(data);
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error=' + e.toString());
+                    }
+                });
+            }
+        });
+        $("#IRFId").on("change", function () {
+            var irfId = $(this).val();
+            if (irfId != "" && irfId != 0) {
+                $.each(IRFItems, function (key, value) {
+                    if (value.ItemReleaseId == irfId) {
+                        $('.qouteAdd').empty();
+                        var index = 0;
+                        $.each(value.ItemReleaseDetails, function (key1, value1) {
+                            addIrfItems(value1, index);
+                            index++;
+                        });
+                    }
+                });
+            }
+        });
         function getModalControlsValues() {
             //get item's values
             var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
@@ -438,9 +479,11 @@
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
                 if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                    appendWarehouseDD($("#ItemVariationDropDownList").val());
                     getModalControlsValues();
                 }
             } else {
+                appendWarehouseDD($("#ItemVariationTree").val());
                 getModalControlsValuesForTree();
             }
         });
@@ -511,7 +554,7 @@
         //add data in row from popup
         $('.trAdder').on("click", function () {
             var index = $("#RifItemsTableBody").children("tr").length;
-            var warehouseColumn = getWarehouseDD(index);
+            var warehouseColumn = getItemWarehouseDD(index, 0);
             var indexCell = "<td style='display:none'>" +
                 "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
                 "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
@@ -538,6 +581,9 @@
                 '</td>' +
                 '<td>' + warehouseColumn +
                 '</td>' +
+                '<td>' +
+                '<label id="RequestedQuantity_' + index + '" class="tableLabel"></label>' +
+                '</td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
                 '</td></tr>';
 
@@ -557,24 +603,8 @@
         });
         reActivateDelete();
 
-        function reActivateDelete() {
-            $('.deleteRow').on("click", function () {
-                var count = $('.qouteAdd tr').length;
-                if (count > 1) {
-                    $(this).parent().parent().remove();
-                }
-                activateSerial();
-            });
-        }
 
-        function activateSerial() {
-            var count = $('.qouteAdd tr').length;
-            var add = 0;
-            $('.qouteAdd tr').each(function () {
-                add++;
-                $(this).find(".serialNumber").text(add);
-            });
-        }
+
         var $radios = $('input:radio[name=ItemFrom]');
         $radios.filter('[value=dropdown]').prop('checked', true);
         $("#Simple_Select_Box_with_Filter_Search").show();
@@ -597,8 +627,51 @@
         height: 200,
         toolbar: 'tiny'
     });
+    function reActivateDelete() {
+        $('.deleteRow').on("click", function () {
+            var count = $('.qouteAdd tr').length;
+            if (count > 1) {
+                $(this).parent().parent().remove();
+            }
+            activateSerial();
+        });
+    }
+
+    function activateSerial() {
+        var count = $('.qouteAdd tr').length;
+        var add = 0;
+        $('.qouteAdd tr').each(function () {
+            add++;
+            $(this).find(".serialNumber").text(add);
+        });
+    }
     function jsTreeClick(event) {
         return true;
+    }
+
+    function populateIRFDDL(data) {
+        $("#IRFId").empty();
+        if (data.length > 0) {
+            $("#IRFId").append(
+                $('<option></option>').val(0).html("- Select IRF -")
+            );
+
+            $.each(data, function (key, value) {
+                $("#IRFId").append(
+                        $('<option></option>').val(value.ItemReleaseId).html(value.FormNumber)
+                    );
+                IRFItems.push(value);
+            });
+        } else {
+            $("#IRFId").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
     }
     function validateForm(event) {
         var client = $("#Client").val();
@@ -623,7 +696,29 @@
         } else {
             $("#orderValidationError").text("");
         }
-        var count = $("#RifItemsTableBody").children("tr").length;
+        var irf = $("#IRFId").val();
+        if (irf == 0 || irf == "" || irf == null) {
+            event.preventDefault();
+            $("#irfValidationError").text("Please Select IRF");
+            $('html,body').animate({
+                scrollTop: $(".irfDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#irfValidationError").text("");
+        }
+        
+        var count = $('.qouteAdd tr').length;
+        // Validate Returned Quantity <= Released Quantity
+        //for (var x = 0; x < count; x++) {
+        //    if (!$("#RifItem_" + x + "__ItemQty").valid()) {
+        //        $('html,body').animate({
+        //            scrollTop: $(".WarehouseError_" + x).offset().top
+        //        }, 'slow');
+        //        event.preventDefault();
+        //        return false;
+        //    }
+        //}
         for (var x = 0; x < count; x++) {
             var warehouse = $("#RifItem_" + x + "__WarehouseId").val();
             if (warehouse == 0 || warehouse == "" || warehouse == null) {
@@ -639,11 +734,38 @@
         }
         return true;
     }
-    function getWarehouseDD(index) {
-        var options = '<option value="0">--Select--</option>';
-        $.each(warehouses, function (key, value) {
-            options += '<option value="' + value.WarehouseId + '">' + value.WarehouseNumber + '</option>';
+    function appendWarehouseDD(varId)
+    {
+        var index = $("#ItemModalIndex").val();
+        $("#RifItem_" + index + "__WarehouseId").empty();
+        $("#RifItem_" + index + "__WarehouseId").append(
+                    $('<option></option>').val(0).html("--Select--")
+                );
+        $.each(itemWarehouses, function (key, value) {
+            if (value.ItemVariationId == varId) {
+                $("#RifItem_" + index + "__WarehouseId").append(
+                    $('<option></option>').val(value.WarehouseId).html(value.WarehouseNo)
+                );
+                //options += '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + '</option>';
+            }
         });
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+    }
+    function getItemWarehouseDD(index, varId) {
+        var options = "";
+        if (varId > 0) {
+            options = '<option value="">--Select--</option>';
+            $.each(itemWarehouses, function (key, value) {
+                if (value.ItemVariationId == varId) {
+                    options += '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + '</option>';
+                }
+            });
+        } else {
+            options = '<option value="">none</option>';
+        }
         var control = '<div class="span9 WarehouseError_' + index + '">' +
             '<div class="controls">' +
             '<select class="select2me disableDdl" id="RifItem_' + index + '__WarehouseId" name="RifItem[' + index + '].WarehouseId">' +
@@ -653,5 +775,55 @@
             '<label id="WarehouseError_' + index + '" class="required"></label>' +
             '</div>';
         return control;
+    }
+    function addIrfItems(data, index) {
+        var warehouseColumn = getItemWarehouseDD(index, data.ItemVariationId);
+        var indexCell = "<td style='display:none'>" +
+            "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
+            "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' value='" + data.IsItemDescription + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' value='" + data.IsItemSKU + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' value='" + data.ItemVariationId + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].PlaceInDepartment' id='RifItem_" + index + "__PlaceInDepartment' value='" + data.PlaceInWarehouse + "' type='hidden' />" +
+            "</td>";
+        var details = data.ItemDetails;
+        var regex = new RegExp(", ", 'g');
+        details = details.replace(regex, '\n');
+        //IRFItem
+        var html = '<tr data-id=' + index + '>' +
+            indexCell +
+            '<td>' +
+            '<div class="control-group row-fluid">' +
+            '<div class="span1">' +
+            '<label class="control-label serialNumber">' + (index + 1) + '</label>' +
+            '</div></div>' +
+            '</td>' +
+            '<td><textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + details + '</textarea>' +
+            '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+            '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td class="quantity"> ' +
+            '<input class="n1" type="text" id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter quantity equal or less than Released quantity" data-val-range-max="' + data.ItemQty + '" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+            '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td>' + warehouseColumn +
+            '</td>' +
+            '<td>' +
+            '<label id="ReleasedQuantity_' + index + '" class="tableLabel">' + data.ItemQty + '</label>' +
+            '</td>' +
+            '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+            '</td></tr>';
+        $('.qouteAdd').append(html);
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
+        reActivateDelete();
+        activateSerial();
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        return true;
     }
 </script>

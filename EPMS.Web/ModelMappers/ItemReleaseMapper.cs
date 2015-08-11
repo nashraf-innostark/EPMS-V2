@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Web.DashboardModels;
+using EPMS.Web.Models;
 using Employee = EPMS.Models.DomainModels.Employee;
+using ItemRelease = EPMS.Models.DomainModels.ItemRelease;
 
 namespace EPMS.Web.ModelMappers
 {
@@ -134,6 +137,16 @@ namespace EPMS.Web.ModelMappers
                 RecCreatedDate = source.RecCreatedDate.ToShortDateString()
             };
             return rfi;
+        }
+
+        public static ItemReleaseForRif CreateForRif(this ItemRelease source)
+        {
+            return new ItemReleaseForRif
+            {
+                ItemReleaseId = source.ItemReleaseId,
+                FormNumber = source.FormNumber,
+                ItemReleaseDetails = source.ItemReleaseDetails.Select(x=>x.CreateFromServerToClient()).ToList()
+            };
         }
     }
 }

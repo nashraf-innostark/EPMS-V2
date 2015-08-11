@@ -309,5 +309,15 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         #endregion
+
+        #region Get Irf By Order
+        [HttpGet]
+        public JsonResult GetIrfByOrder(long orderId)
+        {
+            var irf = itemReleaseService.GetItemReleaseByOrder(orderId);
+            IEnumerable<ItemReleaseForRif> model = irf.Select(x => x.CreateForRif());
+            return Json(model, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

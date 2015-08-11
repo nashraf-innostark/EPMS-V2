@@ -12,7 +12,7 @@ namespace EPMS.Web.ModelMappers
             var itemDetails = source.ItemDetails;
             itemDetails = itemDetails.Replace("\r", " ");
             itemDetails = itemDetails.Replace("\t", " ");
-            itemDetails = itemDetails.Replace("\n", " ");
+            itemDetails = itemDetails.Replace("\n", " , ");
             var retVal = new Models.ItemReleaseDetail
             {
                 IRFDetailId = source.IRFDetailId,
