@@ -25,5 +25,11 @@ namespace EPMS.Web.Models
         public string RecCreatedDateStr { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+
+        public long NoofSections { get; set; }
+        public long NoofSubSections { get; set; }
+        public string ParentServiceEn { get; set; }
+        public string ParentServiceAr { get; set; }
+        public WebsiteService ParentService { get; set; }
     }
 }

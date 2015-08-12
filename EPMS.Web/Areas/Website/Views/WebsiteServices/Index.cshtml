@@ -1,10 +1,12 @@
-﻿@model EPMS.Web.ViewModels.Website.WebsiteServices.ServicesViewModel
+﻿@model EPMS.Web.ViewModels.Website.WebsiteServices.ServicesListViewModel
 
 @{
     ViewBag.Title = "Website Services's Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
     string direction = EPMS.Web.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    int i = 0;
+    int j = 0;
 }
 
 <div class="main-content withPanel">
@@ -68,14 +70,34 @@
                             <table class="table table-striped table-responsive" id="tableSortableResMed">
                                 <thead class="cf sorthead">
                                     <tr>
-                                        <th class="center"> Serial</th>
-                                        <th class="center"> Name</th>
+                                        <th class="center">Serial</th>
+                                        <th class="center">Name</th>
                                         <th class="center">Description</th>
                                         <th class="center">Number of Sections</th>
-                                        <th class="center"> Number of Sub-Sections</th>
+                                        <th class="center">Number of Sub-Sections</th>
                                     </tr>
                                 </thead>
-                                <tbody></tbody>
+                                <tbody>
+                                    @foreach (var service in Model.Services)
+                                    {
+                                        var id = service.ServiceId + "_tableServices";
+                                        <tr class="gradeX" id="@id">
+                                            <td class="center">@(i += 1)</td>
+                                            @*<td class="center">@(direction == "ltr" ? service.ServiceNameEn : service.ServiceNameAr)</td>*@
+                                            @if (direction == "ltr")
+                                            {
+                                                <td class="center"><a href="~/Website/WebsiteServices/Create/@service.ServiceId">@service.ServiceNameEn</a></td>
+                                            }
+                                            else
+                                            {
+                                                <td class="center"><a href="~/Website/WebsiteServices/Create/@service.ServiceId">@service.ServiceNameAr</a></td>
+                                            }
+                                            <td class="center">@(direction == "ltr" ? service.DescriptionEn : service.DescriptionAr)</td>
+                                            <td class="center">@service.NoofSections</td>
+                                            <td class="center">-</td>
+                                        </tr>
+                                    }
+                                </tbody>
                             </table>
                         </div>
                     </div>
@@ -90,14 +112,59 @@
                                     <table class="table table-striped table-responsive" id="tableSortableResMed2">
                                         <thead class="cf sorthead">
                                             <tr>
+                                                <th class="center">Serial</th>
                                                 <th class="center">Parent Service</th>
                                                 <th class="center">Parent Section</th>
                                                 <th class="center">Name</th>
-                                                <th class="center"> Description</th>
+                                                <th class="center">Description</th>
                                                 <th class="center">Number of Sub-Sections</th>
                                             </tr>
                                         </thead>
-                                        <tbody></tbody>
+                                        <tbody>
+                                            @foreach (var sect in Model.Sections)
+                                            {
+                                                var id = sect.ServiceId + "_tableSections";
+                                                <tr class="gradeX" id="@id">
+                                                    <td>@(j += 1)</td>
+                                                    <td class="center">@(direction == "ltr" ? sect.ParentServiceEn : sect.ParentServiceAr)</td>
+                                                    <td class="center">
+                                                        @if (sect.ParentService != null)
+                                                        {
+                                                            var k = 0;
+                                                            var parent = sect.ParentService;
+                                                            while (parent != null)
+                                                            {
+                                                                if (k != 0)
+                                                                {
+                                                                    @: >
+                                                                }
+                                                                k++;
+                                                                if (direction == "ltr")
+                                                                {
+                                                                    <a href="~/Website/WebsiteServices/Create/@parent.ServiceId">@parent.ServiceNameEn</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="~/Website/WebsiteServices/Create/@parent.ServiceId">@parent.ServiceNameAr</a>
+                                                                }
+                                                                parent = parent.ParentService;
+                                                            }
+                                                        }
+                                                        </td>
+                                                        @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
+                                                        }
+                                                        <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
+                                                        <td>-</td>
+                                                    </tr>
+                                            }
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>
@@ -111,9 +178,49 @@
     </form>
 </div>
 
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script type="text/javascript">
+    var websiteServicesList = '@Html.Raw(Json.Encode(Model.Services))';
+    var websiteServices = JSON.parse(websiteServicesList);
+    var parsedSectionsList = '@Html.Raw(Json.Encode(Model.Sections))';
+    var parsedSections = JSON.parse(parsedSectionsList);
+    var divId;
     $(document).ready(function () {
+        divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
         $('.panel, .main-content').toggleClass('retracted');
+        var list = '@Html.Raw(ViewBag.JsTree)';
+        var tree = JSON.parse(list);
+        $("#" + divId).jstree({
+            'core': {
+                'check_callback': true,
+                'data': tree
+            },
+            "plugins": ["themes", "json_data", "ui"],
+        }).on('loaded.jstree', function () {
+            $("#" + divId).jstree('open_all');
+        });
+        setTimeout(function () {
+            subItemsOfServices();
+            subItemsOfSections();
+        }, 500);
+
     });
+    function subItemsOfServices() {
+        $.each(websiteServices, function (key, value) {
+            var serviceId = value.ServiceId;
+            var parent = $('#' + divId).find("[id='" + serviceId + "']");
+            //var parent = $("ul").find("#" + serviceId).parent();
+            var childs = $(parent).find("li").length;
+            $("#" + serviceId + "_tableServices td:eq( 4 )").text(childs);
+        });
+    }
+    function subItemsOfSections() {
+        $.each(parsedSections, function (key, value) {
+            var serviceId = value.ServiceId;
+            var parent = $('#jstree').find("[id='" + serviceId + "']");
+            var childs = $(parent).find("li").length;
+            $("#" + serviceId + "_tableSections td:eq( 5 )").text(childs);
+        });
+    }
 </script>

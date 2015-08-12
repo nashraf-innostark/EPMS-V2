@@ -7,6 +7,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.Web.ModelMappers.Website.WebsiteServices;
 using EPMS.Web.Models;
+using DomainModels=EPMS.Models.DomainModels;
 using EPMS.Web.Models.Common;
 using EPMS.Web.ViewModels.Common;
 using EPMS.Web.ViewModels.Website.WebsiteServices;
@@ -32,12 +33,51 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #endregion
 
+        #region Public
+
+        #region Index
         // GET: Website/Service
         [SiteAuthorize(PermissionKey = "ServiceIndex")]
         public ActionResult Index()
         {
-            return View();
+            string direction = Resources.Shared.Common.TextDirection;
+            // All website services
+            IEnumerable<DomainModels.WebsiteService> websiteServiceses = websiteServices.GetAll().ToList();
+            // website services for service table
+            IList<DomainModels.WebsiteService> services = websiteServiceses.Any()
+                ? websiteServiceses.Where(x => x.ParentServiceId == null).ToList() : new List<DomainModels.WebsiteService>();
+            // website services for section table
+            IList<DomainModels.WebsiteService> sections = websiteServiceses.Any()
+                ? websiteServiceses.Where(x => x.ParentServiceId != null).ToList() : new List<DomainModels.WebsiteService>();
+            ServicesListViewModel viewModel = new ServicesListViewModel
+            {
+                WebsiteServices = websiteServiceses.Any() ? websiteServiceses.Select(y => y.CreateFromServerToClient()).ToList() : new List<WebsiteService>(),
+                Services = services.Any() ? services.Select(y => y.CreateFromServerToClient()).ToList() : new List<WebsiteService>(),
+                Sections = sections.Any() ? sections.Select(y => y.CreateFromServerToClient()).ToList() : new List<WebsiteService>(),
+                ServicesTree = new List<JsTreeJson>()
+            };
+            viewModel.ServicesTree.Add(new JsTreeJson
+            {
+                id = "parentNode",
+                text = Resources.Website.WebsiteService.Service.Services,
+                parent = "#"
+            });
+            foreach (DomainModels.WebsiteService websiteService in websiteServiceses.ToList())
+            {
+                JsTreeJson node = websiteService.CreateForJsTree(direction);
+                viewModel.ServicesTree.Add(node);
+            }
+            // Javascript Serializer
+            var serializer = new JavaScriptSerializer();
+            ViewBag.JsTree = serializer.Serialize(viewModel.ServicesTree);
+            // use new version of JsTree
+            ViewBag.IsIncludeNewJsTree = true;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
         }
+        #endregion
+
+        #region Create
         [SiteAuthorize(PermissionKey = "ServiceCreate,ServiceView")]
         public ActionResult Create(long? id)
         {
@@ -60,7 +100,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             viewModel.WebsiteServices =
                 servicesResponse.WebsiteServices.Select(x => x.CreateFromServerToClient()).ToList();
             //viewModel.ServicesTree = servicesResponse.WebsiteServices.Select()
-            foreach (EPMS.Models.DomainModels.WebsiteService websiteService in servicesResponse.WebsiteServices.ToList())
+            foreach (DomainModels.WebsiteService websiteService in servicesResponse.WebsiteServices.ToList())
             {
                 JsTreeJson node = websiteService.CreateForJsTree(direction);
                 viewModel.ServicesTree.Add(node);
@@ -121,5 +161,8 @@ namespace EPMS.Web.Areas.Website.Controllers
             }
             return View(viewModel);
         }
+        #endregion
+
+        #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Linq;
+using EPMS.Models.DomainModels;
 using EPMS.Web.Models.Common;
 
 namespace EPMS.Web.ModelMappers.Website.WebsiteServices
@@ -7,7 +8,7 @@ namespace EPMS.Web.ModelMappers.Website.WebsiteServices
     {
         public static Models.WebsiteService CreateFromServerToClient(this WebsiteService source)
         {
-            return new Models.WebsiteService
+            var retVal = new Models.WebsiteService
             {
                 ServiceId = source.ServiceId,
                 ParentServiceId = source.ParentServiceId,
@@ -24,9 +25,18 @@ namespace EPMS.Web.ModelMappers.Website.WebsiteServices
                 RecCreatedDate = source.RecCreatedDate,
                 RecCreatedDateStr = source.RecCreatedDate.ToShortDateString(),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDate = source.RecLastUpdatedDate
-                
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                NoofSections = source.WebsiteServices.Any() ? source.WebsiteServices.Count : 0,
+                ParentService = source.ParentService != null ? source.ParentService.CreateFromServerToClient() : null
             };
+            var parent = source.ParentService;
+            while (parent != null && parent.ParentService != null)
+            {
+                parent = parent.ParentService;
+            }
+            retVal.ParentServiceEn = parent != null ? parent.ServiceNameEn : "None";
+            retVal.ParentServiceAr = parent != null ? parent.ServiceNameAr : "None";
+            return retVal;
         }
 
         public static WebsiteService CreateFromClientToServer(this Models.WebsiteService source)

@@ -973,7 +973,7 @@
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
     <Compile Include="ViewModels\Website\WebsiteServices\ServicesCreateViewModel.cs" />
-    <Compile Include="ViewModels\Website\WebsiteServices\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\Website\WebsiteServices\ServicesListViewModel.cs" />
     <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
