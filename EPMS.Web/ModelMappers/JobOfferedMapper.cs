@@ -14,7 +14,7 @@ namespace EPMS.Web.ModelMappers
             retVal.JobTitleId = source.JobTitleId;
             retVal.ShowBasicSalary = source.ShowBasicSalary;
             retVal.IsOpenStatusEn = source.IsOpen ? "Open" : "Close";
-            retVal.IsOpenStatus = source.IsOpen ? Resources.HR.JobOffered.Open : Resources.HR.JobOffered.Close;
+            //retVal.IsOpenStatus = source.IsOpen ? Resources.HR.JobOffered.Open : Resources.HR.JobOffered.Close;
             retVal.IsOpenStatusAr = source.IsOpen ? "مفتوح" : "مغلق";
             retVal.IsOpen = source.IsOpen;
             retVal.NoOfPosts = source.NoOfPosts;

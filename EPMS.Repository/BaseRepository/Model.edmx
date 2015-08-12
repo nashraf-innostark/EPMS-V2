@@ -979,10 +979,10 @@
           <Property Name="StartDate" Type="datetime" />
           <Property Name="EndDate" Type="datetime" />
           <Property Name="TotalCost" Type="decimal" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="nvarchar" MaxLength="5" />
+          <Property Name="TotalWeight" Type="decimal" Precision="5" Scale="2" />
           <Property Name="NotesE" Type="nvarchar(max)" />
           <Property Name="NotesA" Type="nvarchar(max)" />
-          <Property Name="TaskProgress" Type="nvarchar" MaxLength="5" />
+          <Property Name="TaskProgress" Type="decimal" Precision="5" Scale="2" />
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
@@ -4536,10 +4536,10 @@
           <Property Name="StartDate" Type="DateTime" Precision="3" />
           <Property Name="EndDate" Type="DateTime" Precision="3" />
           <Property Name="TotalCost" Type="Decimal" Precision="10" Scale="2" />
-          <Property Name="TotalWeight" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TotalWeight" Type="Decimal" Precision="5" Scale="2"  />
           <Property Name="NotesE" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="NotesA" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="TaskProgress" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
+          <Property Name="TaskProgress" Type="Decimal" Precision="5" Scale="2" />
           <Property Name="RecCreatedDt" Type="DateTime" Precision="3" />
           <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Precision="3" />
