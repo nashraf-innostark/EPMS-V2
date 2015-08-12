@@ -5,12 +5,13 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     int i = 0;
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="/Home/Index">
+            <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
@@ -55,19 +56,26 @@
                         {
                             <tr>
                                 <td>@(i += 1)</td>
-                                @if (EPMS.Web.Helper.CultureHelper.IsRighToLeft())
-                                {
-                                    <td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobOfferedId }) </td>
-                                    <td>@Html.Raw(item.JobTitleDescA)</td>
-                                }
-                                else
+                                @if (direction == "ltr")
                                 {
                                     <td>@Html.ActionLink(@item.JobTitleNameE, "Create", new { id = item.JobOfferedId }) </td>
                                     <td>@Html.Raw(item.JobTitleDescE)</td>
                                 }
+                                else
+                                {
+                                    <td>@Html.ActionLink(@item.JobTitleNameA, "Create", new { id = item.JobOfferedId }) </td>
+                                    <td>@Html.Raw(item.JobTitleDescA)</td>
+                                }
                                 <td>@if (item.ShowBasicSalary) { @item.BasicSalary }</td>
                                 <td>@item.NoOfPosts</td>
-                                <td>@item.IsOpenStatus</td>
+                                @if (direction == "ltr")
+                                {
+                                    <td>@item.IsOpenStatusEn</td>
+                                }
+                                else
+                                {
+                                    <td>@item.IsOpenStatusAr</td>
+                                }
                             </tr>
                         }
                     </tbody>

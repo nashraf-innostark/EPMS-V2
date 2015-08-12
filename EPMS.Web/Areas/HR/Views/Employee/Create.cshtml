@@ -1423,9 +1423,15 @@
             }
         });
         if ('@Model.EmployeeViewModel.Employee.EmployeeId' > 0) {
-            $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
-            $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
-            $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
+            if ($("#EmployeeDOB").val() != "") {
+                $("#EmpDateOfBirthArabic").val(ConvertDates($("#EmployeeDOB").val(), "gregorian", "islamic"));
+            }
+            if ($("#IqamaExpiryDate").val() != "") {
+                $("#IqamaExpiryDateAr").val(ConvertDates($("#IqamaExpiryDate").val(), "gregorian", "islamic"));
+            }
+            if ($("#PassportExpiryDate").val() != "") {
+                $("#PassportExpiryDateAr").val(ConvertDates($("#PassportExpiryDate").val(), "gregorian", "islamic"));
+            }
         }
         var specialKeys = new Array();
         specialKeys.push(8);

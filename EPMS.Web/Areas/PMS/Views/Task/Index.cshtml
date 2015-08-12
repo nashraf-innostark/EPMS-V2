@@ -4,6 +4,7 @@
     ViewBag.Title = EPMS.Web.Resources.PMS.Task.PageTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
     string date = "";
 }
 
@@ -24,13 +25,13 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.Web.Resources.PMS.Task.Tasks</small></h2>
-    @if (Session["RoleName"].ToString() != "Customer")
+    @if (userPermissionsSet.Contains("CreateTask"))
     {
-        <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>
-        if (Session["EmployeeID"] != null)
-        {
-            <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
-        }
+        <h3><small><a href="~/PMS/Task/Create">@EPMS.Web.Resources.PMS.Task.AddNewTask</a></small></h3>   
+    }
+    @if (Session["EmployeeID"] != null)
+    {
+        <h3><small><a href="~/PMS/Task/MyTasks">@EPMS.Web.Resources.PMS.Task.PageTitleMyTasks</a></small></h3>
     }
 </header>
 
@@ -146,7 +147,8 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
-                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        var taskProgressText = full["TaskProgressText"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgressText + "</div> </div>";
                         return html;
                     }
                 }
@@ -307,7 +309,8 @@
                     "sWidth": "15%",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
-                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        var taskProgressText = full["TaskProgressText"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgressText + "</div> </div>";
                         return html;
                     }
                 }

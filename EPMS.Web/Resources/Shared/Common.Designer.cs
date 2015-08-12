@@ -115,6 +115,24 @@ namespace EPMS.Web.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to غير اللغة.
+        /// </summary>
+        public static string ChangeLanguageAr {
+            get {
+                return ResourceManager.GetString("ChangeLanguageAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Change Language.
+        /// </summary>
+        public static string ChangeLanguageEn {
+            get {
+                return ResourceManager.GetString("ChangeLanguageEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Contact.
         /// </summary>
         public static string Contact {

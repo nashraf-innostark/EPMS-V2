@@ -13,7 +13,9 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Project> LoadAllUnfinishedProjects();
         IEnumerable<Project> LoadAllFinishedProjects();
         IEnumerable<Project> LoadAllUnfinishedProjectsByCustomerId(long id);
+        IEnumerable<Project> LoadAllUnfinishedProjectsByUserId(string id);
         IEnumerable<Project> LoadAllFinishedProjectsByCustomerId(long id);
+        IEnumerable<Project> LoadAllFinishedProjectsByEmployeeId(string id);
         ProjectResponseForDashboard LoadProjectForDashboard(string requester, long projectId);
         IEnumerable<Project> LoadAllProjects(string requester, int status);
         IEnumerable<Project> GetAllProjects();

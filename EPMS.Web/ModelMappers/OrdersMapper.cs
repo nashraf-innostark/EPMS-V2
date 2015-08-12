@@ -138,7 +138,7 @@ namespace EPMS.Web.ModelMappers
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDate = Convert.ToDateTime(source.OrderDate.ToString()).ToShortDateString(),
+                OrderDate = source.OrderDate != null ? Convert.ToDateTime(source.OrderDate.ToString()).ToShortDateString() : string.Empty,
                 OrderStatus = source.OrderStatus,
                 CustomerId = source.CustomerId
             };

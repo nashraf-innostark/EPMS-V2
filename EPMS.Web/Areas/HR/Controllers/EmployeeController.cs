@@ -233,6 +233,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <returns>View</returns>
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "EmployeeCreate")]
         public ActionResult Create(EmployeeDetailViewModel viewModel)
         {
             try

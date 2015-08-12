@@ -84,7 +84,9 @@ namespace EPMS.Web
             client.Send(oEmail);
 
         }
-        public bool SendSms(string smsText, string mobileNo)
+
+        // Mobile Number format : +923347109848
+        public static bool SendSms(string smsText, string mobileNo)
         {
             string username = ConfigurationManager.AppSettings["MobileUsername"];
             string password = ConfigurationManager.AppSettings["MobilePassword"];

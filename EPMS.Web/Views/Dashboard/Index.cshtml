@@ -495,13 +495,13 @@
                                                 }
                                             </li>
                                             <li>
-                                                <span>Job ID</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.JobId</span>
                                                 <div>
                                                     @Model.Profile.EmployeeJobId
                                                 </div>
                                             </li>
                                             <li>
-                                                <span>Job Title</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.JobTitle</span>
                                                 @if (direction == "ltr")
                                                 {
                                                     <div>
@@ -516,7 +516,7 @@
                                                 }
                                             </li>
                                             <li>
-                                                <span>ID Expiry Date</span>
+                                                <span>@EPMS.Web.Resources.Dashboard.Dashboard.IdExpiry</span>
                                                 <div>
                                                     @Model.Profile.EmployeeIqamaExpiryDt
                                                 </div>
@@ -717,22 +717,25 @@
                                                         <a data-overall="@Model.Project.Project.ProgressTotal" title="@Model.Project.Project.NameA">...@EPMS.Web.Resources.Dashboard.Dashboard.Project - @(Model.Project.Project.NameA.Length > 5 ? Model.Project.Project.NameA.Substring(0, 5) : Model.Project.Project.NameA)</a>
                                                     }
                                                 </li>
-                                                if (Model.Project.ProjectTasks != null)
-                                                {
-                                                    foreach (var task in Model.Project.ProjectTasks.ToList())
-                                                    {
-                                                        <li class="dashTask">
-                                                            @if (direction == "ltr")
-                                                            {
-                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
-                                                            }
-                                                            else
-                                                            {
-                                                                <a data-task="@task.TaskProgress" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
-                                                            }
-                                                        </li>
-                                                    }
-                                                }
+                                                if (ViewBag.UserRole != "Customer")
+                                                 {
+                                                     if (Model.Project.ProjectTasks != null)
+                                                     {
+                                                         foreach (var task in Model.Project.ProjectTasks.ToList())
+                                                         {
+                                                             <li class="dashTask">
+                                                                 @if (direction == "ltr")
+                                                                 {
+                                                                     <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                                 }
+                                                                 else
+                                                                 {
+                                                                     <a data-task="@task.TaskProgress" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
+                                                                 }
+                                                             </li>
+                                                         }
+                                                     }
+                                                 }
 
                                                 <li class="dashBack">
                                                     <a><i class='icon-photon arrow_left'></i></a>

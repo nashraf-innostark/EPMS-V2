@@ -101,6 +101,7 @@ namespace EPMS.Web.ModelMappers
 
         public static MeetingRequest CreateFrom(this Models.Meeting source)
         {
+            CultureInfo culture = new CultureInfo("en-US");
             DomainModels.Meeting meeting = new DomainModels.Meeting();
             meeting.MeetingId = source.MeetingId;
             meeting.TopicName = source.TopicName;

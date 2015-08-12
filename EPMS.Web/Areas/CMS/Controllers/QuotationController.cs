@@ -64,14 +64,37 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index(QuotationSearchRequest searchRequest)
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
-            string roleName = (string) Session["RoleName"];
-            if (roleName == "Admin")
+            searchRequest.RoleName = (string) Session["RoleName"];
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            //switch (searchRequest.RoleName)
+            //{
+            //    case "Customer":
+            //        searchRequest.CustomerId = (long) Session["CustomerID"];
+            //        break;
+            //    case "Employee":
+            //        searchRequest.EmployeeId = Session["UserID"].ToString();
+            //        break;
+            //    default:
+            //        searchRequest.CustomerId = 0;
+            //        break;
+            //}
+            
+            if (searchRequest.RoleName == "Customer")
             {
-                searchRequest.CustomerId = 0;
+                searchRequest.AllowedAll = false;
+                searchRequest.CustomerId = (long)Session["CustomerID"];
             }
-            if (roleName == "Customer")
+            else
             {
-                searchRequest.CustomerId = (long) Session["CustomerID"];
+                if (userPermissionsSet.Contains("ListviewAllQuotations"))
+                {
+                    searchRequest.AllowedAll = true;
+                }
+                else
+                {
+                    searchRequest.AllowedAll = false;
+                    searchRequest.UserId = Session["UserID"].ToString();
+                }
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
@@ -125,6 +148,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(QuotationCreateViewModel viewModel)
         {
             // Update case
@@ -266,8 +290,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
                 viewModel.Quotation = QuotationService.FindQuotationById((long) id).CreateFromServerToClientLv();
                 // Get Order from Order Number
-                viewModel.Order =
+                if (viewModel.Quotation.OrderId>0)
+                {
+                    viewModel.Order =
                     OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
+                }
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }

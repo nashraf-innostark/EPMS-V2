@@ -86,6 +86,9 @@
                         if ('@userRole' == "Customer") {
                             element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
                         }
+                        if ('@userRole' == "Employee") {
+                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
+                        }
                         return element;
                     },
                     "bSortable": true

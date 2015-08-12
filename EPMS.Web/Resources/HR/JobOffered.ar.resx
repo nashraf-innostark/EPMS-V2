@@ -118,31 +118,31 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNew" xml:space="preserve">
-    <value>إضافة مهمة جديدة</value>
+    <value>اضف وظيفة جديدة</value>
   </data>
   <data name="BasicSalaray" xml:space="preserve">
     <value>الراتب الاساسي</value>
   </data>
   <data name="CancelButton" xml:space="preserve">
-    <value>إلغاء</value>
+    <value>الغاء</value>
   </data>
   <data name="Close" xml:space="preserve">
     <value>أغلق</value>
   </data>
   <data name="CreateJob" xml:space="preserve">
-    <value>خلق عملا عروض</value>
+    <value>انشاء الوظيفة المطروحة</value>
   </data>
   <data name="Department" xml:space="preserve">
-    <value>إدارة</value>
+    <value>قسم</value>
   </data>
   <data name="EditButton" xml:space="preserve">
     <value>تعديل</value>
   </data>
   <data name="IndexLabel" xml:space="preserve">
-    <value>كل الوظائف المعروضة</value>
+    <value>كل الوظائف المطروحة</value>
   </data>
   <data name="IsOpen" xml:space="preserve">
-    <value>الوضع</value>
+    <value>الحالة</value>
   </data>
   <data name="JobDescription" xml:space="preserve">
     <value>تفاصيل الوظيفة</value>
@@ -151,10 +151,10 @@
     <value>اسم الوظيفي</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>وظائف قائمة المقدمة</value>
+    <value>قائمة الوظائف المطروحة</value>
   </data>
   <data name="NoOfPosts" xml:space="preserve">
-    <value>عدد المشاركات</value>
+    <value>الاماكن الخالية للوظيفة</value>
   </data>
   <data name="Open" xml:space="preserve">
     <value>مفتوحة</value>
@@ -166,13 +166,13 @@
     <value>لقد تم حفظ "عرض الوظيفة"</value>
   </data>
   <data name="SelectJobTitle" xml:space="preserve">
-    <value>تحديد المسمى الوظيفي</value>
+    <value>اختر الاسم الوظيفي</value>
   </data>
   <data name="ShowBasicSalary" xml:space="preserve">
-    <value>تظهر الراتب الأساسي؟</value>
+    <value>اظهار الراتب الاساسي؟</value>
   </data>
   <data name="UpdateJob" xml:space="preserve">
-    <value>تحديث الوظيفة المقدمة</value>
+    <value>تحديث الوظائف المطروحة</value>
   </data>
   <data name="UpdateJobOffered" xml:space="preserve">
     <value>وقد تم تحديث "توفر الوظيفة"</value>

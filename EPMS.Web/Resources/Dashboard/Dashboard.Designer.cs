@@ -232,6 +232,33 @@ namespace EPMS.Web.Resources.Dashboard {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to ID Expiry Date.
+        /// </summary>
+        public static string IdExpiry {
+            get {
+                return ResourceManager.GetString("IdExpiry", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Id.
+        /// </summary>
+        public static string JobId {
+            get {
+                return ResourceManager.GetString("JobId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Job Title.
+        /// </summary>
+        public static string JobTitle {
+            get {
+                return ResourceManager.GetString("JobTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Filter By Warehouse Destination.
         /// </summary>
         public static string FilterByWarehouseDestination {

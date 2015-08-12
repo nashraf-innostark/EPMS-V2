@@ -58,6 +58,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "DepartmentCreate")]
         public ActionResult Create(DepartmentListViewModel departmentListViewModel)
         {
             //if (!ModelState.IsValid)

@@ -33,6 +33,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
         private readonly IEmployeeService employeeService;
 
         #region SendInvitation
+
         private void SendInvitation(MeetingViewModel meetingViewModel, SaveMeetingResponse response)
         {
             IEnumerable<string> emEmails = response.EmployeeEmails;
@@ -59,9 +60,13 @@ namespace EPMS.Web.Areas.Meeting.Controllers
                 string emailSubject = "Meeting Invitation";
                 string emailBody = "You are invited to attend the Meeting " + meetingViewModel.Meeting.TopicName +
                                    " on " + meetingViewModel.Meeting.Date;
-                Utility.SendEmailAsync(emails, emailSubject, emailBody);
+                if (!string.IsNullOrEmpty(emails))
+                {
+                    Utility.SendEmailAsync(emails, emailSubject, emailBody);
+                }
             }
         }
+
         #endregion
 
         #endregion
@@ -153,6 +158,7 @@ namespace EPMS.Web.Areas.Meeting.Controllers
 
         [HttpPost]
         [ValidateInput(false)] //this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "MeetingCreate")]
         public ActionResult Create(MeetingViewModel meetingViewModel)
         {
             MeetingRequest toBeSaveMeeting = meetingViewModel.Meeting.CreateFrom();
