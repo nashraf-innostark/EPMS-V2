@@ -556,6 +556,7 @@ namespace EPMS.Web.Controllers
         {
             var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
             var projects = GetProjects(requester, projectId);
+            projects.RoleName = Session["RoleName"].ToString();
             return Json(projects, JsonRequestBehavior.AllowGet);
         }
         [HttpGet]

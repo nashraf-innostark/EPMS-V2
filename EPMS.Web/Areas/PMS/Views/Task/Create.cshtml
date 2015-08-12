@@ -198,7 +198,7 @@
                 <label class="control-label" for="dualMulti">@EPMS.Web.Resources.PMS.Task.Pre_ReqTask</label>
             </div>
             <div class="span9">
-                <div class="controls">
+                <div class="controls" id="pre-req-div">
                     @if ((Model.ProjectAllTasks != null))
                     {
                         if (direction == "ltr")
@@ -311,7 +311,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "readonly  toBeDiable" })
+                    @Html.TextBoxFor(model => model.ProjectTask.TotalCost, new { @id = "TotalCost", @class = "readonly disableOnLoad" })
                     @Html.ValidationMessageFor(m => m.ProjectTask.TotalCost, String.Empty, new { @class = "required" })
                 </div>
             </div>
@@ -408,6 +408,13 @@
     $(document).ready(function () {
         // this is tak weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
         var taskWeight = parseFloat('@Model.ProjectTask.TotalWeight');
+        if ('@userPermissionsSet.Contains("TaskCost")' == 'True') {
+            $('.' + 'disableOnLoad' + ':input').attr('disabled', false);
+        } else {
+            $('.' + 'disableOnLoad' + ':input').attr('disabled', true);
+        }
+        
+
         // diable fields if permission not contain TaskCreate
         var isDetail;
         var val = '@userPermissionsSet.Contains("CreateTask")';
@@ -421,6 +428,7 @@
             $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
             $('#Client').select2('disable');
             $('#ProjectId').select2('disable');
+            $('#ParentTaskId').select2('disable');
             var descpE = '@Html.Raw(Model.ProjectTask.DescriptionE)';
             var regex = /(<([^>]+)>)/ig;
             var result = descpE.replace(regex, "");
@@ -441,31 +449,20 @@
             $("#notesAr").val(result);
             $("#Notes").show();
             $("#CKEditorNotes").hide();
+            $("#pre-req-div").addClass("disableList");
         }
         if (isDetail == false) {
-            editor = CKEDITOR.replace('DescriptionE', {
+            CKEDITOR.replace('DescriptionE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            editor = CKEDITOR.replace('DescriptionA', {
+            CKEDITOR.replace('DescriptionA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            editor = CKEDITOR.replace('NotesE', {
+            CKEDITOR.replace('NotesE', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
-            editor = CKEDITOR.replace('NotesA', {
+            CKEDITOR.replace('NotesA', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-                filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-                filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-                filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
             });
             $("#Descp").hide();
             $("#CKEditorDescp").show();

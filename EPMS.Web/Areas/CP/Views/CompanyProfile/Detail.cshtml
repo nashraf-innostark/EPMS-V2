@@ -430,7 +430,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.LicenseInformation.StartDate, new { @id="LicenseStartDate", @class = "span4", @readonly = true})
+                                @Html.TextBoxFor(model => model.LicenseInformation.StartDate, new { @id = "LicenseStartDate", @class = "span4", @readonly = true })
                                 @Html.TextBox("Start Date", null, new { @id = "LicenseStartDateAr", @class = "span4", @readonly = true })
                             </div>
                         </div>
@@ -519,7 +519,8 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "Bank1MobileNumber1", @class = "tbdisable" })
+                                    @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "BankMobileNumber1", @class = "tbdisable" })
+                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank1MobileNumber, String.Empty, new { @class = "required" })
                                 </div>
                             </div>
                         </div>
@@ -575,6 +576,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank2MobileNumber, new { id = "BankMobileNumber2", @class = "tbdisable" })
+                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank2MobileNumber, String.Empty, new { @class = "required" })
                                 </div>
                             </div>
                         </div>
@@ -630,6 +632,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank3MobileNumber, new { id = "BankMobileNumber3", @class = "tbdisable" })
+                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank3MobileNumber, String.Empty, new { @class = "required" })
                                 </div>
                             </div>
                         </div>
@@ -685,6 +688,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank4MobileNumber, new { id = "BankMobileNumber4", @class = "tbdisable" })
+                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank4MobileNumber, String.Empty, new { @class = "required" })
                                 </div>
                             </div>
                         </div>
@@ -1064,9 +1068,9 @@
         <h3 id="popupHeader">Send SMS</h3>
     </div>
     <div class="form-horizontal">
-        @using (Html.BeginForm("SendSMS", "CompanyProfile", FormMethod.Post, new {@id = "SMSForm", @class = "form-horizontal", role = "form"}))
+        @using (Html.BeginForm("SendSMS", "CompanyProfile", FormMethod.Post, new { @id = "SMSForm", @class = "form-horizontal", role = "form" }))
         {
-            @Html.HiddenFor(m => m.BankName, new {@class = "BankName" })
+            @Html.HiddenFor(m => m.BankName, new { @class = "BankName" })
             @Html.HiddenFor(m => m.BankNameAr, new { @class = "BankNameAr" })
             @Html.HiddenFor(m => m.BankAccountNo, new { @class = "BankAccountNo" })
             @Html.HiddenFor(m => m.BankIbanNo, new { @class = "BankIbanNo" })
@@ -1078,7 +1082,6 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @*@Html.DropDownList("NameE", new SelectList(ViewBag.ContactList, "", "MobileNumber"))*@
                             @Html.ListBoxFor(m => m.MobileNo, new MultiSelectList(Model.List, "MobileNumber", "NameE"))
                         </div>
                     </div>
@@ -1089,12 +1092,13 @@
             </div>
         }
     </div>
-    </div>
+</div>
 
-
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
+    var siteUrl;
     $().ready(function () {
-
+        siteUrl = $('#siteURL').val();
         $("#ProfileForm").validate({
             errorElement: "span",
             errorClass: "error",
@@ -1156,14 +1160,14 @@
         if ($("#LicenseEndDate").val() != null && $("#LicenseEndDate").val() != "") {
             $("#LicenseEndDateAr").val(ConvertDates($("#LicenseEndDate").val(), "gregorian", "islamic"));
         }
-        
+
         var companyId = $('#CompanyProfile_CompanyId').val();
         if (companyId == 0) {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $(".saveButton").hide();
         }
-        var siteURL = $('#siteURL').val();
-        var url = siteURL + "/CP/CompanyProfile/UploadLogo";
+
+        var url = siteUrl + "/CP/CompanyProfile/UploadLogo";
         var errors = "";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
@@ -1215,13 +1219,46 @@
         $('a[rel*=leanModal]').leanModal({ top: 80, closeButton: ".btnSelect,.modal_close" });
     });
 
-    function SetDetail(id) {
-        $('.BankName').val($('#BankName' + id).val());
-        $('.BankNameAr').val($('#BankNameArabic' + id).val());
-        $('.BankAccountNo').val($('#BankAccountNumber' + id).val());
-        $('.BankIbanNo').val($('#BankIBANNumber' + id).val());
-        $('.BankMobileNo').val($('#BankMobileNumber' + id).val());
-        $("#go").click();
+    function SetDetail(id, event) {
+        var validationStatus = $('#BankMobileNumber' + id).valid();
+        if (!validationStatus) {
+            return false;
+        }
+        var bankName = $('#BankName' + id).val();
+        var bankNameAr = $('#BankNameArabic' + id).val();
+        var bankAccountNo = $('#BankAccountNumber' + id).val();
+        var bankIbanNo = $('#BankIBANNumber' + id).val();
+        var mobileNo = $('#BankMobileNumber' + id).val();
+        var dataToPost = {
+            bankName: bankName,
+            bankNameAr: bankNameAr,
+            bankAccountNo: bankAccountNo,
+            bankIbanNo: bankIbanNo,
+            mobileNum: mobileNo
+        };
+        var url = siteUrl + "/CP/CompanyProfile/SendSms";
+        $.blockUI({
+            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+        });
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: dataToPost,
+            success: function (data) {
+                $.unblockUI();
+                if (data) {
+                    alert("Success");
+                } else {
+                    alert("Error");
+                }
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
     }
     function hide() {
         $("#popup").hide();

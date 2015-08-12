@@ -45,7 +45,7 @@
                     preferences: widgets
                 },
                 success: function (data) {
-                    
+
                 },
                 error: function (e) {
                     alert('Error=' + e.toString());
@@ -70,7 +70,7 @@
         stop: function (event, ui, a, b) {
             var elems = document.getElementsByClassName("liItem");
             var elements = [];
-            $(".liItem[id^='Menu_']").each(function() {
+            $(".liItem[id^='Menu_']").each(function () {
                 var result = (this.id).replace('Menu_', '');
                 elements.push(result);
             });
@@ -140,7 +140,7 @@
             }
         });
         $(this).closest('li').remove();
-        
+
     });
 
     $("#addSelectedQuickLink").on("click", function () {
@@ -157,10 +157,10 @@
                 var ok = "ok";
                 var tt12 = $(this).attr('id');
                 widgets.push(tt12);
-                
-                
+
+
                 $("#sortable li").each(function () {
-                    
+
 
                     if ($(this).find("p").text() == title) {
                         ok = "no";
@@ -173,7 +173,7 @@
 
                 //hml+="<li><img src="+img+" alt='Quick Launch Icon' data-original-title title><p>"+title+"</p></li>"
                 if (ok == "ok") {
-                    hml += "<li><a href=" /+siteURL +"/"+ href + "><img src=" + img + " alt='Quick Launch Icon' data-original-title title><p>" + title + "</p></a></li>"
+                    hml += "<li><a href=" / +siteURL + "/" + href + "><img src=" + img + " alt='Quick Launch Icon' data-original-title title><p>" + title + "</p></a></li>"
                 }
 
             }
@@ -192,9 +192,8 @@
             },
             success: function (data) {
                 // Add new items in Quick Launch (append html)
-                for (var item in data)
-                {
-                    var liHtml = "<li class='liItem' id=Menu_" + data[item].MenuId + "><span id='userMenuId' style='display: none'>"+ data[item].MenuId + "'</span><a href=" +siteURL + "/"+ data[item].Url + " data-toggle='modal'><img src="+siteURL+"/Images/photon/icons/" + data[item].ImagePath + " alt='predefined'></a><p>" + data[item].Title + "</p></li>";
+                for (var item in data) {
+                    var liHtml = "<li class='liItem' id=Menu_" + data[item].MenuId + "><span id='userMenuId' style='display: none'>" + data[item].MenuId + "'</span><a href=" + siteURL + "/" + data[item].Url + " data-toggle='modal'><img src=" + siteURL + "/Images/photon/icons/" + data[item].ImagePath + " alt='predefined'></a><p>" + data[item].Title + "</p></li>";
                     $(liHtml).insertBefore('#addItemButton');
                 }
                 var vals = $(".predefined-icons li");
@@ -271,7 +270,7 @@
         $('.dashboard-quick-launch li').find('img').tooltip('hide');
     });
     var firstHover = true;
-    
+
     if (widgetsLoaded['task-completion']) return;
     widgetsLoaded['task-completion'] = true;
     setTimeout(function () {
@@ -288,7 +287,7 @@
     $("#multiFilter").select2();
 
     //#endregion
-    
+
 });
 //#region Dashboard basic functions
 $(function () {
@@ -702,37 +701,37 @@ function LoadEmployeeRequests(control) {
         id = 0;
     }
     var url = siteUrl + "/Dashboard/LoadEmployeeRequests";
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: "json",
-            data: {
-                employeeId: id
-            },
-            success: function (data) {
-                $(".tempLoader").click();
-                //we have searchResult and now convert it in list item form.
-                $('#employeeRequests').empty();
-                if (data.length > 0) {
-                    $.each(data, function (itemIndex, item) {
-                        if (item.IsReplied) {
-                            $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
-                        } else {
-                            $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
-                        }
-                        
-                    });
-                }
-                else {
-                    $(".tempLoader").click();
-                    $('#employeeRequests').append('<li>No record found</li>');
-                }
-            },
-            error: function (e) {
-                alert('Error=' + e.toString());
-                $(".tempLoader").click();
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            employeeId: id
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            //we have searchResult and now convert it in list item form.
+            $('#employeeRequests').empty();
+            if (data.length > 0) {
+                $.each(data, function (itemIndex, item) {
+                    if (item.IsReplied) {
+                        $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/workDone.png" alt="Replied" title="Replied" class="status"></div></li>');
+                    } else {
+                        $('#employeeRequests').append('<li><a href="' + siteUrl + '/HR/Request/Create/' + item.RequestId + '"><span title="' + item.RequestTopic + '">' + item.RequestTopicShort + '</span></a><div><span title="' + item.EmployeeNameE + '">' + item.EmployeeNameEShort + ' </span><img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                    }
+
+                });
             }
-        });
+            else {
+                $(".tempLoader").click();
+                $('#employeeRequests').append('<li>No record found</li>');
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
 };
 function LoadComplaints(control) {
     Loader(control);
@@ -761,8 +760,7 @@ function LoadComplaints(control) {
                         $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create/' + item.ComplaintId + '"><span title="' + item.Topic + '">' + item.TopicShort + '</span></a><div><span title="' + item.ClientName + '">' + item.ClientNameShort + '</span> <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Pending" title="Pending" class="status"></div></li>');
                     }
                 });
-                if ($("#userRole").val() == "Customer")
-                {
+                if ($("#userRole").val() == "Customer") {
                     $('#complaints').append('<li><a href="' + siteUrl + '/CMS/Complaint/Create" class="btn" style="margin-left: 23%; color: black">' + $("#makeComplaint").val() + '</a></li>');
                 }
             }
@@ -804,15 +802,14 @@ function LoadOrders(control) {
             $('#customerOrders').empty();
             if (data.length > 0) {
                 $.each(data, function (itemIndex, item) {
-                     switch (item.OrderStatus)
-                    {
-                         case 2: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
+                    switch (item.OrderStatus) {
+                        case 2: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/pending.png" alt="Pending" title="Pending" class="status"></div></li>');
                             break;
-                         case 1: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
+                        case 1: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/ongoing.png" alt="On Going" title="On Going" class="status"></div></li>');
                             break;
-                         case 3: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
+                        case 3: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/notDone.png" alt="Canceled" title="Canceled" class="status"></div></li>');
                             break;
-                         case 4: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
+                        case 4: $('#customerOrders').append('<li><a href="' + siteUrl + '/CMS/Orders/Create/' + item.OrderId + '"><span>' + item.OrderNo + '</span></a><div>' + item.OrderDate + ' <img src="' + siteUrl + '/Images/photon/workDone.png" alt="Finished" title="Finished" class="status"></div></li>');
                             break;
                     }
                 });
@@ -903,8 +900,8 @@ function LoadMyProfile(control) {
             $(".tempLoader").click();
             //we have searchResult and now convert it in list item form.
             $('#myprofile').empty();
-            if (data!=null) {
-                $('#myprofile').append('<li><div class="avatar-image"><img src="' + data.EmployeeImagePath + '" alt="profile"></div><div title="'+data.EmployeeNameE+'">'+data.EmployeeNameEShort+'</div></li><li><span>Job ID</span><div>' + data.EmployeeJobId + '</div></li><li><span>Job Title</span><div>' + data.EmployeeJobTitleE + '</div></li><li><span>ID Expiry Date</span><div>' + data.EmployeeIqamaExpiryDt + '</div></li>');
+            if (data != null) {
+                $('#myprofile').append('<li><div class="avatar-image"><img src="' + data.EmployeeImagePath + '" alt="profile"></div><div title="' + data.EmployeeNameE + '">' + data.EmployeeNameEShort + '</div></li><li><span>Job ID</span><div>' + data.EmployeeJobId + '</div></li><li><span>Job Title</span><div>' + data.EmployeeJobTitleE + '</div></li><li><span>ID Expiry Date</span><div>' + data.EmployeeIqamaExpiryDt + '</div></li>');
             }
             else {
                 $(".tempLoader").click();
@@ -937,7 +934,7 @@ function LoadPayroll(control) {
             //we have searchResult and now convert it in list item form.
             $('#mypayroll').empty();
             if (data != null) {
-                $('#mypayroll').append('<li id="basicSal"><span>Basic Salary</span><div>'+data.BasicSalary+'</div></li><li id="totalAllownces"><span>Allowances</span><div>'+data.Allowances+'</div></li><li id="totalDeductions"><span>Deductions</span><div>'+data.Deductions+'</div></li><li id="totalSal"><span>Total</span><div>'+data.Total+'</div></li>');
+                $('#mypayroll').append('<li id="basicSal"><span>Basic Salary</span><div>' + data.BasicSalary + '</div></li><li id="totalAllownces"><span>Allowances</span><div>' + data.Allowances + '</div></li><li id="totalDeductions"><span>Deductions</span><div>' + data.Deductions + '</div></li><li id="totalSal"><span>Total</span><div>' + data.Total + '</div></li>');
             }
             else {
                 $(".tempLoader").click();
@@ -1008,27 +1005,26 @@ function LoadProjects(control) {
                     $("#projectDetailId").attr("href", "/PMS/Project/Details/" + data.Project.ProjectId);
                     if (dir == "ltr") {
                         $('#progressId').append(
-                        '<li class="dashProject dashTask">' +
-                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + "Project - " + data.Project.NameEShort + '</a>' +
-                        '</li>');
+                            '<li class="dashProject dashTask">' +
+                            '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameE + '">' + "Project - " + data.Project.NameEShort + '</a>' +
+                            '</li>');
                     } else {
                         if (data.Project.NameA.length > 5) {
                             $('#progressId').append(
-                        '<li class="dashProject dashTask">' +
-                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + '</a>' +
-                        '</li>');
+                                '<li class="dashProject dashTask">' +
+                                '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5) + '</a>' +
+                                '</li>');
                         } else {
                             $('#progressId').append(
-                        '<li class="dashProject dashTask">' +
-                        '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA + '</a>' +
-                        '</li>');
+                                '<li class="dashProject dashTask">' +
+                                '<a data-overall=' + data.Project.ProgressTotal + ' title="' + data.Project.NameA + '">' + "مشاريع" + " - " + data.Project.NameA + '</a>' +
+                                '</li>');
                         }
                     }
                     var projectWidgetTitle;
                     if (dir == "ltr") {
                         projectWidgetTitle = "Project - " + data.Project.NameEShort;
-                    }
-                    else {
+                    } else {
                         if (data.Project.NameA.length > 5) {
                             projectWidgetTitle = "..." + "مشاريع" + " - " + data.Project.NameA.substring(0, 5);
                         } else {
@@ -1037,27 +1033,29 @@ function LoadProjects(control) {
                     }
                     $('#projectDetailId').attr('href', $("#siteURL").val() + '/PMS/Project/Details/' + data.Project.ProjectId);
                     $('#projectDetailId').text(projectWidgetTitle);
-                    if (data.ProjectTasks != null) {
-                        $.each(data.ProjectTasks, function (itemIndex, item) {
-                            if (dir == "ltr") {
-                                $('#progressId').append(
-                                '<li class="dashTask">' +
-                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
-                                '</li>');
-                            } else {
-                                if (item.TaskNameA.length > 15) {
+                    if (data.RoleName != "Customer") {
+                        if (data.ProjectTasks != null) {
+                            $.each(data.ProjectTasks, function (itemIndex, item) {
+                                if (dir == "ltr") {
                                     $('#progressId').append(
-                                '<li class="dashTask">' +
-                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + "..." + item.TaskNameA.substring(0, 15) + '</a>' +
-                                '</li>');
+                                        '<li class="dashTask">' +
+                                        '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
+                                        '</li>');
                                 } else {
-                                    $('#progressId').append(
-                                '<li class="dashTask">' +
-                                '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + item.TaskNameA + '</a>' +
-                                '</li>');
+                                    if (item.TaskNameA.length > 15) {
+                                        $('#progressId').append(
+                                            '<li class="dashTask">' +
+                                            '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + "..." + item.TaskNameA.substring(0, 15) + '</a>' +
+                                            '</li>');
+                                    } else {
+                                        $('#progressId').append(
+                                            '<li class="dashTask">' +
+                                            '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameA + '">' + item.TaskNameA + '</a>' +
+                                            '</li>');
+                                    }
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                     if (dir == "ltr") {
                         $('#progressId').append(
@@ -1104,11 +1102,11 @@ function LoadProjects(control) {
                     '</li>');
                         }
                     }
-                    
+
                     ProjectWidgetEvents();
                 }
                 else {
-                    NoRecord('#progressId',"No record found");
+                    NoRecord('#progressId', "No record found");
                 }
             },
             error: function (e) {
@@ -1125,52 +1123,52 @@ function LoadMyTasks(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
     var id = $("#projectIdTaskFilter").val();
-   
-        if (id == "" || control.className == "refresher") {
-            id = 0;
-        }
-        var url = siteUrl + "/Dashboard/LoadMyTasks";
-        $.ajax({
-            url: url,
-            type: 'GET',
-            dataType: "json",
-            data: {
-                projectId: id
-            },
-            success: function (data) {
-                $(".tempLoader").click();
-                $('#progressId2').empty();
+
+    if (id == "" || control.className == "refresher") {
+        id = 0;
+    }
+    var url = siteUrl + "/Dashboard/LoadMyTasks";
+    $.ajax({
+        url: url,
+        type: 'GET',
+        dataType: "json",
+        data: {
+            projectId: id
+        },
+        success: function (data) {
+            $(".tempLoader").click();
+            $('#progressId2').empty();
                 if (data != null && data.length>0) {
-                    $.each(data, function (itemIndex, item) {
-                        $('#progressId2').append(
-                            '<li class="dashTask">' +
-                            '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
-                            '</li>');
-                    });
+                $.each(data, function (itemIndex, item) {
                     $('#progressId2').append(
-                    '<li class="dashBack">' +
-                        '<a><i class="icon-photon arrow_left"></i></a>' +
-                    '</li>' +
-                    '<li class="dashNext">' +
-                        '<a><i class="icon-photon arrow_right"></i></a>' +
-                    '</li>' +
-                    '<li class="processed-pct2">' +
-                        '<span title="' + data[0].TaskNameE + '">' + data[0].TaskNameEShort + '</span>' +
-                        '<div class="progress progress-info">' +
-                            '<div class="bar" data-target=' + data[0].TaskProgress + ' style="width:' + data[0].TaskProgress + '%;">' + data[0].TaskProgress + '%</div>' +
-                        '</div>' +
-                    '</li>');
-                    MyTasksWidgetEvents();
-                }
-                else {
-                    NoRecord('#progressId2', "No record found");
-                }
-            },
-            error: function (e) {
-                alert('Error=' + e.toString());
-                $(".tempLoader").click();
+                        '<li class="dashTask">' +
+                        '<a data-task=' + item.TaskProgress + ' title="' + item.TaskNameE + '">' + item.TaskNameEShort + '</a>' +
+                        '</li>');
+                });
+                $('#progressId2').append(
+                '<li class="dashBack">' +
+                    '<a><i class="icon-photon arrow_left"></i></a>' +
+                '</li>' +
+                '<li class="dashNext">' +
+                    '<a><i class="icon-photon arrow_right"></i></a>' +
+                '</li>' +
+                '<li class="processed-pct2">' +
+                    '<span title="' + data[0].TaskNameE + '">' + data[0].TaskNameEShort + '</span>' +
+                    '<div class="progress progress-info">' +
+                        '<div class="bar" data-target=' + data[0].TaskProgress + ' style="width:' + data[0].TaskProgress + '%;">' + data[0].TaskProgress + '%</div>' +
+                    '</div>' +
+                '</li>');
+                MyTasksWidgetEvents();
             }
-        });
+            else {
+                NoRecord('#progressId2', "No record found");
+            }
+        },
+        error: function (e) {
+            alert('Error=' + e.toString());
+            $(".tempLoader").click();
+        }
+    });
 };
 
 //#endregion
