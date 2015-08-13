@@ -209,7 +209,10 @@ namespace EPMS.Implementation.Services
                     foreach (var itemVariationId in itemVariationIds)
                     {
                         Product product = productRepository.GetByItemVariationId(itemVariationId);
-                        response.Products.Add(product);
+                        if (product != null)
+                        {
+                            response.Products.Add(product);
+                        }
                     }
                     break;
                 case "Sections":

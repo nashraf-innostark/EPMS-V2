@@ -1,7 +1,10 @@
-﻿@using EPMS.Website.ViewModels.﻿
+﻿@model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
 
 @{
+    ViewBag.Title = "Details";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    int rowCount = 0;
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -76,7 +79,7 @@
                         </ul>
                     </div>
                     <h1 class="page-title margintop10">Catalog</h1>
-                    <a href="#"><img src="images/shop_images/catalog.jpg"></a>
+                    <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
                 </div>
 
                 <div class="span9 directionR">
@@ -110,33 +113,42 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
-
                     <div class="row">
-                        <div class="span3">
-                            <div class="product-list-item">
-                                <span class="hover"></span>
-                                <div class="image">
-                                    <a href="pages-productitem.html"><img src="images/shop_images/img1.png" alt=""></a>
-                                </div>
-                                <div class="details fixclear">
-                                    <h3>Glass</h3>
-                                    <p><strong>SKU:</strong> #95846</p>
-                                    <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                    <div class="actions">
-                                        <a href="#">Add To Cart</a>
-                                        <a href="pages-productitem.html">More</a>
+                        @foreach (var product in Model.Products)
+                        {
+
+                            <div class="span3">
+                                <div class="product-list-item">
+                                    <span class="hover"></span>
+                                    <div class="image">
+                                        <a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>
                                     </div>
-                                    <div class="price">
-                                        <span>129,99</span><span>SR</span>
-                                        <small>199</small>
+                                    <div class="details fixclear">
+                                        @if (direction == "ltr")
+                                        {
+                                            <h3>@(product.ItemVariationId != null ? product.ItemNameEn : product.ProductNameEn)</h3>
+                                        }
+                                        else
+                                        {
+                                            <h3>@(product.ItemVariationId != null ? product.ItemNameAr : product.ProductNameAr)</h3>
+                                        }
+                                        <p><strong>SKU:</strong> @product.SKUCode</p>
+                                        <p class="desc">@(direction == "ltr" ? product.ProductDescEn : product.ProductDescAr)</p>
+                                        <div class="actions">
+                                            <a href="#">Add To Cart</a>
+                                            <a href="pages-productitem.html">More</a>
+                                        </div>
+                                        <div class="price">
+                                            <span>@product.ProductPrice</span><span>SR</span>
+                                            <small>199</small>
+                                        </div>
                                     </div>
-                                </div>
-                            </div><!-- end product-item -->
-                        </div>
-                    </div><!-- end row -->
+                                </div><!-- end product-item -->
+                            </div>
+
+                        }
+                    </div>
                     <div class="span4">
                         <div class="pagination">
                             <a href="#"><div class="previous"><i class="fa fa-long-arrow-right"></i></div></a>
@@ -158,431 +170,431 @@
                                 <li><a href="#tabpan3" data-toggle="tab">Ramdom Products</a></li>
                                 <li><a href="#tabpan4" data-toggle="tab">Featured Products</a></li>
                             </ul>
-                            <div class="tab-content">
-                                <div class="tab-pane active" id="tabpan1">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="latest_products ">
-                                            <li>
-                                                <div class="product-list-item  ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img1.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                            @*<div class="tab-content">
+                                    <div class="tab-pane active" id="tabpan1">
+                                        <div class="shop-latest-carousel">
+                                            <ul id="latest_products ">
+                                                <li>
+                                                    <div class="product-list-item  ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
-                                <div class="tab-pane" id="tabpan2">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="bestselling_products">
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            </ul><!-- shop product list -->
+                                            <div class="controls">
+                                                <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                                <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div><!--end shop-latest-carousel -->
+                                    </div><!-- end tab pane -->
+                                    <div class="tab-pane" id="tabpan2">
+                                        <div class="shop-latest-carousel">
+                                            <ul id="bestselling_products">
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
-                                <div class="tab-pane " id="tabpan3">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="latest_products2 ">
-                                            <li>
-                                                <div class="product-list-item  ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img1.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            </ul><!-- shop product list -->
+                                            <div class="controls">
+                                                <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                                <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div><!--end shop-latest-carousel -->
+                                    </div><!-- end tab pane -->
+                                    <div class="tab-pane " id="tabpan3">
+                                        <div class="shop-latest-carousel">
+                                            <ul id="latest_products2 ">
+                                                <li>
+                                                    <div class="product-list-item  ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
-                                <div class="tab-pane" id="tabpan4">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="bestselling_products4">
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            </ul><!-- shop product list -->
+                                            <div class="controls">
+                                                <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                                <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div><!--end shop-latest-carousel -->
+                                    </div><!-- end tab pane -->
+                                    <div class="tab-pane" id="tabpan4">
+                                        <div class="shop-latest-carousel">
+                                            <ul id="bestselling_products4">
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                                <li>
+                                                    <div class="product-list-item">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
                                                         </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
+                                                        <div class="details fixclear">
+                                                            <h3>Glass</h3>
+                                                            <p><strong>SKU:</strong> #95846</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a href="#">Add To Cart</a>
+                                                                <a href="pages-productitem.html">More</a>
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>129,99</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            </ul><!-- shop product list -->
+                                            <div class="controls">
+                                                <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                                <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                            </div>
+                                            <div class="clear"></div>
+                                        </div><!--end shop-latest-carousel -->
+                                    </div><!-- end tab pane -->
 
-                            </div><!-- /.tab-content -->
+                                </div>*@<!-- /.tab-content -->
                         </div><!-- /.tabbable -->
                     </div><!-- end shop latest -->
                 </div>

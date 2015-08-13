@@ -63,7 +63,7 @@
 </head>
 <body class="">
     @*<div id="fb-root"></div>*@
-    
+
     <div id="page_wrapper">
         <header id="header" class="style2 header2">
             <div class="fullWidth">
@@ -140,8 +140,18 @@
                 </script>
                 @{Html.RenderAction("Index", "WebsiteMenu", new { area = "" });}
             </div>
-        </header> 
-        @{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}
+        </header>
+        @if (ViewBag.ShowSlider != null)
+        {
+            if (ViewBag.ShowSlider)
+            {
+                Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+            }
+        }
+        else
+        {
+            Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+        }
 
         <div id="action_box" data-arrowpos="center">
             <div class="container">

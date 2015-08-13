@@ -213,7 +213,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Startup.cs" />
-    <Compile Include="ViewModels\ProductDetailViewModel.cs" />
     <Compile Include="ViewModels\WebsiteMenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -298,6 +297,25 @@
     <Content Include="Content\fixes.css" />
     <Content Include="Content\flexslider.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\images\shop_images\1.png" />
+    <Content Include="Content\images\shop_images\26650-125LRG.jpg" />
+    <Content Include="Content\images\shop_images\catalog.jpg" />
+    <Content Include="Content\images\shop_images\download.jpg" />
+    <Content Include="Content\images\shop_images\icons\shop-icon1.png" />
+    <Content Include="Content\images\shop_images\icons\shop-icon2.png" />
+    <Content Include="Content\images\shop_images\icons\shop-icon3.png" />
+    <Content Include="Content\images\shop_images\img1.png" />
+    <Content Include="Content\images\shop_images\img2.png" />
+    <Content Include="Content\images\shop_images\img3.png" />
+    <Content Include="Content\images\shop_images\img4.jpg" />
+    <Content Include="Content\images\shop_images\img4.png" />
+    <Content Include="Content\images\shop_images\img5.jpg" />
+    <Content Include="Content\images\shop_images\img5.png" />
+    <Content Include="Content\images\shop_images\img6.png" />
+    <Content Include="Content\images\shop_images\page\img1.jpg" />
+    <Content Include="Content\images\shop_images\page\img2.jpg" />
+    <Content Include="Content\images\shop_images\page\img3.jpg" />
+    <Content Include="Content\images\shop_images\page\img4.jpg" />
     <Content Include="Content\index.html" />
     <Content Include="Content\jquery.fancybox.css" />
     <Content Include="Content\owl.carousel.css" />
@@ -1022,8 +1040,8 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

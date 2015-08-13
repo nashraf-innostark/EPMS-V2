@@ -28,5 +28,38 @@ namespace EPMS.Models.DomainModels
         public virtual ItemVariation ItemVariation { get; set; }
         public virtual ProductSection ProductSection { get; set; }
         public virtual ICollection<ProductImage> ProductImages { get; set; }
+        public string SKUCode
+        {
+            get
+            {
+                if (ItemVariation != null)
+                {
+                    return ItemVariation.SKUCode;
+                }
+                return "";
+            }
+        }
+        public string SKUDescriptionEn
+        {
+            get
+            {
+                if (ItemVariation != null)
+                {
+                    return ItemVariation.SKUDescriptionEn;
+                }
+                return "";
+            }
+        }
+        public string SKUDescriptionAr
+        {
+            get
+            {
+                if (ItemVariation != null)
+                {
+                    return ItemVariation.SKUDescriptionAr;
+                }
+                return "";
+            }
+        }
     }
 }
