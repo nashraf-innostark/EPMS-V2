@@ -521,7 +521,7 @@
 
         $("#selectDepartment").on("click", function() {
             $('#DepartmentPath').val("Selected: " + textTillParent);
-            $('#InventoryItem_DepartmentId').val($('#jstree').jstree('get_selected').attr('id'));
+            $('#departmentId').val($('#jstree').jstree('get_selected').attr('id'));
             $('#modal-dialog').modal('toggle');
             return true;
         });

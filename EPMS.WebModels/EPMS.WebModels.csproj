@@ -595,7 +595,9 @@
     <Compile Include="ViewModels\TIR\TransferItemCreateViewModel.cs" />
     <Compile Include="ViewModels\TIR\TransferItemListViewModel.cs" />
     <Compile Include="ViewModels\Vendor\VendorViewModel.cs" />
+    <Compile Include="ViewModels\Website\Department\DepartmentDetailViewModel.cs" />
     <Compile Include="ViewModels\Website\Department\DepartmentViewModel.cs" />
+    <Compile Include="ViewModels\Website\Home\WebsiteHomeViewModel.cs" />
     <Compile Include="WebsiteModels\AccountViewModels.cs" />
     <Compile Include="WebsiteModels\Allowance.cs" />
     <Compile Include="WebsiteModels\ApplicantExperience.cs" />
@@ -1037,6 +1039,7 @@
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -1,70 +1,36 @@
-﻿@{
+﻿@model EPMS.WebModels.ViewModels.Website.Home.WebsiteHomeViewModel
+
+@{
     ViewBag.Title = "MASAR Scientific Company";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <section id="content">
     <div class="container">
         <div class="row image-boxes imgboxes_style1 catagoryBox">
             <h3>Main Departments</h3>
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/5.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Lab Preparatoin</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/1.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Lab Furnishing</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
+            
+            @foreach (var department in Model.WebsiteDepartments)
+            {
+                <div class="span4 box">
+                    <a href="#" class="hoverBorder">
+                        @if (department.ImageName != "" || department.ImageName != null)
+                        {
+                            <img src='http://localhost:43063/Images/Department/@Url.Content(department.ImageName)' alt="">
+                        }
+                        else
+                        {
+                            <img src="~/images/noimage_department.png" alt="">
+                        }
+                        <h6>For More +</h6>
+                    </a>
+                    <h3 class="m_title">@(direction == "ltr" ? department.NameEn : department.NameAr)</h3>
+                    <p style="text-align: justify">@department.Description</p>
+                </div>
+            }
 
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/img2.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Training Services</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
-
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/2.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Air Conditioning Services</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/4.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Kindergarden</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
-
-
-
-            <div class="span4 box">
-                <a href="#" class="hoverBorder">
-                    <img src="~/images/site_images/6.jpg" alt="">
-                    <h6>For More +</h6>
-                </a>
-                <h3 class="m_title">Learning Games</h3>
-                <p>Lorem ipsum dolor sit amet, utinam volutpat principes sea id, vim an populo eripuit. Aliquid verterem quo id, nominavi indoctum pro et, vim ad diceret assueverit definitiones.</p>
-            </div><!-- end span -->
-
-        </div><!-- end row // imgboxes_style1 -->
-
-
-
-
+        </div>
+        <!-- end row // imgboxes_style1 -->
 
     </div>
 
@@ -81,15 +47,20 @@
             </div>
             <div class="span10">
                 <ul id="partners_carousel" class="fixclear">
-                    <li><a href="#"><img src="~/images/partners/cc.png" alt="" /></a></li>
+                    @foreach (var partner in Model.Partners)
+                    {
+                        <li><a href="#"><img src="http://localhost:43063/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                    }
+                    @*<li><a href="#"><img src="~/images/partners/cc.png" alt="" /></a></li>
                     <li><a href="#"><img src="~/images/partners/ad.png" alt="" /></a></li>
                     <li><a href="#"><img src="~/images/partners/3d.png" alt="" /></a></li>
                     <li><a href="#"><img src="~/images/partners/tf.png" alt="" /></a></li>
                     <li><a href="#"><img src="~/images/partners/3d.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/tf.png" alt="" /></a></li>
+                    <li><a href="#"><img src="~/images/partners/tf.png" alt="" /></a></li>*@
                 </ul>
             </div>
-        </div><!-- end row // partners carousel -->
+        </div>
+        <!-- end row // partners carousel -->
 
         <div class="row">
             <div class="span12">
@@ -97,5 +68,7 @@
             </div>
         </div><!-- end row // keywords-->
 
-    </div><!-- end container -->
+    </div>
+    <!-- end container -->
+
 </section><!-- end #content -->     
