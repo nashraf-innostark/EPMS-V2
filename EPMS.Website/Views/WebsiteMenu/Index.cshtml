@@ -2,6 +2,7 @@
 @{
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    string link = "";
 }
 <!-- start main_menu -->
 <nav id="main_menu">
@@ -28,105 +29,113 @@
                     {
                         <li>
                             @{
-                                //childName variable to just show the name of menu item
-                                var childName="";
-                                //put check for culture for eng or arabic field
-                                if (direction == "ltr")
-                                {
-                                    childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
-                                }
-                                else
-                                {
-                                    childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
-                                }
+                        //childName variable to just show the name of menu item
+                        var childName = "";
+                        //put check for culture for eng or arabic field
+                        if (direction == "ltr")
+                        {
+                            childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
+                        }
+                        else
+                        {
+                            childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
+                        }
                             }
-                            <a href="#">@childName</a>
-                            
+                            @if (productSection.InventoyDepartmentId != null)
+                            {
+                                link = "/Product/Details/" + productSection.InventoyDepartmentId + "?from=Inventory";
+                            }
+                            else
+                            {
+                                link = "/Product/Details/" + productSection.SectionId + "?from=Sections";
+                            }
+                            <a href="@link">@childName</a>
+
                             @{
-                                //Check if there are departments, then show them all, up to 2nd level
-                                if (productSection.InventoryDepartment != null)
+                        //Check if there are departments, then show them all, up to 2nd level
+                        if (productSection.InventoryDepartment != null)
+                        {
+                            <ul>
+
+                                @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
                                 {
-                                    <ul>
-                                        
-                                        @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
+                                    //first level child from department is here
+                                    <li>
+                                        @{
+                                    //put check for culture for eng or arabic field
+                                    childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                        }
+                                        <a href="#">@childName</a>
+
+                                        @if (department.InventoryDepartments.Any())
                                         {
-                                            //first level child from department is here
-                                            <li>
-                                                @{
+                                            //2nd level child from department is here
+                                            <ul>
+                                                @foreach (var childDepartment in department.InventoryDepartments)
+                                                {
+                                                    <li>
+                                                        @{
                                                     //put check for culture for eng or arabic field
-                                                    childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
-                                                }
-                                                <a href="#">@childName</a>
-
-                                                @if (department.InventoryDepartments.Any())
-                                                {
-                                                    //2nd level child from department is here
-                                                    <ul>
-                                                        @foreach (var childDepartment in department.InventoryDepartments)
-                                                        {
-                                                            <li>
-                                                                @{
-                                                                    //put check for culture for eng or arabic field
-                                                                    childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
-                                                                }
-                                                                <a href="#">@childName</a>
-                                                            </li>
+                                                    childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                         }
-                                                    </ul>
+                                                        <a href="~/Product/Details/@childDepartment.DepartmentId">@childName</a>
+                                                    </li>
                                                 }
-                                            </li>
+                                            </ul>
                                         }
-                                    </ul>
+                                    </li>
                                 }
-                                else
+                            </ul>
+                        }
+                        else
+                        {
+                            //we are here because we didn't find any department of this roo level productSection, we are going to check if it has child in productSection table
+                            <ul>
+                                @foreach (var product in productSection.ProductSections)
                                 {
-                                    //we are here because we didn't find any department of this roo level productSection, we are going to check if it has child in productSection table
-                                    <ul>
-                                        @foreach (var product in productSection.ProductSections)
-                                        {
-                                            //first level child from productSection is here
-                                            <li>
-                                                @{
-                                                //put check for culture for eng or arabic field
-                                                if (direction == "ltr")
-                                                {
-                                                    childName = string.IsNullOrEmpty(product.SectionNameEn) ? product.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
-                                                }
-                                                else
-                                                {
-                                                    childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
-                                                }
-                                                }
-                                                <a href="#">@childName</a>
-                                                @if (product.ProductSections.Any())
-                                                {
-                                                    //2nd level child from productSection is here
-                                                    <ul>
-                                                        @foreach (var childProduct in product.ProductSections)
-                                                        {
-                                                            <li>
-                                                                @{
-                                                                    //put check for culture for eng or arabic field
-                                                                    if (direction == "ltr")
-                                                                    {
-                                                                        childName = string.IsNullOrEmpty(childProduct.SectionNameEn) ? childProduct.InventoryDepartment.DepartmentNameEn : childProduct.SectionNameEn;
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
-                                                                    }
-                                                                }
-                                                                <a href="#">@childName</a>
-                                                            </li>
-                                                        }
-                                                    </ul>
-                                                }
-                                            </li>
+                                    //first level child from productSection is here
+                                    <li>
+                                        @{
+                                    //put check for culture for eng or arabic field
+                                    if (direction == "ltr")
+                                    {
+                                        childName = string.IsNullOrEmpty(product.SectionNameEn) ? product.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
+                                    }
+                                    else
+                                    {
+                                        childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
+                                    }
                                         }
-                                    </ul>
+                                        <a href="#">@childName</a>
+                                        @if (product.ProductSections.Any())
+                                        {
+                                            //2nd level child from productSection is here
+                                            <ul>
+                                                @foreach (var childProduct in product.ProductSections)
+                                                {
+                                                    <li>
+                                                        @{
+                                                    //put check for culture for eng or arabic field
+                                                    if (direction == "ltr")
+                                                    {
+                                                        childName = string.IsNullOrEmpty(childProduct.SectionNameEn) ? childProduct.InventoryDepartment.DepartmentNameEn : childProduct.SectionNameEn;
+                                                    }
+                                                    else
+                                                    {
+                                                        childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
+                                                    }
+                                                        }
+                                                        <a href="#">@childName</a>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        }
+                                    </li>
                                 }
+                            </ul>
+                        }
 
-}
+                            }
                         </li>
                     }
                 }

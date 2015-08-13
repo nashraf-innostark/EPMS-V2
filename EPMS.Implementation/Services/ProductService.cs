@@ -20,16 +20,18 @@ namespace EPMS.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly IProductSectionRepository productSectionRepository;
         private readonly IProductImageRepository productImageRepository;
+        private readonly IInventoryDepartmentRepository inventoryDepartmentRepository;
 
         #endregion
 
         #region Constructor
 
-        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository)
+        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository)
         {
             this.productRepository = productRepository;
             this.productSectionRepository = productSectionRepository;
             this.productImageRepository = productImageRepository;
+            this.inventoryDepartmentRepository = inventoryDepartmentRepository;
         }
 
         #endregion
@@ -190,6 +192,74 @@ namespace EPMS.Implementation.Services
                 }
             }
             productImageRepository.SaveChanges();
+        }
+
+        public ProductDetails GetProductDetails(long id, string from)
+        {
+            ProductDetails response = new ProductDetails
+            {
+                Products = new List<Product>()
+            };
+            switch (from)
+            {
+                case "Inventory":
+                    var department = inventoryDepartmentRepository.Find(id);
+                    IEnumerable<InventoryDepartment> departmentsForProduct = AllChildDepartments(department);
+                    IEnumerable<long> itemVariationIds = GetAllItemVariationIds(departmentsForProduct);
+                    foreach (var itemVariationId in itemVariationIds)
+                    {
+                        Product product = productRepository.GetByItemVariationId(itemVariationId);
+                        response.Products.Add(product);
+                    }
+                    break;
+                case "Sections":
+                    productSectionRepository.Find(id);
+                    break;
+            }
+            return response;
+        }
+
+        private IEnumerable<InventoryDepartment> AllChildDepartments(InventoryDepartment department)
+        {
+            IList<InventoryDepartment> childDepartments = new List<InventoryDepartment>();
+            childDepartments.Add(department);
+            if (department.InventoryDepartments.Any())
+            {
+                foreach (var inventoryDepartment1 in department.InventoryDepartments)
+                {
+                    childDepartments.Add(inventoryDepartment1);
+                    if (inventoryDepartment1.InventoryDepartments.Any())
+                    {
+                        foreach (var inventoryDepartment2 in inventoryDepartment1.InventoryDepartments)
+                        {
+                            childDepartments.Add(inventoryDepartment2);
+                        }
+                    }
+                }
+            }
+            return childDepartments;
+        }
+
+        private IEnumerable<long> GetAllItemVariationIds(IEnumerable<InventoryDepartment> departments)
+        {
+            IList<long> itemVariationIds = new List<long>();
+            foreach (var inventoryDepartment in departments)
+            {
+                if (inventoryDepartment.InventoryItems.Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                itemVariationIds.Add(itemVariation.ItemVariationId);
+                            }
+                        }
+                    }
+                }
+            }
+            return itemVariationIds;
         }
 
         #endregion

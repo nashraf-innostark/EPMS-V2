@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -212,6 +213,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="ViewModels\ProductDetailViewModel.cs" />
     <Compile Include="ViewModels\WebsiteMenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1019,6 +1021,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
+    <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

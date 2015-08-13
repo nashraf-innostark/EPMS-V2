@@ -4,5 +4,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IProductRepository : IBaseRepository<Product, long>
     {
+        Product GetByItemVariationId(long itemVariationId);
     }
 }
