@@ -1021,6 +1021,7 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
+    <Content Include="Views\Home\DepartmentDetail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

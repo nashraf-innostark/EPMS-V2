@@ -1,0 +1,100 @@
+﻿@using ProductSection = EPMS.WebModels.WebsiteModels.ProductSection
+@model EPMS.WebModels.ViewModels.Website.Department.DepartmentDetailViewModel
+
+@{
+    ViewBag.Title = "DepartmentDetail";
+    //Layout = "~/Views/Shared/_Layout.cshtml";
+    var rootProducts = @Model.ProductSections.Where(x => x.ParentSectionId == null);
+    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+}
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+
+            <div class="row">
+                <div class="span9 rightSide directionR">
+                    <h1 class="page-title">Lab Department</h1>
+
+
+                    <div class="itemView clearfix eBlog">
+
+                        <div class="itemBody">
+                            <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/Department/@Url.Content(Model.WebsiteDepartment.ImageName)" /></a></p>
+                            <p style="text-align: justify">@Model.WebsiteDepartment.Description</p>
+                        </div><!-- end item body -->
+                        <div class="clear"></div>
+
+
+
+
+                    </div>
+                    <!-- End Item Layout -->
+                </div>
+
+
+                <div class="span3  directionR">
+                    <h1 class="page-title">Poduct Classification</h1>
+                    <div class="css-treeview">
+                        <ul>
+                            <li class="phy">
+                                @foreach (var productSection in rootProducts)
+                                {
+                                    var childName = "";
+                                    if (direction == "ltr")
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartmentNameEn : productSection.SectionNameEn;
+                                    }
+                                    else
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartmentNameAr : productSection.SectionNameAr;
+                                    }
+                                    <input type="checkbox" id="item-0" /><label for="item-0">@childName</label>
+                                    if (productSection.InventoryDepartment != null)
+                                    {
+                                        <ul>
+                                            @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
+                                            {
+                                                <li class="phy">
+                                                    @{
+                                                childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                                <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
+                                                    }
+                                                    @if (department.InventoryDepartments.Any())
+                                                    {
+                                                        <ul>
+                                                            @foreach (var childDepartment in department.InventoryDepartments)
+                                                            {
+                                                                <li class="phy">
+                                                                    @{
+                                                                childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+                                }
+                            </li>
+
+                        </ul>
+                    </div>
+
+                    <h1 class="page-title margintop10">Catalog</h1>
+                    <a href="#"><img src="images/shop_images/catalog.jpg"></a>
+
+                </div>
+
+
+            </div><!-- end row -->
+
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+</section><!-- end #content -->

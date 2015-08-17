@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -11,16 +12,18 @@ namespace EPMS.Implementation.Services
         #region Private
 
         private readonly IWebsiteDepartmentRepository repository;
-        
+        private readonly IProductSectionService productSectionService;
+
         #endregion
         
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public WebsiteDepartmentService(IWebsiteDepartmentRepository repository)
+        public WebsiteDepartmentService(IWebsiteDepartmentRepository repository, IProductSectionService productSectionService)
         {
             this.repository = repository;
+            this.productSectionService = productSectionService;
         }
 
         #endregion
@@ -70,6 +73,14 @@ namespace EPMS.Implementation.Services
                 repository.Delete(dataToDelete);
                 repository.SaveChanges();
             }
+        }
+
+        public WebsiteDepartmentResponse websiteDepartmentResponse(long id)
+        {
+            WebsiteDepartmentResponse response = new WebsiteDepartmentResponse();
+            response.ProductSections = productSectionService.GetAll();
+            response.websiteDepartment = repository.Find(id);
+            return response;
         }
     }
 }

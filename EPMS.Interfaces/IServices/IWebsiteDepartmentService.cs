@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -10,5 +11,6 @@ namespace EPMS.Interfaces.IServices
         bool AddDepartment(WebsiteDepartment websiteDepartment);
         bool UpdateDepartment(WebsiteDepartment websiteDepartment);
         void DeleteDepartment(long id);
+        WebsiteDepartmentResponse websiteDepartmentResponse(long id);
     }
 }
