@@ -360,8 +360,9 @@
     <Compile Include="ResponseModels\POCreateResponse.cs" />
     <Compile Include="ResponseModels\PODetailResponse.cs" />
     <Compile Include="ResponseModels\PoHistoryResponse.cs" />
-    <Compile Include="ResponseModels\ProductDetails.cs" />
+    <Compile Include="ResponseModels\ProductDetailResponse.cs" />
     <Compile Include="ResponseModels\ProductResponse.cs" />
+    <Compile Include="ResponseModels\ProductsListResponse.cs" />
     <Compile Include="ResponseModels\Project.cs" />
     <Compile Include="ResponseModels\ProjectResponseForDashboard.cs" />
     <Compile Include="ResponseModels\ProjectTaskResponse.cs" />

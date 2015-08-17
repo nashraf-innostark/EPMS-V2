@@ -1,9 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace EPMS.WebModels.ViewModels.Product
+﻿namespace EPMS.WebModels.ViewModels.Product
 {
     public class ProductDetailViewModel
     {
-        public IList<WebsiteModels.Product> Products { get; set; }
+        public WebsiteModels.Product Product { get; set; }
     }
 }

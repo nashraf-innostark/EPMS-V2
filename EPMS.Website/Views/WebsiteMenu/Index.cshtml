@@ -43,11 +43,11 @@
                             }
                             @if (productSection.InventoyDepartmentId != null)
                             {
-                                link = "/Product/Details/" + productSection.InventoyDepartmentId + "?from=Inventory";
+                                link = "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
                             }
                             else
                             {
-                                link = "/Product/Details/" + productSection.SectionId + "?from=Sections";
+                                link = "/Product/Index/" + productSection.SectionId + "?from=Sections";
                             }
                             <a href="@link">@childName</a>
 
@@ -64,7 +64,7 @@
                                             @{
                                         //put check for culture for eng or arabic field
                                         childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
-                                        link = "/Product/Details/" + department.DepartmentId + "?from=Inventory";
+                                        link = "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                             }
                                             <a href="@link">@childName</a>
 
@@ -78,7 +78,7 @@
                                                             @{
                                                         //put check for culture for eng or arabic field
                                                         childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
-                                                        link = "/Product/Details/" + childDepartment.DepartmentId + "?from=Inventory";
+                                                        link = "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                             }
                                                             <a href="@link">@childName</a>
                                                         </li>
@@ -107,7 +107,7 @@
                                         {
                                             childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
                                         }
-                                        link = "/Product/Details/" + product.SectionId + "?from=Sections";
+                                        link = "/Product/Index/" + product.SectionId + "?from=Sections";
                                             }
                                             <a href="@link">@childName</a>
                                             @if (product.ProductSections.Any())
@@ -127,7 +127,7 @@
                                                         {
                                                             childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
                                                         }
-                                                        link = "/Product/Details/" + childProduct.SectionId + "?from=Sections";
+                                                        link = "/Product/Index/" + childProduct.SectionId + "?from=Sections";
                                                             }
                                                             <a href="@link">@childName</a>
                                                         </li>

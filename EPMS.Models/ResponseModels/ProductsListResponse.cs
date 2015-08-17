@@ -3,7 +3,7 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ResponseModels
 {
-    public class ProductDetails
+    public class ProductsListResponse
     {
         public IList<Product> Products { get; set; }
     }

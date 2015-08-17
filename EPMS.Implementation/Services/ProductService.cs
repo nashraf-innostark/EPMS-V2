@@ -21,17 +21,19 @@ namespace EPMS.Implementation.Services
         private readonly IProductSectionRepository productSectionRepository;
         private readonly IProductImageRepository productImageRepository;
         private readonly IInventoryDepartmentRepository inventoryDepartmentRepository;
+        private readonly IItemVariationRepository itemVariationRepository;
 
         #endregion
 
         #region Constructor
 
-        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository)
+        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository, IItemVariationRepository itemVariationRepository)
         {
             this.productRepository = productRepository;
             this.productSectionRepository = productSectionRepository;
             this.productImageRepository = productImageRepository;
             this.inventoryDepartmentRepository = inventoryDepartmentRepository;
+            this.itemVariationRepository = itemVariationRepository;
         }
 
         #endregion
@@ -194,9 +196,9 @@ namespace EPMS.Implementation.Services
             productImageRepository.SaveChanges();
         }
 
-        public ProductDetails GetProductDetails(long id, string from)
+        public ProductsListResponse GetProductsList(long id, string from)
         {
-            ProductDetails response = new ProductDetails
+            ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>()
             };
@@ -216,7 +218,25 @@ namespace EPMS.Implementation.Services
                     }
                     break;
                 case "Sections":
-                    productSectionRepository.Find(id);
+                    response.Products = productRepository.GetByProductSectionId(id).ToList();
+                    break;
+            }
+            return response;
+        }
+
+        public ProductDetailResponse GetProductDetails(long id, string from)
+        {
+            ProductDetailResponse response = new ProductDetailResponse
+            {
+                Product = new Product()
+            };
+            switch (from)
+            {
+                case "Inventory":
+                    response.ItemVariation = itemVariationRepository.Find(id);
+                    break;
+                case "Sections":
+                    response.Product = productRepository.Find(id);
                     break;
             }
             return response;

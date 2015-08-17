@@ -4,6 +4,6 @@ namespace EPMS.WebModels.ViewModels.Product
 {
     public class ProductListViewModel
     {
-        public IEnumerable<WebsiteModels.Product> Products { get; set; }
+        public IList<WebsiteModels.Product> Products { get; set; }
     }
 }

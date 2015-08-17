@@ -296,6 +296,7 @@
     <Content Include="Content\dark-theme.css" />
     <Content Include="Content\fixes.css" />
     <Content Include="Content\flexslider.css" />
+    <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\shop_images\1.png" />
     <Content Include="Content\images\shop_images\26650-125LRG.jpg" />
@@ -322,7 +323,18 @@
     <Content Include="Content\owl.theme.css" />
     <Content Include="Content\responsive-devices.css" />
     <Content Include="Content\shadows.css" />
+    <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Images\noimage_department.png" />
+    <Content Include="Images\sliders\iosslider\arr01.png" />
+    <Content Include="Images\sliders\iosslider\controls.png" />
+    <Content Include="Images\sliders\iosslider\jquery.iosslider.kalypso.js" />
+    <Content Include="Images\sliders\iosslider\jquery.iosslider.min.js" />
+    <Content Include="Images\sliders\iosslider\loader-light.gif" />
+    <Content Include="Images\sliders\iosslider\loader_dark.gif" />
+    <Content Include="Images\sliders\iosslider\style.css" />
+    <Content Include="Scripts\blank.png" />
+    <Content Include="Scripts\cloud-zoom.1.0.3.js" />
+    <Content Include="Scripts\zoomsl-3.0.js" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\bg.jpg" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\blank.jpg" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\controls.png" />
@@ -1039,9 +1051,17 @@
     <Content Include="fonts\glyphicons-halflings-regular.ttf" />
     <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
+    <Content Include="fonts\DroidNaskh-Bold.ttf" />
+    <Content Include="fonts\DroidNaskh-Regular.ttf" />
+    <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\fontawesome-webfont.ttf" />
+    <Content Include="fonts\fontawesome-webfont.woff" />
+    <Content Include="fonts\fontawesome-webfont.woff2" />
+    <Content Include="fonts\FontAwesome.otf" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\Product\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

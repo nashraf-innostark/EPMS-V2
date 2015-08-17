@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -22,6 +23,10 @@ namespace EPMS.Repository.Repositories
         public Product GetByItemVariationId(long itemVariationId)
         {
             return DbSet.FirstOrDefault(x => x.ItemVariationId == itemVariationId);
+        }
+        public IEnumerable<Product> GetByProductSectionId(long productSectionId)
+        {
+            return DbSet.Where(x => x.ProductSectionId == productSectionId);
         }
     }
 }

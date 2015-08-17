@@ -64,5 +64,20 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             };
             return request;
         }
+
+        public static WebsiteModels.Product CreateFromItemVariation(this ItemVariation source)
+        {
+            return new WebsiteModels.Product
+            {
+                ProductNameEn = source.InventoryItem.ItemNameEn,
+                ProductNameAr = source.InventoryItem.ItemNameAr,
+                ProductDescEn = source.SKUDescriptionEn,
+                ProductDescAr = source.SKUDescriptionAr,
+                ProductPrice = source.UnitPrice.ToString(),
+                SKUCode = source.SKUCode,
+                ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()),
+                Sizes = source.Sizes.Select(x=>x.CreateFromServerToClient())
+            };
+        }
     }
 }

@@ -29,9 +29,24 @@ namespace EPMS.Website.Controllers
         
         #region Index
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(long? id, string from)
         {
-            return View();
+            ProductListViewModel viewModel = new ProductListViewModel
+            {
+                Products = new List<Product>()
+            };
+            long productId = 0;
+            if (id != null)
+            {
+                productId = (long)id;
+            }
+            ProductsListResponse productsList = productService.GetProductsList(productId, from);
+            if (productsList.Products.Any())
+            {
+                viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClient()).ToList();
+            }
+            ViewBag.ShowSlider = false;
+            return View(viewModel);
         }
 
         #endregion
@@ -41,18 +56,30 @@ namespace EPMS.Website.Controllers
         {
             ProductDetailViewModel viewModel = new ProductDetailViewModel
             {
-                Products = new List<Product>()
+                Product = new Product()
             };
             long productId = 0;
             if (id != null)
             {
-                productId = (long) id;
+                productId = (long)id;
             }
-            ProductDetails responseDetails = productService.GetProductDetails(productId, from);
-            if (responseDetails.Products.Any())
+            ProductDetailResponse productDetails = productService.GetProductDetails(productId, from);
+            switch (from)
             {
-                viewModel.Products = responseDetails.Products.Select(x=>x.CreateFromServerToClient()).ToList();
+                case "Inventory":
+                    if (productDetails.Product != null)
+                    {
+                        viewModel.Product = productDetails.ItemVariation.CreateFromItemVariation();
+                    }
+                    break;
+                case "Sections":
+                    if (productDetails.Product != null)
+                    {
+                        viewModel.Product = productDetails.Product.CreateFromServerToClient();
+                    }
+                    break;
             }
+            
             ViewBag.ShowSlider = false;
             return View(viewModel);
         }
