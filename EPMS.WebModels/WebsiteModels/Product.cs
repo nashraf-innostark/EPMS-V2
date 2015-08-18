@@ -24,5 +24,9 @@ namespace EPMS.WebModels.WebsiteModels
         public List<ProductImage> ProductImages { get; set; }
         public string ItemNameEn { get; set; }
         public string ItemNameAr { get; set; }
+        public string SKUCode { get; set; }
+
+        public IEnumerable<ItemImage> ItemImages { get; set; }
+        public IEnumerable<Size> Sizes { get; set; }
     }
 }

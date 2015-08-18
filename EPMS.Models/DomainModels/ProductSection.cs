@@ -10,9 +10,9 @@ namespace EPMS.Models.DomainModels
         public string SectionNameAr { get; set; }
         public string SectionContentEn { get; set; }
         public string SectionContentAr { get; set; }
-        public Nullable<long> InventoyDepartmentId { get; set; }
+        public long? InventoyDepartmentId { get; set; }
         public bool ShowToPublic { get; set; }
-        public Nullable<long> ParentSectionId { get; set; }
+        public long? ParentSectionId { get; set; }
         public string RecCreatedBy { get; set; }
         public System.DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

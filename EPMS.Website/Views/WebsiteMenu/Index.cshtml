@@ -2,6 +2,7 @@
 @{
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    string link = "";
 }
 <!-- start main_menu -->
 <nav id="main_menu">
@@ -40,7 +41,15 @@
                             childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                         }
                             }
-                            <a href="#">@childName</a>
+                            @if (productSection.InventoyDepartmentId != null)
+                            {
+                                link = "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
+                            }
+                            else
+                            {
+                                link = "/Product/Index/" + productSection.SectionId + "?from=Sections";
+                            }
+                            <a href="@link">@childName</a>
 
                             @{
                         //Check if there are departments, then show them all, up to 2nd level
@@ -55,6 +64,7 @@
                                         @{
                                     //put check for culture for eng or arabic field
                                     childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                        link = "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                         }
                                         <a href="#">@childName</a>
 
@@ -68,6 +78,7 @@
                                                         @{
                                                     //put check for culture for eng or arabic field
                                                     childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                        link = "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                         }
                                                         <a href="#">@childName</a>
                                                     </li>
@@ -96,6 +107,7 @@
                                     {
                                         childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
                                     }
+                                        link = "/Product/Index/" + product.SectionId + "?from=Sections";
                                         }
                                         <a href="#">@childName</a>
                                         @if (product.ProductSections.Any())
@@ -115,6 +127,7 @@
                                                     {
                                                         childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
                                                     }
+                                                        link = "/Product/Index/" + childProduct.SectionId + "?from=Sections";
                                                         }
                                                         <a href="#">@childName</a>
                                                     </li>

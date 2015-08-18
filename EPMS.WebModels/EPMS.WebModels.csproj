@@ -481,6 +481,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\WebsiteClient\Product\ProductDetails.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductDetails.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
       <DependentUpon>ContatUs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -564,6 +569,7 @@
     <Compile Include="ViewModels\ProductSection\ProductSectionCreateViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionListViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionViewModel.cs" />
+    <Compile Include="ViewModels\Product\ProductDetailViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductListViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductViewModel.cs" />
     <Compile Include="ViewModels\Project\ProjectListViewModel.cs" />
@@ -1008,6 +1014,10 @@
     <EmbeddedResource Include="Resources\UserManagement\Users.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Users.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductDetails.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductDetails.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

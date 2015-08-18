@@ -1,0 +1,260 @@
+﻿@model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
+
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.PageTitle;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    int rowCount = 0;
+}
+
+
+@section scripts
+{
+    <link href="~/Content/font-awesome.css" rel="stylesheet" />
+    <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
+    <link href="~/Content/flexslider.css" rel="stylesheet" />
+
+    <script src="~/Scripts/flexslider.min.js"></script>
+    <script src="~/Scripts/zoomsl-3.0.min.js"></script>
+    <script src="~/Scripts/jquery.fancybox.pack.js"></script>
+
+    <script>
+        jQuery(document).ready(function() {
+            singleProduct();
+
+            function singleProduct() {
+                /* Product Images Carousel */
+                jQuery('#product-carousel').flexslider({
+                    animation: "slide",
+                    controlNav: false,
+                    animationLoop: false,
+                    directionNav: false,
+                    slideshow: false,
+                    itemWidth: 80,
+                    itemMargin: 0,
+                    start: function(slider) {
+                        setActive(jQuery('#product-carousel li:first-child img'));
+                        slider.find('.right-arrow').click(function() {
+                            slider.flexAnimate(slider.getTarget("next"));
+                        });
+                        slider.find('.left-arrow').click(function() {
+                            slider.flexAnimate(slider.getTarget("prev"));
+                        });
+                        slider.find('img').click(function() {
+                            var large = jQuery(this).attr('data-large');
+                            setActive(jQuery(this));
+                            jQuery('#product-slider img').fadeOut(300, changeImg(large, jQuery('#product-slider img')));
+                            jQuery('#product-slider a.fullscreen-button').attr('href', large);
+                        });
+
+                        function changeImg(large, element) {
+                            var element = element;
+                            var large = large;
+                            setTimeout(function() { startF(); }, 300);
+
+                            function startF() {
+                                element.attr('src', large);
+                                element.attr('data-large', large);
+                                element.fadeIn(300);
+                            }
+                        }
+
+                        function setActive(el) {
+                            var element = el;
+                            jQuery('#product-carousel img').removeClass('active-item');
+                            element.addClass('active-item');
+                        }
+                    }
+                });
+
+                /* FullScreen Button */
+                jQuery('a.fullscreen-button').click(function(e) {
+                    e.preventDefault();
+                    var target = jQuery(this).attr('href');
+                    jQuery('#product-carousel a.fancybox[href="' + target + '"]').trigger('click');
+                });
+                /* Cloud Zoom */
+                jQuery("#zoom01").imagezoomsl({
+                    zoomrange: [3, 3],
+                    magnifierpos: "left"
+                });
+                /* FancyBox */
+                jQuery(".fancybox").fancybox();
+            }
+        });
+    </script>
+}
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.HomePage</a></li>
+                    <li>@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.Products</li>
+                </ul>
+                <span id="current-date">THURSDAY, 14 JUNE 2001</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.Products</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shadowUP"></div>
+</div>
+<section id="content">
+    <div class="container">
+        <div id="mainbody">
+            <div class="row">
+                <div class="span9 rightSide">
+                    <div class="row product-page">
+                        <div class="span4 product-single-image">
+                            <div id="product-slider">
+                                <ul class="slides">
+                                    <li>
+                                        <a class="fullscreen-button" href="/images/shop_images/img3.png" id="">
+                                            <img class="" src="/images/shop_images/img3.png" alt="" id="zoom01" />
+                                            <div class="product-fullscreen">
+                                                <i class="fa fa-arrows-alt"></i>
+                                            </div>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="product-carousel">
+                                <ul class="slides">
+                                    <li>
+                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img3.png"></a>
+                                        <img src="/images/shop_images/img3.png" data-large="/images/shop_images/img3.png" alt="" />
+                                    </li>
+                                    <li>
+                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img5.png"></a>
+                                        <img src="/images/shop_images/img5.png" data-large="/images/shop_images/img5.png" alt="" />
+                                    </li>
+                                    <li>
+                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
+                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
+                                    </li>
+                                    <li>
+                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
+                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
+                                    </li>
+                                    <li>
+                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
+                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
+                                    </li>
+                                </ul>
+                                <div class="product-arrows">
+                                    <div class="left-arrow">
+                                        <i class="fa fa-arrow-left"></i>
+                                    </div>
+                                    <div class="right-arrow">
+                                        <i class="fa fa-arrow-right"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="span5">
+                            <div class="main-data">
+                                <p class="name">Condencer</p>
+                                <p><strong>SKU:</strong> #95846
+                                <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
+                                <p class="regular_price">Price: <span>1200</span><span>SR</span></p>
+                                <p class="price">
+                                    <span>1056</span><span>SR</span>
+                                </p>
+                                <p>You Will Save: <strong>144.00 (12%)</strong></p>
+                                <div class="to_cart">
+                                    <div class="quantitiy">
+                                        <label for="qty">Size:</label>
+                                        @*@(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), "", new { @id = "Size" }) :
+                                            Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), "", new { @id = "Size" }))*@
+                                    </div>
+                                    <div class="quantitiy">
+                                        <label for="qty">Quantity:</label>
+                                        <input type="text" id="password" name="password" class="inputbox">
+                                    </div>
+                                    <a href="#" class="addtocart btn btn-flat">Add To Cart</a>
+                                    <div class="clear"></div>
+                                </div>
+                            </div><!-- end main data -->
+                        </div>
+                    </div><!-- end row // product page -->
+
+                    <div class="row">
+                        <div class="span9">
+
+                            <div class="tabbable tabs_style2">
+                                <ul class="nav fixclear">
+                                    <li class="active"><a href="#shop-tab1" data-toggle="tab">Description </a></li>
+                                    <li><a href="#shop-tab2" data-toggle="tab">Specifications</a></li>
+                                </ul>
+
+                                <div class="tab-content">
+                                    <div class="tab-pane active" id="shop-tab1">
+                                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis</p>
+                                    </div>
+                                    <div class="tab-pane" id="shop-tab2">
+                                        <p> Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="span3  directionR">
+                    <h1 class="page-title">Poduct Classification</h1>
+                    <div class="css-treeview">
+                        <ul>
+                            <li class="phy">
+                                <input type="checkbox" id="item-0" /><label for="item-0">Physics Department</label>
+                                <ul>
+                                    <li class="phy">
+                                        <input type="checkbox" id="item-0-0" /><label for="item-0-0">Labs</label>
+                                        <ul>
+                                            <li class="phy">
+                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Glassware</label>
+                                                <ul>
+                                                    <li class="phy"><a href="#">Glasses</a></li>
+                                                    <li class="phy"><a href="#">Flasks</a></li>
+                                                    <li class="phy"><a href="#">Cylinders</a></li>
+                                                    <li class="phy"><a href="#">Dispencers</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <input type="checkbox" id="item-0-1" /><label for="item-0-1">Experiments</label>
+                                        <ul>
+                                            <li class="phy"><a href="#">experiment 1</a></li>
+                                            <li class="phy"><a href="#">experiment 2</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            <li class="chmy">
+                                <input type="checkbox" id="item-1" /><label for="item-1">Chemistry Department</label>
+                                <ul>
+                                    <li class="chmy">
+                                        <input type="checkbox" id="item-1-0" /><label for="item-1-0">Labs</label>
+                                        <ul>
+                                            <li class="chmy"><a href="#">Glassware</a></li>
+                                            <li class="chmy"><a href="#">Experiments</a></li>
+                                            <li class="chmy"><a href="#">Chemicals</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <h1 class="page-title margintop10">Catalog</h1>
+                    <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
