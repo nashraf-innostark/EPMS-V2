@@ -192,6 +192,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\NewsAndArticleController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -1022,6 +1023,8 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
     <Content Include="Views\Home\DepartmentDetail.cshtml" />
+    <Content Include="Views\NewsAndArticle\Index.cshtml" />
+    <Content Include="Views\NewsAndArticle\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

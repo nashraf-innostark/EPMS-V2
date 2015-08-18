@@ -48,7 +48,7 @@ namespace EPMS.Website.Controllers
             DepartmentDetailViewModel detailViewModel = new DepartmentDetailViewModel
             {
                 WebsiteDepartment = response.websiteDepartment.CreateFromServerToClient(),
-                ProductSections = response.ProductSections.Select(x=>x.CreateFromServerToClient()).ToList()
+                ProductSections = response.ProductSections.ToList()
             };
             return View(detailViewModel);
 

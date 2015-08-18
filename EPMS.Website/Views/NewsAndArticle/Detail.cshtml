@@ -1,0 +1,82 @@
+﻿@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleViewModel
+@{
+    ViewBag.Title = "Detail";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+            @if (direction == "ltd")
+            {
+                <div class="row">
+                    <div class="span12 directionR">
+                        <h1 class="page-title">@Model.NewsAndArticle.TitleEn</h1>
+
+
+                        <div class="itemView clearfix eBlog">
+                            <div class="itemHeader">
+                                <div class="post_details">
+                                    <span class="itemAuthor">Writer:  <a rel="author" href="#">@Model.NewsAndArticle.AuthorNameEn</a></span>
+                                    <span class="infSep"> / </span>
+                                    <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.NewsAndArticle.RecCreatedDt.ToString("MMMM dd, yyyy")</span>
+
+                                </div>
+                            </div><!-- end itemheader -->
+                            <div class="itemBody">
+                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p style="text-align: justify">@Model.NewsAndArticle.ContentEn</p>
+                            </div><!-- end item body -->
+                            <div class="clear"></div>
+
+
+
+
+                        </div>
+                        <!-- End Item Layout -->
+                    </div>
+
+
+                </div>
+                <!-- end row -->
+            }
+            else
+            {
+                <div class="row">
+                    <div class="span12 directionR">
+                        <h1 class="page-title">@Model.NewsAndArticle.TitleAr</h1>
+
+
+                        <div class="itemView clearfix eBlog">
+                            <div class="itemHeader">
+                                <div class="post_details">
+                                    <span class="itemAuthor">Writer:  <a rel="author" href="#">@Model.NewsAndArticle.AuthorNameAr</a></span>
+                                    <span class="infSep"> / </span>
+                                    <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.NewsAndArticle.RecCreatedDt.ToString("dddd , dd MMMM yyyy")</span>
+
+                                </div>
+                            </div><!-- end itemheader -->
+                            <div class="itemBody">
+                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p style="text-align: justify">@Model.NewsAndArticle.ContentAr</p>
+                            </div><!-- end item body -->
+                            <div class="clear"></div>
+
+
+
+
+                        </div>
+                        <!-- End Item Layout -->
+                    </div>
+
+
+                </div><!-- end row -->
+            }
+
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+</section><!-- end #content -->
+

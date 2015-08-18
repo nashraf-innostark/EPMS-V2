@@ -10,6 +10,6 @@ namespace EPMS.WebModels.ViewModels.Website.Department
             WebsiteDepartment = new WebsiteDepartment();
         }
         public WebsiteDepartment WebsiteDepartment { get; set; }
-        public List<WebsiteModels.ProductSection> ProductSections { get; set; }
+        public IEnumerable<Models.DomainModels.ProductSection> ProductSections { get; set; }
     }
 }

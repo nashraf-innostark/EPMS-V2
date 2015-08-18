@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "DepartmentDetail";
     //Layout = "~/Views/Shared/_Layout.cshtml";
-    var rootProducts = @Model.ProductSections.Where(x => x.ParentSectionId == null);
+    var rootProducts = @Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
 }
 
@@ -44,11 +44,11 @@
                                     var childName = "";
                                     if (direction == "ltr")
                                     {
-                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartmentNameEn : productSection.SectionNameEn;
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn: productSection.SectionNameEn;
                                     }
                                     else
                                     {
-                                        childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartmentNameAr : productSection.SectionNameAr;
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                                     }
                                     <input type="checkbox" id="item-0" /><label for="item-0">@childName</label>
                                     if (productSection.InventoryDepartment != null)
