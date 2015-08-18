@@ -486,6 +486,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductDetails.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\WebsiteClient\Product\ProductIndex.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductIndex.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
       <DependentUpon>ContatUs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1018,6 +1023,10 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductDetails.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductDetails.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductIndex.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

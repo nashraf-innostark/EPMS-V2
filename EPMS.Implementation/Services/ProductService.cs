@@ -196,29 +196,22 @@ namespace EPMS.Implementation.Services
             productImageRepository.SaveChanges();
         }
 
-        public ProductsListResponse GetProductsList(long id, string from)
+        public ProductsListResponse GetProductsList(ProductSearchRequest request)
         {
             ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>()
             };
-            switch (from)
+            switch (request.From)
             {
                 case "Inventory":
-                    var department = inventoryDepartmentRepository.Find(id);
+                    var department = inventoryDepartmentRepository.Find(request.Id);
                     IEnumerable<InventoryDepartment> departmentsForProduct = AllChildDepartments(department);
                     IEnumerable<long> itemVariationIds = GetAllItemVariationIds(departmentsForProduct);
-                    foreach (var itemVariationId in itemVariationIds)
-                    {
-                        Product product = productRepository.GetByItemVariationId(itemVariationId);
-                        if (product != null)
-                        {
-                            response.Products.Add(product);
-                        }
-                    }
+                    response.Products = productRepository.GetByItemVariationId(itemVariationIds, request);
                     break;
                 case "Sections":
-                    response.Products = productRepository.GetByProductSectionId(id).ToList();
+                    response.Products = productRepository.GetByProductSectionId(request.Id).ToList();
                     break;
             }
             return response;

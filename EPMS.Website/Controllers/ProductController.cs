@@ -2,9 +2,11 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ViewModels.Product;
+using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Website.Controllers
@@ -40,12 +42,28 @@ namespace EPMS.Website.Controllers
             {
                 productId = (long)id;
             }
-            ProductsListResponse productsList = productService.GetProductsList(productId, from);
+            ProductSearchRequest request = new ProductSearchRequest
+            {
+                Id = productId,
+                From = from,
+                SearchString = "",
+                NoOfItems = 9,
+                SortBy = "asc"
+            };
+            ProductsListResponse productsList = productService.GetProductsList(request);
             if (productsList.Products.Any())
             {
-                viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClient()).ToList();
+                viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
             }
             ViewBag.ShowSlider = false;
+            ViewBag.From = from;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public ActionResult Index(ProductListViewModel viewModel)
+        {
+
             return View(viewModel);
         }
 
@@ -75,12 +93,13 @@ namespace EPMS.Website.Controllers
                 case "Sections":
                     if (productDetails.Product != null)
                     {
-                        viewModel.Product = productDetails.Product.CreateFromServerToClient();
+                        viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();
                     }
                     break;
             }
             
             ViewBag.ShowSlider = false;
+            ViewBag.From = from;
             return View(viewModel);
         }
 

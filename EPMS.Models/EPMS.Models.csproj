@@ -100,6 +100,7 @@
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
+    <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -199,6 +200,7 @@
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
     <Compile Include="RequestModels\ProductRequest.cs" />
+    <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />

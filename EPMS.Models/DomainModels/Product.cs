@@ -36,24 +36,24 @@ namespace EPMS.Models.DomainModels
                 return "";
             }
         }
-        public string SKUDescriptionEn
+        public string ItemDescriptionEn
         {
             get
             {
                 if (ItemVariation != null)
                 {
-                    return ItemVariation.SKUDescriptionEn;
+                    return ItemVariation.InventoryItem.ItemDescriptionEn;
                 }
                 return "";
             }
         }
-        public string SKUDescriptionAr
+        public string ItemDescriptionAr
         {
             get
             {
                 if (ItemVariation != null)
                 {
-                    return ItemVariation.SKUDescriptionAr;
+                    return ItemVariation.InventoryItem.ItemDescriptionAr;
                 }
                 return "";
             }
