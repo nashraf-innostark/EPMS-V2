@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
@@ -54,42 +55,26 @@ namespace EPMS.Repository.Repositories
             switch (request.From)
             {
                 case "Inventory":
-                    result = request.SortBy == "asc" ? 
-                        DbSet.Where(x => itemVariationIds.Contains(x.ItemVariationId.Value)
-                && searchSpecified
-                && (x.ItemVariationId.HasValue &&
-                x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
-                x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
-                || !searchSpecified)
-                .OrderBy(inventoryClause[request.ProductByOption])
-                .Take(request.NoOfItems).ToList() :
-                DbSet.Where(x => itemVariationIds.Contains(x.ItemVariationId.Value)
-                && searchSpecified
-                && (x.ItemVariationId.HasValue &&
-                x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
-                x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
-                || !searchSpecified)
-                .OrderByDescending(inventoryClause[request.ProductByOption])
-                .Take(request.NoOfItems).ToList();
+                    Expression<Func<Product, bool>> query =
+                        x => itemVariationIds.Contains(x.ItemVariationId.Value)&& searchSpecified&& (x.ItemVariationId.HasValue &&
+                    x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
+                    x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
+                    || !searchSpecified;
+
+                    result = request.SortBy == "asc" ?
+                        DbSet.Where(query).OrderBy(inventoryClause[request.ProductByOption]).Take(request.NoOfItems).ToList() :
+                        DbSet.Where(query).OrderByDescending(inventoryClause[request.ProductByOption]).Take(request.NoOfItems).ToList();
                     break;
                 case "Sections":
+                    Expression<Func<Product, bool>> queery =
+                        x => itemVariationIds.Contains(x.ItemVariationId.Value) && searchSpecified && (x.ItemVariationId.HasValue &&
+                    x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
+                    x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
+                    || !searchSpecified;
+                    
                     result = request.SortBy == "asc" ?
-                        DbSet.Where(x => itemVariationIds.Contains(x.ItemVariationId.Value)
-                && searchSpecified
-                && (x.ItemVariationId.HasValue &&
-                x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
-                x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
-                || !searchSpecified)
-                .OrderBy(sectionClause[request.ProductByOption])
-                .Take(request.NoOfItems).ToList() :
-                DbSet.Where(x => itemVariationIds.Contains(x.ItemVariationId.Value)
-                && searchSpecified
-                && (x.ItemVariationId.HasValue &&
-                x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
-                x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
-                || !searchSpecified)
-                .OrderByDescending(sectionClause[request.ProductByOption])
-                .Take(request.NoOfItems).ToList();
+                        DbSet.Where(queery).OrderBy(sectionClause[request.ProductByOption]).Take(request.NoOfItems).ToList() :
+                        DbSet.Where(queery).OrderByDescending(sectionClause[request.ProductByOption]).Take(request.NoOfItems).ToList();
                     break;
             }
             return result;
