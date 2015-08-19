@@ -14,6 +14,7 @@ namespace EPMS.Repository.Repositories
 {
     public class ProductRepository : BaseRepository<Product>, IProductRepository
     {
+        #region Constructor
         public ProductRepository(IUnityContainer container)
             : base(container)
         {
@@ -23,6 +24,7 @@ namespace EPMS.Repository.Repositories
         {
             get { return db.Products; }
         }
+        #endregion
 
         #region Private
 
@@ -56,12 +58,12 @@ namespace EPMS.Repository.Repositories
             {
                 case "Inventory":
                     Expression<Func<Product, bool>> query =
-                        x => itemVariationIds.Contains(x.ItemVariationId.Value)&& searchSpecified&& (x.ItemVariationId.HasValue &&
+                        x => itemVariationIds.Contains(x.ItemVariationId.Value) && ((searchSpecified && (x.ItemVariationId.HasValue &&
                     x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
-                    x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
-                    || !searchSpecified;
+                    x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
+                    || !searchSpecified);
 
-                    result = request.SortBy == "asc" ?
+                    result = request.SortDirection == "asc" ?
                         DbSet.Where(query).OrderBy(inventoryClause[request.ProductByOption]).Take(request.NoOfItems).ToList() :
                         DbSet.Where(query).OrderByDescending(inventoryClause[request.ProductByOption]).Take(request.NoOfItems).ToList();
                     break;
@@ -72,7 +74,7 @@ namespace EPMS.Repository.Repositories
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString))
                     || !searchSpecified;
                     
-                    result = request.SortBy == "asc" ?
+                    result = request.SortDirection == "asc" ?
                         DbSet.Where(queery).OrderBy(sectionClause[request.ProductByOption]).Take(request.NoOfItems).ToList() :
                         DbSet.Where(queery).OrderByDescending(sectionClause[request.ProductByOption]).Take(request.NoOfItems).ToList();
                     break;
