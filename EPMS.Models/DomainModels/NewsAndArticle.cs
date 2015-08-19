@@ -15,6 +15,10 @@ namespace EPMS.Models.DomainModels
         public string ContentEn { get; set; }
         public string ContentAr { get; set; }
         public bool ShowToPublic { get; set; }
+        public string MetaKeywords { get; set; }
+        public string MetaKeywordsAr { get; set; }
+        public string MetaDesc { get; set; }
+        public string MetaDescAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

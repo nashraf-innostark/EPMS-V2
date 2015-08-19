@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Department;
 using EPMS.WebModels.ModelMappers.Website.Partner;
+using EPMS.WebModels.ModelMappers.Website.ProductSection;
+using EPMS.WebModels.ViewModels.Website.Department;
 using EPMS.WebModels.ViewModels.Website.Home;
-using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Website.Controllers
 {
@@ -18,40 +15,43 @@ namespace EPMS.Website.Controllers
         #region Private
 
         private readonly IWebsiteDepartmentService websiteDepartmentService;
-        private readonly IWebsiteHomePageService _websiteHomePageService;
+        private readonly IWebsiteHomePageService websiteHomePageService;
 
         #endregion
 
         #region Constructor
+
+        public HomeController(IWebsiteDepartmentService websiteDepartmentService, IWebsiteHomePageService websiteHomePageService)
+        {
+            this.websiteDepartmentService = websiteDepartmentService;
+            this.websiteHomePageService = websiteHomePageService;
+        }
+
         #endregion
 
         #region Public
         #endregion
 
-        public HomeController(IWebsiteDepartmentService websiteDepartmentService, IWebsiteHomePageService websiteHomePageService)
-        {
-            this.websiteDepartmentService = websiteDepartmentService;
-            _websiteHomePageService = websiteHomePageService;
-        }
-
         public ActionResult Index()
         {
-
-            WebsiteHomeResponse response;
-            response = _websiteHomePageService.websiteHomeResponse();
+            WebsiteHomeResponse response = websiteHomePageService.websiteHomeResponse();
             return View(new WebsiteHomeViewModel
             {
                 WebsiteDepartments = response.WebsiteDepartments.Select(x=>x.CreateFromServerToClient()),
                 Partners = response.Partners.Select(x=>x.CreateFromServerToClient())
             });
-            
         }
 
-        public ActionResult About()
+        public ActionResult DepartmentDetail(long id)
         {
-            ViewBag.Message = "Your application description page.";
+            WebsiteDepartmentResponse response = websiteDepartmentService.websiteDepartmentResponse(id);
+            DepartmentDetailViewModel detailViewModel = new DepartmentDetailViewModel
+            {
+                WebsiteDepartment = response.websiteDepartment.CreateFromServerToClient(),
+                ProductSections = response.ProductSections.ToList()
+            };
+            return View(detailViewModel);
 
-            return View();
         }
 
         public ActionResult Contact()

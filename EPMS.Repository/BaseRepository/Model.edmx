@@ -5,6 +5,23 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="EPMSInventoryModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AboutUs">
+          <Key>
+            <PropertyRef Name="AboutUsId" />
+          </Key>
+          <Property Name="AboutUsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Title" Type="nvarchar" MaxLength="100" />
+          <Property Name="TitleAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="100" />
+          <Property Name="MetaKeywordsAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="MetaDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="MetaDescAr" Type="nvarchar" MaxLength="500" />
+          <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Allowance">
           <Key>
             <PropertyRef Name="AllowanceId" />
@@ -892,6 +909,10 @@
           <Property Name="ContentEn" Type="nvarchar" MaxLength="1000" />
           <Property Name="ContentAr" Type="nvarchar" MaxLength="1000" />
           <Property Name="ShowToPublic" Type="bit" Nullable="false" />
+          <Property Name="MetaKeywords" Type="nvarchar" MaxLength="100" />
+          <Property Name="MetaKeywordsAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="MetaDesc" Type="nvarchar" MaxLength="500" />
+          <Property Name="MetaDescAr" Type="nvarchar" MaxLength="500" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1016,6 +1037,10 @@
           <Property Name="ProductSpecificationEn" Type="nvarchar" MaxLength="1000" />
           <Property Name="ProductSpecificationAr" Type="nvarchar" MaxLength="1000" />
           <Property Name="ProductSectionId" Type="bigint" />
+          <Property Name="NewArrival" Type="bit" Nullable="false" />
+          <Property Name="BestSeller" Type="bit" Nullable="false" />
+          <Property Name="RandomProduct" Type="bit" Nullable="false" />
+          <Property Name="Featured" Type="bit" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1592,8 +1617,8 @@
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="ServiceNameEn" Type="nvarchar" MaxLength="200" />
-          <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" />
+          <Property Name="ServiceNameEn" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DescriptionEn" Type="nvarchar(max)" />
           <Property Name="DescriptionAr" Type="nvarchar(max)" />
           <Property Name="MetaKeywordsEn" Type="nchar" MaxLength="10" />
@@ -3224,6 +3249,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="EPMSInventoryModelStoreContainer">
+          <EntitySet Name="AboutUs" EntityType="Self.AboutUs" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Allowance" EntityType="Self.Allowance" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantExperience" EntityType="Self.ApplicantExperience" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ApplicantQualification" EntityType="Self.ApplicantQualification" Schema="dbo" store:Type="Tables" />
@@ -6110,6 +6136,7 @@
             <End Role="WebsiteService" EntitySet="WebsiteServices" />
             <End Role="WebsiteService1" EntitySet="WebsiteServices" />
           </AssociationSet>
+          <EntitySet Name="AboutUs1" EntityType="EPMSInventoryModel.AboutUs" />
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7571,6 +7598,10 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="MetaKeywords" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKeywordsAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="ImageSlider">
           <Key>
@@ -7691,6 +7722,10 @@
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_Product_ItemVariation" FromRole="Product" ToRole="ItemVariation" />
           <NavigationProperty Name="ProductSection" Relationship="EPMSInventoryModel.FK_Product_ProductSection" FromRole="Product" ToRole="ProductSection" />
           <NavigationProperty Name="ProductImages" Relationship="EPMSInventoryModel.FK_ProductImage_Product" FromRole="Product" ToRole="ProductImage" />
+          <Property Name="NewArrival" Type="Boolean" Nullable="false" />
+          <Property Name="BestSeller" Type="Boolean" Nullable="false" />
+          <Property Name="RandomProduct" Type="Boolean" Nullable="false" />
+          <Property Name="Featured" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Product_ItemVariation">
           <End Type="EPMSInventoryModel.ItemVariation" Role="ItemVariation" Multiplicity="0..1" />
@@ -7768,8 +7803,8 @@
             <PropertyRef Name="ServiceId" />
           </Key>
           <Property Name="ServiceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ServiceNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="ServiceNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ServiceNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="ServiceNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="DescriptionEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DescriptionAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="MetaKeywordsEn" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
@@ -7797,6 +7832,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="AboutUs">
+          <Key>
+            <PropertyRef Name="AboutUsId" />
+          </Key>
+          <Property Name="AboutUsId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TitleAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKeywords" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MetaKeywordsAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDesc" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="MetaDescAr" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9322,6 +9374,10 @@
           <EntitySetMapping Name="NewsAndArticles">
             <EntityTypeMapping TypeName="EPMSInventoryModel.NewsAndArticle">
               <MappingFragment StoreEntitySet="NewsAndArticle">
+                <ScalarProperty Name="MetaDescAr" ColumnName="MetaDescAr" />
+                <ScalarProperty Name="MetaDesc" ColumnName="MetaDesc" />
+                <ScalarProperty Name="MetaKeywordsAr" ColumnName="MetaKeywordsAr" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
@@ -9415,6 +9471,10 @@
           <EntitySetMapping Name="Products">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Product">
               <MappingFragment StoreEntitySet="Product">
+                <ScalarProperty Name="Featured" ColumnName="Featured" />
+                <ScalarProperty Name="RandomProduct" ColumnName="RandomProduct" />
+                <ScalarProperty Name="BestSeller" ColumnName="BestSeller" />
+                <ScalarProperty Name="NewArrival" ColumnName="NewArrival" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
@@ -9491,6 +9551,24 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="AboutUs1">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.AboutUs">
+              <MappingFragment StoreEntitySet="AboutUs">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="MetaDescAr" ColumnName="MetaDescAr" />
+                <ScalarProperty Name="MetaDesc" ColumnName="MetaDesc" />
+                <ScalarProperty Name="MetaKeywordsAr" ColumnName="MetaKeywordsAr" />
+                <ScalarProperty Name="MetaKeywords" ColumnName="MetaKeywords" />
+                <ScalarProperty Name="TitleAr" ColumnName="TitleAr" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="AboutUsId" ColumnName="AboutUsId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -9513,7 +9591,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="66">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="73">
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />
@@ -9733,6 +9811,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ContactUs" Width="1.5" PointX="25.375" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteService" Width="1.875" PointX="25.375" PointY="6.75" />
         <AssociationConnector Association="EPMSInventoryModel.FK_WebsiteService_WebsiteService" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.AboutUs" Width="1.5" PointX="27.375" PointY="0.75" />
       </Diagram>
     </Diagrams>
   </Designer>

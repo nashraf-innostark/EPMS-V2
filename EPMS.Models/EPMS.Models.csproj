@@ -137,6 +137,7 @@
     <Compile Include="DashboardModels\RIFWidget.cs" />
     <Compile Include="DashboardModels\TIRWidget.cs" />
     <Compile Include="DashboardModels\WarehousDDL.cs" />
+    <Compile Include="DomainModels\AboutUs.cs" />
     <Compile Include="DomainModels\ContactUs.cs" />
     <Compile Include="DomainModels\DIF.cs" />
     <Compile Include="DomainModels\DIFHistory.cs" />
@@ -387,7 +388,9 @@
     <Compile Include="ResponseModels\TIRListResponse.cs" />
     <Compile Include="ResponseModels\VendorResponse.cs" />
     <Compile Include="ResponseModels\TaskResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteDepartmentResponse.cs" />
     <Compile Include="ResponseModels\WebsiteHomeResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteServicesCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -71,8 +71,8 @@
                     {
                         @Html.DropDownListFor(model => model.NewsAndArticle.Type, new[]
                         {
-                            new SelectListItem {Value = "1", Text = @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.News},
-                            new SelectListItem {Value = "0", Text = @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.Article}
+                            new SelectListItem {Value = "True", Text = @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.Article},
+                            new SelectListItem {Value = "False", Text = @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.News}
                         }, new { @id = "Type", @class = "select2me" })
                     }
                 </div>
@@ -246,7 +246,7 @@
     var url = "/Website/NewsAndArticle/UploadImage";
     $('#upload').mfupload({
         type: 'jpg,png,tif,jpeg', //all types
-        maxsize: 1,
+        maxsize: 10,
         post_upload: url,
         folder: "./",
         ini_text: "Drag your file here or click (max: 1MB)",

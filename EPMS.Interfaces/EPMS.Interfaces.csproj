@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServices\IAboutUsService.cs" />
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
     <Compile Include="IServices\IColorService.cs" />
@@ -121,7 +122,9 @@
     <Compile Include="IServices\IVendorService.cs" />
     <Compile Include="IServices\IWarehouseDetailService.cs" />
     <Compile Include="IServices\IWebsiteDepartmentService.cs" />
+    <Compile Include="IServices\IWebsiteServicesService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IAboutUsRepository.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />
     <Compile Include="Repository\IApplicantQualificationRepository.cs" />
@@ -207,6 +210,7 @@
     <Compile Include="Repository\IWarehouseRepository.cs" />
     <Compile Include="Repository\IPhysicalCountItemRepository.cs" />
     <Compile Include="Repository\IWebsiteDepartmentRepository.cs" />
+    <Compile Include="Repository\IWebsiteServicesRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

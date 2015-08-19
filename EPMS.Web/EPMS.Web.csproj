@@ -323,6 +323,7 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
     <Compile Include="Areas\Website\Controllers\HomeController.cs" />
@@ -333,6 +334,7 @@
     <Compile Include="Areas\Website\Controllers\ServiceController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
+    <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -1495,6 +1497,9 @@
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
     <Content Include="Areas\Website\Views\Service\Index.cshtml" />
     <Content Include="Areas\Website\Views\Service\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Create.cshtml" />
+    <Content Include="Areas\Website\Views\AboutUs\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

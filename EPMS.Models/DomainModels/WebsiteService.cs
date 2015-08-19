@@ -22,6 +22,6 @@ namespace EPMS.Models.DomainModels
         public DateTime RecLastUpdatedDate { get; set; }
 
         public virtual ICollection<WebsiteService> WebsiteServices { get; set; }
-        public virtual WebsiteService ParentWebsiteService { get; set; }
+        public virtual WebsiteService ParentService { get; set; }
     }
 }

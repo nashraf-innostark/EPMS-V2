@@ -9,7 +9,8 @@
                 NewsArticleId = source.NewsArticleId,
                 SortOrder = source.SortOrder,
                 Type = source.Type,
-                TypeForIndex = source.Type ? "News" : "Article",
+                //True means Article, False News
+                TypeForIndex = source.Type ? "Article" : "News",
                 TitleEn = source.TitleEn,
                 TitleAr = source.TitleAr,
                 ImagePath = source.ImagePath,

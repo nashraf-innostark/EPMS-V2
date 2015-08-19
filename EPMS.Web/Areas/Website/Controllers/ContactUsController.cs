@@ -55,7 +55,11 @@ namespace EPMS.Web.Areas.Website.Controllers
                     ContactUs detailToUpdate = contactUsViewModel.ContactUs.CreateFromClientToServer();
                     if (contactUsService.UpdateDetail(detailToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Updated, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Website.ContactUs.ContatUs.Updated,
+                            IsUpdated = true
+                        };
                         return RedirectToAction("Detail");
                     }
                 }
@@ -68,14 +72,18 @@ namespace EPMS.Web.Areas.Website.Controllers
                     ContactUs detailToUpdate = contactUsViewModel.ContactUs.CreateFromClientToServer();
                     if (contactUsService.UpdateDetail(detailToUpdate))
                     {
-                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.ContactUs.ContatUs.Saved, IsUpdated = true };
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Website.ContactUs.ContatUs.Saved,
+                            IsSaved = true
+                        };
                         return RedirectToAction("Detail");
                     }
                 }
             }
             catch (Exception e)
             {
-                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                TempData["message"] = new MessageViewModel {Message = e.Message, IsError = true};
                 return RedirectToAction("Create", e);
             }
             return View(contactUsViewModel);
