@@ -16,7 +16,7 @@ namespace EPMS.Interfaces.IServices
         ProductResponse ProductResponse(long id);
         ProductResponse SaveProduct(ProductRequest productToSave);
         bool SaveProducts(IList<Product> products);
-        ProductsListResponse GetProductsList(long id, string from);
+        ProductsListResponse GetProductsList(ProductSearchRequest request);
         ProductDetailResponse GetProductDetails(long id, string from);
     }
 }

@@ -1,10 +1,26 @@
-﻿@model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
+﻿@using System.Configuration
+@using System.Globalization
+@model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
 
 @{
     ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
-    int rowCount = 0;
+    string requestFrom = "";
+    if (ViewBag.From != null)
+    {
+        requestFrom = ViewBag.From.ToString();
+    }
+    string itemImageFolder = "";
+    if (requestFrom == "Inventory")
+    {
+        itemImageFolder = ConfigurationManager.AppSettings["InventoryImage"];
+    }
+    if (requestFrom == "Sections")
+    {
+        itemImageFolder = ConfigurationManager.AppSettings["ProductImage"];
+    }
+    DateTime today = DateTime.Now;
 }
 
 
@@ -19,7 +35,7 @@
     <script src="~/Scripts/jquery.fancybox.pack.js"></script>
 
     <script>
-        jQuery(document).ready(function() {
+        jQuery(document).ready(function () {
             singleProduct();
 
             function singleProduct() {
@@ -32,15 +48,15 @@
                     slideshow: false,
                     itemWidth: 80,
                     itemMargin: 0,
-                    start: function(slider) {
+                    start: function (slider) {
                         setActive(jQuery('#product-carousel li:first-child img'));
-                        slider.find('.right-arrow').click(function() {
+                        slider.find('.right-arrow').click(function () {
                             slider.flexAnimate(slider.getTarget("next"));
                         });
-                        slider.find('.left-arrow').click(function() {
+                        slider.find('.left-arrow').click(function () {
                             slider.flexAnimate(slider.getTarget("prev"));
                         });
-                        slider.find('img').click(function() {
+                        slider.find('img').click(function () {
                             var large = jQuery(this).attr('data-large');
                             setActive(jQuery(this));
                             jQuery('#product-slider img').fadeOut(300, changeImg(large, jQuery('#product-slider img')));
@@ -50,7 +66,7 @@
                         function changeImg(large, element) {
                             var element = element;
                             var large = large;
-                            setTimeout(function() { startF(); }, 300);
+                            setTimeout(function () { startF(); }, 300);
 
                             function startF() {
                                 element.attr('src', large);
@@ -68,7 +84,7 @@
                 });
 
                 /* FullScreen Button */
-                jQuery('a.fullscreen-button').click(function(e) {
+                jQuery('a.fullscreen-button').click(function (e) {
                     e.preventDefault();
                     var target = jQuery(this).attr('href');
                     jQuery('#product-carousel a.fancybox[href="' + target + '"]').trigger('click');
@@ -94,7 +110,7 @@
                     <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.HomePage</a></li>
                     <li>@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.Products</li>
                 </ul>
-                <span id="current-date">THURSDAY, 14 JUNE 2001</span>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
@@ -115,37 +131,55 @@
                             <div id="product-slider">
                                 <ul class="slides">
                                     <li>
-                                        <a class="fullscreen-button" href="/images/shop_images/img3.png" id="">
-                                            <img class="" src="/images/shop_images/img3.png" alt="" id="zoom01" />
-                                            <div class="product-fullscreen">
-                                                <i class="fa fa-arrows-alt"></i>
-                                            </div>
-                                        </a>
+                                        @{
+                                            string path = "";
+                                            if (requestFrom == "Inventory")
+                                            {
+                                                path = itemImageFolder + Model.Product.ItemImage;
+                                            }
+                                            if (requestFrom == "Sections")
+                                            {
+                                                path = itemImageFolder + Model.Product.ProductImage;
+                                            }
+                                            <a class="fullscreen-button" href="@path" id="">
+                                                <img class="" src="@path" alt="" id="zoom01" />
+                                                <div class="product-fullscreen">
+                                                    <i class="fa fa-arrows-alt"></i>
+                                                </div>
+                                            </a>
+                                        }
                                     </li>
                                 </ul>
                             </div>
                             <div id="product-carousel">
                                 <ul class="slides">
-                                    <li>
-                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img3.png"></a>
-                                        <img src="/images/shop_images/img3.png" data-large="/images/shop_images/img3.png" alt="" />
-                                    </li>
-                                    <li>
-                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img5.png"></a>
-                                        <img src="/images/shop_images/img5.png" data-large="/images/shop_images/img5.png" alt="" />
-                                    </li>
-                                    <li>
-                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
-                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
-                                    </li>
-                                    <li>
-                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
-                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
-                                    </li>
-                                    <li>
-                                        <a class="fancybox" rel="product-images" href="/images/shop_images/img2.png"></a>
-                                        <img src="/images/shop_images/img2.png" data-large="/images/shop_images/img2.png" alt="" />
-                                    </li>
+                                    @switch (requestFrom)
+                                    {
+                                        case "Inventory":
+                                            foreach (var image in Model.Product.ItemImages)
+                                            {
+                                                <li>
+                                                    @{
+                                                        string imagePath = itemImageFolder + image.ItemImagePath;
+                                                        <a class="fancybox" rel="product-images" href="@imagePath"></a>
+                                                        <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                    }
+                                                </li>
+                                            }
+                                            break;
+                                        case "Sections":
+                                            foreach (var image in Model.Product.ProductImages)
+                                            {
+                                                <li>
+                                                    @{
+                                                        string imagePath = itemImageFolder + image.ProductImagePath;
+                                                        <a class="fancybox" rel="product-images" href="@imagePath"></a>
+                                                        <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                    }
+                                                </li>
+                                            }
+                                            break;
+                                    }
                                 </ul>
                                 <div class="product-arrows">
                                     <div class="left-arrow">
@@ -160,31 +194,30 @@
 
                         <div class="span5">
                             <div class="main-data">
-                                <p class="name">Condencer</p>
-                                <p><strong>SKU:</strong> #95846
+                                <p class="name">@(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)</p>
+                                <p><strong>SKU:</strong> @Model.Product.SKUCode
                                 <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
                                 <p class="regular_price">Price: <span>1200</span><span>SR</span></p>
                                 <p class="price">
-                                    <span>1056</span><span>SR</span>
+                                    <span>@Model.Product.ProductPrice</span><span>SR</span>
                                 </p>
                                 <p>You Will Save: <strong>144.00 (12%)</strong></p>
                                 <div class="to_cart">
                                     <div class="quantitiy">
                                         <label for="qty">Size:</label>
-                                        @*@(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), "", new { @id = "Size" }) :
-                                            Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), "", new { @id = "Size" }))*@
+                                        @(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), new { @id = "Size" }) :
+                                            Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), new { @id = "Size" }))
                                     </div>
                                     <div class="quantitiy">
                                         <label for="qty">Quantity:</label>
-                                        <input type="text" id="password" name="password" class="inputbox">
+                                        <input type="text" id="quantity" class="inputbox">
                                     </div>
                                     <a href="#" class="addtocart btn btn-flat">Add To Cart</a>
                                     <div class="clear"></div>
                                 </div>
-                            </div><!-- end main data -->
+                            </div>
                         </div>
-                    </div><!-- end row // product page -->
-
+                    </div>
                     <div class="row">
                         <div class="span9">
 
@@ -196,10 +229,10 @@
 
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="shop-tab1">
-                                        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis</p>
+                                        <p>@(direction == "ltr" ? Model.Product.ProductDescEn : Model.Product.ProductDescAr)</p>
                                     </div>
                                     <div class="tab-pane" id="shop-tab2">
-                                        <p> Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis</p>
+                                        <p>@(direction == "ltr" ? "En" : "Ar")</p>
                                     </div>
                                 </div>
                             </div>

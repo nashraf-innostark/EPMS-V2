@@ -414,7 +414,6 @@
     <Content Include="Images\CKUploads\10966523_10152685879702657_1713565689_n.jpg" />
     <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
     <Content Include="Images\CKUploads\11106462_10152685879987657_1716894699_n.jpg" />
-    <Content Include="Images\ItemImage\0101Ch.jpg" />
     <Content Include="Images\loading.gif" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
@@ -1415,7 +1414,6 @@
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Create.cshtml" />
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
-    <Content Include="Images\CKUploads\SetUp project.docx" />
     <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadPartial.cshtml" />
     <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
@@ -3709,6 +3707,7 @@
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
+    <Folder Include="Images\ItemImage\" />
     <Folder Include="Images\NewsOrArticle\" />
     <Folder Include="Images\ProductImage\" />
     <Folder Include="Migrations\" />

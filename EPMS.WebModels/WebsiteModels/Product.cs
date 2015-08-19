@@ -21,11 +21,13 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-        public List<ProductImage> ProductImages { get; set; }
         public string ItemNameEn { get; set; }
         public string ItemNameAr { get; set; }
         public string SKUCode { get; set; }
+        public string ProductImage { get; set; }
+        public string ItemImage { get; set; }
 
+        public List<ProductImage> ProductImages { get; set; }
         public IEnumerable<ItemImage> ItemImages { get; set; }
         public IEnumerable<Size> Sizes { get; set; }
     }
