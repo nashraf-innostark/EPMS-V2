@@ -83,7 +83,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             catch (Exception e)
             {
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
-                return RedirectToAction("Create", e);
+                return RedirectToAction("Detail", e);
             }
             return View(aboutUsViewModel);
         }

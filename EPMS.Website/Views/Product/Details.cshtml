@@ -220,7 +220,10 @@
                         <div class="span5">
                             <div class="main-data">
                                 <p class="name">@(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)</p>
-                                <p><strong>SKU:</strong> @Model.Product.SKUCode
+                                @if (Model.Product.ItemVariationId != null)
+                                {
+                                    <p><strong>SKU:</strong> @Model.Product.SKUCode</p>
+                                }
                                 <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
                                 <p class="regular_price">Price: <span>1200</span><span>SR</span></p>
                                 <p class="price">
@@ -230,8 +233,18 @@
                                 <div class="to_cart">
                                     <div class="quantitiy">
                                         <label for="qty">Size:</label>
-                                        @(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), new { @id = "Size" }) :
-                                            Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), new { @id = "Size" }))
+                                        @if (Model.Product.ItemVariationId != null)
+                                        {
+                                            @(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), new { @id = "Size" }) :
+                                                  Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), new { @id = "Size" }))
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(m => m.Product.ProductSize, new[]
+                                            {
+                                                new SelectListItem {Value = Model.Product.ProductSize, Text = Model.Product.ProductSize}
+                                            }, new { @id = "Size" })
+                                        }
                                     </div>
                                     <div class="quantitiy">
                                         <label for="qty">Quantity:</label>
