@@ -47,7 +47,7 @@ namespace EPMS.Website.Controllers
                 Id = productId,
                 From = from,
                 SearchString = "",
-                NoOfItems = 3,
+                iDisplayLength = 3,
                 SortBy = 1,
                 SortDirection = "asc"
             };
@@ -55,6 +55,7 @@ namespace EPMS.Website.Controllers
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             ViewBag.ShowSlider = false;
             ViewBag.From = from;
@@ -64,11 +65,11 @@ namespace EPMS.Website.Controllers
         [HttpPost]
         public ActionResult Index(ProductListViewModel viewModel)
         {
-            string direction = EPMS.Website.Resources.Shared.Common.TextDirection;
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             ViewBag.ShowSlider = false;
             ViewBag.From = viewModel.SearchRequest.From;

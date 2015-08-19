@@ -6,7 +6,6 @@ namespace EPMS.Models.RequestModels
     {
         public long Id { get; set; }
         public string From { get; set; }
-        public int NoOfItems { get; set; }
         public int SortBy { get; set; }
         public string SortDirection { get; set; }
 
