@@ -41,7 +41,8 @@ namespace EPMS.Website.Controllers
                     NewsAndArticles =
                         newsAndArticleService.GetAll()
                             .Select(x => x.CreateFromServerToClient())
-                            .Where(y=>y.Type).OrderBy(y => y.SortOrder)
+                            .Where(y => y.Type).OrderBy(y => y.SortOrder),
+                    NewsOrArticle = true
                 });
             }
             return View(new NewsAndArticleListViewModel
@@ -49,7 +50,8 @@ namespace EPMS.Website.Controllers
                 NewsAndArticles =
                     newsAndArticleService.GetAll()
                         .Select(x => x.CreateFromServerToClient())
-                        .Where(y => y.Type == false).OrderBy(y => y.SortOrder)
+                        .Where(y => y.Type == false).OrderBy(y => y.SortOrder),
+                NewsOrArticle = false
             });
         }
 

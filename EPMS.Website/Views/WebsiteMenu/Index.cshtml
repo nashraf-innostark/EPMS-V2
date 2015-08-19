@@ -1,4 +1,5 @@
-﻿@model EPMS.Models.MenuModels.WebsiteMenuModel
+﻿@using System.Configuration
+@model EPMS.Models.MenuModels.WebsiteMenuModel
 @{
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
@@ -158,8 +159,8 @@
         <li>
             <a href="#">News & Articles</a>
             <ul>
-                <li><a href="#">News</a></li>
-                <li><a href="#" class="prettyPhoto_transparent">Articles</a></li>
+                <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Index/0'"><a href="#">News</a></li>
+                <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Index/1'"><a href="#" class="prettyPhoto_transparent">Articles</a></li>
             </ul>
         </li>
         <li><a href="#">Contact Us</a></li>

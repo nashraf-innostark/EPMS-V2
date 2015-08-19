@@ -1,9 +1,35 @@
 ﻿@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleListViewModel
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "News And Articles";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var Date = DateTime.Now;
+    var title = Model.NewsOrArticle ? "Our Articles" : "Our News";
 }
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/NewsAndArticle/Index">الصفحة الرئيسية</a></li>
+                     <li>@title</li>
+                </ul>
+                <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@title</h2>
+
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div>
+
+    <div class="shadowUP"></div>
+</div><!-- end page_header -->
 
 <section id="content">
     <div class="container">
@@ -31,7 +57,7 @@
                                     <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" /></a></p>
                                     <p style="text-align: justify">
                                         @newsOrArticle.ContentEn
-                                        <a href="#" class="moreListing">More...</a>
+                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
                                     </p>
                                 </div><!-- end item body -->
                                 <div class="clear"></div>

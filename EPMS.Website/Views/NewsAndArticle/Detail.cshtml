@@ -3,7 +3,41 @@
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var Date = DateTime.Now;
 }
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
+                    @if (@Model.NewsAndArticle.Type)
+                    {
+                        <li><a href="/NewsAndArticle/Index/1">Our News</a></li>
+                        <li>Article</li>
+                    }
+                    else
+                    {
+                        <li><a href="/NewsAndArticle/Index/0">Our News</a></li>
+                        <li>News</li>
+                    }
+                </ul>
+                <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>Our News</h2>
+
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div>
+
+    <div class="shadowUP"></div>
+</div><!-- end page_header -->
 
 <section id="content">
     <div class="container">
@@ -79,4 +113,3 @@
 
     </div><!-- end container -->
 </section><!-- end #content -->
-

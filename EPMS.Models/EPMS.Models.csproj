@@ -387,6 +387,7 @@
     <Compile Include="ResponseModels\TaskResponse.cs" />
     <Compile Include="ResponseModels\WebsiteDepartmentResponse.cs" />
     <Compile Include="ResponseModels\WebsiteHomeResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteServicesCreateResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

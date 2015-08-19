@@ -135,6 +135,7 @@
     <Compile Include="ModelMappers\Website\ProductImage\ProductImageMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
     <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
+    <Compile Include="ModelMappers\Website\Services\WebsiteServicesMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <DependentUpon>Complaint.ar.resx</DependentUpon>
@@ -521,6 +522,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Website\WebsiteService\Service.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Service.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Website\WebsiteService\Service.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Service.resx</DependentUpon>
+    </Compile>
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Barcode\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\CKEditor\ImagesViewModel.cs" />
@@ -591,8 +602,9 @@
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
-    <Compile Include="ViewModels\Services\ServicesCreateViewModel.cs" />
-    <Compile Include="ViewModels\Services\ServicesViewModel.cs" />
+    <Compile Include="ViewModels\Website\Services\ServicesCreateViewModel.cs" />
+    <Compile Include="ViewModels\Website\Services\ServicesListViewModel.cs" />
+    <Compile Include="ViewModels\Website\Services\ServicesViewModel.cs" />
     <Compile Include="ViewModels\Slider\SliderViewModel.cs" />
     <Compile Include="ViewModels\Tasks\ParentProjectTaskAndProject.cs" />
     <Compile Include="ViewModels\Tasks\TaskCreateViewModel.cs" />
@@ -695,6 +707,7 @@
     <Compile Include="WebsiteModels\Warehouse.cs" />
     <Compile Include="WebsiteModels\WarehouseDetail.cs" />
     <Compile Include="WebsiteModels\WebsiteDepartment.cs" />
+    <Compile Include="WebsiteModels\WebsiteService.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Models\EPMS.Models.csproj">
@@ -1047,6 +1060,14 @@
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\WebsiteService\Service.ar.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Service.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\WebsiteService\Service.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Service.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

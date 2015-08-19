@@ -333,6 +333,7 @@
     <Compile Include="Areas\Website\Controllers\ServiceController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
+    <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -1497,6 +1498,8 @@
     <Content Include="Areas\Website\Views\ProductSection\Create.cshtml" />
     <Content Include="Areas\Website\Views\Service\Index.cshtml" />
     <Content Include="Areas\Website\Views\Service\Create.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
+    <Content Include="Areas\Website\Views\WebsiteServices\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
