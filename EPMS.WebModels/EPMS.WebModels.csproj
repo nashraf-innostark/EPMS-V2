@@ -128,6 +128,7 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
+    <Compile Include="ModelMappers\Website\AboutUs\AboutUsMapper.cs" />
     <Compile Include="ModelMappers\Website\ContactUs\ContactUsMapper.cs" />
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
@@ -492,6 +493,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ProductIndex.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\AboutUs\AboutUs.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutUs.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
       <DependentUpon>ContatUs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -537,6 +543,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Service.resx</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AboutUs\AboutUsViewModel.cs" />
     <Compile Include="ViewModels\Admin\UserViewModel.cs" />
     <Compile Include="ViewModels\Barcode\BarcodeViewModel.cs" />
     <Compile Include="ViewModels\CKEditor\ImagesViewModel.cs" />
@@ -621,6 +628,7 @@
     <Compile Include="ViewModels\Website\Department\DepartmentDetailViewModel.cs" />
     <Compile Include="ViewModels\Website\Department\DepartmentViewModel.cs" />
     <Compile Include="ViewModels\Website\Home\WebsiteHomeViewModel.cs" />
+    <Compile Include="WebsiteModels\AboutUs.cs" />
     <Compile Include="WebsiteModels\AccountViewModels.cs" />
     <Compile Include="WebsiteModels\Allowance.cs" />
     <Compile Include="WebsiteModels\ApplicantExperience.cs" />
@@ -1040,6 +1048,10 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AboutUs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

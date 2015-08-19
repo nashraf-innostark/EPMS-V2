@@ -127,6 +127,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repositories\AboutUsRepository.cs" />
     <Compile Include="Repositories\AllowanceRepository.cs" />
     <Compile Include="Repositories\ApplicantExperienceRepository.cs" />
     <Compile Include="Repositories\ApplicantQualificationRepository.cs" />
