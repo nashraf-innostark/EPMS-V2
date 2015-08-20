@@ -708,6 +708,7 @@
     <Compile Include="WebsiteModels\RFIItem.cs" />
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />
+    <Compile Include="WebsiteModels\ShoppingCart.cs" />
     <Compile Include="WebsiteModels\Size.cs" />
     <Compile Include="WebsiteModels\Status.cs" />
     <Compile Include="WebsiteModels\SubTaskWeight.cs" />
