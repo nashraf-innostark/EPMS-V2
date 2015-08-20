@@ -49,10 +49,9 @@ namespace EPMS.Web.Areas.Website.Controllers
         public ActionResult Index()
         {
             ViewBag.IsIncludeNewJsTree = true;
-            return View(new ProductListViewModel
-            {
-                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
-            });
+            ProductListViewModel viewmodel = new ProductListViewModel();
+            viewmodel.Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            return View(viewmodel);
         }
 
         #endregion

@@ -1488,7 +1488,6 @@
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
     <Content Include="Content\themes\default-dark\Thumbs.db" />
-    <Content Include="Areas\Website\Views\Product\Index.cshtml" />
     <Content Include="Content\themes\default\Thumbs.db" />
     <Content Include="Areas\Website\Views\Product\Create.cshtml" />
     <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
@@ -1500,6 +1499,7 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
     <Content Include="Areas\Website\Views\WebsiteServices\Create.cshtml" />
     <Content Include="Areas\Website\Views\AboutUs\Detail.cshtml" />
+    <Content Include="Areas\Website\Views\Product\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

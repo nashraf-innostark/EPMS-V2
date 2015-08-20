@@ -189,6 +189,7 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -1067,6 +1068,8 @@
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\NewsAndArticle\Detail.cshtml" />
+    <Content Include="Views\Services\Detail.cshtml" />
+    <Content Include="Views\AboutUs\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

@@ -17,6 +17,10 @@ namespace EPMS.WebModels.WebsiteModels
         public string ProductSpecificationEn { get; set; }
         public string ProductSpecificationAr { get; set; }
         public long? ProductSectionId { get; set; }
+        public bool NewArrival { get; set; }
+        public bool BestSeller { get; set; }
+        public bool RandomProduct { get; set; }
+        public bool Featured { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

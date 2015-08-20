@@ -7818,7 +7818,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="WebsiteServices" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService" ToRole="WebsiteService1" />
-          <NavigationProperty Name="ParentWebsiteService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
+          <NavigationProperty Name="ParentService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
         </EntityType>
         <Association Name="FK_WebsiteService_WebsiteService">
           <End Type="EPMSInventoryModel.WebsiteService" Role="WebsiteService" Multiplicity="0..1" />
