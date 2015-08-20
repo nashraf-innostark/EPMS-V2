@@ -12,6 +12,7 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+        public int Size { get; set; }
 
         public virtual Product Product { get; set; }
     }

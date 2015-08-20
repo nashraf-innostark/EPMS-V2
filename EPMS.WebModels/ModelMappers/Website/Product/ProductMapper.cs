@@ -108,6 +108,8 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
         {
             return new WebsiteModels.Product
             {
+                ProductId = source.Products.FirstOrDefault(x=>x.ItemVariationId == source.ItemVariationId).ProductId,
+                ItemVariationId = source.ItemVariationId,
                 ProductNameEn = source.InventoryItem.ItemNameEn,
                 ProductNameAr = source.InventoryItem.ItemNameAr,
                 ProductDescEn = source.InventoryItem.ItemDescriptionEn,

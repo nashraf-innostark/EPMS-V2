@@ -1,4 +1,4 @@
-﻿@model dynamic
+﻿@model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
 
 @{
     ViewBag.Title = "Shopping Cart";
@@ -6,3 +6,26 @@
 }
 
 <h2>Shopping Cart</h2>
+
+<script>
+    jQuery(document).ready(function () {
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/ShoppingCart/AddToCart";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: 'json',
+            traditional: true,
+            data: {
+                preferences: 12
+            },
+            success: function (data) {
+
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+                $(".tempLoader").click();
+            }
+        });
+    });
+</script>

@@ -137,6 +137,7 @@
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
     <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
     <Compile Include="ModelMappers\Website\Services\WebsiteServicesMapper.cs" />
+    <Compile Include="ModelMappers\Website\ShoppingCart\ShoppingCartMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <DependentUpon>Complaint.ar.resx</DependentUpon>
@@ -614,6 +615,7 @@
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\WebsiteClient\ShoppingCartListViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesCreateViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesListViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesViewModel.cs" />

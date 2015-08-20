@@ -12,5 +12,6 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+        public int Size { get; set; }
     }
 }

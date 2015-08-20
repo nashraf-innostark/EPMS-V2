@@ -1,24 +1,49 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
+using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers.Website.Product;
+using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
+using EPMS.WebModels.ViewModels.WebsiteClient;
+using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Website.Controllers
 {
     public class ShoppingCartController : Controller
     {
+        #region Private
+        private readonly IShoppingCartService cartService;
+        private readonly IProductService productService;
+
+        #endregion
+
+        #region Constructor
+
+        public ShoppingCartController(IShoppingCartService cartService, IProductService productService)
+        {
+            this.cartService = cartService;
+            this.productService = productService;
+        }
+
+        #endregion
+
+        #region Public
         // GET: ShoppingCart
-        public ActionResult Index(long? id, string from)
+        public ActionResult Index()
         {
             string cartId = GetCartId();
-            if (id != null)
+            ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel
             {
-                ShoppingCartSearchRequest request = new ShoppingCartSearchRequest
-                {
-                    ProductId = (long)id,
-                    From = from
-                };
+                ShoppingCarts = !string.IsNullOrEmpty(cartId) ? cartService.GetUserCart(cartId).ShoppingCarts.Select(x => x.CreateFromServerToClient()).ToList() : new List<ShoppingCart>()
+            };
+            return View(viewModel);
+        }
 
-            }
+        // Create: ShoppingCart
+        public ActionResult Create(long? id, string from)
+        {
             return View();
         }
 
@@ -32,9 +57,58 @@ namespace EPMS.Website.Controllers
             else
             {
                 Guid tempCartId = Guid.NewGuid();
+                cartId = tempCartId.ToString();
                 Session["ShoppingCartId"] = tempCartId;
             }
             return cartId;
+        }
+        #endregion
+
+        [HttpPost]
+        public JsonResult AddToCart(long productId, int size, int quantity)
+        {
+            string userCartid = GetCartId();
+            var items = Session["ShoppingCartItems"];
+            if (items != null)
+            {
+                IList<ShoppingCart> cart = (List<ShoppingCart>) Session["ShoppingCartItems"];
+                var item = cart.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
+                if (item != null)
+                {
+                    item.Quantity += quantity;
+                }
+                else
+                {
+                    ShoppingCart itemToAdd = new ShoppingCart
+                    {
+                        UserCartId = userCartid,
+                        ProductId = productId,
+                        Size = size,
+                        Quantity = quantity,
+                        RecCreatedDate = DateTime.Now
+                    };
+                    cart.Add(itemToAdd);
+                }
+                //var product = productService.FindProductById(productId);
+                //Product userProduct = new Product();
+                //userProduct = product.ItemVariationId != null ? product.CreateFromServerToClientFromInventory() : product.CreateFromServerToClient();
+                Session["ShoppingCartItems"] = cart;
+            }
+            else
+            {
+                IList<ShoppingCart> cart = new List<ShoppingCart>();
+                ShoppingCart itemToAdd = new ShoppingCart
+                {
+                    UserCartId = userCartid,
+                    ProductId = productId,
+                    Size = size,
+                    Quantity = quantity,
+                    RecCreatedDate = DateTime.Now
+                };
+                cart.Add(itemToAdd);
+                Session["ShoppingCartItems"] = cart;
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
         }
     }
 }

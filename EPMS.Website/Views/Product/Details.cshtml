@@ -100,7 +100,32 @@
                 /* FancyBox */
                 jQuery(".fancybox").fancybox();
             }
+
         });
+        function addToCart(id) {
+            var quantity = jQuery('#Quantity').val();
+            var size = jQuery('#Size').val();
+            var url = "/ShoppingCart/AddToCart";
+            jQuery.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    productId: id,
+                    size: size,
+                    quantity: quantity
+                },
+                success: function (data) {
+                    if (data == "Success") {
+                        alert("Added");
+                    }
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                }
+            });
+        }
     </script>
 }
 
@@ -250,9 +275,9 @@
                                     </div>
                                     <div class="quantitiy">
                                         <label for="qty">@Product.Quantity:</label>
-                                        <input type="text" id="quantity" class="inputbox">
+                                        <input type="text" id="Quantity" class="inputbox">
                                     </div>
-                                    <a href="#" class="addtocart btn btn-flat">@Product.AddToCart</a>
+                                    <a class="addtocart btn btn-flat" onclick="addToCart(@Model.Product.ProductId)">@Product.AddToCart</a>
                                     <div class="clear"></div>
                                 </div>
                             </div>
