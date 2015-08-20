@@ -6,7 +6,6 @@ using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ViewModels.Product;
-using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Website.Controllers

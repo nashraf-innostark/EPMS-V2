@@ -1,11 +1,13 @@
 ﻿@using System.Configuration
 @using System.Globalization
+@using EPMS.WebModels.Resources.WebsiteClient.Product
+@using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Product.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var direction = Common.TextDirection;
     string requestFrom = "";
     if (ViewBag.From != null)
     {
@@ -31,15 +33,15 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">Home Page</a></li>
-                    <li>Products</li>
+                    <li><a href="/Home/Index">@Product.HomePage</a></li>
+                    <li>@Product.Products</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Products</h2>
-                    <h4>Select by Catagory</h4>
+                    <h2>@Product.Products</h2>
+                    <h4>@Product.SelectByCatagory</h4>
                 </div>
             </div>
         </div><!-- end row -->
@@ -51,7 +53,7 @@
         <div id="mainbody">
             <div class="row">
                 <div class="span3  directionR">
-                    <h1 class="page-title">Poduct Classification</h1>
+                    <h1 class="page-title">@Product.PoductClassification</h1>
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
@@ -96,7 +98,7 @@
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title margintop10">Catalog</h1>
+                    <h1 class="page-title margintop10">@Product.Catalog</h1>
                     <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
                 </div>
                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
@@ -107,16 +109,16 @@
                     @Html.HiddenFor(model => model.SearchRequest.iSortCol_0, new { @id = "sortCol" })
                     @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
                     <div class="span9 directionR">
-                        <h1 class="page-title">Products</h1>
+                        <h1 class="page-title">@Product.Products</h1>
                         <div class="row">
                             <div class="span9 linebot center-sm margintopLess10">
                                 <div class="filtersgroup">
                                     <div class="limit">
-                                        <span>Search:</span>
+                                        <span>@Product.Search:</span>
                                         @Html.TextBoxFor(model => model.SearchRequest.SearchString, new { @class = "inputbox filter" })
                                     </div>
                                     <div class="limit">
-                                        <span>Show:</span>
+                                        <span>@Product.Show:</span>
                                         @Html.DropDownListFor(model => model.SearchRequest.iDisplayLength, new[]
                                         {
                                             new SelectListItem { Value = "3" , Text = "3" },
@@ -127,25 +129,25 @@
                                         }, new { @id = "displayLength", @class = "filter" })
                                     </div>
                                     <div class="sort">
-                                        <span>Sort By:</span>
+                                        <span>@Product.SortBy:</span>
                                         @if (direction == "ltr")
                                         {
                                             @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
                                             {
-                                                new SelectListItem {Value = "1", Text = "By Name (A - Z)"},
-                                                new SelectListItem {Value = "2", Text = "By Name (Z - A)"},
-                                                new SelectListItem {Value = "3", Text = "By Lowest Price"},
-                                                new SelectListItem {Value = "4", Text = "By Highest Price"}
+                                                new SelectListItem {Value = "1", Text = Product.ByNameASC},
+                                                new SelectListItem {Value = "2", Text = Product.ByNameDesc},
+                                                new SelectListItem {Value = "3", Text = Product.ByLowestPrice},
+                                                new SelectListItem {Value = "4", Text = Product.ByHighestPrice}
                                             }, new { @id = "SortBy", @class = "filter" })
                                         }
                                         else
                                         {
                                             @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
                                             {
-                                                new SelectListItem {Value = "5", Text = "By Name (A - Z)"},
-                                                new SelectListItem {Value = "6", Text = "By Name (Z - A)"},
-                                                new SelectListItem {Value = "3", Text = "By Lowest Price"},
-                                                new SelectListItem {Value = "4", Text = "By Highest Price"}
+                                                new SelectListItem {Value = "5", Text = Product.ByNameASC},
+                                                new SelectListItem {Value = "6", Text = Product.ByNameDesc},
+                                                new SelectListItem {Value = "3", Text = Product.ByLowestPrice},
+                                                new SelectListItem {Value = "4", Text = Product.ByHighestPrice}
                                             }, new { @id = "SortBy", @class = "filter" })
                                         }
                                     </div>
@@ -194,17 +196,17 @@
                                                 {
                                                     <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
                                                 }
-                                                <p><strong>SKU:</strong> @Model.Products[j].SKUCode</p>
+                                                <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
                                                 <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
                                                 <div class="actions">
-                                                    <a href="#">Add To Cart</a>
+                                                    <a href="#">@Product.AddToCart</a>
                                                     @if (Model.Products[j].ItemVariationId != null)
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">More</a>
+                                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">@Product.More</a>
                                                     }
                                                     else
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">More</a>
+                                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
                                                     }
                                                 </div>
                                                 <div class="price">
@@ -244,10 +246,10 @@
                 <div class="shop-latest">
                     <div class="tabbable">
                         <ul class="nav fixclear">
-                            <li class="active"><a href="#tabpan1" data-toggle="tab">New Arrivels</a></li>
-                            <li><a href="#tabpan2" data-toggle="tab">Best Sell</a></li>
-                            <li><a href="#tabpan3" data-toggle="tab">Ramdom Products</a></li>
-                            <li><a href="#tabpan4" data-toggle="tab">Featured Products</a></li>
+                            <li class="active"><a href="#tabpan1" data-toggle="tab">@Product.NewArrivals</a></li>
+                            <li><a href="#tabpan2" data-toggle="tab">@Product.BestSell</a></li>
+                            <li><a href="#tabpan3" data-toggle="tab">@Product.RamdomProducts</a></li>
+                            <li><a href="#tabpan4" data-toggle="tab">@Product.FeaturedProducts</a></li>
                         </ul>
                         @*<div class="tab-content">
                                 <div class="tab-pane active" id="tabpan1">

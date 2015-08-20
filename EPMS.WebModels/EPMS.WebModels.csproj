@@ -483,15 +483,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\WebsiteClient\Product\ProductDetails.Designer.cs">
+    <Compile Include="Resources\WebsiteClient\Product\Product.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProductDetails.resx</DependentUpon>
+      <DependentUpon>Product.ar.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\WebsiteClient\Product\ProductIndex.Designer.cs">
+    <Compile Include="Resources\WebsiteClient\Product\Product.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>ProductIndex.resx</DependentUpon>
+      <DependentUpon>Product.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Website\AboutUs\AboutUs.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1041,13 +1041,13 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Users.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductDetails.resx">
+    <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProductDetails.Designer.cs</LastGenOutput>
+      <LastGenOutput>Product.ar.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\WebsiteClient\Product\ProductIndex.resx">
+    <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
+      <LastGenOutput>Product.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
