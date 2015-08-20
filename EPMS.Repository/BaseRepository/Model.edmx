@@ -12,6 +12,8 @@
           <Property Name="AboutUsId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Title" Type="nvarchar" MaxLength="100" />
           <Property Name="TitleAr" Type="nvarchar" MaxLength="100" />
+          <Property Name="ContentEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ContentAr" Type="nvarchar" MaxLength="1000" />
           <Property Name="MetaKeywords" Type="nvarchar" MaxLength="100" />
           <Property Name="MetaKeywordsAr" Type="nvarchar" MaxLength="100" />
           <Property Name="MetaDesc" Type="nvarchar" MaxLength="500" />
@@ -1621,6 +1623,7 @@
           <Property Name="ServiceNameAr" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="DescriptionEn" Type="nvarchar(max)" />
           <Property Name="DescriptionAr" Type="nvarchar(max)" />
+          <Property Name="ImagePath" Type="nvarchar" MaxLength="200" />
           <Property Name="MetaKeywordsEn" Type="nchar" MaxLength="10" />
           <Property Name="MetaKeywordsAr" Type="nchar" MaxLength="10" />
           <Property Name="MetaDescriptionEn" Type="nchar" MaxLength="10" />
@@ -7819,6 +7822,7 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="WebsiteServices" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService" ToRole="WebsiteService1" />
           <NavigationProperty Name="ParentService" Relationship="EPMSInventoryModel.FK_WebsiteService_WebsiteService" FromRole="WebsiteService1" ToRole="WebsiteService" />
+          <Property Name="ImagePath" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
         <Association Name="FK_WebsiteService_WebsiteService">
           <End Type="EPMSInventoryModel.WebsiteService" Role="WebsiteService" Multiplicity="0..1" />
@@ -7848,6 +7852,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ContentEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ContentAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
       </Schema>
     </edmx:ConceptualModels>
@@ -9533,6 +9539,7 @@
           <EntitySetMapping Name="WebsiteServices">
             <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteService">
               <MappingFragment StoreEntitySet="WebsiteService">
+                <ScalarProperty Name="ImagePath" ColumnName="ImagePath" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
@@ -9554,6 +9561,8 @@
           <EntitySetMapping Name="AboutUs1">
             <EntityTypeMapping TypeName="EPMSInventoryModel.AboutUs">
               <MappingFragment StoreEntitySet="AboutUs">
+                <ScalarProperty Name="ContentAr" ColumnName="ContentAr" />
+                <ScalarProperty Name="ContentEn" ColumnName="ContentEn" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
