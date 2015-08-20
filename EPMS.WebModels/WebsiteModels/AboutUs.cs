@@ -7,6 +7,8 @@ namespace EPMS.WebModels.WebsiteModels
         public long AboutUsId { get; set; }
         public string Title { get; set; }
         public string TitleAr { get; set; }
+        public string ContentEn { get; set; }
+        public string ContentAr { get; set; }
         public string MetaKeywords { get; set; }
         public string MetaKeywordsAr { get; set; }
         public string MetaDesc { get; set; }

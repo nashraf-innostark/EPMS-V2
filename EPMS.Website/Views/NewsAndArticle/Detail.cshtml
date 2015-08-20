@@ -16,7 +16,7 @@
                     <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
                     @if (@Model.NewsAndArticle.Type)
                     {
-                        <li><a href="/NewsAndArticle/Index/1">Our News</a></li>
+                        <li><a href="/NewsAndArticle/Index/1">Our Articles</a></li>
                         <li>Article</li>
                     }
                     else
@@ -29,8 +29,14 @@
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Our News</h2>
-
+                    @if (@Model.NewsAndArticle.Type)
+                    {
+                        <h2>Our Articles</h2>
+                    }
+                    else
+                    {
+                        <h2>Our News</h2>
+                    }
                 </div>
             </div>
         </div><!-- end row -->
@@ -43,7 +49,7 @@
     <div class="container">
 
         <div id="mainbody">
-            @if (direction == "ltd")
+            @if (direction == "ltr")
             {
                 <div class="row">
                     <div class="span12 directionR">

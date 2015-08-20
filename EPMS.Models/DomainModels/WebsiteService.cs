@@ -10,6 +10,7 @@ namespace EPMS.Models.DomainModels
         public string ServiceNameAr { get; set; }
         public string DescriptionEn { get; set; }
         public string DescriptionAr { get; set; }
+        public string ImagePath { get; set; }
         public string MetaKeywordsEn { get; set; }
         public string MetaKeywordsAr { get; set; }
         public string MetaDescriptionEn { get; set; }

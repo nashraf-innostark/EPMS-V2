@@ -1,0 +1,83 @@
+﻿@model EPMS.WebModels.ViewModels.AboutUs.AboutUsViewModel
+
+@{
+    ViewBag.Title = "About Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var Date = DateTime.Now;
+}
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
+                    <li><a href="/NewsAndArticle/Index/1">About Us</a></li>
+                </ul>
+                <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>About Us</h2>
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div>
+    <div class="shadowUP"></div>
+</div><!-- end page_header -->
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+            @if (direction == "ltr")
+            {
+                <div class="row">
+                    <div class="span12 directionR">
+                        <h1 class="page-title">@Model.AboutUs.Title</h1>
+                        <div class="itemView clearfix eBlog">
+                            @*<div class="itemHeader">
+                                    <div class="post_details">
+                                        <span class="infSep"> / </span>
+                                        <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.WebsiteService.RecCreatedDate.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                </div>*@<!-- end itemheader -->
+                            <div class="itemBody">
+                                <p style="text-align: justify">@Model.AboutUs.Title</p>
+                            </div><!-- end item body -->
+                            <div class="clear"></div>
+                        </div>
+                        <!-- End Item Layout -->
+                    </div>
+                </div>
+                <!-- end row -->
+            }
+            else
+            {
+                <div class="row">
+                    <div class="span12 directionR">
+                        <h1 class="page-title">@Model.AboutUs.Title</h1>
+                        <div class="itemView clearfix eBlog">
+                            @*<div class="itemHeader">
+                                    <div class="post_details">
+                                        <span class="infSep"> / </span>
+                                        <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.WebsiteService.RecCreatedDate.ToString("MMMM dd, yyyy")</span>
+                                    </div>
+                                </div>*@<!-- end itemheader -->
+                            <div class="itemBody">
+                                <p style="text-align: justify">@Model.AboutUs.Title</p>
+                            </div><!-- end item body -->
+                            <div class="clear"></div>
+                        </div>
+                        <!-- End Item Layout -->
+                    </div>
+                </div>
+            }
+
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+</section><!-- end #content -->
