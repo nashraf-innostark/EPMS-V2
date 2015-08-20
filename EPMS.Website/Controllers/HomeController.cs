@@ -4,7 +4,6 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Department;
 using EPMS.WebModels.ModelMappers.Website.Partner;
-using EPMS.WebModels.ModelMappers.Website.ProductSection;
 using EPMS.WebModels.ViewModels.Website.Department;
 using EPMS.WebModels.ViewModels.Website.Home;
 
@@ -30,7 +29,6 @@ namespace EPMS.Website.Controllers
         #endregion
 
         #region Public
-        #endregion
 
         public ActionResult Index()
         {
@@ -60,5 +58,6 @@ namespace EPMS.Website.Controllers
 
             return View();
         }
+        #endregion
     }
 }

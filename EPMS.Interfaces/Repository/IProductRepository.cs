@@ -1,12 +1,13 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.Repository
 {
     public interface IProductRepository : IBaseRepository<Product, long>
     {
-        IList<Product> GetByItemVariationId(IEnumerable<long> itemVariationIds, ProductSearchRequest request);
+        ProductResponse GetByItemVariationId(IEnumerable<long> itemVariationIds, ProductSearchRequest request, long productSectionId);
         IEnumerable<Product> GetByProductSectionId(long productSectionId);
     }
 }

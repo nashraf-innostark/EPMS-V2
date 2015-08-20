@@ -67,7 +67,7 @@
                                         childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                         link = "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                             }
-                                            <a href="#">@childName</a>
+                                        <a href="@link">@childName</a>
 
                                             @if (department.InventoryDepartments.Any())
                                             {
@@ -81,7 +81,7 @@
                                                         childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                         link = "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                             }
-                                                            <a href="#">@childName</a>
+                                                        <a href="@link">@childName</a>
                                                         </li>
                                                     }
                                                 </ul>
@@ -110,7 +110,7 @@
                                         }
                                         link = "/Product/Index/" + product.SectionId + "?from=Sections";
                                             }
-                                            <a href="#">@childName</a>
+                                        <a href="@link">@childName</a>
                                             @if (product.ProductSections.Any())
                                             {
                                                 //2nd level child from productSection is here
@@ -130,7 +130,7 @@
                                                         }
                                                         link = "/Product/Index/" + childProduct.SectionId + "?from=Sections";
                                                             }
-                                                            <a href="#">@childName</a>
+                                                        <a href="@link">@childName</a>
                                                         </li>
                                                     }
                                                 </ul>

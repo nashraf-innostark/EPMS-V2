@@ -1,11 +1,13 @@
 ﻿@using System.Configuration
 @using System.Globalization
+@using EPMS.WebModels.Resources.WebsiteClient.Product
+@using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
 
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.PageTitle;
+    ViewBag.Title = Product.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var direction = Common.TextDirection;
     string requestFrom = "";
     if (ViewBag.From != null)
     {
@@ -20,6 +22,7 @@
     {
         itemImageFolder = ConfigurationManager.AppSettings["ProductImage"];
     }
+    const string noImage = "/images/noimage_department.png";
     DateTime today = DateTime.Now;
 }
 
@@ -107,14 +110,14 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.HomePage</a></li>
-                    <li>@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.Products</li>
+                    <li><a href="/Home/Index">@Product.HomePage</a></li>
+                    <li>@Product.Products</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Product.ProductDetails.Products</h2>
+                    <h2>@Product.Products</h2>
                 </div>
             </div>
         </div>
@@ -135,11 +138,11 @@
                                             string path = "";
                                             if (requestFrom == "Inventory")
                                             {
-                                                path = itemImageFolder + Model.Product.ItemImage;
+                                                path = !string.IsNullOrEmpty(Model.Product.ItemImage) ? itemImageFolder + Model.Product.ItemImage : noImage;
                                             }
                                             if (requestFrom == "Sections")
                                             {
-                                                path = itemImageFolder + Model.Product.ProductImage;
+                                                path = !string.IsNullOrEmpty(Model.Product.ProductImage) ? itemImageFolder + Model.Product.ProductImage : noImage;
                                             }
                                             <a class="fullscreen-button" href="@path" id="">
                                                 <img class="" src="@path" alt="" id="zoom01" />
@@ -156,25 +159,49 @@
                                     @switch (requestFrom)
                                     {
                                         case "Inventory":
-                                            foreach (var image in Model.Product.ItemImages)
+                                            if (Model.Product.ItemImages.Any())
+                                            {
+                                                foreach (var image in Model.Product.ItemImages)
+                                                {
+                                                    <li>
+                                                        @{
+                                                    string imagePath = itemImageFolder + image.ItemImagePath;
+                                                    <a class="fancybox" rel="product-images" href="@imagePath"></a>
+                                                            <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                        }
+                                                    </li>
+                                                }
+                                            }
+                                            else
                                             {
                                                 <li>
                                                     @{
-                                                        string imagePath = itemImageFolder + image.ItemImagePath;
-                                                        <a class="fancybox" rel="product-images" href="@imagePath"></a>
-                                                        <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                        <a class="fancybox" rel="product-images" href="@noImage"></a>
+                                                        <img src="@noImage" data-large="@noImage" alt="" />
                                                     }
                                                 </li>
                                             }
                                             break;
                                         case "Sections":
-                                            foreach (var image in Model.Product.ProductImages)
+                                            if (Model.Product.ProductImages.Any())
+                                            {
+                                                foreach (var image in Model.Product.ProductImages)
+                                                {
+                                                    <li>
+                                                        @{
+                                                    string imagePath = itemImageFolder + image.ProductImagePath;
+                                                    <a class="fancybox" rel="product-images" href="@imagePath"></a>
+                                                            <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                        }
+                                                    </li>
+                                                }
+                                            }
+                                            else
                                             {
                                                 <li>
                                                     @{
-                                                        string imagePath = itemImageFolder + image.ProductImagePath;
-                                                        <a class="fancybox" rel="product-images" href="@imagePath"></a>
-                                                        <img src="@imagePath" data-large="@imagePath" alt="" />
+                                                        <a class="fancybox" rel="product-images" href="@noImage"></a>
+                                                        <img src="@noImage" data-large="@noImage" alt="" />
                                                     }
                                                 </li>
                                             }
@@ -195,24 +222,37 @@
                         <div class="span5">
                             <div class="main-data">
                                 <p class="name">@(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)</p>
-                                <p><strong>SKU:</strong> @Model.Product.SKUCode
+                                @if (Model.Product.ItemVariationId != null)
+                                {
+                                    <p><strong>@Product.SKU:</strong> @Model.Product.SKUCode</p>
+                                }
                                 <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
-                                <p class="regular_price">Price: <span>1200</span><span>SR</span></p>
+                                <p class="regular_price">@Product.Price: <span>1200</span><span>SR</span></p>
                                 <p class="price">
                                     <span>@Model.Product.ProductPrice</span><span>SR</span>
                                 </p>
-                                <p>You Will Save: <strong>144.00 (12%)</strong></p>
+                                <p>@Product.YouWillSave: <strong>144.00 (12%)</strong></p>
                                 <div class="to_cart">
                                     <div class="quantitiy">
-                                        <label for="qty">Size:</label>
-                                        @(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), new { @id = "Size" }) :
-                                            Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), new { @id = "Size" }))
+                                        <label for="qty">@Product.Size:</label>
+                                        @if (Model.Product.ItemVariationId != null)
+                                        {
+                                            @(direction == "ltr" ? Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameEn"), new { @id = "Size" }) :
+                                                  Html.DropDownListFor(m => m.Product.ProductSize, new SelectList(Model.Product.Sizes, "SizeId", "SizeNameAr"), new { @id = "Size" }))
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(m => m.Product.ProductSize, new[]
+                                            {
+                                                new SelectListItem {Value = Model.Product.ProductSize, Text = Model.Product.ProductSize}
+                                            }, new { @id = "Size" })
+                                        }
                                     </div>
                                     <div class="quantitiy">
-                                        <label for="qty">Quantity:</label>
+                                        <label for="qty">@Product.Quantity:</label>
                                         <input type="text" id="quantity" class="inputbox">
                                     </div>
-                                    <a href="#" class="addtocart btn btn-flat">Add To Cart</a>
+                                    <a href="#" class="addtocart btn btn-flat">@Product.AddToCart</a>
                                     <div class="clear"></div>
                                 </div>
                             </div>
@@ -223,8 +263,8 @@
 
                             <div class="tabbable tabs_style2">
                                 <ul class="nav fixclear">
-                                    <li class="active"><a href="#shop-tab1" data-toggle="tab">Description </a></li>
-                                    <li><a href="#shop-tab2" data-toggle="tab">Specifications</a></li>
+                                    <li class="active"><a href="#shop-tab1" data-toggle="tab">@Product.Description </a></li>
+                                    <li><a href="#shop-tab2" data-toggle="tab">@Product.Specifications</a></li>
                                 </ul>
 
                                 <div class="tab-content">
@@ -240,7 +280,7 @@
                     </div>
                 </div>
                 <div class="span3  directionR">
-                    <h1 class="page-title">Poduct Classification</h1>
+                    <h1 class="page-title">@Product.PoductClassification</h1>
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
@@ -284,7 +324,7 @@
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title margintop10">Catalog</h1>
+                    <h1 class="page-title margintop10">@Product.Catalog</h1>
                     <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
                 </div>
             </div>

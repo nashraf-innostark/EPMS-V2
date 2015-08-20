@@ -6,7 +6,6 @@ using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ViewModels.Product;
-using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Website.Controllers
@@ -42,18 +41,20 @@ namespace EPMS.Website.Controllers
             {
                 productId = (long)id;
             }
-            ProductSearchRequest request = new ProductSearchRequest
+            viewModel.SearchRequest = new ProductSearchRequest
             {
                 Id = productId,
                 From = from,
                 SearchString = "",
-                NoOfItems = 9,
-                SortBy = "asc"
+                iDisplayLength = 3,
+                SortBy = 1,
+                SortDirection = "asc"
             };
-            ProductsListResponse productsList = productService.GetProductsList(request);
+            ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             ViewBag.ShowSlider = false;
             ViewBag.From = from;
@@ -63,7 +64,14 @@ namespace EPMS.Website.Controllers
         [HttpPost]
         public ActionResult Index(ProductListViewModel viewModel)
         {
-
+            ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            if (productsList.Products.Any())
+            {
+                viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
+            }
+            ViewBag.ShowSlider = false;
+            ViewBag.From = viewModel.SearchRequest.From;
             return View(viewModel);
         }
 

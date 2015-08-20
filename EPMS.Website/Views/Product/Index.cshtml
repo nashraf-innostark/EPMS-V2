@@ -1,11 +1,13 @@
 ﻿@using System.Configuration
 @using System.Globalization
+@using EPMS.WebModels.Resources.WebsiteClient.Product
+@using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = Product.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var direction = Common.TextDirection;
     string requestFrom = "";
     if (ViewBag.From != null)
     {
@@ -20,6 +22,8 @@
     {
         itemImageFolder = ConfigurationManager.AppSettings["ProductImage"];
     }
+    const string noImage = "/images/noimage_department.png";
+    int pageNo = 1;
     DateTime today = DateTime.Now;
 }
 
@@ -29,15 +33,15 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">Home Page</a></li>
-                    <li>Products</li>
+                    <li><a href="/Home/Index">@Product.HomePage</a></li>
+                    <li>@Product.Products</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Products</h2>
-                    <h4>Select by Catagory</h4>
+                    <h2>@Product.Products</h2>
+                    <h4>@Product.SelectByCatagory</h4>
                 </div>
             </div>
         </div><!-- end row -->
@@ -49,7 +53,7 @@
         <div id="mainbody">
             <div class="row">
                 <div class="span3  directionR">
-                    <h1 class="page-title">Poduct Classification</h1>
+                    <h1 class="page-title">@Product.PoductClassification</h1>
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
@@ -94,41 +98,58 @@
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title margintop10">Catalog</h1>
+                    <h1 class="page-title margintop10">@Product.Catalog</h1>
                     <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
                 </div>
                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
                 {
+                    @Html.HiddenFor(model => model.SearchRequest.Id)
+                    @Html.HiddenFor(model => model.SearchRequest.From)
+                    @Html.HiddenFor(model => model.SearchRequest.SortDirection, new { @id = "SortDirection" })
+                    @Html.HiddenFor(model => model.SearchRequest.iSortCol_0, new { @id = "sortCol" })
+                    @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
                     <div class="span9 directionR">
-                        <h1 class="page-title">Products</h1>
+                        <h1 class="page-title">@Product.Products</h1>
                         <div class="row">
                             <div class="span9 linebot center-sm margintopLess10">
                                 <div class="filtersgroup">
                                     <div class="limit">
-                                        <span>Search:</span>
+                                        <span>@Product.Search:</span>
                                         @Html.TextBoxFor(model => model.SearchRequest.SearchString, new { @class = "inputbox filter" })
                                     </div>
                                     <div class="limit">
-                                        <span>Show:</span>
-                                        @Html.DropDownListFor(model => model.SearchRequest.NoOfItems, new[]
+                                        <span>@Product.Show:</span>
+                                        @Html.DropDownListFor(model => model.SearchRequest.iDisplayLength, new[]
                                         {
+                                            new SelectListItem { Value = "3" , Text = "3" },
+                                            new SelectListItem { Value = "6" , Text = "6" },
                                             new SelectListItem { Value = "9" , Text = "9" },
-                                            new SelectListItem { Value = "15" , Text = "15" },
-                                            new SelectListItem { Value = "24" , Text = "24" },
                                             new SelectListItem { Value = "60" , Text = "60" },
                                             new SelectListItem { Value = "90" , Text = "90" }
-                                        }, new { @class = "filter" })
+                                        }, new { @id = "displayLength", @class = "filter" })
                                     </div>
                                     <div class="sort">
-                                        <span>Sort By:</span>
-                                        @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
+                                        <span>@Product.SortBy:</span>
+                                        @if (direction == "ltr")
                                         {
-                                            new SelectListItem { Value = "asc" , Text = "Default" },
-                                            new SelectListItem { Value = "asc" , Text = "By Name (A - Z)" },
-                                            new SelectListItem { Value = "desc" , Text = "By Name (Z - A)" },
-                                            new SelectListItem { Value = "HighPrice" , Text = "By Highest Price" },
-                                            new SelectListItem { Value = "LowPrice" , Text = "By Lowest Price" }
-                                        }, new { @class = "filter" })
+                                            @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
+                                            {
+                                                new SelectListItem {Value = "1", Text = Product.ByNameASC},
+                                                new SelectListItem {Value = "2", Text = Product.ByNameDesc},
+                                                new SelectListItem {Value = "3", Text = Product.ByLowestPrice},
+                                                new SelectListItem {Value = "4", Text = Product.ByHighestPrice}
+                                            }, new { @id = "SortBy", @class = "filter" })
+                                        }
+                                        else
+                                        {
+                                            @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
+                                            {
+                                                new SelectListItem {Value = "5", Text = Product.ByNameASC},
+                                                new SelectListItem {Value = "6", Text = Product.ByNameDesc},
+                                                new SelectListItem {Value = "3", Text = Product.ByLowestPrice},
+                                                new SelectListItem {Value = "4", Text = Product.ByHighestPrice}
+                                            }, new { @id = "SortBy", @class = "filter" })
+                                        }
                                     </div>
                                 </div>
                             </div>
@@ -136,7 +157,7 @@
                         @for (int i = 0; i < Model.Products.Count; i += 3)
                         {
                             <div class="row">
-                                @for (int j = i; j < (i + 3); j++)
+                                @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
                                 {
                                     <div class="span3">
                                         <div class="product-list-item">
@@ -146,11 +167,11 @@
                                     string path = "";
                                     if (requestFrom == "Inventory")
                                     {
-                                        path = itemImageFolder + Model.Products[j].ItemImage;
+                                        path = !string.IsNullOrEmpty(Model.Products[j].ItemImage) ? itemImageFolder + Model.Products[j].ItemImage : noImage;
                                     }
                                     if (requestFrom == "Sections")
                                     {
-                                        path = itemImageFolder + Model.Products[j].ProductImage;
+                                        path = !string.IsNullOrEmpty(Model.Products[j].ProductImage) ? itemImageFolder + Model.Products[j].ProductImage : noImage;
                                     }
                                     if (Model.Products[j].ItemVariationId != null)
                                     {
@@ -175,17 +196,17 @@
                                                 {
                                                     <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
                                                 }
-                                                <p><strong>SKU:</strong> @Model.Products[j].SKUCode</p>
+                                                <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
                                                 <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
                                                 <div class="actions">
-                                                    <a href="#">Add To Cart</a>
+                                                    <a href="#">@Product.AddToCart</a>
                                                     @if (Model.Products[j].ItemVariationId != null)
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">More</a>
+                                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">@Product.More</a>
                                                     }
                                                     else
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">More</a>
+                                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
                                                     }
                                                 </div>
                                                 <div class="price">
@@ -199,12 +220,21 @@
                             </div>
                         }
                         <div class="span4">
-                            <div class="pagination">
-                                <a href="#"><div class="previous"><i class="fa fa-long-arrow-right"></i></div></a>
-                                <a href="#" class="active"><div class="page-button">1</div></a>
-                                <a href="#"><div class="page-button">2</div></a>
-                                <a href="#"><div class="page-button">3</div></a>
-                                <a href="#"><div class="next"><i class="fa fa-long-arrow-left"></i></div></a>
+                            <div class="pagination" id="pagination">
+                                <a><div class="first-page"><i class="fa fa-long-arrow-right"></i></div></a>
+                                @for (int i = 0; i <= Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
+                                {
+                                    if (i == Model.SearchRequest.iDisplayStart)
+                                    {
+                                        <a class="active cursorHand"><div class="page-button">@pageNo</div></a>
+                                    }
+                                    else
+                                    {
+                                        <a class="cursorHand"><div class="page-button">@pageNo</div></a>
+                                    }
+                                    pageNo++;
+                                }
+                                <a><div class="last-page"><i class="fa fa-long-arrow-left"></i></div></a>
                             </div>
                         </div>
                     </div>
@@ -216,10 +246,10 @@
                 <div class="shop-latest">
                     <div class="tabbable">
                         <ul class="nav fixclear">
-                            <li class="active"><a href="#tabpan1" data-toggle="tab">New Arrivels</a></li>
-                            <li><a href="#tabpan2" data-toggle="tab">Best Sell</a></li>
-                            <li><a href="#tabpan3" data-toggle="tab">Ramdom Products</a></li>
-                            <li><a href="#tabpan4" data-toggle="tab">Featured Products</a></li>
+                            <li class="active"><a href="#tabpan1" data-toggle="tab">@Product.NewArrivals</a></li>
+                            <li><a href="#tabpan2" data-toggle="tab">@Product.BestSell</a></li>
+                            <li><a href="#tabpan3" data-toggle="tab">@Product.RamdomProducts</a></li>
+                            <li><a href="#tabpan4" data-toggle="tab">@Product.FeaturedProducts</a></li>
                         </ul>
                         @*<div class="tab-content">
                                 <div class="tab-pane active" id="tabpan1">
@@ -652,15 +682,57 @@
         </div><!-- end row -->
     </div><!-- end mainbody -->
 </section>
+
 @section scripts
 {
     <script>
-        $(document).ready(function () {
+        jQuery(document).ready(function () {
 
         });
-        $(document).on('change', '.filter', function () {
-            //jQuery("#filter-products").submit();
+        jQuery(document).on('change', '.filter', function () {
+            var sortBy = parseInt(jQuery("#SortBy").val());
+            if (sortBy == 1 || sortBy == 3 || sortBy == 5) {
+                jQuery("#SortDirection").val("asc");
+            } else {
+                jQuery("#SortDirection").val("desc");
+            }
+            if (sortBy == 1 || sortBy == 2) {
+                jQuery("#sortCol").val("1");
+            }
+            else if (sortBy == 5 || sortBy == 6) {
+                jQuery("#sortCol").val("2");
+            }
+            else if (sortBy == 3 || sortBy == 4) {
+                jQuery("#sortCol").val("3");
+            }
+            // submit from
+            jQuery("#filter-products").submit();
         });
-
+        jQuery(document).on('click', '.page-button', function () {
+            jQuery('#pagination a').removeClass("active");
+            this.parentElement.classList.add("active");
+            var pageNo = parseInt(this.textContent);
+            var length = parseInt(jQuery('#displayLength').val());
+            var displayStart = (pageNo -1) * length;
+            jQuery('#displayStart').val(displayStart);
+            // submit from
+            jQuery("#filter-products").submit();
+        });
+        jQuery(document).on('click', '.first-page', function () {
+            jQuery('#pagination a').removeClass("active");
+            this.parentElement.classList.add("active");
+            jQuery('#displayStart').val(0);
+            // submit from
+            jQuery("#filter-products").submit();
+        });
+        jQuery(document).on('click', '.last-page', function () {
+            jQuery('#pagination a').removeClass("active");
+            this.parentElement.classList.add("active");
+            var totalCount = parseInt('@Model.SearchRequest.TotalCount');
+            var length = parseInt(jQuery('#displayLength').val());
+            jQuery('#displayStart').val(totalCount - length);
+            // submit from
+            jQuery("#filter-products").submit();
+        });
     </script>
 }

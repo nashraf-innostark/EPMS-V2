@@ -208,10 +208,14 @@ namespace EPMS.Implementation.Services
                     var department = inventoryDepartmentRepository.Find(request.Id);
                     IEnumerable<InventoryDepartment> departmentsForProduct = AllChildDepartments(department);
                     IEnumerable<long> itemVariationIds = GetAllItemVariationIds(departmentsForProduct);
-                    response.Products = productRepository.GetByItemVariationId(itemVariationIds, request);
+                    var invProducts = productRepository.GetByItemVariationId(itemVariationIds, request, 0);
+                    response.Products = invProducts.Products;
+                    response.TotalCount = invProducts.TotalCount;
                     break;
                 case "Sections":
-                    response.Products = productRepository.GetByProductSectionId(request.Id).ToList();
+                    var secProducts  = productRepository.GetByItemVariationId(null, request, request.Id);
+                    response.Products = secProducts.Products;
+                    response.TotalCount = secProducts.TotalCount;
                     break;
             }
             return response;
