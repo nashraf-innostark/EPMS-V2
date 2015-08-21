@@ -58,17 +58,17 @@
                                     <td><p><a href="#">@(direction == "ltr" ? cartItem.ItemNameEn : cartItem.ItemNameAr)</a></p></td>
                                     <td><p>@cartItem.SkuCode</p></td>
                                     <td class="quantity">
-                                        <input type="text" value="@cartItem.Quantity" class="cartnum">
+                                        <input id="@cartItem.ProductId" type="text" value="@cartItem.Quantity" class="cartnum">
                                     </td>
-                                    <td><p>@cartItem.UnitPrice</p></td>
-                                    <td><p>@(cartItem.Quantity * cartItem.UnitPrice)</p></td>
+                                    <td><p class="cartPrice">@cartItem.UnitPrice</p></td>
+                                    <td><p class="cartTotal Total_@cartItem.ProductId">@(cartItem.Quantity * cartItem.UnitPrice)</p></td>
                                     <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
                                 </tr>
                             }
 
                             <tr class="">
                                 <td class="cartTotalCount" colspan="5"><strong>@Cart.GrandTotal</strong></td>
-                                <td><strong><p class="cartGrandTotal">56</p></strong></td>
+                                <td><strong><p class="cartGTotal">0</p></strong></td>
                             </tr>
                         </table>
                         <div class="control-group">
@@ -96,14 +96,44 @@
             jQuery(this).parent().parent().remove();
             calculateGrandTotal();
         });
-    });
-    function calculateGrandTotal() {
-        var grandTotal = 0;
-
-        jQuery.each(cartList, function (key, value) {
-            grandTotal += (value.UnitPrice * value.Quantity);
+        jQuery(".cartnum").on("change", function () {
+            var qty = parseInt(this.value);
+            var productId = this.id;
+            jQuery.each(cartList, function (key, value) {
+                if (value.ProductId == productId) {
+                    var unitPrice = value.UnitPrice;
+                    var totalPrice = qty * unitPrice;
+                    jQuery(".Total_" + value.ProductId).text(totalPrice);
+                    calculateGrandTotal();
+                    return true;
+                }
+            });
         });
-        jQuery('.cartGrandTotal').text(grandTotal);
+    });
+    //jQuery(document).on('change', '.cartnum', function () {
+    //    var qty = this.value;
+    //    jQuery.each(cartList, function (key, value) {
+    //        if (value.CartId == qty) {
+    //            var unitPrice = value.UnitPrice;
+    //            var totalPrice = qty * unitPrice;
+    //            jQuery("#Total_value.CartId").text(totalPrice);
+    //        }
+    //    });
+    //});
+
+    function calculateGrandTotal() {
+        var gtotal = 0;
+        jQuery(".shopping-table tr.cartRow").each(function () {
+
+            var qty = parseInt(jQuery(this).find(".cartnum ").val());
+
+            var price = parseInt(jQuery(this).find(".cartPrice ").text());
+            var total = qty * price;
+            jQuery(this).find(".cartTotal").text(total);
+            gtotal += total;
+
+        });
+        jQuery(".cartGTotal").text(gtotal);
     }
     function addToCart() {
         var url = "/ShoppingCart/AddToCart";
