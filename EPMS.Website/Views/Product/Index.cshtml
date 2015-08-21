@@ -199,7 +199,7 @@
                                                 <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
                                                 <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
                                                 <div class="actions">
-                                                    <a href="#">@Product.AddToCart</a>
+                                                    <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId)">@Product.AddToCart</a>
                                                     @if (Model.Products[j].ItemVariationId != null)
                                                     {
                                                         <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">@Product.More</a>
@@ -221,7 +221,7 @@
                         }
                         <div class="span4">
                             <div class="pagination" id="pagination">
-                                <a><div class="first-page"><i class="fa fa-long-arrow-right"></i></div></a>
+                                <a><div class="cursorHand first-page"><i class="fa fa-long-arrow-right"></i></div></a>
                                 @for (int i = 0; i <= Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
                                 {
                                     if (i == Model.SearchRequest.iDisplayStart)
@@ -234,7 +234,7 @@
                                     }
                                     pageNo++;
                                 }
-                                <a><div class="last-page"><i class="fa fa-long-arrow-left"></i></div></a>
+                                <a><div class="cursorHand last-page"><i class="fa fa-long-arrow-left"></i></div></a>
                             </div>
                         </div>
                     </div>
@@ -730,9 +730,13 @@
             this.parentElement.classList.add("active");
             var totalCount = parseInt('@Model.SearchRequest.TotalCount');
             var length = parseInt(jQuery('#displayLength').val());
-            jQuery('#displayStart').val(totalCount - length);
+            jQuery('#displayStart').val(getLastPage(totalCount, length));
             // submit from
             jQuery("#filter-products").submit();
         });
+        function getLastPage(totalCount, length) {
+            var totalPages = Math.ceil(totalCount / length);
+            return ((totalPages - 1) * length);
+        }
     </script>
 }

@@ -29,7 +29,6 @@
 
 @section scripts
 {
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
     <link href="~/Content/flexslider.css" rel="stylesheet" />
 
@@ -102,30 +101,6 @@
             }
 
         });
-        function addToCart(id) {
-            var quantity = jQuery('#Quantity').val();
-            var size = jQuery('#Size').val();
-            var url = "/ShoppingCart/AddToCart";
-            jQuery.ajax({
-                url: url,
-                type: 'POST',
-                dataType: 'json',
-                traditional: true,
-                data: {
-                    productId: id,
-                    size: size,
-                    quantity: quantity
-                },
-                success: function (data) {
-                    if (data == "Success") {
-                        alert("Added");
-                    }
-                },
-                error: function (e) {
-                    alert('Error=' + e.toString());
-                }
-            });
-        }
     </script>
 }
 

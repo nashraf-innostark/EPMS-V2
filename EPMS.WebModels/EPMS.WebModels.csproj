@@ -494,6 +494,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Product.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\WebsiteClient\ShoppingCart\Cart.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cart.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WebsiteClient\ShoppingCart\Cart.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cart.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\AboutUs\AboutUs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1051,6 +1061,14 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Product.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cart.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cart.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

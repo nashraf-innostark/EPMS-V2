@@ -30,6 +30,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string SKUCode { get; set; }
         public string ProductImage { get; set; }
         public string ItemImage { get; set; }
+        public long SizeId { get; set; }
 
         public List<ProductImage> ProductImages { get; set; }
         public IEnumerable<ItemImage> ItemImages { get; set; }

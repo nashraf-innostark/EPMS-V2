@@ -33,9 +33,13 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                ItemNameEn = source.ItemVariation !=null ? source.ItemVariation.SKUDescriptionEn : "",
+                ItemNameEn = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionEn : "",
                 ItemNameAr = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionAr : "",
-                ProductImages = source.ProductImages.Select(x=>x.CreateFromServerToClient()).ToList(),
+                ProductImages = source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList(),
+                ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
+                    source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "",
+                ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
+                    source.ProductImages.FirstOrDefault().ProductImagePath : "",
             };
         }
         public static WebsiteModels.Product CreateFromServerToClientFromInventory(this Models.DomainModels.Product source)
@@ -61,12 +65,13 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ItemNameEn = source.ItemVariation != null && source.ItemVariation.InventoryItem != null ? source.ItemVariation.InventoryItem.ItemNameEn : "",
                 ItemNameAr = source.ItemVariation != null && source.ItemVariation.InventoryItem != null ? source.ItemVariation.InventoryItem.ItemNameAr : "",
-                ProductImages = source.ProductImages != null ? source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList() : 
+                ProductImages = source.ProductImages != null ? source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList() :
                                     new List<WebsiteModels.ProductImage>(),
-                ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ? 
+                ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
                     source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "",
                 ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
                     source.ProductImages.FirstOrDefault().ProductImagePath : "",
+                SizeId = source.ItemVariation != null && source.ItemVariation.Sizes.FirstOrDefault() != null ? source.ItemVariation.Sizes.FirstOrDefault().SizeId : 0,
             };
         }
 
@@ -108,7 +113,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
         {
             return new WebsiteModels.Product
             {
-                ProductId = source.Products.FirstOrDefault(x=>x.ItemVariationId == source.ItemVariationId).ProductId,
+                ProductId = source.Products.FirstOrDefault(x => x.ItemVariationId == source.ItemVariationId).ProductId,
                 ItemVariationId = source.ItemVariationId,
                 ProductNameEn = source.InventoryItem.ItemNameEn,
                 ProductNameAr = source.InventoryItem.ItemNameAr,
@@ -116,8 +121,8 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ProductDescAr = source.InventoryItem.ItemDescriptionAr,
                 ProductPrice = source.UnitPrice.ToString(),
                 SKUCode = source.SKUCode,
-                ItemImages = source.ItemImages.Select(x=>x.CreateFromServerToClient()),
-                Sizes = source.Sizes.Select(x=>x.CreateFromServerToClient()),
+                ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()),
+                Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()),
                 ItemImage = source.ItemImages != null && source.ItemImages.FirstOrDefault() != null ?
                     source.ItemImages.FirstOrDefault().ItemImagePath : "",
             };

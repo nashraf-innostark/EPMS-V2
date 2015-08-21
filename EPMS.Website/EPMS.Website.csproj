@@ -327,7 +327,9 @@
     <Content Include="Content\owl.theme.css" />
     <Content Include="Content\responsive-devices.css" />
     <Content Include="Content\shadows.css" />
+    <Content Include="Content\styleIST.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\index.html" />
     <Content Include="Images\noimage_department.png" />
     <Content Include="Images\sliders\iosslider\arr01.png" />
     <Content Include="Images\sliders\iosslider\controls.png" />
@@ -338,6 +340,7 @@
     <Content Include="Images\sliders\iosslider\style.css" />
     <Content Include="Scripts\blank.png" />
     <Content Include="Scripts\cloud-zoom.1.0.3.js" />
+    <Content Include="Scripts\Functions\scriptIST.js" />
     <Content Include="Scripts\zoomsl-3.0.js" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\bg.jpg" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\blank.jpg" />
@@ -490,7 +493,6 @@
     <Content Include="Content\template.css" />
     <Content Include="Content\updates.css" />
     <Content Include="favicon.ico" />
-    <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Images\02.png" />
     <Content Include="Images\aboutus.jpg" />
@@ -1051,9 +1053,6 @@
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="fonts\glyphicons-halflings-regular.woff" />
-    <Content Include="fonts\glyphicons-halflings-regular.ttf" />
-    <Content Include="fonts\glyphicons-halflings-regular.eot" />
     <Content Include="packages.config" />
     <Content Include="fonts\DroidNaskh-Bold.ttf" />
     <Content Include="fonts\DroidNaskh-Regular.ttf" />

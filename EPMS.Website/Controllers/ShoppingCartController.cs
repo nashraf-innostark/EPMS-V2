@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -33,18 +34,27 @@ namespace EPMS.Website.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
+            ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel();
+            bool isItemsExist = false;
             string cartId = GetCartId();
-            ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel
+            var items = Session["ShoppingCartItems"];
+            if (items != null)
             {
-                ShoppingCarts = !string.IsNullOrEmpty(cartId) ? cartService.GetUserCart(cartId).ShoppingCarts.Select(x => x.CreateFromServerToClient()).ToList() : new List<ShoppingCart>()
-            };
+                IList<ShoppingCart> cartItems = (List<ShoppingCart>) Session["ShoppingCartItems"];
+                if (cartItems.Any())
+                {
+                    isItemsExist = true;
+                    viewModel.ShoppingCarts = cartItems;
+                }
+            }
+            if (!isItemsExist)
+            {
+                viewModel.ShoppingCarts = !string.IsNullOrEmpty(cartId)
+                    ? cartService.GetUserCart(cartId).ShoppingCarts.Select(x => x.CreateFromServerToClient()).ToList()
+                    : new List<ShoppingCart>();
+            }
+            ViewBag.ShowSlider = false;
             return View(viewModel);
-        }
-
-        // Create: ShoppingCart
-        public ActionResult Create(long? id, string from)
-        {
-            return View();
         }
 
         private string GetCartId()
@@ -65,14 +75,27 @@ namespace EPMS.Website.Controllers
         #endregion
 
         [HttpPost]
-        public JsonResult AddToCart(long productId, int size, int quantity)
+        public JsonResult AddToCart(long productId, long sizeId, int quantity)
         {
+            // get Product data from DB
+            var product = productService.FindProductById(productId);
+            Product userProduct = product.ItemVariationId != null ? product.CreateFromServerToClientFromInventory() : product.CreateFromServerToClient();
+            // check if sizr is zero then add default size of Product
+            if (sizeId == 0)
+            {
+                sizeId = userProduct.ItemVariationId != null ? userProduct.SizeId : Convert.ToInt64(userProduct.ProductSize);
+            }
+            // Product Image path
+            string itemImageFolder = "";
+            itemImageFolder = userProduct.ItemVariationId != null ? ConfigurationManager.AppSettings["InventoryImage"] : ConfigurationManager.AppSettings["ProductImage"];
+            // Get User Cart Id
             string userCartid = GetCartId();
+            // Get user Cart from Session
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
                 IList<ShoppingCart> cart = (List<ShoppingCart>) Session["ShoppingCartItems"];
-                var item = cart.FirstOrDefault(x => x.ProductId == productId && x.Size == size);
+                var item = cart.FirstOrDefault(x => x.ProductId == productId && x.SizeId == sizeId);
                 if (item != null)
                 {
                     item.Quantity += quantity;
@@ -83,15 +106,18 @@ namespace EPMS.Website.Controllers
                     {
                         UserCartId = userCartid,
                         ProductId = productId,
-                        Size = size,
+                        SizeId = sizeId,
                         Quantity = quantity,
-                        RecCreatedDate = DateTime.Now
+                        ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
+                        ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
+                        UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
+                        SkuCode = userProduct.SKUCode,
+                        ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage, 
+                        RecCreatedDate = DateTime.Now,
                     };
                     cart.Add(itemToAdd);
                 }
-                //var product = productService.FindProductById(productId);
-                //Product userProduct = new Product();
-                //userProduct = product.ItemVariationId != null ? product.CreateFromServerToClientFromInventory() : product.CreateFromServerToClient();
+                
                 Session["ShoppingCartItems"] = cart;
             }
             else
@@ -101,8 +127,13 @@ namespace EPMS.Website.Controllers
                 {
                     UserCartId = userCartid,
                     ProductId = productId,
-                    Size = size,
+                    SizeId = sizeId,
                     Quantity = quantity,
+                    ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
+                    ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
+                    UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
+                    SkuCode = userProduct.SKUCode,
+                    ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage, 
                     RecCreatedDate = DateTime.Now
                 };
                 cart.Add(itemToAdd);
