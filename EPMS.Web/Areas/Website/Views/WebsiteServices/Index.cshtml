@@ -150,19 +150,19 @@
                                                                 parent = parent.ParentService;
                                                             }
                                                         }
-                                                    </td>
-                                                    @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
-                                                    @if (direction == "ltr")
-                                                    {
-                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
-                                                    }
-                                                    <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
-                                                    <td>-</td>
-                                                </tr>
+                                                        </td>
+                                                        @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
+                                                        }
+                                                        else
+                                                        {
+                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
+                                                        }
+                                                        <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
+                                                        <td>-</td>
+                                                    </tr>
                                             }
                                         </tbody>
                                     </table>
