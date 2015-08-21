@@ -1076,6 +1076,7 @@
     <Content Include="Views\AboutUs\Detail.cshtml" />
     <Content Include="Views\WebsiteFooter\Index.cshtml" />
     <Content Include="Views\ContactUs\Detail.cshtml" />
+    <None Include="Properties\PublishProfiles\EPMSWebsite.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

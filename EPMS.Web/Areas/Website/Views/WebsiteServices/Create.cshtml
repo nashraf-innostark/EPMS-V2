@@ -62,6 +62,7 @@
             @Html.HiddenFor(model => model.WebsiteService.ParentServiceId, new {@id = "ParentService"})
             @Html.HiddenFor(model => model.WebsiteService.RecCreatedBy, new {@id = "RecCreatedBy"})
             @Html.HiddenFor(model => model.WebsiteService.RecCreatedDate, new { @id = "RecCreatedDate" })
+            @Html.HiddenFor(model => model.WebsiteService.ImagePath, new { @id = "imagePath" })
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="">Service Name</label>
@@ -125,6 +126,20 @@
                         <div class="controls">
                             <input type="text" id="descpAr" class="toBeDisable" />
                         </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">
+                        @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span9 row-fluid">
+                    <div class="upload-boxes row-fluid">
+                        <div class="span3" id="upload"></div>
+                        <div class="span9" id="uploaded"></div>
                     </div>
                 </div>
             </div>
@@ -404,4 +419,48 @@
         $("#Edit").hide();
         return true;
     }
+
+    // upload Image
+    var errors = "";
+    var siteUrl = $('#siteURL').val();
+    var url = "/Website/WebsiteServices/UploadImage";
+    $('#upload').mfupload({
+        type: 'jpg,png,tif,jpeg', //all types
+        maxsize: 10,
+        post_upload: url,
+        folder: "./",
+        ini_text: "Drag your file here or click (max: 1MB)",
+        over_text: "Drop Here",
+        over_col: '#666666',
+        over_bkcol: '#f0f0f0',
+
+        init: function () {
+            $("#uploaded").empty();
+        },
+
+        start: function (result) {
+            $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+        },
+
+        loaded: function (result) {
+            $("#PRO" + result.fileno).remove();
+            $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+            $("#imagePath").val(result.filename);
+        },
+
+        progress: function (result) {
+            $("#PRO" + result.fileno).css("width", result.perc + "%");
+        },
+
+        error: function (error) {
+            errors += error.filename + ": " + error.err_des + "\n";
+        },
+
+        completed: function () {
+            if (errors != "") {
+                alert(errors);
+                errors = "";
+            }
+        }
+    });
 </script>
