@@ -1,0 +1,130 @@
+﻿@using System.Globalization
+@using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
+@using EPMS.Website.Resources.Shared
+@model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
+
+@{
+    ViewBag.Title = "Shopping Cart";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = Common.TextDirection;
+    DateTime today = DateTime.Now;
+}
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">@Cart.HomePage</a></li>
+                    <li>@Cart.BCCart</li>
+                </ul>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@Cart.BCCart</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shadowUP"></div>
+</div>
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+
+            <div class="row">
+                <div class="span12 directionR ">
+                    <h1 class="page-title">@Cart.BodyTitle</h1>
+                    @if (Model.ShoppingCarts.Any())
+                    {
+                        <table class="shopping-table">
+                            <tr>
+                                <th colspan="2">@Cart.ItemPictureAndName</th>
+                                <th>@Cart.ItemCode</th>
+                                <th>@Cart.Qty</th>
+                                <th>@Cart.UnitPrice</th>
+                                <th>@Cart.Total</th>
+                                <th>@Cart.Delete</th>
+                            </tr>
+
+                            @foreach (var cartItem in Model.ShoppingCarts)
+                            {
+                                <tr class="cartRow">
+                                    @{
+                                        var noImage = "/images/noimage_department.png";
+                                    }
+                                    <td class="image-column"><a href="#"><img src="@cartItem.ImagePath" alt=""></a></td>
+                                    <td><p><a href="#">@(direction == "ltr" ? cartItem.ItemNameEn : cartItem.ItemNameAr)</a></p></td>
+                                    <td><p>@cartItem.SkuCode</p></td>
+                                    <td class="quantity">
+                                        <input id="@cartItem.ProductId" type="text" value="@cartItem.Quantity" class="cartnum">
+                                    </td>
+                                    <td><p class="cartPrice">@cartItem.UnitPrice</p></td>
+                                    <td><p class="cartTotal Total_@cartItem.ProductId">@(cartItem.Quantity * cartItem.UnitPrice)</p></td>
+                                    <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
+                                </tr>
+                            }
+
+                            <tr class="">
+                                <td class="cartTotalCount" colspan="5"><strong>@Cart.GrandTotal</strong></td>
+                                <td><strong><p class="cartGTotal">0</p></strong></td>
+                            </tr>
+                        </table>
+                        <div class="control-group">
+                            <div class="controls">
+                                <input class="btn" id="submit-form" type="submit" value="@Cart.SendRequest" />
+                            </div>
+                        </div>
+                    }
+                    else
+                    {
+                        @:@Cart.CartEmpty
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    var cartItemList = '@Html.Raw(Json.Encode(Model.ShoppingCarts))';
+    var cartList = JSON.parse(cartItemList);
+    jQuery(document).ready(function () {
+        calculateGrandTotal();
+        jQuery(".cartDelete").on("click", function () {
+            jQuery(this).parent().parent().remove();
+            calculateGrandTotal();
+        });
+        jQuery(".cartnum").on("change", function () {
+            var qty = parseInt(this.value);
+            var productId = this.id;
+            jQuery.each(cartList, function (key, value) {
+                if (value.ProductId == productId) {
+                    var unitPrice = value.UnitPrice;
+                    var totalPrice = qty * unitPrice;
+                    jQuery(".Total_" + value.ProductId).text(totalPrice);
+                    calculateGrandTotal();
+                    return true;
+                }
+            });
+        });
+    });
+
+    function calculateGrandTotal() {
+        var gtotal = 0;
+        jQuery(".shopping-table tr.cartRow").each(function () {
+
+            var qty = parseInt(jQuery(this).find(".cartnum ").val());
+
+            var price = parseInt(jQuery(this).find(".cartPrice ").text());
+            var total = qty * price;
+            jQuery(this).find(".cartTotal").text(total);
+            gtotal += total;
+        });
+        jQuery(".cartGTotal").text(gtotal);
+    }
+</script>

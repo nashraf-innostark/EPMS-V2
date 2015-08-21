@@ -94,6 +94,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IContactUsRepository, ContactUsRepository>();
             unityContainer.RegisterType<IAboutUsRepository, AboutUsRepository>();
             unityContainer.RegisterType<IWebsiteServicesRepository, WebsiteServicesRepository>();
+            unityContainer.RegisterType<IShoppingCartRepository, ShoppingCartRepository>();
 
         }
     }

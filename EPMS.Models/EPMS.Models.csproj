@@ -170,6 +170,7 @@
     <Compile Include="DomainModels\RIFHistory.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\RIFItemHistory.cs" />
+    <Compile Include="DomainModels\ShoppingCart.cs" />
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRHistory.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
+    <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
     <Compile Include="RequestModels\DifSearchRequest.cs" />
@@ -384,6 +386,7 @@
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\ShoppingCartResponse.cs" />
     <Compile Include="ResponseModels\TIRCreateResponse.cs" />
     <Compile Include="ResponseModels\TirHistoryResponse.cs" />
     <Compile Include="ResponseModels\TIRListResponse.cs" />

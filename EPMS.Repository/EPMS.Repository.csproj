@@ -200,6 +200,7 @@
     <Compile Include="Repositories\DIFRepository.cs" />
     <Compile Include="Repositories\RIFRepository.cs" />
     <Compile Include="Repositories\RFIRepository.cs" />
+    <Compile Include="Repositories\ShoppingCartRepository.cs" />
     <Compile Include="Repositories\SizeRepository.cs" />
     <Compile Include="Repositories\StatusRepository.cs" />
     <Compile Include="Repositories\TaskEmployeeRepository.cs" />

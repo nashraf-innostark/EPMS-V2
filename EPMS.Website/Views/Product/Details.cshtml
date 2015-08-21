@@ -29,7 +29,6 @@
 
 @section scripts
 {
-    <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
     <link href="~/Content/flexslider.css" rel="stylesheet" />
 
@@ -100,6 +99,7 @@
                 /* FancyBox */
                 jQuery(".fancybox").fancybox();
             }
+
         });
     </script>
 }
@@ -250,9 +250,9 @@
                                     </div>
                                     <div class="quantitiy">
                                         <label for="qty">@Product.Quantity:</label>
-                                        <input type="text" id="quantity" class="inputbox">
+                                        <input type="text" id="Quantity" class="inputbox">
                                     </div>
-                                    <a href="#" class="addtocart btn btn-flat">@Product.AddToCart</a>
+                                    <a class="addtocart btn btn-flat" onclick="addToCart(@Model.Product.ProductId)">@Product.AddToCart</a>
                                     <div class="clear"></div>
                                 </div>
                             </div>

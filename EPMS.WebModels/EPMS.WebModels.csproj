@@ -137,6 +137,7 @@
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
     <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
     <Compile Include="ModelMappers\Website\Services\WebsiteServicesMapper.cs" />
+    <Compile Include="ModelMappers\Website\ShoppingCart\ShoppingCartMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
       <DependentUpon>Complaint.ar.resx</DependentUpon>
@@ -493,6 +494,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Product.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\WebsiteClient\ShoppingCart\Cart.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cart.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WebsiteClient\ShoppingCart\Cart.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Cart.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\AboutUs\AboutUs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -614,6 +625,7 @@
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\WebsiteClient\ShoppingCartListViewModel.cs" />
     <Compile Include="ViewModels\Website\Footer\FooterViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesCreateViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesListViewModel.cs" />
@@ -709,6 +721,7 @@
     <Compile Include="WebsiteModels\RFIItem.cs" />
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />
+    <Compile Include="WebsiteModels\ShoppingCart.cs" />
     <Compile Include="WebsiteModels\Size.cs" />
     <Compile Include="WebsiteModels\Status.cs" />
     <Compile Include="WebsiteModels\SubTaskWeight.cs" />
@@ -1049,6 +1062,14 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Product.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cart.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Cart.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

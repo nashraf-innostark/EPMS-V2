@@ -179,6 +179,7 @@
     <Compile Include="Services\DIFService.cs" />
     <Compile Include="Services\RIFService.cs" />
     <Compile Include="Services\RFIService.cs" />
+    <Compile Include="Services\ShoppingCartService.cs" />
     <Compile Include="Services\SizeService.cs" />
     <Compile Include="Services\StatusService.cs" />
     <Compile Include="Services\TaskEmployeeService.cs" />
