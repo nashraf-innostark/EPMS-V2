@@ -110,16 +110,6 @@
             });
         });
     });
-    //jQuery(document).on('change', '.cartnum', function () {
-    //    var qty = this.value;
-    //    jQuery.each(cartList, function (key, value) {
-    //        if (value.CartId == qty) {
-    //            var unitPrice = value.UnitPrice;
-    //            var totalPrice = qty * unitPrice;
-    //            jQuery("#Total_value.CartId").text(totalPrice);
-    //        }
-    //    });
-    //});
 
     function calculateGrandTotal() {
         var gtotal = 0;
@@ -131,27 +121,7 @@
             var total = qty * price;
             jQuery(this).find(".cartTotal").text(total);
             gtotal += total;
-
         });
         jQuery(".cartGTotal").text(gtotal);
-    }
-    function addToCart() {
-        var url = "/ShoppingCart/AddToCart";
-        jQuery.ajax({
-            url: url,
-            type: 'POST',
-            dataType: 'json',
-            traditional: true,
-            data: {
-                preferences: 12
-            },
-            success: function (data) {
-
-            },
-            error: function (e) {
-                alert('Error=' + e.toString());
-                $(".tempLoader").click();
-            }
-        });
     }
 </script>
