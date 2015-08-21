@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="~/Content/template.css" type="text/css" />
     <link rel="stylesheet" href="~/Content/updates.css" type="text/css" />
     <link rel="stylesheet" href="~/Content/custom.css" type="text/css" />
+    <link rel="stylesheet" href="~/Content/fixes.css" type="text/css" />
+    <link rel="stylesheet" href="~/Sliders/caroufredsel/caroufredsel.css" type="text/css" />
 
 
     <!-- This stylesheet only adds some repairs on idevices  -->
@@ -156,7 +158,8 @@
             </div>
         </div><!-- end action box -->
         @RenderBody()
-        @{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}
+        @{Html.RenderAction("Index", "WebsiteFooter", new { area = "" });}
+        @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
 
     </div>
 

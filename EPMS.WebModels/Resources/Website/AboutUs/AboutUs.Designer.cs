@@ -79,6 +79,24 @@ namespace EPMS.WebModels.Resources.Website.AboutUs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content.
+        /// </summary>
+        public static string Content {
+            get {
+                return ResourceManager.GetString("Content", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content Arabic.
+        /// </summary>
+        public static string ContentAr {
+            get {
+                return ResourceManager.GetString("ContentAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {

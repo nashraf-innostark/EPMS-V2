@@ -73,6 +73,30 @@
         
         <div class="control-group row-fluid">
             <div class="span3">
+                <label class="control-label">@EPMS.WebModels.Resources.Website.AboutUs.AboutUs.Content</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.AboutUs.ContentEn, new { @dir = "ltr", id = "ContentEn", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.AboutUs.ContentEn, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">@EPMS.WebModels.Resources.Website.AboutUs.AboutUs.ContentAr</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(m => m.AboutUs.ContentAr, new { @dir = "ltr", id = "ContentAr", @class = "tbdisable toBeRequired" })
+                    @Html.ValidationMessageFor(m => m.AboutUs.ContentAr, "", new { @class = "required" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.AboutUs.AboutUs.MetaKeywords</label>
             </div>
             <div class="span9">
