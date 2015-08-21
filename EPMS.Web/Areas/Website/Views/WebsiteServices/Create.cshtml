@@ -1,12 +1,10 @@
 ﻿@model EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel
 
 @{
-    ViewBag.Title = "Website Services's Page";
+    ViewBag.Title = "Website Services Addition";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    int i = 0;
-    int j = 0;
 }
 
 <div class="main-content withPanel">
@@ -14,7 +12,8 @@
         <div class="panel-content filler">
             <div class="panel-logo"></div>
             <div class="panel-header">
-                <h1><small>Services</small></h1>
+                <h1><small>Add Services</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>Add New</button>
             </div>
             <div class="panel-search container-fluid">
                 <form class="form-horizontal" action="javascript:;">
@@ -52,175 +51,357 @@
         <i class="icon-big-notepad"></i>
         <h2><small>Website Services</small></h2>
     </header>
+    <!--Notifications begin-->
     @Html.Partial("_Alert")
-    <form class="form-horizontal" id="validation_form">
-        <div class="container-fluid">
-            <div class="control-group row-fluid span-inset">
-                <ul class="nav nav-tabs" id="myTab">
-                    <li class="active"><a data-toggle="tab" href="#tab-example1">Services</a></li>
-                    <li class=""><a data-toggle="tab" href="#tab-example2">Sections</a></li>
-                </ul>
-                <div class="tab-content">
-                    <div id="tab-example1" class="tab-pane fade active in">
-                        @if (userPermissionsSet.Contains("ServiceCreate"))
-                        {
-                            <h3><small><a href="~/Website/WebsiteServices/Create">Add New Service</a></small></h3>
-                        }
-                        <div class="container-fluid">
-                            <table class="table table-striped table-responsive" id="tableSortableResMed">
-                                <thead class="cf sorthead">
-                                    <tr>
-                                        <th class="center">Serial</th>
-                                        <th class="center">Name</th>
-                                        <th class="center">Description</th>
-                                        <th class="center">Number of Sections</th>
-                                        <th class="center">Number of Sub-Sections</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach (var service in Model.Services)
-                                    {
-                                        var id = service.ServiceId + "_tableServices";
-                                        <tr class="gradeX" id="@id">
-                                            <td class="center">@(i += 1)</td>
-                                            @*<td class="center">@(direction == "ltr" ? service.ServiceNameEn : service.ServiceNameAr)</td>*@
-                                            @if (direction == "ltr")
-                                            {
-                                                <td class="center"><a href="~/Website/WebsiteServices/Create/@service.ServiceId">@service.ServiceNameEn</a></td>
-                                            }
-                                            else
-                                            {
-                                                <td class="center"><a href="~/Website/WebsiteServices/Create/@service.ServiceId">@service.ServiceNameAr</a></td>
-                                            }
-                                            <td class="center">@(direction == "ltr" ? service.DescriptionEn : service.DescriptionAr)</td>
-                                            <td class="center">@service.NoofSections</td>
-                                            <td class="center">-</td>
-                                        </tr>
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div id="tab-example2" class="tab-pane fade">
-                        @if (userPermissionsSet.Contains("ServiceCreate"))
-                        {
-                            <h3><small><a href="~/Website/WebsiteServices/Create">Add New Section</a></small></h3>
-                        }
-                        <div class="container-fluid">
-                            <div class="row-fluid">
-                                <div class="span12">
-                                    <table class="table table-striped table-responsive" id="tableSortableResMed2">
-                                        <thead class="cf sorthead">
-                                            <tr>
-                                                <th class="center">Serial</th>
-                                                <th class="center">Parent Service</th>
-                                                <th class="center">Parent Section</th>
-                                                <th class="center">Name</th>
-                                                <th class="center">Description</th>
-                                                <th class="center">Number of Sub-Sections</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            @foreach (var sect in Model.Sections)
-                                            {
-                                                var id = sect.ServiceId + "_tableSections";
-                                                <tr class="gradeX" id="@id">
-                                                    <td>@(j += 1)</td>
-                                                    <td class="center">@(direction == "ltr" ? sect.ParentServiceEn : sect.ParentServiceAr)</td>
-                                                    <td class="center">
-                                                        @if (sect.ParentService != null)
-                                                        {
-                                                            var k = 0;
-                                                            var parent = sect.ParentService;
-                                                            while (parent != null)
-                                                            {
-                                                                if (k != 0)
-                                                                {
-                                                                    @: >
-                                                                }
-                                                                k++;
-                                                                if (direction == "ltr")
-                                                                {
-                                                                    <a href="~/Website/WebsiteServices/Create/@parent.ServiceId">@parent.ServiceNameEn</a>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <a href="~/Website/WebsiteServices/Create/@parent.ServiceId">@parent.ServiceNameAr</a>
-                                                                }
-                                                                parent = parent.ParentService;
-                                                            }
-                                                        }
-                                                    </td>
-                                                    @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
-                                                    @if (direction == "ltr")
-                                                    {
-                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
-                                                    }
-                                                    else
-                                                    {
-                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
-                                                    }
-                                                    <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
-                                                    <td>-</td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <!--Notifications end-->
 
+    @using (Html.BeginForm("Create", "WebsiteServices", FormMethod.Post, new {@class = "form-horizontal", @id = "AddEditProductSection", role = "form", enctype = "multipart/form-data"}))
+    {
+        <div class="container-fluid">
+            @Html.HiddenFor(model => model.WebsiteService.ServiceId, new { @id = "ServiceId" })
+            @Html.HiddenFor(model => model.WebsiteService.ParentServiceId, new {@id = "ParentService"})
+            @Html.HiddenFor(model => model.WebsiteService.RecCreatedBy, new {@id = "RecCreatedBy"})
+            @Html.HiddenFor(model => model.WebsiteService.RecCreatedDate, new { @id = "RecCreatedDate" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">Service Name</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.ServiceNameEn, new {@id = "ServiceNameEn", @class = "toBeDisable"})
+                        @Html.ValidationMessageFor(m => m.WebsiteService.ServiceNameEn, String.Empty, new {@class = "required"})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">Service Name Arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.ServiceNameAr, new {@id = "ServiceNameAr", @class = "toBeDisable"})
+                        @Html.ValidationMessageFor(m => m.WebsiteService.ServiceNameAr, String.Empty, new {@class = "required"})
+                    </div>
+                </div>
+            </div>
+            <div id="CKDescp" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="">Description </label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextAreaFor(model => model.WebsiteService.DescriptionEn, new { @id = "DescriptionEn", @class = "" })
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="">Description Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextAreaFor(model => model.WebsiteService.DescriptionAr, new { @id = "DescriptionAr", @class = "" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="Descp" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Notes">Description</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="descpEn" class="toBeDisable" />
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="NotesAr">Description Arabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input type="text" id="descpAr" class="toBeDisable" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">
+                        Meta keywords
+                        <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="words seperated with comma"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaKeywordsEn, new {@id = "MetaKeywordsEn", @class = "toBeDisable"})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">
+                        Meta keywords Arabic
+                        <a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="words seperated with comma"><i class="icon-photon info-circle"></i></a>
+                    </label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaKeywordsAr, new {@id = "MetaKeywordsAr", @class = "toBeDisable"})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">Meta description</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaDescriptionEn, new {@id = "MetaDescriptionEn", @class = "toBeDisable"})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="">Meta description Arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.WebsiteService.MetaDescriptionAr, new {@id = "MetaDescriptionAr", @class = "toBeDisable"})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid" id="ShowToPublicDiv">
+                <div class="span3">
+                    <label class="control-label" for="">Show to public?</label>
+                </div>
+                <div class="span9 span-inset" id="ShowToPublicDiv">
+                    <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                        @Html.CheckBoxFor(model => model.WebsiteService.ShowToPublic, new {@id = "ShowToPublic"})
+                    </div>
+                </div>
+            </div>
+            <div id="Edit" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn" id="edit">Edit</button>
+                    </div>
+                </div>
+            </div>
+            <div id="SaveNewNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="validateForm(event)">Create</button>
+                    </div>
+                </div>
+            </div>
+            <div id="UpdateNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">Update</button>
+                    </div>
                 </div>
             </div>
         </div>
-        <!-- end container -->
-    </form>
+    }
 </div>
 
+<script src="~/RTE/ckeditor.js"></script>
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script type="text/javascript">
-    var websiteServicesList = '@Html.Raw(Json.Encode(Model.Services))';
-    var websiteServices = JSON.parse(websiteServicesList);
-    var parsedSectionsList = '@Html.Raw(Json.Encode(Model.Sections))';
-    var parsedSections = JSON.parse(parsedSectionsList);
     var divId;
+
     $(document).ready(function () {
         divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
         $('.panel, .main-content').toggleClass('retracted');
+        if (parseInt('@Model.WebsiteService.ServiceId') > 0 || '@userPermissionsSet.Contains("ServiceCreate")' == 'False') {
+            disableControls();
+            var descEn = '@Html.Raw(Model.WebsiteService.DescriptionEn)';
+            var regex = /(<([^>]+)>)/ig;
+            var result = descEn.replace(regex, "");
+            $("#descpEn").val(result);
+            var descAr = '@Html.Raw(Model.WebsiteService.DescriptionAr)';
+            regex = /(<([^>]+)>)/ig;
+            result = descAr.replace(regex, "");
+            $("#descpAr").val(result);
+            $("#Descp").show();
+            $("#Edit").show();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+        } else {
+            CKEDITOR.replace('DescriptionEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('DescriptionAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#CKDescp").show();
+            $("#SaveNewNode").hide();
+            $("#UpdateNode").hide();
+            $("#Edit").hide();
+        }
+
         var list = '@Html.Raw(ViewBag.JsTree)';
         var tree = JSON.parse(list);
-        $("#" + divId).jstree({
+        $("#" + divId).on('changed.jstree', function (e, data) {
+            var m = $(".alert-error");
+            m.children("span").text("");
+            m.hide();
+            var i, j, r = [];
+            for (i = 0, j = data.selected.length; i < j; i++) {
+                r.push(data.instance.get_node(data.selected[i]).id);
+            }
+            updateView(r[0]);
+        }).jstree({
             'core': {
                 'check_callback': true,
                 'data': tree
             },
             "plugins": ["themes", "json_data", "ui"],
-        }).on('loaded.jstree', function () {
-            $("#" + divId).jstree('open_all');
         });
+        var serviceToShow;
         setTimeout(function () {
-            subItemsOfServices();
-            subItemsOfSections();
+            var temp = '@ViewBag.ServiceId';
+            if (temp != '') {
+                serviceToShow = temp;
+            }
+            if (serviceToShow != "" && serviceToShow != undefined || serviceToShow != null) {
+                $('#jstree').jstree('select_node', serviceToShow);
+            }
         }, 500);
-
     });
-    function subItemsOfServices() {
-        $.each(websiteServices, function (key, value) {
-            var serviceId = value.ServiceId;
-            var parent = $('#' + divId).find("[id='" + serviceId + "']");
-            //var parent = $("ul").find("#" + serviceId).parent();
-            var childs = $(parent).find("li").length;
-            $("#" + serviceId + "_tableServices td:eq( 4 )").text(childs);
+    $("#edit").click(function (event) {
+        enableControls();
+        $("#CKDescp").show();
+        $("#UpdateNode").show();
+        $("#Descp").hide();
+        $("#Edit").hide();
+        $("#SaveNewNode").hide();
+    });
+
+    function disableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', true);
+        $("#ShowToPublicDiv").addClass("disableList");
+    }
+
+    function enableControls() {
+        $('.' + 'toBeDisable' + ':input').attr('disabled', false);
+        $("#ShowToPublicDiv").removeClass("disableList");
+    }
+    function removeCkEditor() {
+        for (name in CKEDITOR.instances) {
+            CKEDITOR.instances[name].destroy();
+        }
+    }
+    function assignCkEditor() {
+        CKEDITOR.replace('DescriptionEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DescriptionAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
     }
-    function subItemsOfSections() {
-        $.each(parsedSections, function (key, value) {
-            var serviceId = value.ServiceId;
-            var parent = $('#jstree').find("[id='" + serviceId + "']");
-            var childs = $(parent).find("li").length;
-            $("#" + serviceId + "_tableSections td:eq( 5 )").text(childs);
+    function updateView(r) {
+        var id = r;
+        if (id == "parentNode") {
+            setNullValues();
+            $("#Edit").hide();
+            $("#UpdateNode").hide();
+            $("#SaveNewNode").hide();
+            disableControls();
+            $("#ShowToPublicDiv").hide();
+            return;
+        }
+        $("#ShowToPublicDiv").show();
+        var serviceId = id;
+        var servicesList = '@Html.Raw(Json.Encode(Model.WebsiteServices))';
+        var services = JSON.parse(servicesList);
+        $.each(services, function (key, value) {
+            if (value.ServiceId == serviceId) {
+                setValues(value);
+                disableControls();
+                $("#Edit").show();
+                $("#Descp").show();
+                $("#UpdateNode").hide();
+                $("#CKDescp").hide();
+                $("#SaveNewNode").hide();
+            }
         });
+    }
+    function setNullValues() {
+        removeCkEditor();
+        $("#ParentService").val($("#ServiceId").val());
+        $("#ServiceId").val("");
+        $("#ServiceNameEn").val("");
+        $("#ServiceNameAr").val("");
+        $("#DescriptionEn").val("");
+        $("#DescriptionAr").val("");
+        $("#descpEn").val("");
+        $("#descpAr").val("");
+        $("#MetaKeywordsEn").val("");
+        $("#MetaKeywordsAr").val("");
+        $("#MetaDescriptionEn").val("");
+        $("#MetaDescriptionAr").val("");
+        $("#RecCreatedBy").val("");
+        $("#RecCreatedDate").val("");
+        assignCkEditor();
+        return true;
+    }
+    function setValues(value) {
+        removeCkEditor();
+        $("#ParentService").val(value.ParentServiceId);
+        $("#ServiceId").val(value.ServiceId);
+        $("#ServiceNameEn").val(value.ServiceNameEn);
+        $("#ServiceNameAr").val(value.ServiceNameAr);
+        $("#DescriptionEn").val(value.DescriptionEn);
+        $("#DescriptionAr").val(value.DescriptionAr);
+        var descEn = value.DescriptionEn;
+        var regex = /(<([^>]+)>)/ig;
+        var result = descEn.replace(regex, "");
+        $("#descpEn").val(result);
+        var descAr = value.DescriptionAr;
+        regex = /(<([^>]+)>)/ig;
+        result = descAr.replace(regex, "");
+        $("#descpAr").val(result);
+        $("#MetaKeywordsEn").val(value.MetaKeywordsEn);
+        $("#MetaKeywordsAr").val(value.MetaKeywordsAr);
+        $("#MetaDescriptionEn").val(value.MetaDescriptionEn);
+        $("#MetaDescriptionAr").val(value.MetaDescriptionAr);
+        if (value.ShowToPublic) {
+            if (!$('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        } else {
+            if ($('#ShowToPublic').is(":checked")) {
+                $("#ShowToPublic").trigger("click");
+            }
+        }
+        $("#RecCreatedBy").val(value.RecCreatedBy);
+        $("#RecCreatedDate").val(value.RecCreatedDateStr);
+        assignCkEditor()
+        return true;
+    }
+    function AddNewNode() {
+        var parentId = $('#' + divId).jstree('get_selected')[0];
+        if (parentId == "" || parentId == null || parentId == undefined) {
+            var m = $(".alert-error");
+            m.children("span").text("Please select Parent Service");
+            m.show();
+            return false;
+        }
+        setNullValues();
+        enableControls();
+        $("#SaveNewNode").show();
+        $("#CKDescp").show();
+        $("#ShowToPublicDiv").show();
+        $("#UpdateNode").hide();
+        $("#Descp").hide();
+        $("#Edit").hide();
+        return true;
     }
 </script>

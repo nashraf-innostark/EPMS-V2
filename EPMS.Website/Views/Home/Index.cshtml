@@ -46,17 +46,11 @@
                 </div>
             </div>
             <div class="span10">
-                <ul id="partners_carousel" class="fixclear">
+                <ul id="partners_carousel" class="fixclear" >
                     @foreach (var partner in Model.Partners)
                     {
-                        <li><a href="#"><img src="http://localhost:43063/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                        <li style="height: 103px"><a href="http://@partner.Link" target="_blank"><img src="http://localhost:43063/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
                     }
-                    @*<li><a href="#"><img src="~/images/partners/cc.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/ad.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/3d.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/tf.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/3d.png" alt="" /></a></li>
-                    <li><a href="#"><img src="~/images/partners/tf.png" alt="" /></a></li>*@
                 </ul>
             </div>
         </div>
@@ -71,4 +65,35 @@
     </div>
     <!-- end container -->
 
-</section><!-- end #content -->     
+</section><!-- end #content -->
+
+<script type="text/javascript">
+    
+    $(document).ready(function() {
+        (function ($) {
+            // ** partners carousel
+            $('#partners_carousel').carouFredSel({
+                responsive: true,
+                scroll: 1,
+                auto: false,
+                items: {
+                    width: 250,
+                    visible: {
+                        min: 3,
+                        max: 10
+                    }
+                },
+                prev: {
+                    button: ".partners_carousel .prev",
+                    key: "left"
+                },
+                next: {
+                    button: ".partners_carousel .next",
+                    key: "right"
+                }
+            });
+            // *** end partners carousel
+
+        })(jQuery);
+    })
+</script>

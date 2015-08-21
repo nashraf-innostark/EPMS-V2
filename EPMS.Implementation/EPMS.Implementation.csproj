@@ -191,6 +191,7 @@
     <Compile Include="Services\WarehouseDetailService.cs" />
     <Compile Include="Services\WarehouseService.cs" />
     <Compile Include="Services\WebsiteDepartmentService.cs" />
+    <Compile Include="Services\WebsiteFooterService.cs" />
     <Compile Include="Services\WebsiteHomePageService.cs" />
     <Compile Include="Services\WebsiteMenuService.cs" />
     <Compile Include="Services\WebsiteServicesService.cs" />

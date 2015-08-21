@@ -1,0 +1,155 @@
+﻿@model EPMS.WebModels.ViewModels.ContactUs.ContactUsViewModel
+@Scripts.Render("~/Scripts/mapmarker.jquery.js")
+
+@{
+    ViewBag.Title = "Contact Us";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<div id="slideshow">
+    <div class="static-content maps-style">
+        <div id="google_map" style="width:100%; height:550px;"></div><!-- map container -->
+        <ul id="map_controls">
+            <li><a id="zoom_in"><span class="icon-plus icon-white"></span></a></li>
+            <li><a id="zoom_out"><span class="icon-minus icon-white"></span></a></li>
+            <li><a id="reset"><span class="icon-refresh icon-white"></span></a></li>
+        </ul>
+    </div>
+    <div id="bottom_mask" class="mask2" style="top: 518px;"></div>
+</div><!-- end slideshow -->
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+
+            <div class="row">
+                <div class="span12 directionR">
+                    <h1 class="page-title">Contact Us</h1>
+
+                    <div class="row">
+                        <div class="span6">
+                            <p>You can get in contact with us through this form:</p>
+                            <div id="contact_form" class="rapid_contact ">
+                                @using (Html.BeginForm("SendEmail", "ContactUs", FormMethod.Post, new { @id = "ContactUsForm", @class = "form-horizontal", role = "form" }))
+                                {
+                                    @Html.HiddenFor(m => m.ReceiverEmail, new { @id = "receiverEmail" })
+                                    <div id="success"></div>
+                                    <div class="control-group">
+                                        <label class="control-label" for="rp_name">Name</label>
+                                        <div class="controls">
+                                            @Html.TextBoxFor(m => m.Name, new { @dir = "ltr", id = "formName", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Name" })
+                                        </div>
+                                    </div><!-- end control group -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="rp_email">Email</label>
+                                        <div class="controls">
+                                            @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "FormEmail", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Email" })
+                                        </div>
+                                    </div><!-- end control group -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="rp_subject">Address</label>
+                                        <div class="controls">
+                                            @Html.TextBoxFor(m => m.Address, new { @dir = "ltr", id = "FormAddress", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Address" })
+                                        </div>
+                                    </div><!-- end control group -->
+                                    <div class="control-group">
+                                        <label class="control-label" for="rp_message">Message</label>
+                                        <div class="controls">
+                                            @Html.TextAreaFor(m => m.Message, new { @dir = "ltr", id = "FormMessage", @class = "tbdisable toBeRequired textarea span4", @placeholder = "Message" })
+                                        </div>
+                                    </div><!-- end control group -->
+                                    <div class="control-group">
+                                        <div class="controls">
+                                            <input class=" btn " id="submit-form" type="submit" name="submit" value="Send" />
+                                        </div>
+                                    </div><!-- end control group -->
+                                }
+                            </div><!-- end contact form -->
+                        </div><!-- end left side -->
+                        <div class="span6">
+                            <h3>Get in touch with us</h3>
+                            @if (direction == "ltr")
+                            {
+                                <p><strong>Address:</strong>&nbsp;@Model.ContactUs.Address</p>
+                                <p>
+                                    <strong>Telephone:</strong> @Model.ContactUs.Phone<br>
+                                    <strong>Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
+                                    <strong>Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
+                                </p>
+                                <p style="text-align: justify">@Model.ContactUs.ContentEn</p>
+                            }
+                            else
+                            {
+                                <p><strong>Address:</strong>&nbsp;@Model.ContactUs.AddressAr</p>
+                                <p>
+                                    <strong>Telephone:</strong> @Model.ContactUs.Phone<br>
+                                    <strong>Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
+                                    <strong>Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
+                                </p>
+                                <p style="text-align: justify">@Model.ContactUs.ContentAr</p>
+                            }
+                        </div><!-- end right side -->
+                    </div><!-- end row -->
+                </div>
+            </div><!-- end row -->
+
+        </div><!-- end mainbody -->
+
+    </div><!-- end container -->
+</section><!-- end #content -->
+
+<script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+<script type="text/javascript">
+    (function ($) {
+        $(document).ready(function () {
+            $('#receiverEmail').val('@Model.ContactUs.FormEmail');
+            var latitude = '@Model.ContactUs.Latitude';
+            var longitude = '@Model.ContactUs.Longitude';
+            var coordinates = latitude + "," + longitude;
+            var icon = '/images/map_pin_1.png';
+            var myMarkers = {
+                "markers": [
+					{
+					    "latitude": latitude,		// latitude
+					    "longitude": longitude,		// longitude
+					    "icon": icon	// Pin icon
+					}
+					/*
+
+					Add as plenty as you want:
+					, {
+						"latitude": "40.712785",
+						"longitude":"-73.962708",
+						"icon": "images/map_pin_1.png"
+					}
+
+					*/
+                ]
+            };
+            $("#google_map").mapmarker({
+                zoom: 16,							// Zoom
+                center: coordinates,		// Center of map
+                type: "ROADMAP",					// Map Type
+                controls: "HORIZONTAL_BAR",			// Controls style
+                dragging: 1,							// Allow dragging?
+                mousewheel: 0,						// Allow zooming with mousewheel
+                markers: myMarkers,
+                styling: 0,							// Bool - do you want to style the map?
+                featureType: "all",
+                visibility: "on",
+                elementType: "geometry",
+                hue: "#00AAFF",
+                saturation: -100,
+                lightness: 0,
+                gamma: 1,
+                navigation_control: 0
+                /*
+				To play with the map colors and styles you can try this tool right here http://gmaps-samples-v3.googlecode.com/svn/trunk/styledmaps/wizard/index.html
+				*/
+            });
+
+        });
+    })(jQuery);
+</script>

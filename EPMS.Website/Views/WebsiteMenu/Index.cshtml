@@ -15,9 +15,9 @@
         <li>
             <a href="#">About Us</a>
             <ul>
-                <li><a href="#">Company Profile</a>
+                <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/AboutUs/Detail'"><a href="#">Company Profile</a>
 
-            </ul>
+</ul>
         </li>
 
         <li>
@@ -158,7 +158,7 @@
                     }
                     else
                     {
-                        <li><a href="#">@service.ServiceNameAr</a></li>
+                        <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Services/Detail/@service.ServiceId'"><a href="#">@service.ServiceNameAr</a></li>
                     }
                 }
             </ul>
@@ -170,7 +170,7 @@
                 <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Index/1'"><a href="#" class="prettyPhoto_transparent">Articles</a></li>
             </ul>
         </li>
-        <li><a href="#">Contact Us</a></li>
+        <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/ContactUs/Detail/'"><a href="#">Contact Us</a></li>
     </ul>
 </nav>
 <!-- end main_menu -->

@@ -191,11 +191,13 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
+    <Compile Include="Controllers\WebsiteFooterController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
     <Compile Include="Global.asax.cs">
@@ -217,6 +219,7 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <Compile Include="Startup.cs" />
+    <Compile Include="Utility.cs" />
     <Compile Include="ViewModels\WebsiteMenuViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1071,6 +1074,8 @@
     <Content Include="Views\ShoppingCart\Index.cshtml" />
     <Content Include="Views\Services\Detail.cshtml" />
     <Content Include="Views\AboutUs\Detail.cshtml" />
+    <Content Include="Views\WebsiteFooter\Index.cshtml" />
+    <Content Include="Views\ContactUs\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">
