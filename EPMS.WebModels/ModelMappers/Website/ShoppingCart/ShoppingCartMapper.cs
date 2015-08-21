@@ -29,7 +29,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
             var itemImage = source.Product.ItemVariation.ItemImages.FirstOrDefault();
             string itemImageName = itemImage != null ? itemImage.ItemImagePath : "";
             var productImage = source.Product.ProductImages.FirstOrDefault();
-            string productImageName = productImage != null ? productImage.ProductImagePath : "";
+            string productImageName = productImage != null ? productImage.ProductImagePath : "noimage_department.png";
 
             string itemImageFolder = source.Product.ItemVariationId != null
                 ? ConfigurationManager.AppSettings["InventoryImage"] + itemImageName

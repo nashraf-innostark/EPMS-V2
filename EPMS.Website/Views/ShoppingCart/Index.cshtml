@@ -54,6 +54,9 @@
                             @foreach (var cartItem in Model.ShoppingCarts)
                             {
                                 <tr class="cartRow">
+                                    @{
+                                        var noImage = "/images/noimage_department.png";
+                                    }
                                     <td class="image-column"><a href="#"><img src="@cartItem.ImagePath" alt=""></a></td>
                                     <td><p><a href="#">@(direction == "ltr" ? cartItem.ItemNameEn : cartItem.ItemNameAr)</a></p></td>
                                     <td><p>@cartItem.SkuCode</p></td>
