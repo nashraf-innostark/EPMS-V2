@@ -1,4 +1,5 @@
-﻿<html lang="en-gb" class="no-js">
+﻿@using System.Configuration
+<html lang="en-gb" class="no-js">
 <head>
     <title>@ViewBag.Title</title>
 
@@ -83,7 +84,7 @@
                     </ul><!-- end topnav // right aligned -->
                     <ul class="topnav navLeft">
                         <li class="drop">
-                            <a href="#">Cart</a>
+                            <a href="~/ShoppingCart/Index">Cart</a>
                             <div class="pPanel">
                                 <div class="inner">
                                     <span class="cart_details">Number of items 3<a href="#" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
@@ -164,7 +165,7 @@
         @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
 
     </div>
-
+    <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
     <a href="#" id="totop">TOP</a>
     @{ Html.RenderPartial("~/Views/Shared/_WebsiteLogin.cshtml");}
     <!--////////////////// Load JS Files -->

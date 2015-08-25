@@ -1062,6 +1062,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Product.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

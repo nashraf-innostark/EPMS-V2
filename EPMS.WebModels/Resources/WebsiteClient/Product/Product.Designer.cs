@@ -169,6 +169,15 @@ namespace EPMS.WebModels.Resources.WebsiteClient.Product {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Our Products.
+        /// </summary>
+        public static string OurProducts {
+            get {
+                return ResourceManager.GetString("OurProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Products | MASAR Scientific Company.
         /// </summary>
         public static string PageTitle {
@@ -201,6 +210,15 @@ namespace EPMS.WebModels.Resources.WebsiteClient.Product {
         public static string Products {
             get {
                 return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products Page.
+        /// </summary>
+        public static string ProductsPage {
+            get {
+                return ResourceManager.GetString("ProductsPage", resourceCulture);
             }
         }
         

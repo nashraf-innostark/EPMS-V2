@@ -22,7 +22,8 @@
     {
         itemImageFolder = ConfigurationManager.AppSettings["ProductImage"];
     }
-    const string noImage = "/images/noimage_department.png";
+    var siteURL = ConfigurationManager.AppSettings["SiteURL"];
+    string noImage = siteURL + "/images/noimage_department.png";
     int pageNo = 1;
     DateTime today = DateTime.Now;
 }
@@ -33,7 +34,7 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">@Product.HomePage</a></li>
+                    <li><a href="@siteURL/Home/Index">@Product.HomePage</a></li>
                     <li>@Product.Products</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
@@ -99,7 +100,7 @@
                         </ul>
                     </div>
                     <h1 class="page-title margintop10">@Product.Catalog</h1>
-                    <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
+                    <a href="#"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
                 </div>
                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
                 {
@@ -175,17 +176,17 @@
                                     }
                                     if (Model.Products[j].ItemVariationId != null)
                                     {
-                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">
+                                        <a href="@siteURL/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">
                                             <img src="@path" alt="">
                                         </a>
                                     }
                                     else
                                     {
-                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">
+                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
                                             <img src="@path" alt="">
                                         </a>
                                     }
-                                                }
+}
                                             </div>
                                             <div class="details fixclear">
                                                 @if (direction == "ltr")
@@ -202,11 +203,11 @@
                                                     <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId)">@Product.AddToCart</a>
                                                     @if (Model.Products[j].ItemVariationId != null)
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">@Product.More</a>
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ItemVariationId?from=Inventory">@Product.More</a>
                                                     }
                                                     else
                                                     {
-                                                        <a href="/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
                                                     }
                                                 </div>
                                                 <div class="price">
@@ -686,8 +687,9 @@
 @section scripts
 {
     <script>
+        var siteUrl;
         jQuery(document).ready(function () {
-
+            siteUrl = jQuery("#siteURL").val();
         });
         jQuery(document).on('change', '.filter', function () {
             var sortBy = parseInt(jQuery("#SortBy").val());
