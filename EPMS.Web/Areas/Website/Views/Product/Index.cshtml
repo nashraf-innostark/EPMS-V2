@@ -142,12 +142,11 @@
                     selectedChildNodes.push(value.id);
                     if (value.parents.length > 1) {
                         var isContains = $.inArray(value.parents[0], selectedParentNodes) > -1;
-                        if (isContains == false) {
+                        if (isContains == false && value.parents[1] == "#") {
                             selectedParentNodes.push(value.parents[0]);
                         }
                     }
                 }
-                
             });
             if (selectedChildNodes.length > 0 || selectedParentNodes.length > 0) {
                 var url = siteUrl + "/Website/Product/ImportProducts";
