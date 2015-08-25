@@ -195,10 +195,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\WebsiteFooterController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -206,6 +206,7 @@
     <Compile Include="ModelMappers\WebsiteMenuMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
@@ -1076,6 +1077,7 @@
     <Content Include="Views\AboutUs\Detail.cshtml" />
     <Content Include="Views\WebsiteFooter\Index.cshtml" />
     <Content Include="Views\ContactUs\Detail.cshtml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

@@ -14,7 +14,7 @@
             <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
-        </li>
+        </li>   
         <li>
             <a href="">
                 @ViewBag.Title
@@ -69,7 +69,7 @@
                                     }
                                     else
                                     {
-                                        @(direction == "ltr" ? Html.ActionLink(@item.ProductNameEn, "Create", new {id = item.ProductId}) : Html.ActionLink(@item.ProductNameAr, "Create", new {id = item.ProductId}))
+                                        @(direction == "ltr" ? Html.ActionLink(@item.ProductNameEn, "Create", new { id = item.ProductId }) : Html.ActionLink(@item.ProductNameAr, "Create", new { id = item.ProductId }))
                                     }
                                 </td>
                                 <td>@item.ProductPrice</td>

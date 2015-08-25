@@ -61,13 +61,12 @@ namespace EPMS.Web.Areas.Website.Controllers
             ViewBag.JsTree = serializer.Serialize(productSectionCreate.JsTreeJsons);
             // use new version of JsTree
             ViewBag.IsIncludeNewJsTree = true;
-            // use new version of jQuery switch
-            ViewBag.IsIncludeNewSwitch = true;
-            ViewBag.ProductId = id;
+            ViewBag.ProductId = id != null ? (long)id : 0;
             return View(viewModel);
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(ProductSectionViewModel viewModel)
         {
             try

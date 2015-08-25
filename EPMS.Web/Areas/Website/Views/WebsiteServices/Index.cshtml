@@ -1,5 +1,4 @@
-﻿@model EPMS.WebModels.ViewModels.Website.Services.ServicesListViewModel
-
+﻿﻿@model EPMS.WebModels.ViewModels.Website.Services.ServicesListViewModel
 @{
     ViewBag.Title = "Website Services's Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -8,7 +7,6 @@
     int i = 0;
     int j = 0;
 }
-
 <div class="main-content withPanel">
     <div class="panel">
         <div class="panel-content filler">
@@ -150,19 +148,19 @@
                                                                 parent = parent.ParentService;
                                                             }
                                                         }
-                                                        </td>
-                                                        @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
-                                                        @if (direction == "ltr")
-                                                        {
-                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
-                                                        }
-                                                        else
-                                                        {
-                                                            <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
-                                                        }
-                                                        <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
-                                                        <td>-</td>
-                                                    </tr>
+                                                    </td>
+                                                    @*<td class="center">@(direction == "ltr" ? sect.ServiceNameEn : sect.ServiceNameAr)</td>*@
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameEn</a></td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
+                                                    }
+                                                    <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
+                                                    <td>-</td>
+                                                </tr>
                                             }
                                         </tbody>
                                     </table>
@@ -170,14 +168,12 @@
                             </div>
                         </div>
                     </div>
-
                 </div>
             </div>
         </div>
         <!-- end container -->
     </form>
 </div>
-
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script type="text/javascript">
     var websiteServicesList = '@Html.Raw(Json.Encode(Model.Services))';

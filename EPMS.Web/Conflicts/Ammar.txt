@@ -1,0 +1,30 @@
+Merge branch 'WebsiteCP' into WebsiteModelSeparation
+
+Conflicts:
+	EPMS.Implementation/Services/WebsiteServicesService.cs
+	EPMS.Implementation/TypeRegistrations.cs
+	EPMS.Interfaces/IServices/IWebsiteServicesService.cs
+	EPMS.Interfaces/Repository/IWebsiteServicesRepository.cs
+	EPMS.Models/EPMS.Models.csproj
+	EPMS.Models/ResponseModels/WebsiteServicesCreateResponse.cs
+	EPMS.Repository/BaseRepository/BaseDbContext.cs
+	EPMS.Repository/BaseRepository/Model.edmx
+	EPMS.Repository/Repositories/WebsiteServicesRepository.cs
+	EPMS.Repository/TypeRegistrations.cs
+	EPMS.Web/Areas/Website/Controllers/ProductSectionController.cs
+	EPMS.Web/Areas/Website/Controllers/WebsiteServicesController.cs
+	EPMS.Web/Areas/Website/Views/Product/Index.cshtml
+	EPMS.Web/Areas/Website/Views/ProductSection/Create.cshtml
+	EPMS.Web/Areas/Website/Views/Service/Create.cshtml
+	EPMS.Web/Areas/Website/Views/Service/Index.cshtml
+	EPMS.Web/Areas/Website/Views/WebsiteServices/Create.cshtml
+	EPMS.Web/Areas/Website/Views/WebsiteServices/Index.cshtml
+	EPMS.Web/EPMS.Web.csproj
+	EPMS.Web/ModelMappers/Website/Product/ProductMapper.cs
+	EPMS.Website/Controllers/ProductController.cs
+	EPMS.Website/EPMS.Website.csproj
+	EPMS.Website/Views/Product/Details.cshtml
+	EPMS.Website/Views/Shared/_Layout.cshtml
+	EPMS.Website/Views/WebsiteMenu/Index.cshtml
+
+
