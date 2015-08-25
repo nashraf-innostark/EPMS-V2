@@ -1,10 +1,12 @@
-﻿@model EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel
 
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
+    var link = ConfigurationManager.AppSettings["WebsiteServices"];
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -41,13 +43,13 @@
                     <div class="span12 directionR">
                         <h1 class="page-title">@Model.WebsiteService.ServiceNameEn</h1>
                         <div class="itemView clearfix eBlog">
-                            @*<div class="itemHeader">
+                            <div class="itemHeader">
                                 <div class="post_details">
-                                    <span class="infSep"> / </span>
                                     <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.WebsiteService.RecCreatedDate.ToString("MMMM dd, yyyy")</span>
                                 </div>
-                            </div>*@<!-- end itemheader -->
+                            </div><!-- end itemheader -->
                             <div class="itemBody">
+                                <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
                                 <p style="text-align: justify">@Model.WebsiteService.DescriptionEn</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
@@ -63,13 +65,13 @@
                     <div class="span12 directionR">
                         <h1 class="page-title">@Model.WebsiteService.ServiceNameAr</h1>
                         <div class="itemView clearfix eBlog">
-                            @*<div class="itemHeader">
+                            <div class="itemHeader">
                                 <div class="post_details">
-                                    <span class="infSep"> / </span>
                                     <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.WebsiteService.RecCreatedDate.ToString("MMMM dd, yyyy")</span>
                                 </div>
-                            </div>*@<!-- end itemheader -->
+                            </div><!-- end itemheader -->
                             <div class="itemBody">
+                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/ServicesImage/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
                                 <p style="text-align: justify">@Model.WebsiteService.DescriptionAr</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>

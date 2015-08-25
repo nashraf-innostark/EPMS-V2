@@ -1,9 +1,11 @@
-﻿@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleViewModel
 @{
     ViewBag.Title = "Detail";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
+    var link = ConfigurationManager.AppSettings["NewsAndArticleImage"];
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -66,7 +68,7 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
                                 <p style="text-align: justify">@Model.NewsAndArticle.ContentEn</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
@@ -99,7 +101,7 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
                                 <p style="text-align: justify">@Model.NewsAndArticle.ContentAr</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
