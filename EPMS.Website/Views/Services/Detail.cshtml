@@ -7,6 +7,8 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
     var link = ConfigurationManager.AppSettings["WebsiteServices"];
+    var noImage = ConfigurationManager.AppSettings["NoImageAvailable"];
+    
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -49,7 +51,14 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
+                                @if (@Model.WebsiteService.ImagePath != null)
+                                {
+                                    <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
+                                }
+                                else
+                                {
+                                    <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
+                                }
                                 <p style="text-align: justify">@Model.WebsiteService.DescriptionEn</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
@@ -71,8 +80,15 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/ServicesImage/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
-                                <p style="text-align: justify">@Model.WebsiteService.DescriptionAr</p>
+                                @if (@Model.WebsiteService.ImagePath != null)
+                                {
+                                    <p><a href="#" class="hoverBorder pull-left"><img src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
+                                }
+                                else
+                                {
+                                    <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
+                                }
+                                <p style="text-align: justify">@Model.WebsiteService.DescriptionEn</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>
