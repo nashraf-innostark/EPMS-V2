@@ -186,7 +186,7 @@
                                             <img src="@path" alt="">
                                         </a>
                                     }
-}
+                                                }
                                             </div>
                                             <div class="details fixclear">
                                                 @if (direction == "ltr")
@@ -686,6 +686,7 @@
 
 @section scripts
 {
+    <script src="~/Scripts/jquery.pnotify.min.js"></script>
     <script>
         var siteUrl;
         jQuery(document).ready(function () {
@@ -715,7 +716,7 @@
             this.parentElement.classList.add("active");
             var pageNo = parseInt(this.textContent);
             var length = parseInt(jQuery('#displayLength').val());
-            var displayStart = (pageNo -1) * length;
+            var displayStart = (pageNo - 1) * length;
             jQuery('#displayStart').val(displayStart);
             // submit from
             jQuery("#filter-products").submit();

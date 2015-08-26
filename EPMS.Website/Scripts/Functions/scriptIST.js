@@ -20,7 +20,11 @@
         },
         success: function (data) {
             if (data == "Success") {
-                alert("Added");
+                $.pnotify({
+                    title: 'Success',
+                    type: 'info',
+                    text: 'Item has been successfully added to your Cart.'
+                });
             }
         },
         error: function (e) {
