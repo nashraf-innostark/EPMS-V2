@@ -27,12 +27,15 @@
                 <div class="newsletter-signup">
                     <h3 class="m_title">Latest News</h3>
                     <ul class="menu">
-                        @foreach (var item in Model.NewsAndArticles)
+                        @if (Model.NewsAndArticles.Any())
                         {
-                            <li>
-                                <a href="#" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Detail/@item.NewsArticleId'">@item.TitleEn</a>
-                                <p><span>@item.RecCreatedDt.ToShortDateString()</span><br />@item.ContentEn.Substring(0, item.ContentEn.Length > 100? 100 : item.ContentEn.Length)...</p>
-                            </li>
+                            foreach (var item in Model.NewsAndArticles)
+                            {
+                                <li>
+                                    <a href="#" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Detail/@item.NewsArticleId'">@item.TitleEn</a>
+                                    <p><span>@item.RecCreatedDt.ToShortDateString()</span><br />@item.ContentEn.Substring(0, item.ContentEn.Length > 100 ? 100 : item.ContentEn.Length)...</p>
+                                </li>
+                            }
                         }
                     </ul><!-- end footer menu -->
 
@@ -43,7 +46,7 @@
                     <h3 class="m_title">Contact us</h3>
                     <p>
                         @*@Model.ContactUs.Title<br />
-                        @Model.ContactUs.Address*@
+                            @Model.ContactUs.Address*@
                     </p>
 
                     <p>
@@ -74,5 +77,4 @@
         </div><!-- end row -->
 
     </div>
-</footer>   
-
+</footer>

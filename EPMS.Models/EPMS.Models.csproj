@@ -180,6 +180,7 @@
     <Compile Include="DomainModels\WebsiteService.cs" />
     <Compile Include="MenuModels\WebsiteFooterMenuModel.cs" />
     <Compile Include="MenuModels\WebsiteMenuModel.cs" />
+    <Compile Include="MenuModels\ImageSliderModel.cs" />
     <Compile Include="ModelMapers\DIFHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />

@@ -204,6 +204,7 @@
     <Compile Include="Controllers\ShoppingCartController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
+    <Compile Include="Controllers\WebsiteSliderController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1075,6 +1076,7 @@
     <Content Include="Views\WebsiteFooter\Index.cshtml" />
     <Content Include="Views\ContactUs\Detail.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
+    <Content Include="Views\WebsiteSlider\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

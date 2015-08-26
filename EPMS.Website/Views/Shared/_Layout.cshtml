@@ -144,24 +144,18 @@
         {
             if (ViewBag.ShowSlider)
             {
-                Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+                //Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+                {Html.RenderAction("Index", "WebsiteSlider", new { area = "" });}
             }
         }
         else
         {
-            Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+            //Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");
+            { Html.RenderAction("Index", "WebsiteSlider", new { area = "" }); }
         }
-
-        <div id="action_box" data-arrowpos="center">
-            <div class="container">
-                <div class="row">
-
-                </div>
-            </div>
-        </div><!-- end action box -->
         
         @RenderBody()
-        @*@{Html.RenderAction("Index", "WebsiteFooter", new { area = "" });}*@
+        @{Html.RenderAction("Index", "WebsiteFooter", new { area = "" });}
         @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
 
     </div>
