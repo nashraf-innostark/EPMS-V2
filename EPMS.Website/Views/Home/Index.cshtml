@@ -1,8 +1,10 @@
-﻿@model EPMS.WebModels.ViewModels.Website.Home.WebsiteHomeViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Website.Home.WebsiteHomeViewModel
 
 @{
     ViewBag.Title = "MASAR Scientific Company";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var cpLink = ConfigurationManager.AppSettings["CpLink"];
 }
 @{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}
 
@@ -13,6 +15,7 @@
         </div>
     </div>
 </div><!-- end action box -->
+
 <section id="content">
     <div class="container">
         <div class="row image-boxes imgboxes_style1 catagoryBox">
@@ -24,7 +27,7 @@
                     <a href="#" class="hoverBorder">
                         @if (department.ImageName != "" || department.ImageName != null)
                         {
-                            <img src='http://localhost:43063/Images/Department/@Url.Content(department.ImageName)' alt="">
+                            <img src='@cpLink/Images/Department/@Url.Content(department.ImageName)' alt="">
                         }
                         else
                         {
@@ -57,7 +60,7 @@
                 <ul id="partners_carousel" class="fixclear" >
                     @foreach (var partner in Model.Partners)
                     {
-                        <li style="height: 103px"><a href="http://@partner.Link" target="_blank"><img src="http://localhost:43063/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                        <li style="height: 103px"><a href="http://@partner.Link" target="_blank"><img src="@cpLink/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
                     }
                 </ul>
             </div>

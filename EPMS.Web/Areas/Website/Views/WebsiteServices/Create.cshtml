@@ -1,3 +1,4 @@
+@using System.Configuration
 @model EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel
 
 @{
@@ -422,8 +423,8 @@
 
     // upload Image
     var errors = "";
-    var siteUrl = $('#siteURL').val();
-    var url = "/Website/WebsiteServices/UploadImage";
+    var siteUrl = '@ConfigurationManager.AppSettings["SiteURL"]';
+    var url = siteUrl + "/Website/WebsiteServices/UploadImage";
     $('#upload').mfupload({
         type: 'jpg,png,tif,jpeg', //all types
         maxsize: 10,
