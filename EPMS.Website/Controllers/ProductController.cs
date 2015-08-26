@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -114,5 +114,14 @@ namespace EPMS.Website.Controllers
         #endregion
 
         #endregion
+        //// GET: Product
+        //public ActionResult Index()
+        //{
+        //    return View();
+        //}
+        //public ActionResult Details(long id)
+        //{
+        //    return View();
+        //}
     }
 }

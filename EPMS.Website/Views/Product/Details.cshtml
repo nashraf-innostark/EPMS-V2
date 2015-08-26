@@ -1,4 +1,4 @@
-﻿@using System.Configuration
+@using System.Configuration
 @using System.Globalization
 @using EPMS.WebModels.Resources.WebsiteClient.Product
 @using EPMS.Website.Resources.Shared
@@ -22,7 +22,8 @@
     {
         itemImageFolder = ConfigurationManager.AppSettings["ProductImage"];
     }
-    const string noImage = "/images/noimage_department.png";
+    var siteURL = ConfigurationManager.AppSettings["SiteURL"];
+    string noImage = siteURL + "/images/noimage_department.png";
     DateTime today = DateTime.Now;
 }
 
@@ -104,20 +105,23 @@
     </script>
 }
 
+
 <div id="page_header" class="gradient bottom-shadow">
     <div class="bgback bg3"></div>
+
     <div class="container">
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">@Product.HomePage</a></li>
-                    <li>@Product.Products</li>
+                    <li><a href="@siteURL/Home/Index">@Product.HomePage</a></li>
+                    <li><a href="#">@Product.OurProducts</a></li>
+                    <li>@Product.ProductsPage</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>@Product.Products</h2>
+                    <h2>@Product.ProductsPage</h2>
                 </div>
             </div>
         </div>
@@ -260,7 +264,6 @@
                     </div>
                     <div class="row">
                         <div class="span9">
-
                             <div class="tabbable tabs_style2">
                                 <ul class="nav fixclear">
                                     <li class="active"><a href="#shop-tab1" data-toggle="tab">@Product.Description </a></li>
@@ -280,7 +283,7 @@
                     </div>
                 </div>
                 <div class="span3  directionR">
-                    <h1 class="page-title">@Product.PoductClassification</h1>
+                    <h1 class="page-title">Poduct Classification</h1>
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
@@ -324,10 +327,10 @@
                             </li>
                         </ul>
                     </div>
-                    <h1 class="page-title margintop10">@Product.Catalog</h1>
-                    <a href="#"><img src="/images/shop_images/catalog.jpg"></a>
+                    <h1 class="page-title margintop10">Catalog</h1>
+                    <a href="#"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
                 </div>
-            </div>
+            </div><!-- end row -->
         </div>
-    </div>
+    </div><!-- end page_header -->
 </section>

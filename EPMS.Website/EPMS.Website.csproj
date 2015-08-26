@@ -199,10 +199,10 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
-    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\WebsiteFooterController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
+    <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\WebsiteMenuController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -210,6 +210,7 @@
     <Compile Include="ModelMappers\WebsiteMenuMapper.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\IdentityModels.cs" />
+    <Compile Include="Models\InventoryItem.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\Shared\Common.ar.Designer.cs">
@@ -338,13 +339,6 @@
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\index.html" />
     <Content Include="Images\noimage_department.png" />
-    <Content Include="Images\sliders\iosslider\arr01.png" />
-    <Content Include="Images\sliders\iosslider\controls.png" />
-    <Content Include="Images\sliders\iosslider\jquery.iosslider.kalypso.js" />
-    <Content Include="Images\sliders\iosslider\jquery.iosslider.min.js" />
-    <Content Include="Images\sliders\iosslider\loader-light.gif" />
-    <Content Include="Images\sliders\iosslider\loader_dark.gif" />
-    <Content Include="Images\sliders\iosslider\style.css" />
     <Content Include="Scripts\blank.png" />
     <Content Include="Scripts\cloud-zoom.1.0.3.js" />
     <Content Include="Scripts\Functions\scriptIST.js" />
@@ -1080,7 +1074,7 @@
     <Content Include="Views\AboutUs\Detail.cshtml" />
     <Content Include="Views\WebsiteFooter\Index.cshtml" />
     <Content Include="Views\ContactUs\Detail.cshtml" />
-    <None Include="Properties\PublishProfiles\EPMSWebsite.pubxml" />
+    <Content Include="Views\Product\Details.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

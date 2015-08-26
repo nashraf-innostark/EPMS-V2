@@ -196,6 +196,15 @@ namespace EPMS.WebModels.Resources.Website.Product {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Product Sections.
+        /// </summary>
+        public static string ProductSections {
+            get {
+                return ResourceManager.GetString("ProductSections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Product Size.
         /// </summary>
         public static string ProductSize {
@@ -255,6 +264,24 @@ namespace EPMS.WebModels.Resources.Website.Product {
         public static string UpdatePageTitle {
             get {
                 return ResourceManager.GetString("UpdatePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Product Section Add.
+        /// </summary>
+        public static string WebsiteProductSectionAdd {
+            get {
+                return ResourceManager.GetString("WebsiteProductSectionAdd", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Product Section Edit.
+        /// </summary>
+        public static string WebsiteProductSectionEdit {
+            get {
+                return ResourceManager.GetString("WebsiteProductSectionEdit", resourceCulture);
             }
         }
     }

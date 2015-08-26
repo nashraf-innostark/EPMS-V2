@@ -331,10 +331,9 @@
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductSectionController.cs" />
-    <Compile Include="Areas\Website\Controllers\ServiceController.cs" />
+    <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
-    <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
@@ -372,16 +371,14 @@
     <Content Include="404.html" />
     <Content Include="500.html" />
     <Content Include="Areas\CMS\Views\Quotation\Detail.cshtml" />
-    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Finished.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Create.cshtml" />
     <Content Include="Areas\PMS\Views\Task\Create.cshtml" />
-    <Content Include="Areas\Meeting\Views\web.config" />
-    <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\PMS\Views\Project\Details.cshtml" />
     <Content Include="Areas\PMS\Views\Task\MyTasks.cshtml" />
+    <Content Include="Conflicts\Ammar.txt" />
     <Content Include="Content\CSS\arabic1.css" />
     <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\32px.png" />
@@ -1500,6 +1497,9 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Create.cshtml" />
     <Content Include="Areas\Website\Views\AboutUs\Detail.cshtml" />
     <Content Include="Areas\Website\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
+    <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
+    <Content Include="Areas\Meeting\Views\web.config" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3700,12 +3700,11 @@
     <Folder Include="Areas\HR\Views\Shared\" />
     <Folder Include="Areas\Inventory\Models\" />
     <Folder Include="Areas\Inventory\Views\Shared\" />
-    <Folder Include="Areas\Meeting\Models\" />
-    <Folder Include="Areas\Meeting\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />
+    <Folder Include="DashboardModels\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
@@ -3713,8 +3712,11 @@
     <Folder Include="Images\NewsOrArticle\" />
     <Folder Include="Images\ProductImage\" />
     <Folder Include="Migrations\" />
-    <Folder Include="Models\" />
+    <Folder Include="ModelMappers\" />
+    <Folder Include="Models\Common\" />
     <Folder Include="Reports\" />
+    <Folder Include="Resources\" />
+    <Folder Include="ViewModels\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />

@@ -162,6 +162,9 @@
   <data name="ProductSection" xml:space="preserve">
     <value>Product Section</value>
   </data>
+  <data name="ProductSections" xml:space="preserve">
+    <value>Product Sections</value>
+  </data>
   <data name="ProductSize" xml:space="preserve">
     <value>Product Size</value>
   </data>
@@ -182,5 +185,11 @@
   </data>
   <data name="UpdatePageTitle" xml:space="preserve">
     <value>Update Existing Product</value>
+  </data>
+  <data name="WebsiteProductSectionAdd" xml:space="preserve">
+    <value>Website Product Section Add</value>
+  </data>
+  <data name="WebsiteProductSectionEdit" xml:space="preserve">
+    <value>Website Product Section Edit</value>
   </data>
 </root>

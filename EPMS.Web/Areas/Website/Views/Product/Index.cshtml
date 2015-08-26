@@ -14,7 +14,7 @@
             <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
-        </li>
+        </li>   
         <li>
             <a href="">
                 @ViewBag.Title
@@ -69,7 +69,7 @@
                                     }
                                     else
                                     {
-                                        @(direction == "ltr" ? Html.ActionLink(@item.ProductNameEn, "Create", new {id = item.ProductId}) : Html.ActionLink(@item.ProductNameAr, "Create", new {id = item.ProductId}))
+                                        @(direction == "ltr" ? Html.ActionLink(@item.ProductNameEn, "Create", new { id = item.ProductId }) : Html.ActionLink(@item.ProductNameAr, "Create", new { id = item.ProductId }))
                                     }
                                 </td>
                                 <td>@item.ProductPrice</td>
@@ -142,12 +142,11 @@
                     selectedChildNodes.push(value.id);
                     if (value.parents.length > 1) {
                         var isContains = $.inArray(value.parents[0], selectedParentNodes) > -1;
-                        if (isContains == false) {
+                        if (isContains == false && value.parents[1] == "#") {
                             selectedParentNodes.push(value.parents[0]);
                         }
                     }
                 }
-                
             });
             if (selectedChildNodes.length > 0 || selectedParentNodes.length > 0) {
                 var url = siteUrl + "/Website/Product/ImportProducts";

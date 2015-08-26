@@ -12,22 +12,21 @@ using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers.Website.Services;
 using EPMS.WebModels.ViewModels.Common;
-using EPMS.WebModels.ViewModels.Website.Services;
-using EPMS.WebModels.WebsiteModels;
 using EPMS.WebModels.WebsiteModels.Common;
 using DomainModels = EPMS.Models.DomainModels;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
-using EPMS.WebModels.ViewModels.Website.Services;
+using ServicesCreateViewModel = EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel;
+using ServicesListViewModel = EPMS.WebModels.ViewModels.Website.Services.ServicesListViewModel;
+using WebsiteService = EPMS.WebModels.WebsiteModels.WebsiteService;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
     public class WebsiteServicesController : BaseController
     {
         #region Private
-
         private readonly IWebsiteServicesService websiteServices;
-
+        
         #endregion
 
         #region Constructor

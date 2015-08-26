@@ -7,7 +7,7 @@
     if (sizeId == "" || sizeId == undefined) {
         sizeId = 0;
     }
-    var url = "/ShoppingCart/AddToCart";
+    var url = siteUrl + "/ShoppingCart/AddToCart";
     jQuery.ajax({
         url: url,
         type: 'POST',

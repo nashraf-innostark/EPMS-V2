@@ -14,7 +14,6 @@ namespace EPMS.Implementation.Services
         private readonly IWebsiteServicesRepository servicesRepository;
 
         #endregion
-
         #region Constructor
         /// <summary>
         /// Constructor
@@ -28,7 +27,7 @@ namespace EPMS.Implementation.Services
 
         public WebsiteService FindWebsiteServiceById(long id)
         {
-            var result= servicesRepository.Find(id);
+            var result = servicesRepository.Find(id);
             return result;
         }
 
