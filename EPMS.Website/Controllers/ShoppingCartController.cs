@@ -4,7 +4,6 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using EPMS.WebModels.ViewModels.WebsiteClient;

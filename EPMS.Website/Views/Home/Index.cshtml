@@ -2,11 +2,12 @@
 @model EPMS.WebModels.ViewModels.Website.Home.WebsiteHomeViewModel
 
 @{
+    Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "MASAR Scientific Company";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
 }
-@{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}
+@*@{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}*@
 
 <div id="action_box" data-arrowpos="center">
     <div class="container">
