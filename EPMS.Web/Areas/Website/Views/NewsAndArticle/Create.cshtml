@@ -290,8 +290,8 @@
 
     // upload Image
     var errors = "";
-    var siteUrl = $('#siteURL').val();
-    var url = "/Website/NewsAndArticle/UploadImage";
+    var siteUrl = '@ConfigurationManager.AppSettings["SiteURL"]';
+    var url = siteUrl + "/Website/NewsAndArticle/UploadImage";
     $('#upload').mfupload({
         type: 'jpg,png,tif,jpeg', //all types
         maxsize: 10,
