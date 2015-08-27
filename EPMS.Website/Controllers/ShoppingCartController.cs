@@ -39,7 +39,7 @@ namespace EPMS.Website.Controllers
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
-                IList<ShoppingCart> cartItems = (List<ShoppingCart>) Session["ShoppingCartItems"];
+                IList<ShoppingCart> cartItems = (List<ShoppingCart>)Session["ShoppingCartItems"];
                 if (cartItems.Any())
                 {
                     isItemsExist = true;
@@ -73,6 +73,7 @@ namespace EPMS.Website.Controllers
         }
         #endregion
 
+        #region Add Item To Cart
         [HttpPost]
         public JsonResult AddToCart(long productId, long sizeId, int quantity)
         {
@@ -93,7 +94,7 @@ namespace EPMS.Website.Controllers
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
-                IList<ShoppingCart> cart = (List<ShoppingCart>) Session["ShoppingCartItems"];
+                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
                 var item = cart.FirstOrDefault(x => x.ProductId == productId && x.SizeId == sizeId);
                 if (item != null)
                 {
@@ -101,6 +102,29 @@ namespace EPMS.Website.Controllers
                 }
                 else
                 {
+                    string imagePath = "";
+                    if (userProduct.ItemVariationId != null)
+                    {
+                        if (string.IsNullOrEmpty(userProduct.ItemImage))
+                        {
+                            imagePath = ConfigurationManager.AppSettings["SiteURL"] + "/images/noimage_department.png";
+                        }
+                        else
+                        {
+                            imagePath = itemImageFolder + userProduct.ItemImage;
+                        }
+                    }
+                    else
+                    {
+                        if (string.IsNullOrEmpty(userProduct.ProductImage))
+                        {
+                            imagePath = ConfigurationManager.AppSettings["SiteURL"] + "/images/noimage_department.png";
+                        }
+                        else
+                        {
+                            imagePath = itemImageFolder + userProduct.ProductImage;
+                        }
+                    }
                     ShoppingCart itemToAdd = new ShoppingCart
                     {
                         UserCartId = userCartid,
@@ -111,12 +135,12 @@ namespace EPMS.Website.Controllers
                         ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
                         UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
                         SkuCode = userProduct.SKUCode,
-                        ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage, 
+                        ImagePath = imagePath,
                         RecCreatedDate = DateTime.Now,
                     };
                     cart.Add(itemToAdd);
                 }
-                
+
                 Session["ShoppingCartItems"] = cart;
             }
             else
@@ -132,7 +156,7 @@ namespace EPMS.Website.Controllers
                     ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
                     UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
                     SkuCode = userProduct.SKUCode,
-                    ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage, 
+                    ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage,
                     RecCreatedDate = DateTime.Now
                 };
                 cart.Add(itemToAdd);
@@ -140,5 +164,26 @@ namespace EPMS.Website.Controllers
             }
             return Json("Success", JsonRequestBehavior.AllowGet);
         }
+        #endregion
+
+        #region Delete Item from Cart
+        [HttpPost]
+        public JsonResult DeleteFromCart(long productId)
+        {
+            var items = Session["ShoppingCartItems"];
+            if (items != null)
+            {
+                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
+                var item = cart.FirstOrDefault(x => x.ProductId == productId);
+                if (item != null)
+                {
+                    cart.Remove(item);
+                    Session["ShoppingCartItems"] = cart;
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Error", JsonRequestBehavior.AllowGet);
+        }
+        #endregion
     }
 }

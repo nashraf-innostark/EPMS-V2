@@ -32,13 +32,18 @@
 {
     <link href="~/Content/jquery.fancybox.css" rel="stylesheet" />
     <link href="~/Content/flexslider.css" rel="stylesheet" />
+    <link href="~/Content/pnotify.core.min.css" rel="stylesheet" />
+
 
     <script src="~/Scripts/flexslider.min.js"></script>
     <script src="~/Scripts/zoomsl-3.0.min.js"></script>
     <script src="~/Scripts/jquery.fancybox.pack.js"></script>
+    <script type="text/javascript" src="~/Scripts/pnotify.core.min.js"></script>
 
     <script>
+        var siteUrl;
         jQuery(document).ready(function () {
+            siteUrl = jQuery("#siteURL").val();
             singleProduct();
 
             function singleProduct() {

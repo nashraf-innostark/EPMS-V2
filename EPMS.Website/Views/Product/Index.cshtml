@@ -27,6 +27,7 @@
     int pageNo = 1;
     DateTime today = DateTime.Now;
 }
+<link href="~/Content/pnotify.core.min.css" rel="stylesheet" />
 
 <div id="page_header" class="gradient bottom-shadow">
     <div class="bgback bg3"></div>
@@ -686,7 +687,7 @@
 
 @section scripts
 {
-    <script src="~/Scripts/jquery.pnotify.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/pnotify.core.min.js"></script>
     <script>
         var siteUrl;
         jQuery(document).ready(function () {
