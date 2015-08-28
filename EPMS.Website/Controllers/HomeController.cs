@@ -33,6 +33,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Index()
         {
             WebsiteHomeResponse response = websiteHomePageService.websiteHomeResponse();
+            ViewBag.ShowSlider = true;
             return View(new WebsiteHomeViewModel
             {
                 WebsiteDepartments = response.WebsiteDepartments.Select(x=>x.CreateFromServerToClient()),

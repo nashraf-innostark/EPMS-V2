@@ -7,7 +7,7 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
 }
-@*@{ Html.RenderPartial("~/Views/Shared/_WebsiteSlider.cshtml");}*@
+@{Html.RenderAction("Index", "WebsiteSlider", new { area = "" });}
 
 <div id="action_box" data-arrowpos="center">
     <div class="container">
@@ -21,34 +21,29 @@
     <div class="container">
         <div class="row image-boxes imgboxes_style1 catagoryBox">
             <h3>Main Departments</h3>
-            
             @foreach (var department in Model.WebsiteDepartments)
             {
                 <div class="span4 box">
-                    <a href="#" class="hoverBorder">
-                        @if (department.ImageName != "" || department.ImageName != null)
+                    <a href="/Home/DepartmentDetail/@department.DepartmentId" class="hoverBorder">
+                        @if (!string.IsNullOrEmpty(department.ImageName))
                         {
-                            <img src='@cpLink/Images/Department/@Url.Content(department.ImageName)' alt="">
+                            <img src='@cpLink/Images/Department/@Url.Content(department.ImageName)' alt="" />
                         }
                         else
                         {
-                            <img src="~/images/noimage_department.png" alt="">
+                            <img src="~/images/noimage_department.png" alt="" />
                         }
-                        <h6><a href=""></a> For More +</h6>
+                        <h6>For More +</h6>
                     </a>
                     <h3 class="m_title">@(direction == "ltr" ? department.NameEn : department.NameAr)</h3>
                     <p style="text-align: justify">@department.Description</p>
                 </div>
             }
-
         </div>
         <!-- end row // imgboxes_style1 -->
-
     </div>
 
     <div class="container">
-
-
         <div class="row partners_carousel">
             <div class="span2 floatRight">
                 <h3 class="title"><span>Our Partners</span></h3>
@@ -58,7 +53,7 @@
                 </div>
             </div>
             <div class="span10">
-                <ul id="partners_carousel" class="fixclear" >
+                <ul id="partners_carousel" class="fixclear">
                     @foreach (var partner in Model.Partners)
                     {
                         <li style="height: 103px"><a href="http://@partner.Link" target="_blank"><img src="@cpLink/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
@@ -76,36 +71,4 @@
 
     </div>
     <!-- end container -->
-
 </section><!-- end #content -->
-
-<script type="text/javascript">
-    
-    $(document).ready(function() {
-        (function ($) {
-            // ** partners carousel
-            $('#partners_carousel').carouFredSel({
-                responsive: true,
-                scroll: 1,
-                auto: false,
-                items: {
-                    width: 250,
-                    visible: {
-                        min: 3,
-                        max: 10
-                    }
-                },
-                prev: {
-                    button: ".partners_carousel .prev",
-                    key: "left"
-                },
-                next: {
-                    button: ".partners_carousel .next",
-                    key: "right"
-                }
-            });
-            // *** end partners carousel
-
-        })(jQuery);
-    })
-</script>

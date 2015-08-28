@@ -56,6 +56,8 @@ namespace EPMS.Website.Controllers
             return View(viewModel);
         }
 
+
+
         private string GetCartId()
         {
             string cartId = "";

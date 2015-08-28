@@ -1415,8 +1415,6 @@
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
     <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadPartial.cshtml" />
-    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
-    <Content Include="RTB\userfiles\.htaccess" />
     <Content Include="RTE\CHANGES.md" />
     <Content Include="RTE\LICENSE.md" />
     <Content Include="RTE\plugins\scayt\LICENSE.md" />
@@ -1501,6 +1499,8 @@
     <Content Include="Areas\Meeting\Views\Meeting\Create.cshtml" />
     <Content Include="Areas\Meeting\Views\Meeting\Index.cshtml" />
     <Content Include="Areas\Meeting\Views\web.config" />
+    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
+    <Content Include="RTB\userfiles\.htaccess" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

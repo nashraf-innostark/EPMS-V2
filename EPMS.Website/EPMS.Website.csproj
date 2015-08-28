@@ -342,10 +342,12 @@
     <Content Include="fonts\index.html" />
     <Content Include="Images\NoImageWebsite.png" />
     <Content Include="Images\noimage_department.png" />
+    <Content Include="Images\sliders\Penguins.jpg" />
     <Content Include="Scripts\blank.png" />
     <Content Include="Scripts\cloud-zoom.1.0.3.js" />
     <Content Include="Scripts\Functions\scriptIST.js" />
     <Content Include="Scripts\jquery.pnotify.min.js" />
+    <Content Include="Scripts\Layout\LayoutScripts.js" />
     <Content Include="Scripts\pnotify.core.min.js" />
     <Content Include="Scripts\zoomsl-3.0.js" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\bg.jpg" />
@@ -1013,7 +1015,9 @@
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\swfobject.js" />
     <Content Include="Scripts\zoomsl-3.0.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>

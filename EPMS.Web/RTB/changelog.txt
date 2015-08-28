@@ -4,6 +4,9 @@ http://cksource.com/ckfinder
 Copyright (C) 2007-2015, CKSource - Frederico Knabben. All rights reserved.
 
 
+### Version 2.5.0.1
+[ASP.NET] - Security release, updating is highly recommended. Authenticated users could download any file from the server if the correct path to a file was provided.
+
 ### Version 2.5
 - Fixed: Opening settings panel after opening/closing flashupload panel caused exception being thrown.
 - Fixed: Selection issues when double-clicking the file.
