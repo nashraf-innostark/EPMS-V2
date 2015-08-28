@@ -24,8 +24,10 @@
 });
 
 function ppOpen(panel, width) {
+    $('body').css('overflow', 'hidden');
     jQuery.prettyPhoto.close();
     setTimeout(function () {
+        
         jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
         jQuery.prettyPhoto.open(panel);
     }, 300);

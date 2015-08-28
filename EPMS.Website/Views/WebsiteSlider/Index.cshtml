@@ -22,7 +22,13 @@
                         <h2 class="main_title">@imageSlider.TitleEn</h2>
                         <h3 class="title_big">@imageSlider.SubTitleEn</h3>
                         <a href="#" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
-                        <h4 class="title_small">@imageSlider.Description</h4>
+                        <h4 class="title_small descp-@imageSlider.SliderId"></h4>
+                        <script>
+                            var descp = '@Html.Raw(imageSlider.Description)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descp.replace(regex, "");
+                            jQuery(".descp-@imageSlider.SliderId").text(result);
+                        </script>
                     </div>
                 </div>
                 }

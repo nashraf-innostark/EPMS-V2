@@ -36,7 +36,13 @@
                         <h6>For More +</h6>
                     </a>
                     <h3 class="m_title">@(direction == "ltr" ? department.NameEn : department.NameAr)</h3>
-                    <p style="text-align: justify">@department.Description</p>
+                    <p style="text-align: justify" class="descp-@department.DepartmentId"></p>
+                    <script>
+                            var descp = '@Html.Raw(department.Description)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descp.replace(regex, "");
+                            jQuery(".descp-@department.DepartmentId").text(result);
+                    </script>
                 </div>
             }
         </div>
