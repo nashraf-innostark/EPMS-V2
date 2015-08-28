@@ -733,6 +733,7 @@
     <Compile Include="WebsiteModels\VendorItems.cs" />
     <Compile Include="WebsiteModels\Warehouse.cs" />
     <Compile Include="WebsiteModels\WarehouseDetail.cs" />
+    <Compile Include="WebsiteModels\WebsiteCustomer.cs" />
     <Compile Include="WebsiteModels\WebsiteDepartment.cs" />
     <Compile Include="WebsiteModels\WebsiteService.cs" />
   </ItemGroup>
