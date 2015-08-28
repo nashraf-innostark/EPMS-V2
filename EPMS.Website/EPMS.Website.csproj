@@ -195,6 +195,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CatalogueController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -303,6 +304,7 @@
     <Content Include="Addons\superfish_responsive\superfish_menu.js" />
     <Content Include="Addons\twitterfeed\twitter.min.js" />
     <Content Include="Content\arabic.css" />
+    <Content Include="Content\turnjs.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\cloud-zoom.css" />
     <Content Include="Content\custom.css" />
@@ -339,8 +341,12 @@
     <Content Include="Content\styleIST.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\index.html" />
+    <Content Include="Images\ImageNoAvailableBig.jpg" />
     <Content Include="Images\NoImageWebsite.png" />
     <Content Include="Images\noimage_department.png" />
+    <Content Include="Scripts\modernizr.2.5.3.min.js" />
+    <Content Include="Scripts\turn.js" />
+    <Content Include="Scripts\turnjs.js" />
     <Content Include="Scripts\blank.png" />
     <Content Include="Scripts\cloud-zoom.1.0.3.js" />
     <Content Include="Scripts\Functions\scriptIST.js" />
@@ -1079,6 +1085,7 @@
     <Content Include="Views\ContactUs\Detail.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\WebsiteSlider\Index.cshtml" />
+    <Content Include="Views\Catalogue\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

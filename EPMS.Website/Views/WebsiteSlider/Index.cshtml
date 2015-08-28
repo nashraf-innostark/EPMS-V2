@@ -1,5 +1,4 @@
 ﻿@using System.Configuration
-@using System.Web.UI.WebControls.WebParts
 @model EPMS.Models.MenuModels.ImageSliderModel
 
 @{
@@ -16,15 +15,22 @@
             <div class="slider">
                 @foreach (var imageSlider in Model.ImageSliders)
                 {
-                <div class="item">
-                    <img style="height: 537px" src="@link@imageSlider.ImageName" alt="" />
-                    <div class="caption style1 fromright">
-                        <h2 class="main_title">@imageSlider.TitleEn</h2>
-                        <h3 class="title_big">@imageSlider.SubTitleEn</h3>
-                        <a href="#" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
-                        <h4 class="title_small">@imageSlider.Description</h4>
+                    <div class="item">
+                        @if (imageSlider.ImageName != null)
+                        {
+                            <img style="height: 537px" src="@link@imageSlider.ImageName" alt="" />
+                        }
+                        else
+                        {
+                            <img style="height: 537px" src="/Images/ImageNoAvailableBig.jpg" alt="" />
+                        }
+                        <div class="caption style1 fromright">
+                            <h2 class="main_title">@imageSlider.TitleEn</h2>
+                            <h3 class="title_big">@imageSlider.SubTitleEn</h3>
+                            <a href="#" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
+                            <h4 class="title_small">@imageSlider.Description</h4>
+                        </div>
                     </div>
-                </div>
                 }
             </div>
         }
