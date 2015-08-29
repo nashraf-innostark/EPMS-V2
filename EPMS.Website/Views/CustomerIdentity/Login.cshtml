@@ -1,0 +1,67 @@
+﻿@model EPMS.Models.IdentityModels.ViewModels.WebCustomerIdentityViewModel
+
+@{
+    Layout = null;
+}
+<div class="login_register_stuff hide">
+    <!-- Login/Register Modal forms - hidded by default to be opened through modal -->
+    <div id="login_panel">
+        <div class="inner-container login-panel">
+            <h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>
+            <form id="login_form" name="login_form" method="post">
+                <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">CREATE ACCOUNT</a>
+                <input type="text" id="username" name="username" class="inputbox" placeholder="Username">
+                <input type="password" id="password" name="password" class="inputbox" placeholder="Password">
+                <input type="submit" id="login" name="submit" value="LOG IN">
+                <a href="#" class="login_facebook">login with facebook</a>
+            </form>
+            <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR USERNAME?</a> / <a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a></div>
+        </div>
+    </div><!-- end login panel -->
+    <div id="register_panel">
+        <div class="inner-container register-panel">
+            <h3 class="m_title">CREATE ACCOUNT</h3>
+            @using (Html.BeginForm("SignUp", "CustomerIdentity", FormMethod.Post, new { @class = "form-horizontal", @id = "SignUpFrom", role = "form" }))
+            {
+                <p>
+                    @Html.TextBoxFor(model => model.SignUp.UserName, new { @id = "UserName", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
+                    @Html.ValidationMessageFor(m => m.SignUp.UserName, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    @Html.TextBoxFor(model => model.SignUp.CustomerNameEn, new { @id = "CustomerNameEn", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.NameEn })
+                    @Html.ValidationMessageFor(m => m.SignUp.CustomerNameEn, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    @Html.TextBoxFor(model => model.SignUp.Email, new { @id = "Email", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Email })
+                    @Html.ValidationMessageFor(m => m.SignUp.Email, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    @Html.PasswordFor(model => model.SignUp.Password, new { @id = "Password", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
+                    @Html.ValidationMessageFor(m => m.SignUp.Password, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    @Html.PasswordFor(model => model.SignUp.ConfirmPassword, new { @id = "ConfirmPassword", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.ConfirmPassword })
+                    @Html.ValidationMessageFor(m => m.SignUp.ConfirmPassword, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    <input type="submit" id="create" value="CREATE MY ACCOUNT" @*onclick="validateFrom(event)"*@>
+                </p>
+            }
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY HAVE AN ACCOUNT?</a></div>
+        </div>
+    </div><!-- end register panel -->
+    <div id="forgot_panel">
+        <div class="inner-container forgot-panel">
+            <h3 class="m_title">FORGOT YOUR DETAILS?</h3>
+            <form id="forgot_form" name="forgot_form" method="post">
+                <p>
+                    <input type="text" id="forgot-email" name="email" class="inputbox" placeholder="Email Address">
+                </p>
+                <p>
+                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!">
+                </p>
+            </form>
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">AAH, WAIT, I REMEMBER NOW!</a></div>
+        </div>
+    </div><!-- end register panel -->
+</div><!-- end login register stuff -->

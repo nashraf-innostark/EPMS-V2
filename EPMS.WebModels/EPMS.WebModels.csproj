@@ -128,6 +128,7 @@
     <Compile Include="ModelMappers\VendorMapper.cs" />
     <Compile Include="ModelMappers\WarehouseDetailMapper.cs" />
     <Compile Include="ModelMappers\WarehouseMapper.cs" />
+    <Compile Include="ModelMappers\WebsiteClient\WebsiteCustomerMapper.cs" />
     <Compile Include="ModelMappers\Website\AboutUs\AboutUsMapper.cs" />
     <Compile Include="ModelMappers\Website\ContactUs\ContactUsMapper.cs" />
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
@@ -484,6 +485,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\WebsiteClient\Customer\Customer.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WebsiteClient\Customer\Customer.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\WebsiteClient\Product\Product.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -764,6 +775,7 @@
     <EmbeddedResource Include="Resources\CMS\Customer.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Customer.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Order.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1055,6 +1067,15 @@
     <EmbeddedResource Include="Resources\UserManagement\Users.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Users.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\Customer\Customer.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\Customer\Customer.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Customer.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

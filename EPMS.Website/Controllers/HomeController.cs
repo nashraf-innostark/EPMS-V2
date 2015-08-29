@@ -4,6 +4,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Department;
 using EPMS.WebModels.ModelMappers.Website.Partner;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Website.Department;
 using EPMS.WebModels.ViewModels.Website.Home;
 
@@ -34,6 +35,7 @@ namespace EPMS.Website.Controllers
         {
             WebsiteHomeResponse response = websiteHomePageService.websiteHomeResponse();
             ViewBag.ShowSlider = true;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new WebsiteHomeViewModel
             {
                 WebsiteDepartments = response.WebsiteDepartments.Select(x=>x.CreateFromServerToClient()),

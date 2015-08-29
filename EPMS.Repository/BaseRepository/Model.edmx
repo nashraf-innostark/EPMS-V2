@@ -1621,10 +1621,10 @@
           <Property Name="CustomerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CustomerNameEn" Type="nvarchar" MaxLength="200" />
           <Property Name="CustomerNameAr" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
-          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
-          <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecCreatedDate" Type="datetime" />
+          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="RecUpdatedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="WebsiteDepartment">
           <Key>
@@ -8002,10 +8002,10 @@
           <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CustomerNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="CustomerNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Precision="3" />
           <NavigationProperty Name="AspNetUsers" Relationship="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" FromRole="WebsiteCustomer" ToRole="AspNetUser" />
         </EntityType>
         <Association Name="FK_AspNetUsers_WebsiteCustomer">
@@ -10020,7 +10020,7 @@
           <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCart" Width="1.5" PointX="24.5" PointY="33.375" />
           <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCart_Product" />
           <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCart_Size" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteCustomer" Width="1.5" PointX="27.375" PointY="13" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteCustomer" Width="1.75" PointX="27.375" PointY="13.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" />
         </Diagram>
       </Diagrams>

@@ -1,4 +1,30 @@
 ﻿jQuery(document).ready(function ($) {
+    // Notification
+    debugger;
+    var message = jQuery("#Message").val();
+    var isSaved = jQuery("#IsSaved").val();
+    var isUpdated = jQuery("#IsUpdated").val();
+    var isError = jQuery("#IsError").val();
+    var isInfo = jQuery("#IsInfo").val();
+    if (isSaved || isUpdated) {
+        new PNotify({
+            title: 'Success',
+            text: message
+        });
+    }
+    else if(isError) {
+        new PNotify({
+            title: 'Error',
+            text: message
+        });
+    }
+    else if (isInfo) {
+        new PNotify({
+            title: 'Info',
+            text: message
+        });
+    }
+
     jQuery("a[data-rel^='prettyPhoto'], .prettyphoto_link").prettyPhoto({ theme: 'pp_kalypso', social_tools: false, deeplinking: false });
     jQuery("a[rel^='prettyPhoto']").prettyPhoto({ theme: 'pp_kalypso' });
     jQuery("a[data-rel^='prettyPhoto[login_panel]']").prettyPhoto({ theme: 'pp_kalypso', default_width: 800, social_tools: false, deeplinking: false });
@@ -24,7 +50,6 @@
 });
 
 function ppOpen(panel, width) {
-    $('body').css('overflow', 'hidden');
     jQuery.prettyPhoto.close();
     setTimeout(function () {
         

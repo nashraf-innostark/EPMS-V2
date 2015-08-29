@@ -179,6 +179,9 @@
     <Compile Include="DomainModels\WebsiteCustomer.cs" />
     <Compile Include="DomainModels\WebsiteDepartment.cs" />
     <Compile Include="DomainModels\WebsiteService.cs" />
+    <Compile Include="IdentityModels\ViewModels\CustomerLoginViewModel.cs" />
+    <Compile Include="IdentityModels\ViewModels\CustomerSignUpViewModel.cs" />
+    <Compile Include="IdentityModels\ViewModels\WebCustomerIdentityViewModel.cs" />
     <Compile Include="MenuModels\WebsiteFooterMenuModel.cs" />
     <Compile Include="MenuModels\WebsiteMenuModel.cs" />
     <Compile Include="MenuModels\ImageSliderModel.cs" />

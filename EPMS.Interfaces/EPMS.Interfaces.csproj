@@ -88,6 +88,7 @@
     <Compile Include="IServices\IMeetingAttendeeService.cs" />
     <Compile Include="IServices\IMeetingDocumentService.cs" />
     <Compile Include="IServices\IMeetingService.cs" />
+    <Compile Include="IServices\IWebsiteCustomerService.cs" />
     <Compile Include="IServices\IWebsiteFooterService.cs" />
     <Compile Include="IServices\IShoppingCartService.cs" />
     <Compile Include="IServices\IWebsiteHomePageService.cs" />
@@ -212,6 +213,7 @@
     <Compile Include="Repository\IWarehouseDetailRepository.cs" />
     <Compile Include="Repository\IWarehouseRepository.cs" />
     <Compile Include="Repository\IPhysicalCountItemRepository.cs" />
+    <Compile Include="Repository\IWebsiteCustomerRepository.cs" />
     <Compile Include="Repository\IWebsiteDepartmentRepository.cs" />
     <Compile Include="Repository\IWebsiteServicesRepository.cs" />
   </ItemGroup>

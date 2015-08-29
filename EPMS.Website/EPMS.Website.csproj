@@ -196,6 +196,7 @@
     <Compile Include="Controllers\AboutUsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\ContactUsController.cs" />
+    <Compile Include="Controllers\CustomerIdentityController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
@@ -349,6 +350,9 @@
     <Content Include="Scripts\jquery.pnotify.min.js" />
     <Content Include="Scripts\Layout\LayoutScripts.js" />
     <Content Include="Scripts\pnotify.core.min.js" />
+    <Content Include="Scripts\validation\jquery.unobtrusive-ajax.min.js" />
+    <Content Include="Scripts\validation\jquery.validate.min.js" />
+    <Content Include="Scripts\validation\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\zoomsl-3.0.js" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\bg.jpg" />
     <Content Include="Sliders\3d_cute_slider\cute-theme\blank.jpg" />
@@ -1085,6 +1089,9 @@
     <Content Include="Views\ContactUs\Detail.cshtml" />
     <Content Include="Views\Product\Details.cshtml" />
     <Content Include="Views\WebsiteSlider\Index.cshtml" />
+    <Content Include="Views\CustomerIdentity\SignUp.cshtml" />
+    <Content Include="Views\CustomerIdentity\Login.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">
