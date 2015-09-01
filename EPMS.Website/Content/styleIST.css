@@ -21,3 +21,19 @@
     padding: 0 10px;
     font-size: 11px;
 }
+
+.not-active {
+    pointer-events: none !important;
+    cursor: pointer !important;
+}
+
+.active {
+    pointer-events: all !important;
+    cursor: pointer !important;
+}
+
+.required {
+    color: #e02222;
+    font-size: 12px;
+    padding-left: 2px;
+}

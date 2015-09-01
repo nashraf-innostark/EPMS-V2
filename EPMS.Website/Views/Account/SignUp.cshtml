@@ -10,15 +10,14 @@
             <h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>
             @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "LoginFrom", role = "form" }))
             {
+                @Html.Hidden("returnUrl", this.Request.RawUrl)
                 <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">CREATE ACCOUNT</a>
-                @Html.TextBoxFor(model => model.Login.UserName, new { @id = "UserName", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
-                @Html.ValidationMessageFor(m => m.Login.UserName, String.Empty, new { @class = "required" })
-                @Html.PasswordFor(model => model.Login.Password, new { @id = "Password", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
-                @Html.ValidationMessageFor(m => m.Login.Password, String.Empty, new { @class = "required" })
-                <input type="submit" id="login" name="submit" value="LOG IN">
+                @Html.TextBoxFor(model => model.Login.UserName, new { @id = "LoginUserName", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
+                @Html.PasswordFor(model => model.Login.Password, new { @id = "LoginPassword", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
+                <input type="submit" id="login" name="submit" value="LOG IN" />
                 <a href="#" class="login_facebook">login with facebook</a>
             }
-            <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR USERNAME?</a> / <a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a></div>
+            <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen('#resetpassword_panel', '350');">RESET YOUR PASSWORD?</a></div>
         </div>
     </div><!-- end login panel -->
     <div id="register_panel">
@@ -27,27 +26,27 @@
             @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "SignUpFrom", role = "form" }))
             {
                 <p>
-                    @Html.TextBoxFor(model => model.SignUp.UserName, new { @id = "UserName", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
+                    @Html.TextBoxFor(model => model.SignUp.UserName, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                     @Html.ValidationMessageFor(m => m.SignUp.UserName, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    @Html.TextBoxFor(model => model.SignUp.CustomerNameEn, new { @id = "CustomerNameEn", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.NameEn })
+                    @Html.TextBoxFor(model => model.SignUp.CustomerNameEn, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.NameEn })
                     @Html.ValidationMessageFor(m => m.SignUp.CustomerNameEn, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    @Html.TextBoxFor(model => model.SignUp.Email, new { @id = "Email", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Email })
+                    @Html.TextBoxFor(model => model.SignUp.Email, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Email })
                     @Html.ValidationMessageFor(m => m.SignUp.Email, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    @Html.PasswordFor(model => model.SignUp.Password, new { @id = "Password", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
+                    @Html.PasswordFor(model => model.SignUp.Password, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
                     @Html.ValidationMessageFor(m => m.SignUp.Password, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    @Html.PasswordFor(model => model.SignUp.ConfirmPassword, new { @id = "ConfirmPassword", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.ConfirmPassword })
+                    @Html.PasswordFor(model => model.SignUp.ConfirmPassword, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.ConfirmPassword })
                     @Html.ValidationMessageFor(m => m.SignUp.ConfirmPassword, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="create" value="CREATE MY ACCOUNT" @*onclick="validateFrom(event)"*@>
+                    <input type="submit" id="create" value="CREATE MY ACCOUNT" @*onclick="validateFrom(event)"*@ />
                 </p>
             }
             <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY HAVE AN ACCOUNT?</a></div>
@@ -56,24 +55,116 @@
     <div id="forgot_panel">
         <div class="inner-container forgot-panel">
             <h3 class="m_title">FORGOT YOUR DETAILS?</h3>
-            <form id="forgot_form" name="forgot_form" method="post">
+            @using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ForgotPasswordFrom", role = "form" }))
+            {
                 <p>
-                    <input type="text" id="forgot-email" name="email" class="inputbox" placeholder="Email Address">
+                    @Html.TextBoxFor(model => model.ForgotPassword.UserName, new { @id = "ForgotPasswordEmail", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
+                    @Html.ValidationMessageFor(m => m.ForgotPassword.UserName, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!">
+                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!" />
                 </p>
-            </form>
+            }
             <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">AAH, WAIT, I REMEMBER NOW!</a></div>
         </div>
     </div><!-- end register panel -->
+    <div id="resetpassword_panel">
+        <div class="inner-container register-panel">
+            <h3 class="m_title">Reset Password</h3>
+            @using (Html.BeginForm("ResetPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ResetPasswordFrom", role = "form" }))
+            {
+                @Html.HiddenFor(model => model.ResetPassword.Code, new { @id = "reset-code" })
+                @Html.HiddenFor(model => model.ResetPassword.UserId, new { @id = "user-id" })
+                <p>
+                    @Html.PasswordFor(model => model.ResetPassword.Password, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
+                    @Html.ValidationMessageFor(m => m.ResetPassword.Password, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    @Html.PasswordFor(model => model.ResetPassword.ConfirmPassword, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.ConfirmPassword })
+                    @Html.ValidationMessageFor(m => m.ResetPassword.ConfirmPassword, String.Empty, new { @class = "required" })
+                </p>
+                <p>
+                    <input type="submit" id="reset" value="RESET" />
+                </p>
+            }
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY RESET?</a></div>
+        </div>
+    </div>
 </div><!-- end login register stuff -->
 
 <script>
-    function validateFrom(event) {
-        debugger;
-        var status = $("#SignUpFrom").validate();
-        event.preventDefault();
-        return false;
-    }
+    var userNameValid = false;
+    var emailValid = false;
+    jQuery('#SignUp_UserName').live("blur", function () {
+        var username = jQuery(this).val();
+        if (username != "" && username != undefined) {
+            var siteURL = jQuery('#siteURL').val();
+            var url = siteURL + "/Account/ValidateUserName";
+            jQuery.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    username: username
+                },
+                success: function (data) {
+                    if (data == "Success") {
+                        userNameValid = true;
+                        if (emailValid == true) {
+                            jQuery("#create").removeClass('not-active');
+                            //jQuery("#create").addClass('active');
+                        }
+                    }
+                    else {
+                        jQuery("#create").addClass('not-active');
+                        new PNotify({
+                            title: 'Error',
+                            text: data
+                        });
+                    }
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                    jQuery(".tempLoader").click();
+                }
+            });
+        }
+    });
+    jQuery('#SignUp_Email').live("blur", function () {
+        var email = jQuery(this).val();
+        if (email != "" && email != undefined) {
+            var siteURL = jQuery('#siteURL').val();
+            var url = siteURL + "/Account/ValidateEmail";
+            jQuery.ajax({
+                url: url,
+                type: 'POST',
+                dataType: 'json',
+                traditional: true,
+                data: {
+                    email: email
+                },
+                success: function (data) {
+                    if (data == "Success") {
+                        emailValid = true;
+                        if (userNameValid == true) {
+                            jQuery("#create").removeClass('not-active');
+                            //jQuery("#create").addClass('active');
+                        }
+                    }
+                    else {
+                        jQuery("#create").addClass('not-active');
+                        new PNotify({
+                            title: 'Error',
+                            text: data
+                        });
+                    }
+                },
+                error: function (e) {
+                    alert('Error=' + e.toString());
+                    jQuery(".tempLoader").click();
+                }
+            });
+        }
+    });
 </script>

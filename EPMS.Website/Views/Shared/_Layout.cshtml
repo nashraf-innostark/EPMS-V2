@@ -12,30 +12,48 @@
     <link rel="stylesheet" href="~/Content/template.css" type="text/css" />
     <link rel="stylesheet" href="~/Content/updates.css" type="text/css" />
     <link rel="stylesheet" href="~/Content/custom.css" type="text/css" />
-
     <link href="~/Content/font-awesome.css" rel="stylesheet" />
     <link rel="stylesheet" href="~/Sliders/caroufredsel/caroufredsel.css" type="text/css" />
-
     <!-- This stylesheet only adds some repairs on idevices  -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="~/Content/responsive-devices.css" type="text/css" />
-
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700,900&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font" />
     <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font_body" />
-
-    <!-- Grab Google CDN's jQuery, with a protocol relative URL; fall back to local if offline -->
-    @*<script type="text/javascript" src="~/Scripts/jquery-1.8.2.min.js"></script>*@
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="~/Scripts/WebsiteScripts/jquery-1.8.2.min.js">\x3C/script>')</script>
-    @*<script src="~/Scripts/jquery.noconflict.js" type="text/javascript"></script>*@
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/modernizr/2.6.2/modernizr.min.js" type="text/javascript"></script>
-    
     <link href="~/Content/pnotify.core.min.css" rel="stylesheet" />
     <link rel="shortcut icon" href="~/images/favicons/favicon.png">
     <link rel="apple-touch-icon" href="~/images/favicons/apple-touch-icon-57x57.png">
     <link rel="apple-touch-icon" sizes="72x72" href="~/images/favicons/apple-touch-icon-72x72.png">
     <link rel="apple-touch-icon" sizes="114x114" href="~/images/favicons/apple-touch-icon-114x114.png">
     <link href="~/Content/styleIST.css" rel="stylesheet" />
+    <!-- Custom page stylesheets -->
+    <link rel="stylesheet" href="~/Sliders/iosslider/style.css" type="text/css" />
+    <!-- end custom page stylesheets -->
+    @Scripts.Render("~/bundles/jquery")
+    @*<script type="text/javascript" src="~/Scripts/jquery-1.8.2.min.js"></script>*@
+    <script type="text/javascript" src="~/Scripts/jqueryui-1.10.0.min.js"></script>
+    <!-- jQuery validation starts -->
+    <script type="text/javascript" src="~/Scripts/validation/jquery.validate.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/validation/jquery.unobtrusive-ajax.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/validation/jquery.validate.unobtrusive.min.js"></script>
+    <!-- jQuery validation ends -->
+    @*@Scripts.Render("~/bundles/jqueryval")*@
+    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script><!-- Bootstrap Framework -->
+    <script src="~/Scripts/jquery.noconflict.js" type="text/javascript"></script>
+    <script src="~/Sliders/iosslider/jquery.iosslider.min.js"></script>
+    <script src="~/Sliders/iosslider/jquery.iosslider.kalypso.js"></script>
+    <!-- Carousels (by CarouFredSel) -->
+    <script src="~/Scripts/jquery.carouFredSel.js" type="text/javascript"></script>
+    <script type="text/javascript" src="~/Scripts/modernizr-2.6.2.min.js"></script>
+    <script type="text/javascript" src="~/Scripts/plugins.js"></script><!-- jQuery Plugins -->
+    <script type="text/javascript" src="~/addons/superfish_responsive/superfish_menu.js"></script><!-- Superfish Menu -->
+    <script type="text/javascript" src="~/Scripts/pnotify.core.min.js"></script>
+    <script src="~/Scripts/Functions/scriptIST.js"></script>
+    <script src="~/Scripts/Layout/LayoutScripts.js"></script>
+    @*<script type="text/javascript" src="~/Scripts/kalypso_script.js"></script>*@<!-- custom scripts file -->
+    <!-- prettyphoto scripts & styles -->
+    <link rel="stylesheet" href="~/addons/prettyphoto/prettyPhoto.css" type="text/css" />
+    <script type="text/javascript" src="~/addons/prettyphoto/jquery.prettyPhoto.js"></script>
+
 
     <!--[if lte IE 9]>
         <link rel="stylesheet" href="~/Content/fixes.css" type="text/css" />
@@ -58,141 +76,127 @@
     <!--[if lt IE 9]>
       <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
     <![endif]-->
-    <!-- Custom page stylesheets -->
-    <link rel="stylesheet" href="~/Sliders/iosslider/style.css" type="text/css" />
-    <!-- end custom page stylesheets -->
     @RenderSection("scripts", required: false)
 
 </head>
-<body class="">
-    @{Html.RenderAction("SignUp", "Account", new { area = "" });}
-    @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteLogin.cshtml");}*@
+    <body class="">
+        <div id="signup_div">
+            @{
+                Html.RenderAction("SignUp", "Account", new { area = "" });
+            }
+        </div>
 
-    <div id="page_wrapper">
-        <header id="header" class="style2 header2">
-            <div class="fullWidth">
-                <div class="container headerTopLinks">
-                    <div class=" header-social-icons multicolor ">
-                        <ul>
-                            <li><a href="#" class="twitter"><br></a></li>
-                            <li><a href="#" class="facebook"><br></a></li>
-                            <li><a href="#" class="skype"><br></a></li>
-                            <li><a href="#" class="linkedin"><br></a></li>
-                            <li><a href="#" class="rss"><br></a></li>
-                            <li><a href="#" class="deviantart"><br></a></li>
-                            <li><a href="#" class="googleplus"><br></a></li>
-                        </ul>
-                    </div>
-                    <ul class="topnav navRight">
-                        <li class="drop">
-                            <a href="~/ShoppingCart/Index">Cart</a>
-                            <div class="pPanel">
-                                <div class="inner">
-                                    @{
-                                        var items = Session["ShoppingCartItems"];
-                                        if (items != null)
-                                        {
-                                            IList<ShoppingCart> cart = (List<ShoppingCart>) Session["ShoppingCartItems"];
-                                            <span class="cart_details">Number of items @cart.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
-                                        }
-                                        else
-                                        {
-                                            <span class="cart_details_no_item">Number of items 0</span>
-                                        }
-}
-                                </div>
-                            </div>
-                        </li>
-                        <li class="languages drop">
-                            <a href="#"><span class="icon-globe icon-white"></span> Language</a>
-                            <div class="pPanel">
-                                <ul class="inner">
-                                    <li><a href="#">Arabic </a></li>
-                                    <li class="active"><a href="#">English <span class="icon-ok"></span></a></li>
-
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                    <ul class="topnav navLeft">
-                        @if (User.Identity.IsAuthenticated)
-                        {
+        <div id="page_wrapper">
+            <header id="header" class="style2 header2">
+                <div class="fullWidth">
+                    <div class="container headerTopLinks">
+                        <div class=" header-social-icons multicolor ">
+                            <ul>
+                                <li><a href="#" class="twitter"><br></a></li>
+                                <li><a href="#" class="facebook"><br></a></li>
+                                <li><a href="#" class="skype"><br></a></li>
+                                <li><a href="#" class="linkedin"><br></a></li>
+                                <li><a href="#" class="rss"><br></a></li>
+                                <li><a href="#" class="deviantart"><br></a></li>
+                                <li><a href="#" class="googleplus"><br></a></li>
+                            </ul>
+                        </div>
+                        <ul class="topnav navRight">
                             <li class="drop">
-                                <a href="~/ShoppingCart/Index">User</a>
+                                <a href="~/ShoppingCart/Index">Cart</a>
                                 <div class="pPanel">
                                     <div class="inner">
-                                        <span class="cart_details">
-                                            Loged in as : @User.Identity.Name
-                                            <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
-                                        </span>
+                                        @{
+                                            var items = Session["ShoppingCartItems"];
+                                            if (items != null)
+                                            {
+                                                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
+                                                <span class="cart_details">Number of items @cart.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
+                                            }
+                                            else
+                                            {
+                                                <span class="cart_details_no_item">Number of items 0</span>
+                                            }
+                                        }
                                     </div>
                                 </div>
                             </li>
+                            <li class="languages drop">
+                                <a href="#"><span class="icon-globe icon-white"></span> Language</a>
+                                <div class="pPanel">
+                                    <ul class="inner">
+                                        <li><a href="#">Arabic </a></li>
+                                        <li class="active"><a href="#">English <span class="icon-ok"></span></a></li>
+
+                                    </ul>
+                                </div>
+                            </li>
+                        </ul>
+                        <ul class="topnav navLeft">
+                            @if (User.Identity.IsAuthenticated)
+                            {
+                                <li class="drop">
+                                    <a href="#">User</a>
+                                    <div class="pPanel">
+                                        <div class="inner">
+                                            <span class="cart_details">
+                                                Loged in as : @User.Identity.Name
+                                                <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </li>
                             @*<li>Loged in as : @User.Identity.Name <a href="~/Account/LogOff" data-rel="prettyPhoto[login_panel]">Logout</a></li>*@
-                        }
-                        else
-                        {
-                            <li><a href="#login_panel" data-rel="prettyPhoto[login_panel]">Login</a></li>
-                        }
-                    </ul><!-- end topnav // left aligned -->
-                </div>
-            </div>
-            <div class="container">
-                <!-- logo -->
-                <h1 id="logo"><a href="~/Home/Index"><img src="~/images/logo.png" alt="شركة مسار العلمية"></a></h1>
-                <!-- search -->
-                <div id="search">
-                    <a href="#" class="searchBtn"><span class="icon-search icon-white"></span></a>
-                    <div class="search">
-                        <form action="http://www.google.com/search" method="get" onsubmit="Gsitesearch(this)" target="_blank">
-                            <input name="q" type="hidden" />
-                            <input name="qfront" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
-                            <input type="submit" value="go" class=" icon-search" />
-                        </form>
+                            }
+                            else
+                            {
+                                <li><a id="login" href="#login_panel" data-rel="prettyPhoto[login_panel]">Login</a></li>
+                            }
+                        </ul><!-- end topnav // left aligned -->
                     </div>
-                </div><!-- end search -->
-                @{Html.RenderAction("Index", "WebsiteMenu", new { area = "" });}
-            </div>
-        </header>
+                </div>
+                <div class="container">
+                    <!-- logo -->
+                    <h1 id="logo"><a href="~/Home/Index"><img src="~/images/logo.png" alt="شركة مسار العلمية"></a></h1>
+                    <!-- search -->
+                    <div id="search">
+                        <a href="#" class="searchBtn"><span class="icon-search icon-white"></span></a>
+                        <div class="search">
+                            <form action="http://www.google.com/search" method="get" onsubmit="Gsitesearch(this)" target="_blank">
+                                <input name="q" type="hidden" />
+                                <input name="qfront" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
+                                <input type="submit" value="go" class=" icon-search" />
+                            </form>
+                        </div>
+                    </div><!-- end search -->
+                    @{
+                        Html.RenderAction("Index", "WebsiteMenu", new { area = "" });
+                    }
+                </div>
+            </header>
 
-        @RenderBody()
+            @RenderBody()
 
-        @{Html.RenderAction("Index", "WebsiteFooter", new { area = "" });}
-        @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
+            @{
+                Html.RenderAction("Index", "WebsiteFooter", new { area = "" });
+            }
+            @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
 
-    </div>
-    <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
-    <a href="#" id="totop">TOP</a>
-    @if (ViewBag.MessageVM != null)
-    {
-        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
-    }
+        </div>
+        <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
 
-    <!--////////////////// Load JS Files -->
-    <script src="~/Sliders/iosslider/jquery.iosslider.min.js"></script>
-    <script src="~/Sliders/iosslider/jquery.iosslider.kalypso.js"></script>
-    <!-- Carousels (by CarouFredSel) -->
-    <script src="~/Scripts/jquery.carouFredSel.js" type="text/javascript"></script>
-    <!-- JavaScript at the bottom for fast page loading -->
-    <script type="text/javascript" src="~/Scripts/bootstrap.min.js"></script><!-- Bootstrap Framework -->
-    <script type="text/javascript" src="~/Scripts/plugins.js"></script><!-- jQuery Plugins -->
-    <script type="text/javascript" src="~/addons/superfish_responsive/superfish_menu.js"></script><!-- Superfish Menu -->
-    <script type="text/javascript" src="~/Scripts/pnotify.core.min.js"></script>
-    <script src="~/Scripts/Functions/scriptIST.js"></script>
-    <script src="~/Scripts/Layout/LayoutScripts.js"></script>
-    <script type="text/javascript" src="~/Scripts/kalypso_script.js"></script><!-- custom scripts file -->
-    <!-- prettyphoto scripts & styles -->
-    <link rel="stylesheet" href="~/addons/prettyphoto/prettyPhoto.css" type="text/css" />
-    <script type="text/javascript" src="~/addons/prettyphoto/jquery.prettyPhoto.js"></script>
-    <!-- jQuery validation starts -->
-    <script type="text/javascript" src="~/Scripts/validation/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/validation/jquery.unobtrusive-ajax.min.js"></script>
-    <script type="text/javascript" src="~/Scripts/validation/jquery.validate.unobtrusive.min.js"></script>
-    <!-- jQuery validation ends -->
-</body>
+        <a href="#" id="totop">TOP</a>
+        @if (ViewBag.MessageVM != null)
+        {
+            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+            <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
+        }
+
+
+
+    </body>
 
 </html>

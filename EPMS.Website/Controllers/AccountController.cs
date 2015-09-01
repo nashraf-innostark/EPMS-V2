@@ -13,9 +13,6 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.WebModels.ViewModels.Common;
-using ExternalLoginConfirmationViewModel = EPMS.WebModels.WebsiteModels.ExternalLoginConfirmationViewModel;
-using ForgotPasswordViewModel = EPMS.WebModels.WebsiteModels.ForgotPasswordViewModel;
-using ResetPasswordViewModel = EPMS.WebModels.WebsiteModels.ResetPasswordViewModel;
 
 namespace EPMS.Website.Controllers
 {
@@ -121,8 +118,10 @@ namespace EPMS.Website.Controllers
                 {
                     if (!await UserManager.IsEmailConfirmedAsync(user.Id))
                     {
-                        TempData["message"] = new MessageViewModel { Message = "\nEmail not confirmed", IsError = true };
-                        return RedirectToAction("Index", "Home");
+                        TempData["message"] = new MessageViewModel { Message = "\nEmail not Confirmed", IsError = true };
+                        if (string.IsNullOrEmpty(returnUrl))
+                            return RedirectToAction("Index", "Home");
+                        return RedirectToLocal(returnUrl);
                     }
                 }
                 // This doen't count login failures towards lockout only two factor authentication
@@ -137,31 +136,35 @@ namespace EPMS.Website.Controllers
                                 return RedirectToAction("Index", "Home");
                             return RedirectToLocal(returnUrl);
                         }
-                    case SignInStatus.LockedOut:
-                        return View("Lockout");
-                    case SignInStatus.RequiresVerification:
-                        return RedirectToAction("SendCode", new { ReturnUrl = returnUrl });
                     default:
                         TempData["message"] = new MessageViewModel { Message = "\nInvalid login attempt.", IsError = true };
-                        return RedirectToAction("Index", "Home");
+                        if (string.IsNullOrEmpty(returnUrl))
+                            return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
+                        return RedirectToLocal(returnUrl);
                 }
             }
             catch (Exception ex)
             {
-                return RedirectToAction("Error");
-
+                if (string.IsNullOrEmpty(returnUrl))
+                    return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
+                return RedirectToLocal(returnUrl);
             }
         }
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut();
             Session.Abandon();
-            return RedirectToAction("Index", "Home");
+            if (Request.UrlReferrer != null)
+            {
+                string returnUrl = Request.UrlReferrer.PathAndQuery;
+                return RedirectToLocal(returnUrl);
+            }
+            return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
         }
         #endregion
 
         #region Register
-        
+
         [AllowAnonymous]
         public ActionResult Signup()
         {
@@ -175,7 +178,7 @@ namespace EPMS.Website.Controllers
         [HttpPost]
         [AllowAnonymous]
         //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel)
+        public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel, string returnUrl)
         {
             var users = aspNetUserService.GetAllUsers().ToList();
             if (users.Any())
@@ -185,14 +188,14 @@ namespace EPMS.Website.Controllers
                 {
                     // it means username is already taken
                     TempData["message"] = new MessageViewModel { Message = "\nUserName already taken. Please try other one.", IsError = true };
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { div = "register_panel", width = "280" });
                 }
                 var emails = users.Select(x => x.Email);
                 if (emails.Contains(viewModel.SignUp.Email))
                 {
                     // it means email is already taken
                     TempData["message"] = new MessageViewModel { Message = "\nEmail already taken. Please try other one.", IsError = true };
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home", new { div = "register_panel", width = "280" });
                 }
             }
 
@@ -224,6 +227,7 @@ namespace EPMS.Website.Controllers
                                 "Please confirm your account by clicking this link: <a href=\"" + callbackUrl +
                                 "\">link</a><br>Your Password is:" + viewModel.SignUp.Password);
                         ViewBag.Link = callbackUrl;
+
                         string message = "\nConfirmation Email has been sent to " + viewModel.SignUp.Email + " Please verify your account.";
                         TempData["message"] = new MessageViewModel { Message = message, IsSaved = true };
 
@@ -307,19 +311,22 @@ namespace EPMS.Website.Controllers
             {
                 if (userId == null || code == null)
                 {
+                    TempData["message"] = new MessageViewModel { Message = "\nInvalid request.", IsError = true };
                     return RedirectToAction("Index", "Home");
                 }
                 var result = await UserManager.ConfirmEmailAsync(userId, code);
                 if (result.Succeeded)
                 {
-                    return RedirectToAction("Index", "Home");
+                    TempData["message"] = new MessageViewModel { Message = "\nEmail has been Confirmed successfully. Please login to your account to have access to different features.", IsUpdated = true };
+                    return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
                 }
                 //return View(result.Succeeded ? "ConfirmEmail" : "Error");
+                TempData["message"] = new MessageViewModel { Message = "\nInvalid request.", IsError = true };
                 return RedirectToAction("Index", "Home");
             }
             catch (Exception)
             {
-
+                TempData["message"] = new MessageViewModel { Message = "\nInvalid request.", IsError = true };
                 return RedirectToAction("Index", "Home");
             }
         }
@@ -336,32 +343,28 @@ namespace EPMS.Website.Controllers
         // POST: /Account/ForgotPassword
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        public async Task<ActionResult> ForgotPassword(WebCustomerIdentityViewModel model)
         {
-            if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            //{
+            var user = await UserManager.FindByNameAsync(model.ForgotPassword.UserName);
+            if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
             {
-                var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null || !(await UserManager.IsEmailConfirmedAsync(user.Id)))
-                {
-                    ModelState.AddModelError("", "Email not found.");
-                    // Don't reveal that the user does not exist or is not confirmed
-                    return View(model);
-                }
+                TempData["message"] = new MessageViewModel { Message = "\nUser not found or Email not Confirmed", IsError = true };
 
-                var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, Request.Url.Scheme);
-                await
-                    UserManager.SendEmailAsync(user.Email, "Reset Password",
-                        "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
-                ViewBag.Link = callbackUrl;
-                TempData["message"] = new MessageViewModel { Message = "\n: An email with Password link has been sent.", IsUpdated = true };
-                return RedirectToAction("Login");
-                //return View("Login");
+                // Don't reveal that the user does not exist or is not confirmed
+                return RedirectToAction("Index", "Home");
             }
 
-            // If we got this far, something failed, redisplay form
-            return View(model);
+            var code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+            var callbackUrl = Url.Action("Index", "Home", new { div = "resetpassword_panel", width = "350", code = code, userId = user.Id }, Request.Url.Scheme);
+            await
+                UserManager.SendEmailAsync(user.Email, "Reset Password",
+                    "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+            ViewBag.Link = callbackUrl;
+            TempData["message"] = new MessageViewModel { Message = "\nAn email with Password link has been sent.", IsUpdated = true };
+            return RedirectToAction("Index", "Home");
+            //}
         }
 
         //
@@ -384,24 +387,18 @@ namespace EPMS.Website.Controllers
         // POST: /Account/ResetPassword
         [HttpPost]
         [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ResetPassword(ResetPasswordViewModel model)
+        public async Task<ActionResult> ResetPassword(WebCustomerIdentityViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var user = await UserManager.FindByNameAsync(model.Email);
-            if (user == null)
-            {
-                // Don't reveal that the user does not exist
-                return RedirectToAction("Login", "Account");
-            }
-            var result = await UserManager.ResetPasswordAsync(user.Id, model.Code, model.Password);
+
+            var result = await UserManager.ResetPasswordAsync(model.ResetPassword.UserId, model.ResetPassword.Code, model.ResetPassword.Password);
             if (result.Succeeded)
             {
                 TempData["message"] = new MessageViewModel { Message = "\nPassword has been updated.", IsUpdated = true };
-                return RedirectToAction("Login", "Account");
+                return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
             }
             AddErrors(result);
             return View();
@@ -533,6 +530,55 @@ namespace EPMS.Website.Controllers
         }
 
         #endregion
+
+        #region Validate Username
+
+        [HttpPost]
+        public JsonResult ValidateUserName(string username)
+        {
+            var users = aspNetUserService.GetAllUsers().ToList();
+            if (users.Any())
+            {
+                if (!string.IsNullOrEmpty(username))
+                {
+                    var usernames = users.Select(x => x.UserName);
+                    if (usernames.Contains(username))
+                    {
+                        // it means username is already taken
+                        const string message = "\nUserName already taken. Please try other one.";
+                        return Json(message, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Validate Email
+
+        [HttpPost]
+        public JsonResult ValidateEmail(string email)
+        {
+            var users = aspNetUserService.GetAllUsers().ToList();
+            if (users.Any())
+            {
+                if (!string.IsNullOrEmpty(email))
+                {
+                    var emails = users.Select(x => x.Email);
+                    if (emails.Contains(email))
+                    {
+                        // it means email is already taken
+                        const string message = "\nEmail already taken. Please try other one.";
+                        return Json(message, JsonRequestBehavior.AllowGet);
+                    }
+                }
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
         private void updateSessionValues(AspNetUser user)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());

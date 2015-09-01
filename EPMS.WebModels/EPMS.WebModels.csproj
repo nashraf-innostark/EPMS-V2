@@ -636,6 +636,7 @@
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\WebsiteClient\ReturnUrlModel.cs" />
     <Compile Include="ViewModels\WebsiteClient\ShoppingCartListViewModel.cs" />
     <Compile Include="ViewModels\Website\Footer\FooterViewModel.cs" />
     <Compile Include="ViewModels\Website\Services\ServicesCreateViewModel.cs" />

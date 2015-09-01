@@ -6193,7 +6193,6 @@
           <EntitySet Name="NewsAndArticles" EntityType="EPMSInventoryModel.NewsAndArticle" />
           <EntitySet Name="ImageSliders" EntityType="EPMSInventoryModel.ImageSlider" />
           <EntitySet Name="Partners" EntityType="EPMSInventoryModel.Partner" />
-          <EntitySet Name="WebsiteDepartments" EntityType="EPMSInventoryModel.WebsiteDepartment" />
           <EntitySet Name="ProductSections" EntityType="EPMSInventoryModel.ProductSection" />
           <AssociationSet Name="FK_ProductSection_InventoryDepartment" Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartments" />
@@ -6238,6 +6237,7 @@
             <End Role="WebsiteCustomer" EntitySet="WebsiteCustomers" />
             <End Role="AspNetUser" EntitySet="AspNetUsers" />
           </AssociationSet>
+          <EntitySet Name="WebsiteDepartments" EntityType="EPMSInventoryModel.WebsiteDepartment" />
         </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7738,23 +7738,6 @@
           <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
         </EntityType>
-        <EntityType Name="WebsiteDepartment">
-          <Key>
-            <PropertyRef Name="DepartmentId" />
-          </Key>
-          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="NameEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="ImageName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
-          <Property Name="DepartmentOrder" Type="Int32" />
-          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
-          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-        </EntityType>
         <EntityType Name="ProductSection">
           <Key>
             <PropertyRef Name="SectionId" />
@@ -8020,6 +8003,23 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WebsiteDepartment">
+          <Key>
+            <PropertyRef Name="DepartmentId" />
+          </Key>
+          <Property Name="DepartmentId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NameEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="NameAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
+          <Property Name="DepartmentOrder" Type="Int32" />
+          <Property Name="ShowToPublic" Type="Boolean" Nullable="false" />
+          <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="RecUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9606,24 +9606,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WebsiteDepartments">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteDepartment">
-              <MappingFragment StoreEntitySet="WebsiteDepartment">
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="Link" ColumnName="Link" />
-                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
-                <ScalarProperty Name="DepartmentOrder" ColumnName="DepartmentOrder" />
-                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
-                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
-                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
-                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="ProductSections">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ProductSection">
               <MappingFragment StoreEntitySet="ProductSection">
@@ -9771,6 +9753,24 @@
                 <ScalarProperty Name="CustomerNameAr" ColumnName="CustomerNameAr" />
                 <ScalarProperty Name="CustomerNameEn" ColumnName="CustomerNameEn" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteDepartments">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteDepartment">
+              <MappingFragment StoreEntitySet="WebsiteDepartment">
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
+                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="Link" ColumnName="Link" />
+                <ScalarProperty Name="ShowToPublic" ColumnName="ShowToPublic" />
+                <ScalarProperty Name="DepartmentOrder" ColumnName="DepartmentOrder" />
+                <ScalarProperty Name="ImageName" ColumnName="ImageName" />
+                <ScalarProperty Name="NameAr" ColumnName="NameAr" />
+                <ScalarProperty Name="NameEn" ColumnName="NameEn" />
+                <ScalarProperty Name="DepartmentId" ColumnName="DepartmentId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10004,7 +10004,6 @@
           <EntityTypeShape EntityType="EPMSInventoryModel.NewsAndArticle" Width="1.5" PointX="25" PointY="15.25" />
           <EntityTypeShape EntityType="EPMSInventoryModel.ImageSlider" Width="1.5" PointX="19.75" PointY="0.75" />
           <EntityTypeShape EntityType="EPMSInventoryModel.Partner" Width="1.5" PointX="0.75" PointY="0.75" />
-          <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.75" PointY="0.75" />
           <EntityTypeShape EntityType="EPMSInventoryModel.ProductSection" Width="1.5" PointX="15" PointY="57" />
           <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_InventoryDepartment" />
           <AssociationConnector Association="EPMSInventoryModel.FK_ProductSection_ProductSection1" />
@@ -10022,6 +10021,7 @@
           <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCart_Size" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteCustomer" Width="1.75" PointX="27.375" PointY="13.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.375" PointY="0.75" />
         </Diagram>
       </Diagrams>
   </Designer>

@@ -1,18 +1,95 @@
-﻿jQuery(document).ready(function ($) {
+﻿var signup =
+    '<div class="login_register_stuff hide">' +
+        '<div id="login_panel">' +
+            '<div class="inner-container login-panel">' +
+                '<h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>' +
+                '<form action="/Account/Login" class="form-horizontal" id="LoginFrom" method="post" role="form" novalidate="novalidate">' +
+                '<a class="create_account cursorHand" onclick="ppOpen(\'#register_panel\', \'280\');">CREATE ACCOUNT</a>' +
+                '<input class="toBeRequired inputbox " data-val="true" data-val-required="The User Name field is required." id="LoginUserName" name="Login.UserName" placeholder="UserName" type="text" value="">' +
+                '<input class="toBeRequired inputbox " data-val="true" data-val-required="The Password field is required." id="LoginPassword" name="Login.Password" placeholder="Password" type="password">' +
+                '<input type="submit" id="login" name="submit" value="LOG IN">' +
+                ' <a href="#" class="login_facebook">login with facebook</a>' +
+                '</form>            ' +
+            '<div class="links"><a href="#" onclick="ppOpen(\'#forgot_panel\', \'350\');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen(\'#resetpassword_panel\', \'350\');">RESET YOUR PASSWORD?</a></div>' +
+            ' </div>' +
+        '</div><!-- end login panel -->' +
+        '<div id="register_panel">' +
+            '<div class="inner-container register-panel">' +
+                '<h3 class="m_title">CREATE ACCOUNT</h3>' +
+                    '<form action="/Account/SignUp" class="form-horizontal" id="SignUpFrom" method="post" role="form" novalidate="novalidate">                <p>' +
+                        '<input class="toBeRequired" data-val="true" data-val-required="User Name is required." id="SignUp_UserName" name="SignUp.UserName" placeholder="UserName" type="text" value="">' +
+                        '</p>' +
+                        '<p>' +
+                        '<input class="toBeRequired" data-val="true" data-val-required="Your Name is required" id="SignUp_CustomerNameEn" name="SignUp.CustomerNameEn" placeholder="Your Name" type="text" value="">' +
+                        '</p>' +
+                        '<p>' +
+                        '<input class="toBeRequired" data-val="true" data-val-email="The Email field is not a valid e-mail address." data-val-required="Email is required." id="SignUp_Email" name="SignUp.Email" placeholder="Email" type="text" value="">' +
+                        '<span class="field-validation-valid required" data-valmsg-for="SignUp.Email" data-valmsg-replace="true"></span>' +
+                        '</p>' +
+                        '<p>' +
+                        '<input class="toBeRequired" data-val="true" data-val-length="The Password must be at least 6 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="Password is required." id="SignUp_Password" name="SignUp.Password" placeholder="Password" type="password">' +
+                        '<span class="field-validation-valid required" data-valmsg-for="SignUp.Password" data-valmsg-replace="true"></span>' +
+                        '</p>' +
+                        '<p>' +
+                        '<input class="toBeRequired" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" data-val-required="Password is required." id="SignUp_ConfirmPassword" name="SignUp.ConfirmPassword" placeholder="Confirm Password" type="password">' +
+                        '<span class="field-validation-valid required" data-valmsg-for="SignUp.ConfirmPassword" data-valmsg-replace="true"></span>' +
+                        '</p>' +
+                        '<p>' +
+                        '<input type="submit" id="create" value="CREATE MY ACCOUNT">' +
+                        '</p>' +
+                    '</form>' +
+                    '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">ALREADY HAVE AN ACCOUNT?</a></div>' +
+                '</div>' +
+            '</div><!-- end register panel -->' +
+        '<div id="forgot_panel">' +
+            '<div class="inner-container forgot-panel">' +
+                '<h3 class="m_title">FORGOT YOUR DETAILS?</h3>' +
+                '<form action="/Account/ForgotPassword" class="form-horizontal" id="ForgotPasswordFrom" method="post" role="form" novalidate="novalidate">' +
+                    '<p>' +
+                    '<input class="toBeRequired" data-val="true" data-val-required="The User Name field is required." id="ForgotPasswordEmail" name="ForgotPassword.UserName" placeholder="UserName" type="text" value="">' +
+                    '</p>' +
+                    '<p>' +
+                    '<input type="submit" id="recover" name="submit" value="SEND MY DETAILS!"> </p>' +
+                '</form>' +
+                '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">AAH, WAIT, I REMEMBER NOW!</a></div>' +
+            '</div>' +
+        '</div><!-- end register panel -->' +
+        '<div id="resetpassword_panel">' +
+        '<div class="inner-container register-panel">' +
+            '<h3 class="m_title">Reset Password</h3>' +
+                '<form action="/Account/ResetPassword" class="form-horizontal" id="ResetPasswordFrom" method="post" role="form" novalidate="novalidate">' +
+                '<input id="reset-code" name="ResetPassword.Code" type="hidden" value="">' +
+                '<input id="user-id" name="ResetPassword.UserId" type="hidden" value="">' +
+                '<p>' +
+                '<input class="toBeRequired" data-val="true" data-val-length="The Password must be at least 6 characters long." data-val-length-max="100" data-val-length-min="6" data-val-required="The Password field is required." id="ResetPassword_Password" name="ResetPassword.Password" placeholder="Password" type="password">' +
+                '<span class="field-validation-valid required" data-valmsg-for="ResetPassword.Password" data-valmsg-replace="true"></span>' +
+                '</p>' +
+                '<p>' +
+                '<input class="toBeRequired" data-val="true" data-val-equalto="The password and confirmation password do not match." data-val-equalto-other="*.Password" id="ResetPassword_ConfirmPassword" name="ResetPassword.ConfirmPassword" placeholder="Confirm Password" type="password">' +
+                '<span class="field-validation-valid required" data-valmsg-for="ResetPassword.ConfirmPassword" data-valmsg-replace="true"></span>' +
+                '</p>' +
+                '<p>' +
+                '<input type="submit" id="reset" value="RESET">' +
+                '</p>' +
+                '</form>' +
+            '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">ALREADY RESET?</a></div>' +
+        '</div>' +
+    '</div>' +
+'</div>';
+$(document).ready(function ($) {
     // Notification
-    debugger;
-    var message = jQuery("#Message").val();
-    var isSaved = jQuery("#IsSaved").val();
-    var isUpdated = jQuery("#IsUpdated").val();
-    var isError = jQuery("#IsError").val();
-    var isInfo = jQuery("#IsInfo").val();
+    var message = $("#Message").val();
+    var isSaved = $("#IsSaved").val();
+    var isUpdated = $("#IsUpdated").val();
+    var isError = $("#IsError").val();
+    var isInfo = $("#IsInfo").val();
     if (isSaved || isUpdated) {
         new PNotify({
             title: 'Success',
             text: message
         });
     }
-    else if(isError) {
+    else if (isError) {
         new PNotify({
             title: 'Error',
             text: message
@@ -25,14 +102,14 @@
         });
     }
 
-    jQuery("a[data-rel^='prettyPhoto'], .prettyphoto_link").prettyPhoto({ theme: 'pp_kalypso', social_tools: false, deeplinking: false });
-    jQuery("a[rel^='prettyPhoto']").prettyPhoto({ theme: 'pp_kalypso' });
-    jQuery("a[data-rel^='prettyPhoto[login_panel]']").prettyPhoto({ theme: 'pp_kalypso', default_width: 800, social_tools: false, deeplinking: false });
+    $("a[data-rel^='prettyPhoto'], .prettyphoto_link").prettyPhoto({ theme: 'pp_kalypso', social_tools: false, deeplinking: false });
+    $("a[rel^='prettyPhoto']").prettyPhoto({ theme: 'pp_kalypso' });
+    $("a[data-rel^='prettyPhoto[login_panel]']").prettyPhoto({ theme: 'pp_kalypso', default_width: 800, social_tools: false, deeplinking: false });
 
-    jQuery(".prettyPhoto_transparent").click(function (e) {
+    $(".prettyPhoto_transparent").click(function (e) {
         e.preventDefault();
-        jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: 980, theme: 'pp_kalypso transparent', opacity: 0.95 });
-        jQuery.prettyPhoto.open($(this).attr('href'), '', '');
+        $.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: 980, theme: 'pp_kalypso transparent', opacity: 0.95 });
+        $.prettyPhoto.open($(this).attr('href'), '', '');
     });
 
     // THIS SCRIPT DETECTS THE ACTIVE ELEMENT AND ADDS ACTIVE CLASS
@@ -50,11 +127,10 @@
 });
 
 function ppOpen(panel, width) {
-    jQuery.prettyPhoto.close();
+    $.prettyPhoto.close();
     setTimeout(function () {
-        
-        jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
-        jQuery.prettyPhoto.open(panel);
+        $.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
+        $.prettyPhoto.open(panel);
     }, 300);
 }
 
@@ -106,5 +182,5 @@ $(document).ready(function () {
             infiniteSlider: true,
             autoSlide: true
         });
-    })(jQuery);
+    })($);
 })

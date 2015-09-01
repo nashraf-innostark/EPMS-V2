@@ -38,10 +38,10 @@
                     <h3 class="m_title">@(direction == "ltr" ? department.NameEn : department.NameAr)</h3>
                     <p style="text-align: justify" class="descp-@department.DepartmentId"></p>
                     <script>
-                            var descp = '@Html.Raw(department.Description)';
-                            var regex = /(<([^>]+)>)/ig;
-                            var result = descp.replace(regex, "");
-                            jQuery(".descp-@department.DepartmentId").text(result);
+                        var descp = '@Html.Raw(department.Description)';
+                        var regex = /(<([^>]+)>)/ig;
+                        var result = descp.replace(regex, "");
+                        jQuery(".descp-@department.DepartmentId").text(result);
                     </script>
                 </div>
             }
@@ -78,3 +78,32 @@
     </div>
     <!-- end container -->
 </section><!-- end #content -->
+
+<script>
+    jQuery(document).ready(function ($) {
+        var divId = '@Model.Div';
+        var width = '@Model.Width';
+        if (divId != '') {
+            if (divId == "resetpassword_panel") {
+                var code = '@Model.Code';
+                var userId = '@Model.UserId';
+                if (code != '') {
+                    setTimeout(function () {
+                        jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
+                        jQuery.prettyPhoto.open("#" + divId);
+                    }, 300);
+                    setTimeout(function () {
+                        jQuery("#reset-code").val(code);
+                        jQuery("#user-id").val(userId);
+                    }, 400);
+                }
+            } else {
+                setTimeout(function () {
+                    jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
+                    jQuery.prettyPhoto.open("#" + divId);
+                }, 300);
+            }
+        }
+
+    });
+</script>
