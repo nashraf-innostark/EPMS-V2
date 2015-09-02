@@ -42,6 +42,7 @@ namespace EPMS.Website.Controllers
 
         public ActionResult DepartmentDetail(long id)
         {
+            ViewBag.ShowSlider = false;
             WebsiteDepartmentResponse response = websiteDepartmentService.websiteDepartmentResponse(id);
             DepartmentDetailViewModel detailViewModel = new DepartmentDetailViewModel
             {

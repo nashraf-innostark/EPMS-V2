@@ -1,4 +1,5 @@
-﻿@using ProductSection = EPMS.WebModels.WebsiteModels.ProductSection
+﻿@using System.Configuration
+@using ProductSection = EPMS.WebModels.WebsiteModels.ProductSection
 @model EPMS.WebModels.ViewModels.Website.Department.DepartmentDetailViewModel
 
 @{
@@ -6,7 +7,31 @@
     //Layout = "~/Views/Shared/_Layout.cshtml";
     var rootProducts = @Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var cpLink = ConfigurationManager.AppSettings["CpLink"];
+    var Date = DateTime.Now;
 }
+
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
+                </ul>
+                <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>Our Departments</h2>
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div>
+    <div class="shadowUP"></div>
+</div><!-- end page_header -->
 
 <section id="content">
     <div class="container">
@@ -15,13 +40,13 @@
 
             <div class="row">
                 <div class="span9 rightSide directionR">
-                    <h1 class="page-title">Lab Department</h1>
+                    <h1 class="page-title">@Model.WebsiteDepartment.NameEn</h1>
 
 
                     <div class="itemView clearfix eBlog">
 
                         <div class="itemBody">
-                            <p><a href="#" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/Department/@Url.Content(Model.WebsiteDepartment.ImageName)" /></a></p>
+                            <p><a href="#" class="hoverBorder pull-left"><img src="@cpLink/Images/Department/@Url.Content(Model.WebsiteDepartment.ImageName)" /></a></p>
                             <p style="text-align: justify">@Model.WebsiteDepartment.Description</p>
                         </div><!-- end item body -->
                         <div class="clear"></div>

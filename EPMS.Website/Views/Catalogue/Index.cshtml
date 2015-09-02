@@ -1,9 +1,17 @@
-﻿@model EPMS.WebModels.ViewModels.Product.ProductListViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     var Date = DateTime.Now;
+    var cpLink = ConfigurationManager.AppSettings["CpLink"];
 }
+
+<style>
+    body {
+        overflow: auto !important;
+    }
+</style>
 
 <div id="page_header" class="gradient bottom-shadow">
     <div class="bgback bg3"></div>
@@ -29,23 +37,70 @@
 </div><!-- end page_header -->
 
 <section id="content">
-
-    <div id="mainbody">
-        <div id="flipbook">
-            <div class="hard"> Turn.js </div>
-            <div class="hard"></div>
-            @if (Model.Products != null && Model.Products.Any())
-            {
-                foreach (var product in Model.Products)
+    <div class="container">
+        <div id="mainbody">
+            <div id="flipbook">
+                @if (Model.Products != null && Model.Products.Any())
                 {
-                    <div> @product.ProductNameEn</div>
+                    foreach (var product in Model.Products)
+                    {
+                        <div style="background-image: url(/Images/Catalog.png)">
+                            <form class="form-horizontal" id="validation_form">
+                                <div class="container-fluid">
+                                    <div class="control-group row-fluid">
+                                        <div class="catalogDepartment" style="background-color:@product.DeptColor !important; color:white !important;">
+                                            <h5 class="titleLeft" style="color:white !important; padding-left: 10px">Department(Physics)</h5>
+                                            <h5 class="titleRight" style="color:white !important">Section(Lab > Glassware > Glasses)</h5>
+                                        </div>
+                                        <div class="invoice-info">
+                                            <div class="invoice-name" style="color:@product.DeptColor !important;">
+                                                @if (product.ItemVariationId != null)
+                                                {
+                                                    <h3><span style="float: left">@product.ItemNameEn</span></h3>
+                                                }
+                                                else
+                                                {
+                                                    <h3><span style="float: left">@product.ProductNameEn</span></h3>
+                                                }
+                                            </div>
+                                            <div class="controls" style="float: right">
+                                                <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> Print</a>
+                                            </div>
+                                            <br/><br /><br />
+                                            <div>
+                                                <img style="width: 195px; height: 195px; clear: both" src="@cpLink/Images/ItemImage/@product.ItemImage" alt="user" class="">
+                                            </div>
+                                            <div class="control-group row-fluid">
+                                                <div class="span12">
+                                                    <div class="invoice-from">
+                                                        <h3 style="color:@product.DeptColor !important;">Product Description</h3>
+                                                        @if (product.ItemVariationId != null)
+                                                        {
+                                                            <p style="text-align: justify"> @product.ItemDesc</p>
+                                                        }
+                                                        else
+                                                        {
+                                                            <p style="text-align: justify"> @product.ProductDescEn</p>
+                                                        }
+                                                    </div>
+                                                    <h3 style="color:@product.DeptColor !important;">Product Specification</h3>
+                                                    <p style="text-align: justify">@product.ProductSpecificationEn</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="catalogDepartment" style="background-color:@product.DeptColor !important; color:white !important;">
+                                            <h5 class="" style="color:white !important;text-align:right;margin-right:5px;">12</h5>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    }
                 }
-            }
-            <div class="hard"></div>
-            <div class="hard"></div>
-        </div>
+            </div>
 
-    </div><!-- end mainbody -->
+        </div><!-- end mainbody -->
+    </div>
 </section><!-- end #content -->
 
 
@@ -63,11 +118,11 @@
         jQuery('#flipbook').turn({
             // Width
 
-            width: 922,
+            width: 1200,
 
             // Height
 
-            height: 300,
+            height: 850,
 
             // Elevation
 
@@ -79,8 +134,7 @@
 
             // Auto center this flipbook
 
-            autoCenter: true
-
+            autoCenter: true,
         });
     }
 

@@ -100,7 +100,7 @@
                         </ul>
                     </div>
                     <h1 class="page-title margintop10">@Product.Catalog</h1>
-                    <a href="#"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
+                    <a href="~/Catalogue/Index"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
                 </div>
                 @using (Html.BeginForm("Index", "Product", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
                 {
