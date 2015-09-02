@@ -82,7 +82,8 @@
     <body class="">
         <div id="signup_div">
             @{
-                Html.RenderAction("SignUp", "Account", new { area = "" });
+                Html.Action("SignUp", "Account");
+                //Html.Action("_SignUpPartial");
             }
         </div>
 

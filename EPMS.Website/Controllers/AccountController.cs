@@ -1,4 +1,5 @@
-﻿using EPMS.Implementation.Identity;
+﻿using System.Reflection;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
@@ -177,6 +178,7 @@ namespace EPMS.Website.Controllers
 
         [HttpPost]
         [AllowAnonymous]
+        [MultiButton(MatchFormKey = "login", MatchFormValue = "LOG IN")]
         //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
         public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel, string returnUrl)
         {
@@ -586,6 +588,19 @@ namespace EPMS.Website.Controllers
             //Session["FullName"] = result.Employee.EmployeeFirstName + " " + result.Employee.EmployeeLastName;
             Session["UserID"] = result.Id;
             Session["RoleName"] = role;
+        }
+    }
+
+    [AttributeUsage(AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
+    public class MultiButtonAttribute : ActionNameSelectorAttribute
+    {
+        public string MatchFormKey { get; set; }
+        public string MatchFormValue { get; set; }
+
+        public override bool IsValidName(ControllerContext controllerContext, string actionName, MethodInfo methodInfo)
+        {
+            return controllerContext.HttpContext.Request[MatchFormKey] != null &&
+                controllerContext.HttpContext.Request[MatchFormKey] == MatchFormValue;
         }
     }
 }

@@ -34,59 +34,75 @@
 
 <section id="content">
     <div class="container">
-
         <div id="mainbody">
-
             <div class="row">
                 <div class="span12 directionR ">
                     <h1 class="page-title">@Cart.BodyTitle</h1>
-                    @if (Model.ShoppingCarts.Any())
+                    @using (Html.BeginForm("PostTotPaypal", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
                     {
-                        <table class="shopping-table">
-                            <tr>
-                                <th style="display: none">Product Id</th>
-                                <th colspan="2">@Cart.ItemPictureAndName</th>
-                                <th>@Cart.ItemCode</th>
-                                <th>@Cart.Qty</th>
-                                <th>@Cart.UnitPrice</th>
-                                <th>@Cart.Total</th>
-                                <th>@Cart.Delete</th>
-                            </tr>
-
-                            @foreach (var cartItem in Model.ShoppingCarts)
-                            {
-                                <tr class="cartRow">
-                                    @{
-                                        var noImage = "/images/noimage_department.png";
-                                    }
-                                    <td class="product-id" style="display: none">@cartItem.ProductId</td>
-                                    <td class="image-column"><a href="#"><img src="@cartItem.ImagePath" alt=""></a></td>
-                                    <td><p><a href="#">@(direction == "ltr" ? cartItem.ItemNameEn : cartItem.ItemNameAr)</a></p></td>
-                                    <td><p>@cartItem.SkuCode</p></td>
-                                    <td class="quantity">
-                                        <input id="@cartItem.ProductId" type="text" value="@cartItem.Quantity" class="cartnum">
-                                    </td>
-                                    <td><p class="cartPrice">@cartItem.UnitPrice</p></td>
-                                    <td><p class="cartTotal Total_@cartItem.ProductId">@(cartItem.Quantity * cartItem.UnitPrice)</p></td>
-                                    <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
+                        if (Model.ShoppingCarts.Any())
+                        {
+                            <table class="shopping-table">
+                                <tr>
+                                    <th style="display: none">Product Id</th>
+                                    <th colspan="2">@Cart.ItemPictureAndName</th>
+                                    <th>@Cart.ItemCode</th>
+                                    <th>@Cart.Qty</th>
+                                    <th>@Cart.UnitPrice</th>
+                                    <th>@Cart.Total</th>
+                                    <th>@Cart.Delete</th>
                                 </tr>
-                            }
 
-                            <tr class="">
-                                <td class="cartTotalCount" colspan="5"><strong>@Cart.GrandTotal</strong></td>
-                                <td><strong><p class="cartGTotal">0</p></strong></td>
-                            </tr>
-                        </table>
-                        <div class="control-group">
-                            <div class="controls">
-                                <input class="btn" id="submit-form" type="submit" value="@Cart.SendRequest" />
+                                @for (int i=0; i < Model.ShoppingCarts.Count ; i++)
+                                {
+                                    <tr class="cartRow">
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].CartId)
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].UserCartId)
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ProductId)
+                                        <td class="product-id" style="display: none">@Model.ShoppingCarts[i].ProductId</td>
+
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ImagePath)
+                                        <td class="image-column"><a href="#"><img src="@Model.ShoppingCarts[i].ImagePath" alt=""></a></td>
+
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemNameEn)
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemNameAr)
+                                        <td><p><a href="#">@(direction == "ltr" ? Model.ShoppingCarts[i].ItemNameEn : Model.ShoppingCarts[i].ItemNameAr)</a></p></td>
+
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].SkuCode)
+                                        <td><p>@Model.ShoppingCarts[i].SkuCode</p></td>
+
+                                        <td class="quantity">
+                                            @Html.TextBoxFor(model => model.ShoppingCarts[i].Quantity, new { @class = "cartnum toBeRequired" })
+                                            @*<input id="@Model.ShoppingCarts[i].ProductId" type="text" value="@Model.ShoppingCarts[i].Quantity" class="cartnum">*@
+                                        </td>
+
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].UnitPrice)
+                                        <td><p class="cartPrice">@Model.ShoppingCarts[i].UnitPrice</p></td>
+
+                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemTotal, new { @id = "ItemTotal-" + Model.ShoppingCarts[i].ProductId , @Value = Model.ShoppingCarts[i].Quantity * Model.ShoppingCarts[i].UnitPrice })
+                                        <td><p class="cartTotal Total_@Model.ShoppingCarts[i].ProductId">@(Model.ShoppingCarts[i].Quantity * Model.ShoppingCarts[i].UnitPrice)</p></td>
+                                        <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
+                                    </tr>
+                                }
+                                <tr class="">
+                                    @Html.HiddenFor(model => model.GrandTotal, new { @id = "GrandTotal" })
+                                    <td class="cartTotalCount" colspan="5"><strong>@Cart.GrandTotal</strong></td>
+                                    <td><strong><p class="cartGTotal">0</p></strong></td>
+                                </tr>
+                            </table>
+                            <div class="control-group">
+                                <div class="controls">
+                                    @*<input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />*@
+                                    <input class="btn" id="submit-form" name="PaypalAction" type="submit" value="@Cart.PaypalPayment" />
+                                </div>
                             </div>
-                        </div>
+                        }
+                        else
+                        {
+                            <h4>@Cart.CartEmpty</h4>
+                        }
                     }
-                    else
-                    {
-                        @:@Cart.CartEmpty
-                    }
+
                 </div>
             </div>
         </div>
@@ -132,6 +148,7 @@
             jQuery(this).find(".cartTotal").text(total);
             gtotal += total;
         });
+        $("#GrandTotal").val(gtotal);
         jQuery(".cartGTotal").text(gtotal);
         return true;
     }
@@ -160,4 +177,5 @@
             }
         });
     }
+
 </script>

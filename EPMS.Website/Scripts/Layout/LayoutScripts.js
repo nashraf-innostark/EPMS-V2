@@ -133,9 +133,12 @@ function ppOpen(panel, width) {
         $.prettyPhoto.open(panel);
     }, 300);
 }
+function Gsitesearch(curobj) {
+    //curobj.q.value = "site:" + domainroot + " " + curobj.qfront.value;
+}
 
-$(document).ready(function () {
-    (function ($) {
+$(document).ready(function() {
+    (function($) {
         // ** partners carousel
         $('#partners_carousel').carouFredSel({
             responsive: true,
@@ -171,10 +174,10 @@ $(document).ready(function () {
             scrollbarMargin: '0',
             scrollbarBorderRadius: '4px',
             onSlideComplete: slideComplete,
-            onSliderLoaded: function (args) {
+            onSliderLoaded: function(args) {
                 var otherSettings = {
                     hideControls: true, // Bool, if true, the NAVIGATION ARROWS will be hidden and shown only on mouseover the slider
-                    hideCaptions: false  // Bool, if true, the CAPTIONS will be hidden and shown only on mouseover the slider
+                    hideCaptions: false // Bool, if true, the CAPTIONS will be hidden and shown only on mouseover the slider
                 }
                 sliderLoaded(args, otherSettings);
             },
@@ -183,4 +186,4 @@ $(document).ready(function () {
             autoSlide: true
         });
     })($);
-})
+});

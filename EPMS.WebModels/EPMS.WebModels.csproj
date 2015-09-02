@@ -708,6 +708,7 @@
     <Compile Include="WebsiteModels\Order.cs" />
     <Compile Include="WebsiteModels\ParentNodesSection.cs" />
     <Compile Include="WebsiteModels\Partner.cs" />
+    <Compile Include="WebsiteModels\Paypal.cs" />
     <Compile Include="WebsiteModels\Payroll.cs" />
     <Compile Include="WebsiteModels\PhysicalCountItemModel.cs" />
     <Compile Include="WebsiteModels\PhysicalCountListModel.cs" />

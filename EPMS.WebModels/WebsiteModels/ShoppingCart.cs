@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -8,6 +9,8 @@ namespace EPMS.WebModels.WebsiteModels
         public string UserCartId { get; set; }
         public long ProductId { get; set; }
         public long SizeId { get; set; }
+        [Required]
+        [Display(Name = "Quantity")]
         public int Quantity { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
@@ -18,5 +21,6 @@ namespace EPMS.WebModels.WebsiteModels
         public string SkuCode { get; set; }
         public string ImagePath { get; set; }
         public double UnitPrice { get; set; }
+        public double ItemTotal { get; set; }
     }
 }

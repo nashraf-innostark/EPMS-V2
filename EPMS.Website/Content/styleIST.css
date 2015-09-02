@@ -37,3 +37,8 @@
     font-size: 12px;
     padding-left: 2px;
 }
+
+.paypal {
+    background: url(https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif) no-repeat scroll 7px 7px;
+    padding-left: 30px;
+}
