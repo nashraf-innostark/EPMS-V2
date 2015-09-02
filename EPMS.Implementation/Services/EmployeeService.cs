@@ -13,6 +13,7 @@ namespace EPMS.Implementation.Services
 {
     public class EmployeeService : IEmployeeService
     {
+        #region Private
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly INotificationRepository notificationRepository;
         private readonly INotificationService notificationService;
@@ -25,6 +26,7 @@ namespace EPMS.Implementation.Services
         private readonly IEmployeeRequestService EmployeeRequestService;
         private readonly ITaskEmployeeService TaskEmployeeService;
         private readonly IAllowanceService allowanceService;
+        #endregion
 
         #region Constructor
 
@@ -35,7 +37,7 @@ namespace EPMS.Implementation.Services
         /// <param name="notificationRepository"></param>
         /// <param name="notificationService"></param>
         /// <param name="xRepository"></param>
-        public EmployeeService(IAspNetUserRepository aspNetUserRepository,INotificationRepository notificationRepository,INotificationService notificationService,IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IJobTitleService jobTitleService, IEmployeeRequestService employeeRequestService, ITaskEmployeeService taskEmployeeService, IAllowanceService allowanceService)
+        public EmployeeService(IAspNetUserRepository aspNetUserRepository, INotificationRepository notificationRepository, INotificationService notificationService, IEmployeeRepository xRepository, IEmployeeRequestRepository requestRepository, IAllowanceRepository allowanceRepository, IEmployeeJobHistoryRepository employeeJobHistoryRepository, IJobTitleHistoryRepository jobTitleHistoryRepository, IJobTitleService jobTitleService, IEmployeeRequestService employeeRequestService, ITaskEmployeeService taskEmployeeService, IAllowanceService allowanceService)
         {
             this.aspNetUserRepository = aspNetUserRepository;
             this.notificationRepository = notificationRepository;
@@ -62,7 +64,7 @@ namespace EPMS.Implementation.Services
         {
             if (id != null)
             {
-                return repository.Find((long) id);
+                return repository.Find((long)id);
             }
             return null;
         }
@@ -127,7 +129,7 @@ namespace EPMS.Implementation.Services
                         }
                         double sumOfAllAllowances = allowance.Sum(allowance1 => allowance1.Allowance1 + allowance1.Allowance2 + allowance1.Allowance3 + allowance1.Allowance4 + allowance1.Allowance5 ?? 0);
                         int noOfMonths = to.Month - from.Month;
-                        jobs.TotalSalaryReceived = (noOfMonths*jobs.BasicSalary) + sumOfAllAllowances;
+                        jobs.TotalSalaryReceived = (noOfMonths * jobs.BasicSalary) + sumOfAllAllowances;
                         jobs.From = Convert.ToDateTime(from)
                             .ToString("dd/MM/yyyy", new CultureInfo("en"));
                         jobs.To = Convert.ToDateTime(to)
@@ -147,14 +149,14 @@ namespace EPMS.Implementation.Services
                 response.IsError = true;
                 response.Employee = repository.Find((long)id);
                 var empJobTitleHistory = response.Employee.EmployeeJobHistories.FirstOrDefault(x => x.RecCreatedDate <= currTime);
-                var jobTitleHistory = response.Employee.JobTitle.JobTitleHistories.OrderByDescending(x=>x.RecCreatedDate).FirstOrDefault(x => empJobTitleHistory != null && ((x.JobTitleId == empJobTitleHistory.JobTitleId) && (x.RecCreatedDate <= currTime)));
+                var jobTitleHistory = response.Employee.JobTitle.JobTitleHistories.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault(x => empJobTitleHistory != null && ((x.JobTitleId == empJobTitleHistory.JobTitleId) && (x.RecCreatedDate <= currTime)));
                 if (jobTitleHistory != null)
                 {
                     response.Employee.JobTitle.JobTitleNameE = jobTitleHistory.JobTitle.JobTitleNameE;
                     response.Employee.JobTitle.BasicSalary = jobTitleHistory.BasicSalary;
                     response.IsError = false;
                 }
-                response.Allowance = allowanceRepository.FindAllownce((long) id, currTime);
+                response.Allowance = allowanceRepository.FindAllownce((long)id, currTime);
                 response.Requests = requestRepository.GetAllMonetaryRequests(currTime, (long)id);
                 return response;
             }
@@ -215,7 +217,7 @@ namespace EPMS.Implementation.Services
                 }
                 repository.Update(employee);
                 repository.SaveChanges();
-                
+
                 if (employee.EmployeeIqamaExpiryDt != null)
                 {
                     notificationService.CreateNotification("iqama", employee.EmployeeId, employee.EmployeeIqamaExpiryDt);
@@ -244,7 +246,7 @@ namespace EPMS.Implementation.Services
                 repository.SaveChanges();
             }
             catch (Exception)
-            {   
+            {
                 throw;
             }
         }

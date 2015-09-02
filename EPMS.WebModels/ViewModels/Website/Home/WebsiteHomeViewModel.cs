@@ -12,5 +12,9 @@ namespace EPMS.WebModels.ViewModels.Website.Home
         }
         public IEnumerable<WebsiteDepartment> WebsiteDepartments { get; set; }
         public IEnumerable<WebsiteModels.Partner> Partners { get; set; }
+        public string Div { get; set; }
+        public string Width { get; set; }
+        public string Code { get; set; }
+        public string UserId { get; set; }
     }
 }

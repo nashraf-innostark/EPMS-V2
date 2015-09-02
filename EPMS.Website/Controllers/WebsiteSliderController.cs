@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
 
 namespace EPMS.Website.Controllers

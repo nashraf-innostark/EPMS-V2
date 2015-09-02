@@ -36,9 +36,11 @@
     <script src="~/Scripts/flexslider.min.js"></script>
     <script src="~/Scripts/zoomsl-3.0.min.js"></script>
     <script src="~/Scripts/jquery.fancybox.pack.js"></script>
-
+    
     <script>
+        var siteUrl;
         jQuery(document).ready(function () {
+            siteUrl = jQuery("#siteURL").val();
             singleProduct();
 
             function singleProduct() {

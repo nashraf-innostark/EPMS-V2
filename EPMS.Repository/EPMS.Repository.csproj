@@ -214,6 +214,7 @@
     <Compile Include="Repositories\VendorRepository.cs" />
     <Compile Include="Repositories\WarehouseDetailRepository.cs" />
     <Compile Include="Repositories\WarehouseRepository.cs" />
+    <Compile Include="Repositories\WebsiteCustomerRepository.cs" />
     <Compile Include="Repositories\WebsiteDepartmentRepository.cs" />
     <Compile Include="Repositories\WebsiteServicesRepository.cs" />
     <Compile Include="TypeRegistrations.cs" />
