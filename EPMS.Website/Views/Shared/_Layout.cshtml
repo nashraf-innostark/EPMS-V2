@@ -81,10 +81,7 @@
 </head>
     <body class="">
         <div id="signup_div">
-            @{
-                Html.Action("SignUp", "Account");
-                //Html.Action("_SignUpPartial");
-            }
+            @Html.Action("SignUp", "Account")
         </div>
 
         <div id="page_wrapper">
@@ -141,13 +138,12 @@
                                     <div class="pPanel">
                                         <div class="inner">
                                             <span class="cart_details">
-                                                Loged in as : @User.Identity.Name
+                                                Logged in as : @User.Identity.Name
                                                 <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
                                             </span>
                                         </div>
                                     </div>
                                 </li>
-                            @*<li>Loged in as : @User.Identity.Name <a href="~/Account/LogOff" data-rel="prettyPhoto[login_panel]">Logout</a></li>*@
                             }
                             else
                             {
@@ -181,7 +177,6 @@
             @{
                 Html.RenderAction("Index", "WebsiteFooter", new { area = "" });
             }
-            @*@{ Html.RenderPartial("~/Views/Shared/_WebsiteFooter.cshtml");}*@
 
         </div>
         <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
@@ -195,9 +190,7 @@
             <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
             <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
         }
-
-
-
+        
     </body>
 
 </html>

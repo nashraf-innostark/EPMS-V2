@@ -1,8 +1,31 @@
-﻿
+﻿@using System.Globalization
+
 @{
     ViewBag.Title = "RedirectFromPaypal";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var today = DateTime.Now;
 }
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">Home Page</a></li>
+                    <li><a href="#">Payment Successful</a></li>
+                </ul>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>Thanks for Purchasing</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shadowUP"></div>
+</div>
 
 <h2>RedirectFromPaypal</h2>
 

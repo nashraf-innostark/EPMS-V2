@@ -8,6 +8,7 @@ namespace EPMS.Models.DomainModels
         public string UserCartId { get; set; }
         public long ProductId { get; set; }
         public long SizeId { get; set; }
+        public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }

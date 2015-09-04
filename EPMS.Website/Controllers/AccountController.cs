@@ -1,8 +1,11 @@
-﻿using System.Reflection;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using System.Web.Security;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
+using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using WebModels = EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
@@ -27,15 +30,17 @@ namespace EPMS.Website.Controllers
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
         private readonly IWebsiteCustomerService websiteCustomerService;
+        private readonly IShoppingCartService cartService;
 
         #endregion
 
         #region Constructor
 
-        public AccountController(IWebsiteCustomerService websiteCustomerService, IAspNetUserService aspNetUserService)
+        public AccountController(IWebsiteCustomerService websiteCustomerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService)
         {
             this.websiteCustomerService = websiteCustomerService;
             this.aspNetUserService = aspNetUserService;
+            this.cartService = cartService;
         }
 
         #endregion
@@ -110,8 +115,10 @@ namespace EPMS.Website.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<ActionResult> Login(WebCustomerIdentityViewModel model, string returnUrl)
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> Login(WebCustomerIdentityViewModel model)
         {
+            string returnUrl = Request.UrlReferrer.PathAndQuery;
             try
             {
                 var user = await UserManager.FindByNameAsync(model.Login.UserName);
@@ -127,12 +134,16 @@ namespace EPMS.Website.Controllers
                 }
                 // This doen't count login failures towards lockout only two factor authentication
                 // To enable password failures to trigger lockout, change to shouldLockout: true
-                var result = await SignInManager.PasswordSignInAsync(model.Login.UserName, model.Login.Password, model.Login.RememberMe, false);
+                var result =
+                    await
+                        SignInManager.PasswordSignInAsync(model.Login.UserName, model.Login.Password, model.Login.RememberMe,
+                            shouldLockout: false);
 
                 switch (result)
                 {
                     case SignInStatus.Success:
                         {
+                            SaveCartToDB(user.Id);
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Home");
                             return RedirectToLocal(returnUrl);
@@ -162,6 +173,25 @@ namespace EPMS.Website.Controllers
             }
             return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
         }
+        private void SaveCartToDB(string userId)
+        {
+            Session["ShoppingCartId"] = userId;
+            var items = Session["ShoppingCartItems"];
+            if (items != null)
+            {
+                IList<WebModels.WebsiteModels.ShoppingCart> cartItems = (List<WebModels.WebsiteModels.ShoppingCart>)Session["ShoppingCartItems"];
+                foreach (var cartItem in cartItems)
+                {
+                    cartItem.UserCartId = userId;
+                    cartItem.RecCreatedBy = userId;
+                    cartItem.RecCreatedDate = DateTime.Now;
+                    cartItem.RecLastUpdatedBy = userId;
+                    cartItem.RecLastUpdatedDate = DateTime.Now;
+                }
+                var cartToSave = cartItems.Select(x => x.CreateFromClientToServer());
+                cartService.AddShoppingCart(cartToSave);
+            }
+        }
         #endregion
 
         #region Register
@@ -178,9 +208,8 @@ namespace EPMS.Website.Controllers
 
         [HttpPost]
         [AllowAnonymous]
-        [MultiButton(MatchFormKey = "login", MatchFormValue = "LOG IN")]
         //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
-        public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel, string returnUrl)
+        public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel)
         {
             var users = aspNetUserService.GetAllUsers().ToList();
             if (users.Any())

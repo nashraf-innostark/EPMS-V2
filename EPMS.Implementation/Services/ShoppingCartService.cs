@@ -53,12 +53,15 @@ namespace EPMS.Implementation.Services
             return repository.GetAll();
         }
 
-        public bool AddShoppingCart(ShoppingCart cart)
+        public bool AddShoppingCart(IEnumerable<ShoppingCart> cart)
         {
             try
             {
-                repository.Add(cart);
-                repository.SaveChanges();
+                foreach (var shoppingCart in cart)
+                {
+                    repository.Add(shoppingCart);
+                    repository.SaveChanges();
+                }
                 return true;
             }
             catch (Exception)

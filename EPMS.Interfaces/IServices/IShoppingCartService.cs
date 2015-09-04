@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
         ShoppingCartResponse GetUserCart(string userCartId);
         bool AddToUserCart(ShoppingCartSearchRequest request);
         IEnumerable<ShoppingCart> GetAll();
-        bool AddShoppingCart(ShoppingCart cart);
+        bool AddShoppingCart(IEnumerable<ShoppingCart> cart);
         bool UpdateShoppingCart(ShoppingCart cart);
         void DeleteShoppingCart(ShoppingCart cart);
     }

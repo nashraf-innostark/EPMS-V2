@@ -36,6 +36,7 @@ namespace EPMS.Website.Controllers
             ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel();
             bool isItemsExist = false;
             string cartId = GetCartId();
+            // check local
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
@@ -46,6 +47,7 @@ namespace EPMS.Website.Controllers
                     viewModel.ShoppingCarts = cartItems;
                 }
             }
+            // check DB
             if (!isItemsExist)
             {
                 viewModel.ShoppingCarts = !string.IsNullOrEmpty(cartId)
@@ -135,7 +137,7 @@ namespace EPMS.Website.Controllers
                         Quantity = quantity,
                         ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                         ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
-                        UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
+                        UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
                         SkuCode = userProduct.SKUCode,
                         ImagePath = imagePath,
                         RecCreatedDate = DateTime.Now,
@@ -156,7 +158,7 @@ namespace EPMS.Website.Controllers
                     Quantity = quantity,
                     ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                     ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
-                    UnitPrice = Convert.ToDouble(userProduct.ProductPrice),
+                    UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
                     SkuCode = userProduct.SKUCode,
                     ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage,
                     RecCreatedDate = DateTime.Now

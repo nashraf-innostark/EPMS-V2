@@ -15,6 +15,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
                 CartId = source.CartId,
                 UserCartId = source.UserCartId,
                 ProductId = source.ProductId,
+                UnitPrice = source.UnitPrice,
                 Quantity = source.Quantity,
                 SizeId = source.SizeId,
                 RecCreatedBy = source.RecCreatedBy,
@@ -48,7 +49,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
                 ItemNameEn = source.Product.ItemVariationId != null ? source.Product.ItemVariation.InventoryItem.ItemNameEn : source.Product.ProductNameEn,
                 ItemNameAr = source.Product.ItemVariationId != null ? source.Product.ItemVariation.InventoryItem.ItemNameAr : source.Product.ProductNameAr,
                 SkuCode = source.Product.ItemVariationId != null ? source.Product.ItemVariation.SKUCode : source.Product.SKUCode,
-                UnitPrice = source.Product.ItemVariationId != null ? (double)source.Product.ItemVariation.UnitPrice : Convert.ToDouble(source.Product.ProductPrice),
+                UnitPrice = source.Product.ItemVariationId != null ? Convert.ToDecimal(source.Product.ItemVariation.UnitPrice) : Convert.ToDecimal(source.Product.ProductPrice),
                 ImagePath = itemImageFolder
             };
         }

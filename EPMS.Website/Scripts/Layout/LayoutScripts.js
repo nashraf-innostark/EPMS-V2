@@ -3,13 +3,14 @@
         '<div id="login_panel">' +
             '<div class="inner-container login-panel">' +
                 '<h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>' +
-                '<form action="/Account/Login" class="form-horizontal" id="LoginFrom" method="post" role="form" novalidate="novalidate">' +
+                '<form action="/Account/Login" class="form-horizontal" enctype="multipart/form-data" id="LoginFrom" method="post" role="form">' +
                 '<a class="create_account cursorHand" onclick="ppOpen(\'#register_panel\', \'280\');">CREATE ACCOUNT</a>' +
+                '<input name="__RequestVerificationToken" type="hidden" value="koJQmo6TpKsbNn1QdmciQVndSse4PT5G7S_9YcBzUzUqv8wXzhBj1ZxYBxNfZ7uwCMZAp_kEFSa1UyYZ8S5lJefHyuPbCxlX9UfyXbpoh3Y1">' +
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The User Name field is required." id="LoginUserName" name="Login.UserName" placeholder="UserName" type="text" value="">' +
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The Password field is required." id="LoginPassword" name="Login.Password" placeholder="Password" type="password">' +
                 '<input type="submit" id="login" name="submit" value="LOG IN">' +
                 ' <a href="#" class="login_facebook">login with facebook</a>' +
-                '</form>            ' +
+                '</form>' +
             '<div class="links"><a href="#" onclick="ppOpen(\'#forgot_panel\', \'350\');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen(\'#resetpassword_panel\', \'350\');">RESET YOUR PASSWORD?</a></div>' +
             ' </div>' +
         '</div><!-- end login panel -->' +
@@ -77,6 +78,8 @@
     '</div>' +
 '</div>';
 $(document).ready(function ($) {
+    //$("#signup_div").empty();
+    //$("#signup_div").append(signup);
     // Notification
     var message = $("#Message").val();
     var isSaved = $("#IsSaved").val();

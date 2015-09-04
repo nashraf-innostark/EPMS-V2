@@ -18,30 +18,34 @@ namespace EPMS.Website.Controllers
         }
 
         [HttpPost]
-        [MultiButton(MatchFormKey = "PaypalAction", MatchFormValue = "Pay with Paypal")]
         public ActionResult PostTotPaypal(ShoppingCartListViewModel model)
-        { 
+        {
             Paypal paypal = new Paypal
             {
-                cmd = "_xclick",
+                cmd = "_cart",
                 business = ConfigurationManager.AppSettings["BusinessAccountKey"],
+                upload = "1"
             };
             bool useSandbox = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSandbox"]);
             ViewBag.actionURL = useSandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr";
             paypal.cancel_return = ConfigurationManager.AppSettings["CancelURL"];
-            paypal.@return = ConfigurationManager.AppSettings["ReturnURL"];
+            paypal.return_url = ConfigurationManager.AppSettings["ReturnURL"];
             paypal.notify_url = ConfigurationManager.AppSettings["NotifyURL"];
             paypal.currency_code = ConfigurationManager.AppSettings["CurrencyCode"];
 
-            paypal.item_name = model.ShoppingCarts.FirstOrDefault().ItemNameEn;
-            paypal.amount = model.GrandTotal.ToString();
-            paypal.quantity = model.ShoppingCarts.FirstOrDefault().Quantity.ToString();
             ViewBag.CartItems = model.ShoppingCarts;
             return View(paypal);
         }
 
         public ActionResult RedirectFromPaypal()
         {
+            var response = Request.QueryString;
+            string transaction_id = response["tx"];
+            string status = response["st"];
+            string amount = response["amt"];
+            string currency_code = response["cc"];
+            string cm = response["cm"];
+            string item_number = response["item_number"];
             return View();
         }
         public ActionResult NotifyFromPaypal()

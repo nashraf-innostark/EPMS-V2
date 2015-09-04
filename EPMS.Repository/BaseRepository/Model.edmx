@@ -1428,6 +1428,7 @@
           <Property Name="UserCartId" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
           <Property Name="SizeId" Type="bigint" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
@@ -7953,6 +7954,7 @@
           <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Product" Relationship="EPMSInventoryModel.FK_ShoppingCart_Product" FromRole="ShoppingCart" ToRole="Product" />
           <NavigationProperty Name="Size" Relationship="EPMSInventoryModel.FK_ShoppingCart_Size" FromRole="ShoppingCart" ToRole="Size" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
         </EntityType>
         <Association Name="FK_ShoppingCart_Product">
           <End Type="EPMSInventoryModel.Product" Role="Product" Multiplicity="1" />
@@ -9731,6 +9733,7 @@
           <EntitySetMapping Name="ShoppingCarts">
             <EntityTypeMapping TypeName="EPMSInventoryModel.ShoppingCart">
               <MappingFragment StoreEntitySet="ShoppingCart">
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />

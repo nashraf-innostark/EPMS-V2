@@ -10,11 +10,11 @@
             <h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>
             @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "LoginFrom", role = "form", enctype = "multipart/form-data" }))
             {
-                @Html.Hidden("returnUrl", this.Request.RawUrl)
                 <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">CREATE ACCOUNT</a>
+                @Html.AntiForgeryToken()
                 @Html.TextBoxFor(model => model.Login.UserName, new { @id = "LoginUserName", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                 @Html.PasswordFor(model => model.Login.Password, new { @id = "LoginPassword", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
-                <input type="submit" id="login" name="login" value="LOG IN" />
+                <input type="submit" id="login" name="submit" value="LOG IN" />
                 <a href="#" class="login_facebook">login with facebook</a>
             }
             <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen('#resetpassword_panel', '350');">RESET YOUR PASSWORD?</a></div>

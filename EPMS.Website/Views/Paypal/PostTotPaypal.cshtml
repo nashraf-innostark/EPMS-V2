@@ -1,7 +1,6 @@
 ﻿@using System.Globalization
-@using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
 @using EPMS.WebModels.WebsiteModels
-@model EPMS.WebModels.WebsiteModels.Paypal
+@model Paypal
 
 @{
     ViewBag.Title = "PostTotPaypal";
@@ -36,17 +35,19 @@
 </p>
 
 <form id="paypal-form" action="@ViewBag.actionURL">
-    @Html.HiddenFor(model => model.cmd)
-    @*@Html.HiddenFor(model => model.upload)*@
-    @Html.HiddenFor(model => model.business)
-    @Html.HiddenFor(model => model.no_shipping)
-    @Html.HiddenFor(model => model.@return)
-    @Html.HiddenFor(model => model.cancel_return)
-    @Html.HiddenFor(model => model.notify_url)
-    @Html.HiddenFor(model => model.currency_code)
-    @Html.HiddenFor(model => model.item_name)
-    @Html.HiddenFor(model => model.amount)
-    
+    <input type="hidden" name="cmd" value="@Model.cmd">
+    <input type="hidden" name="upload" value="@Model.upload">
+    <input type="hidden" name="business" value="@Model.business">
+    <input type="hidden" name="return" value="@Model.return_url">
+    <input type="hidden" name="cancel_return" value="@Model.cancel_return">
+    <input type="hidden" name="notify_url" value="@Model.notify_url">
+    <input type="hidden" name="currency_code" value="@Model.currency_code">
+    @for (int i = 0; i < cartItems.Count; i++)
+    {
+        <input type="hidden" name="item_name_@(i+1)" value="@cartItems[i].ItemNameEn">
+        <input type="hidden" name="amount_@(i+1)" value="@cartItems[i].UnitPrice">
+        <input type="hidden" name="quantity_@(i+1)" value="@cartItems[i].Quantity">
+    }
 </form>
 
 <script>
