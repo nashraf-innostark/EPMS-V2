@@ -31,6 +31,8 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 SKUCode = source.SKUCode,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
+                DeptColor = source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor,
+                ItemDesc = source.ItemVariation.DescriptionEn,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ItemNameEn = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionEn : "",
