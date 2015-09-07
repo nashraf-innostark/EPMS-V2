@@ -14,6 +14,6 @@ namespace EPMS.Models.DomainModels
         public DateTime RecLastUpdatedDt { get; set; }
 
         public virtual ICollection<ItemVariation> ItemVariations { get; set; }
-        public virtual ICollection<ShoppingCart> ShoppingCarts { get; set; }
+        public virtual ICollection<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

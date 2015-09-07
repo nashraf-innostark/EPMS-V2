@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.NewsAndArticle;
 
 namespace EPMS.Website.Controllers
@@ -41,6 +42,7 @@ namespace EPMS.Website.Controllers
                     NewsOrArticle = true
                 });
             }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(new NewsAndArticleListViewModel
             {
                 NewsAndArticles =

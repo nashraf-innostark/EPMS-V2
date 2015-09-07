@@ -1,12 +1,16 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Department;
 using EPMS.WebModels.ModelMappers.Website.Partner;
+using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Website.Department;
 using EPMS.WebModels.ViewModels.Website.Home;
+using EPMS.WebModels.WebsiteModels;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
@@ -16,15 +20,32 @@ namespace EPMS.Website.Controllers
 
         private readonly IWebsiteDepartmentService websiteDepartmentService;
         private readonly IWebsiteHomePageService websiteHomePageService;
+        private readonly IShoppingCartService cartService;
+
+        private void SetSessionValues()
+        {
+            if (User.Identity.IsAuthenticated)
+            {
+                string userId = User.Identity.GetUserId();
+                Session["ShoppingCartId"] = userId;
+                var response = cartService.FindByUserCartId(userId);
+                if (response != null)
+                {
+                    ShoppingCart userCart = response.CreateFromServerToClient();
+                    Session["ShoppingCartItems"] = userCart;
+                }
+            }
+        }
 
         #endregion
 
         #region Constructor
 
-        public HomeController(IWebsiteDepartmentService websiteDepartmentService, IWebsiteHomePageService websiteHomePageService)
+        public HomeController(IWebsiteDepartmentService websiteDepartmentService, IWebsiteHomePageService websiteHomePageService, IShoppingCartService cartService)
         {
             this.websiteDepartmentService = websiteDepartmentService;
             this.websiteHomePageService = websiteHomePageService;
+            this.cartService = cartService;
         }
 
         #endregion
@@ -34,6 +55,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Index(string div, string width, string code, string userId)
         {
             WebsiteHomeResponse response = websiteHomePageService.websiteHomeResponse();
+            SetSessionValues();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.Controller = "Home";
             ViewBag.Action = "Index";

@@ -14,6 +14,7 @@ namespace EPMS.Implementation.Services
         #region Private
 
         private readonly IShoppingCartRepository repository;
+        private readonly IShoppingCartItemRepository itemRepository;
         
         #endregion
         
@@ -21,9 +22,10 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ShoppingCartService(IShoppingCartRepository repository)
+        public ShoppingCartService(IShoppingCartRepository repository, IShoppingCartItemRepository itemRepository)
         {
             this.repository = repository;
+            this.itemRepository = itemRepository;
         }
 
         #endregion
@@ -34,6 +36,11 @@ namespace EPMS.Implementation.Services
             return repository.Find(id);
         }
 
+        public ShoppingCart FindByUserCartId(string userCartId)
+        {
+            return repository.FindByUserCartId(userCartId);
+        }
+
         public ShoppingCartResponse GetUserCart(string userCartId)
         {
             ShoppingCartResponse response =  new ShoppingCartResponse
@@ -41,11 +48,6 @@ namespace EPMS.Implementation.Services
                 ShoppingCarts = repository.GetCartByUserCartId(userCartId).ToList()
             };
             return response;
-        }
-
-        public bool AddToUserCart(ShoppingCartSearchRequest request)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<ShoppingCart> GetAll()
@@ -70,6 +72,52 @@ namespace EPMS.Implementation.Services
             }
         }
 
+        public bool AddItemToCart(ShoppingCart cart)
+        {
+            try
+            {
+                repository.Add(cart);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool SyncShoppingCart(ShoppingCartSearchRequest request)
+        {
+            var dbCartList = FindByUserCartId(request.UserCartId);
+            if (dbCartList != null)
+            {
+                foreach (var shoppingCart in request.ShoppingCart.ShoppingCartItems)
+                {
+                    var cartItem = shoppingCart;
+                    ShoppingCartItem listItem =
+                        dbCartList.ShoppingCartItems.FirstOrDefault(
+                            x => x.ProductId == cartItem.ProductId && x.SizeId == cartItem.SizeId);
+                    if (listItem != null)
+                    {
+                        listItem.Quantity += shoppingCart.Quantity;
+                        itemRepository.Update(listItem);
+                    }
+                    else
+                    {
+                        shoppingCart.CartId = dbCartList.CartId;
+                        itemRepository.Add(shoppingCart);
+                    }
+                }
+                itemRepository.SaveChanges();
+            }
+            else
+            {
+                repository.Add(request.ShoppingCart);
+                repository.SaveChanges();
+            }
+            return true;
+        }
+
         public bool UpdateShoppingCart(ShoppingCart cart)
         {
             try
@@ -84,8 +132,9 @@ namespace EPMS.Implementation.Services
             }
         }
 
-        public void DeleteShoppingCart(ShoppingCart cart)
+        public void DeleteShoppingCart(long cartId)
         {
+            var cart = FindById(cartId);
             repository.Delete(cart);
             repository.SaveChanges();
         }

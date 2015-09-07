@@ -1,0 +1,110 @@
+﻿@using System.Globalization
+@model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
+
+@{
+    ViewBag.Title = "CheckOut";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var today = DateTime.Now;
+}
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">HomePage</a></li>
+                    <li>CheckOut</li>
+                </ul>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>CheckOut</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="shadowUP"></div>
+</div>
+
+<div class="control-group row-fluid" style="margin-top: 50px">
+    <div class="span3"></div>
+    <div class="span9">
+        <div class="controls">
+            <label>
+                <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
+                Pay with Paypal
+            </label>
+            <br />
+            <label>
+                <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
+                Pay Offline
+            </label>
+            <br />
+            <label>
+                <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
+                Manual Delivery
+            </label>
+        </div>
+    </div>
+</div>
+
+<div id="PaypalDiv" class="hide">
+    @using (Html.BeginForm("PostTotPaypal", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
+    {
+        if (Model.ShoppingCart != null && Model.ShoppingCart.ShoppingCartItems.Any())
+        {
+            for (int i = 0; i < Model.ShoppingCart.ShoppingCartItems.Count; i++)
+            {
+                @Html.HiddenFor(model => model.ShoppingCart.CartId)
+                @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
+                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal,
+                new
+                {
+                    @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId,
+                    @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice
+                })
+            }
+        }
+        <input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />
+    }
+</div>
+<div id="OfflineDiv" class="hide">
+    Offline
+</div>
+<div id="ManualDeliveryDiv" class="hide">
+    Manual Delivery
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("input[name=PaymentMethod]:radio").change(function () {
+            if ($(this).val() == "Paypal") {
+                $("#PaypalDiv").show();
+                $("#OfflineDiv").hide();
+                $("#ManualDeliveryDiv").hide();
+            }
+            if ($(this).val() == "Offline") {
+                $("#OfflineDiv").show();
+                $("#PaypalDiv").hide();
+                $("#ManualDeliveryDiv").hide();
+            }
+            if ($(this).val() == "ManualDelivery") {
+                $("#ManualDeliveryDiv").show();
+                $("#PaypalDiv").hide();
+                $("#OfflineDiv").hide();
+            }
+        });
+    });
+    function paypal() {
+        window.location.href = "/"
+    }
+</script>

@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.Product;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Product;
 
 namespace EPMS.Website.Controllers
@@ -26,6 +27,7 @@ namespace EPMS.Website.Controllers
             {
                 Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
             };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
     }

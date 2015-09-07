@@ -1693,6 +1693,7 @@
     <Content Include="Views\Paypal\RedirectFromPaypal.cshtml" />
     <Content Include="Views\Paypal\NotifyFromPaypal.cshtml" />
     <Content Include="Views\Paypal\CancelFromPaypal.cshtml" />
+    <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

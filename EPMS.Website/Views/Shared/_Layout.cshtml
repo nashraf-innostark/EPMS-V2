@@ -108,8 +108,8 @@
                                             var items = Session["ShoppingCartItems"];
                                             if (items != null)
                                             {
-                                                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
-                                                <span class="cart_details">Number of items @cart.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
+                                                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                                                <span class="cart_details">Number of items @cart.ShoppingCartItems.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
                                             }
                                             else
                                             {

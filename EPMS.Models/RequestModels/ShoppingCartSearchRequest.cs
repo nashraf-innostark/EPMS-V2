@@ -1,9 +1,12 @@
-﻿namespace EPMS.Models.RequestModels
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
+
+namespace EPMS.Models.RequestModels
 {
     public class ShoppingCartSearchRequest
     {
-        public long ProductId { get; set; }
-        public string From { get; set; }
         public string UserCartId { get; set; }
+        public IEnumerable<ShoppingCart> ShoppingCarts { get; set; }
+        public ShoppingCart ShoppingCart { get; set; }
     }
 }

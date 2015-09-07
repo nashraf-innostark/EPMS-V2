@@ -171,6 +171,7 @@
     <Compile Include="DomainModels\RIFItem.cs" />
     <Compile Include="DomainModels\RIFItemHistory.cs" />
     <Compile Include="DomainModels\ShoppingCart.cs" />
+    <Compile Include="DomainModels\ShoppingCartItem.cs" />
     <Compile Include="DomainModels\TIR.cs" />
     <Compile Include="DomainModels\TIRHistory.cs" />
     <Compile Include="DomainModels\TIRItem.cs" />

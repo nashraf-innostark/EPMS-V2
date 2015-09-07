@@ -12,9 +12,10 @@
             {
                 <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">CREATE ACCOUNT</a>
                 @Html.AntiForgeryToken()
+                <input type="hidden" id="fromLogin" name="fromLogin" value="" />
                 @Html.TextBoxFor(model => model.Login.UserName, new { @id = "LoginUserName", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                 @Html.PasswordFor(model => model.Login.Password, new { @id = "LoginPassword", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
-                <input type="submit" id="login" name="submit" value="LOG IN" />
+                <input type="submit" id="login" name="submit" value="LOG IN" onclick="setSignUpFromValue(1)" />
                 <a href="#" class="login_facebook">login with facebook</a>
             }
             <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen('#resetpassword_panel', '350');">RESET YOUR PASSWORD?</a></div>
@@ -25,6 +26,7 @@
             <h3 class="m_title">CREATE ACCOUNT</h3>
             @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "SignUpFrom", role = "form" }))
             {
+                <input type="hidden" id="fromSignUp" name="fromSignUp" value="" />
                 <p>
                     @Html.TextBoxFor(model => model.SignUp.UserName, new { @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                     @Html.ValidationMessageFor(m => m.SignUp.UserName, String.Empty, new { @class = "required" })
@@ -46,33 +48,35 @@
                     @Html.ValidationMessageFor(m => m.SignUp.ConfirmPassword, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="create" value="CREATE MY ACCOUNT" @*onclick="validateFrom(event)"*@ />
+                    <input type="submit" id="create" value="CREATE MY ACCOUNT" onclick="setSignUpFromValue(2)" />
                 </p>
             }
             <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY HAVE AN ACCOUNT?</a></div>
         </div>
-    </div><!-- end register panel -->
+    </div>
     <div id="forgot_panel">
         <div class="inner-container forgot-panel">
             <h3 class="m_title">FORGOT YOUR DETAILS?</h3>
             @using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ForgotPasswordFrom", role = "form" }))
             {
+                <input type="hidden" id="fromForgot" name="fromForgot" value="" />
                 <p>
                     @Html.TextBoxFor(model => model.ForgotPassword.UserName, new { @id = "ForgotPasswordEmail", @class = "toBeRequired", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                     @Html.ValidationMessageFor(m => m.ForgotPassword.UserName, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!" />
+                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!" onclick="setSignUpFromValue(3)" />
                 </p>
             }
             <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">AAH, WAIT, I REMEMBER NOW!</a></div>
         </div>
-    </div><!-- end register panel -->
+    </div>
     <div id="resetpassword_panel">
         <div class="inner-container register-panel">
             <h3 class="m_title">Reset Password</h3>
             @using (Html.BeginForm("ResetPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ResetPasswordFrom", role = "form" }))
             {
+                <input type="hidden" id="fromReset" name="fromReset" value="" />
                 @Html.HiddenFor(model => model.ResetPassword.Code, new { @id = "reset-code" })
                 @Html.HiddenFor(model => model.ResetPassword.UserId, new { @id = "user-id" })
                 <p>
@@ -84,7 +88,7 @@
                     @Html.ValidationMessageFor(m => m.ResetPassword.ConfirmPassword, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="reset" value="RESET" />
+                    <input type="submit" id="reset" value="RESET" onclick="setSignUpFromValue(4)" />
                 </p>
             }
             <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY RESET?</a></div>
@@ -167,4 +171,22 @@
             });
         }
     });
+    function setSignUpFromValue(num) {
+        switch (num) {
+            case 1:
+                $("#fromLogin").val("Login");
+                break;
+            case 2:
+                $("#fromSignUp").val("SignUp");
+                break;
+            case 3:
+                $("#fromForgot").val("Forgot");
+                break;
+            case 4:
+                $("#fromReset").val("Reset");
+                break;
+            default:
+        }
+        return true;
+    }
 </script>

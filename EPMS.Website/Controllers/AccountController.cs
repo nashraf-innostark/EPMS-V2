@@ -5,6 +5,7 @@ using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
+using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using WebModels = EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
@@ -58,37 +59,37 @@ namespace EPMS.Website.Controllers
         }
 
         #region Change Password
-        public ActionResult ChangePassword()
-        {
-            return View();
-        }
-        // POST: /Account/ChangePassword
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-            var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
-            if (result.Succeeded)
-            {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
-                if (user != null)
-                {
-                    await SignInAsync(user, false);
-                }
-                //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
-                //return RedirectToAction("Index", "Dashboard");
-                ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
+        //public ActionResult ChangePassword()
+        //{
+        //    return View();
+        //}
+        //// POST: /Account/ChangePassword
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<ActionResult> ChangePassword(ChangePasswordViewModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return View(model);
+        //    }
+        //    var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+        //    if (result.Succeeded)
+        //    {
+        //        var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+        //        if (user != null)
+        //        {
+        //            await SignInAsync(user, false);
+        //        }
+        //        //return RedirectToAction("Index", new { Message = IdentitySample.Controllers.ManageController.ManageMessageId.ChangePasswordSuccess });
+        //        //return RedirectToAction("Index", "Dashboard");
+        //        ViewBag.MessageVM = new MessageViewModel { Message = "Password has been updated.", IsUpdated = true };
 
-                return View();
-            }
-            ViewBag.MessageVM = new MessageViewModel { Message = "Incorrect old Password", IsError = true };
-            AddErrors(result);
-            return View(model);
-        }
+        //        return View();
+        //    }
+        //    ViewBag.MessageVM = new MessageViewModel { Message = "Incorrect old Password", IsError = true };
+        //    AddErrors(result);
+        //    return View(model);
+        //}
         private async Task SignInAsync(AspNetUser user, bool isPersistent)
         {
             //AuthenticationManager.SignOut(DefaultAuthenticationTypes.ExternalCookie, DefaultAuthenticationTypes.TwoFactorCookie);
@@ -179,17 +180,20 @@ namespace EPMS.Website.Controllers
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
-                IList<WebModels.WebsiteModels.ShoppingCart> cartItems = (List<WebModels.WebsiteModels.ShoppingCart>)Session["ShoppingCartItems"];
-                foreach (var cartItem in cartItems)
+                WebModels.WebsiteModels.ShoppingCart cart = (WebModels.WebsiteModels.ShoppingCart)Session["ShoppingCartItems"];
+                cart.UserCartId = userId;
+                cart.Status = false;
+                cart.RecCreatedBy = userId;
+                cart.RecCreatedDate = DateTime.Now;
+                cart.RecLastUpdatedBy = userId;
+                cart.RecLastUpdatedDate = DateTime.Now;
+                var cartToSave = cart.CreateFromClientToServer();
+                ShoppingCartSearchRequest request = new ShoppingCartSearchRequest
                 {
-                    cartItem.UserCartId = userId;
-                    cartItem.RecCreatedBy = userId;
-                    cartItem.RecCreatedDate = DateTime.Now;
-                    cartItem.RecLastUpdatedBy = userId;
-                    cartItem.RecLastUpdatedDate = DateTime.Now;
-                }
-                var cartToSave = cartItems.Select(x => x.CreateFromClientToServer());
-                cartService.AddShoppingCart(cartToSave);
+                    UserCartId = userId,
+                    ShoppingCart = cartToSave
+                };
+                cartService.SyncShoppingCart(request);
             }
         }
         #endregion
@@ -211,6 +215,10 @@ namespace EPMS.Website.Controllers
         //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
         public async Task<ActionResult> Signup(WebCustomerIdentityViewModel viewModel)
         {
+            if (Request.Form["fromSignUp"] == null || Request.Form["fromSignUp"] != "SignUp")
+            {
+                return View();
+            }
             var users = aspNetUserService.GetAllUsers().ToList();
             if (users.Any())
             {
@@ -284,53 +292,6 @@ namespace EPMS.Website.Controllers
         public ActionResult Error()
         {
             return View("Error");
-        }
-
-        //
-        // GET: /Account/VerifyCode
-        [AllowAnonymous]
-        public async Task<ActionResult> VerifyCode(string provider, string returnUrl)
-        {
-            // Require that the user has already logged in via username/password or external login
-            if (!await SignInManager.HasBeenVerifiedAsync())
-            {
-                return View("Error");
-            }
-            var user = await UserManager.FindByIdAsync(await SignInManager.GetVerifiedUserIdAsync());
-            if (user != null)
-            {
-                ViewBag.Status = "For DEMO purposes the current " + provider + " code is: " +
-                                 await UserManager.GenerateTwoFactorTokenAsync(user.Id, provider);
-            }
-            return View(new VerifyCodeViewModel { Provider = provider, ReturnUrl = returnUrl });
-        }
-
-        //
-        // POST: /Account/VerifyCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> VerifyCode(VerifyCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(model);
-            }
-
-            var result =
-                await
-                    SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, false, model.RememberBrowser);
-            switch (result)
-            {
-                case SignInStatus.Success:
-                    return RedirectToLocal(model.ReturnUrl);
-                case SignInStatus.LockedOut:
-                    return View("Lockout");
-                case SignInStatus.Failure:
-                default:
-                    ModelState.AddModelError("", "Invalid code.");
-                    return View(model);
-            }
         }
 
         //
@@ -422,7 +383,7 @@ namespace EPMS.Website.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View(model);
+                return RedirectToAction("Index", "Home", new { div = "resetpassword_panel", width = "350" });
             }
 
             var result = await UserManager.ResetPasswordAsync(model.ResetPassword.UserId, model.ResetPassword.Code, model.ResetPassword.Password);
@@ -441,46 +402,6 @@ namespace EPMS.Website.Controllers
         public ActionResult ResetPasswordConfirmation()
         {
             return View();
-        }
-
-        //
-        // POST: /Account/ExternalLogin
-
-
-        //
-        // GET: /Account/SendCode
-        [AllowAnonymous]
-        public async Task<ActionResult> SendCode(string returnUrl)
-        {
-            var userId = await SignInManager.GetVerifiedUserIdAsync();
-            if (userId == null)
-            {
-                return View("Error");
-            }
-            var userFactors = await UserManager.GetValidTwoFactorProvidersAsync(userId);
-            var factorOptions =
-                userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose }).ToList();
-            return View(new SendCodeViewModel { Providers = factorOptions, ReturnUrl = returnUrl });
-        }
-
-        //
-        // POST: /Account/SendCode
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> SendCode(SendCodeViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-
-            // Generate the token and send it
-            if (!await SignInManager.SendTwoFactorCodeAsync(model.SelectedProvider))
-            {
-                return View("Error");
-            }
-            return RedirectToAction("VerifyCode", new { Provider = model.SelectedProvider, ReturnUrl = model.ReturnUrl });
         }
 
         #endregion

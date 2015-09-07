@@ -6,9 +6,10 @@
                 '<form action="/Account/Login" class="form-horizontal" enctype="multipart/form-data" id="LoginFrom" method="post" role="form">' +
                 '<a class="create_account cursorHand" onclick="ppOpen(\'#register_panel\', \'280\');">CREATE ACCOUNT</a>' +
                 '<input name="__RequestVerificationToken" type="hidden" value="koJQmo6TpKsbNn1QdmciQVndSse4PT5G7S_9YcBzUzUqv8wXzhBj1ZxYBxNfZ7uwCMZAp_kEFSa1UyYZ8S5lJefHyuPbCxlX9UfyXbpoh3Y1">' +
+                '<input type="hidden" id="fromLogin" name="fromLogin" value="" />' +
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The User Name field is required." id="LoginUserName" name="Login.UserName" placeholder="UserName" type="text" value="">' +
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The Password field is required." id="LoginPassword" name="Login.Password" placeholder="Password" type="password">' +
-                '<input type="submit" id="login" name="submit" value="LOG IN">' +
+                '<input type="submit" id="login" name="submit" value="LOG IN" onclick="setSignUpFromValue(1)">' +
                 ' <a href="#" class="login_facebook">login with facebook</a>' +
                 '</form>' +
             '<div class="links"><a href="#" onclick="ppOpen(\'#forgot_panel\', \'350\');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen(\'#resetpassword_panel\', \'350\');">RESET YOUR PASSWORD?</a></div>' +
@@ -17,7 +18,9 @@
         '<div id="register_panel">' +
             '<div class="inner-container register-panel">' +
                 '<h3 class="m_title">CREATE ACCOUNT</h3>' +
-                    '<form action="/Account/SignUp" class="form-horizontal" id="SignUpFrom" method="post" role="form" novalidate="novalidate">                <p>' +
+                    '<form action="/Account/SignUp" class="form-horizontal" id="SignUpFrom" method="post" role="form" novalidate="novalidate">' +
+                        '<input type="hidden" id="fromSignUp" name="fromSignUp" value="" />' +
+                        '<p>' +
                         '<input class="toBeRequired" data-val="true" data-val-required="User Name is required." id="SignUp_UserName" name="SignUp.UserName" placeholder="UserName" type="text" value="">' +
                         '</p>' +
                         '<p>' +
@@ -36,7 +39,7 @@
                         '<span class="field-validation-valid required" data-valmsg-for="SignUp.ConfirmPassword" data-valmsg-replace="true"></span>' +
                         '</p>' +
                         '<p>' +
-                        '<input type="submit" id="create" value="CREATE MY ACCOUNT">' +
+                        '<input type="submit" id="create" value="CREATE MY ACCOUNT" onclick="setSignUpFromValue(2)">' +
                         '</p>' +
                     '</form>' +
                     '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">ALREADY HAVE AN ACCOUNT?</a></div>' +
@@ -46,11 +49,12 @@
             '<div class="inner-container forgot-panel">' +
                 '<h3 class="m_title">FORGOT YOUR DETAILS?</h3>' +
                 '<form action="/Account/ForgotPassword" class="form-horizontal" id="ForgotPasswordFrom" method="post" role="form" novalidate="novalidate">' +
+                    '<input type="hidden" id="fromForgot" name="fromForgot" value="" />' +
                     '<p>' +
                     '<input class="toBeRequired" data-val="true" data-val-required="The User Name field is required." id="ForgotPasswordEmail" name="ForgotPassword.UserName" placeholder="UserName" type="text" value="">' +
                     '</p>' +
                     '<p>' +
-                    '<input type="submit" id="recover" name="submit" value="SEND MY DETAILS!"> </p>' +
+                    '<input type="submit" id="recover" name="submit" value="SEND MY DETAILS!" onclick="setSignUpFromValue(3)"> </p>' +
                 '</form>' +
                 '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">AAH, WAIT, I REMEMBER NOW!</a></div>' +
             '</div>' +
@@ -59,6 +63,7 @@
         '<div class="inner-container register-panel">' +
             '<h3 class="m_title">Reset Password</h3>' +
                 '<form action="/Account/ResetPassword" class="form-horizontal" id="ResetPasswordFrom" method="post" role="form" novalidate="novalidate">' +
+                '<input type="hidden" id="fromReset" name="fromReset" value="" />' +
                 '<input id="reset-code" name="ResetPassword.Code" type="hidden" value="">' +
                 '<input id="user-id" name="ResetPassword.UserId" type="hidden" value="">' +
                 '<p>' +
@@ -70,7 +75,7 @@
                 '<span class="field-validation-valid required" data-valmsg-for="ResetPassword.ConfirmPassword" data-valmsg-replace="true"></span>' +
                 '</p>' +
                 '<p>' +
-                '<input type="submit" id="reset" value="RESET">' +
+                '<input type="submit" id="reset" value="RESET" onclick="setSignUpFromValue(4)">' +
                 '</p>' +
                 '</form>' +
             '<div class="links"><a href="#" onclick="ppOpen(\'#login_panel\', \'800\');">ALREADY RESET?</a></div>' +

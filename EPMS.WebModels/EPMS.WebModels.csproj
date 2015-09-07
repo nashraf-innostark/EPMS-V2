@@ -138,6 +138,7 @@
     <Compile Include="ModelMappers\Website\ProductSection\ProductSectionMapper.cs" />
     <Compile Include="ModelMappers\Website\Product\ProductMapper.cs" />
     <Compile Include="ModelMappers\Website\Services\WebsiteServicesMapper.cs" />
+    <Compile Include="ModelMappers\Website\ShoppingCart\ShoppingCartItemMapper.cs" />
     <Compile Include="ModelMappers\Website\ShoppingCart\ShoppingCartMapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources\CMS\Complaint.ar.Designer.cs">
@@ -735,6 +736,7 @@
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />
     <Compile Include="WebsiteModels\ShoppingCart.cs" />
+    <Compile Include="WebsiteModels\ShoppingCartItem.cs" />
     <Compile Include="WebsiteModels\Size.cs" />
     <Compile Include="WebsiteModels\Status.cs" />
     <Compile Include="WebsiteModels\SubTaskWeight.cs" />

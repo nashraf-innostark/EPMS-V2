@@ -1,21 +1,36 @@
 ﻿using System;
 using System.Configuration;
-using System.Data.Entity.Core.Mapping;
-using System.Linq;
 using System.Web.Mvc;
+using EPMS.Interfaces.IServices;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.WebsiteClient;
 using EPMS.WebModels.WebsiteModels;
-using EPMS.Website.Models;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
     public class PaypalController : Controller
     {
-        // GET: Paypal
-        public ActionResult Index()
+        #region Private
+        private readonly IShoppingCartService cartService;
+        
+        #endregion
+
+        #region Constructor
+
+        public PaypalController(IShoppingCartService cartService)
         {
-            return View();
+            this.cartService = cartService;
         }
+
+        #endregion
+
+        //// GET: Paypal
+        //public ActionResult Index()
+        //{
+        //    ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+        //    return View();
+        //}
 
         [HttpPost]
         public ActionResult PostTotPaypal(ShoppingCartListViewModel model)
@@ -33,19 +48,28 @@ namespace EPMS.Website.Controllers
             paypal.notify_url = ConfigurationManager.AppSettings["NotifyURL"];
             paypal.currency_code = ConfigurationManager.AppSettings["CurrencyCode"];
 
-            ViewBag.CartItems = model.ShoppingCarts;
+            ViewBag.CartItem = model.ShoppingCart;
             return View(paypal);
         }
 
         public ActionResult RedirectFromPaypal()
         {
             var response = Request.QueryString;
-            string transaction_id = response["tx"];
+            string transactionId = response["tx"];
             string status = response["st"];
             string amount = response["amt"];
-            string currency_code = response["cc"];
-            string cm = response["cm"];
-            string item_number = response["item_number"];
+            string currencyCode = response["cc"];
+            //string cm = response["cm"];
+            //string itemNumber = response["item_number"];
+            var cart = cartService.FindByUserCartId(User.Identity.GetUserId());
+            if (cart != null)
+            {
+                cart.TransactionId = transactionId;
+                cart.Status = status == "Completed" ? true : false;
+                cart.AmountPaid = Convert.ToDecimal(amount);
+                cart.CurrencyCode = currencyCode;
+                cartService.UpdateShoppingCart(cart);
+            }
             return View();
         }
         public ActionResult NotifyFromPaypal()

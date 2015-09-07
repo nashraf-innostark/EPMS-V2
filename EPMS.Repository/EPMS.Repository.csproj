@@ -152,6 +152,7 @@
     <Compile Include="Repositories\ImageSliderRepository.cs" />
     <Compile Include="Repositories\InventoryDepartmentRepository.cs" />
     <Compile Include="Repositories\InventoryItemRepository.cs" />
+    <Compile Include="Repositories\ShoppingCartItemRepository.cs" />
     <Compile Include="Repositories\ItemReleaseQuantityRepository.cs" />
     <Compile Include="Repositories\ItemBarcodeRepository.cs" />
     <Compile Include="Repositories\ItemImageRepository.cs" />

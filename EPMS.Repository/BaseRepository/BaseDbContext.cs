@@ -161,5 +161,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<AboutUs> AboutUs { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<WebsiteCustomer> WebsiteCustomers { get; set; }
+        public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
     }
 }

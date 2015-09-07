@@ -5,6 +5,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.Product;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Product;
 using EPMS.WebModels.WebsiteModels;
 
@@ -56,6 +57,7 @@ namespace EPMS.Website.Controllers
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.ShowSlider = false;
             ViewBag.From = from;
             return View(viewModel);
@@ -114,6 +116,7 @@ namespace EPMS.Website.Controllers
         #endregion
 
         #endregion
+
         //// GET: Product
         //public ActionResult Index()
         //{

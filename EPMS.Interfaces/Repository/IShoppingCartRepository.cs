@@ -6,5 +6,6 @@ namespace EPMS.Interfaces.Repository
     public interface IShoppingCartRepository : IBaseRepository<ShoppingCart, long>
     {
         IEnumerable<ShoppingCart> GetCartByUserCartId(string userCartId);
+        ShoppingCart FindByUserCartId(string userCartId);
     }
 }

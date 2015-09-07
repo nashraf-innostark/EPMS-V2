@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.Services;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Website.Services;
 
 namespace EPMS.Website.Controllers
@@ -30,6 +31,7 @@ namespace EPMS.Website.Controllers
             {
                 WebsiteService = websiteServicesService.FindWebsiteServiceById(id).CreateFromServerToClient()
             };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewmodel);
         }
 

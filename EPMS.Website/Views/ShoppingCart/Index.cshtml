@@ -38,9 +38,10 @@
             <div class="row">
                 <div class="span12 directionR ">
                     <h1 class="page-title">@Cart.BodyTitle</h1>
-                    @using (Html.BeginForm("PostTotPaypal", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
+                    @using (Html.BeginForm("CheckOut", "ShoppingCart", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
                     {
-                        if (Model.ShoppingCarts.Any())
+                        <input type="hidden" id="fromCart" name="fromCart" value="" />
+                        if (Model.ShoppingCart.ShoppingCartItems.Any())
                         {
                             <table class="shopping-table">
                                 <tr>
@@ -53,34 +54,34 @@
                                     <th>@Cart.Delete</th>
                                 </tr>
 
-                                @for (int i=0; i < Model.ShoppingCarts.Count ; i++)
+                                @for (int i=0; i < Model.ShoppingCart.ShoppingCartItems.Count ; i++)
                                 {
                                     <tr class="cartRow">
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].CartId)
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].UserCartId)
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ProductId)
-                                        <td class="product-id" style="display: none">@Model.ShoppingCarts[i].ProductId</td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.CartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
+                                        <td class="product-id" style="display: none">@Model.ShoppingCart.ShoppingCartItems[i].ProductId</td>
 
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ImagePath)
-                                        <td class="image-column"><a href="#"><img src="@Model.ShoppingCarts[i].ImagePath" alt=""></a></td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
+                                        <td class="image-column"><a href="#"><img src="@Model.ShoppingCart.ShoppingCartItems[i].ImagePath" alt=""></a></td>
 
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemNameEn)
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemNameAr)
-                                        <td><p><a href="#">@(direction == "ltr" ? Model.ShoppingCarts[i].ItemNameEn : Model.ShoppingCarts[i].ItemNameAr)</a></p></td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
+                                        <td><p><a href="#">@(direction == "ltr" ? Model.ShoppingCart.ShoppingCartItems[i].ItemNameEn : Model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)</a></p></td>
 
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].SkuCode)
-                                        <td><p>@Model.ShoppingCarts[i].SkuCode</p></td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
+                                        <td><p>@Model.ShoppingCart.ShoppingCartItems[i].SkuCode</p></td>
 
                                         <td class="quantity">
-                                            @Html.TextBoxFor(model => model.ShoppingCarts[i].Quantity, new { @class = "cartnum toBeRequired" })
-                                            @*<input id="@Model.ShoppingCarts[i].ProductId" type="text" value="@Model.ShoppingCarts[i].Quantity" class="cartnum">*@
+                                            @Html.TextBoxFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity, new { @class = "cartnum toBeRequired" })
+                                            @*<input id="@Model.ShoppingCart.ProductId" type="text" value="@Model.ShoppingCart.Quantity" class="cartnum">*@
                                         </td>
 
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].UnitPrice)
-                                        <td><p class="cartPrice">@Model.ShoppingCarts[i].UnitPrice</p></td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
+                                        <td><p class="cartPrice">@Model.ShoppingCart.ShoppingCartItems[i].UnitPrice</p></td>
 
-                                        @Html.HiddenFor(model => model.ShoppingCarts[i].ItemTotal, new { @id = "ItemTotal-" + Model.ShoppingCarts[i].ProductId , @Value = Model.ShoppingCarts[i].Quantity * Model.ShoppingCarts[i].UnitPrice })
-                                        <td><p class="cartTotal Total_@Model.ShoppingCarts[i].ProductId">@(Model.ShoppingCarts[i].Quantity * Model.ShoppingCarts[i].UnitPrice)</p></td>
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal, new { @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId, @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice })
+                                        <td><p class="cartTotal Total_@Model.ShoppingCart.ShoppingCartItems[i].ProductId">@(Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice)</p></td>
                                         <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
                                     </tr>
                                 }
@@ -93,7 +94,7 @@
                             <div class="control-group">
                                 <div class="controls">
                                     @*<input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />*@
-                                    <input class="btn" id="submit-form" name="PaypalAction" type="submit" value="@Cart.PaypalPayment" />
+                                    <input class="btn" id="submit-form" type="submit" value="Proceed to CheckOut" onclick="setFromValue()"/>
                                 </div>
                             </div>
                         }
@@ -177,5 +178,8 @@
             }
         });
     }
-
+    function setFromValue() {
+        $("#fromCart").val("ShoppingCart");
+        return true;
+    }
 </script>

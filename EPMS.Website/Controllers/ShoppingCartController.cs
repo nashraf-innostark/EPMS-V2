@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -6,8 +7,10 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.WebsiteClient;
 using EPMS.WebModels.WebsiteModels;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
@@ -15,16 +18,18 @@ namespace EPMS.Website.Controllers
     {
         #region Private
         private readonly IShoppingCartService cartService;
+        private readonly IShoppingCartItemService cartItemService;
         private readonly IProductService productService;
 
         #endregion
 
         #region Constructor
 
-        public ShoppingCartController(IShoppingCartService cartService, IProductService productService)
+        public ShoppingCartController(IShoppingCartService cartService, IProductService productService, IShoppingCartItemService cartItemService)
         {
             this.cartService = cartService;
             this.productService = productService;
+            this.cartItemService = cartItemService;
         }
 
         #endregion
@@ -34,31 +39,37 @@ namespace EPMS.Website.Controllers
         public ActionResult Index()
         {
             ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel();
-            bool isItemsExist = false;
             string cartId = GetCartId();
-            // check local
-            var items = Session["ShoppingCartItems"];
-            if (items != null)
+            // check DB
+            var shoppingCart = cartService.FindByUserCartId(cartId);
+
+            viewModel.ShoppingCart = shoppingCart != null
+                    ? shoppingCart.CreateFromServerToClient()
+                    : new ShoppingCart();
+            if (shoppingCart != null)
             {
-                IList<ShoppingCart> cartItems = (List<ShoppingCart>)Session["ShoppingCartItems"];
-                if (cartItems.Any())
+                Session["ShoppingCartItems"] = viewModel.ShoppingCart;
+            }
+            // check local
+            var cart = Session["ShoppingCartItems"];
+            if (cart != null)
+            {
+                ShoppingCart cartItem = (ShoppingCart)Session["ShoppingCartItems"];
+                if (cartItem != null)
                 {
-                    isItemsExist = true;
-                    viewModel.ShoppingCarts = cartItems;
+                    viewModel.ShoppingCart = cartItem;
                 }
             }
-            // check DB
-            if (!isItemsExist)
-            {
-                viewModel.ShoppingCarts = !string.IsNullOrEmpty(cartId)
-                    ? cartService.GetUserCart(cartId).ShoppingCarts.Select(x => x.CreateFromServerToClient()).ToList()
-                    : new List<ShoppingCart>();
-            }
-            ViewBag.ShowSlider = false;
+
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
 
-
+        [Authorize]
+        public ActionResult CheckOut(ShoppingCartListViewModel model)
+        {
+            return View(model);
+        }
 
         private string GetCartId()
         {
@@ -69,9 +80,17 @@ namespace EPMS.Website.Controllers
             }
             else
             {
-                Guid tempCartId = Guid.NewGuid();
-                cartId = tempCartId.ToString();
-                Session["ShoppingCartId"] = tempCartId;
+                if (User.Identity.IsAuthenticated)
+                {
+                    cartId = User.Identity.GetUserId();
+                    Session["ShoppingCartId"] = cartId;
+                }
+                else
+                {
+                    Guid tempCartId = Guid.NewGuid();
+                    cartId = tempCartId.ToString();
+                    Session["ShoppingCartId"] = tempCartId;
+                }
             }
             return cartId;
         }
@@ -98,11 +117,21 @@ namespace EPMS.Website.Controllers
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
-                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
-                var item = cart.FirstOrDefault(x => x.ProductId == productId && x.SizeId == sizeId);
+                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId && y.SizeId == sizeId);
                 if (item != null)
                 {
                     item.Quantity += quantity;
+                    // Update DB Cart
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        var dbCartItem = cartItemService.FindById(cart.CartId);
+                        if (dbCartItem != null)
+                        {
+                            dbCartItem.Quantity += quantity;
+                            cartItemService.UpdateShoppingCartItem(dbCartItem);
+                        }
+                    }
                 }
                 else
                 {
@@ -129,9 +158,9 @@ namespace EPMS.Website.Controllers
                             imagePath = itemImageFolder + userProduct.ProductImage;
                         }
                     }
-                    ShoppingCart itemToAdd = new ShoppingCart
+                    ShoppingCartItem itemToAdd = new ShoppingCartItem
                     {
-                        UserCartId = userCartid,
+                        CartId = cart.CartId,
                         ProductId = productId,
                         SizeId = sizeId,
                         Quantity = quantity,
@@ -140,19 +169,22 @@ namespace EPMS.Website.Controllers
                         UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
                         SkuCode = userProduct.SKUCode,
                         ImagePath = imagePath,
-                        RecCreatedDate = DateTime.Now,
                     };
-                    cart.Add(itemToAdd);
+                    cart.ShoppingCartItems.Add(itemToAdd);
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        var cartToAdd = itemToAdd.CreateFromClientToServer();
+                        var status = cartItemService.AddShoppingCartItem(cartToAdd);
+                    }
                 }
-
                 Session["ShoppingCartItems"] = cart;
             }
             else
             {
-                IList<ShoppingCart> cart = new List<ShoppingCart>();
-                ShoppingCart itemToAdd = new ShoppingCart
+                ShoppingCart cart = new ShoppingCart();
+                ShoppingCartItem itemToAdd = new ShoppingCartItem
                 {
-                    UserCartId = userCartid,
+                    CartId = cart.CartId,
                     ProductId = productId,
                     SizeId = sizeId,
                     Quantity = quantity,
@@ -161,9 +193,19 @@ namespace EPMS.Website.Controllers
                     UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
                     SkuCode = userProduct.SKUCode,
                     ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage,
-                    RecCreatedDate = DateTime.Now
                 };
-                cart.Add(itemToAdd);
+                cart.ShoppingCartItems.Add(itemToAdd);
+                if (User.Identity.IsAuthenticated)
+                {
+                    var cartToAdd = cart.CreateFromClientToServer();
+                    cartToAdd.UserCartId = GetCartId();
+                    cartToAdd.Status = false;
+                    cartToAdd.RecCreatedBy = User.Identity.GetUserId();
+                    cartToAdd.RecCreatedDate = DateTime.Now;
+                    cartToAdd.RecLastUpdatedBy = User.Identity.GetUserId();
+                    cartToAdd.RecLastUpdatedDate = DateTime.Now;
+                    var status = cartService.AddItemToCart(cartToAdd);
+                }
                 Session["ShoppingCartItems"] = cart;
             }
             return Json("Success", JsonRequestBehavior.AllowGet);
@@ -177,11 +219,19 @@ namespace EPMS.Website.Controllers
             var items = Session["ShoppingCartItems"];
             if (items != null)
             {
-                IList<ShoppingCart> cart = (List<ShoppingCart>)Session["ShoppingCartItems"];
-                var item = cart.FirstOrDefault(x => x.ProductId == productId);
+                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                var item = cart.ShoppingCartItems.FirstOrDefault(x => x.ProductId == productId);
                 if (item != null)
                 {
-                    cart.Remove(item);
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        cartItemService.DeleteShoppingCartItem(item.CartItemId);
+                        cart.ShoppingCartItems.Remove(item);
+                    }
+                    else
+                    {
+                        cart.ShoppingCartItems.Remove(item);
+                    }
                     Session["ShoppingCartItems"] = cart;
                     return Json("Success", JsonRequestBehavior.AllowGet);
                 }

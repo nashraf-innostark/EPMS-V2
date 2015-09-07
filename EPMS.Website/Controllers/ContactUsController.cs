@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.ContactUs;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.ContactUs;
 
 namespace EPMS.Website.Controllers
@@ -33,6 +34,7 @@ namespace EPMS.Website.Controllers
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();
             }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(contactUsViewModel);
         }
 
