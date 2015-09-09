@@ -5,7 +5,7 @@
         public long CartItemId { get; set; }
         public long CartId { get; set; }
         public long ProductId { get; set; }
-        public long SizeId { get; set; }
+        public long? SizeId { get; set; }
         public decimal UnitPrice { get; set; }
         public int Quantity { get; set; }
 

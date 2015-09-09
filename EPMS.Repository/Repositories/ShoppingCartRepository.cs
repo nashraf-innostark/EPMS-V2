@@ -39,7 +39,7 @@ namespace EPMS.Repository.Repositories
 
         public ShoppingCart FindByUserCartId(string userCartId)
         {
-            return DbSet.FirstOrDefault(x => x.UserCartId == userCartId && x.Status == false);
+            return DbSet.FirstOrDefault(x => x.UserCartId == userCartId && x.Status == 1);
         }
 
         #endregion

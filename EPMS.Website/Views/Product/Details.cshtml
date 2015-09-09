@@ -250,7 +250,7 @@
                                         {
                                             @Html.DropDownListFor(m => m.Product.ProductSize, new[]
                                             {
-                                                new SelectListItem {Value = Model.Product.ProductSize, Text = Model.Product.ProductSize}
+                                                new SelectListItem {Value = "0", Text = Model.Product.ProductSize}
                                             }, new { @id = "Size" })
                                         }
                                     </div>
@@ -277,7 +277,7 @@
                                         <p>@(direction == "ltr" ? Model.Product.ProductDescEn : Model.Product.ProductDescAr)</p>
                                     </div>
                                     <div class="tab-pane" id="shop-tab2">
-                                        <p>@(direction == "ltr" ? "En" : "Ar")</p>
+                                        <p>@(direction == "ltr" ? Model.Product.ProductSpecificationEn : Model.Product.ProductSpecificationAr)</p>
                                     </div>
                                 </div>
                             </div>

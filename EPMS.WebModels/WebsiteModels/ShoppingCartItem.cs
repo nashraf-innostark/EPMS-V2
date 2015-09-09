@@ -7,7 +7,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long CartItemId { get; set; }
         public long CartId { get; set; }
         public long ProductId { get; set; }
-        public long SizeId { get; set; }
+        public long? SizeId { get; set; }
         public decimal UnitPrice { get; set; }
         [Required]
         [Display(Name = "Quantity")]

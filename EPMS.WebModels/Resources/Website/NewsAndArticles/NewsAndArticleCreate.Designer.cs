@@ -115,11 +115,29 @@ namespace EPMS.WebModels.Resources.Website.NewsAndArticles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to News or Article Content arabic is required.
+        /// </summary>
+        public static string ContentArValidation {
+            get {
+                return ResourceManager.GetString("ContentArValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Content.
         /// </summary>
         public static string ContentEn {
             get {
                 return ResourceManager.GetString("ContentEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News or Article Content is required.
+        /// </summary>
+        public static string ContentEnValidation {
+            get {
+                return ResourceManager.GetString("ContentEnValidation", resourceCulture);
             }
         }
         

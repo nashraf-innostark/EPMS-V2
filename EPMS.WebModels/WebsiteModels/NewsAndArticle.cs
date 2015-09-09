@@ -17,7 +17,9 @@ namespace EPMS.WebModels.WebsiteModels
         public string ImagePath { get; set; }
         public string AuthorNameEn { get; set; }
         public string AuthorNameAr { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "ContentEnValidation")]
         public string ContentEn { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.NewsAndArticles.NewsAndArticleCreate), ErrorMessageResourceName = "ContentArValidation")]
         public string ContentAr { get; set; }
         public bool ShowToPublic { get; set; }
         public string MetaKeywords { get; set; }

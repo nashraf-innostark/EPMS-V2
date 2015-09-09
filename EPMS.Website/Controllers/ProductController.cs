@@ -56,6 +56,18 @@ namespace EPMS.Website.Controllers
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
+                // New Arrivals
+                var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).ToList();
+                viewModel.NewArrivals = newArrivals.Any() ? newArrivals.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Best Sell
+                var bestSell = productsList.AllProducts.Where(x => x.BestSeller).ToList();
+                viewModel.BestSell = bestSell.Any() ? bestSell.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Random Products
+                var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).ToList();
+                viewModel.RandomProducts = randomProducts.Any() ? randomProducts.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Featured Products
+                var featuredProducts = productsList.AllProducts.Where(x => x.Featured).ToList();
+                viewModel.FeaturedProducts = featuredProducts.Any() ? featuredProducts.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.ShowSlider = false;

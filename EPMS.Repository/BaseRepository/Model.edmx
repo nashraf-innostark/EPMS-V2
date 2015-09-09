@@ -1427,7 +1427,7 @@
           <Property Name="CartId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserCartId" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="TransactionId" Type="nvarchar" MaxLength="100" />
-          <Property Name="Status" Type="bit" />
+          <Property Name="Status" Type="int" Nullable="false" />
           <Property Name="AmountPaid" Type="decimal" Precision="10" Scale="2" />
           <Property Name="CurrencyCode" Type="nvarchar" MaxLength="5" />
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
@@ -1442,7 +1442,7 @@
           <Property Name="CartItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="CartId" Type="bigint" Nullable="false" />
           <Property Name="ProductId" Type="bigint" Nullable="false" />
-          <Property Name="SizeId" Type="bigint" Nullable="false" />
+          <Property Name="SizeId" Type="bigint" />
           <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="Quantity" Type="int" Nullable="false" />
         </EntityType>
@@ -1654,6 +1654,13 @@
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="WebsiteHomePage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="WebsiteLogoPath" Type="nvarchar" MaxLength="200" Nullable="false" />
         </EntityType>
         <EntityType Name="WebsiteService">
           <Key>
@@ -3125,7 +3132,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ShoppingCartItem_Size">
-          <End Role="Size" Type="Self.Size" Multiplicity="1" />
+          <End Role="Size" Type="Self.Size" Multiplicity="0..1" />
           <End Role="ShoppingCartItem" Type="Self.ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Size">
@@ -3439,6 +3446,7 @@
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteCustomer" EntityType="Self.WebsiteCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebsiteHomePage" EntityType="Self.WebsiteHomePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteService" EntityType="Self.WebsiteService" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -6272,6 +6280,7 @@
             <End Role="Size" EntitySet="Sizes" />
             <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
           </AssociationSet>
+          <EntitySet Name="WebsiteHomePages" EntityType="EPMSInventoryModel.WebsiteHomePage" />
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -8021,7 +8030,7 @@
           <Property Name="CartId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="UserCartId" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="TransactionId" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
-          <Property Name="Status" Type="Boolean" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
           <Property Name="AmountPaid" Type="Decimal" Precision="10" Scale="2" />
           <Property Name="CurrencyCode" Type="String" MaxLength="5" FixedLength="false" Unicode="true" />
           <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
@@ -8037,7 +8046,7 @@
           <Property Name="CartItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="CartId" Type="Int64" Nullable="false" />
           <Property Name="ProductId" Type="Int64" Nullable="false" />
-          <Property Name="SizeId" Type="Int64" Nullable="false" />
+          <Property Name="SizeId" Type="Int64" />
           <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
           <Property Name="Quantity" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Product" Relationship="EPMSInventoryModel.FK_ShoppingCartItem_Product" FromRole="ShoppingCartItem" ToRole="Product" />
@@ -8069,7 +8078,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_ShoppingCartItem_Size">
-          <End Type="EPMSInventoryModel.Size" Role="Size" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.Size" Role="Size" Multiplicity="0..1" />
           <End Type="EPMSInventoryModel.ShoppingCartItem" Role="ShoppingCartItem" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Size">
@@ -8080,6 +8089,13 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="WebsiteHomePage">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="WebsiteLogoPath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9847,6 +9863,14 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteHomePages">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteHomePage">
+              <MappingFragment StoreEntitySet="WebsiteHomePage">
+                <ScalarProperty Name="WebsiteLogoPath" ColumnName="WebsiteLogoPath" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10092,11 +10116,12 @@
           <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteCustomer" Width="1.75" PointX="27.375" PointY="13.25" />
         <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.375" PointY="0.75" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCart" Width="1.5" PointX="31.625" PointY="33.625" />
-        <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCartItem" Width="1.5" PointX="25.375" PointY="33.875" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCart" Width="1.5" PointX="31.75" PointY="33.5" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCartItem" Width="1.5" PointX="25.875" PointY="33.875" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_Product" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_ShoppingCart" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_Size" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteHomePage" Width="1.75" PointX="0.5" PointY="9.5" />
         </Diagram>
       </Diagrams>
   </Designer>

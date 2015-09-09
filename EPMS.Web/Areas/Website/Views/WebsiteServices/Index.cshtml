@@ -90,7 +90,13 @@
                                             {
                                                 <td class="center"><a href="~/Website/WebsiteServices/Create/@service.ServiceId">@service.ServiceNameAr</a></td>
                                             }
-                                            <td class="center">@(direction == "ltr" ? service.DescriptionEn : service.DescriptionAr)</td>
+                                            <td class="center @service.ServiceId"></td>
+                                            <script>
+                                                var descp = '@Html.Raw((direction == "ltr" ? service.DescriptionEn : service.DescriptionAr))';
+                                                var regex = /(<([^>]+)>)/ig;
+                                                var result = descp.replace(regex, "");
+                                                $("." + '@service.ServiceId').text(result);
+                                            </script>
                                             <td class="center">@service.NoofSections</td>
                                             <td class="center">-</td>
                                         </tr>
@@ -158,7 +164,13 @@
                                                     {
                                                         <td class="center"><a href="~/Website/WebsiteServices/Create/@sect.ServiceId">@sect.ServiceNameAr</a></td>
                                                     }
-                                                    <td class="center">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
+                                                    <td class="center @sect.ServiceId">@(direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr)</td>
+                                                    <script>
+                                                        var descp = '@Html.Raw((direction == "ltr" ? sect.DescriptionEn : sect.DescriptionAr))';
+                                                        var regex = /(<([^>]+)>)/ig;
+                                                        var result = descp.replace(regex, "");
+                                                        $("." + '@sect.ServiceId').text(result);
+                                                    </script>
                                                     <td>-</td>
                                                 </tr>
                                             }

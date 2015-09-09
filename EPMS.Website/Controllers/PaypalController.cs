@@ -2,6 +2,7 @@
 using System.Configuration;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.WebsiteClient;
 using EPMS.WebModels.WebsiteModels;
@@ -9,6 +10,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
+    [Authorize]
     public class PaypalController : Controller
     {
         #region Private
@@ -65,12 +67,16 @@ namespace EPMS.Website.Controllers
             if (cart != null)
             {
                 cart.TransactionId = transactionId;
-                cart.Status = status == "Completed" ? true : false;
+                cart.Status = status == "Completed" ? (int)PurchaseStatus.Completed : (int)PurchaseStatus.Error;
                 cart.AmountPaid = Convert.ToDecimal(amount);
                 cart.CurrencyCode = currencyCode;
                 cartService.UpdateShoppingCart(cart);
             }
-            return View();
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "\nYour order has been successfully placed. You will be contacted soon by our Team", IsSaved = true
+            };
+            return RedirectToAction("Index","Home");
         }
         public ActionResult NotifyFromPaypal()
         {
@@ -79,6 +85,38 @@ namespace EPMS.Website.Controllers
         public ActionResult CancelFromPaypal()
         {
             return View();
+        }
+
+        [HttpPost]
+        public ActionResult OfflinePayment(ShoppingCartListViewModel model)
+        {
+            var cart = cartService.FindByUserCartId(User.Identity.GetUserId());
+            if (cart != null)
+            {
+                cart.Status = (int)PurchaseStatus.InProgress;
+                cartService.UpdateShoppingCart(cart);
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "\nYour order has been successfully placed. You will be contacted soon by our Team", IsSaved = true
+            };
+            return RedirectToAction("Index","Home");
+        }
+
+        [HttpPost]
+        public ActionResult OnDeliveryPayment(ShoppingCartListViewModel model)
+        {
+            var cart = cartService.FindByUserCartId(User.Identity.GetUserId());
+            if (cart != null)
+            {
+                cart.Status = (int)PurchaseStatus.InProgress;
+                cartService.UpdateShoppingCart(cart);
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = "\nYour order has been successfully placed. You will be contacted soon by our Team", IsSaved = true
+            };
+            return RedirectToAction("Index", "Home");
         }
     }
 }

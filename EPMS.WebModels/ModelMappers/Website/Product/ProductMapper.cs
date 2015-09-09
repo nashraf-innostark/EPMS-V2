@@ -10,39 +10,39 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
     {
         public static WebsiteModels.Product CreateFromServerToClient(this Models.DomainModels.Product source)
         {
-            return new WebsiteModels.Product
-            {
-                ProductId = source.ProductId,
-                ProductNameEn = source.ProductNameEn,
-                ProductNameAr = source.ProductNameAr,
-                ItemVariationId = source.ItemVariationId,
-                ProductDescEn = source.ItemVariationId == null ? source.ProductDescEn : source.ItemDescriptionEn,
-                ProductDescAr = source.ItemVariationId == null ? source.ProductDescAr : source.ItemDescriptionAr,
-                ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice,
-                DiscountedPrice = source.DiscountedPrice,
-                ProductSpecificationEn = source.ProductSpecificationEn,
-                ProductSpecificationAr = source.ProductSpecificationAr,
-                ProductSize = source.ProductSize,
-                ProductSectionId = source.ProductSectionId,
-                NewArrival = source.NewArrival,
-                Featured = source.Featured,
-                RandomProduct = source.RandomProduct,
-                BestSeller = source.BestSeller,
-                SKUCode = source.SKUCode,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                DeptColor = source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor,
-                ItemDesc = source.ItemVariation.DescriptionEn,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
-                ItemNameEn = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionEn : "",
-                ItemNameAr = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionAr : "",
-                ProductImages = source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList(),
-                ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
-                    source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "",
-                ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
-                    source.ProductImages.FirstOrDefault().ProductImagePath : "",
-            };
+            WebsiteModels.Product retVal = new WebsiteModels.Product();
+            retVal.ProductId = source.ProductId;
+            retVal.ProductNameEn = source.ProductNameEn;
+            retVal.ProductNameAr = source.ProductNameAr;
+            retVal.ItemVariationId = source.ItemVariationId;
+            retVal.ProductDescEn = source.ItemVariationId == null ? source.ProductDescEn : source.ItemDescriptionEn;
+            retVal.ProductDescAr = source.ItemVariationId == null ? source.ProductDescAr : source.ItemDescriptionAr;
+            retVal.ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice;
+            retVal.DiscountedPrice = source.DiscountedPrice;
+            retVal.ProductSpecificationEn = source.ProductSpecificationEn;
+            retVal.ProductSpecificationAr = source.ProductSpecificationAr;
+            retVal.ProductSize = source.ProductSize;
+            retVal.ProductSectionId = source.ProductSectionId;
+            retVal.NewArrival = source.NewArrival;
+            retVal.Featured = source.Featured;
+            retVal.RandomProduct = source.RandomProduct;
+            retVal.BestSeller = source.BestSeller;
+            retVal.SKUCode = source.SKUCode;
+            retVal.RecCreatedBy = source.RecCreatedBy;
+            retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
+            retVal.ItemDesc = source.ItemVariation != null ? source.ItemVariation.DescriptionEn : "";
+            retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            retVal.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            retVal.ItemNameEn = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionEn : "";
+            retVal.ItemNameAr = source.ItemVariation != null ? source.ItemVariation.SKUDescriptionAr : "";
+            retVal.ProductImages = source.ProductImages.Any() ? source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebsiteModels.ProductImage>();
+            retVal.ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
+                source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "";
+            retVal.ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
+                source.ProductImages.FirstOrDefault().ProductImagePath : "";
+
+            return retVal;
         }
         public static WebsiteModels.Product CreateFromServerToClientFromInventory(this Models.DomainModels.Product source)
         {

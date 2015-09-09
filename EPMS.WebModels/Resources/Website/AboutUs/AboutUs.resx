@@ -168,4 +168,16 @@
   <data name="ContentAr" xml:space="preserve">
     <value>Content Arabic</value>
   </data>
+  <data name="ContentValidErrorAr" xml:space="preserve">
+    <value>About Us Content arabic is required</value>
+  </data>
+  <data name="ContentValidErrorEn" xml:space="preserve">
+    <value>About Us Content is required</value>
+  </data>
+  <data name="TitleValidErrorAr" xml:space="preserve">
+    <value>About Us Title arabic is required</value>
+  </data>
+  <data name="TitleValidErrorEn" xml:space="preserve">
+    <value>About Us Title is required</value>
+  </data>
 </root>

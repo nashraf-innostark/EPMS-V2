@@ -6,6 +6,7 @@ namespace EPMS.Models.ResponseModels
     public class ProductsListResponse
     {
         public IList<Product> Products { get; set; }
+        public IList<Product> AllProducts { get; set; }
         public int TotalCount { get; set; }
     }
 }

@@ -97,6 +97,24 @@ namespace EPMS.WebModels.Resources.Website.AboutUs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Us Content arabic is required.
+        /// </summary>
+        public static string ContentValidErrorAr {
+            get {
+                return ResourceManager.GetString("ContentValidErrorAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Us Content is required.
+        /// </summary>
+        public static string ContentValidErrorEn {
+            get {
+                return ResourceManager.GetString("ContentValidErrorEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit.
         /// </summary>
         public static string Edit {
@@ -192,6 +210,24 @@ namespace EPMS.WebModels.Resources.Website.AboutUs {
         public static string TitleAr {
             get {
                 return ResourceManager.GetString("TitleAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Us Title arabic is required.
+        /// </summary>
+        public static string TitleValidErrorAr {
+            get {
+                return ResourceManager.GetString("TitleValidErrorAr", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to About Us Title is required.
+        /// </summary>
+        public static string TitleValidErrorEn {
+            get {
+                return ResourceManager.GetString("TitleValidErrorEn", resourceCulture);
             }
         }
         

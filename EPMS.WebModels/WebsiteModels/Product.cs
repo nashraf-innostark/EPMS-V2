@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -7,7 +8,11 @@ namespace EPMS.WebModels.WebsiteModels
     {
         public long ProductId { get; set; }
         public long? ItemVariationId { get; set; }
+        [Required]
+        [Display(Name = "Product Name")]
         public string ProductNameEn { get; set; }
+        [Required]
+        [Display(Name = "Product Name arabic")]
         public string ProductNameAr { get; set; }
         public string ProductDescEn { get; set; }
         public string ProductDescAr { get; set; }

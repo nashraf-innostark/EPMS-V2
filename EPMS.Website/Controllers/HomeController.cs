@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -34,6 +34,10 @@ namespace EPMS.Website.Controllers
                     ShoppingCart userCart = response.CreateFromServerToClient();
                     Session["ShoppingCartItems"] = userCart;
                 }
+                else
+                {
+                    Session["ShoppingCartItems"] = null;
+                }
             }
         }
 
@@ -54,20 +58,23 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Index(string div, string width, string code, string userId)
         {
-            WebsiteHomeResponse response = websiteHomePageService.websiteHomeResponse();
+            WebsiteHomeResponse response = websiteHomePageService.WebsiteHomeResponse();
             SetSessionValues();
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            ViewBag.Controller = "Home";
-            ViewBag.Action = "Index";
-            return View(new WebsiteHomeViewModel
+            WebsiteHomeViewModel viewModel = new WebsiteHomeViewModel
             {
-                WebsiteDepartments = response.WebsiteDepartments.Select(x=>x.CreateFromServerToClient()),
-                Partners = response.Partners.Select(x=>x.CreateFromServerToClient()),
+                WebsiteDepartments = response.WebsiteDepartments.Select(x => x.CreateFromServerToClient()),
+                Partners = response.Partners.Select(x => x.CreateFromServerToClient()),
                 Div = div,
                 Width = width,
                 Code = code,
                 UserId = userId
-            });
+            };
+
+            ViewBag.Controller = "Home";
+            ViewBag.Action = "Index";
+            Session["WebsiteLogo"] = ConfigurationManager.AppSettings["WebsiteLogo"] + response.Logo;
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
         }
 
         public ActionResult DepartmentDetail(long id)
@@ -89,6 +96,8 @@ namespace EPMS.Website.Controllers
 
             return View();
         }
+
         #endregion
+
     }
 }

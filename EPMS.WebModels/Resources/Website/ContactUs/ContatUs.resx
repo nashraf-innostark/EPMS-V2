@@ -166,10 +166,10 @@
     <value>Show To Public?</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Title is required</value>
   </data>
   <data name="TitleAr" xml:space="preserve">
-    <value>Title Arabic</value>
+    <value>Title Arabic is required</value>
   </data>
   <data name="UpdateButton" xml:space="preserve">
     <value>Update</value>
@@ -194,5 +194,11 @@
   </data>
   <data name="TitleValidation" xml:space="preserve">
     <value>Title is Required.</value>
+  </data>
+  <data name="ContentArValidation" xml:space="preserve">
+    <value>Content arabic is required</value>
+  </data>
+  <data name="ContentEnValidation" xml:space="preserve">
+    <value>Content is required</value>
   </data>
 </root>

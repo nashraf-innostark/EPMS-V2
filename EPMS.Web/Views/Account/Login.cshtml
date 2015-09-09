@@ -29,11 +29,11 @@
                         @*@Html.Partial("_Alert")*@
                         <div>
                             @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = "Username" })
-                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger required" })
                         </div>
                         <div>
                             @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
-                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger required" })
                         </div>
                         <button type="submit" class="btn btn-large btn-success btn-login">Login</button>
                     }

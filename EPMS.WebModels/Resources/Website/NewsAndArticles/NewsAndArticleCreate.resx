@@ -135,8 +135,14 @@
   <data name="ContentAr" xml:space="preserve">
     <value>Content Arabic</value>
   </data>
+  <data name="ContentArValidation" xml:space="preserve">
+    <value>News or Article Content arabic is required</value>
+  </data>
   <data name="ContentEn" xml:space="preserve">
     <value>Content</value>
+  </data>
+  <data name="ContentEnValidation" xml:space="preserve">
+    <value>News or Article Content is required</value>
   </data>
   <data name="CreateButton" xml:space="preserve">
     <value>Create</value>

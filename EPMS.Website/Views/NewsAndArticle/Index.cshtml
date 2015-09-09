@@ -54,7 +54,18 @@
                                     </div>
                                 </div><!-- end itemheader -->
                                 <div class="itemBody ">
-                                    <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" /></a></p>
+                                    <p>
+                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                            @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                            {
+                                                <img src="~/Images/noimage_department.png" />
+                                            }
+                                            else
+                                            {
+                                                <img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" />
+                                            }
+                                        </a>
+                                    </p>
                                     <p style="text-align: justify">
                                         @newsOrArticle.ContentEn
                                         <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>

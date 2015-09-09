@@ -200,7 +200,8 @@ namespace EPMS.Implementation.Services
         {
             ProductsListResponse response = new ProductsListResponse
             {
-                Products = new List<Product>()
+                Products = new List<Product>(),
+                AllProducts = productRepository.GetAll().ToList()
             };
             switch (request.From)
             {

@@ -132,6 +132,7 @@
     <Compile Include="ModelMappers\Website\AboutUs\AboutUsMapper.cs" />
     <Compile Include="ModelMappers\Website\ContactUs\ContactUsMapper.cs" />
     <Compile Include="ModelMappers\Website\Department\WebsiteDepartmentMapper.cs" />
+    <Compile Include="ModelMappers\Website\HomePage\WebsiteHomePageMapper.cs" />
     <Compile Include="ModelMappers\Website\NewsAndArticles\NewsAndArticleMapper.cs" />
     <Compile Include="ModelMappers\Website\Partner\PartnerMapper.cs" />
     <Compile Include="ModelMappers\Website\ProductImage\ProductImageMapper.cs" />
@@ -750,6 +751,7 @@
     <Compile Include="WebsiteModels\WarehouseDetail.cs" />
     <Compile Include="WebsiteModels\WebsiteCustomer.cs" />
     <Compile Include="WebsiteModels\WebsiteDepartment.cs" />
+    <Compile Include="WebsiteModels\WebsiteHomePage.cs" />
     <Compile Include="WebsiteModels\WebsiteService.cs" />
   </ItemGroup>
   <ItemGroup>

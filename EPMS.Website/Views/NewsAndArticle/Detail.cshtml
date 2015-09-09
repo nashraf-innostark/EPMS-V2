@@ -68,7 +68,18 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p>
+                                    <a href="#" class="hoverBorder pull-left">
+                                        @if (string.IsNullOrEmpty(Model.NewsAndArticle.ImagePath))
+                                        {
+                                            <img src="~/Images/noimage_department.png" />
+                                        }
+                                        else
+                                        {
+                                            <img style="height: 186px; width: 280px" src="@link/@Url.Content(Model.NewsAndArticle.ImagePath)" />
+                                        }
+                                    </a>
+                                </p>
                                 <p style="text-align: justify">@Model.NewsAndArticle.ContentEn</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>

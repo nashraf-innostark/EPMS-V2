@@ -12,7 +12,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long CartId { get; set; }
         public string UserCartId { get; set; }
         public string TransactionId { get; set; }
-        public bool? Status { get; set; }
+        public int Status { get; set; }
         public decimal? AmountPaid { get; set; }
         public string CurrencyCode { get; set; }
         public string RecCreatedBy { get; set; }

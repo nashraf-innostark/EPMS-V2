@@ -115,6 +115,24 @@ namespace EPMS.WebModels.Resources.Website.ContactUs {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Content arabic is required.
+        /// </summary>
+        public static string ContentArValidation {
+            get {
+                return ResourceManager.GetString("ContentArValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Content is required.
+        /// </summary>
+        public static string ContentEnValidation {
+            get {
+                return ResourceManager.GetString("ContentEnValidation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create.
         /// </summary>
         public static string CreateButton {
@@ -223,7 +241,7 @@ namespace EPMS.WebModels.Resources.Website.ContactUs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title.
+        ///   Looks up a localized string similar to Title is required.
         /// </summary>
         public static string Title {
             get {
@@ -232,7 +250,7 @@ namespace EPMS.WebModels.Resources.Website.ContactUs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Title Arabic.
+        ///   Looks up a localized string similar to Title Arabic is required.
         /// </summary>
         public static string TitleAr {
             get {

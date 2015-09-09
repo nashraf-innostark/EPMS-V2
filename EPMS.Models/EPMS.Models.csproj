@@ -101,6 +101,7 @@
     <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
+    <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -179,6 +180,7 @@
     <Compile Include="DomainModels\TransferItemStatus.cs" />
     <Compile Include="DomainModels\WebsiteCustomer.cs" />
     <Compile Include="DomainModels\WebsiteDepartment.cs" />
+    <Compile Include="DomainModels\WebsiteHomePage.cs" />
     <Compile Include="DomainModels\WebsiteService.cs" />
     <Compile Include="IdentityModels\ViewModels\CustoemrResetPasswordViewModel.cs" />
     <Compile Include="IdentityModels\ViewModels\CustomerForgotPasswordViewModel.cs" />

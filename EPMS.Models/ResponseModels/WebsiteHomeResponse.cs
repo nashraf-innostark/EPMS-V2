@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ResponseModels
@@ -11,5 +7,6 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<WebsiteDepartment> WebsiteDepartments { get; set; }
         public IEnumerable<Partner> Partners { get; set; }
+        public string Logo { get; set; }
     }
 }

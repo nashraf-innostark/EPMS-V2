@@ -4,6 +4,7 @@
 @{
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var siteURL = ConfigurationManager.AppSettings["SiteURL"];
 }
 
 <footer id="footer">
@@ -12,7 +13,7 @@
             <div class="span5 footerRight">
                 <h3 class="m_title">Menu</h3>
                 <ul class="menu">
-                    <li><a href="#">About us</a></li>
+                    <li><a href="@siteURL/AboutUs/Detail">About us</a></li>
                     <li><a href="#">Labs Preperation</a></li>
                     <li><a href="#">Labs Furnishing</a></li>
                     <li><a href="#">Kindergarden</a></li>
@@ -20,7 +21,7 @@
                     <li><a href="#">Training Services</a></li>
                     <li><a href="#">Neo Horizon</a></li>
                     <li><a href="#">News And Articles</a></li>
-                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="@siteURL/ContactUs/Detail">Contact Us</a></li>
                 </ul><!-- end footer menu -->
             </div>
             <div class="span4 footerMid">

@@ -1,7 +1,7 @@
 ﻿function addToCart(id) {
     var quantity = jQuery('#Quantity').val();
     if (quantity == "" || quantity == undefined) {
-        quantity = 0;
+        quantity = 1;
     }
     var sizeId = jQuery('#Size').val();
     if (sizeId == "" || sizeId == undefined) {
@@ -22,13 +22,8 @@
             if (data == "Success") {
                 new PNotify({
                     title: 'Added',
-                    text: 'Item has been successfully added to your Cart.'
+                    text: '\nItem has been successfully added to your Cart.'
                 });
-                //$.pnotify({
-                //    title: 'Success',
-                //    type: 'info',
-                //    text: 'Item has been successfully added to your Cart.'
-                //});
             }
         },
         error: function (e) {

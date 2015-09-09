@@ -242,12 +242,13 @@
     var departmentRow;
     $(document).ready(function () {
         var errors = "";
-
+        var siteUrl = '@ConfigurationManager.AppSettings["SiteURL"]';
+        var url = siteUrl + "/Website/Home/UploadLogo";
         $('#upload').mfupload({
 
             type: '',   //all types
             maxsize: 10,
-            post_upload: "./file-uploader.html",
+            post_upload: url,
             folder: "./",
             ini_text: "Drag your file here or click (max: 1MB)",
             over_text: "Drop Here",

@@ -1,5 +1,6 @@
 ﻿@using System.Configuration
 @using EPMS.WebModels.WebsiteModels
+@using Microsoft.AspNet.Identity
 <!doctype html>
 <html lang="en-gb" class="no-js">
 <head>
@@ -79,118 +80,135 @@
     @RenderSection("scripts", required: false)
 
 </head>
-    <body class="">
-        <div id="signup_div">
-            @Html.Action("SignUp", "Account")
-        </div>
+<body class="">
+    <div id="signup_div">
+        @Html.Action("SignUp", "Account")
+    </div>
 
-        <div id="page_wrapper">
-            <header id="header" class="style2 header2">
-                <div class="fullWidth">
-                    <div class="container headerTopLinks">
-                        <div class=" header-social-icons multicolor ">
-                            <ul>
-                                <li><a href="#" class="twitter"><br></a></li>
-                                <li><a href="#" class="facebook"><br></a></li>
-                                <li><a href="#" class="skype"><br></a></li>
-                                <li><a href="#" class="linkedin"><br></a></li>
-                                <li><a href="#" class="rss"><br></a></li>
-                                <li><a href="#" class="deviantart"><br></a></li>
-                                <li><a href="#" class="googleplus"><br></a></li>
-                            </ul>
-                        </div>
-                        <ul class="topnav navRight">
+    @{
+        if (User.Identity.IsAuthenticated)
+        {
+            string userId = User.Identity.GetUserId();
+            Session["ShoppingCartId"] = userId;
+        }
+    }
+
+    <div id="page_wrapper">
+        <header id="header" class="style2 header2">
+            <div class="fullWidth">
+                <div class="container headerTopLinks">
+                    <div class=" header-social-icons multicolor ">
+                        <ul>
+                            <li><a href="#" class="twitter"><br></a></li>
+                            <li><a href="#" class="facebook"><br></a></li>
+                            <li><a href="#" class="skype"><br></a></li>
+                            <li><a href="#" class="linkedin"><br></a></li>
+                            <li><a href="#" class="rss"><br></a></li>
+                            <li><a href="#" class="deviantart"><br></a></li>
+                            <li><a href="#" class="googleplus"><br></a></li>
+                        </ul>
+                    </div>
+                    <ul class="topnav navRight">
+                        <li class="drop">
+                            <a href="~/ShoppingCart/Index">Cart</a>
+                            <div class="pPanel">
+                                <div class="inner">
+                                    @{
+                                        var items = Session["ShoppingCartItems"];
+                                        if (items != null)
+                                        {
+                                            ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                                            <span class="cart_details">Number of items @cart.ShoppingCartItems.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
+                                        }
+                                        else
+                                        {
+                                            <span class="cart_details_no_item">Number of items 0</span>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </li>
+                        <li class="languages drop">
+                            <a href="#"><span class="icon-globe icon-white"></span> Language</a>
+                            <div class="pPanel">
+                                <ul class="inner">
+                                    <li><a href="#">Arabic </a></li>
+                                    <li class="active"><a href="#">English <span class="icon-ok"></span></a></li>
+
+                                </ul>
+                            </div>
+                        </li>
+                    </ul>
+                    <ul class="topnav navLeft">
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="drop">
-                                <a href="~/ShoppingCart/Index">Cart</a>
+                                <a href="#">User</a>
                                 <div class="pPanel">
                                     <div class="inner">
-                                        @{
-                                            var items = Session["ShoppingCartItems"];
-                                            if (items != null)
-                                            {
-                                                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
-                                                <span class="cart_details">Number of items @cart.ShoppingCartItems.Count<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
-                                            }
-                                            else
-                                            {
-                                                <span class="cart_details_no_item">Number of items 0</span>
-                                            }
-                                        }
+                                        <span class="cart_details">
+                                            Logged in as : @User.Identity.Name
+                                            <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
+                                        </span>
                                     </div>
                                 </div>
                             </li>
-                            <li class="languages drop">
-                                <a href="#"><span class="icon-globe icon-white"></span> Language</a>
-                                <div class="pPanel">
-                                    <ul class="inner">
-                                        <li><a href="#">Arabic </a></li>
-                                        <li class="active"><a href="#">English <span class="icon-ok"></span></a></li>
-
-                                    </ul>
-                                </div>
-                            </li>
-                        </ul>
-                        <ul class="topnav navLeft">
-                            @if (User.Identity.IsAuthenticated)
-                            {
-                                <li class="drop">
-                                    <a href="#">User</a>
-                                    <div class="pPanel">
-                                        <div class="inner">
-                                            <span class="cart_details">
-                                                Logged in as : @User.Identity.Name
-                                                <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </li>
-                            }
-                            else
-                            {
-                                <li><a id="login" href="#login_panel" data-rel="prettyPhoto[login_panel]">Login</a></li>
-                            }
-                        </ul><!-- end topnav // left aligned -->
-                    </div>
+                        }
+                        else
+                        {
+                            <li><a id="login" href="#login_panel" data-rel="prettyPhoto[login_panel]">Login</a></li>
+                        }
+                    </ul><!-- end topnav // left aligned -->
                 </div>
-                <div class="container">
-                    <!-- logo -->
-                    <h1 id="logo"><a href="~/Home/Index"><img src="~/images/logo.png" alt="شركة مسار العلمية"></a></h1>
-                    <!-- search -->
-                    <div id="search">
-                        <a href="#" class="searchBtn"><span class="icon-search icon-white"></span></a>
-                        <div class="search">
-                            <form action="http://www.google.com/search" method="get" onsubmit="Gsitesearch(this)" target="_blank">
-                                <input name="q" type="hidden" />
-                                <input name="qfront" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
-                                <input type="submit" value="go" class=" icon-search" />
-                            </form>
-                        </div>
-                    </div><!-- end search -->
-                    @{
-                        Html.RenderAction("Index", "WebsiteMenu", new { area = "" });
+            </div>
+            <div class="container">
+                <!-- logo -->
+                <h1 id="logo">
+                    @if (Session["WebsiteLogo"] != null)
+                    {
+                        <a href="~/Home/Index"><img src="@Session["WebsiteLogo"]" alt="شركة مسار العلمية"></a>
                     }
-                </div>
-            </header>
+                    else
+                    {
+                        <a href="~/Home/Index"><img src="~/images/logo.png" alt="شركة مسار العلمية"></a>
+                    }
+                </h1>
+                <!-- search -->
+                <div id="search">
+                    <a href="#" class="searchBtn"><span class="icon-search icon-white"></span></a>
+                    <div class="search">
+                        <form action="http://www.google.com/search" method="get" onsubmit="Gsitesearch(this)" target="_blank">
+                            <input name="q" type="hidden" />
+                            <input name="qfront" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
+                            <input type="submit" value="go" class=" icon-search" />
+                        </form>
+                    </div>
+                </div><!-- end search -->
+                @{
+                    Html.RenderAction("Index", "WebsiteMenu", new { area = "" });
+                }
+            </div>
+        </header>
 
-            @RenderBody()
+        @RenderBody()
 
-            @{
-                Html.RenderAction("Index", "WebsiteFooter", new { area = "" });
-            }
-
-        </div>
-        <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
-
-        <a href="#" id="totop">TOP</a>
-        @if (ViewBag.MessageVM != null)
-        {
-            <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-            <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-            <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-            <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-            <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
+        @{
+            Html.RenderAction("Index", "WebsiteFooter", new { area = "" });
         }
-        
-    </body>
+
+    </div>
+    <input type="hidden" id="siteURL" value="@ConfigurationManager.AppSettings["SiteURL"]" />
+
+    <a href="#" id="totop">TOP</a>
+    @if (ViewBag.MessageVM != null)
+    {
+        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
+        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
+        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
+        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
+        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
+    }
+
+</body>
 
 </html>

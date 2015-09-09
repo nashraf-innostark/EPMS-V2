@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
+using EPMS.Interfaces.Repository;
+using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
@@ -12,29 +10,86 @@ namespace EPMS.Implementation.Services
     {
         #region Private
 
-        private readonly IWebsiteDepartmentService _websiteDepartmentService;
-        private readonly IPartnerService _partnerService;
+        private readonly IWebsiteDepartmentService websiteDepartmentService;
+        private readonly IPartnerService partnerService;
+        private readonly IWebsiteHomePageRepository repository;
 
         #endregion
 
         #region Constructor
 
-        public WebsiteHomePageService(IWebsiteDepartmentService websiteDepartmentService, IPartnerService partnerService)
+        public WebsiteHomePageService(IWebsiteDepartmentService websiteDepartmentService, IPartnerService partnerService, IWebsiteHomePageRepository repository)
         {
-            _websiteDepartmentService = websiteDepartmentService;
-            _partnerService = partnerService;
+            this.websiteDepartmentService = websiteDepartmentService;
+            this.partnerService = partnerService;
+            this.repository = repository;
         }
 
         #endregion
 
         #region Public
 
-        public WebsiteHomeResponse websiteHomeResponse()
+        public WebsiteHomeResponse WebsiteHomeResponse()
         {
-            WebsiteHomeResponse response = new WebsiteHomeResponse();
-            response.WebsiteDepartments = _websiteDepartmentService.GetAll();
-            response.Partners = _partnerService.GetAll();
+            WebsiteHomeResponse response = new WebsiteHomeResponse
+            {
+                WebsiteDepartments = websiteDepartmentService.GetAll(),
+                Partners = partnerService.GetAll(),
+                Logo = repository.GetHomePageLogo().WebsiteLogoPath
+            };
             return response;
+        }
+
+        public bool SaveLogo(WebsiteHomePage homePage)
+        {
+            try
+            {
+                var dbLogo = repository.GetHomePageLogo();
+                if (dbLogo != null)
+                {
+                    dbLogo.WebsiteLogoPath = homePage.WebsiteLogoPath;
+                    repository.Update(dbLogo);
+                    repository.SaveChanges();
+                }
+                else
+                {
+                    repository.Add(homePage);
+                    repository.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool AddWebsiteLogo(WebsiteHomePage homePage)
+        {
+            try
+            {
+                repository.Add(homePage);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateWebsiteLogo(WebsiteHomePage homePage)
+        {
+            try
+            {
+                repository.Update(homePage);
+                repository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         #endregion

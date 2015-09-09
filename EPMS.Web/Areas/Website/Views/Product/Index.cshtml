@@ -65,11 +65,11 @@
                                 <td>
                                     @if (item.ItemVariationId != null)
                                     {
-                                        @(direction == "ltr" ? Html.ActionLink(@item.ItemNameEn, "Create", new {id = item.ProductId}) : Html.ActionLink(@item.ItemNameAr, "Create", new {id = item.ProductId}))
+                                        @(direction == "ltr" ? Html.ActionLink(item.ItemNameEn, "Create", new {id = item.ProductId}) : Html.ActionLink(item.ItemNameAr, "Create", new {id = item.ProductId}))
                                     }
                                     else
                                     {
-                                        @(direction == "ltr" ? Html.ActionLink(@item.ProductNameEn, "Create", new { id = item.ProductId }) : Html.ActionLink(@item.ProductNameAr, "Create", new { id = item.ProductId }))
+                                        @(direction == "ltr" ? Html.ActionLink(item.ProductNameEn, "Create", new { id = item.ProductId }) : Html.ActionLink(item.ProductNameAr, "Create", new { id = item.ProductId }))
                                     }
                                 </td>
                                 <td>@item.ProductPrice</td>

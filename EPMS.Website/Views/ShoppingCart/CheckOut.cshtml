@@ -28,61 +28,140 @@
     <div class="shadowUP"></div>
 </div>
 
-<div class="control-group row-fluid" style="margin-top: 50px">
-    <div class="span3"></div>
-    <div class="span9">
-        <div class="controls">
-            <label>
-                <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
-                Pay with Paypal
-            </label>
-            <br />
-            <label>
-                <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
-                Pay Offline
-            </label>
-            <br />
-            <label>
-                <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
-                Manual Delivery
-            </label>
+<section id="content">
+    <div class="container">
+        <div id="mainbody">
+            <div class="row">
+                <div class="span12 directionR ">
+                    <div class="controls">
+                        <label>
+                            <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
+                            Pay with Paypal
+                        </label>
+                        <br />
+                        <div id="PaypalDiv" class="hide">
+                            @using (Html.BeginForm("PostTotPaypal", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
+                            {
+                                if (Model.ShoppingCart != null && Model.ShoppingCart.ShoppingCartItems.Any())
+                                {
+                                    for (int i = 0; i < Model.ShoppingCart.ShoppingCartItems.Count; i++)
+                                    {
+                                        @Html.HiddenFor(model => model.ShoppingCart.CartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal,
+                                        new
+                                        {
+                                            @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId,
+                                            @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice
+                                        })
+                                    }
+                                }
+                                <input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />
+                            }
+                        </div>
+                        <label>
+                            <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
+                            Pay Offline
+                        </label>
+                        <br />
+                        <div id="OfflineDiv" class="hide">
+                            @using (Html.BeginForm("OfflinePayment", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
+                            {
+                                if (Model.ShoppingCart != null && Model.ShoppingCart.ShoppingCartItems.Any())
+                                {
+                                    for (int i = 0; i < Model.ShoppingCart.ShoppingCartItems.Count; i++)
+                                    {
+                                        @Html.HiddenFor(model => model.ShoppingCart.CartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal,
+                                        new
+                                        {
+                                            @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId,
+                                            @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice
+                                        })
+                                    }
+                                }
+                                <input type="submit" class="btn" value="Pay Offline" />
+                            }
+                        </div>
+                        <label>
+                            <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
+                            Manual Delivery
+                        </label>
+                        <br />
+                        <div id="ManualDeliveryDiv" class="hide">
+                            @using (Html.BeginForm("OnDeliveryPayment", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
+                            {
+                                if (Model.ShoppingCart != null && Model.ShoppingCart.ShoppingCartItems.Any())
+                                {
+                                    for (int i = 0; i < Model.ShoppingCart.ShoppingCartItems.Count; i++)
+                                    {
+                                        @Html.HiddenFor(model => model.ShoppingCart.CartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
+                                        @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal,
+                                        new
+                                        {
+                                            @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId,
+                                            @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice
+                                        })
+                                    }
+                                }
+                                <input type="submit" class="btn" value="Manual Delivery" />
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>
 
-<div id="PaypalDiv" class="hide">
-    @using (Html.BeginForm("PostTotPaypal", "Paypal", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
-    {
-        if (Model.ShoppingCart != null && Model.ShoppingCart.ShoppingCartItems.Any())
-        {
-            for (int i = 0; i < Model.ShoppingCart.ShoppingCartItems.Count; i++)
-            {
-                @Html.HiddenFor(model => model.ShoppingCart.CartId)
-                @Html.HiddenFor(model => model.ShoppingCart.UserCartId)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ProductId)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].Quantity)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
-                @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal,
-                new
-                {
-                    @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId,
-                    @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice
-                })
-            }
-        }
-        <input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />
-    }
-</div>
-<div id="OfflineDiv" class="hide">
-    Offline
-</div>
-<div id="ManualDeliveryDiv" class="hide">
-    Manual Delivery
-</div>
+@*<div class="control-group row-fluid" style="margin-top: 50px">
+        <div class="span3"></div>
+        <div class="span9">
+            <div class="controls">
+                <label>
+                    <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
+                    Pay with Paypal
+                </label>
+                <br />
+                <label>
+                    <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
+                    Pay Offline
+                </label>
+                <br />
+                <label>
+                    <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
+                    Manual Delivery
+                </label>
+            </div>
+        </div>
+    </div>*@
+
+
+
+
 
 <script>
     $(document).ready(function () {
@@ -104,7 +183,4 @@
             }
         });
     });
-    function paypal() {
-        window.location.href = "/"
-    }
 </script>

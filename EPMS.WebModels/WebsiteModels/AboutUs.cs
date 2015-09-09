@@ -1,13 +1,18 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
     public class AboutUs
     {
         public long AboutUsId { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.AboutUs.AboutUs), ErrorMessageResourceName = "TitleValidErrorEn")]
         public string Title { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.AboutUs.AboutUs), ErrorMessageResourceName = "TitleValidErrorAr")]
         public string TitleAr { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.AboutUs.AboutUs), ErrorMessageResourceName = "ContentValidErrorEn")]
         public string ContentEn { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Resources.Website.AboutUs.AboutUs), ErrorMessageResourceName = "ContentValidErrorAr")]
         public string ContentAr { get; set; }
         public string MetaKeywords { get; set; }
         public string MetaKeywordsAr { get; set; }

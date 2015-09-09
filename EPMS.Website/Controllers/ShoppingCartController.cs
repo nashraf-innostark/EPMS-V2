@@ -5,6 +5,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using EPMS.WebModels.ViewModels.Common;
@@ -100,13 +101,14 @@ namespace EPMS.Website.Controllers
         [HttpPost]
         public JsonResult AddToCart(long productId, long sizeId, int quantity)
         {
+            long? nullSize = null;
             // get Product data from DB
             var product = productService.FindProductById(productId);
             Product userProduct = product.ItemVariationId != null ? product.CreateFromServerToClientFromInventory() : product.CreateFromServerToClient();
-            // check if sizr is zero then add default size of Product
+            // check if size is zero then add default size of Product
             if (sizeId == 0)
             {
-                sizeId = userProduct.ItemVariationId != null ? userProduct.SizeId : Convert.ToInt64(userProduct.ProductSize);
+                sizeId = userProduct.ItemVariationId != null ? userProduct.SizeId : sizeId;
             }
             // Product Image path
             string itemImageFolder = "";
@@ -118,14 +120,14 @@ namespace EPMS.Website.Controllers
             if (items != null)
             {
                 ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
-                var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId && y.SizeId == sizeId);
+                var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId);
                 if (item != null)
                 {
                     item.Quantity += quantity;
                     // Update DB Cart
                     if (User.Identity.IsAuthenticated)
                     {
-                        var dbCartItem = cartItemService.FindById(cart.CartId);
+                        var dbCartItem = cartItemService.FindById(item.CartItemId);
                         if (dbCartItem != null)
                         {
                             dbCartItem.Quantity += quantity;
@@ -162,7 +164,7 @@ namespace EPMS.Website.Controllers
                     {
                         CartId = cart.CartId,
                         ProductId = productId,
-                        SizeId = sizeId,
+                        SizeId = sizeId != 0 ? sizeId : nullSize,
                         Quantity = quantity,
                         ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                         ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
@@ -174,6 +176,7 @@ namespace EPMS.Website.Controllers
                     if (User.Identity.IsAuthenticated)
                     {
                         var cartToAdd = itemToAdd.CreateFromClientToServer();
+                        cartToAdd.CartId = cart.CartId;
                         var status = cartItemService.AddShoppingCartItem(cartToAdd);
                     }
                 }
@@ -186,7 +189,7 @@ namespace EPMS.Website.Controllers
                 {
                     CartId = cart.CartId,
                     ProductId = productId,
-                    SizeId = sizeId,
+                    SizeId = sizeId != 0 ? sizeId : nullSize,
                     Quantity = quantity,
                     ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                     ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
@@ -199,7 +202,7 @@ namespace EPMS.Website.Controllers
                 {
                     var cartToAdd = cart.CreateFromClientToServer();
                     cartToAdd.UserCartId = GetCartId();
-                    cartToAdd.Status = false;
+                    cartToAdd.Status = (int)PurchaseStatus.New;
                     cartToAdd.RecCreatedBy = User.Identity.GetUserId();
                     cartToAdd.RecCreatedDate = DateTime.Now;
                     cartToAdd.RecLastUpdatedBy = User.Identity.GetUserId();
@@ -239,5 +242,38 @@ namespace EPMS.Website.Controllers
             return Json("Error", JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region UpdateQuantity
+
+        [HttpPost]
+        public JsonResult UpdateQuantity(long productId, int quantity)
+        {
+            var items = Session["ShoppingCartItems"];
+            if (items != null)
+            {
+                ShoppingCart cart = (ShoppingCart) Session["ShoppingCartItems"];
+                var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId);
+                if (item != null)
+                {
+                    item.Quantity = quantity;
+                    // Update DB Cart
+                    if (User.Identity.IsAuthenticated)
+                    {
+                        var dbCartItem = cartItemService.FindById(item.CartItemId);
+                        if (dbCartItem != null)
+                        {
+                            dbCartItem.Quantity = quantity;
+                            cartItemService.UpdateShoppingCartItem(dbCartItem);
+                        }
+                    }
+                    Session["ShoppingCartItems"] = cart;
+                    return Json("Success", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Error", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
     }
 }

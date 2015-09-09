@@ -3,6 +3,7 @@ using System.Reflection;
 using System.Web.Security;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Models.RequestModels;
@@ -172,7 +173,7 @@ namespace EPMS.Website.Controllers
                 string returnUrl = Request.UrlReferrer.PathAndQuery;
                 return RedirectToLocal(returnUrl);
             }
-            return RedirectToAction("Index", "Home", new { div = "login_panel", width = "800" });
+            return RedirectToAction("Index", "Home");
         }
         private void SaveCartToDB(string userId)
         {
@@ -182,7 +183,7 @@ namespace EPMS.Website.Controllers
             {
                 WebModels.WebsiteModels.ShoppingCart cart = (WebModels.WebsiteModels.ShoppingCart)Session["ShoppingCartItems"];
                 cart.UserCartId = userId;
-                cart.Status = false;
+                cart.Status = (int)PurchaseStatus.New;
                 cart.RecCreatedBy = userId;
                 cart.RecCreatedDate = DateTime.Now;
                 cart.RecLastUpdatedBy = userId;

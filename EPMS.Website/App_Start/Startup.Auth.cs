@@ -28,6 +28,7 @@ namespace EPMS.Website
             {
                 AuthenticationType = DefaultAuthenticationTypes.ApplicationCookie,
                 LoginPath = new PathString("/Account/Login"),
+                //LoginPath = new PathString("/Home/Index?div=login_panel&width=800"),
                 Provider = new CookieAuthenticationProvider
                 {
                     // Enables the application to validate the security stamp when the user logs in.
