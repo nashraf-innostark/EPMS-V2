@@ -5,6 +5,7 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
     var title = Model.NewsOrArticle ? "Our Articles" : "Our News";
+    int pageNo = 1;
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -15,7 +16,7 @@
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
                     <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
-                     <li>@title</li>
+                    <li>@title</li>
                 </ul>
                 <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
             </div>
@@ -35,82 +36,95 @@
     <div class="container">
 
         <div id="mainbody">
-
-            <div class="row">
-                <div class="span12 directionR listing">
-                    <h1 class="page-title">Latest News</h1>
-                    @foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
-                    {
-
-                        if (direction == "ltr")
+            @using (Html.BeginForm("Index", "NewsAndArticle", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model => model.Type)
+                @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
+                <div class="row">
+                    <div class="span12 directionR listing">
+                        <h1 class="page-title">Latest News</h1>
+                        @foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
                         {
-                            <div class="itemView clearfix eBlog">
-                                <h4>@newsOrArticle.TitleEn</h4>
-                                <div class="itemHeader">
-                                    <div class="post_details">
-                                        <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
-                                        <span class="infSep"> / </span>
-                                        <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
-                                    </div>
-                                </div><!-- end itemheader -->
-                                <div class="itemBody ">
-                                    <p>
-                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
-                                            @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
-                                            {
-                                                <img src="~/Images/noimage_department.png" />
-                                            }
-                                            else
-                                            {
-                                                <img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" />
-                                            }
-                                        </a>
-                                    </p>
-                                    <p style="text-align: justify">
-                                        @newsOrArticle.ContentEn
+
+                            if (direction == "ltr")
+                            {
+                                <div class="itemView clearfix eBlog">
+                                    <h4>@newsOrArticle.TitleEn</h4>
+                                    <div class="itemHeader">
+                                        <div class="post_details">
+                                            <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
+                                            <span class="infSep"> / </span>
+                                            <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
+                                        </div>
+                                    </div><!-- end itemheader -->
+                                    <div class="itemBody ">
+                                        <p>
+                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                {
+                                                    <img src="~/Images/noimage_department.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" />
+                                                }
+                                            </a>
+                                        </p>
+                                        <p style="text-align: justify">
+                                            @newsOrArticle.ContentEn
+                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
+                                        </p>
+                                    </div><!-- end item body -->
+                                    <div class="clear"></div>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="itemView clearfix eBlog">
+                                    <h4>@newsOrArticle.TitleAr</h4>
+                                    <div class="itemHeader">
+                                        <div class="post_details">
+                                            <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
+                                            <span class="infSep"> / </span>
+                                            <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
+                                        </div>
+                                    </div><!-- end itemheader -->
+                                    <div class="itemBody ">
+                                        <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" /></a></p>
+                                        <p style="text-align: justify">
+                                            @newsOrArticle.ContentAr
+                                        </p>
                                         <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
-                                    </p>
-                                </div><!-- end item body -->
-                                <div class="clear"></div>
-                            </div>
-                        }
-                        else
-                        {
-                            <div class="itemView clearfix eBlog">
-                                <h4>@newsOrArticle.TitleAr</h4>
-                                <div class="itemHeader">
-                                    <div class="post_details">
-                                        <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
-                                        <span class="infSep"> / </span>
-                                        <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
-                                    </div>
-                                </div><!-- end itemheader -->
-                                <div class="itemBody ">
-                                    <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" /></a></p>
-                                    <p style="text-align: justify">
-                                        @newsOrArticle.ContentAr
-                                    </p>
-                                    <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
-                                </div><!-- end item body -->
-                                <div class="clear"></div>
-                            </div>
-                        }
+                                    </div><!-- end item body -->
+                                    <div class="clear"></div>
+                                </div>
+                            }
 
-                    }
-                    <!-- End Item Layout -->
-                </div>
+                        }
+                        <!-- End Item Layout -->
+                    </div>
 
-                <div class="span4">
-                    <div class="pagination">
-                        <a href="#"><div class="previous"><i class="fa fa-long-arrow-right"></i></div></a>
-                        <a href="#" class="active"><div class="page-button">1</div></a>
-                        <a href="#"><div class="page-button">2</div></a>
-                        <a href="#"><div class="page-button">3</div></a>
-                        <a href="#"><div class="next"><i class="fa fa-long-arrow-left"></i></div></a>
+                    <div class="span4">
+                        <div class="pagination">
+                            <a><div class="cursorHand first-page"><i class="fa fa-long-arrow-right"></i></div></a>
+                            @for (int i = 0; i <= Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
+                            {
+                                if (i == Model.SearchRequest.iDisplayStart)
+                                {
+                                    <a class="active cursorHand"><div class="page-button">@pageNo</div></a>
+                                }
+                                else
+                                {
+                                    <a class="cursorHand"><div class="page-button">@pageNo</div></a>
+                                }
+                                pageNo++;
+                            }
+                            <a><div class="cursorHand last-page"><i class="fa fa-long-arrow-left"></i></div></a>
+                        </div>
                     </div>
                 </div>
-            </div><!-- end row -->
-
+    <!-- end row -->
+            }
         </div><!-- end mainbody -->
 
     </div><!-- end container -->
@@ -120,6 +134,38 @@
 
     $(document).ready(function () {
     });
+    jQuery(document).on('click', '.page-button', function () {
+        debugger;
+        jQuery('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var pageNo = parseInt(this.textContent);
+        var length = 5;
+        var displayStart = (pageNo - 1) * length;
+        jQuery('#displayStart').val(displayStart);
+        // submit from
+        jQuery("#filter-products").submit();
+    });
 
+    jQuery(document).on('click', '.first-page', function () {
+        jQuery('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        jQuery('#displayStart').val(0);
+        // submit from
+        jQuery("#filter-products").submit();
+    });
+
+    jQuery(document).on('click', '.last-page', function () {
+        jQuery('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var totalCount = parseInt('@Model.SearchRequest.TotalCount');
+        var length = 5;
+        jQuery('#displayStart').val(getLastPage(totalCount, length));
+        // submit from
+        jQuery("#filter-products").submit();
+    });
+    function getLastPage(totalCount, length) {
+        var totalPages = Math.ceil(totalCount / length);
+        return ((totalPages - 1) * length);
+    }
 </script>
 

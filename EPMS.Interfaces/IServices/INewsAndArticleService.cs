@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -11,5 +13,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateNewsAndArticle(NewsAndArticle newsAndArticle);
         void DeleteNewsAndArticle(NewsAndArticle newsAndArticle);
         bool Delete(long id);
+        NewsAndArticleResponse GetNewsAndArticleList(NewsAndArticleSearchRequest request, bool type);
     }
 }

@@ -1,7 +1,10 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
+using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.NewsAndArticle;
 
@@ -31,26 +34,33 @@ namespace EPMS.Website.Controllers
         public ActionResult Index(long id)
         {
             ViewBag.ShowSlider = false;
-            if (id == 1)
+            NewsAndArticleListViewModel viewModel = new NewsAndArticleListViewModel();
+            viewModel.SearchRequest = new NewsAndArticleSearchRequest
             {
-                return View(new NewsAndArticleListViewModel
-                {
-                    NewsAndArticles =
-                        newsAndArticleService.GetAll()
-                            .Select(x => x.CreateFromServerToClient())
-                            .Where(y => y.Type).OrderBy(y => y.SortOrder),
-                    NewsOrArticle = true
-                });
+                iDisplayLength = 5,
+            };
+
+            var response = newsAndArticleService.GetNewsAndArticleList(viewModel.SearchRequest, id == 1);
+            viewModel.NewsAndArticles = response.NewsAndArticles.Select(x => x.CreateFromServerToClient());
+            viewModel.SearchRequest.TotalCount = response.TotalCount;
+            viewModel.Type = id;
+            return View(viewModel);
+        }
+
+        [HttpPost]
+
+        public ActionResult Index(NewsAndArticleListViewModel viewModel)
+        {
+            viewModel.SearchRequest.iDisplayLength = 5;
+            NewsAndArticleResponse productsList = newsAndArticleService.GetNewsAndArticleList(viewModel.SearchRequest, viewModel.Type == 1);
+            if (productsList.NewsAndArticles.Any())
+            {
+                viewModel.NewsAndArticles = productsList.NewsAndArticles.Select(x => x.CreateFromServerToClient()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(new NewsAndArticleListViewModel
-            {
-                NewsAndArticles =
-                    newsAndArticleService.GetAll()
-                        .Select(x => x.CreateFromServerToClient())
-                        .Where(y => y.Type == false).OrderBy(y => y.SortOrder),
-                NewsOrArticle = false
-            });
+            ViewBag.ShowSlider = false;
+            ViewBag.From = viewModel.SearchRequest.From;
+            return View(viewModel);
         }
 
         #endregion

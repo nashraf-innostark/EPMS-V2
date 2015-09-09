@@ -211,6 +211,7 @@
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
+    <Compile Include="RequestModels\NewsAndArticleSearchRequest.cs" />
     <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
     <Compile Include="RequestModels\ProductRequest.cs" />
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
@@ -360,6 +361,7 @@
     <Compile Include="ResponseModels\JobOfferedResponse.cs" />
     <Compile Include="ResponseModels\JobTitleResponse.cs" />
     <Compile Include="ResponseModels\MeetingResponse.cs" />
+    <Compile Include="ResponseModels\NewsAndArticleResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListResponse.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationListView.cs" />
     <Compile Include="ResponseModels\NotificationResponseModel\NotificationRecipientResponse.cs" />
