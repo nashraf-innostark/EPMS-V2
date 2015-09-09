@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -65,6 +67,18 @@ namespace EPMS.Implementation.Services
             newsAndArticleRepository.Delete(newsAndArticleToDelete);
             newsAndArticleRepository.SaveChanges();
             return true;
+        }
+
+        public NewsAndArticleResponse GetNewsAndArticleList(NewsAndArticleSearchRequest request, bool type)
+        {
+            NewsAndArticleResponse response = new NewsAndArticleResponse
+            {
+                NewsAndArticles = new List<NewsAndArticle>()
+            };
+            return newsAndArticleRepository.GetNewsAndArticleList(request, type);
+            //response.NewsAndArticles = newsAndArticles.NewsAndArticles;
+            //response.TotalCount = newsAndArticles.TotalCount;
+            //return newsAndArticles;
         }
 
         #endregion
