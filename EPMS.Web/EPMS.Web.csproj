@@ -356,6 +356,7 @@
     <Compile Include="DashboardModels\TIRWidget.cs" />
     <Compile Include="DashboardModels\RFIWidget.cs" />
     <Compile Include="DashboardModels\WarehousDDL.cs" />
+    <Compile Include="DateTimeBinder.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>

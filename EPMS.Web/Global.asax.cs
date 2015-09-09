@@ -69,6 +69,7 @@ namespace IdentitySample
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters, container);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            ModelBinders.Binders.Add(typeof(DateTime), new EPMS.Web.DateTimeBinder());
 
             // Set MVC resolver
             DependencyResolver.SetResolver(new UnityDependencyResolver(container));

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -231,9 +232,11 @@ namespace EPMS.Implementation.Services
             variationToSave.ItemVariation.InventoryItem =
                 inventoryItemRepository.Find(variationToSave.ItemVariation.InventoryItemId);
             ItemVariation itemVariationFromDatabase = variationRepository.Find(variationToSave.ItemVariation.ItemVariationId);
+            var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
+            
             if (variationToSave.ItemVariation.ItemVariationId > 0)
             {
-                UpdateItemVariation(variationToSave);
+                UpdateItemVariation(variationToSave, itemVariationFromDatabase);
                 //UpdateItemVariation(variationToSave.ItemVariation);
                 UpdateSizeList(variationToSave, itemVariationFromDatabase);
                 UpdateManufacturerList(variationToSave);
@@ -252,7 +255,10 @@ namespace EPMS.Implementation.Services
                 AddColorList(variationToSave);
                 AddImages(variationToSave);
             }
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             variationRepository.SaveChanges();
+            System.Threading.Thread.CurrentThread.CurrentCulture = currentCulture;
             return new ItemVariationResponse
             {
                 ItemVariation = new ItemVariation
@@ -267,6 +273,12 @@ namespace EPMS.Implementation.Services
         /// </summary>
         private void AddNewVariation(ItemVariationRequest variationToSave)
         {
+            //CultureInfo culture = new CultureInfo("en-US");
+            //var datetimenow = DateTime.Now.ToShortDateString();
+            // var dateNow = Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-US"));
+            //var datenow = DateTime.ParseExact(dateNow, "dd/MM/yyyy", new CultureInfo("en"));
+
+                        // Specify exactly how to interpret the string.
             variationToSave.ItemVariation.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             variationToSave.ItemVariation.RecCreatedDt = DateTime.Now;
             variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -325,8 +337,9 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Update Existing Variation from Client
         /// </summary>
-        private void UpdateItemVariation(ItemVariationRequest variationToSave)
+        private void UpdateItemVariation(ItemVariationRequest variationToSave, ItemVariation itemVariationFromDatabase)
         {
+            variationToSave.ItemVariation.RecCreatedDt = itemVariationFromDatabase.RecCreatedDt;
             variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             variationToSave.ItemVariation.RecLastUpdatedDt = DateTime.Now;
             string itemNameEn;
@@ -455,7 +468,7 @@ namespace EPMS.Implementation.Services
                     };
                     itemWarehouseRepository.Add(warehouse);
                 }
-                itemWarehouseRepository.SaveChanges();
+                //itemWarehouseRepository.SaveChanges();
             }
         }
 
@@ -505,7 +518,7 @@ namespace EPMS.Implementation.Services
                     itemWarehouseRepository.Delete(itemToDelete);
                 }
             }
-            itemWarehouseRepository.SaveChanges();
+            //itemWarehouseRepository.SaveChanges();
         }
 
         /// <summary>
@@ -527,7 +540,7 @@ namespace EPMS.Implementation.Services
                     };
                     itemManufacturerRepository.Add(manufacturer);
                 }
-                itemManufacturerRepository.SaveChanges();
+                //itemManufacturerRepository.SaveChanges();
             }
         }
 
@@ -582,7 +595,7 @@ namespace EPMS.Implementation.Services
                     itemManufacturerRepository.Delete(itemToDelete);
                 }
             }
-            itemManufacturerRepository.SaveChanges();
+            //itemManufacturerRepository.SaveChanges();
         }
 
         /// <summary>
@@ -719,7 +732,7 @@ namespace EPMS.Implementation.Services
                     };
                     imageRepository.Add(image);
                 }
-                imageRepository.SaveChanges();
+                //imageRepository.SaveChanges();
             }
         }
         /// <summary>
@@ -760,7 +773,7 @@ namespace EPMS.Implementation.Services
                     imageRepository.Delete(image);
                 }
             }
-            imageRepository.SaveChanges();
+            //imageRepository.SaveChanges();
         }
 
 
