@@ -52,22 +52,27 @@ namespace EPMS.Website.Controllers
                 SortDirection = "asc"
             };
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            viewModel.ProductSections = productsList.ProductSections.ToList();
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
                 // New Arrivals
-                var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).ToList();
-                viewModel.NewArrivals = newArrivals.Any() ? newArrivals.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> arrivals = newArrivals as IList<EPMS.Models.DomainModels.Product> ?? newArrivals.ToList();
+                viewModel.NewArrivals = arrivals.Any() ? arrivals.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
                 // Best Sell
-                var bestSell = productsList.AllProducts.Where(x => x.BestSeller).ToList();
-                viewModel.BestSell = bestSell.Any() ? bestSell.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                var bestSell = productsList.AllProducts.Where(x => x.BestSeller).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> sell = bestSell as IList<EPMS.Models.DomainModels.Product> ?? bestSell.ToList();
+                viewModel.BestSell = sell.Any() ? sell.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
                 // Random Products
-                var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).ToList();
-                viewModel.RandomProducts = randomProducts.Any() ? randomProducts.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> products = randomProducts as IList<EPMS.Models.DomainModels.Product> ?? randomProducts.ToList();
+                viewModel.RandomProducts = products.Any() ? products.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
                 // Featured Products
-                var featuredProducts = productsList.AllProducts.Where(x => x.Featured).ToList();
-                viewModel.FeaturedProducts = featuredProducts.Any() ? featuredProducts.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                var featuredProducts = productsList.AllProducts.Where(x => x.Featured).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> enumerable = featuredProducts as IList<EPMS.Models.DomainModels.Product> ?? featuredProducts.ToList();
+                viewModel.FeaturedProducts = enumerable.Any() ? enumerable.Select(x=>x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             ViewBag.ShowSlider = false;
@@ -79,10 +84,27 @@ namespace EPMS.Website.Controllers
         public ActionResult Index(ProductListViewModel viewModel)
         {
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            viewModel.ProductSections = productsList.ProductSections.ToList();
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
+                // New Arrivals
+                var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> arrivals = newArrivals as IList<EPMS.Models.DomainModels.Product> ?? newArrivals.ToList();
+                viewModel.NewArrivals = arrivals.Any() ? arrivals.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Best Sell
+                var bestSell = productsList.AllProducts.Where(x => x.BestSeller).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> sell = bestSell as IList<EPMS.Models.DomainModels.Product> ?? bestSell.ToList();
+                viewModel.BestSell = sell.Any() ? sell.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Random Products
+                var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> products = randomProducts as IList<EPMS.Models.DomainModels.Product> ?? randomProducts.ToList();
+                viewModel.RandomProducts = products.Any() ? products.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+                // Featured Products
+                var featuredProducts = productsList.AllProducts.Where(x => x.Featured).Take(50);
+                IEnumerable<EPMS.Models.DomainModels.Product> enumerable = featuredProducts as IList<EPMS.Models.DomainModels.Product> ?? featuredProducts.ToList();
+                viewModel.FeaturedProducts = enumerable.Any() ? enumerable.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
             }
             ViewBag.ShowSlider = false;
             ViewBag.From = viewModel.SearchRequest.From;
@@ -104,6 +126,7 @@ namespace EPMS.Website.Controllers
                 productId = (long)id;
             }
             ProductDetailResponse productDetails = productService.GetProductDetails(productId, from);
+            viewModel.ProductSections = productDetails.ProductSections;
             switch (from)
             {
                 case "Inventory":

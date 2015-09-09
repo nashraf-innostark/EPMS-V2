@@ -46,3 +46,14 @@
 .no-margin-top {
     margin-top: -1px !important;
 }
+
+.product-tabs {
+    text-align: left; 
+    float: none; 
+    top: 0px; right: auto; 
+    bottom: auto; 
+    left: 0px; 
+    margin: 0px; 
+    width: 3384px; 
+    height: 400px;
+}

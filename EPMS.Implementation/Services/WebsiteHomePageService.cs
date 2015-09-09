@@ -35,7 +35,7 @@ namespace EPMS.Implementation.Services
             {
                 WebsiteDepartments = websiteDepartmentService.GetAll(),
                 Partners = partnerService.GetAll(),
-                Logo = repository.GetHomePageLogo().WebsiteLogoPath
+                Logo = repository.GetHomePageLogo().WebsiteLogoPath,
             };
             return response;
         }

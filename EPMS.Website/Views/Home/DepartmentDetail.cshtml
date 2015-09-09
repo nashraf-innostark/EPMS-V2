@@ -5,10 +5,11 @@
 @{
     ViewBag.Title = "DepartmentDetail";
     //Layout = "~/Views/Shared/_Layout.cshtml";
-    var rootProducts = @Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
+    var rootProducts = Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
     var Date = DateTime.Now;
+    var siteURL = ConfigurationManager.AppSettings["SiteURL"];
 }
 
 
@@ -47,7 +48,13 @@
 
                         <div class="itemBody">
                             <p><a href="#" class="hoverBorder pull-left"><img src="@cpLink/Images/Department/@Url.Content(Model.WebsiteDepartment.ImageName)" /></a></p>
-                            <p style="text-align: justify">@Model.WebsiteDepartment.Description</p>
+                            <p style="text-align: justify" class="@Model.WebsiteDepartment.DepartmentId"></p>
+                            <script>
+                                var descp = '@Html.Raw(Model.WebsiteDepartment.Description)';
+                                var regex = /(<([^>]+)>)/ig;
+                                var result = descp.replace(regex, "");
+                                $("." + '@Model.WebsiteDepartment.DepartmentId').text(result);
+                            </script>
                         </div><!-- end item body -->
                         <div class="clear"></div>
 
@@ -69,7 +76,7 @@
                                     var childName = "";
                                     if (direction == "ltr")
                                     {
-                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn: productSection.SectionNameEn;
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
                                     }
                                     else
                                     {
@@ -83,8 +90,8 @@
                                             {
                                                 <li class="phy">
                                                     @{
-                                                childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
-                                                <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
+                                                        childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                                        <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -93,8 +100,8 @@
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
-                                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
+                                                                        childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                                        <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
                                                                     }
                                                                 </li>
                                                             }
@@ -105,6 +112,7 @@
 
                                         </ul>
                                     }
+                                    <br/>
                                 }
                             </li>
 
@@ -112,7 +120,7 @@
                     </div>
 
                     <h1 class="page-title margintop10">Catalog</h1>
-                    <a href="#"><img src="images/shop_images/catalog.jpg"></a>
+                    <a href="~/Catalogue/Index"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
 
                 </div>
 

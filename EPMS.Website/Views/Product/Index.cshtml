@@ -26,6 +26,7 @@
     string noImage = siteURL + "/images/noimage_department.png";
     int pageNo = 1;
     DateTime today = DateTime.Now;
+    var rootProducts = Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -58,47 +59,54 @@
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
-                                <input type="checkbox" id="item-0" /><label for="item-0">Physics Department</label>
-                                <ul>
-                                    <li class="phy">
-                                        <input type="checkbox" id="item-0-0" /><label for="item-0-0">Labs</label>
+                                @foreach (var productSection in rootProducts)
+                                {
+                                    var childName = "";
+                                    if (direction == "ltr")
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
+                                    }
+                                    else
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
+                                    }
+                                    <input type="checkbox" id="item-0" /><label for="item-0">@childName</label>
+                                    if (productSection.InventoryDepartment != null)
+                                    {
                                         <ul>
-                                            <li class="phy">
-                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Glassware</label>
-                                                <ul>
-                                                    <li class="phy"><a href="#">Glasses</a></li>
-                                                    <li class="phy"><a href="#">Flasks</a></li>
-                                                    <li class="phy"><a href="#">Cylinders</a></li>
-                                                    <li class="phy"><a href="#">Dispencers</a></li>
-                                                </ul>
-                                            </li>
+                                            @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
+                                            {
+                                                <li class="phy">
+                                                    @{
+                                                childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                                <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
+                                                    }
+                                                    @if (department.InventoryDepartments.Any())
+                                                    {
+                                                        <ul>
+                                                            @foreach (var childDepartment in department.InventoryDepartments)
+                                                            {
+                                                                <li class="phy">
+                                                                    @{
+                                                                childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
 
                                         </ul>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="item-0-1" /><label for="item-0-1">Experiments</label>
-                                        <ul>
-                                            <li class="phy"><a href="#">experiment 1</a></li>
-                                            <li class="phy"><a href="#">experiment 2</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                    }
+                                    <br />
+                                }
                             </li>
-                            <li class="chmy">
-                                <input type="checkbox" id="item-1" /><label for="item-1">Chemistry Department</label>
-                                <ul>
-                                    <li class="chmy">
-                                        <input type="checkbox" id="item-1-0" /><label for="item-1-0">Labs</label>
-                                        <ul>
-                                            <li class="chmy"><a href="#">Glassware</a></li>
-                                            <li class="chmy"><a href="#">Experiments</a></li>
-                                            <li class="chmy"><a href="#">Chemicals</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
+
                     <h1 class="page-title margintop10">@Product.Catalog</h1>
                     <a href="~/Catalogue/Index"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
                 </div>
@@ -253,325 +261,223 @@
                             <li><a href="#tabpan4" data-toggle="tab">@Product.FeaturedProducts</a></li>
                         </ul>
                         <div class="tab-content">
-                                <div class="tab-pane active" id="tabpan1">
+                            <div class="tab-pane active" id="tabpan1">
+                                <div class="shop-latest-carousel">
+                                    <ul id="latest_products" class="product-tabs">
+                                        @if (Model.NewArrivals != null && Model.NewArrivals.Any())
+                                        {
+                                            foreach (var newArrival in Model.NewArrivals)
+                                            {
+                                                <li>
+                                                    <div class="product-list-item  ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                            @{
+                                                string path = "";
+                                                if (newArrival.ItemVariationId != null)
+                                                {
+                                                    path = !string.IsNullOrEmpty(newArrival.ItemImage) ? itemImageFolder + newArrival.ItemImage : noImage;
+                                                }
+                                                else
+                                                {
+                                                    path = !string.IsNullOrEmpty(newArrival.ProductImage) ? itemImageFolder + newArrival.ProductImage : noImage;
+                                                }
+                                                if (newArrival.ItemVariationId != null)
+                                                {
+                                                    <a href="@siteURL/Product/Details/@newArrival.ItemVariationId?from=Inventory">
+                                                        <img src="@path" alt="">
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">
+                                                        <img src="@path" alt="">
+                                                    </a>
+                                                }
+                                                            }
+                                                        </div>
+                                                        <div class="details fixclear">
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameEn : newArrival.ProductNameEn)</h3>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameAr : newArrival.ProductNameAr)</h3>
+                                                            }
+                                                            <p><strong>SKU:</strong> @newArrival.SKUCode</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a class="cursorHand" onclick="addToCart(@newArrival.ProductId)">@Product.AddToCart</a>
+                                                                @if (newArrival.ItemVariationId != null)
+                                                                {
+                                                                    <a href="@siteURL/Product/Details/@newArrival.ItemVariationId?from=Inventory">@Product.More</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">@Product.More</a>
+                                                                }
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>@newArrival.ProductPrice</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            }
+                                        }
+                                    </ul><!-- shop product list -->
+                                    <div class="controls">
+                                        <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                        <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--end shop-latest-carousel -->
+                            </div><!-- end tab pane -->
+                            <div class="tab-pane" id="tabpan2">
+                                <div class="shop-latest-carousel">
+                                    <ul id="bestselling_products" class="product-tabs">
+                                        @if (Model.BestSell != null && Model.BestSell.Any())
+                                        {
+                                            foreach (var bestSell in Model.BestSell)
+                                            {
+                                                <li>
+                                                    <div class="product-list-item  ">
+                                                        <span class="hover"></span>
+                                                        <div class="image">
+                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                            @{
+                                                string path = "";
+                                                if (bestSell.ItemVariationId != null)
+                                                {
+                                                    path = !string.IsNullOrEmpty(bestSell.ItemImage) ? itemImageFolder + bestSell.ItemImage : noImage;
+                                                }
+                                                else
+                                                {
+                                                    path = !string.IsNullOrEmpty(bestSell.ProductImage) ? itemImageFolder + bestSell.ProductImage : noImage;
+                                                }
+                                                if (bestSell.ItemVariationId != null)
+                                                {
+                                                    <a href="@siteURL/Product/Details/@bestSell.ItemVariationId?from=Inventory">
+                                                        <img src="@path" alt="">
+                                                    </a>
+                                                }
+                                                else
+                                                {
+                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">
+                                                        <img src="@path" alt="">
+                                                    </a>
+                                                }
+                                                            }
+                                                        </div>
+                                                        <div class="details fixclear">
+                                                            @if (direction == "ltr")
+                                                            {
+                                                                <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameEn : bestSell.ProductNameEn)</h3>
+                                                            }
+                                                            else
+                                                            {
+                                                                <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameAr : bestSell.ProductNameAr)</h3>
+                                                            }
+                                                            <p><strong>SKU:</strong> @bestSell.SKUCode</p>
+                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                            <div class="actions">
+                                                                <a class="cursorHand" onclick="addToCart(@bestSell.ProductId)">@Product.AddToCart</a>
+                                                                @if (bestSell.ItemVariationId != null)
+                                                                {
+                                                                    <a href="@siteURL/Product/Details/@bestSell.ItemVariationId?from=Inventory">@Product.More</a>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">@Product.More</a>
+                                                                }
+                                                            </div>
+                                                            <div class="price">
+                                                                <span>@bestSell.ProductPrice</span><span>SR</span>
+                                                                <small>199</small>
+                                                            </div>
+                                                        </div>
+                                                    </div><!-- end product-item -->
+                                                </li>
+                                            }
+                                        }
+                                    </ul><!-- shop product list -->
+                                    <div class="controls">
+                                        <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
+                                        <a href="#" class="next"><span class="icon-chevron-right"></span></a>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div><!--end shop-latest-carousel -->
+                            </div>
+                            <div class="tab-pane " id="tabpan3">
                                     <div class="shop-latest-carousel">
-                                        <ul id="latest_products ">
-                                            <li>
-                                                <div class="product-list-item  ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
-                                @*<div class="tab-pane" id="tabpan2">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="bestselling_products">
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                        </ul><!-- shop product list -->
-                                        <div class="controls">
-                                            <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
-                                            <a href="#" class="next"><span class="icon-chevron-right"></span></a>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div><!--end shop-latest-carousel -->
-                                </div><!-- end tab pane -->
-                                <div class="tab-pane " id="tabpan3">
-                                    <div class="shop-latest-carousel">
-                                        <ul id="latest_products2 ">
-                                            <li>
-                                                <div class="product-list-item  ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
+                                        <ul id="latest_products2" class="product-tabs">
+                                            @if (Model.RandomProducts != null && Model.RandomProducts.Any())
+                                            {
+                                                foreach (var randomProduct in Model.RandomProducts)
+                                                {
+                                                    <li>
+                                                        <div class="product-list-item  ">
+                                                            <span class="hover"></span>
+                                                            <div class="image">
+                                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                                @{
+                                                    string path = "";
+                                                    if (randomProduct.ItemVariationId != null)
+                                                    {
+                                                        path = !string.IsNullOrEmpty(randomProduct.ItemImage) ? itemImageFolder + randomProduct.ItemImage : noImage;
+                                                    }
+                                                    else
+                                                    {
+                                                        path = !string.IsNullOrEmpty(randomProduct.ProductImage) ? itemImageFolder + randomProduct.ProductImage : noImage;
+                                                    }
+                                                    if (randomProduct.ItemVariationId != null)
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@randomProduct.ItemVariationId?from=Inventory">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                                }
+                                                            </div>
+                                                            <div class="details fixclear">
+                                                                @if (direction == "ltr")
+                                                                {
+                                                                    <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameEn : randomProduct.ProductNameEn)</h3>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameAr : randomProduct.ProductNameAr)</h3>
+                                                                }
+                                                                <p><strong>SKU:</strong> @randomProduct.SKUCode</p>
+                                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                                <div class="actions">
+                                                                    <a class="cursorHand" onclick="addToCart(@randomProduct.ProductId)">@Product.AddToCart</a>
+                                                                    @if (randomProduct.ItemVariationId != null)
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@randomProduct.ItemVariationId?from=Inventory">@Product.More</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">@Product.More</a>
+                                                                    }
+                                                                </div>
+                                                                <div class="price">
+                                                                    <span>@randomProduct.ProductPrice</span><span>SR</span>
+                                                                    <small>199</small>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- end product-item -->
+                                                    </li>
+                                                }
+                                            }
                                         </ul><!-- shop product list -->
                                         <div class="controls">
                                             <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
@@ -582,91 +488,71 @@
                                 </div><!-- end tab pane -->
                                 <div class="tab-pane" id="tabpan4">
                                     <div class="shop-latest-carousel">
-                                        <ul id="bestselling_products4">
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img2.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img5.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item ">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img3.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
-                                            <li>
-                                                <div class="product-list-item">
-                                                    <span class="hover"></span>
-                                                    <div class="image">
-                                                        <a href="pages-productitem.html"><img src="/images/shop_images/img6.png" alt=""></a>
-                                                    </div>
-                                                    <div class="details fixclear">
-                                                        <h3>Glass</h3>
-                                                        <p><strong>SKU:</strong> #95846</p>
-                                                        <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                        <div class="actions">
-                                                            <a href="#">Add To Cart</a>
-                                                            <a href="pages-productitem.html">More</a>
-                                                        </div>
-                                                        <div class="price">
-                                                            <span>129,99</span><span>SR</span>
-                                                            <small>199</small>
-                                                        </div>
-                                                    </div>
-                                                </div><!-- end product-item -->
-                                            </li>
+                                        <ul id="bestselling_products4" class="product-tabs">
+                                            @if (Model.FeaturedProducts != null && Model.FeaturedProducts.Any())
+                                            {
+                                                foreach (var featuredProduct in Model.FeaturedProducts)
+                                                {
+                                                    <li>
+                                                        <div class="product-list-item  ">
+                                                            <span class="hover"></span>
+                                                            <div class="image">
+                                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                                @{
+                                                    string path = "";
+                                                    if (featuredProduct.ItemVariationId != null)
+                                                    {
+                                                        path = !string.IsNullOrEmpty(featuredProduct.ItemImage) ? itemImageFolder + featuredProduct.ItemImage : noImage;
+                                                    }
+                                                    else
+                                                    {
+                                                        path = !string.IsNullOrEmpty(featuredProduct.ProductImage) ? itemImageFolder + featuredProduct.ProductImage : noImage;
+                                                    }
+                                                    if (featuredProduct.ItemVariationId != null)
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@featuredProduct.ItemVariationId?from=Inventory">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                                }
+                                                            </div>
+                                                            <div class="details fixclear">
+                                                                @if (direction == "ltr")
+                                                                {
+                                                                    <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameEn : featuredProduct.ProductNameEn)</h3>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameAr : featuredProduct.ProductNameAr)</h3>
+                                                                }
+                                                                <p><strong>SKU:</strong> @featuredProduct.SKUCode</p>
+                                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                                <div class="actions">
+                                                                    <a class="cursorHand" onclick="addToCart(@featuredProduct.ProductId)">@Product.AddToCart</a>
+                                                                    @if (featuredProduct.ItemVariationId != null)
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@featuredProduct.ItemVariationId?from=Inventory">@Product.More</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">@Product.More</a>
+                                                                    }
+                                                                </div>
+                                                                <div class="price">
+                                                                    <span>@featuredProduct.ProductPrice</span><span>SR</span>
+                                                                    <small>199</small>
+                                                                </div>
+                                                            </div>
+                                                        </div><!-- end product-item -->
+                                                    </li>
+                                                }
+                                            }
                                         </ul><!-- shop product list -->
                                         <div class="controls">
                                             <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
@@ -674,9 +560,9 @@
                                         </div>
                                         <div class="clear"></div>
                                     </div><!--end shop-latest-carousel -->
-                                </div>*@<!-- end tab pane -->
+                                </div><!-- end tab pane -->
 
-                            </div>
+                        </div>
                     </div><!-- /.tabbable -->
                 </div><!-- end shop latest -->
             </div>

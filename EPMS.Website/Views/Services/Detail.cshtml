@@ -8,7 +8,7 @@
     var Date = DateTime.Now;
     var link = ConfigurationManager.AppSettings["WebsiteServices"];
     var noImage = ConfigurationManager.AppSettings["NoImageAvailable"];
-    
+
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -51,7 +51,7 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                @if (@Model.WebsiteService.ImagePath != null)
+                                @if (Model.WebsiteService.ImagePath != null)
                                 {
                                     <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
                                 }
@@ -59,7 +59,13 @@
                                 {
                                     <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
                                 }
-                                <p style="text-align: justify">@Model.WebsiteService.DescriptionEn</p>
+                                <p style="text-align: justify" class="@Model.WebsiteService.ServiceId"></p>
+                                <script>
+                                    var descp = '@Html.Raw(Model.WebsiteService.DescriptionEn)';
+                                    var regex = /(<([^>]+)>)/ig;
+                                    var result = descp.replace(regex, "");
+                                    $("." + '@Model.WebsiteService.ServiceId').text(result);
+                                </script>
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>
@@ -80,7 +86,7 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                @if (@Model.WebsiteService.ImagePath != null)
+                                @if (Model.WebsiteService.ImagePath != null)
                                 {
                                     <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
                                 }
@@ -88,7 +94,14 @@
                                 {
                                     <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
                                 }
-                                <p style="text-align: justify">@Model.WebsiteService.DescriptionEn</p>
+                                <p style="text-align: justify" class="@Model.WebsiteService.ServiceId"></p>
+                                <script>
+                                    var descp = '@Html.Raw(Model.WebsiteService.DescriptionEn)';
+                                    var regex = /(<([^>]+)>)/ig;
+                                    var result = descp.replace(regex, "");
+                                    $("." + '@Model.WebsiteService.ServiceId').text(result);
+                                </script>
+
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>

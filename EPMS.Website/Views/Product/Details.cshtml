@@ -25,6 +25,7 @@
     var siteURL = ConfigurationManager.AppSettings["SiteURL"];
     string noImage = siteURL + "/images/noimage_department.png";
     DateTime today = DateTime.Now;
+    var rootProducts = Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
 }
 
 
@@ -289,48 +290,56 @@
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
-                                <input type="checkbox" id="item-0" /><label for="item-0">Physics Department</label>
-                                <ul>
-                                    <li class="phy">
-                                        <input type="checkbox" id="item-0-0" /><label for="item-0-0">Labs</label>
+                                @foreach (var productSection in rootProducts)
+                                {
+                                    var childName = "";
+                                    if (direction == "ltr")
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameEn) ? productSection.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
+                                    }
+                                    else
+                                    {
+                                        childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
+                                    }
+                                    <input type="checkbox" id="item-0" /><label for="item-0">@childName</label>
+                                    if (productSection.InventoryDepartment != null)
+                                    {
                                         <ul>
-                                            <li class="phy">
-                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">Glassware</label>
-                                                <ul>
-                                                    <li class="phy"><a href="#">Glasses</a></li>
-                                                    <li class="phy"><a href="#">Flasks</a></li>
-                                                    <li class="phy"><a href="#">Cylinders</a></li>
-                                                    <li class="phy"><a href="#">Dispencers</a></li>
-                                                </ul>
-                                            </li>
+                                            @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
+                                            {
+                                                <li class="phy">
+                                                    @{
+                                                childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                                <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
+                                                    }
+                                                    @if (department.InventoryDepartments.Any())
+                                                    {
+                                                        <ul>
+                                                            @foreach (var childDepartment in department.InventoryDepartments)
+                                                            {
+                                                                <li class="phy">
+                                                                    @{
+                                                                childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                                <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
+
                                         </ul>
-                                    </li>
-                                    <li>
-                                        <input type="checkbox" id="item-0-1" /><label for="item-0-1">Experiments</label>
-                                        <ul>
-                                            <li class="phy"><a href="#">experiment 1</a></li>
-                                            <li class="phy"><a href="#">experiment 2</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                    }
+                                    <br />
+                                }
                             </li>
-                            <li class="chmy">
-                                <input type="checkbox" id="item-1" /><label for="item-1">Chemistry Department</label>
-                                <ul>
-                                    <li class="chmy">
-                                        <input type="checkbox" id="item-1-0" /><label for="item-1-0">Labs</label>
-                                        <ul>
-                                            <li class="chmy"><a href="#">Glassware</a></li>
-                                            <li class="chmy"><a href="#">Experiments</a></li>
-                                            <li class="chmy"><a href="#">Chemicals</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
-                            </li>
+
                         </ul>
                     </div>
-                    <h1 class="page-title margintop10">Catalog</h1>
-                    <a href="#"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
+
+                    <h1 class="page-title margintop10">@Product.Catalog</h1>
+                    <a href="~/Catalogue/Index"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
                 </div>
             </div><!-- end row -->
         </div>

@@ -22,18 +22,20 @@ namespace EPMS.Implementation.Services
         private readonly IProductImageRepository productImageRepository;
         private readonly IInventoryDepartmentRepository inventoryDepartmentRepository;
         private readonly IItemVariationRepository itemVariationRepository;
+        private readonly IProductSectionService productSectionService;
 
         #endregion
 
         #region Constructor
 
-        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository, IItemVariationRepository itemVariationRepository)
+        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository, IItemVariationRepository itemVariationRepository, IProductSectionService productSectionService)
         {
             this.productRepository = productRepository;
             this.productSectionRepository = productSectionRepository;
             this.productImageRepository = productImageRepository;
             this.inventoryDepartmentRepository = inventoryDepartmentRepository;
             this.itemVariationRepository = itemVariationRepository;
+            this.productSectionService = productSectionService;
         }
 
         #endregion
@@ -201,7 +203,8 @@ namespace EPMS.Implementation.Services
             ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>(),
-                AllProducts = productRepository.GetAll().ToList()
+                AllProducts = productRepository.GetAll().ToList(),
+                ProductSections = productSectionService.GetAll()
             };
             switch (request.From)
             {
@@ -226,7 +229,8 @@ namespace EPMS.Implementation.Services
         {
             ProductDetailResponse response = new ProductDetailResponse
             {
-                Product = new Product()
+                Product = new Product(),
+                ProductSections = productSectionRepository.GetAll().ToList()
             };
             switch (from)
             {

@@ -11,5 +11,6 @@ namespace EPMS.WebModels.ViewModels.Product
         public IList<WebsiteModels.Product> RandomProducts { get; set; }
         public IList<WebsiteModels.Product> FeaturedProducts { get; set; }
         public ProductSearchRequest SearchRequest { get; set; }
+        public IEnumerable<Models.DomainModels.ProductSection> ProductSections { get; set; }
     }
 }
