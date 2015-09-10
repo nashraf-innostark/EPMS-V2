@@ -90,6 +90,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IWebsiteServicesService, WebsiteServicesService>();
             unityContainer.RegisterType<IWebsiteCustomerService, WebsiteCustomerService>();
             unityContainer.RegisterType<IShoppingCartItemService, ShoppingCartItemService>();
+            unityContainer.RegisterType<IWebsiteUserPreferenceService, WebsiteUserPreferenceService>();
         }
     }
 }

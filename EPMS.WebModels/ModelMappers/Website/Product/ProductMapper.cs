@@ -74,6 +74,10 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
                     source.ProductImages.FirstOrDefault().ProductImagePath : "",
                 SizeId = source.ItemVariation != null && source.ItemVariation.Sizes.FirstOrDefault() != null ? source.ItemVariation.Sizes.FirstOrDefault().SizeId : 0,
+                ItemImages = source.ItemVariation != null && source.ItemVariation.ItemImages != null ? 
+                            source.ItemVariation.ItemImages.Select(x => x.CreateFromServerToClient()) : new List<WebsiteModels.ItemImage>(),
+                Sizes = source.ItemVariation != null && source.ItemVariation.Sizes!= null ? source.ItemVariation.Sizes.Select(x => x.CreateFromServerToClient()) : 
+                        new List<WebsiteModels.Size>(),
             };
         }
 

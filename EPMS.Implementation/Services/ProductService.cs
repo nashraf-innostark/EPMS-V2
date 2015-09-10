@@ -232,15 +232,7 @@ namespace EPMS.Implementation.Services
                 Product = new Product(),
                 ProductSections = productSectionRepository.GetAll().ToList()
             };
-            switch (from)
-            {
-                case "Inventory":
-                    response.ItemVariation = itemVariationRepository.Find(id);
-                    break;
-                case "Sections":
-                    response.Product = productRepository.Find(id);
-                    break;
-            }
+            response.Product = productRepository.Find(id);
             return response;
         }
 

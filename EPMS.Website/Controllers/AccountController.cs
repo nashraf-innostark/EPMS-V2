@@ -34,6 +34,22 @@ namespace EPMS.Website.Controllers
         private readonly IWebsiteCustomerService websiteCustomerService;
         private readonly IShoppingCartService cartService;
 
+        private void SetSessionValues(string userId)
+        {
+            Session["ShoppingCartId"] = userId;
+            Session["UserID"] = userId;
+            var response = cartService.FindByUserCartId(userId);
+            if (response != null)
+            {
+                WebModels.WebsiteModels.ShoppingCart userCart = response.CreateFromServerToClient();
+                Session["ShoppingCartItems"] = userCart;
+            }
+            else
+            {
+                Session["ShoppingCartItems"] = null;
+            }
+        }
+
         #endregion
 
         #region Constructor
@@ -146,6 +162,7 @@ namespace EPMS.Website.Controllers
                     case SignInStatus.Success:
                         {
                             SaveCartToDB(user.Id);
+                            SetSessionValues(user.Id);
                             if (string.IsNullOrEmpty(returnUrl))
                                 return RedirectToAction("Index", "Home");
                             return RedirectToLocal(returnUrl);

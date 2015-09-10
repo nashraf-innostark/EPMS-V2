@@ -28,6 +28,7 @@ namespace EPMS.Website.Controllers
             {
                 string userId = User.Identity.GetUserId();
                 Session["ShoppingCartId"] = userId;
+                Session["UserID"] = userId;
                 var response = cartService.FindByUserCartId(userId);
                 if (response != null)
                 {

@@ -37,7 +37,7 @@
     <script src="~/Scripts/flexslider.min.js"></script>
     <script src="~/Scripts/zoomsl-3.0.min.js"></script>
     <script src="~/Scripts/jquery.fancybox.pack.js"></script>
-    
+
     <script>
         var siteUrl;
         jQuery(document).ready(function () {
@@ -234,11 +234,25 @@
                                     <p><strong>@Product.SKU:</strong> @Model.Product.SKUCode</p>
                                 }
                                 <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
-                                <p class="regular_price">@Product.Price: <span>1200</span><span>SR</span></p>
-                                <p class="price">
-                                    <span>@Model.Product.ProductPrice</span><span>SR</span>
-                                </p>
-                                <p>@Product.YouWillSave: <strong>144.00 (12%)</strong></p>
+                                @if (!string.IsNullOrEmpty(Model.Product.DiscountedPrice))
+                                {
+                                    <p class="regular_price">@Product.Price: <span>@Model.Product.ProductPrice</span><span>SR</span></p>
+                                    <p class="price">
+                                        <span>@Model.Product.DiscountedPrice</span><span>SR</span>
+                                    </p>
+                                    <p>
+                                        @Product.YouWillSave:
+                                        @{
+                                            @: <strong>
+                                                                         var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
+                                                                         var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
+                                                                        @: @(actualPrice - discountedPrice)
+                                                                        @:( @Math.Round((actualPrice / discountedPrice), 2) %)
+                                                                        @: </strong>
+                                        }
+                                    </p>
+                                }
+
                                 <div class="to_cart">
                                     <div class="quantitiy">
                                         <label for="qty">@Product.Size:</label>

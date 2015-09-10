@@ -197,6 +197,7 @@
     <Compile Include="Services\WebsiteHomePageService.cs" />
     <Compile Include="Services\WebsiteMenuService.cs" />
     <Compile Include="Services\WebsiteServicesService.cs" />
+    <Compile Include="Services\WebsiteUserPreferenceService.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
   </ItemGroup>

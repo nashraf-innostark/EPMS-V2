@@ -182,6 +182,7 @@
     <Compile Include="DomainModels\WebsiteDepartment.cs" />
     <Compile Include="DomainModels\WebsiteHomePage.cs" />
     <Compile Include="DomainModels\WebsiteService.cs" />
+    <Compile Include="DomainModels\WebsiteUserPrefrence.cs" />
     <Compile Include="IdentityModels\ViewModels\CustoemrResetPasswordViewModel.cs" />
     <Compile Include="IdentityModels\ViewModels\CustomerForgotPasswordViewModel.cs" />
     <Compile Include="IdentityModels\ViewModels\CustomerLoginViewModel.cs" />

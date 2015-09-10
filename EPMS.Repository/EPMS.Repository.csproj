@@ -219,6 +219,7 @@
     <Compile Include="Repositories\WebsiteDepartmentRepository.cs" />
     <Compile Include="Repositories\WebsiteHomePageRepository.cs" />
     <Compile Include="Repositories\WebsiteServicesRepository.cs" />
+    <Compile Include="Repositories\WebsiteUserPreferenceRepository.cs" />
     <Compile Include="TypeRegistrations.cs" />
   </ItemGroup>
   <ItemGroup>

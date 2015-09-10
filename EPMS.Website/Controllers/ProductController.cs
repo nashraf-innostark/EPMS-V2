@@ -127,22 +127,7 @@ namespace EPMS.Website.Controllers
             }
             ProductDetailResponse productDetails = productService.GetProductDetails(productId, from);
             viewModel.ProductSections = productDetails.ProductSections;
-            switch (from)
-            {
-                case "Inventory":
-                    if (productDetails.Product != null)
-                    {
-                        viewModel.Product = productDetails.ItemVariation.CreateFromItemVariation();
-                    }
-                    break;
-                case "Sections":
-                    if (productDetails.Product != null)
-                    {
-                        viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();
-                    }
-                    break;
-            }
-            
+            viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();            
             ViewBag.ShowSlider = false;
             ViewBag.From = from;
             return View(viewModel);

@@ -1683,6 +1683,14 @@
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="ImagePath" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="WebsiteUserPrefrences">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="Culture" Type="nvarchar" MaxLength="3" />
+        </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="Allowance" Type="Self.Allowance" Multiplicity="*" />
@@ -3448,6 +3456,7 @@
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteHomePage" EntityType="Self.WebsiteHomePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteService" EntityType="Self.WebsiteService" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="WebsiteUserPrefrences" EntityType="Self.WebsiteUserPrefrences" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Allowance_Employee" Association="Self.FK_Allowance_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="Allowance" EntitySet="Allowance" />
@@ -6281,6 +6290,7 @@
             <End Role="ShoppingCartItem" EntitySet="ShoppingCartItems" />
           </AssociationSet>
           <EntitySet Name="WebsiteHomePages" EntityType="EPMSInventoryModel.WebsiteHomePage" />
+          <EntitySet Name="WebsiteUserPrefrences" EntityType="EPMSInventoryModel.WebsiteUserPrefrence" />
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -8096,6 +8106,14 @@
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="WebsiteLogoPath" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="WebsiteUserPrefrence">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
+          <Property Name="Culture" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9871,6 +9889,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="WebsiteUserPrefrences">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteUserPrefrence">
+              <MappingFragment StoreEntitySet="WebsiteUserPrefrences">
+                <ScalarProperty Name="Culture" ColumnName="Culture" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10122,6 +10149,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_ShoppingCart" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_Size" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteHomePage" Width="1.75" PointX="0.5" PointY="9.5" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteUserPrefrence" Width="2" PointX="0.5" PointY="11.625" />
         </Diagram>
       </Diagrams>
   </Designer>

@@ -127,6 +127,7 @@
     <Compile Include="IServices\IWarehouseDetailService.cs" />
     <Compile Include="IServices\IWebsiteDepartmentService.cs" />
     <Compile Include="IServices\IWebsiteServicesService.cs" />
+    <Compile Include="IServices\IWebsiteUserPreferenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IAboutUsRepository.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
@@ -219,6 +220,7 @@
     <Compile Include="Repository\IWebsiteDepartmentRepository.cs" />
     <Compile Include="Repository\IWebsiteHomePageRepository.cs" />
     <Compile Include="Repository\IWebsiteServicesRepository.cs" />
+    <Compile Include="Repository\IWebsiteUserPreferenceRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

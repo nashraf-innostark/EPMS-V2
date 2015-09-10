@@ -753,6 +753,7 @@
     <Compile Include="WebsiteModels\WebsiteDepartment.cs" />
     <Compile Include="WebsiteModels\WebsiteHomePage.cs" />
     <Compile Include="WebsiteModels\WebsiteService.cs" />
+    <Compile Include="WebsiteModels\WebsiteUserPrefrence.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Models\EPMS.Models.csproj">
