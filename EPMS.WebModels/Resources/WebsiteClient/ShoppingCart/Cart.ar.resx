@@ -126,6 +126,9 @@
   <data name="CartEmpty" xml:space="preserve">
     <value>No Item in your Cart</value>
   </data>
+  <data name="CheckOut" xml:space="preserve">
+    <value>Check Out</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -141,11 +144,23 @@
   <data name="ItemPictureAndName" xml:space="preserve">
     <value>Item Picture And Name</value>
   </data>
+  <data name="ManualOnDelivery" xml:space="preserve">
+    <value>Manual on Delivery</value>
+  </data>
   <data name="PageTitle" xml:space="preserve">
     <value>شركة مسار العلمية</value>
   </data>
+  <data name="PayOffline" xml:space="preserve">
+    <value>Pay Offline</value>
+  </data>
   <data name="PaypalPayment" xml:space="preserve">
     <value>Pay with Paypal</value>
+  </data>
+  <data name="PayWithPaypal" xml:space="preserve">
+    <value>Pay with Paypal</value>
+  </data>
+  <data name="ProductId" xml:space="preserve">
+    <value>Product Id</value>
   </data>
   <data name="Qty" xml:space="preserve">
     <value>Qty</value>

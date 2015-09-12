@@ -6,7 +6,7 @@ using EPMS.WebModels.ViewModels.ContactUs;
 
 namespace EPMS.Website.Controllers
 {
-    public class ContactUsController : Controller
+    public class ContactUsController : BaseController
     {
         #region Private
 

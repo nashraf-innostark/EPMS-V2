@@ -2,7 +2,7 @@
 @model EPMS.WebModels.ViewModels.Website.Services.ServicesCreateViewModel
 
 @{
-    ViewBag.Title = "Detail";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Services.Services.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
@@ -18,15 +18,14 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
-                    <li><a href="/NewsAndArticle/Index/1">Our Services</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
+                    <li><a href="/NewsAndArticle/Index/1">@ViewBag.Title</a></li>
                 </ul>
                 <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Services</h2>
-
+                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Services.Services.PageHeader</h2>
                 </div>
             </div>
         </div><!-- end row -->

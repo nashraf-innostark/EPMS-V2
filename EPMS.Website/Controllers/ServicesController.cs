@@ -6,7 +6,7 @@ using EPMS.WebModels.ViewModels.Website.Services;
 
 namespace EPMS.Website.Controllers
 {
-    public class ServicesController : Controller
+    public class ServicesController : BaseController
     {
         private readonly IWebsiteServicesService websiteServicesService;
 

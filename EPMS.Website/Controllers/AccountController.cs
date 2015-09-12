@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Globalization;
 using System.Reflection;
 using System.Web.Security;
 using EPMS.Implementation.Identity;
@@ -33,9 +34,21 @@ namespace EPMS.Website.Controllers
         private ApplicationRoleManager _roleManager;
         private readonly IWebsiteCustomerService websiteCustomerService;
         private readonly IShoppingCartService cartService;
+        private readonly IWebsiteUserPreferenceService userPreferenceService;
 
         private void SetSessionValues(string userId)
         {
+            // Set Culture
+            var userPrefrences = userPreferenceService.LoadPrefrencesByUserId(userId);
+            CultureInfo info = userPrefrences != null
+                ? new CultureInfo(userPrefrences.Culture)
+                : new CultureInfo("en");
+            Session["Culture"] = info.Name;
+            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+            System.Threading.Thread.CurrentThread.CurrentCulture = info;
+            System.Threading.Thread.CurrentThread.CurrentUICulture = info;
+
+            // Set Cart Items
             Session["ShoppingCartId"] = userId;
             Session["UserID"] = userId;
             var response = cartService.FindByUserCartId(userId);
@@ -54,11 +67,12 @@ namespace EPMS.Website.Controllers
 
         #region Constructor
 
-        public AccountController(IWebsiteCustomerService websiteCustomerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService)
+        public AccountController(IWebsiteCustomerService websiteCustomerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService, IWebsiteUserPreferenceService userPreferenceService)
         {
             this.websiteCustomerService = websiteCustomerService;
             this.aspNetUserService = aspNetUserService;
             this.cartService = cartService;
+            this.userPreferenceService = userPreferenceService;
         }
 
         #endregion

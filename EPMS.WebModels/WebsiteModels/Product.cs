@@ -36,8 +36,11 @@ namespace EPMS.WebModels.WebsiteModels
         public string ProductImage { get; set; }
         public string ItemImage { get; set; }
         public long SizeId { get; set; }
+        public string DepartmentNameEn { get; set; }
+        public string DepartmentNameAr { get; set; }
         public string DeptColor { get; set; }
         public string ItemDesc { get; set; }
+        public string PathTillParent { get; set; }
 
         public List<ProductImage> ProductImages { get; set; }
         public IEnumerable<ItemImage> ItemImages { get; set; }

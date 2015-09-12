@@ -19,10 +19,14 @@
             quantity: quantity
         },
         success: function (data) {
-            if (data == "Success") {
+            if (data.response == "OK") {
+                //var checkOutBtn = '<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a>';
+                //var shoppingcart = 'Number of items ' + data.count;
+                //$(".shopping-cart").text(shoppingcart);
+                //$(".checkoutBtn").removeClass('hide');
                 new PNotify({
                     title: 'Added',
-                    text: '\nItem has been successfully added to your Cart.'
+                    text: "\n" + data.itemName + ' has been successfully added to your Cart.'
                 });
             }
         },

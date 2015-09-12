@@ -3,7 +3,7 @@
 @model Paypal
 
 @{
-    ViewBag.Title = "PostTotPaypal";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.PaypalPayment;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var today = DateTime.Now;
     var cart = (ShoppingCart)ViewBag.CartItem;
@@ -15,14 +15,14 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">Home Page</a></li>
-                    <li><a href="#">Payment</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
+                    <li><a href="#">@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.Payment</a></li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Payment</h2>
+                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.Payment</h2>
                 </div>
             </div>
         </div>
@@ -30,8 +30,8 @@
     <div class="shadowUP"></div>
 </div>
 
-<p style="text-align: center">
-    <h4>Connecting to Paypal , please wait ...</h4>
+<p style="text-align: center; height: 40%; width: 33%; margin-left: 33%">
+    <h4>@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.Connecting ...</h4>
 </p>
 
 <form id="paypal-form" action="@ViewBag.actionURL">

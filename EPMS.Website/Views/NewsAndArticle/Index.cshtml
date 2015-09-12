@@ -1,11 +1,14 @@
-﻿@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleListViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleListViewModel
 @{
-    ViewBag.Title = "News And Articles";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
-    var title = Model.NewsOrArticle ? "Our Articles" : "Our News";
+    var title = Model.NewsOrArticle ? EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles : 
+        EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurNews;
     int pageNo = 1;
+    var imagePath = ConfigurationManager.AppSettings["NewsAndArticleImage"];
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -15,7 +18,7 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
                     <li>@title</li>
                 </ul>
                 <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
@@ -42,7 +45,7 @@
                 @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
                 <div class="row">
                     <div class="span12 directionR listing">
-                        <h1 class="page-title">Latest News</h1>
+                        <h1 class="page-title">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.LatestNews</h1>
                         @foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
                         {
 
@@ -52,7 +55,7 @@
                                     <h4>@newsOrArticle.TitleEn</h4>
                                     <div class="itemHeader">
                                         <div class="post_details">
-                                            <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
+                                            <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
                                             <span class="infSep"> / </span>
                                             <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
                                         </div>
@@ -66,13 +69,13 @@
                                                 }
                                                 else
                                                 {
-                                                    <img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" />
+                                                    <img src="@imagePath@Url.Content(newsOrArticle.ImagePath)" />
                                                 }
                                             </a>
                                         </p>
                                         <p style="text-align: justify">
                                             @newsOrArticle.ContentEn
-                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
+                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
                                         </p>
                                     </div><!-- end item body -->
                                     <div class="clear"></div>
@@ -84,17 +87,26 @@
                                     <h4>@newsOrArticle.TitleAr</h4>
                                     <div class="itemHeader">
                                         <div class="post_details">
-                                            <span class="itemAuthor">Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
+                                            <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
                                             <span class="infSep"> / </span>
                                             <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
                                         </div>
                                     </div><!-- end itemheader -->
                                     <div class="itemBody ">
-                                        <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left"><img src="http://localhost:43063/Images/NewsOrArticle/@Url.Content(newsOrArticle.ImagePath)" /></a></p>
+                                        <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                               @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                               {
+                                                <img src="~/Images/noimage_department.png" />
+                                               }
+                                               else
+                                               {
+                                                <img src="@imagePath@Url.Content(newsOrArticle.ImagePath)" />
+                                               }
+                                           </a></p>
                                         <p style="text-align: justify">
                                             @newsOrArticle.ContentAr
                                         </p>
-                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">More...</a>
+                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
                                     </div><!-- end item body -->
                                     <div class="clear"></div>
                                 </div>

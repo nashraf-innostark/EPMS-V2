@@ -10,7 +10,7 @@ using EPMS.WebModels.ViewModels.Product;
 
 namespace EPMS.Website.Controllers
 {
-    public class CatalogueController : Controller
+    public class CatalogueController : BaseController
     {
         private readonly IProductService productService;
 
@@ -27,6 +27,11 @@ namespace EPMS.Website.Controllers
             {
                 Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
             };
+            foreach (var product in viewModel.Products)
+            {
+                
+                
+            }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }

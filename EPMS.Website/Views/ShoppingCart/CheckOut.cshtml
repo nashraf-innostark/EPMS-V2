@@ -1,8 +1,10 @@
 ﻿@using System.Globalization
+@using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
+@using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
 
 @{
-    ViewBag.Title = "CheckOut";
+    ViewBag.Title = Cart.CheckOut;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var today = DateTime.Now;
 }
@@ -13,14 +15,14 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">HomePage</a></li>
-                    <li>CheckOut</li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
+                    <li>@ViewBag.Title</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>CheckOut</h2>
+                    <h2>@ViewBag.Title</h2>
                 </div>
             </div>
         </div>
@@ -36,7 +38,7 @@
                     <div class="controls">
                         <label>
                             <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
-                            Pay with Paypal
+                            @Cart.PayWithPaypal
                         </label>
                         <br />
                         <div id="PaypalDiv" class="hide">
@@ -68,7 +70,7 @@
                         </div>
                         <label>
                             <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
-                            Pay Offline
+                            @Cart.PayOffline
                         </label>
                         <br />
                         <div id="OfflineDiv" class="hide">
@@ -95,12 +97,12 @@
                                         })
                                     }
                                 }
-                                <input type="submit" class="btn" value="Pay Offline" />
+                                <input type="submit" class="btn" value="@Cart.PayOffline" />
                             }
                         </div>
                         <label>
                             <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
-                            Manual Delivery
+                            @Cart.ManualOnDelivery
                         </label>
                         <br />
                         <div id="ManualDeliveryDiv" class="hide">
@@ -127,7 +129,7 @@
                                         })
                                     }
                                 }
-                                <input type="submit" class="btn" value="Manual Delivery" />
+                                <input type="submit" class="btn" value="@Cart.ManualOnDelivery" />
                             }
                         </div>
                     </div>
@@ -136,32 +138,6 @@
         </div>
     </div>
 </section>
-
-@*<div class="control-group row-fluid" style="margin-top: 50px">
-        <div class="span3"></div>
-        <div class="span9">
-            <div class="controls">
-                <label>
-                    <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
-                    Pay with Paypal
-                </label>
-                <br />
-                <label>
-                    <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
-                    Pay Offline
-                </label>
-                <br />
-                <label>
-                    <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
-                    Manual Delivery
-                </label>
-            </div>
-        </div>
-    </div>*@
-
-
-
-
 
 <script>
     $(document).ready(function () {

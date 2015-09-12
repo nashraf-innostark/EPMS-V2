@@ -14,33 +14,12 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         #region Private
 
         private readonly IWebsiteDepartmentService websiteDepartmentService;
         private readonly IWebsiteHomePageService websiteHomePageService;
-        private readonly IShoppingCartService cartService;
-
-        private void SetSessionValues()
-        {
-            if (User.Identity.IsAuthenticated)
-            {
-                string userId = User.Identity.GetUserId();
-                Session["ShoppingCartId"] = userId;
-                Session["UserID"] = userId;
-                var response = cartService.FindByUserCartId(userId);
-                if (response != null)
-                {
-                    ShoppingCart userCart = response.CreateFromServerToClient();
-                    Session["ShoppingCartItems"] = userCart;
-                }
-                else
-                {
-                    Session["ShoppingCartItems"] = null;
-                }
-            }
-        }
 
         #endregion
 
@@ -50,7 +29,6 @@ namespace EPMS.Website.Controllers
         {
             this.websiteDepartmentService = websiteDepartmentService;
             this.websiteHomePageService = websiteHomePageService;
-            this.cartService = cartService;
         }
 
         #endregion
@@ -60,11 +38,10 @@ namespace EPMS.Website.Controllers
         public ActionResult Index(string div, string width, string code, string userId)
         {
             WebsiteHomeResponse response = websiteHomePageService.WebsiteHomeResponse();
-            SetSessionValues();
             WebsiteHomeViewModel viewModel = new WebsiteHomeViewModel
             {
-                WebsiteDepartments = response.WebsiteDepartments.Select(x => x.CreateFromServerToClient()),
-                Partners = response.Partners.Select(x => x.CreateFromServerToClient()),
+                WebsiteDepartments = response.WebsiteDepartments.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.DepartmentOrder),
+                Partners = response.Partners.Select(x => x.CreateFromServerToClient()).OrderBy(x=>x.ImageOrder),
                 Div = div,
                 Width = width,
                 Code = code,
@@ -73,7 +50,6 @@ namespace EPMS.Website.Controllers
 
             ViewBag.Controller = "Home";
             ViewBag.Action = "Index";
-            Session["WebsiteLogo"] = ConfigurationManager.AppSettings["WebsiteLogo"] + response.Logo;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }

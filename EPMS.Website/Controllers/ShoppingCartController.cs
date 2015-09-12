@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
@@ -15,7 +13,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
-    public class ShoppingCartController : Controller
+    public class ShoppingCartController : BaseController
     {
         #region Private
         private readonly IShoppingCartService cartService;
@@ -61,12 +59,11 @@ namespace EPMS.Website.Controllers
                     viewModel.ShoppingCart = cartItem;
                 }
             }
-
+            ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
 
-        [Authorize]
         public ActionResult CheckOut(ShoppingCartListViewModel model)
         {
             return View(model);
@@ -102,6 +99,8 @@ namespace EPMS.Website.Controllers
         public JsonResult AddToCart(long productId, long sizeId, int quantity)
         {
             long? nullSize = null;
+            string itemName = "";
+            var direction = Resources.Shared.Common.TextDirection;
             // get Product data from DB
             var product = productService.FindProductById(productId);
             Product userProduct = product.ItemVariationId != null ? product.CreateFromServerToClientFromInventory() : product.CreateFromServerToClient();
@@ -117,13 +116,15 @@ namespace EPMS.Website.Controllers
             string userCartid = GetCartId();
             // Get user Cart from Session
             var items = Session["ShoppingCartItems"];
+            ShoppingCart cart;
             if (items != null)
             {
-                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                cart = (ShoppingCart)Session["ShoppingCartItems"];
                 var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId);
                 if (item != null)
                 {
                     item.Quantity += quantity;
+                    itemName = direction == "ltr" ? item.ItemNameEn : item.ItemNameAr;
                     // Update DB Cart
                     if (User.Identity.IsAuthenticated)
                     {
@@ -173,6 +174,7 @@ namespace EPMS.Website.Controllers
                         ImagePath = imagePath,
                     };
                     cart.ShoppingCartItems.Add(itemToAdd);
+                    itemName = direction == "ltr" ? itemToAdd.ItemNameEn : itemToAdd.ItemNameAr;
                     if (User.Identity.IsAuthenticated)
                     {
                         var cartToAdd = itemToAdd.CreateFromClientToServer();
@@ -184,7 +186,7 @@ namespace EPMS.Website.Controllers
             }
             else
             {
-                ShoppingCart cart = new ShoppingCart();
+                cart = new ShoppingCart();
                 ShoppingCartItem itemToAdd = new ShoppingCartItem
                 {
                     CartId = cart.CartId,
@@ -198,6 +200,7 @@ namespace EPMS.Website.Controllers
                     ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage,
                 };
                 cart.ShoppingCartItems.Add(itemToAdd);
+                itemName = direction == "ltr" ? itemToAdd.ItemNameEn : itemToAdd.ItemNameAr;
                 if (User.Identity.IsAuthenticated)
                 {
                     var cartToAdd = cart.CreateFromClientToServer();
@@ -211,7 +214,7 @@ namespace EPMS.Website.Controllers
                 }
                 Session["ShoppingCartItems"] = cart;
             }
-            return Json("Success", JsonRequestBehavior.AllowGet);
+            return Json(new { itemName = itemName, count = cart.ShoppingCartItems.Count, response = "OK" }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -220,12 +223,16 @@ namespace EPMS.Website.Controllers
         public JsonResult DeleteFromCart(long productId)
         {
             var items = Session["ShoppingCartItems"];
+            ShoppingCart cart = new ShoppingCart();
+            string itemName = "";
+            var direction = Resources.Shared.Common.TextDirection;
             if (items != null)
             {
-                ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
+                cart = (ShoppingCart)Session["ShoppingCartItems"];
                 var item = cart.ShoppingCartItems.FirstOrDefault(x => x.ProductId == productId);
                 if (item != null)
                 {
+                    itemName = direction == "ltr" ? item.ItemNameEn : item.ItemNameAr;
                     if (User.Identity.IsAuthenticated)
                     {
                         cartItemService.DeleteShoppingCartItem(item.CartItemId);
@@ -236,10 +243,10 @@ namespace EPMS.Website.Controllers
                         cart.ShoppingCartItems.Remove(item);
                     }
                     Session["ShoppingCartItems"] = cart;
-                    return Json("Success", JsonRequestBehavior.AllowGet);
+                    return Json(new { itemName = itemName, count = cart.ShoppingCartItems.Count, response = "OK" }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json("Error", JsonRequestBehavior.AllowGet);
+            return Json(new { itemName = "", count = 0, response = "Error" }, JsonRequestBehavior.AllowGet);
         }
         #endregion
 
@@ -249,12 +256,16 @@ namespace EPMS.Website.Controllers
         public JsonResult UpdateQuantity(long productId, int quantity)
         {
             var items = Session["ShoppingCartItems"];
+            ShoppingCart cart = new ShoppingCart();
+            string itemName = "";
+            var direction = Resources.Shared.Common.TextDirection;
             if (items != null)
             {
-                ShoppingCart cart = (ShoppingCart) Session["ShoppingCartItems"];
+                cart = (ShoppingCart) Session["ShoppingCartItems"];
                 var item = cart.ShoppingCartItems.FirstOrDefault(y => y.ProductId == productId);
                 if (item != null)
                 {
+                    itemName = direction == "ltr" ? item.ItemNameEn : item.ItemNameAr;
                     item.Quantity = quantity;
                     // Update DB Cart
                     if (User.Identity.IsAuthenticated)
@@ -267,10 +278,10 @@ namespace EPMS.Website.Controllers
                         }
                     }
                     Session["ShoppingCartItems"] = cart;
-                    return Json("Success", JsonRequestBehavior.AllowGet);
+                    return Json(new { itemName = itemName, count = cart.ShoppingCartItems.Count, response = "OK" }, JsonRequestBehavior.AllowGet);
                 }
             }
-            return Json("Error", JsonRequestBehavior.AllowGet);
+            return Json(new { itemName = "", count = 0, response = "Error" }, JsonRequestBehavior.AllowGet);
         }
 
         #endregion

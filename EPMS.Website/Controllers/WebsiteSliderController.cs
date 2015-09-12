@@ -16,7 +16,7 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Index()
         {
-            ImageSliderModel sliders = new ImageSliderModel {ImageSliders = sliderService.GetAll().ToList()};
+            ImageSliderModel sliders = new ImageSliderModel {ImageSliders = sliderService.GetAll().OrderBy(x=>x.ImageOrder).ToList()};
             return View(sliders);
         }
     }

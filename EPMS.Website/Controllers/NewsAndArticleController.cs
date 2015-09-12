@@ -10,7 +10,7 @@ using EPMS.WebModels.ViewModels.NewsAndArticle;
 
 namespace EPMS.Website.Controllers
 {
-    public class NewsAndArticleController : Controller
+    public class NewsAndArticleController : BaseController
     {
         #region Private
 

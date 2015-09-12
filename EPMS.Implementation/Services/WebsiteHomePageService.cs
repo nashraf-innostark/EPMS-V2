@@ -29,13 +29,17 @@ namespace EPMS.Implementation.Services
 
         #region Public
 
+        public WebsiteHomePage GetHomePageLogo()
+        {
+            return repository.GetHomePageLogo();
+        }
+
         public WebsiteHomeResponse WebsiteHomeResponse()
         {
             WebsiteHomeResponse response = new WebsiteHomeResponse
             {
                 WebsiteDepartments = websiteDepartmentService.GetAll(),
                 Partners = partnerService.GetAll(),
-                Logo = repository.GetHomePageLogo().WebsiteLogoPath,
             };
             return response;
         }

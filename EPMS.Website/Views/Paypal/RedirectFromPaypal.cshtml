@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 
 @{
-    ViewBag.Title = "RedirectFromPaypal";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.PaymentSuccessful;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var today = DateTime.Now;
 }
@@ -12,14 +12,14 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">Home Page</a></li>
-                    <li><a href="#">Payment Successful</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
+                    <li><a href="#">@ViewBag.Title</a></li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Thanks for Purchasing</h2>
+                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.ThankYouNote</h2>
                 </div>
             </div>
         </div>
@@ -27,5 +27,21 @@
     <div class="shadowUP"></div>
 </div>
 
-<h2>RedirectFromPaypal</h2>
+<section id="content">
+    <div class="container">
+        <div id="mainbody">
+            <div class="row">
+                <div class="span12 directionR ">
+                    <h3>@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.PaymentMessage</h3>
+                    <p>
+                        Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                        when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+                        It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 

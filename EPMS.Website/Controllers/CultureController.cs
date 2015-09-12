@@ -17,22 +17,29 @@ namespace EPMS.Website.Controllers
         {
             if (id == "AR")
             {
-                CultureInfo culture = new CultureInfo("ar-AE");
-                CultureInfo.DefaultThreadCurrentCulture = culture;
-                CultureInfo.DefaultThreadCurrentUICulture = culture;
+                CultureInfo culture = new CultureInfo("ar");
+
                 System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
                 System.Threading.Thread.CurrentThread.CurrentCulture = culture;
 
-                if (userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "ar-AE"))
-                    Session["Culture"] = "ar-AE";
+                if (User.Identity.IsAuthenticated)
+                {
+                    userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "ar");
+                }
+                Session["Culture"] = "ar";
             }
             else
             {
-                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en-US");
-                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+                CultureInfo culture = new CultureInfo("en");
 
-                if (userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "en-US"))
-                    Session["Culture"] = "en-US";
+                System.Threading.Thread.CurrentThread.CurrentUICulture = culture;
+                System.Threading.Thread.CurrentThread.CurrentCulture = culture;
+
+                if (User.Identity.IsAuthenticated)
+                {
+                    userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "en");
+                }
+                Session["Culture"] = "en";
             }
             string redirectUrl = Request.UrlReferrer.ToString();
             if (string.IsNullOrEmpty(redirectUrl))

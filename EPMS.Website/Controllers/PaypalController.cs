@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 namespace EPMS.Website.Controllers
 {
     [Authorize]
-    public class PaypalController : Controller
+    public class PaypalController : BaseController
     {
         #region Private
         private readonly IShoppingCartService cartService;

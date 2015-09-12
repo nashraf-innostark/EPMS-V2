@@ -41,7 +41,59 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "";
             retVal.ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
                 source.ProductImages.FirstOrDefault().ProductImagePath : "";
-
+            retVal.DepartmentNameEn = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameEn :
+                source.ProductSection != null ? source.ProductSection.SectionNameEn : "";
+            retVal.DepartmentNameAr = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameAr :
+                source.ProductSection != null ? source.ProductSection.SectionNameAr: "";
+            var direction = Resources.Shared.Common.TextDirection;
+            if (source.ItemVariationId != null)
+            {
+                var department = source.ItemVariation.InventoryItem.InventoryDepartment;
+                while (department != null)
+                {
+                    retVal.PathTillParent += direction == "ltr"
+                        ? department.DepartmentNameEn + ">"
+                        : department.DepartmentNameAr + ">";
+                    department = department.ParentDepartment;
+                }
+                var path = retVal.PathTillParent.Split('>');
+                retVal.PathTillParent = "";
+                for (int i = path.Length - 2 ; i >= 0; i--)
+                {
+                    if (i != path.Length - 2)
+                    {
+                        retVal.PathTillParent += " > " + path[i];
+                    }
+                    else
+                    {
+                        retVal.PathTillParent += path[i];
+                    }
+                }
+            }
+            else
+            {
+                var section = source.ProductSection;
+                while (section != null)
+                {
+                    retVal.PathTillParent += direction == "ltr" ? section.SectionNameEn + ">" : section.SectionNameAr + ">";
+                    section = section.ParentSection;
+                }
+                var path = retVal.PathTillParent.Split('>');
+                retVal.PathTillParent = "";
+                for (int i = path.Length - 2; i >= 0; i--)
+                {
+                    if (i != path.Length - 2)
+                    {
+                        retVal.PathTillParent += " > " + path[i];
+                    }
+                    else
+                    {
+                        retVal.PathTillParent += path[i];
+                    }
+                }
+            }
             return retVal;
         }
         public static WebsiteModels.Product CreateFromServerToClientFromInventory(this Models.DomainModels.Product source)

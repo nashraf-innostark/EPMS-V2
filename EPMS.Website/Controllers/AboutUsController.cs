@@ -6,7 +6,7 @@ using EPMS.WebModels.ViewModels.Common;
 
 namespace EPMS.Website.Controllers
 {
-    public class AboutUsController : Controller
+    public class AboutUsController : BaseController
     {
         #region Private
 

@@ -5,6 +5,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.ProductSection;
+using EPMS.WebModels.Resources.Website.ProductSection;
 using EPMS.WebModels.ViewModels.ProductSection;
 using EPMS.WebModels.WebsiteModels;
 using EPMS.WebModels.WebsiteModels.Common;
@@ -129,11 +130,11 @@ namespace EPMS.Web.Areas.Website.Controllers
             JsTreeJson parent = new JsTreeJson
             {
                 id = "parentNode",
-                text = EPMS.WebModels.Resources.Website.Product.ProductIndex.Departments,
+                text = ProductSectionIndex.PageTitle,
                 parent = "#"
             };
             model.JsTreeJsons.Add(parent);
-            string direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+            string direction = WebModels.Resources.Shared.Common.TextDirection;
             foreach (var productSection in productSections)
             {
                 // add root node

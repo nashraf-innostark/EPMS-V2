@@ -7,6 +7,5 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<WebsiteDepartment> WebsiteDepartments { get; set; }
         public IEnumerable<Partner> Partners { get; set; }
-        public string Logo { get; set; }
     }
 }

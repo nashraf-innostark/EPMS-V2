@@ -2,7 +2,7 @@
 @Scripts.Render("~/Scripts/mapmarker.jquery.js")
 
 @{
-    ViewBag.Title = "Contact Us";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -26,67 +26,67 @@
 
             <div class="row">
                 <div class="span12 directionR">
-                    <h1 class="page-title">Contact Us</h1>
+                    <h1 class="page-title">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Title</h1>
 
                     <div class="row">
                         <div class="span6">
-                            <p>You can get in contact with us through this form:</p>
+                            <p>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.FormHeader:</p>
                             <div id="contact_form" class="rapid_contact ">
                                 @using (Html.BeginForm("SendEmail", "ContactUs", FormMethod.Post, new { @id = "ContactUsForm", @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.HiddenFor(m => m.ReceiverEmail, new { @id = "receiverEmail" })
                                     <div id="success"></div>
                                     <div class="control-group">
-                                        <label class="control-label" for="rp_name">Name</label>
+                                        <label class="control-label" for="rp_name">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Name</label>
                                         <div class="controls">
-                                            @Html.TextBoxFor(m => m.Name, new { @dir = "ltr", id = "formName", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Name" })
+                                            @Html.TextBoxFor(m => m.Name, new { @dir = "ltr", id = "formName", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Name })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
-                                        <label class="control-label" for="rp_email">Email</label>
+                                        <label class="control-label" for="rp_email">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email</label>
                                         <div class="controls">
-                                            @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "FormEmail", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Email" })
+                                            @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "FormEmail", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = @EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
-                                        <label class="control-label" for="rp_subject">Address</label>
+                                        <label class="control-label" for="rp_subject">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address</label>
                                         <div class="controls">
-                                            @Html.TextBoxFor(m => m.Address, new { @dir = "ltr", id = "FormAddress", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = "Address" })
+                                            @Html.TextBoxFor(m => m.Address, new { @dir = "ltr", id = "FormAddress", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = @EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
-                                        <label class="control-label" for="rp_message">Message</label>
+                                        <label class="control-label" for="rp_message">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Message</label>
                                         <div class="controls">
-                                            @Html.TextAreaFor(m => m.Message, new { @dir = "ltr", id = "FormMessage", @class = "tbdisable toBeRequired textarea span4", @placeholder = "Message" })
+                                            @Html.TextAreaFor(m => m.Message, new { @dir = "ltr", id = "FormMessage", @class = "tbdisable toBeRequired textarea span4", @placeholder = @EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Message })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
                                         <div class="controls">
-                                            <input class=" btn " id="submit-form" type="submit" name="submit" value="Send" />
+                                            <input class=" btn " id="submit-form" type="submit" name="submit" value="@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Send" />
                                         </div>
                                     </div><!-- end control group -->
                                 }
                             </div><!-- end contact form -->
                         </div><!-- end left side -->
                         <div class="span6">
-                            <h3>Get in touch with us</h3>
+                            <h3>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.GetInTouch</h3>
                             @if (direction == "ltr")
                             {
-                                <p><strong>Address:</strong>&nbsp;@Model.ContactUs.Address</p>
+                                <p><strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address:</strong>&nbsp;@Model.ContactUs.Address</p>
                                 <p>
-                                    <strong>Telephone:</strong> @Model.ContactUs.Phone<br>
-                                    <strong>Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
-                                    <strong>Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Telephone:</strong> @Model.ContactUs.Phone<br>
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
                                 </p>
                                 <p style="text-align: justify">@Model.ContactUs.ContentEn</p>
                             }
                             else
                             {
-                                <p><strong>Address:</strong>&nbsp;@Model.ContactUs.AddressAr</p>
+                                <p><strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address:</strong>&nbsp;@Model.ContactUs.AddressAr</p>
                                 <p>
-                                    <strong>Telephone:</strong> @Model.ContactUs.Phone<br>
-                                    <strong>Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
-                                    <strong>Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Telephone:</strong> @Model.ContactUs.Phone<br>
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email:</strong> <a href="mailto:@Model.ContactUs.FormEmail">@Model.ContactUs.FormEmail</a><br />
+                                    <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Website:</strong> <a href="http://@Model.ContactUs.Website" target="_blank">@Model.ContactUs.Website</a>
                                 </p>
                                 <p style="text-align: justify">@Model.ContactUs.ContentAr</p>
                             }

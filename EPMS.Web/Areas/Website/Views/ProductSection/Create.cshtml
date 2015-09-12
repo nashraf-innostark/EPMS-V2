@@ -4,14 +4,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    if (ViewBag.ProductId > 0)
-    {
-        ViewBag.Title = "Website Product Section Updation";
-    }
-    else
-    {
-        ViewBag.Title = "Website Product Section Addition";
-    }
+    ViewBag.Title = ViewBag.ProductId > 0 ? "Website Product Section Updation" : "Website Product Section Addition";
 }
 
 <div class="main-content withPanel">
@@ -50,13 +43,8 @@
                 </a>
             </li>
             <li>
-<<<<<<< HEAD
-                <a href="~/Inventory/InventoryWarehouse/Index">
-                    @EPMS.WebModels.Resources.Inventory.InventoryWarehouse.BCTitle
-=======
                 <a href="~/Website/ProductSection/Index">
-                    Product Sections
->>>>>>> WebsiteCP
+                    Product Sections List
                 </a>
             </li>
             <li class="current">
@@ -68,13 +56,16 @@
     </div>
     <header>
         <i class="icon-big-notepad"></i>
-        <h2><small>@(ViewBag.ProductId > 0 ? EPMS.Web.Resources.Website.Product.ProductCreate.WebsiteProductSectionEdit :
-              EPMS.Web.Resources.Website.Product.ProductCreate.WebsiteProductSectionAdd)</small></h2>
+        <h2>
+            <small>
+                @(ViewBag.ProductId > 0 ? EPMS.WebModels.Resources.Website.Product.ProductCreate.WebsiteProductSectionEdit :
+              EPMS.WebModels.Resources.Website.Product.ProductCreate.WebsiteProductSectionAdd)
+            </small>
+        </h2>
     </header>
     <!--Notifications begin-->
     @Html.Partial("_Alert")
     <!--Notifications end-->
-
     @using (Html.BeginForm("Create", "ProductSection", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditProductSection", role = "form", enctype = "multipart/form-data" }))
     {
         <div class="container-fluid">
@@ -83,7 +74,7 @@
             @Html.HiddenFor(model => model.ProductSection.ParentSectionId, new { @id = "ParentSectionId" })
             @Html.HiddenFor(model => model.ProductSection.RecCreatedBy, new { @id = "RecCreatedBy" })
             @Html.HiddenFor(model => model.ProductSection.RecCreatedDt, new { @id = "RecCreatedDt" })
-            
+
             <div class="control-group row-fluid ">
                 <div class="span3">
                     <label class="control-label" for="SectionNameEn">Section Name</label>
@@ -241,7 +232,7 @@
                 $("#UpdateNode").hide();
                 $("#SaveNewNode").hide();
                 disableControls();
-                
+
             } else if (id.indexOf("Sub") >= 0) {
                 productId = id;
                 $("#content").hide();
@@ -288,9 +279,9 @@
         }
     }
 
-    $("#edit").click(function(event) {
+    $("#edit").click(function (event) {
         @*if ('@userPermissionsSet.Contains("")' == 'True') {
-            
+
         }*@
         enableControls();
         $("#UpdateNode").show();
@@ -366,7 +357,7 @@
                     $("#UpdateNode").hide();
                     enableControls();
                 }
-                
+
             }
         } else {
             var m = $(".alert-error");

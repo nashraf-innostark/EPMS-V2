@@ -3,13 +3,14 @@
 @model EPMS.WebModels.ViewModels.Website.Department.DepartmentDetailViewModel
 
 @{
-    ViewBag.Title = "DepartmentDetail";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Home.Home.DepartmentDetail;
     //Layout = "~/Views/Shared/_Layout.cshtml";
     var rootProducts = Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
     var Date = DateTime.Now;
     var siteURL = ConfigurationManager.AppSettings["SiteURL"];
+    string link = "";
 }
 
 
@@ -20,13 +21,13 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">الصفحة الرئيسية</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
                 </ul>
                 <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
             </div>
             <div class="span6">
                 <div class="header-titles">
-                    <h2>Our Departments</h2>
+                    <h2>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.OurDepartments</h2>
                 </div>
             </div>
         </div><!-- end row -->
@@ -41,7 +42,7 @@
 
             <div class="row">
                 <div class="span9 rightSide directionR">
-                    <h1 class="page-title">@Model.WebsiteDepartment.NameEn</h1>
+                    <h1 class="page-title">@(direction == "ltr" ? Model.WebsiteDepartment.NameEn : Model.WebsiteDepartment.NameAr)</h1>
 
 
                     <div class="itemView clearfix eBlog">
@@ -67,7 +68,7 @@
 
 
                 <div class="span3  directionR">
-                    <h1 class="page-title">Poduct Classification</h1>
+                    <h1 class="page-title">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.PoductClassification</h1>
                     <div class="css-treeview">
                         <ul>
                             <li class="phy">
@@ -82,7 +83,19 @@
                                     {
                                         childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                                     }
-                                    <input type="checkbox" id="item-0" /><label for="item-0">@childName</label>
+
+                                    {
+                                        if (productSection.InventoyDepartmentId != null)
+                                        {
+                                            link = siteURL + "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
+                                        }
+                                        else
+                                        {
+                                            link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
+                                        }
+                                    }
+                                    <input type="checkbox" id="item-0" />
+                                    <label for="item-0"><a href="@link">@childName</a></label>
                                     if (productSection.InventoryDepartment != null)
                                     {
                                         <ul>
@@ -90,8 +103,10 @@
                                             {
                                                 <li class="phy">
                                                     @{
-                                                        childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
-                                                        <input type="checkbox" id="item-0-0" /><label for="item-0-0">@childName</label>
+                                                childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
+                                                link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
+                                                <input type="checkbox" id="item-0-0" />
+                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -100,8 +115,10 @@
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                        childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
-                                                                        <input type="checkbox" id="item-0-0-0" /><label for="item-0-0-0">@childName</label>
+                                                                childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
+                                                                link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
+                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
                                                             }
@@ -112,14 +129,47 @@
 
                                         </ul>
                                     }
-                                    <br/>
+                                    if (productSection.ProductSections != null && productSection.ProductSections.Any())
+                                    {
+                                        <ul>
+                                            @foreach (var section in productSection.ProductSections)
+                                            {
+                                                <li class="phy">
+                                                    @{
+                                                childName = direction == "ltr" ? section.SectionNameEn : section.SectionNameAr;
+                                                link = siteURL + "/Product/Index/" + section.SectionId + "?from=Sections";
+                                                <input type="checkbox" id="item-0-0" />
+                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                    }
+                                                    @if (section.ProductSections.Any())
+                                                    {
+                                                        <ul>
+                                                            @foreach (var subSection in section.ProductSections)
+                                                            {
+                                                                <li class="phy">
+                                                                    @{
+                                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
+                                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
+                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                    }
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    }
+                                                </li>
+                                            }
+
+                                        </ul>
+                                    }
+                                    <br />
                                 }
                             </li>
 
                         </ul>
                     </div>
 
-                    <h1 class="page-title margintop10">Catalog</h1>
+                    <h1 class="page-title margintop10">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.Catalog</h1>
                     <a href="~/Catalogue/Index"><img src="@siteURL/images/shop_images/catalog.jpg"></a>
 
                 </div>

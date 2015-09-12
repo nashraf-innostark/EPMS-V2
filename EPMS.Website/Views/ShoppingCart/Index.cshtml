@@ -4,7 +4,7 @@
 @model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
 
 @{
-    ViewBag.Title = "Shopping Cart";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = Common.TextDirection;
     DateTime today = DateTime.Now;
@@ -17,7 +17,7 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="/Home/Index">@Cart.HomePage</a></li>
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
                     <li>@Cart.BCCart</li>
                 </ul>
                 <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
@@ -37,7 +37,7 @@
         <div id="mainbody">
             <div class="row">
                 <div class="span12 directionR ">
-                    <h1 class="page-title">@Cart.BodyTitle</h1>
+                    <h1 class="page-title">@Cart.Title</h1>
                     @using (Html.BeginForm("CheckOut", "ShoppingCart", FormMethod.Post, new { @class = "form-horizontal", @id = "PaymentForm", role = "form", enctype = "multipart/form-data" }))
                     {
                         <input type="hidden" id="fromCart" name="fromCart" value="" />
@@ -45,7 +45,7 @@
                         {
                             <table class="shopping-table">
                                 <tr>
-                                    <th style="display: none">Product Id</th>
+                                    <th style="display: none">@Cart.ProductId</th>
                                     <th colspan="2">@Cart.ItemPictureAndName</th>
                                     <th>@Cart.ItemCode</th>
                                     <th>@Cart.Qty</th>
@@ -94,7 +94,7 @@
                             <div class="control-group">
                                 <div class="controls">
                                     @*<input type="image" name="submit" src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" border="0" alt="Submit" />*@
-                                    <input class="btn" id="submit-form" type="submit" value="Proceed to CheckOut" onclick="setFromValue()"/>
+                                    <input class="btn" id="submit-form" type="submit" value="Proceed to CheckOut" onclick="setFromValue(event)"/>
                                 </div>
                             </div>
                         }
@@ -169,12 +169,12 @@
                 productId: productId,
             },
             success: function (data) {
-                if (data == "Success") {
+                if (data.response == "OK") {
                     jQuery(row).remove();
                     calculateGrandTotal();
                     new PNotify({
                         title: 'Removed',
-                        text: '\nItem has been successfully removed from your Cart.'
+                        text: "\n" + data.itemName + ' has been successfully removed from your Cart.'
                     });
                 }
             },
@@ -183,8 +183,14 @@
             }
         });
     }
-    function setFromValue() {
+    function setFromValue(event) {
         $("#fromCart").val("ShoppingCart");
+        var isAuthenticated = '@ViewBag.IsAuthenticated';
+        if (isAuthenticated == 'False' || isAuthenticated == 'false') {
+            event.preventDefault();
+            $("#loginPopUp").click();
+            return false;
+        }
         return true;
     }
     function UpdateCartInDB(productId, qty) {
@@ -199,10 +205,10 @@
                 quantity: qty
             },
             success: function (data) {
-                if (data == "Success") {
+                if (data.response == "OK") {
                     new PNotify({
-                        title: 'Added',
-                        text: '\nItem quantity has been successfully updated.'
+                        title: 'Updated',
+                        text: "\n" + data.itemName + ' quantity has been successfully updated.'
                     });
                 }
             },

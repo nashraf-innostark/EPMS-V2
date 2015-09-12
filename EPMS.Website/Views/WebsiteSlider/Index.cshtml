@@ -5,6 +5,7 @@
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
     var link = ConfigurationManager.AppSettings["SliderImages"];
+    string textClass = "";
 }
 
 <div id="slideshow" class="gradient">
@@ -18,16 +19,31 @@
                     <div class="item">
                         @if (imageSlider.ImageName != null)
                         {
-                            <img style="height: 537px" src="@link@imageSlider.ImageName" alt="" />
+                            <img style="" src="@link@imageSlider.ImageName" alt="" />
                         }
                         else
                         {
-                            <img style="height: 537px" src="/Images/ImageNoAvailableBig.jpg" alt="" />
+                            <img style="" src="/Images/ImageNoAvailableBig.jpg" alt="" />
                         }
-                        <div class="caption style1 fromright">
+                        @switch (imageSlider.Position)
+                        {
+                            case 1:
+                                textClass = "fromtop";
+                                break;
+                            case 2:
+                                textClass = "frombottom";
+                                break;
+                            case 3:
+                                textClass = "";
+                                break;
+                            case 4:
+                                textClass = "fromright";
+                                break;
+                        }
+                        <div class="caption style1 @textClass">
                             <h2 class="main_title">@imageSlider.TitleEn</h2>
                             <h3 class="title_big">@imageSlider.SubTitleEn</h3>
-                            <a href="#" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
+                            <a href="@imageSlider.Link" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
                             <h4 class="title_small descp-@imageSlider.SliderId"></h4>
                             <script>
                                 var descp = '@Html.Raw(imageSlider.Description)';

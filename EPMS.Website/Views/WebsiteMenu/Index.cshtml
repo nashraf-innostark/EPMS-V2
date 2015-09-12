@@ -1,8 +1,10 @@
 ﻿@using System.Configuration
+@using EPMS.WebModels.Resources.WebsiteClient.Menu
+@using EPMS.Website.Resources.Shared
 @model EPMS.Models.MenuModels.WebsiteMenuModel
 @{
     Layout = null;
-    var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
+    var direction = Common.TextDirection;
     string link = "";
     var siteURL = ConfigurationManager.AppSettings["SiteURL"];
 }
@@ -10,19 +12,18 @@
 <nav id="main_menu">
     <ul class="sf-menu clearfix">
         <li class="active">
-            <a href="~/Home/Index">Home</a>
+            <a href="~/Home/Index">@Menu.Home</a>
         </li>
-
         <li>
-            <a href="#">About Us</a>
+            <a href="javascript:;" class="sf-with-ul">@Menu.AboutUs</a>
             <ul>
-                <li onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/AboutUs/Detail'"><a href="#">Company Profile</a>
-
+                <li>
+                    <a href="@siteURL/AboutUs/Detail">@Menu.CompanyProfile</a>
+                </li>
             </ul>
         </li>
-
         <li>
-            <a href="javascript:;">Our Products</a>
+            <a href="javascript:;" class="sf-with-ul">@Menu.OurProducts</a>
             <ul>
                 @{
                     //All productSections, who have no parentId
@@ -93,55 +94,58 @@
                             }
                             else
                             {
-                                //we are here because we didn't find any department of this roo level productSection, we are going to check if it has child in productSection table
-                                <ul>
-                                    @foreach (var product in productSection.ProductSections)
-                                    {
-                                        //first level child from productSection is here
-                                        <li>
-                                            @{
-                                        //put check for culture for eng or arabic field
-                                        if (direction == "ltr")
+                                if (productSection.ProductSections.Any())
+                                {
+                                    //we are here because we didn't find any department of this roo level productSection, we are going to check if it has child in productSection table
+                                    <ul>
+                                        @foreach (var product in productSection.ProductSections)
                                         {
-                                            childName = string.IsNullOrEmpty(product.SectionNameEn) ? product.InventoryDepartment.DepartmentNameEn : productSection.SectionNameEn;
-                                        }
-                                        else
-                                        {
-                                            childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
-                                        }
-                                        link = @siteURL + "/Product/Index/" + product.SectionId + "?from=Sections";
-                                            }
-                                            <a href="@link">@childName</a>
-                                            @if (product.ProductSections.Any())
+                                            //first level child from productSection is here
+                                            <li>
+                                                @{
+                                            //put check for culture for eng or arabic field
+                                            if (direction == "ltr")
                                             {
-                                                //2nd level child from productSection is here
-                                                <ul>
-                                                    @foreach (var childProduct in product.ProductSections)
-                                                    {
-                                                        <li>
-                                                            @{
-                                                        //put check for culture for eng or arabic field
-                                                        if (direction == "ltr")
-                                                        {
-                                                            childName = string.IsNullOrEmpty(childProduct.SectionNameEn) ? childProduct.InventoryDepartment.DepartmentNameEn : childProduct.SectionNameEn;
-                                                        }
-                                                        else
-                                                        {
-                                                            childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
-                                                        }
-                                                        link = @siteURL + "/Product/Index/" + childProduct.SectionId + "?from=Sections";
-                                                            }
-                                                            <a href="@link">@childName</a>
-                                                        </li>
-                                                    }
-                                                </ul>
+                                                childName = string.IsNullOrEmpty(product.SectionNameEn) ? product.InventoryDepartment.DepartmentNameEn : product.SectionNameEn;
                                             }
-                                        </li>
-                                    }
-                                </ul>
+                                            else
+                                            {
+                                                childName = string.IsNullOrEmpty(product.SectionNameAr) ? product.InventoryDepartment.DepartmentNameAr : product.SectionNameAr;
+                                            }
+                                            link = @siteURL + "/Product/Index/" + product.SectionId + "?from=Sections";
+                                                }
+                                                <a href="@link">@childName</a>
+                                                @if (product.ProductSections.Any())
+                                                {
+                                                    //2nd level child from productSection is here
+                                                    <ul>
+                                                        @foreach (var childProduct in product.ProductSections)
+                                                        {
+                                                            <li>
+                                                                @{
+                                                            //put check for culture for eng or arabic field
+                                                            if (direction == "ltr")
+                                                            {
+                                                                childName = string.IsNullOrEmpty(childProduct.SectionNameEn) ? childProduct.InventoryDepartment.DepartmentNameEn : childProduct.SectionNameEn;
+                                                            }
+                                                            else
+                                                            {
+                                                                childName = string.IsNullOrEmpty(childProduct.SectionNameAr) ? childProduct.InventoryDepartment.DepartmentNameAr : childProduct.SectionNameAr;
+                                                            }
+                                                            link = @siteURL + "/Product/Index/" + childProduct.SectionId + "?from=Sections";
+                                                                }
+                                                                <a href="@link">@childName</a>
+                                                            </li>
+                                                        }
+                                                    </ul>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                }
                             }
 
-                            }
+}
                         </li>
                     }
                 }
@@ -149,29 +153,37 @@
         </li>
 
         <li>
-            <a href="#">Our Services</a>
+            <a href="javascript:;" class="sf-with-ul">@Menu.OurServices</a>
             <ul>
                 @foreach (var service in Model.WebsiteServices)
                 {
                     if (direction == "ltr")
                     {
-                        <li onclick="window.location.href = '@siteURL/Services/Detail/@service.ServiceId'"><a href="#">@service.ServiceNameEn</a></li>
+                        <li>
+                            <a href="@siteURL/Services/Detail/@service.ServiceId">@service.ServiceNameEn</a>
+                        </li>
                     }
                     else
                     {
-                        <li onclick="window.location.href = '@siteURL/Services/Detail/@service.ServiceId'"><a href="#">@service.ServiceNameAr</a></li>
+                        <li>
+                            <a href="@siteURL/Services/Detail/@service.ServiceId">@service.ServiceNameAr</a>
+                        </li>
                     }
                 }
             </ul>
         </li>
         <li>
-            <a href="#">News & Articles</a>
+            <a href="javascript:;" class="sf-with-ul">@Menu.NewsArticles</a>
             <ul>
-                <li onclick="window.location.href = '@siteURL/NewsAndArticle/Index/0'"><a href="#">News</a></li>
-                <li onclick="window.location.href = '@siteURL/NewsAndArticle/Index/1'"><a href="#" class="prettyPhoto_transparent">Articles</a></li>
+                <li>
+                    <a href="@siteURL/NewsAndArticle/Index/0">@Menu.News</a>
+                </li>
+                <li>
+                    <a href="@siteURL/NewsAndArticle/Index/1" class="prettyPhoto_transparent">@Menu.Articles</a>
+                </li>
             </ul>
         </li>
-        <li onclick="window.location.href = '@siteURL/ContactUs/Detail/'"><a href="#">Contact Us</a></li>
+        <li><a href="@siteURL/ContactUs/Detail">@Menu.ContactUs</a></li>
     </ul>
 </nav>
 <!-- end main_menu -->
