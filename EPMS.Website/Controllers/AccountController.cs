@@ -32,7 +32,7 @@ namespace EPMS.Website.Controllers
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
-        private readonly IWebsiteCustomerService websiteCustomerService;
+        private readonly ICustomerService customerService;
         private readonly IShoppingCartService cartService;
         private readonly IWebsiteUserPreferenceService userPreferenceService;
 
@@ -67,9 +67,9 @@ namespace EPMS.Website.Controllers
 
         #region Constructor
 
-        public AccountController(IWebsiteCustomerService websiteCustomerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService, IWebsiteUserPreferenceService userPreferenceService)
+        public AccountController(ICustomerService customerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService, IWebsiteUserPreferenceService userPreferenceService)
         {
-            this.websiteCustomerService = websiteCustomerService;
+            this.customerService = customerService;
             this.aspNetUserService = aspNetUserService;
             this.cartService = cartService;
             this.userPreferenceService = userPreferenceService;
@@ -272,19 +272,19 @@ namespace EPMS.Website.Controllers
 
             #region Add Customer
 
-            WebsiteCustomer customer = new WebsiteCustomer
+            Customer customerToAdd = new Customer
             {
-                CustomerNameEn = viewModel.SignUp.CustomerNameEn,
-                CustomerNameAr = viewModel.SignUp.CustomerNameEn,
+                CustomerNameE = viewModel.SignUp.CustomerNameEn,
+                CustomerNameA = viewModel.SignUp.CustomerNameEn,
             };
-            bool status = websiteCustomerService.AddWebsiteCustomer(customer);
+            var customer = customerService.AddCustomer(customerToAdd);
 
             #endregion
 
-            if (status)
+            if (customer != null)
             {
                 var user = new AspNetUser { UserName = viewModel.SignUp.UserName, Email = viewModel.SignUp.Email };
-                user.WebsiteCustomerId = customer.CustomerId;
+                user.CustomerId = customer.CustomerId;
                 if (!String.IsNullOrEmpty(viewModel.SignUp.Password))
                 {
                     var result = await UserManager.CreateAsync(user, viewModel.SignUp.Password);

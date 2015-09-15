@@ -44,7 +44,12 @@
                 </a>
             </li>
             <li>
-                Website Services
+                <a href="~/Website/WebsiteServices/Index">
+                    Website Services
+                </a>
+            </li>
+            <li class="current">
+                <a href="javascript:;">@ViewBag.Title</a>
             </li>
         </ul>
     </div>
@@ -230,7 +235,7 @@
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script type="text/javascript">
     var divId;
-
+    var level;
     $(document).ready(function () {
         divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
@@ -265,6 +270,7 @@
         var list = '@Html.Raw(ViewBag.JsTree)';
         var tree = JSON.parse(list);
         $("#" + divId).on('changed.jstree', function (e, data) {
+            level = data.node.parents.length;
             var m = $(".alert-error");
             m.children("span").text("");
             m.hide();
@@ -399,10 +405,16 @@
         }
         $("#RecCreatedBy").val(value.RecCreatedBy);
         $("#RecCreatedDate").val(value.RecCreatedDateStr);
-        assignCkEditor()
+        assignCkEditor();
         return true;
     }
     function AddNewNode() {
+        if (level >= 3) {
+            var m = $(".alert-error");
+            m.children("span").text("Cann't crate further child Service.");
+            m.show();
+            return false;
+        }
         var parentId = $('#' + divId).jstree('get_selected')[0];
         if (parentId == "" || parentId == null || parentId == undefined) {
             var m = $(".alert-error");
@@ -410,6 +422,7 @@
             m.show();
             return false;
         }
+
         setNullValues();
         enableControls();
         $("#SaveNewNode").show();

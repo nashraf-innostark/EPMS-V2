@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.Product;
@@ -21,8 +18,6 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Index()
         {
-            ViewBag.ShowSlider = false;
-
             ProductListViewModel viewModel = new ProductListViewModel
             {
                 Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
@@ -32,6 +27,16 @@ namespace EPMS.Website.Controllers
                 
                 
             }
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+
+        public ActionResult Test()
+        {
+            ProductListViewModel viewModel = new ProductListViewModel
+            {
+                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
+            };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }

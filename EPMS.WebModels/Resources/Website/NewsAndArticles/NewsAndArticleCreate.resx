@@ -117,8 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddPageTitle" xml:space="preserve">
-    <value>Website News And Articles Add</value>
+  <data name="AddArticlePageTitle" xml:space="preserve">
+    <value>Website Article Add</value>
+  </data>
+  <data name="AddNewsPageTitle" xml:space="preserve">
+    <value>Website News Add</value>
   </data>
   <data name="Article" xml:space="preserve">
     <value>Article</value>
@@ -180,7 +183,10 @@
   <data name="Type" xml:space="preserve">
     <value>Type</value>
   </data>
-  <data name="UpdatePageTitle" xml:space="preserve">
-    <value>Website News And Articles Update</value>
+  <data name="UpdateArticlePageTitle" xml:space="preserve">
+    <value>Website Article Update</value>
+  </data>
+  <data name="UpdateNewsPageTitle" xml:space="preserve">
+    <value>Website News Update</value>
   </data>
 </root>

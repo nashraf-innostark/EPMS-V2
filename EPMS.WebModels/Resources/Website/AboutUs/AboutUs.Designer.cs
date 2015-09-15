@@ -241,7 +241,7 @@ namespace EPMS.WebModels.Resources.Website.AboutUs {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Contact Us Details.
+        ///   Looks up a localized string similar to Update About Us Details.
         /// </summary>
         public static string UpdatePageTitle {
             get {

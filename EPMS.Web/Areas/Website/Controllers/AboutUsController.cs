@@ -2,6 +2,7 @@
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Website.AboutUs;
 using EPMS.WebModels.ViewModels.AboutUs;
 using EPMS.WebModels.ViewModels.Common;
@@ -30,6 +31,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Public
 
+        [SiteAuthorize(PermissionKey = "AboutUsDetail")]
         public ActionResult Detail()
         {
             AboutUsViewModel aboutUsViewModel = new AboutUsViewModel();

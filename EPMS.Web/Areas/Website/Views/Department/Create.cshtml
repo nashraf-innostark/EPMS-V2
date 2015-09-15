@@ -99,7 +99,7 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid ShowToPublicDiv">
             <div class="span3">
                 <label class="control-label" for="ShowToPublic">Show to public?</label>
             </div>
@@ -173,7 +173,7 @@
         if (parseInt('@Model.WebsiteDepartment.DepartmentId') > 0 || '@userPermissionsSet.Contains("WebsiteDepartmentCreate")' == 'False') {
             $('.' + 'toBeDisable' + ':input').attr('disabled', true);
             $('#image').addClass('disableList');
-            $('#ShowToPublicDiv').addClass('disableList');
+            $('.ShowToPublicDiv').addClass('disableList');
             var descpE = '@Html.Raw(Model.WebsiteDepartment.Description)';
             var regex = /(<([^>]+)>)/ig;
             var res = descpE.replace(regex, "");
@@ -233,7 +233,7 @@
     $("#edit").click(function (event) {
         $('.' + 'toBeDisable' + ':input').attr('disabled', false);
         $('#image').removeClass('disableList');
-        $('#ShowToPublicDiv').removeClass('disableList');
+        $('.ShowToPublicDiv').removeClass('disableList');
         // CK Editor
         CKEDITOR.replace('Description', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',

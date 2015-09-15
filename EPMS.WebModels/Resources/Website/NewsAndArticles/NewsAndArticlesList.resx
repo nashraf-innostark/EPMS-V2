@@ -120,8 +120,8 @@
   <data name="Added" xml:space="preserve">
     <value>Record has been Added.</value>
   </data>
-  <data name="AddNew" xml:space="preserve">
-    <value>Create New News Or Article</value>
+  <data name="AddNewNews" xml:space="preserve">
+    <value>Create New News</value>
   </data>
   <data name="Author" xml:space="preserve">
     <value>Author Name</value>
@@ -135,8 +135,8 @@
   <data name="Image" xml:space="preserve">
     <value>Image</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>Website News And Articles</value>
+  <data name="NewsTitle" xml:space="preserve">
+    <value>Website News</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
@@ -152,5 +152,11 @@
   </data>
   <data name="Deleted" xml:space="preserve">
     <value>Successfully deleted.</value>
+  </data>
+  <data name="ArticlesTitle" xml:space="preserve">
+    <value>Website Articles</value>
+  </data>
+  <data name="AddNewArticle" xml:space="preserve">
+    <value>Create New Article</value>
   </data>
 </root>

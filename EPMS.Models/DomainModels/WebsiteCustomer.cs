@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
@@ -12,7 +11,5 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime? RecUpdatedDate { get; set; }
-
-        public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
     }
 }

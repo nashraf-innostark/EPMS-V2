@@ -8,6 +8,7 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
 using EPMS.WebModels.ViewModels.NewsAndArticle;
 using EPMS.Web.Controllers;
@@ -36,27 +37,29 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Public
 
-        #region Index
+        #region News Index
 
+        [SiteAuthorize(PermissionKey = "NewsIndex")]
         public ActionResult Index()
         {
             return View(new NewsAndArticleListViewModel
             {
-                NewsAndArticles = newsAndArticleService.GetAll().Select(x=>x.CreateFromServerToClient()).OrderBy(y=>y.SortOrder)
+                NewsAndArticles = newsAndArticleService.GetAll().Where(x => x.Type == false).Select(x => x.CreateFromServerToClient()).OrderBy(y => y.SortOrder)
             });
         }
 
         #endregion
 
-        #region Create
+        #region News Create
 
+        [SiteAuthorize(PermissionKey = "NewsCreate")]
         public ActionResult Create(long? id)
         {
             NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel();
             if (id != null)
             {
                 newsAndArticleViewModel.NewsAndArticle =
-                    newsAndArticleService.FindNewsAndArticleById((long) id).CreateFromServerToClient();
+                    newsAndArticleService.FindNewsAndArticleById((long)id).CreateFromServerToClient();
             }
             return View(newsAndArticleViewModel);
         }
@@ -99,6 +102,77 @@ namespace EPMS.Web.Areas.Website.Controllers
             {
                 TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
                 return RedirectToAction("Create", e);
+            }
+            return View(newsAndArticleViewModel);
+        }
+
+        #endregion
+
+        #region Article Index
+
+        [SiteAuthorize(PermissionKey = "ArticlesIndex")]
+        public ActionResult Articles()
+        {
+            return View(new NewsAndArticleListViewModel
+            {
+                NewsAndArticles = newsAndArticleService.GetAll().Where(x => x.Type).Select(x => x.CreateFromServerToClient()).OrderBy(y => y.SortOrder)
+            });
+        }
+
+        #endregion
+
+        #region Article Create
+
+        [SiteAuthorize(PermissionKey = "ArticleCreate")]
+        public ActionResult ArticleCreate(long? id)
+        {
+            NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel();
+            if (id != null)
+            {
+                newsAndArticleViewModel.NewsAndArticle =
+                    newsAndArticleService.FindNewsAndArticleById((long)id).CreateFromServerToClient();
+            }
+            return View(newsAndArticleViewModel);
+        }
+
+        [HttpPost]
+        public ActionResult ArticleCreate(NewsAndArticleViewModel newsAndArticleViewModel)
+        {
+            try
+            {
+                if (newsAndArticleViewModel.NewsAndArticle.NewsArticleId > 0)
+                {
+                    //Update Case
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedBy = User.Identity.GetUserId();
+                    NewsAndArticle newsAndArticleToUpdate =
+                        newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
+                    if (newsAndArticleService.UpdateNewsAndArticle(newsAndArticleToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.Updated, IsUpdated = true };
+                        return RedirectToAction("Articles");
+                    }
+                }
+                else
+                {
+                    //Add Case
+                    newsAndArticleViewModel.NewsAndArticle.RecCreatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecCreatedBy = User.Identity.GetUserId();
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedDt = DateTime.Now;
+                    newsAndArticleViewModel.NewsAndArticle.RecLastUpdatedBy = User.Identity.GetUserId();
+                    NewsAndArticle newsAndArticleToAdd =
+                        newsAndArticleViewModel.NewsAndArticle.CreateFromClientToServer();
+                    if (newsAndArticleService.AddNewsAndArticle(newsAndArticleToAdd))
+                    {
+                        TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.Added, IsSaved = true };
+                        return RedirectToAction("Articles");
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                TempData["message"] = new MessageViewModel { Message = e.Message, IsError = true };
+                return RedirectToAction("ArticleCreate", e);
             }
             return View(newsAndArticleViewModel);
         }

@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Website.ContactUs;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.ContactUs;
@@ -30,6 +31,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Public
 
+        [SiteAuthorize(PermissionKey = "ContactUsDetail")]
         public ActionResult Detail()
         {
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();

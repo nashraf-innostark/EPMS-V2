@@ -104,7 +104,7 @@ namespace EPMS.Website.Controllers
             if (status)
             {
                 var user = new AspNetUser { UserName = viewModel.SignUp.UserName, Email = viewModel.SignUp.Email };
-                user.WebsiteCustomerId = customerToAdd.CustomerId;
+                user.CustomerId = customerToAdd.CustomerId;
                 if (!String.IsNullOrEmpty(viewModel.SignUp.Password))
                 {
                     var result = await UserManager.CreateAsync(user, viewModel.SignUp.Password);

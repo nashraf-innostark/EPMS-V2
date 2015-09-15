@@ -637,6 +637,16 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Website\Slider\Slider.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Slider.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Website\Slider\Slider.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Slider.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\WebsiteService\Service.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -1277,6 +1287,14 @@
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Slider\Slider.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Slider.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Slider\Slider.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Slider.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\WebsiteService\Service.ar.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1501,6 +1501,8 @@
     <Content Include="Areas\Meeting\Views\web.config" />
     <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="RTB\userfiles\.htaccess" />
+    <Content Include="Areas\Website\Views\NewsAndArticle\Articles.cshtml" />
+    <Content Include="Areas\Website\Views\NewsAndArticle\ArticleCreate.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

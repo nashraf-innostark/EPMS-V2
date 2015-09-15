@@ -122,16 +122,16 @@
                                             ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
                                             if (cart.ShoppingCartItems.Any())
                                             {
-                                                <span class="cart_details shopping-cart">Number of items @cart.ShoppingCartItems.Count <a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a></span>
+                                                <span class="cart_details shopping-cart">Number of items @cart.ShoppingCartItems.Count <a href="~/ShoppingCart/Index" class="checkout checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
                                             }
                                             else
                                             {
-                                                <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
+                                                <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
                                             }
                                         }
                                         else
                                         {
-                                            <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
+                                            <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
                                         }
                                     }
                                 </div>

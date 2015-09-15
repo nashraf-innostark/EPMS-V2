@@ -20,13 +20,16 @@
         },
         success: function (data) {
             if (data.response == "OK") {
-                //var checkOutBtn = '<a href="~/ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a>';
-                //var shoppingcart = 'Number of items ' + data.count;
-                //$(".shopping-cart").text(shoppingcart);
-                //$(".checkoutBtn").removeClass('hide');
+                $(".shopping-cart").removeClass('cart_details_no_item');
+                $(".shopping-cart").addClass('cart_details');
+                var checkOutBtn = '<a href="../../ShoppingCart/Index" class="checkout">Checkout<span class="icon-chevron-right"></span></a>';
+                var shoppingcart = 'Number of items ' + data.count;
+                $(".shopping-cart").text(shoppingcart);
+                $(".shopping-cart").append(checkOutBtn);
                 new PNotify({
                     title: 'Added',
-                    text: "\n" + data.itemName + ' has been successfully added to your Cart.'
+                    text: "\n" + data.itemName + ' has been successfully added to your Cart.',
+                    delay: 1000
                 });
             }
         },

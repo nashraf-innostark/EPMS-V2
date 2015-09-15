@@ -57,3 +57,7 @@
     width: 3384px; 
     height: 400px;
 }
+
+.div-hide {
+    display: none !important;
+}

@@ -1,11 +1,15 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
+using EPMS.WebModels.Resources.Website.Slider;
 
 namespace EPMS.WebModels.WebsiteModels
 {
     public class ImageSlider
     {
         public long SliderId { get; set; }
+        [Required(ErrorMessageResourceType = typeof (Slider), ErrorMessageResourceName = "TitleValidationError")]
         public string TitleEn { get; set; }
+        [Required(ErrorMessageResourceType = typeof (Slider), ErrorMessageResourceName = "TItleArValidationError")]
         public string TitleAr { get; set; }
         public string SubTitleEn { get; set; }
         public string SubTitleAr { get; set; }

@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.ProductSection;
@@ -46,6 +47,8 @@ namespace EPMS.Web.Areas.Website.Controllers
         #region Public
 
         #region Index
+
+        [SiteAuthorize(PermissionKey = "ProductIndex")]
         public ActionResult Index()
         {
             ViewBag.IsIncludeNewJsTree = true;
@@ -58,6 +61,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Create
 
+        [SiteAuthorize(PermissionKey = "ProductCreate")]
         public ActionResult Create(long? id)
         {
             ProductViewModel productViewModel = new ProductViewModel();

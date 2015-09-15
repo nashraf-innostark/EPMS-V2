@@ -117,67 +117,10 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddPageTitle" xml:space="preserve">
-    <value>Add About Us Details</value>
+  <data name="TItleArValidationError" xml:space="preserve">
+    <value>Slider Title arabic is required</value>
   </data>
-  <data name="MetaDesc" xml:space="preserve">
-    <value>Meta Description</value>
-  </data>
-  <data name="MetaDescAr" xml:space="preserve">
-    <value>MetaDescription Arabic</value>
-  </data>
-  <data name="MetaKeywords" xml:space="preserve">
-    <value>Meta Keywords</value>
-  </data>
-  <data name="MetaKeywordsAr" xml:space="preserve">
-    <value>Meta Keywords Arabic</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="Saved" xml:space="preserve">
-    <value>Details Saved</value>
-  </data>
-  <data name="ShowToPublic" xml:space="preserve">
-    <value>Show To Public?</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>Title</value>
-  </data>
-  <data name="TitleAr" xml:space="preserve">
-    <value>Title Arabic</value>
-  </data>
-  <data name="Updated" xml:space="preserve">
-    <value>Details Updated</value>
-  </data>
-  <data name="UpdatePageTitle" xml:space="preserve">
-    <value>Update About Us Details</value>
-  </data>
-  <data name="MainPage" xml:space="preserve">
-    <value>Website Main Page</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
-  </data>
-  <data name="Content" xml:space="preserve">
-    <value>Content</value>
-  </data>
-  <data name="ContentAr" xml:space="preserve">
-    <value>Content Arabic</value>
-  </data>
-  <data name="ContentValidErrorAr" xml:space="preserve">
-    <value>About Us Content arabic is required</value>
-  </data>
-  <data name="ContentValidErrorEn" xml:space="preserve">
-    <value>About Us Content is required</value>
-  </data>
-  <data name="TitleValidErrorAr" xml:space="preserve">
-    <value>About Us Title arabic is required</value>
-  </data>
-  <data name="TitleValidErrorEn" xml:space="preserve">
-    <value>About Us Title is required</value>
+  <data name="TitleValidationError" xml:space="preserve">
+    <value>Slider Title is required</value>
   </data>
 </root>

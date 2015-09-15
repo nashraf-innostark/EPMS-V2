@@ -1,7 +1,7 @@
 ﻿@model EPMS.WebModels.ViewModels.NewsAndArticle.NewsAndArticleListViewModel
 
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.NewsTitle;
+    ViewBag.Title = EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.ArticlesTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
@@ -36,7 +36,7 @@
     <div class="container-fluid">
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>@ViewBag.Title</strong><a href="~/Website/NewsAndArticle/Create">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.AddNewNews</a>
+            <strong>@ViewBag.Title</strong><a href="~/Website/NewsAndArticle/ArticleCreate">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.AddNewArticle</a>
         </div>
 
         <div class="row-fluid">
@@ -71,11 +71,11 @@
                                 <td>
                                     @if (direction == "ltr")
                                     {
-                                        @Html.ActionLink(@item.TitleEn, "Create", new { id = item.NewsArticleId })
+                                        @Html.ActionLink(@item.TitleEn, "ArticleCreate", new { id = item.NewsArticleId })
                                     }
                                     else
                                     {
-                                        @Html.ActionLink(@item.TitleAr, "Create", new { id = item.NewsArticleId })
+                                        @Html.ActionLink(@item.TitleAr, "ArticleCreate", new { id = item.NewsArticleId })
                                     }
                                 </td>
                                 <td>

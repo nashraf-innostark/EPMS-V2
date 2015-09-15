@@ -38,7 +38,7 @@
 @using (Html.BeginForm("Create", "Product", FormMethod.Post, new { @id = "ProductForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
-        
+
         @Html.AntiForgeryToken()
         @Html.HiddenFor(m => m.Product.ProductId)
         @Html.HiddenFor(m => m.Product.RecCreatedBy)
@@ -47,7 +47,7 @@
         @Html.HiddenFor(m => m.Product.ItemVariationId)
         @*@Html.HiddenFor(m => m.Product.ProductSectionId, new { @id = "ProductSectionId" })*@
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductNameEn</label>
@@ -59,7 +59,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductNameAr</label>
@@ -71,7 +71,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescEn</label>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescAr</label>
@@ -95,7 +95,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductPrice</label>
@@ -107,7 +107,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.DiscountedPrice</label>
@@ -119,7 +119,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSize</label>
@@ -131,7 +131,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
@@ -143,7 +143,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
@@ -155,7 +155,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid jobTitleDDL">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSection</label>
@@ -178,7 +178,7 @@
                 <label id="departmentvalidate" style="margin-top: 20px; margin-left: 20px"></label>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">New Arrival</label>
@@ -189,7 +189,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Best Seller</label>
@@ -200,7 +200,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Random Product</label>
@@ -211,7 +211,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">Featured</label>
@@ -222,69 +222,71 @@
                 </div>
             </div>
         </div>
-        
-        <div class="alert alert-info alert-block">
-            <i class="icon-alert icon-alert-info"></i>
-            <strong>@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImages</strong>
-            <a href="#productImageModule" data-toggle="modal" class="addImageButton">@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</a>
-        </div>
-        <!--Sortable Responsive Table begin-->
 
-        <div class="row-fluid">
-            <div class="span12">
-                <table class="table table-striped table-responsive tableImage" id="tableSortableProductImg">
-                    <thead>
-                        <tr>
-                            <th style='display:none'></th>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Order</th>
-                            <th>Show</th>
-                            <th>Delete</th>
-                        </tr>
-                    </thead>
-                    <tbody id="imageDetails">
-                        @if (Model.Product.ProductImages.Any())
-                        {
+        @if (Model.Product.ItemVariationId == null)
+        {
+            <div class="alert alert-info alert-block">
+                <i class="icon-alert icon-alert-info"></i>
+                <strong>@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImages</strong>
+                <a href="#productImageModule" data-toggle="modal" class="addImageButton">@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</a>
+            </div>
+            <!--Sortable Responsive Table begin-->
 
-                            var serial = 0;
-                            for (int i = 0; i < Model.Product.ProductImages.Count(); i++)
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive tableImage" id="tableSortableProductImg">
+                        <thead>
+                            <tr>
+                                <th style='display:none'></th>
+                                <th>Serial</th>
+                                <th>Image</th>
+                                <th>Order</th>
+                                <th>Show</th>
+                                <th>Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody id="imageDetails">
+                            @if (Model.Product.ProductImages.Any())
                             {
 
-                                serial = serial + 1;
+                                var serial = 0;
+                                for (int i = 0; i < Model.Product.ProductImages.Count(); i++)
+                                {
 
-                                <tr data-id="@i">
-                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ProductImagePath)
-                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ImageId)
-                                    @Html.HiddenFor(model => model.Product.ProductImages[i].ProductId)
-                                    <td style='display:none'><input name='Product.ProductImages.Index' type='hidden' value='@i' /></td>
-                                    <td>
-                                        <label class="control-label serialNumber">@serial</label>
-                                    </td>
-                                    <td>
-                                        <img class="itemImg" src='/Images/ProductImage/@Url.Content(Model.Product.ProductImages[i].ProductImagePath)' alt="user" />
-                                    </td>
-                                    <td>
-                                        <div class="span2">
-                                            <div class="controls">
-                                                @Html.TextBoxFor(model => model.Product.ProductImages[i].ImageOrder, new { @class = "auto-resize ImageOrder tbdisable" })
+                                    serial = serial + 1;
+
+                                    <tr data-id="@i">
+                                        @Html.HiddenFor(model => model.Product.ProductImages[i].ProductImagePath)
+                                        @Html.HiddenFor(model => model.Product.ProductImages[i].ImageId)
+                                        @Html.HiddenFor(model => model.Product.ProductImages[i].ProductId)
+                                        <td style='display:none'><input name='Product.ProductImages.Index' type='hidden' value='@i' /></td>
+                                        <td>
+                                            <label class="control-label serialNumber">@serial</label>
+                                        </td>
+                                        <td>
+                                            <img class="itemImg" src='/Images/ProductImage/@Url.Content(Model.Product.ProductImages[i].ProductImagePath)' alt="user" />
+                                        </td>
+                                        <td>
+                                            <div class="span2">
+                                                <div class="controls">
+                                                    @Html.TextBoxFor(model => model.Product.ProductImages[i].ImageOrder, new { @class = "auto-resize ImageOrder tbdisable" })
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @Html.CheckBoxFor(model => model.Product.ProductImages[i].ShowImage, new { @class = "tbdisable" })
-                                        Show
-                                    </td>
-                                    <td><i class="icon-photon minus deleteImage"></i></td>
-                                </tr>
+                                        </td>
+                                        <td>
+                                            @Html.CheckBoxFor(model => model.Product.ProductImages[i].ShowImage, new { @class = "tbdisable" })
+                                            Show
+                                        </td>
+                                        <td><i class="icon-photon minus deleteImage"></i></td>
+                                    </tr>
+                                }
                             }
-                        }
-                    </tbody>
-                </table>
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
-        <!--Sortable Responsive Table end-->
-        
+            <!--Sortable Responsive Table end-->
+        }
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
@@ -298,68 +300,68 @@
         </div>
 
     </div>
-    
+
 }
 
 @section popups
 {
     <!--Add Item Image Starts-->
-<div id="productImageModule" class="modal hide fade treeSelector">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</h3>
-    </div>
-    <div class="modal-body ">
-        <form class="form-horizontal">
-            <!--Drag And Drop Upload begin-->
-            <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
-                <div class="span2">
-                    <label class="control-label" for="inputField">
-                        @EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
-                    </label>
-                </div>
-                <div class="span10 row-fluid">
-                    <div class="upload-boxes row-fluid">
-                        <div class="span4" id="upload"></div>
-                        <div class="span8" id="uploaded"></div>
+    <div id="productImageModule" class="modal hide fade treeSelector">
+        <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h3>@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddProductImage</h3>
+        </div>
+        <div class="modal-body ">
+            <form class="form-horizontal">
+                <!--Drag And Drop Upload begin-->
+                <div id="Drag_And_Drop_Upload  " class="control-group row-fluid">
+                    <div class="span2">
+                        <label class="control-label" for="inputField">
+                            @EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                        </label>
+                    </div>
+                    <div class="span10 row-fluid">
+                        <div class="upload-boxes row-fluid">
+                            <div class="span4" id="upload"></div>
+                            <div class="span8" id="uploaded"></div>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <!--Drag And Drop Upload end-->
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label" for="inputFieldaOrder">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Order</label>
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <input id="inputFieldaOrder" type="text" name="inputField" class="imageOrder toClear">
+                <!--Drag And Drop Upload end-->
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="inputFieldaOrder">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Order</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <input id="inputFieldaOrder" type="text" name="inputField" class="imageOrder toClear">
+                        </div>
                     </div>
                 </div>
-            </div>
-            <div class="control-group row-fluid">
-                <div class="span1">
-                    @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear", @style = "margin: 23px 0 0 5px" })
-                </div>
-                <div class="span9">
-                    <div class="controls">
-                        <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Show</label>
+                <div class="control-group row-fluid">
+                    <div class="span1">
+                        @Html.CheckBox("Show", new { @id = "iCheckBox", @class = "toClear", @style = "margin: 23px 0 0 5px" })
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Show</label>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
-    <div class="modal-footer">
-        <a type="button" class="btn trImageDetails">Add New Image</a>
-        <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
-    </div>
+            </form>
+        </div>
+        <div class="modal-footer">
+            <a type="button" class="btn trImageDetails">Add New Image</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+        </div>
 
-</div>
-<!--Add Item Image Ends-->
+    </div>
+    <!--Add Item Image Ends-->
 }
 
 <script>
     var productId = $('#Product_ProductId').val();
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#tableSortableProductImg').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {

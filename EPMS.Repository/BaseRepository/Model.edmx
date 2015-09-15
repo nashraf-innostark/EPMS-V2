@@ -139,7 +139,6 @@
           <Property Name="ImageName" Type="nvarchar(max)" />
           <Property Name="PhoneNumber" Type="nvarchar(max)" />
           <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="WebsiteCustomerId" Type="bigint" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -1626,18 +1625,6 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
         </EntityType>
-        <EntityType Name="WebsiteCustomer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="CustomerNameEn" Type="nvarchar" MaxLength="200" />
-          <Property Name="CustomerNameAr" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecCreatedDate" Type="datetime" />
-          <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" />
-          <Property Name="RecUpdatedDate" Type="datetime" />
-        </EntityType>
         <EntityType Name="WebsiteDepartment">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -1689,7 +1676,7 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="UserId" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="Culture" Type="nvarchar" MaxLength="3" />
+          <Property Name="Culture" Type="nvarchar" MaxLength="6" />
         </EntityType>
         <Association Name="FK_Allowance_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
@@ -1748,18 +1735,6 @@
             </Principal>
             <Dependent Role="AspNetUsers">
               <PropertyRef Name="EmployeeId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_AspNetUsers_WebsiteCustomer">
-          <End Role="WebsiteCustomer" Type="Self.WebsiteCustomer" Multiplicity="0..1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WebsiteCustomer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="WebsiteCustomerId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3452,7 +3427,6 @@
           <EntitySet Name="VendorItems" EntityType="Self.VendorItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Warehouse" EntityType="Self.Warehouse" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WarehouseDetail" EntityType="Self.WarehouseDetail" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="WebsiteCustomer" EntityType="Self.WebsiteCustomer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteDepartment" EntityType="Self.WebsiteDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteHomePage" EntityType="Self.WebsiteHomePage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="WebsiteService" EntityType="Self.WebsiteService" Schema="dbo" store:Type="Tables" />
@@ -3475,10 +3449,6 @@
           </AssociationSet>
           <AssociationSet Name="FK_AspNetUsers_Employee" Association="Self.FK_AspNetUsers_Employee">
             <End Role="Employee" EntitySet="Employee" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_AspNetUsers_WebsiteCustomer" Association="Self.FK_AspNetUsers_WebsiteCustomer">
-            <End Role="WebsiteCustomer" EntitySet="WebsiteCustomer" />
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
           </AssociationSet>
           <AssociationSet Name="FK_CompanyBankDetails_CompanyProfile" Association="Self.FK_CompanyBankDetails_CompanyProfile">
@@ -4155,8 +4125,6 @@
           <NavigationProperty Name="RFIHistories" Relationship="EPMSInventoryModel.FK_RFIHistory_AspNetUsers" FromRole="AspNetUser" ToRole="RFIHistory" />
           <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="WebsiteCustomerId" Type="Int64" />
-          <NavigationProperty Name="WebsiteCustomer" Relationship="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" FromRole="AspNetUser" ToRole="WebsiteCustomer" />
         </EntityType>
         <EntityType Name="Color">
           <Key>
@@ -6269,11 +6237,6 @@
             <End Role="WebsiteService1" EntitySet="WebsiteServices" />
           </AssociationSet>
           <EntitySet Name="AboutUs1" EntityType="EPMSInventoryModel.AboutUs" />
-          <EntitySet Name="WebsiteCustomers" EntityType="EPMSInventoryModel.WebsiteCustomer" />
-          <AssociationSet Name="FK_AspNetUsers_WebsiteCustomer" Association="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer">
-            <End Role="WebsiteCustomer" EntitySet="WebsiteCustomers" />
-            <End Role="AspNetUser" EntitySet="AspNetUsers" />
-          </AssociationSet>
           <EntitySet Name="WebsiteDepartments" EntityType="EPMSInventoryModel.WebsiteDepartment" />
           <EntitySet Name="ShoppingCarts" EntityType="EPMSInventoryModel.ShoppingCart" />
           <EntitySet Name="ShoppingCartItems" EntityType="EPMSInventoryModel.ShoppingCartItem" />
@@ -7991,31 +7954,6 @@
           <Property Name="ContentEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="ContentAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
         </EntityType>
-        <EntityType Name="WebsiteCustomer">
-          <Key>
-            <PropertyRef Name="CustomerId" />
-          </Key>
-          <Property Name="CustomerId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="CustomerNameEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="CustomerNameAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecCreatedDate" Type="DateTime" Precision="3" />
-          <Property Name="RecUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
-          <Property Name="RecUpdatedDate" Type="DateTime" Precision="3" />
-          <NavigationProperty Name="AspNetUsers" Relationship="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" FromRole="WebsiteCustomer" ToRole="AspNetUser" />
-        </EntityType>
-        <Association Name="FK_AspNetUsers_WebsiteCustomer">
-          <End Type="EPMSInventoryModel.WebsiteCustomer" Role="WebsiteCustomer" Multiplicity="0..1" />
-          <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="WebsiteCustomer">
-              <PropertyRef Name="CustomerId" />
-            </Principal>
-            <Dependent Role="AspNetUser">
-              <PropertyRef Name="WebsiteCustomerId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="WebsiteDepartment">
           <Key>
             <PropertyRef Name="DepartmentId" />
@@ -8214,7 +8152,6 @@
           <EntitySetMapping Name="AspNetUsers">
             <EntityTypeMapping TypeName="EPMSInventoryModel.AspNetUser">
               <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="WebsiteCustomerId" ColumnName="WebsiteCustomerId" />
                 <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
                 <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
@@ -9822,19 +9759,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="WebsiteCustomers">
-            <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteCustomer">
-              <MappingFragment StoreEntitySet="WebsiteCustomer">
-                <ScalarProperty Name="RecUpdatedDate" ColumnName="RecUpdatedDate" />
-                <ScalarProperty Name="RecUpdatedBy" ColumnName="RecUpdatedBy" />
-                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
-                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
-                <ScalarProperty Name="CustomerNameAr" ColumnName="CustomerNameAr" />
-                <ScalarProperty Name="CustomerNameEn" ColumnName="CustomerNameEn" />
-                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="WebsiteDepartments">
             <EntityTypeMapping TypeName="EPMSInventoryModel.WebsiteDepartment">
               <MappingFragment StoreEntitySet="WebsiteDepartment">
@@ -10140,8 +10064,6 @@
           <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteService" Width="1.75" PointX="25.375" PointY="6.75" />
           <AssociationConnector Association="EPMSInventoryModel.FK_WebsiteService_WebsiteService" />
           <EntityTypeShape EntityType="EPMSInventoryModel.AboutUs" Width="1.5" PointX="27.375" PointY="0.75" />
-          <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteCustomer" Width="1.75" PointX="27.375" PointY="13.25" />
-        <AssociationConnector Association="EPMSInventoryModel.FK_AspNetUsers_WebsiteCustomer" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteDepartment" Width="1.5" PointX="22.375" PointY="0.75" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCart" Width="1.5" PointX="31.75" PointY="33.5" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ShoppingCartItem" Width="1.5" PointX="25.875" PointY="33.875" />

@@ -145,7 +145,7 @@
                                 }
                             }
 
-}
+                            }
                         </li>
                     }
                 }
@@ -155,7 +155,36 @@
         <li>
             <a href="javascript:;" class="sf-with-ul">@Menu.OurServices</a>
             <ul>
-                @foreach (var service in Model.WebsiteServices)
+                @{
+                    //All productSections, who have no parentId
+                    var rootServices = Model.WebsiteServices.Where(x => x.ParentServiceId == null);
+                    foreach (var service in rootServices)
+                    {
+                        <li>
+                            @{
+                                var childName = direction == "ltr" ? service.ServiceNameEn : service.ServiceNameAr;
+                                link = siteURL + "/Services/Detail/" + service.ServiceId;
+                                <a href="@link">@childName</a>
+                                if (service.WebsiteServices != null && service.WebsiteServices.Any())
+                                {
+                                    <ul>
+                                        @foreach (var childService in service.WebsiteServices)
+                                        {
+                                            <li>
+                                                @{
+                                                    childName = direction == "ltr" ? childService.ServiceNameEn : childService.ServiceNameAr;
+                                                    link = siteURL + "/Services/Detail/" + childService.ServiceId;
+                                                    <a href="@link">@childName</a>
+                                                }
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            }
+                        </li>
+                    }
+                }
+                @*@foreach (var service in Model.WebsiteServices)
                 {
                     if (direction == "ltr")
                     {
@@ -169,7 +198,7 @@
                             <a href="@siteURL/Services/Detail/@service.ServiceId">@service.ServiceNameAr</a>
                         </li>
                     }
-                }
+                }*@
             </ul>
         </li>
         <li>

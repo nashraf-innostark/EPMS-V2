@@ -21,7 +21,6 @@ namespace EPMS.Models.DomainModels
         public string ImageName { get; set; }
         public string PhoneNumber { get; set; }
         public bool PhoneNumberConfirmed { get; set; }
-        public long? WebsiteCustomerId { get; set; }
 
         public virtual ICollection<AspNetUserClaim> AspNetUserClaims { get; set; }
         public virtual ICollection<AspNetUserLogin> AspNetUserLogins { get; set; }
@@ -50,6 +49,5 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesManager { get; set; }
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesCreatedBy { get; set; }
         public virtual ICollection<ItemReleaseHistory> ItemReleaseHistoriesRequester { get; set; }
-        public virtual WebsiteCustomer WebsiteCustomer { get; set; }
     }
 }

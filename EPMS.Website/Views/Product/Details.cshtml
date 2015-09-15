@@ -2,6 +2,7 @@
 @using System.Globalization
 @using EPMS.WebModels.Resources.WebsiteClient.Product
 @using EPMS.Website.Resources.Shared
+@using iTextSharp.text.pdf.qrcode
 @model EPMS.WebModels.ViewModels.Product.ProductDetailViewModel
 
 @{
@@ -117,20 +118,38 @@
         <div class="row">
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
-                    <li><a href="@siteURL/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
-                    <li><a href="#">@Product.OurProducts</a></li>
-                    <li>@Product.ProductsPage</li>
-                </ul>
-                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
-            </div>
-            <div class="span6">
-                <div class="header-titles">
-                    <h2>@Product.ProductsPage</h2>
-                </div>
+                    <li>@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</li>
+                    <li>@Product.Products</li>
+                    @{
+                        var items = Model.Product.PathTillParent.Split('>');
+                        foreach (string item in items)
+                        {
+                            <li>@item</li>
+                        }
+                    }
+                    <li>
+                        @{
+                        if (ViewBag.From.ToString() == "Inventory")
+                        {
+                            @(direction == "ltr" ? Model.Product.ItemNameEn : Model.Product.ItemNameAr)
+                        }
+                        if (ViewBag.From.ToString() == "Sections")
+                        {
+                            @(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)
+                        }
+                    }
+                </li>
+            </ul>
+            <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+        </div>
+        <div class="span6">
+            <div class="header-titles">
+                <h2>@Product.ProductsPage</h2>
             </div>
         </div>
     </div>
-    <div class="shadowUP"></div>
+</div>
+<div class="shadowUP"></div>
 </div>
 <section id="content">
     <div class="container">

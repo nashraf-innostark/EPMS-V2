@@ -61,11 +61,20 @@ namespace EPMS.WebModels.Resources.Website.NewsAndArticles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Website News And Articles Add.
+        ///   Looks up a localized string similar to Website Article Add.
         /// </summary>
-        public static string AddPageTitle {
+        public static string AddArticlePageTitle {
             get {
-                return ResourceManager.GetString("AddPageTitle", resourceCulture);
+                return ResourceManager.GetString("AddArticlePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website News Add.
+        /// </summary>
+        public static string AddNewsPageTitle {
+            get {
+                return ResourceManager.GetString("AddNewsPageTitle", resourceCulture);
             }
         }
         
@@ -250,11 +259,20 @@ namespace EPMS.WebModels.Resources.Website.NewsAndArticles {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Website News And Articles Update.
+        ///   Looks up a localized string similar to Website Article Update.
         /// </summary>
-        public static string UpdatePageTitle {
+        public static string UpdateArticlePageTitle {
             get {
-                return ResourceManager.GetString("UpdatePageTitle", resourceCulture);
+                return ResourceManager.GetString("UpdateArticlePageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website News Update.
+        /// </summary>
+        public static string UpdateNewsPageTitle {
+            get {
+                return ResourceManager.GetString("UpdateNewsPageTitle", resourceCulture);
             }
         }
     }

@@ -25,7 +25,7 @@
             @foreach (var department in Model.WebsiteDepartments)
             {
                 <div class="span4 box">
-                    <a href="/Home/DepartmentDetail/@department.DepartmentId" class="hoverBorder">
+                    <a href="@department.Link" class="hoverBorder">
                         @if (!string.IsNullOrEmpty(department.ImageName))
                         {
                             <img src='@cpLink/Images/Department/@Url.Content(department.ImageName)' alt="" />

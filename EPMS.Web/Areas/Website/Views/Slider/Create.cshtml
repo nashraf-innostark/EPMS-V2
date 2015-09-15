@@ -62,6 +62,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.ImageSlider.TitleEn, new { @id = "TitleEn", @class = "toBeDisable" })
+                    @Html.ValidationMessageFor(m => m.ImageSlider.TitleEn, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -72,6 +73,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.ImageSlider.TitleAr, new { @id = "TitleAr", @class = "toBeDisable" })
+                    @Html.ValidationMessageFor(m => m.ImageSlider.TitleAr, String.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>

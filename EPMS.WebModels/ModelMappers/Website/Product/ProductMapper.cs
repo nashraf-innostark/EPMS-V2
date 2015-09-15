@@ -98,7 +98,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
         }
         public static WebsiteModels.Product CreateFromServerToClientFromInventory(this Models.DomainModels.Product source)
         {
-            return new WebsiteModels.Product
+            var retVal = new WebsiteModels.Product
             {
                 ProductId = source.ProductId,
                 ProductNameEn = source.ProductNameEn,
@@ -131,6 +131,54 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 Sizes = source.ItemVariation != null && source.ItemVariation.Sizes!= null ? source.ItemVariation.Sizes.Select(x => x.CreateFromServerToClient()) : 
                         new List<WebsiteModels.Size>(),
             };
+            var direction = Resources.Shared.Common.TextDirection;
+            if (source.ItemVariationId != null)
+            {
+                var department = source.ItemVariation.InventoryItem.InventoryDepartment;
+                while (department != null)
+                {
+                    retVal.PathTillParent += direction == "ltr"
+                        ? department.DepartmentNameEn + ">"
+                        : department.DepartmentNameAr + ">";
+                    department = department.ParentDepartment;
+                }
+                var path = retVal.PathTillParent.Split('>');
+                retVal.PathTillParent = "";
+                for (int i = path.Length - 2; i >= 0; i--)
+                {
+                    if (i != path.Length - 2)
+                    {
+                        retVal.PathTillParent += " > " + path[i];
+                    }
+                    else
+                    {
+                        retVal.PathTillParent += path[i];
+                    }
+                }
+            }
+            else
+            {
+                var section = source.ProductSection;
+                while (section != null)
+                {
+                    retVal.PathTillParent += direction == "ltr" ? section.SectionNameEn + ">" : section.SectionNameAr + ">";
+                    section = section.ParentSection;
+                }
+                var path = retVal.PathTillParent.Split('>');
+                retVal.PathTillParent = "";
+                for (int i = path.Length - 2; i >= 0; i--)
+                {
+                    if (i != path.Length - 2)
+                    {
+                        retVal.PathTillParent += " > " + path[i];
+                    }
+                    else
+                    {
+                        retVal.PathTillParent += path[i];
+                    }
+                }
+            }
+            return retVal;
         }
 
         public static ProductRequest CreateFromClientToServer(this WebsiteModels.Product source)
