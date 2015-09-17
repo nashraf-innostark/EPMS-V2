@@ -6,5 +6,6 @@ namespace EPMS.Interfaces.Repository
     public interface IProductSectionRepository : IBaseRepository<ProductSection, long>
     {
         bool ProductSectionExists(ProductSection productSection);
+        ProductSection FindByDepartmentId(long departmentId);
     }
 }

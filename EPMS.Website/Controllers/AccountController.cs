@@ -1,13 +1,12 @@
-﻿using System.Collections.Generic;
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
-using System.Web.Security;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using WebModels = EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
@@ -35,6 +34,7 @@ namespace EPMS.Website.Controllers
         private readonly ICustomerService customerService;
         private readonly IShoppingCartService cartService;
         private readonly IWebsiteUserPreferenceService userPreferenceService;
+        private IDashboardWidgetPreferencesService preferencesService;
 
         private void SetSessionValues(string userId)
         {
@@ -67,12 +67,13 @@ namespace EPMS.Website.Controllers
 
         #region Constructor
 
-        public AccountController(ICustomerService customerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService, IWebsiteUserPreferenceService userPreferenceService)
+        public AccountController(ICustomerService customerService, IAspNetUserService aspNetUserService, IShoppingCartService cartService, IWebsiteUserPreferenceService userPreferenceService, IDashboardWidgetPreferencesService preferencesService)
         {
             this.customerService = customerService;
             this.aspNetUserService = aspNetUserService;
             this.cartService = cartService;
             this.userPreferenceService = userPreferenceService;
+            this.preferencesService = preferencesService;
         }
 
         #endregion
@@ -290,6 +291,21 @@ namespace EPMS.Website.Controllers
                     var result = await UserManager.CreateAsync(user, viewModel.SignUp.Password);
                     if (result.Succeeded)
                     {
+                        UserManager.AddToRole(user.Id, "Customer");
+
+                        // Save widgets preferennces
+                        string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
+                        for (int i = 0; i < 3; i++)
+                        {
+                            DashboardWidgetPreference preferences = new DashboardWidgetPreference
+                            {
+                                UserId = user.Id,
+                                WidgetId = customerWidgets[i],
+                                SortNumber = i + 1
+                            };
+                            preferencesService.AddPreferences(preferences);
+                        }
+
                         var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
                         var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code },
                             protocol: Request.Url.Scheme);

@@ -115,6 +115,23 @@ namespace EPMS.Web.Areas.Website.Controllers
         #endregion
 
         #region Delete
+
+        [HttpPost]
+        public JsonResult DeleteIt(long sectionId)
+        {
+            string status = productSectionService.DeleteProductSection(sectionId);
+            switch (status)
+            {
+                case "Success":
+                    return Json(new { response = "OK" }, JsonRequestBehavior.AllowGet);
+                case "Associated":
+                    return Json(new { response = "ASSOCIATED" }, JsonRequestBehavior.AllowGet);
+                case "Error":
+                    return Json(new { response = "ERROR" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { response = "ERROR" }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region JsTree

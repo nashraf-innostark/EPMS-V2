@@ -76,16 +76,14 @@
                                 <td>@item.DiscountedPrice</td>
                                 <td>@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
                                 <td>@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
-                                <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId)">Delete</a></td>
+                                <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId, this)">Delete</a></td>
                             </tr>
                         }
                     </tbody>
                 </table>
             </div>
         </div>
-        
     </div>
-
 </form>
 
 @section popups
@@ -155,9 +153,8 @@
         });
     });
 
-    function deleteRow(abcd) {
-        debugger;
-        if (confirm("Are you sure to delete this row ?") == false) {
+    function deleteRow(productId, elem) {
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
         }
 
@@ -167,20 +164,40 @@
             type: "POST",
             dataType: "json",
             data: {
-                abcd: abcd
+                productId: productId
             },
-            success: function () {
-                $.pnotify({
-                    title: 'Success',
-                    type: 'info',
-                    text: 'Record has been Deleted.'
-                });
+            success: function(data) {
+                if (data.response == "OK") {
+                    var row = $(elem).parent().parent().get(0);
+                    var atable = $('#Product').dataTable();
+                    var pos = atable.fnGetPosition(row);
+                    atable.fnDeleteRow(pos);
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'info',
+                        text: '@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg'
+                    });
+                }
+                if (data.response == "ASSOCIATED") {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Error deleting record because it is associated'
+                    });
+                }
+                if (data.response == "ERROR") {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: '@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg'
+                    });
+                }
             },
             error: function () {
                 $.pnotify({
                     title: 'Failure',
                     type: 'error',
-                    text: 'Error deleting record.'
+                    text: '@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg'
                 });
             }
         });

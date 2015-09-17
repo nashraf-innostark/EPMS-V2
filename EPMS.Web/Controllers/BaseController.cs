@@ -56,11 +56,11 @@ namespace EPMS.Web.Controllers
         private void GetNotifications()
         {
             notificationService = UnityWebActivator.Container.Resolve<INotificationService>();
-            NotificationRequestParams requestParams=new NotificationRequestParams();
+            NotificationRequestParams requestParams = new NotificationRequestParams();
             object userPermissionSet = System.Web.HttpContext.Current.Session["UserPermissionSet"];
             if (userPermissionSet != null)
             {
-                string[] userPermissionsSet = (string[]) userPermissionSet;
+                string[] userPermissionsSet = (string[])userPermissionSet;
                 requestParams.SystemGenerated = userPermissionsSet.Contains("SystemGenerated");
 
                 requestParams.RoleName = Session["RoleName"].ToString();
@@ -83,7 +83,7 @@ namespace EPMS.Web.Controllers
             companyProfileService = UnityWebActivator.Container.Resolve<ICompanyProfileService>();
             var companyWebsite = companyProfileService.GetDetail();
             if (companyWebsite != null)
-            Session["CompWebsiteUrl"] = companyWebsite.CompanyWebsite;
+                Session["CompWebsiteUrl"] = companyWebsite.CompanyWebsite;
             if (Session["FullName"] == null || Session["FullName"].ToString() == string.Empty)
                 SetUserDetail();
             //Set culture info
@@ -101,9 +101,13 @@ namespace EPMS.Web.Controllers
 
         #region Public
 
-//when isForce =  true it sets the value, no matter session has or not
+        //when isForce =  true it sets the value, no matter session has or not
         public void SetUserDetail()
         {
+            customerService = UnityWebActivator.Container.Resolve<ICustomerService>();
+            employeeService = UnityWebActivator.Container.Resolve<IEmployeeService>();
+            menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
+
             Session["FullName"] = Session["UserID"] = string.Empty;
 
             if (!User.Identity.IsAuthenticated) return;
@@ -111,49 +115,52 @@ namespace EPMS.Web.Controllers
                 HttpContext.GetOwinContext()
                     .GetUserManager<ApplicationUserManager>()
                     .FindById(User.Identity.GetUserId());
-            string role =
+            if (result.AspNetRoles.Any())
+            {
+                string role =
                 HttpContext.GetOwinContext()
                     .Get<ApplicationRoleManager>()
                     .FindById(result.AspNetRoles.ToList()[0].Id)
                     .Name;
+                Session["RoleName"] = role;
+                Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
+                Session["RoleKey"] = result.AspNetRoles.ToList()[0].RoleKey;
+                var fullName = "";
+                var fullNameA = "";
+                if (role == "Customer")
+                {
+                    fullName = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameE;
+                    fullNameA = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameA;
+                }
+                else
+                {
+                    if (result.EmployeeId != null)
+                    {
+                        fullName = result.Employee.EmployeeFirstNameE + " " + result.Employee.EmployeeMiddleNameE + " " + result.Employee.EmployeeLastNameE;
+                        fullNameA = result.Employee.EmployeeFirstNameA + " " + result.Employee.EmployeeMiddleNameA + " " + result.Employee.EmployeeLastNameA;
+                    }
+                }
+                Session["UserFullName"] = fullName;
+                Session["UserFullNameA"] = fullNameA;
+            }
+
             Session["FullName"] = result.UserName;
             Session["UserID"] = result.Id;
-            Session["RoleName"] = role;
-            Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
-            Session["RoleKey"] = result.AspNetRoles.ToList()[0].RoleKey;
             Session["EmployeeID"] = result.EmployeeId;
             Session["CustomerID"] = result.CustomerId;
 
-            customerService = UnityWebActivator.Container.Resolve<ICustomerService>();
-            employeeService = UnityWebActivator.Container.Resolve<IEmployeeService>();
-            var fullName = "";
-            var fullNameA = "";
-            if (role == "Customer")
-            {
-                fullName = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameE;
-                fullNameA = customerService.FindCustomerById(Convert.ToInt64(result.CustomerId)).CustomerNameA;
-            }
-            else
-            {
-                if (result.EmployeeId != null)
-                {
-                    fullName = result.Employee.EmployeeFirstNameE + " " + result.Employee.EmployeeMiddleNameE + " " + result.Employee.EmployeeLastNameE;
-                    fullNameA = result.Employee.EmployeeFirstNameA + " " + result.Employee.EmployeeMiddleNameA + " " + result.Employee.EmployeeLastNameA;
-                }
-            }
-            Session["UserFullName"] = fullName;
-            Session["UserFullNameA"] = fullNameA;
-
-            menuRightService = UnityWebActivator.Container.Resolve<IMenuRightsService>();
+            
 
             AspNetUser userResult = UserManager.FindById(User.Identity.GetUserId());
-            List<AspNetRole> roles = userResult.AspNetRoles.ToList();
-            IList<MenuRight> userRights =
+            if (userResult.AspNetRoles.Any())
+            {
+                List<AspNetRole> roles = userResult.AspNetRoles.ToList();
+                IList<MenuRight> userRights =
                 menuRightService.FindMenuItemsByRoleId(roles[0].Id).ToList();
 
-            string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
-            Session["UserPermissionSet"] = userPermissions;
-            
+                string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
+                Session["UserPermissionSet"] = userPermissions;
+            }
         }
         public ApplicationUserManager UserManager
         {

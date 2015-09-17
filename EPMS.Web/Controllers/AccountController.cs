@@ -630,7 +630,7 @@ namespace IdentitySample.Controllers
 
                     // Save widgets preferennces
                     var code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    string[] customerWidgets = { "ComplaintsWidget", "OrderWidget", "ProjectWidget" };
+                    string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
                     for (int i = 0; i < 3; i++)
                     {
                         DashboardWidgetPreference preferences = new DashboardWidgetPreference

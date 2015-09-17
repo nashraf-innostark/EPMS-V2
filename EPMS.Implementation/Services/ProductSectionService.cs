@@ -39,6 +39,24 @@ namespace EPMS.Implementation.Services
             return productSectionRepository.Find(id);
         }
 
+        public IList<long> RemoveDuplication(string[] departmentIds)
+        {
+            IList<long> noDuplication = new List<long>();
+            foreach (string departmentId in departmentIds)
+            {
+                if (departmentId.Contains("department"))
+                {
+                    var id = Convert.ToInt64(departmentId.Split('_')[0]);
+                    var productSection = productSectionRepository.FindByDepartmentId(id);
+                    if (productSection == null)
+                    {
+                        noDuplication.Add(id);
+                    }
+                }
+            }
+            return noDuplication;
+        }
+
         public bool AddProductSection(ProductSection productSection)
         {
             productSectionRepository.Add(productSection);
@@ -59,12 +77,23 @@ namespace EPMS.Implementation.Services
             productSectionRepository.SaveChanges();
         }
 
-        public bool Delete(long id)
+        public string DeleteProductSection(long id)
         {
             ProductSection productSectionToDelete = productSectionRepository.Find(id);
-            productSectionRepository.Delete(productSectionToDelete);
-            productSectionRepository.SaveChanges();
-            return true;
+            try
+            {
+                if (productSectionToDelete != null)
+                {
+                    productSectionRepository.Delete(productSectionToDelete);
+                    productSectionRepository.SaveChanges();
+                    return "Success";
+                }
+            }
+            catch (Exception)
+            {
+                return "Associated";
+            }
+            return "Error";
         }
 
         public bool SaveProductSections(IList<ProductSection> productSections)

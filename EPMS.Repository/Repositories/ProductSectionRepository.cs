@@ -30,5 +30,10 @@ namespace EPMS.Repository.Repositories
                     section =>
                         (section.SectionNameEn == productSection.SectionNameEn || section.SectionNameAr == productSection.SectionNameAr));
         }
+
+        public ProductSection FindByDepartmentId(long departmentId)
+        {
+            return DbSet.FirstOrDefault(x => x.InventoyDepartmentId == departmentId);
+        }
     }
 }

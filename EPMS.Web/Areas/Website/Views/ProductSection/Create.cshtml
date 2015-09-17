@@ -4,7 +4,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    ViewBag.Title = ViewBag.ProductId > 0 ? "Website Product Section Updation" : "Website Product Section Addition";
+    ViewBag.Title = ViewBag.ProductId > 0 ? 
+        EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.UpdateTitle : EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.AddTitle;
 }
 
 <div class="main-content withPanel">
@@ -12,7 +13,7 @@
         <div class="panel-content filler">
             <div class="panel-logo"></div>
             <div class="panel-header">
-                <h1><small>Product Sections</small></h1>
+                <h1><small>@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.ProductSections</small></h1>
                 <button type="submit" class="btn btn-mini" onclick="AddNewNode();"><i class="icon-photon move_alt2"></i>@EPMS.WebModels.Resources.Shared.Common.AddNewNode</button>
             </div>
             <div class="panel-search container-fluid">
@@ -44,7 +45,7 @@
             </li>
             <li>
                 <a href="~/Website/ProductSection/Index">
-                    Product Sections List
+                    @EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.ProductSectionsList
                 </a>
             </li>
             <li class="current">
@@ -77,7 +78,7 @@
 
             <div class="control-group row-fluid ">
                 <div class="span3">
-                    <label class="control-label" for="SectionNameEn">Section Name</label>
+                    <label class="control-label" for="SectionNameEn">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.SectionName</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -87,7 +88,7 @@
             </div>
             <div class="control-group row-fluid ">
                 <div class="span3">
-                    <label class="control-label" for="SectionNameAr">Section Name Arabic</label>
+                    <label class="control-label" for="SectionNameAr">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.SectionNameArabic</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -98,7 +99,7 @@
             <div id="content">
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="SectionContentEn">Content</label>
+                        <label class="control-label" for="SectionContentEn">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.Content</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -108,7 +109,7 @@
                 </div>
                 <div class="control-group row-fluid">
                     <div class="span3">
-                        <label class="control-label" for="SectionContentAr">Content Arabic</label>
+                        <label class="control-label" for="SectionContentAr">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.ContentArabic</label>
                     </div>
                     <div class="span9">
                         <div class="controls">
@@ -119,7 +120,7 @@
             </div>
             <div class="control-group row-fluid" id="ShowToPublicDiv">
                 <div class="span3">
-                    <label class="control-label" for="ShowToPublic">Show to public?</label>
+                    <label class="control-label" for="ShowToPublic">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.ShowToPublic</label>
                 </div>
                 <div class="span9 span-inset">
                     <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -130,21 +131,21 @@
             <div id="Edit" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="button" class="btn" id="edit">Edit</button>
+                        <button type="button" class="btn" id="edit">@EPMS.WebModels.Resources.Website.Common.Common.Edit</button>
                     </div>
                 </div>
             </div>
             <div id="SaveNewNode" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" onclick="validateForm(event)">Create</button>
+                        <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.Website.Common.Common.Create</button>
                     </div>
                 </div>
             </div>
             <div id="UpdateNode" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" onclick="validateForm(event)">Update</button>
+                        <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.Website.Common.Common.Update</button>
                     </div>
                 </div>
             </div>
@@ -337,14 +338,14 @@
             var parent = parseInt($("#SectionId").val());
             if (parent == 0 || parent == "" || parent == null) {
                 var m = $(".alert-error");
-                m.children("span").text("Please select parent section");
+                m.children("span").text('@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.SelectionErrorMsg');
                 m.show();
                 return;
             } else {
                 var parentDiv = $('.jstree-clicked').parent().parent().parent().parent().parent().parent().parent().parent().parent();
                 if (parentDiv.is("div") && parentDiv.attr('id') == "jstree") {
                     var m = $(".alert-error");
-                    m.children("span").text("Can't create further Product Section");
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.LimitReachedMsg');
                     m.show();
                     return;
                 } else {
@@ -361,7 +362,7 @@
             }
         } else {
             var m = $(".alert-error");
-            m.children("span").text("Cannot Add Product Section in Imported Products from Inventory");
+            m.children("span").text('@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.UnableToCreateForImportedSection');
             m.show();
         }
     }

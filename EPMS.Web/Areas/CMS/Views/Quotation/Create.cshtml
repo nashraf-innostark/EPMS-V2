@@ -53,7 +53,7 @@
                     {
                         @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameE"), "--Select--", new { @class = "select2me customerDDL", @id = "Client" })
                     }
-                    @if (direction == "rtl")
+                    else
                     {
                         @Html.DropDownListFor(model => model.CustomerId, new SelectList(ViewBag.Customers, "CustomerId", "CustomerNameA"), "--Select--", new { @class = "select2me customerDDL", @id = "Client" })
                     }

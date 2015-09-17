@@ -75,15 +75,15 @@ namespace EPMS.Website.Controllers
                 HttpContext.GetOwinContext()
                     .GetUserManager<ApplicationUserManager>()
                     .FindById(User.Identity.GetUserId());
-            string role =
-                HttpContext.GetOwinContext()
-                    .Get<ApplicationRoleManager>()
-                    .FindById(result.AspNetRoles.ToList()[0].Id)
-                    .Name;
-            Session["FullName"] = result.UserName;
+            //string role =
+            //    HttpContext.GetOwinContext()
+            //        .Get<ApplicationRoleManager>()
+            //        .FindById(result.AspNetRoles.ToList()[0].Id)
+            //        .Name;
+            Session["UserName"] = result.UserName;
             Session["UserID"] = result.Id;
-            Session["RoleName"] = role;
-            Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
+            //Session["RoleName"] = role;
+            //Session["RoleId"] = result.AspNetRoles.ToList()[0].Id;
         }
 
         public void SetCartItems()

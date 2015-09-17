@@ -61,11 +61,218 @@ namespace EPMS.WebModels.Resources.Website.WebsiteService {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add New Section.
+        /// </summary>
+        public static string AddNewSection {
+            get {
+                return ResourceManager.GetString("AddNewSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Service.
+        /// </summary>
+        public static string AddNewService {
+            get {
+                return ResourceManager.GetString("AddNewService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Services.
+        /// </summary>
+        public static string AddServices {
+            get {
+                return ResourceManager.GetString("AddServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description Arabic.
+        /// </summary>
+        public static string DescriptionArabic {
+            get {
+                return ResourceManager.GetString("DescriptionArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cann&apos;t crate further child Service..
+        /// </summary>
+        public static string LimitExceedMsg {
+            get {
+                return ResourceManager.GetString("LimitExceedMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta description.
+        /// </summary>
+        public static string Metadescription {
+            get {
+                return ResourceManager.GetString("Metadescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta description Arabic.
+        /// </summary>
+        public static string MetadescriptionArabic {
+            get {
+                return ResourceManager.GetString("MetadescriptionArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta keywords.
+        /// </summary>
+        public static string Metakeywords {
+            get {
+                return ResourceManager.GetString("Metakeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta keywords Arabic.
+        /// </summary>
+        public static string MetakeywordsArabic {
+            get {
+                return ResourceManager.GetString("MetakeywordsArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Sections.
+        /// </summary>
+        public static string NumberOfSections {
+            get {
+                return ResourceManager.GetString("NumberOfSections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Sub-Sections.
+        /// </summary>
+        public static string NumberOfSubSections {
+            get {
+                return ResourceManager.GetString("NumberOfSubSections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Services&apos;s Page.
+        /// </summary>
+        public static string PageTitle {
+            get {
+                return ResourceManager.GetString("PageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Section.
+        /// </summary>
+        public static string ParentSection {
+            get {
+                return ResourceManager.GetString("ParentSection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parent Service.
+        /// </summary>
+        public static string ParentService {
+            get {
+                return ResourceManager.GetString("ParentService", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sections.
+        /// </summary>
+        public static string Sections {
+            get {
+                return ResourceManager.GetString("Sections", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select Parent Service.
+        /// </summary>
+        public static string SelectionErrorMsg {
+            get {
+                return ResourceManager.GetString("SelectionErrorMsg", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Name.
+        /// </summary>
+        public static string ServiceName {
+            get {
+                return ResourceManager.GetString("ServiceName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Service Name Arabic.
+        /// </summary>
+        public static string ServiceNameArabic {
+            get {
+                return ResourceManager.GetString("ServiceNameArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Services.
         /// </summary>
         public static string Services {
             get {
                 return ResourceManager.GetString("Services", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show to public?.
+        /// </summary>
+        public static string ShowToPublic {
+            get {
+                return ResourceManager.GetString("ShowToPublic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Services.
+        /// </summary>
+        public static string WebsiteServices {
+            get {
+                return ResourceManager.GetString("WebsiteServices", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Services Addition.
+        /// </summary>
+        public static string WebsiteServicesAddition {
+            get {
+                return ResourceManager.GetString("WebsiteServicesAddition", resourceCulture);
             }
         }
     }

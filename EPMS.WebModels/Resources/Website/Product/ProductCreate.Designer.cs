@@ -88,6 +88,15 @@ namespace EPMS.WebModels.Resources.Website.Product {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Best Seller.
+        /// </summary>
+        public static string BestSeller {
+            get {
+                return ResourceManager.GetString("BestSeller", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cancel.
         /// </summary>
         public static string Cancel {
@@ -111,6 +120,24 @@ namespace EPMS.WebModels.Resources.Website.Product {
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Featured.
+        /// </summary>
+        public static string Featured {
+            get {
+                return ResourceManager.GetString("Featured", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to New Arrival.
+        /// </summary>
+        public static string NewArrival {
+            get {
+                return ResourceManager.GetString("NewArrival", resourceCulture);
             }
         }
         
@@ -228,6 +255,15 @@ namespace EPMS.WebModels.Resources.Website.Product {
         public static string ProductSpecificationEn {
             get {
                 return ResourceManager.GetString("ProductSpecificationEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Random Product.
+        /// </summary>
+        public static string RandomProduct {
+            get {
+                return ResourceManager.GetString("RandomProduct", resourceCulture);
             }
         }
         

@@ -91,5 +91,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.ProductSectionId == productSectionId);
         }
+
+        public Product FindByVariationId(long variationId)
+        {
+            return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
+        }
     }
 }

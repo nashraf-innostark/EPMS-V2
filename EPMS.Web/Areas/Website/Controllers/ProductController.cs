@@ -52,9 +52,9 @@ namespace EPMS.Web.Areas.Website.Controllers
         public ActionResult Index()
         {
             ViewBag.IsIncludeNewJsTree = true;
-            ProductListViewModel viewmodel = new ProductListViewModel();
-            viewmodel.Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            return View(viewmodel);
+            ProductListViewModel viewModel = new ProductListViewModel();
+            viewModel.Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            return View(viewModel);
         }
 
         #endregion
@@ -68,7 +68,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             ProductResponse productResponse;
             if (id != null)
             {
-                productResponse = productService.ProductResponse((long) id);
+                productResponse = productService.ProductResponse((long)id);
                 productViewModel.Product = productResponse.Product.CreateFromServerToClient();
             }
             else
@@ -76,7 +76,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 productResponse = productService.ProductResponse(0);
             }
             productViewModel.ProductSections =
-                    productResponse.ProductSections.Select(x => x.CreateFromServerToClient()).ToList();
+                    productResponse.ProductSections.Where(x=>x.InventoyDepartmentId == null).Select(x => x.CreateFromServerToClient()).ToList();
             return View(productViewModel);
         }
 
@@ -88,7 +88,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 ProductRequest productToSave = productViewModel.Product.CreateFromClientToServer();
                 productService.SaveProduct(productToSave);
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Updated", IsUpdated = true};
+                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
                     return RedirectToAction("Index");
                 }
             }
@@ -97,7 +97,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 ProductRequest productToSave = productViewModel.Product.CreateFromClientToServer();
                 productService.SaveProduct(productToSave);
                 {
-                    TempData["message"] = new MessageViewModel {Message = "Saved", IsSaved = true};
+                    TempData["message"] = new MessageViewModel { Message = "Saved", IsSaved = true };
                     return RedirectToAction("Index");
                 }
             }
@@ -106,6 +106,23 @@ namespace EPMS.Web.Areas.Website.Controllers
         #endregion
 
         #region Delete
+
+        [HttpPost]
+        public JsonResult DeleteIt(long productId)
+        {
+            string status = productService.DeleteProduct(productId);
+            switch (status)
+            {
+                case "Success":
+                    return Json(new { response = "OK" }, JsonRequestBehavior.AllowGet);
+                case "Associated":
+                    return Json(new { response = "ASSOCIATED" }, JsonRequestBehavior.AllowGet);
+                case "Error":
+                    return Json(new { response = "ERROR" }, JsonRequestBehavior.AllowGet);
+            }
+            return Json(new { response = "ERROR" }, JsonRequestBehavior.AllowGet);
+        }
+
         #endregion
 
         #region Upload Image
@@ -157,52 +174,54 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             bool isProductAdded = false;
             bool isProductSectionAdded = false;
+            // select products that are not in DB
+            IList<long> noItemDuplication = productService.RemoveDuplication(itemVariationIds);
             // save Products
             IList<EPMS.Models.DomainModels.Product> productsToAdd = new List<EPMS.Models.DomainModels.Product>();
-            foreach (var product in itemVariationIds.ToList())
+            foreach (var id in noItemDuplication)
             {
-                if (product.Contains("Item"))
+                EPMS.Models.DomainModels.Product addToList = new EPMS.Models.DomainModels.Product
                 {
-                    var id = Convert.ToInt64(product.Split('_')[0]);
-                    EPMS.Models.DomainModels.Product addToList = new EPMS.Models.DomainModels.Product
-                    {
-                        ItemVariationId = id,
-                        RecCreatedBy = User.Identity.GetUserId(),
-                        RecCreatedDt = DateTime.Now,
-                        RecLastUpdatedBy = User.Identity.GetUserId(),
-                        RecLastUpdatedDt = DateTime.Now
-                    };
-                    productsToAdd.Add(addToList);
+                    ItemVariationId = id,
+                    RecCreatedBy = User.Identity.GetUserId(),
+                    RecCreatedDt = DateTime.Now,
+                    RecLastUpdatedBy = User.Identity.GetUserId(),
+                    RecLastUpdatedDt = DateTime.Now
+                };
+                productsToAdd.Add(addToList);
+            }
+            if (productsToAdd.Any())
+            {
+                if (productService.SaveProducts(productsToAdd))
+                {
+                    isProductAdded = true;
                 }
             }
-            if (productService.SaveProducts(productsToAdd))
-            {
-                isProductAdded = true;
-            }
+            // select product section that are not in DB
+            IList<long> noSectionDuplication = productSectionService.RemoveDuplication(sectionIds);
             // save Product Sections
             IList<EPMS.Models.DomainModels.ProductSection> productSectionsToAdd = new List<EPMS.Models.DomainModels.ProductSection>();
-            foreach (var section in sectionIds.ToList())
+            foreach (var id in noSectionDuplication)
             {
-                if (section.Contains("department"))
+                EPMS.Models.DomainModels.ProductSection addToList = new EPMS.Models.DomainModels.ProductSection
                 {
-                    var id = Convert.ToInt64(section.Split('_')[0]);
-                    EPMS.Models.DomainModels.ProductSection addToList = new EPMS.Models.DomainModels.ProductSection
-                    {
-                        InventoyDepartmentId = id,
-                        ShowToPublic = true,
-                        RecCreatedBy = User.Identity.GetUserId(),
-                        RecCreatedDt = DateTime.Now,
-                        RecLastUpdatedBy = User.Identity.GetUserId(),
-                        RecLastUpdatedDt = DateTime.Now
-                    };
-                    productSectionsToAdd.Add(addToList);
+                    InventoyDepartmentId = id,
+                    ShowToPublic = true,
+                    RecCreatedBy = User.Identity.GetUserId(),
+                    RecCreatedDt = DateTime.Now,
+                    RecLastUpdatedBy = User.Identity.GetUserId(),
+                    RecLastUpdatedDt = DateTime.Now
+                };
+                productSectionsToAdd.Add(addToList);
+            }
+            if (productSectionsToAdd.Any())
+            {
+                if (productSectionService.SaveProductSections(productSectionsToAdd))
+                {
+                    isProductSectionAdded = true;
                 }
             }
-            if (productSectionService.SaveProductSections(productSectionsToAdd))
-            {
-                isProductSectionAdded = true;
-            }
-            if (isProductAdded && isProductSectionAdded)
+            if ((isProductAdded || productsToAdd.Count == 0) && (isProductSectionAdded || productSectionsToAdd.Count == 0))
             {
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }

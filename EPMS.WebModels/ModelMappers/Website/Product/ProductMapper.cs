@@ -178,6 +178,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                     }
                 }
             }
+            retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
             return retVal;
         }
 

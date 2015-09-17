@@ -7,10 +7,11 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<ProductSection> GetAll();
         ProductSection FindProductSectionById(long id);
+        IList<long> RemoveDuplication(string[] departmentIds);
         bool AddProductSection(ProductSection productSection);
         bool UpdateProductSection(ProductSection productSection);
         void DeleteProductSection(ProductSection productSection);
-        bool Delete(long id);
+        string DeleteProductSection(long id);
         bool SaveProductSections(IList<ProductSection> productSections);
     }
 }

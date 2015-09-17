@@ -41,7 +41,7 @@
 
 <section id="content">
     <div class="container">
-        <div id="mainbody">
+        <div id="mainbody" style="margin-top: 10px">
             <div id="flipbook">
                 @if (Model.Products != null && Model.Products.Any())
                 {
@@ -57,7 +57,7 @@
                                                 <h5 class="titleLeft" style="color: #ffffff !important; padding-left: 10px">
                                                     @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
                                                 </h5>
-                                                <h5 class="titleRight" style="color: #ffffff !important">@product.PathTillParent</h5>
+                                                <h5 class="titleRight" style="color: #ffffff !important; padding-left: 10px">@product.PathTillParent</h5>
                                             </div>
                                         }
                                         else
@@ -66,7 +66,7 @@
                                                 <h5 class="titleLeft" style="color: #000000 !important; padding-left: 10px">
                                                     @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
                                                 </h5>
-                                                <h5 class="titleRight" style="color: #000000 !important">@product.PathTillParent</h5>
+                                                <h5 class="titleRight" style="color: #000000 !important; padding-left: 10px">@product.PathTillParent</h5>
                                             </div>
                                         }
 
@@ -136,6 +136,7 @@
             </div>
 
         </div><!-- end mainbody -->
+        <a href="~/Catalogue/Catalogue" class="btn">Export as PDF</a>
     </div>
 </section><!-- end #content -->
 

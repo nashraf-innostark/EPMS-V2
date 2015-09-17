@@ -4,7 +4,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Website Main Page Create";
+    ViewBag.Title = EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.PageTitle;
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     int i = 0;
@@ -21,12 +21,12 @@
         </li>
         <li>
             <a href="">
-                Website Home Page
+                @EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.WebsiteHomePage
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">
-                Home Page Create
+                @EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.HomePageCreate
             </a>
         </li>
     </ul>
@@ -34,7 +34,7 @@
 
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>Website Home Page Create</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.WebsiteHomePageCreate</small></h2>
 </header>
 <!--Notifications begin-->
 @Html.Partial("_Alert")
@@ -45,7 +45,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputField">
-                    Logo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.Website.Common.Common.Logo<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -58,10 +58,10 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Slider</strong>
+            <strong>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Slider</strong>
             @if (userPermissionsSet.Contains("SliderCreate"))
             {
-                <a href="~/Website/Slider/Create">Create New Slider Image</a>
+                <a href="~/Website/Slider/Create">@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.CreateNewSliderImage</a>
             }
         </div>
 
@@ -70,15 +70,15 @@
                 <table class="table table-striped table-responsive" id="tableSortableSlider">
                     <thead>
                         <tr>
-                            <th> Serial</th>
-                            <th>Image</th>
-                            <th>Image Order</th>
-                            <th>Title</th>
-                            <th>Sub Title</th>
-                            <th>Description</th>
-                            <th>Link</th>
-                            <th>Position</th>
-                            <th>Delete</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Image</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.ImageOrder</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Title</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.SubTitle</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Description</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Link</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Position</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="sliderTableRows">
@@ -127,10 +127,10 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Departments</strong>
+            <strong>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Departments</strong>
             @if (userPermissionsSet.Contains("WebsiteDepartmentCreate"))
             {
-                <a href="~/Website/Department/Create">Create New Department</a>
+                <a href="~/Website/Department/Create">@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.CreateNewDepartment</a>
             }
         </div>
 
@@ -139,13 +139,13 @@
                 <table class="table table-striped table-responsive" id="tableSortableDepartments">
                     <thead>
                         <tr>
-                            <th> Serial</th>
-                            <th>Image</th>
-                            <th>Department Order</th>
-                            <th>Department Name</th>
-                            <th>Description</th>
-                            <th>Link</th>
-                            <th>Delete</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Image</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.DepartmentOrder</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.DepartmentName</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Description</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Link</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="departmentTableRows">
@@ -182,10 +182,10 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Partners</strong>
+            <strong>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Partners</strong>
             @if (userPermissionsSet.Contains("PartnerCreate"))
             {
-                <a href="~/Website/Partner/Create">Create New Partner</a>
+                <a href="~/Website/Partner/Create">@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.CreateNewPartner</a>
             }
         </div>
 
@@ -194,12 +194,12 @@
                 <table class="table table-striped table-responsive" id="tableSortablePartners">
                     <thead>
                         <tr>
-                            <th>Serial</th>
-                            <th>Image</th>
-                            <th>Order</th>
-                            <th>Partner Name</th>
-                            <th>Link</th>
-                            <th>Delete</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Image</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Order</th>
+                            <th>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.PartnerName</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Link</th>
+                            <th>@EPMS.WebModels.Resources.Website.Common.Common.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="partnerTableRows">
@@ -337,11 +337,11 @@
     function deleteSliderRow(sliderId, imageName) {
         if ('@userPermissionsSet.Contains("DeleteSlider")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text("You have no permission to delete");
+            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
             m.show();
             return;
         }
-        if (confirm("Are you sure to delete this row ?") == false) {
+        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
             return;
         }
 
@@ -364,18 +364,18 @@
                         reActivateSliderSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text("Record has been Deleted");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text("Error deleting record");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text("Error deleting record");
+                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                 m.show();
             }
         });
@@ -386,11 +386,11 @@
     function deleteDepartmentRow(departmentId, imageName) {
         if ('@userPermissionsSet.Contains("WebsiteDepartmentDelete")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text("You have no permission to delete");
+            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
             m.show();
             return;
         }
-        if (confirm("Are you sure to delete this row ?") == false) {
+        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
             return;
         }
 
@@ -413,18 +413,18 @@
                         reActivateDepartmentSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text("Record has been Deleted");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text("Error deleting record");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text("Error deleting record");
+                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                 m.show();
             }
         });
@@ -435,11 +435,11 @@
     function deletePartnerRoW(partnerId, imageName) {
         if ('@userPermissionsSet.Contains("DeletePartner")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text("You have no permission to delete");
+            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
             m.show();
             return;
         }
-        if (confirm("Are you sure to delete this row ?") == false) {
+        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
             return;
         }
 
@@ -462,18 +462,18 @@
                         reActivatePartnerSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text("Record has been Deleted");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text("Error deleting record");
+                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text("Error deleting record");
+                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
                 m.show();
             }
         });

@@ -8,13 +8,16 @@ using EPMS.Interfaces.IServices;
 
 using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using EPMS.WebModels.ViewModels.Quotation;
 using EPMS.Web.Controllers;
-using EPMS.WebModels.Resources.CMS;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.ViewModels.WebsiteClient;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 using Order = EPMS.WebModels.WebsiteModels.Order;
+using Quotation = EPMS.WebModels.Resources.CMS.Quotation;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -29,11 +32,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IQuotationService QuotationService;
         private readonly IQuotationItemService QuotationItemService;
         private readonly ICompanyProfileService ProfileService;
+        private readonly IShoppingCartService cartService;
         #endregion
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService)
+        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService)
         {
             CustomerService = customerService;
             AspNetUserService = aspNetUserService;
@@ -41,6 +45,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationService = quotationService;
             QuotationItemService = quotationItemService;
             ProfileService = profileService;
+            this.cartService = cartService;
         }
 
         #endregion
@@ -86,14 +91,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Add/Update
 
         [SiteAuthorize(PermissionKey = "QuotationsCreate")]
-        public ActionResult Create(long? id)
+        public ActionResult Create(long? id, string from)
         {
-            QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
-            var customers = CustomerService.GetAll();
-            ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
-            ViewBag.ShowExcelImport = CheckInventoryModule() != true;
-            var users = AspNetUserService.FindById(User.Identity.GetUserId());
             var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+            var users = AspNetUserService.FindById(User.Identity.GetUserId());
             var createdByName = "";
             if (users.Employee != null && direction == "ltr")
             {
@@ -105,6 +106,47 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 createdByName = users.Employee.EmployeeFirstNameA + " " + users.Employee.EmployeeMiddleNameA + " " +
                                 users.Employee.EmployeeLastNameA;
             }
+            if (from == "Client")
+            {
+                string userId = User.Identity.GetUserId();
+                var response = cartService.GetUserCart(userId);
+                if (response.ShoppingCarts.Any())
+                {
+                    QuotationCreateViewModel model = new QuotationCreateViewModel
+                    {
+                        QuotationItemDetails = new List<QuotationItemDetail>()
+                    };
+                    var shoppingCart = response.ShoppingCarts.Select(x => x.CreateFromServerToClient());
+                    foreach (var shoppingCartItem in shoppingCart.FirstOrDefault().ShoppingCartItems)
+                    {
+                        QuotationItemDetail item = new QuotationItemDetail
+                        {
+                            ItemDetails = direction == "ltr" ? shoppingCartItem.ItemNameEn : shoppingCartItem.ItemNameAr,
+                            ItemQuantity = shoppingCartItem.Quantity,
+                            UnitPrice = shoppingCartItem.UnitPrice,
+                            TotalPrice = (shoppingCartItem.Quantity * shoppingCartItem.UnitPrice)
+                        };
+                        model.QuotationItemDetails.Add(item);
+                    }
+                    model.CustomerId = users.CustomerId ?? 0;
+                    var customeres = CustomerService.GetAll();
+                    ViewBag.Customers = customeres.Select(x => x.CreateFromServerToClient());
+                    ViewBag.Orders =
+                        OrdersService.GetOrdersByCustomerId(model.CustomerId).Select(x => x.CreateFromServerToClient());
+                    ViewBag.ShowExcelImport = CheckInventoryModule() != true;
+                    model.CreatedByName = createdByName;
+                    model.CreatedByEmployee = users.EmployeeId ?? 0;
+                    model.PageTitle = Quotation.CreateNew;
+                    model.BtnText = Quotation.CreateQoute;
+
+                    return View(model);
+                }
+            }
+            QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
+            var customers = CustomerService.GetAll();
+            ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
+            ViewBag.ShowExcelImport = CheckInventoryModule() != true;
+            
             if (id == null)
             {
                 viewModel.CreatedByName = createdByName;

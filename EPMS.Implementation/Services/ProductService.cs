@@ -76,12 +76,31 @@ namespace EPMS.Implementation.Services
             productRepository.SaveChanges();
         }
 
-        public bool Delete(long id)
+        public string DeleteProduct(long id)
         {
             Product productToDelete = productRepository.Find(id);
-            productRepository.Delete(productToDelete);
-            productRepository.SaveChanges();
-            return true;
+            try
+            {
+                if (productToDelete != null)
+                {
+                    if (productToDelete.ProductImages.Any())
+                    {
+                        foreach (var productImage in productToDelete.ProductImages.ToList())
+                        {
+                            productImageRepository.Delete(productImage);
+                            productImageRepository.SaveChanges();
+                        }
+                    }
+                    productRepository.Delete(productToDelete);
+                    productRepository.SaveChanges();
+                    return "Success";
+                }
+            }
+            catch (Exception)
+            {
+                return "Associated";
+            }
+            return "Error";
         }
 
         public ProductResponse ProductResponse(long id)
@@ -128,6 +147,24 @@ namespace EPMS.Implementation.Services
             {
                 return false;
             }
+        }
+
+        public IList<long> RemoveDuplication(string[] itemVariationIds)
+        {
+            IList<long> noDuplication = new List<long>();
+            foreach (string itemVariationId in itemVariationIds)
+            {
+                if (itemVariationId.Contains("Item"))
+                {
+                    var id = Convert.ToInt64(itemVariationId.Split('_')[0]);
+                    var product = productRepository.FindByVariationId(id);
+                    if (product == null)
+                    {
+                        noDuplication.Add(id);
+                    }
+                }
+            }
+            return noDuplication;
         }
 
         private void AddProductImages(ProductRequest productToSave)

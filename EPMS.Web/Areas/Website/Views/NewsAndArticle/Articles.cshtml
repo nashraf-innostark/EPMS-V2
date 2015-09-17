@@ -103,7 +103,7 @@
 
 <script>
     var siteUrl = $('#siteURL').val();
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('#NewsAndArticle').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
@@ -114,7 +114,7 @@
                 null,
                 { "bSortable": false }
             ],
-            "fnInitComplete": function() {
+            "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
@@ -127,7 +127,7 @@
 
     function deleteRow(abcd) {
         debugger;
-        if (confirm("Are you sure to delete this row ?") == false) {
+        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
             return;
         }
 
@@ -143,14 +143,14 @@
                 $.pnotify({
                     title: 'Success',
                     type: 'info',
-                    text: 'Record has been Deleted.'
+                    text: '@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg'
                 });
             },
             error: function () {
                 $.pnotify({
                     title: 'Failure',
                     type: 'error',
-                    text: 'Error deleting record.'
+                    text: '@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg'
                 });
             }
         });

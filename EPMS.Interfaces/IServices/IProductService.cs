@@ -12,10 +12,11 @@ namespace EPMS.Interfaces.IServices
         bool AddProduct(Product product);
         bool UpdateProduct(Product product);
         void DeleteProduct(Product product);
-        bool Delete(long id);
+        string DeleteProduct(long id);
         ProductResponse ProductResponse(long id);
         ProductResponse SaveProduct(ProductRequest productToSave);
         bool SaveProducts(IList<Product> products);
+        IList<long> RemoveDuplication(string[] itemVariationIds);
         ProductsListResponse GetProductsList(ProductSearchRequest request);
         ProductDetailResponse GetProductDetails(long id, string from);
     }

@@ -66,6 +66,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\Project\Project\FortressEMS - Interface Testing - Copy\FortressEMS.WebUI\bin\Microsoft.Practices.Unity.dll</HintPath>
     </Reference>
+    <Reference Include="Rotativa">
+      <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
@@ -1092,6 +1095,12 @@
     <Content Include="pics\spine.png" />
     <Content Include="pics\thumb.png" />
     <Content Include="pics\young.jpg" />
+    <Content Include="Rotativa\libgcc_s_sjlj-1.dll" />
+    <Content Include="Rotativa\libstdc++-6.dll" />
+    <Content Include="Rotativa\libwinpthread-1.dll" />
+    <Content Include="Rotativa\wkhtmltoimage.exe" />
+    <Content Include="Rotativa\wkhtmltopdf.exe" />
+    <Content Include="Rotativa\wkhtmltox.dll" />
     <Content Include="Scripts\hash.js" />
     <Content Include="Scripts\jquery-ui-1.8.20.custom.min.js" />
     <Content Include="Scripts\jquery.mousewheel.min.js" />
@@ -1824,6 +1833,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
+    <Folder Include="Views\PdfView\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -1853,6 +1863,7 @@
     <Content Include="Content\photon-responsive.less" />
     <Content Include="Content\photon.less" />
     <Content Include="Content\variables.less" />
+    <Content Include="App_Browsers\qt.browser" />
     <None Include="Project_Readme.html" />
     <Content Include="Views\WebsiteMenu\Index.cshtml" />
     <Content Include="Views\Home\DepartmentDetail.cshtml" />
@@ -1874,7 +1885,8 @@
     <Content Include="Views\Paypal\NotifyFromPaypal.cshtml" />
     <Content Include="Views\Paypal\CancelFromPaypal.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
-    <Content Include="Views\Catalogue\Test.cshtml" />
+    <Content Include="Views\Catalogue\SteveJobs.cshtml" />
+    <Content Include="Views\Catalogue\CatalogueHtml.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

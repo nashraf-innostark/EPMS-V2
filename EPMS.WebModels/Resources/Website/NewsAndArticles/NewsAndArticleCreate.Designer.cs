@@ -178,6 +178,42 @@ namespace EPMS.WebModels.Resources.Website.NewsAndArticles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Meta Description.
+        /// </summary>
+        public static string MetaDescription {
+            get {
+                return ResourceManager.GetString("MetaDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta Description Arabic.
+        /// </summary>
+        public static string MetaDescriptionArabic {
+            get {
+                return ResourceManager.GetString("MetaDescriptionArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta Keywords.
+        /// </summary>
+        public static string MetaKeywords {
+            get {
+                return ResourceManager.GetString("MetaKeywords", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Meta Keywords Arabic.
+        /// </summary>
+        public static string MetaKeywordsArabic {
+            get {
+                return ResourceManager.GetString("MetaKeywordsArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to News.
         /// </summary>
         public static string News {

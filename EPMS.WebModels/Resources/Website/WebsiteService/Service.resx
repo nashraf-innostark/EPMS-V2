@@ -117,7 +117,76 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddNewSection" xml:space="preserve">
+    <value>Add New Section</value>
+  </data>
+  <data name="AddNewService" xml:space="preserve">
+    <value>Add New Service</value>
+  </data>
+  <data name="AddServices" xml:space="preserve">
+    <value>Add Services</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionArabic" xml:space="preserve">
+    <value>Description Arabic</value>
+  </data>
+  <data name="LimitExceedMsg" xml:space="preserve">
+    <value>Cann't crate further child Service.</value>
+  </data>
+  <data name="Metadescription" xml:space="preserve">
+    <value>Meta description</value>
+  </data>
+  <data name="MetadescriptionArabic" xml:space="preserve">
+    <value>Meta description Arabic</value>
+  </data>
+  <data name="Metakeywords" xml:space="preserve">
+    <value>Meta keywords</value>
+  </data>
+  <data name="MetakeywordsArabic" xml:space="preserve">
+    <value>Meta keywords Arabic</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NumberOfSections" xml:space="preserve">
+    <value>Number of Sections</value>
+  </data>
+  <data name="NumberOfSubSections" xml:space="preserve">
+    <value>Number of Sub-Sections</value>
+  </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Website Services's Page</value>
+  </data>
+  <data name="ParentSection" xml:space="preserve">
+    <value>Parent Section</value>
+  </data>
+  <data name="ParentService" xml:space="preserve">
+    <value>Parent Service</value>
+  </data>
+  <data name="Sections" xml:space="preserve">
+    <value>Sections</value>
+  </data>
+  <data name="SelectionErrorMsg" xml:space="preserve">
+    <value>Please select Parent Service</value>
+  </data>
+  <data name="ServiceName" xml:space="preserve">
+    <value>Service Name</value>
+  </data>
+  <data name="ServiceNameArabic" xml:space="preserve">
+    <value>Service Name Arabic</value>
+  </data>
   <data name="Services" xml:space="preserve">
     <value>Services</value>
+  </data>
+  <data name="ShowToPublic" xml:space="preserve">
+    <value>Show to public?</value>
+  </data>
+  <data name="WebsiteServices" xml:space="preserve">
+    <value>Website Services</value>
+  </data>
+  <data name="WebsiteServicesAddition" xml:space="preserve">
+    <value>Website Services Addition</value>
   </data>
 </root>

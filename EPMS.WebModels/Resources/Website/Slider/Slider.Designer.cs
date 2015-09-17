@@ -61,6 +61,78 @@ namespace EPMS.WebModels.Resources.Website.Slider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Website Slider Add.
+        /// </summary>
+        public static string Add {
+            get {
+                return ResourceManager.GetString("Add", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Slider Addition.
+        /// </summary>
+        public static string AddTitle {
+            get {
+                return ResourceManager.GetString("AddTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Slider Edit.
+        /// </summary>
+        public static string Edit {
+            get {
+                return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Position.
+        /// </summary>
+        public static string Position {
+            get {
+                return ResourceManager.GetString("Position", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Title.
+        /// </summary>
+        public static string SubTitle {
+            get {
+                return ResourceManager.GetString("SubTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Sub Title Arabic.
+        /// </summary>
+        public static string SubTitleArabic {
+            get {
+                return ResourceManager.GetString("SubTitleArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Title Arabic.
+        /// </summary>
+        public static string TitleArabic {
+            get {
+                return ResourceManager.GetString("TitleArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slider Title arabic is required.
         /// </summary>
         public static string TItleArValidationError {
@@ -75,6 +147,15 @@ namespace EPMS.WebModels.Resources.Website.Slider {
         public static string TitleValidationError {
             get {
                 return ResourceManager.GetString("TitleValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Website Slider Updation.
+        /// </summary>
+        public static string UpdateTitle {
+            get {
+                return ResourceManager.GetString("UpdateTitle", resourceCulture);
             }
         }
     }

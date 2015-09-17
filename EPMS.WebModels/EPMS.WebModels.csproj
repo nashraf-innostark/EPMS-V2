@@ -597,15 +597,30 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Cart.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\AboutUs\AboutUs.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>AboutUs.ar.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\AboutUs\AboutUs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>AboutUs.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Website\Common\Common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ContactUs\ContatUs.Designer.cs">
       <DependentUpon>ContatUs.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Website\Department\Department.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Department.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Website\ImageSlider.Designer.cs">
       <DependentUpon>ImageSlider.resx</DependentUpon>
@@ -622,10 +637,20 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Website\Partner\Partner.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Partner.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Website\ProductSection\ProductSectionIndex.Designer.cs">
       <DependentUpon>ProductSectionIndex.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Website\ProductSection\ProductSectionsCreate.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ProductSectionsCreate.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Website\Product\ProductCreate.Designer.cs">
       <DependentUpon>ProductCreate.resx</DependentUpon>
@@ -646,6 +671,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Slider.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Website\WebsiteMainPage\WebsiteMainPage.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>WebsiteMainPage.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Website\WebsiteService\Service.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -1255,35 +1285,67 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Cart.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>AboutUs.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>AboutUs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Common\Common.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\Common\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.ar.resx" />
     <EmbeddedResource Include="Resources\Website\ContactUs\ContatUs.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ContatUs.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Department\Department.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\Department\Department.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Department.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ImageSlider.ar.resx" />
     <EmbeddedResource Include="Resources\Website\ImageSlider.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ImageSlider.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticleCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticleCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsAndArticleCreate.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.ar.resx" />
     <EmbeddedResource Include="Resources\Website\NewsAndArticles\NewsAndArticlesList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsAndArticlesList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Partner\Partner.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\Partner\Partner.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Partner.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductSectionIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionsCreate.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\ProductSection\ProductSectionsCreate.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ProductSectionsCreate.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Product\ProductCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Website\Product\ProductCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductCreate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\Product\ProductIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductIndex.Designer.cs</LastGenOutput>
@@ -1295,6 +1357,11 @@
     <EmbeddedResource Include="Resources\Website\Slider\Slider.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Slider.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Website\WebsiteMainPage\WebsiteMainPage.ar.resx" />
+    <EmbeddedResource Include="Resources\Website\WebsiteMainPage\WebsiteMainPage.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>WebsiteMainPage.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\WebsiteService\Service.ar.resx">
       <Generator>ResXFileCodeGenerator</Generator>

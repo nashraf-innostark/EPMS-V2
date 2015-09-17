@@ -2,7 +2,8 @@
 @model EPMS.WebModels.ViewModels.Product.ProductViewModel
 
 @{
-    ViewBag.Title = Model.Product.ProductId > 0 ? EPMS.WebModels.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.WebModels.Resources.Website.Product.ProductCreate.AddPageTitle;
+    ViewBag.Title = Model.Product.ProductId > 0 ? 
+        EPMS.WebModels.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.WebModels.Resources.Website.Product.ProductCreate.AddPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -181,7 +182,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">New Arrival</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.NewArrival</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -192,7 +193,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Best Seller</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.BestSeller</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -203,7 +204,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Random Product</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.RandomProduct</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -214,7 +215,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">Featured</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.Featured</label>
             </div>
             <div class="span9 span-inset">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
@@ -238,11 +239,11 @@
                         <thead>
                             <tr>
                                 <th style='display:none'></th>
-                                <th>Serial</th>
-                                <th>Image</th>
-                                <th>Order</th>
-                                <th>Show</th>
-                                <th>Delete</th>
+                                <th>@EPMS.WebModels.Resources.Website.Common.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Website.Common.Common.Image</th>
+                                <th>@EPMS.WebModels.Resources.Website.Common.Common.Order</th>
+                                <th>@EPMS.WebModels.Resources.Website.Common.Common.Show</th>
+                                <th>@EPMS.WebModels.Resources.Website.Common.Common.Delete</th>
                             </tr>
                         </thead>
                         <tbody id="imageDetails">
@@ -252,9 +253,7 @@
                                 var serial = 0;
                                 for (int i = 0; i < Model.Product.ProductImages.Count(); i++)
                                 {
-
                                     serial = serial + 1;
-
                                     <tr data-id="@i">
                                         @Html.HiddenFor(model => model.Product.ProductImages[i].ProductImagePath)
                                         @Html.HiddenFor(model => model.Product.ProductImages[i].ImageId)
@@ -275,7 +274,7 @@
                                         </td>
                                         <td>
                                             @Html.CheckBoxFor(model => model.Product.ProductImages[i].ShowImage, new { @class = "tbdisable" })
-                                            Show
+                                            @EPMS.WebModels.Resources.Website.Common.Common.Show
                                         </td>
                                         <td><i class="icon-photon minus deleteImage"></i></td>
                                     </tr>
@@ -351,8 +350,8 @@
             </form>
         </div>
         <div class="modal-footer">
-            <a type="button" class="btn trImageDetails">Add New Image</a>
-            <a href="javascript:;" class="btn" data-dismiss="modal">Cancel</a>
+            <a type="button" class="btn trImageDetails">@EPMS.WebModels.Resources.Website.Product.ProductCreate.AddNewImage</a>
+            <a href="javascript:;" class="btn" data-dismiss="modal">@EPMS.WebModels.Resources.Website.Common.Common.Cancel</a>
         </div>
 
     </div>
