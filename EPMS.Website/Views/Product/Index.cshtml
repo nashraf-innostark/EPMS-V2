@@ -213,78 +213,82 @@
                                 </div>
                             </div>
                         </div>
-                        @for (int i = 0; i < Model.Products.Count; i += 3)
+                        @if (Model.Products.Any())
                         {
-                            <div class="row">
-                                @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
-                                {
-                                    <div class="span3">
-                                        <div class="product-list-item">
-                                            <span class="hover"></span>
-                                            <div class="image">
-                                                @{
-                                    string path = "";
-                                    if (requestFrom == "Inventory")
-                                    {
-                                        path = !string.IsNullOrEmpty(Model.Products[j].ItemImage) ? itemImageFolder + Model.Products[j].ItemImage : noImage;
-                                    }
-                                    if (requestFrom == "Sections")
-                                    {
-                                        path = !string.IsNullOrEmpty(Model.Products[j].ProductImage) ? itemImageFolder + Model.Products[j].ProductImage : noImage;
-                                    }
-                                    if (Model.Products[j].ItemVariationId != null)
-                                    {
-                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">
-                                            <img src="@path" alt="">
-                                        </a>
-                                    }
-                                    else
-                                    {
-                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
-                                            <img src="@path" alt="">
-                                        </a>
-                                    }
-                                                }
-                                            </div>
-                                            <div class="details fixclear">
-                                                @if (direction == "ltr")
-                                                {
-                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
-                                                }
-                                                else
-                                                {
-                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
-                                                }
-                                                <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
-                                                <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
-                                                <div class="actions">
-                                                    <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId)">@Product.AddToCart</a>
-                                                    @if (Model.Products[j].ItemVariationId != null)
-                                                    {
-                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">@Product.More</a>
-                                                    }
-                                                    else
-                                                    {
-                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
-                                                    }
-                                                </div>
-                                                <div class="price">
-                                                    @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
-                                                    {
-                                                        <span>@Model.Products[j].DiscountedPrice</span>
-                                                        <span>SR</span>
-                                                        <small>@Model.Products[j].ProductPrice</small>
-                                                    }
-                                                    else
-                                                    {
-                                                        <span>@Model.Products[j].ProductPrice</span><span>SR</span>
-                                                    }
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                }
-                            </div>
+                             for (int i = 0; i < Model.Products.Count; i += 3)
+                             {
+                                 <div class="row">
+                                     @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
+                                     {
+                                         <div class="span3">
+                                             <div class="product-list-item">
+                                                 <span class="hover"></span>
+                                                 <div class="image">
+                                                     @{
+                                                         string path = "";
+                                                         if (requestFrom == "Inventory")
+                                                         {
+                                                             path = !string.IsNullOrEmpty(Model.Products[j].ItemImage) ? itemImageFolder + Model.Products[j].ItemImage : noImage;
+                                                         }
+                                                         if (requestFrom == "Sections")
+                                                         {
+                                                             path = !string.IsNullOrEmpty(Model.Products[j].ProductImage) ? itemImageFolder + Model.Products[j].ProductImage : noImage;
+                                                         }
+                                                         if (Model.Products[j].ItemVariationId != null)
+                                                         {
+                                                             <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">
+                                                                 <img src="@path" alt="">
+                                                             </a>
+                                                         }
+                                                         else
+                                                         {
+                                                             <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
+                                                                 <img src="@path" alt="">
+                                                             </a>
+                                                         }
+                                                     }
+                                                 </div>
+                                                 <div class="details fixclear">
+                                                     @if (direction == "ltr")
+                                                     {
+                                                         <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
+                                                     }
+                                                     else
+                                                     {
+                                                         <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
+                                                     }
+                                                     <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
+                                                     <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
+                                                     <div class="actions">
+                                                         <a class="cursorHand" onclick=" addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
+                                                         @if (Model.Products[j].ItemVariationId != null)
+                                                         {
+                                                             <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">@Product.More</a>
+                                                         }
+                                                         else
+                                                         {
+                                                             <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
+                                                         }
+                                                     </div>
+                                                     <div class="price">
+                                                         @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                         {
+                                                             <span>@Model.Products[j].DiscountedPrice</span>
+                                                             <span>SR</span>
+                                                             <small>@Model.Products[j].ProductPrice</small>
+                                                         }
+                                                         else
+                                                         {
+                                                             <span>@Model.Products[j].ProductPrice</span>
+                                                             <span>SR</span>
+                                                         }
+                                                     </div>
+                                                 </div>
+                                             </div>
+                                         </div>
+                                     }
+                                 </div>
+                             }
                         }
                         <div class="span4">
                             <div class="pagination" id="pagination">

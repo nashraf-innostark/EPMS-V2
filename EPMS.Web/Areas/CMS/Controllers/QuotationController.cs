@@ -7,6 +7,8 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 
 using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
+using EPMS.Web.EncryptDecrypt;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
 using EPMS.WebModels.ViewModels.Quotation;
@@ -54,7 +56,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region ListView
 
-// GET: CMS/Quotation
+        // GET: CMS/Quotation
         [SiteAuthorize(PermissionKey = "QuotationIndex")]
         public ActionResult Index()
         {
@@ -70,14 +72,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index(QuotationSearchRequest searchRequest)
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
-            string roleName = (string) Session["RoleName"];
+            string roleName = (string)Session["RoleName"];
             if (roleName == "Admin")
             {
                 searchRequest.CustomerId = 0;
             }
             if (roleName == "Customer")
             {
-                searchRequest.CustomerId = (long) Session["CustomerID"];
+                searchRequest.CustomerId = (long)Session["CustomerID"];
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
@@ -93,31 +95,24 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(long? id, string from)
         {
-            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-            var users = AspNetUserService.FindById(User.Identity.GetUserId());
-            var createdByName = "";
-            if (users.Employee != null && direction == "ltr")
+            var direction = WebModels.Resources.Shared.Common.TextDirection;
+            long quotationId = 0;
+            if (id != null)
             {
-                createdByName = users.Employee.EmployeeFirstNameE + " " + users.Employee.EmployeeMiddleNameE + " " +
-                                users.Employee.EmployeeLastNameE;
+                quotationId = (long)id;
             }
-            if (users.Employee != null && direction == "rtl")
-            {
-                createdByName = users.Employee.EmployeeFirstNameA + " " + users.Employee.EmployeeMiddleNameA + " " +
-                                users.Employee.EmployeeLastNameA;
-            }
+            string createdByName = GetCreatedBy(direction);
+            long employeeId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"]) : 0;
             if (from == "Client")
             {
                 string userId = User.Identity.GetUserId();
-                var response = cartService.GetUserCart(userId);
-                if (response.ShoppingCarts.Any())
+                var response = cartService.FindByUserCartId(userId);
+                QuotationCreateViewModel model = new QuotationCreateViewModel();
+                if (response != null)
                 {
-                    QuotationCreateViewModel model = new QuotationCreateViewModel
-                    {
-                        QuotationItemDetails = new List<QuotationItemDetail>()
-                    };
-                    var shoppingCart = response.ShoppingCarts.Select(x => x.CreateFromServerToClient());
-                    foreach (var shoppingCartItem in shoppingCart.FirstOrDefault().ShoppingCartItems)
+                    model.QuotationItemDetails = new List<QuotationItemDetail>();
+                    var shoppingCart = response.CreateFromServerToClient();
+                    foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
                     {
                         QuotationItemDetail item = new QuotationItemDetail
                         {
@@ -128,41 +123,43 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         };
                         model.QuotationItemDetails.Add(item);
                     }
-                    model.CustomerId = users.CustomerId ?? 0;
-                    var customeres = CustomerService.GetAll();
-                    ViewBag.Customers = customeres.Select(x => x.CreateFromServerToClient());
-                    ViewBag.Orders =
-                        OrdersService.GetOrdersByCustomerId(model.CustomerId).Select(x => x.CreateFromServerToClient());
+                    model.CustomerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
+                    QuotationResponse quotClientResponse = QuotationService.GetQuotationResponse(quotationId, model.CustomerId, from);
+                    ViewBag.Customers = quotClientResponse.Customers.Any() ? 
+                        quotClientResponse.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
+                    ViewBag.Orders = quotClientResponse.Orders.Any() ?
+                        quotClientResponse.Orders.Select(x => x.CreateFromServerToClient()) : new List<Order>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
-                    model.CreatedByEmployee = users.EmployeeId ?? 0;
+                    model.CreatedByEmployee = employeeId;
                     model.PageTitle = Quotation.CreateNew;
                     model.BtnText = Quotation.CreateQoute;
-
-                    return View(model);
+                    ViewBag.FromClient = true;
                 }
+                return View(model);
             }
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
-            var customers = CustomerService.GetAll();
-            ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
+            QuotationResponse quotResponse = QuotationService.GetQuotationResponse(quotationId, 0, from);
+            ViewBag.Customers = quotResponse.Customers.Any() ?
+                        quotResponse.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
             ViewBag.ShowExcelImport = CheckInventoryModule() != true;
-            
+            ViewBag.FromClient = false;
             if (id == null)
             {
                 viewModel.CreatedByName = createdByName;
-                viewModel.CreatedByEmployee = users.EmployeeId ?? 0;
+                viewModel.CreatedByEmployee = employeeId;
                 viewModel.PageTitle = Quotation.CreateNew;
                 viewModel.BtnText = Quotation.CreateQoute;
                 return View(viewModel);
             }
-            viewModel = QuotationService.FindQuotationById((long) id).CreateFromServerToClient();
+            viewModel = quotResponse.Quotation.CreateFromServerToClient();
             viewModel.CreatedByName = createdByName;
-            viewModel.CreatedByEmployee = users.EmployeeId ?? 0;
+            viewModel.CreatedByEmployee = employeeId;
             viewModel.PageTitle = Quotation.UpdateQuotation;
             viewModel.BtnText = Quotation.UpdateQuotation;
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
-            ViewBag.Orders =
-                OrdersService.GetOrdersByCustomerId(viewModel.CustomerId).Select(x => x.CreateFromServerToClient());
+            ViewBag.Orders = quotResponse.Orders.Any() ?
+                        quotResponse.Orders.Select(x => x.CreateFromServerToClient()) : new List<Order>();
             return View(viewModel);
         }
 
@@ -307,7 +304,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (id != null)
             {
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
-                viewModel.Quotation = QuotationService.FindQuotationById((long) id).CreateFromServerToClientLv();
+                viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
                 // Get Order from Order Number
                 viewModel.Order =
                     OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
@@ -333,7 +330,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.CMS.Order.Canceled,
+                        Message = WebModels.Resources.CMS.Order.Canceled,
                         IsSaved = true
                     };
                 }
@@ -341,7 +338,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.CMS.Order.Updated,
+                        Message = WebModels.Resources.CMS.Order.Updated,
                         IsSaved = true
                     };
                 }
@@ -384,7 +381,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         bool CheckInventoryModule()
         {
             string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string licenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
+            string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
             string[] splitLicenseKey = licenseKey.Split('|');
             string modules = splitLicenseKey[4];
             string[] splitModules = modules.Split(';');
@@ -395,6 +392,23 @@ namespace EPMS.Web.Areas.CMS.Controllers
             return false;
         }
 
+        #endregion
+
+        #region functions
+
+        public string GetCreatedBy(string direction)
+        {
+            string createdBy = "";
+            if (direction == "ltr" && Session["UserFullName"] != null)
+            {
+                createdBy = Session["UserFullName"].ToString();
+            }
+            if (direction == "rtl" && Session["UserFullNameA"] != null)
+            {
+                createdBy = Session["UserFullNameA"].ToString();
+            }
+            return createdBy;
+        }
         #endregion
 
         #endregion

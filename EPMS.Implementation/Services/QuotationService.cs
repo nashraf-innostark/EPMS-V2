@@ -18,20 +18,20 @@ namespace EPMS.Implementation.Services
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IQuotationRepository Repository;
         private readonly INotificationService notificationService;
+        private readonly ICustomerService customerService;
+        private readonly IOrdersService ordersService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        /// <param name="aspNetUserRepository"></param>
-        /// <param name="repository"></param>
-        /// <param name="notificationService"></param>
-        /// <param name="notificationRepository"></param>
-        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService)
+        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService, ICustomerService customerService, IOrdersService ordersService)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             Repository = repository;
             this.notificationService = notificationService;
+            this.customerService = customerService;
+            this.ordersService = ordersService;
         }
 
         public IEnumerable<Quotation> GetAll()
@@ -42,6 +42,34 @@ namespace EPMS.Implementation.Services
         public IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId)
         {
             return Repository.GetAllQuotationByCustomerId(customerId);
+        }
+
+        public QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from)
+        {
+            QuotationResponse response = new QuotationResponse
+            {
+                Customers = customerService.GetAll()
+            };
+            if (from == "Client")
+            {
+                response.Orders = ordersService.GetOrdersByCustomerId(customerId);
+            }
+            else
+            {
+                if (quotationId == 0)
+                {
+                    response.Orders = ordersService.GetAll();
+                }
+                else
+                {
+                    response.Quotation = Repository.Find(quotationId);
+                    if (response.Quotation != null)
+                    {
+                        response.Orders = ordersService.GetOrdersByCustomerId(response.Quotation.CustomerId);
+                    }
+                }
+            }
+            return response;
         }
 
         public Quotation FindQuotationById(long id)

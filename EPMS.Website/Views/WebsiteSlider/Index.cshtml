@@ -5,6 +5,7 @@
     Layout = null;
     var direction = EPMS.Website.Resources.Shared.Common.TextDirection;
     var link = ConfigurationManager.AppSettings["SliderImages"];
+    string siteUrl = ConfigurationManager.AppSettings["SiteURL"];
     string textClass = "";
 }
 
@@ -43,7 +44,7 @@
                         <div class="caption style1 @textClass">
                             <h2 class="main_title">@imageSlider.TitleEn</h2>
                             <h3 class="title_big">@imageSlider.SubTitleEn</h3>
-                            <a href="@imageSlider.Link" class="more"><img src="/sliders/iosslider/arr01.png" alt=""></a>
+                            <a href="@imageSlider.Link" class="more"><img src="@siteUrl/sliders/iosslider/arr01.png" alt=""></a>
                             <h4 class="title_small descp-@imageSlider.SliderId"></h4>
                             <script>
                                 var descp = '@Html.Raw(imageSlider.Description)';

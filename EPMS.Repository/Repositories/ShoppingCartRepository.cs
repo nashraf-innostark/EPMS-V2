@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -34,7 +33,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<ShoppingCart> GetCartByUserCartId(string userCartId)
         {
-            return DbSet.Where(x => x.UserCartId == userCartId);
+            return DbSet.Where(x => x.UserCartId == userCartId && x.Status == 1);
         }
 
         public ShoppingCart FindByUserCartId(string userCartId)

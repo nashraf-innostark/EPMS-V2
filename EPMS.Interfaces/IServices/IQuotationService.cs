@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.IServices
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
         IEnumerable<Quotation> GetAll();
         IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId);
+        QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from);
         Quotation FindQuotationById(long id);
         IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id);
         Quotation FindQuotationByOrderId(long orderId);
