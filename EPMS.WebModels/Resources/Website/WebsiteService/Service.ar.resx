@@ -118,75 +118,75 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AddNewSection" xml:space="preserve">
-    <value>Add New Section</value>
+    <value>اضافة خدمة جديدة</value>
   </data>
   <data name="AddNewService" xml:space="preserve">
-    <value>Add New Service</value>
+    <value>اضف خدمة جديدة</value>
   </data>
   <data name="AddServices" xml:space="preserve">
-    <value>Add Services</value>
+    <value>اضافة خدمة</value>
   </data>
   <data name="Description" xml:space="preserve">
-    <value>Description</value>
+    <value>وصف بالانجليزي</value>
   </data>
   <data name="DescriptionArabic" xml:space="preserve">
-    <value>Description Arabic</value>
+    <value>وصف بالعربي</value>
   </data>
   <data name="LimitExceedMsg" xml:space="preserve">
-    <value>Cann't crate further child Service.</value>
+    <value>لا يمكن انشاء اطفال للخدمة</value>
   </data>
   <data name="Metadescription" xml:space="preserve">
-    <value>Meta description</value>
+    <value>وصف بالانجليزي للصفحة</value>
   </data>
   <data name="MetadescriptionArabic" xml:space="preserve">
-    <value>Meta description Arabic</value>
+    <value>وصف بالعربي للصفحة</value>
   </data>
   <data name="Metakeywords" xml:space="preserve">
-    <value>Meta keywords</value>
+    <value>علامات وصفية بالنجليزي</value>
   </data>
   <data name="MetakeywordsArabic" xml:space="preserve">
-    <value>Meta keywords Arabic</value>
+    <value>علامات و صفية بالعربي</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>اسم</value>
   </data>
   <data name="NumberOfSections" xml:space="preserve">
-    <value>Number of Sections</value>
+    <value>عدد الخدمات</value>
   </data>
   <data name="NumberOfSubSections" xml:space="preserve">
-    <value>Number of Sub-Sections</value>
+    <value>عدد الخدمات الفرعية</value>
   </data>
   <data name="PageTitle" xml:space="preserve">
-    <value>Website Services's Page</value>
+    <value>صفحة الخدمات</value>
   </data>
   <data name="ParentSection" xml:space="preserve">
-    <value>Parent Section</value>
+    <value>قسم الام</value>
   </data>
   <data name="ParentService" xml:space="preserve">
-    <value>Parent Service</value>
+    <value>خدمة الام</value>
   </data>
   <data name="Sections" xml:space="preserve">
-    <value>Sections</value>
+    <value>اقسام</value>
   </data>
   <data name="SelectionErrorMsg" xml:space="preserve">
-    <value>Please select Parent Service</value>
+    <value>من فضلك اختر خدمة الام</value>
   </data>
   <data name="ServiceName" xml:space="preserve">
-    <value>Service Name</value>
+    <value>اسم القسم بالانجليزي</value>
   </data>
   <data name="ServiceNameArabic" xml:space="preserve">
-    <value>Service Name Arabic</value>
+    <value>السم القسم بالعربي</value>
   </data>
   <data name="Services" xml:space="preserve">
-    <value>Services</value>
+    <value>خدمات</value>
   </data>
   <data name="ShowToPublic" xml:space="preserve">
-    <value>Show to public?</value>
+    <value>اظهار للعماء؟</value>
   </data>
   <data name="WebsiteServices" xml:space="preserve">
-    <value>Website Services</value>
+    <value>خدمات </value>
   </data>
   <data name="WebsiteServicesAddition" xml:space="preserve">
-    <value>Website Services Addition</value>
+    <value>اضافة الخدمات</value>
   </data>
 </root>

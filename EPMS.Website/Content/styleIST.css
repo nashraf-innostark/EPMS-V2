@@ -48,16 +48,52 @@
 }
 
 .product-tabs {
-    text-align: left; 
-    float: none; 
-    top: 0px; right: auto; 
-    bottom: auto; 
-    left: 0px; 
-    margin: 0px; 
-    width: 3384px; 
+    text-align: left;
+    float: none;
+    top: 0px;
+    right: auto;
+    bottom: auto;
+    left: 0px;
+    margin: 0px;
+    width: 3384px;
     height: 400px;
 }
 
 .div-hide {
     display: none !important;
+}
+
+.btn-pdf {
+    float: right;
+    margin-right: 23%;
+    margin-top: 2%;
+    margin-bottom: 1%;
+}
+
+.btn-pdf-steve {
+    float: right;
+    margin-top: -5%;
+    margin-right: 30%;
+}
+
+.catalogue-page-no {
+    margin-top: 85px;
+}
+
+.book-size {
+    width:460px;
+	height:582px;
+}
+
+.sj-book .book-content p {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    text-align: justify !important; 
+    font-size: 12px !important;
+    margin: 0 0 !important;
+}
+
+.catalogue-footer {
+    position: fixed;
+    bottom: 10px;
+    width: 87%;
 }

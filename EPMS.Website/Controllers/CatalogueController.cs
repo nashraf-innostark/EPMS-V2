@@ -1,10 +1,12 @@
-﻿using System.IO;
+﻿using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.Product;
+using EPMS.WebModels.Resources.Shared;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Product;
+using Rotativa;
 
 namespace EPMS.Website.Controllers
 {
@@ -27,7 +29,14 @@ namespace EPMS.Website.Controllers
             return View(viewModel);
         }
 
-        public ActionResult SteveJobs()
+        // Generate PDF
+        public ActionResult Catalogue()
+        {
+            return new ActionAsPdf("SteveJobsHtml") { FileName = "EPMS Catalogue.pdf" };
+        }
+
+        // view used to generate PDF
+        public ActionResult SteveJobsHtml()
         {
             ProductListViewModel viewModel = new ProductListViewModel
             {
@@ -36,89 +45,109 @@ namespace EPMS.Website.Controllers
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
-        public ActionResult CatalogueHtml()
+
+        // load catalogue page
+        [HttpGet]
+        public JsonResult LoadPage(int pageNo)
         {
-            ProductListViewModel viewModel = new ProductListViewModel
+            var products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            var product = products[pageNo - 1];
+            var direction = Common.TextDirection;
+            string cpLink = ConfigurationManager.AppSettings["CpLink"];
+            var imageSrc = "";
+            if (product.ItemVariationId != null)
             {
-                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
-            };
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return PartialView(viewModel);
-        }
-        public static string RenderPartialViewToString(Controller controller, string viewName, object model)
-        {
-            controller.ViewData.Model = model;
-            using (StringWriter sw = new StringWriter())
-            {
-                ViewEngineResult viewResult = ViewEngines.Engines.FindPartialView(controller.ControllerContext, viewName);
-                ViewContext viewContext = new ViewContext(controller.ControllerContext, viewResult.View, controller.ViewData, controller.TempData, sw);
-                viewResult.View.Render(viewContext, sw);
-                return sw.ToString();
+                if (string.IsNullOrEmpty(product.ItemImage))
+                {
+                    imageSrc = cpLink + "/Images/ItemImage/noimage_department.png";
+                }
+                else
+                {
+                    imageSrc = cpLink + "/Images/ItemImage/" + product.ItemImage;
+                }
             }
+            else
+            {
+                if (string.IsNullOrEmpty(product.ProductImage))
+                {
+                    imageSrc = cpLink + "/Images/ProductImage/noimage_department.png";
+                }
+                else
+                {
+                    imageSrc = cpLink + "/Images/ProductImage/" + product.ProductImage;
+                }
+            }
+            string html = product.ItemVariationId != null ? GetPageForInventoryItem(product, imageSrc, pageNo, direction) : 
+                GetPageForProductItem(product, imageSrc, pageNo, direction);
+            return Json(html, JsonRequestBehavior.AllowGet);
         }
 
-        // Generate Pdf
-
-        public ActionResult Catalogue()
+        public string GetPageForInventoryItem(WebModels.WebsiteModels.Product product, string imageSrc, int pageNo, string direction)
         {
-            ////Create a byte array that will eventually hold our final PDF
-            //Byte[] bytes;
+            string footer;
+            if (!string.IsNullOrEmpty(product.DeptColor))
+            {
+                footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
+                            "<h5 style=\"color: white; text-align: right; margin-right: 10px;\">" + pageNo + "</h5>" +
+                         "</div>";
+            }
+            else
+            {
+                footer = "<div class=\"catalogue-footer\" style=\"background-color: #000000; \">" +
+                            "<h5 style=\"color: #ffffff; text-align: right; margin-right:10px;\">" + pageNo + "</h5>" +
+                         "</div>";
+            }
+            string html = "<div class=\"book-content\">" +
+                            "<div style=\"background-color: " + product.DeptColor + "; color: white;\">" +
+                                "<h6  style=\"padding-left: 10px\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>" +
+                                "<h6  style=\"padding-left: 10px\">" + product.PathTillParent + "</h6>" +
+                            "</div>" +
+                            "<div style=\"color:" + product.DeptColor + ";\">" +
+                                "<h6><span style=\"float: left\">" + (direction == "ltr" ? product.ItemNameEn : product.ItemNameAr) + "</span></h6>" +
+                            "</div>" +
+                            "<br /><br />" +
+                            "<img style=\"width: 125; height: 125px;\" src=\"" + imageSrc + "\" alt=\"user\">" +
+                            "<h6 style=\"color:" + product.DeptColor + ";\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription + "</h6>" +
+                            "<p>" + product.ItemDesc + "</p>" +
+                            "<h6 style=\"color:" + product.DeptColor + ";\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification + "</h6>" +
+                            "<p>" + "No specification available" + "</p>" +
+                            footer +
+                        "</div>";
+            return html;
+        }
 
-            ////Boilerplate iTextSharp setup here
-            ////Create a stream that we can write to, in this case a MemoryStream
-            //using (var ms = new MemoryStream())
-            //{
-            //    //Create an iTextSharp Document which is an abstraction of a PDF but **NOT** a PDF
-            //    using (var doc = new Document())
-            //    {
-            //        //Create a writer that's bound to our PDF abstraction and our stream
-            //        using (var writer = PdfWriter.GetInstance(doc, ms))
-            //        {
-            //            //Open the document for writing
-            //            doc.Open();
-
-            //            //Our sample HTML and CSS
-            //            ProductListViewModel viewModel = new ProductListViewModel
-            //            {
-            //                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
-            //            };
-            //            var example_html = RenderPartialViewToString(this, "CatalogueHtml", viewModel);
-            //            var example_css = @".headline{font-size:200%}";
-
-            //            /* ************************************************
-            //             * Example #1                                     *
-            //             *                                                *
-            //             * Use the built-in HTMLWorker to parse the HTML. *
-            //             * Only inline CSS is supported.                  *
-            //             * ************************************************/
-
-            //            //Create a new HTMLWorker bound to our document
-            //            using (var htmlWorker = new iTextSharp.text.html.simpleparser.HTMLWorker(doc))
-            //            {
-
-            //                //HTMLWorker doesn't read a string directly but instead needs a TextReader (which StringReader subclasses)
-            //                using (var sr = new StringReader(example_html))
-            //                {
-
-            //                    //Parse the HTML
-            //                    htmlWorker.Parse(sr);
-            //                }
-            //            }
-            //            doc.Close();
-            //        }
-            //    }
-            //    //After all of the PDF "stuff" above is done and closed but **before** we
-            //    //close the MemoryStream, grab all of the active bytes from the stream
-            //    bytes = ms.ToArray();
-            //}
-            ////Now we just need to do something with those bytes.
-            ////Here I'm writing them to disk but if you were in ASP.Net you might Response.BinaryWrite() them.
-            ////You could also write the bytes to a database in a varbinary() column (but please don't) or you
-            ////could pass them to another function for further PDF processing.
-            //var testFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "test.pdf");
-            //System.IO.File.WriteAllBytes(testFile, bytes);
-            //return File(testFile, "application/pdf");
-            return new Rotativa.ActionAsPdf("CatalogueHtml"){FileName = "EPMS Catalogue.pdf"};
+        public string GetPageForProductItem(WebModels.WebsiteModels.Product product, string imageSrc, int pageNo, string direction)
+        {
+            string footer;
+            if (!string.IsNullOrEmpty(product.DeptColor))
+            {
+                footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
+                            "<h5 style=\"color: white; text-align: right; margin-right: 10px;\">" + pageNo + "</h5>" +
+                         "</div>";
+            }
+            else
+            {
+                footer = "<div class=\"catalogue-footer\" style=\"background-color: #000000; \">" +
+                            "<h5 style=\"color: #ffffff; text-align: right; margin-right:10px;\">" + pageNo + "</h5>" +
+                         "</div>";
+            }
+            string html = "<div class=\"book-content\">" +
+                            "<div style=\"background-color: black; color: white;\">" +
+                                "<h6 style=\"padding-left: 10px\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>" +
+                                "<h6 style=\"padding-left: 10px\">" + product.PathTillParent + "</h6>" +
+                            "</div>" +
+                            "<div style=\"color: black;\">" +
+                                "<h6><span style=\"float: left\">" + (direction == "ltr" ? product.ProductNameEn : product.ProductNameAr) + "</span></h6>" +
+                            "</div>" +
+                            "<br /><br />" +
+                            "<img style=\"width: 125px; height: 125px;\" src=\"" + imageSrc + "\" alt=\"user\">" +
+                            "<h6 style=\"color:black; \">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription + "</h6>" +
+                            "<p>" + (direction == "ltr" ? product.ProductDescEn : product.ProductDescAr) + "</p>" +
+                            "<h6 style=\"color:black ;\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification + "</h6>" +
+                            "<p>" + (direction == "ltr" ? product.ProductSpecificationEn : product.ProductSpecificationAr) + "</p>" +
+                            footer +
+                        "</div>";
+            return html;
         }
     }
 }

@@ -152,15 +152,18 @@ namespace EPMS.Implementation.Services
         public IList<long> RemoveDuplication(string[] itemVariationIds)
         {
             IList<long> noDuplication = new List<long>();
-            foreach (string itemVariationId in itemVariationIds)
+            if (itemVariationIds != null)
             {
-                if (itemVariationId.Contains("Item"))
+                foreach (string itemVariationId in itemVariationIds)
                 {
-                    var id = Convert.ToInt64(itemVariationId.Split('_')[0]);
-                    var product = productRepository.FindByVariationId(id);
-                    if (product == null)
+                    if (itemVariationId.Contains("Item"))
                     {
-                        noDuplication.Add(id);
+                        var id = Convert.ToInt64(itemVariationId.Split('_')[0]);
+                        var product = productRepository.FindByVariationId(id);
+                        if (product == null)
+                        {
+                            noDuplication.Add(id);
+                        }
                     }
                 }
             }

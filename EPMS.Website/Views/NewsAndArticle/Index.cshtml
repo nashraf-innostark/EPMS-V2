@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
-    var title = Model.NewsOrArticle ? EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles : 
+    var title = Model.Type == 1  ? EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles : 
         EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurNews;
     int pageNo = 1;
     var imagePath = ConfigurationManager.AppSettings["NewsAndArticleImage"];
@@ -45,7 +45,16 @@
                 @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
                 <div class="row">
                     <div class="span12 directionR listing">
-                        <h1 class="page-title">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.LatestNews</h1>
+                        <h1 class="page-title">
+                            @if (Model.Type == 0)
+                            {
+                                @EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.LatestNews
+                            }
+                            else
+                            {
+                                @EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.LatestArticles
+                            }
+                        </h1>
                         @foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
                         {
 

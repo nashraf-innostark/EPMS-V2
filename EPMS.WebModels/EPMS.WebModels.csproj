@@ -1119,6 +1119,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Resources\Menu.ar.resx" />
     <EmbeddedResource Include="Resources\Notification1.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification1.ar.Designer.cs</LastGenOutput>
@@ -1251,6 +1252,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\NewsAndArticles\NewsAndArticles.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>NewsAndArticles.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Paypal\Paypal.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

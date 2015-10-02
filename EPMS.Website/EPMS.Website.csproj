@@ -1082,7 +1082,6 @@
     <Content Include="pics\47.jpg" />
     <Content Include="pics\48.jpg" />
     <Content Include="pics\book-covers.jpg" />
-    <Content Include="pics\book-covers.png" />
     <Content Include="pics\books.jpg" />
     <Content Include="pics\collegue.jpg" />
     <Content Include="pics\gradient-page-left.jpg" />
@@ -1885,8 +1884,7 @@
     <Content Include="Views\Paypal\NotifyFromPaypal.cshtml" />
     <Content Include="Views\Paypal\CancelFromPaypal.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
-    <Content Include="Views\Catalogue\SteveJobs.cshtml" />
-    <Content Include="Views\Catalogue\CatalogueHtml.cshtml" />
+    <Content Include="Views\Catalogue\SteveJobsHtml.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

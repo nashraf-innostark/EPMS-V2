@@ -79,6 +79,15 @@ namespace EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Latest Articles.
+        /// </summary>
+        public static string LatestArticles {
+            get {
+                return ResourceManager.GetString("LatestArticles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Latest News.
         /// </summary>
         public static string LatestNews {

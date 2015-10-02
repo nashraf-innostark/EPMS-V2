@@ -58,6 +58,11 @@ namespace EPMS.Website.Controllers
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
+            else
+            {
+                viewModel.Products = new List<Product>();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
+            }
             // New Arrivals
             var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).Take(50);
             IEnumerable<EPMS.Models.DomainModels.Product> arrivals = newArrivals as IList<EPMS.Models.DomainModels.Product> ?? newArrivals.ToList();
@@ -88,6 +93,11 @@ namespace EPMS.Website.Controllers
             if (productsList.Products.Any())
             {
                 viewModel.Products = productsList.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList();
+                viewModel.SearchRequest.TotalCount = productsList.TotalCount;
+            }
+            else
+            {
+                viewModel.Products = new List<Product>();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             // New Arrivals

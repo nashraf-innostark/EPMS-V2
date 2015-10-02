@@ -16,7 +16,7 @@
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
                     <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
-                    @if (@Model.NewsAndArticle.Type)
+                    @if (Model.NewsAndArticle.Type)
                     {
                         <li><a href="/NewsAndArticle/Index/1">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles</a></li>
                         <li>@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Article</li>
@@ -70,7 +70,7 @@
                                     <a href="#" class="hoverBorder pull-left">
                                         @if (string.IsNullOrEmpty(Model.NewsAndArticle.ImagePath))
                                         {
-                                            <img src="~/Images/noimage_department.png" />
+                                            <img style="height: 186px; width: 280px" src="~/Images/noimage_department.png" />
                                         }
                                         else
                                         {
@@ -102,7 +102,18 @@
                                 </div>
                             </div><!-- end itemheader -->
                             <div class="itemBody">
-                                <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.NewsAndArticle.ImagePath)" /></a></p>
+                                <p>
+                                    <a href="#" class="hoverBorder pull-left">
+                                        @if (string.IsNullOrEmpty(Model.NewsAndArticle.ImagePath))
+                                        {
+                                            <img style="height: 186px; width: 280px" src="~/Images/noimage_department.png" />
+                                        }
+                                        else
+                                        {
+                                            <img style="height: 186px; width: 280px" src="@link/@Url.Content(Model.NewsAndArticle.ImagePath)" />
+                                        }
+                                    </a>
+                                </p>
                                 <p style="text-align: justify">@Model.NewsAndArticle.ContentAr</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>

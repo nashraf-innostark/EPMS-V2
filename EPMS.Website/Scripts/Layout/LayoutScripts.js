@@ -147,51 +147,7 @@ function Gsitesearch(curobj) {
 
 $(document).ready(function() {
     (function($) {
-        // ** partners carousel
-        $('#partners_carousel').carouFredSel({
-            responsive: true,
-            scroll: 1,
-            auto: false,
-            items: {
-                width: 250,
-                visible: {
-                    min: 3,
-                    max: 10
-                }
-            },
-            prev: {
-                button: ".partners_carousel .prev",
-                key: "left"
-            },
-            next: {
-                button: ".partners_carousel .next",
-                key: "right"
-            }
-        });
-        // *** end partners carousel
-        // slider
-        $('.iosSlider').iosSlider({
-            snapToChildren: true,
-            desktopClickDrag: true,
-            keyboardControls: true,
-            navNextSelector: $('.next'),
-            navPrevSelector: $('.prev'),
-            navSlideSelector: $('.selectors .item'),
-            scrollbar: true,
-            scrollbarContainer: '#slideshow .scrollbarContainer',
-            scrollbarMargin: '0',
-            scrollbarBorderRadius: '4px',
-            onSlideComplete: slideComplete,
-            onSliderLoaded: function(args) {
-                var otherSettings = {
-                    hideControls: true, // Bool, if true, the NAVIGATION ARROWS will be hidden and shown only on mouseover the slider
-                    hideCaptions: false // Bool, if true, the CAPTIONS will be hidden and shown only on mouseover the slider
-                }
-                sliderLoaded(args, otherSettings);
-            },
-            onSlideChange: slideChange,
-            infiniteSlider: true,
-            autoSlide: true
-        });
+        
+        
     })($);
 });

@@ -1,6 +1,6 @@
 ﻿function addToCart(id) {
     var quantity = jQuery('#Quantity').val();
-    if (quantity == "" || quantity == undefined) {
+    if (quantity == 0 || quantity == "" || quantity == undefined) {
         quantity = 1;
     }
     var sizeId = jQuery('#Size').val();

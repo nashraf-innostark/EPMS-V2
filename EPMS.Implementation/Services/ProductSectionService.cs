@@ -42,15 +42,18 @@ namespace EPMS.Implementation.Services
         public IList<long> RemoveDuplication(string[] departmentIds)
         {
             IList<long> noDuplication = new List<long>();
-            foreach (string departmentId in departmentIds)
+            if (departmentIds != null)
             {
-                if (departmentId.Contains("department"))
+                foreach (string departmentId in departmentIds)
                 {
-                    var id = Convert.ToInt64(departmentId.Split('_')[0]);
-                    var productSection = productSectionRepository.FindByDepartmentId(id);
-                    if (productSection == null)
+                    if (departmentId.Contains("department"))
                     {
-                        noDuplication.Add(id);
+                        var id = Convert.ToInt64(departmentId.Split('_')[0]);
+                        var productSection = productSectionRepository.FindByDepartmentId(id);
+                        if (productSection == null)
+                        {
+                            noDuplication.Add(id);
+                        }
                     }
                 }
             }

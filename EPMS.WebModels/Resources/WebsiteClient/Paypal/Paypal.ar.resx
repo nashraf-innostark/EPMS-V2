@@ -118,24 +118,24 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Connecting" xml:space="preserve">
-    <value>Connecting to Paypal , please wait</value>
+    <value>الاتصال بباي بال ، يرجى الانتظار</value>
   </data>
   <data name="Payment" xml:space="preserve">
-    <value>Payment</value>
+    <value>دفع</value>
   </data>
   <data name="PaymentCanceled" xml:space="preserve">
-    <value>Payment canceled</value>
+    <value>الغي الدفع</value>
   </data>
   <data name="PaymentMessage" xml:space="preserve">
-    <value>You have successfully paid for your item(s)</value>
+    <value>لقد قمت بالدفع عن المتجات الخاصة بك بنجاح</value>
   </data>
   <data name="PaymentSuccessful" xml:space="preserve">
-    <value>Payment Successful</value>
+    <value>الدفع كان ناجحا</value>
   </data>
   <data name="PaypalPayment" xml:space="preserve">
-    <value>Paypal payment</value>
+    <value>دفع عبر باي بال</value>
   </data>
   <data name="ThankYouNote" xml:space="preserve">
-    <value>Thanks for Shopping</value>
+    <value>شكرا لكم على تسوقكم معنا</value>
   </data>
 </root>

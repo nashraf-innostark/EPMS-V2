@@ -29,12 +29,31 @@ function updateDepth(book, newPage) {
 }
 
 function loadPage(page) {
+    var productNo = page - 4;
+    // ajax logic for dynamic pages
+    if (productNo >= 0) {
+        $.ajax({
+            url: "/Catalogue/LoadPage",
+            type: 'GET',
+            dataType: "json",
+            data: {
+                pageNo: productNo
+            },
+            success: function(data) {
+                $('.sj-book .p' + page).html(data);
+            },
+            error: function(e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
+    }
 
-	$.ajax({url: '../../pages/page' + page + '.html'}).
-		done(function(pageHtml) {
-			$('.sj-book .p' + page).html(pageHtml.replace('samples/steve-jobs/', ''));
-		});
-
+    // ajax logic for static pages
+    //$.ajax({url: '../../pages/page' + page + '.html'}).
+    //	done(function(pageHtml) {
+    //		$('.sj-book .p' + page).html(pageHtml.replace('samples/steve-jobs/', ''));
+    //	});
 }
 
 function addPage(page, book) {

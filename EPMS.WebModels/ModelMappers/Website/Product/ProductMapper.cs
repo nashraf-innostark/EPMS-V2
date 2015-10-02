@@ -179,6 +179,12 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 }
             }
             retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
+            retVal.DepartmentNameEn = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameEn :
+                source.ProductSection != null ? source.ProductSection.SectionNameEn : "";
+            retVal.DepartmentNameAr = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameAr :
+                source.ProductSection != null ? source.ProductSection.SectionNameAr : "";
             return retVal;
         }
 
