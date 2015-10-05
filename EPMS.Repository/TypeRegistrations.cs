@@ -100,6 +100,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IShoppingCartItemRepository, ShoppingCartItemRepository>();
             unityContainer.RegisterType<IWebsiteHomePageRepository, WebsiteHomePageRepository>();
             unityContainer.RegisterType<IWebsiteUserPreferenceRepository, WebsiteUserPreferenceRepository>();
+            unityContainer.RegisterType<IRFQRepository, RFQRepository>();
         }
     }
 }

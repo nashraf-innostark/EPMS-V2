@@ -1,0 +1,131 @@
+﻿@model EPMS.WebModels.ViewModels.RFQ.RFQListViewModel
+
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.RFQ.PageTitleIndex;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
+    var userRole = (string)Session["RoleName"];
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+    @if (userPermissionsSet.Contains("RFQCreate"))
+    {
+        <h3> <small><a href="~/CMS/Quotation/RFQ">@EPMS.WebModels.Resources.CMS.Quotation.CreateNew</a></small></h3>
+    }
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+<!-- Page heading ends -->
+
+<form class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+                <table id="QuotationTable" class="table table-striped table-responsive">
+                    @if (userRole == "Admin")
+                    {
+                        int count = 1;
+                        <thead>
+                            <tr>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Header</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.ClientName</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rfq in Model.Rfqs)
+                            {
+                                <tr>
+                                    <td>@count</td>
+                                    @if (rfq.RFQItems.Any())
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId?from=Client">Quotation @count</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">Quotation @count</a></td>
+                                    }
+                                    <td>@(direction == "ltr" ? rfq.CustomerNameEn : rfq.CustomerNameAr)</td>
+                                    @switch (rfq.Status)
+                                    {
+                                        case 1:
+                                            <td>Qoutation Created</td>
+                                            break;
+                                        case 2:
+                                            <td>Qoutation Pending</td>
+                                            break;
+                                        case 3:
+                                            <td>Qoutation Approved</td>
+                                            break;
+                                    }
+                                </tr>
+                                count++;
+                            }
+                        </tbody>
+                    }
+                    else
+                    {
+                        int count = 1;
+                        <thead>
+                            <tr>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Header</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rfq in Model.Rfqs)
+                            {
+                                <tr>
+                                    <td>@count</td>
+                                    @if (rfq.RFQItems.Any())
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId?from=Client">@EPMS.WebModels.Resources.CMS.RFQ.Quotation @count</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">Quotation @count</a></td>
+                                    }
+                                    @switch (rfq.Status)
+                                    {
+                                        case 1:
+                                            <td>Qoutation Created</td>
+                                            break;
+                                        case 2:
+                                            <td>Qoutation Pending</td>
+                                            break;
+                                        case 3:
+                                            <td>Qoutation Approved</td>
+                                            break;
+                                    }
+                                </tr>
+                                count++;
+                            }
+                        </tbody>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</form>

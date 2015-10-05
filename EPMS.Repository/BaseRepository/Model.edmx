@@ -21,8 +21,8 @@
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
-          <Property Name="ContentEn" Type="nvarchar(max)" />
-          <Property Name="ContentAr" Type="nvarchar(max)" />
+          <Property Name="ContentEn" Type="nvarchar" MaxLength="1000" />
+          <Property Name="ContentAr" Type="nvarchar" MaxLength="1000" />
         </EntityType>
         <EntityType Name="Allowance">
           <Key>
@@ -1348,6 +1348,36 @@
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="RFQ">
+          <Key>
+            <PropertyRef Name="RFQId" />
+          </Key>
+          <Property Name="RFQId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar(max)" />
+          <Property Name="Discount" Type="smallint" />
+          <Property Name="Requests" Type="nvarchar(max)" />
+          <Property Name="CustomerId" Type="bigint" />
+          <Property Name="Status" Type="smallint" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RFQItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="RFQId" Type="bigint" Nullable="false" />
+          <Property Name="ItemDetails" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="ItemQuantity" Type="decimal" Precision="10" Scale="0" Nullable="false" />
+          <Property Name="UnitPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="TotalPrice" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="RIF">
           <Key>
             <PropertyRef Name="RIFId" />
@@ -2670,18 +2700,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Project_Quotation">
-          <End Role="Quotation" Type="Self.Quotation" Multiplicity="0..1" />
-          <End Role="Project" Type="Self.Project" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Quotation">
-              <PropertyRef Name="QuotationId" />
-            </Principal>
-            <Dependent Role="Project">
-              <PropertyRef Name="QuotationId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ProjectDocuments_Project">
           <End Role="Project" Type="Self.Project" Multiplicity="1" />
           <End Role="ProjectDocuments" Type="Self.ProjectDocuments" Multiplicity="*" />
@@ -2991,6 +3009,30 @@
             </Principal>
             <Dependent Role="RFIItemHistory">
               <PropertyRef Name="RFIId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFQ_Customer">
+          <End Role="Customer" Type="Self.Customer" Multiplicity="0..1" />
+          <End Role="RFQ" Type="Self.RFQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="RFQ">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFQItem_RFQ">
+          <End Role="RFQ" Type="Self.RFQ" Multiplicity="1" />
+          <End Role="RFQItem" Type="Self.RFQItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFQ">
+              <PropertyRef Name="RFQId" />
+            </Principal>
+            <Dependent Role="RFQItem">
+              <PropertyRef Name="RFQId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3409,6 +3451,8 @@
           <EntitySet Name="RFIHistory" EntityType="Self.RFIHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFIItem" EntityType="Self.RFIItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFIItemHistory" EntityType="Self.RFIItemHistory" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFQ" EntityType="Self.RFQ" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RFQItem" EntityType="Self.RFQItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIF" EntityType="Self.RIF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFHistory" EntityType="Self.RIFHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItem" EntityType="Self.RIFItem" Schema="dbo" store:Type="Tables" />
@@ -3759,10 +3803,6 @@
             <End Role="Orders" EntitySet="Orders" />
             <End Role="Project" EntitySet="Project" />
           </AssociationSet>
-          <AssociationSet Name="FK_Project_Quotation" Association="Self.FK_Project_Quotation">
-            <End Role="Quotation" EntitySet="Quotation" />
-            <End Role="Project" EntitySet="Project" />
-          </AssociationSet>
           <AssociationSet Name="FK_ProjectDocuments_Project" Association="Self.FK_ProjectDocuments_Project">
             <End Role="Project" EntitySet="Project" />
             <End Role="ProjectDocuments" EntitySet="ProjectDocuments" />
@@ -3866,6 +3906,14 @@
           <AssociationSet Name="FK_RFIItemHistory_RFIHistory" Association="Self.FK_RFIItemHistory_RFIHistory">
             <End Role="RFIHistory" EntitySet="RFIHistory" />
             <End Role="RFIItemHistory" EntitySet="RFIItemHistory" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFQ_Customer" Association="Self.FK_RFQ_Customer">
+            <End Role="Customer" EntitySet="Customer" />
+            <End Role="RFQ" EntitySet="RFQ" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFQItem_RFQ" Association="Self.FK_RFQItem_RFQ">
+            <End Role="RFQ" EntitySet="RFQ" />
+            <End Role="RFQItem" EntitySet="RFQItem" />
           </AssociationSet>
           <AssociationSet Name="FK_RIF_AspNetUsers" Association="Self.FK_RIF_AspNetUsers">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
@@ -4304,6 +4352,7 @@
           <NavigationProperty Name="Projects" Relationship="Self.FK_Project_Customer" FromRole="Customer" ToRole="Project" />
           <NavigationProperty Name="ProjectTasks" Relationship="Self.FK_ProjectTask_Customer" FromRole="Customer" ToRole="ProjectTask" />
           <NavigationProperty Name="Quotations" Relationship="Self.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
+          <NavigationProperty Name="RFQs" Relationship="EPMSInventoryModel.FK_RFQ_Customer" FromRole="Customer" ToRole="RFQ" />
         </EntityType>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -6254,6 +6303,16 @@
           </AssociationSet>
           <EntitySet Name="WebsiteHomePages" EntityType="EPMSInventoryModel.WebsiteHomePage" />
           <EntitySet Name="WebsiteUserPrefrences" EntityType="EPMSInventoryModel.WebsiteUserPrefrence" />
+          <EntitySet Name="RFQs" EntityType="EPMSInventoryModel.RFQ" />
+          <EntitySet Name="RFQItems" EntityType="EPMSInventoryModel.RFQItem" />
+          <AssociationSet Name="FK_RFQ_Customer" Association="EPMSInventoryModel.FK_RFQ_Customer">
+            <End Role="Customer" EntitySet="Customers" />
+            <End Role="RFQ" EntitySet="RFQs" />
+          </AssociationSet>
+          <AssociationSet Name="FK_RFQItem_RFQ" Association="EPMSInventoryModel.FK_RFQItem_RFQ">
+            <End Role="RFQ" EntitySet="RFQs" />
+            <End Role="RFQItem" EntitySet="RFQItems" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -7951,8 +8010,8 @@
           <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="ContentEn" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="ContentAr" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ContentEn" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
+          <Property Name="ContentAr" Type="String" MaxLength="1000" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="WebsiteDepartment">
           <Key>
@@ -8052,6 +8111,63 @@
           <Property Name="UserId" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <Property Name="Culture" Type="String" MaxLength="6" FixedLength="false" Unicode="true" />
         </EntityType>
+        <EntityType Name="RFQ">
+          <Key>
+            <PropertyRef Name="RFQId" />
+          </Key>
+          <Property Name="RFQId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Discount" Type="Int16" />
+          <Property Name="Requests" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="CustomerId" Type="Int64" />
+          <Property Name="Status" Type="Int16" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Customer" Relationship="EPMSInventoryModel.FK_RFQ_Customer" FromRole="RFQ" ToRole="Customer" />
+          <NavigationProperty Name="RFQItems" Relationship="EPMSInventoryModel.FK_RFQItem_RFQ" FromRole="RFQ" ToRole="RFQItem" />
+        </EntityType>
+        <EntityType Name="RFQItem">
+          <Key>
+            <PropertyRef Name="ItemId" />
+          </Key>
+          <Property Name="ItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RFQId" Type="Int64" Nullable="false" />
+          <Property Name="ItemDetails" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="ItemQuantity" Type="Decimal" Nullable="false" Precision="10" Scale="0" />
+          <Property Name="UnitPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="TotalPrice" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="RFQ" Relationship="EPMSInventoryModel.FK_RFQItem_RFQ" FromRole="RFQItem" ToRole="RFQ" />
+        </EntityType>
+        <Association Name="FK_RFQ_Customer">
+          <End Type="EPMSInventoryModel.Customer" Role="Customer" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.RFQ" Role="RFQ" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Customer">
+              <PropertyRef Name="CustomerId" />
+            </Principal>
+            <Dependent Role="RFQ">
+              <PropertyRef Name="CustomerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_RFQItem_RFQ">
+          <End Type="EPMSInventoryModel.RFQ" Role="RFQ" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.RFQItem" Role="RFQItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RFQ">
+              <PropertyRef Name="RFQId" />
+            </Principal>
+            <Dependent Role="RFQItem">
+              <PropertyRef Name="RFQId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -9822,6 +9938,38 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="RFQs">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.RFQ">
+              <MappingFragment StoreEntitySet="RFQ">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="Requests" ColumnName="Requests" />
+                <ScalarProperty Name="Discount" ColumnName="Discount" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="RFQId" ColumnName="RFQId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RFQItems">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.RFQItem">
+              <MappingFragment StoreEntitySet="RFQItem">
+                <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDate" ColumnName="RecCreatedDate" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="UnitPrice" ColumnName="UnitPrice" />
+                <ScalarProperty Name="ItemQuantity" ColumnName="ItemQuantity" />
+                <ScalarProperty Name="ItemDetails" ColumnName="ItemDetails" />
+                <ScalarProperty Name="RFQId" ColumnName="RFQId" />
+                <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10072,6 +10220,10 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ShoppingCartItem_Size" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteHomePage" Width="1.75" PointX="0.5" PointY="9.5" />
         <EntityTypeShape EntityType="EPMSInventoryModel.WebsiteUserPrefrence" Width="2" PointX="0.5" PointY="11.625" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RFQ" Width="1.5" PointX="3.125" PointY="87.875" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RFQItem" Width="1.5" PointX="5.375" PointY="88" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFQ_Customer" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_RFQItem_RFQ" />
         </Diagram>
       </Diagrams>
   </Designer>

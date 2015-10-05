@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace EPMS.Models.DomainModels
+﻿namespace EPMS.Models.DomainModels
 {
     public class ProjectDocument
     {

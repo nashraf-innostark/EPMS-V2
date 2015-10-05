@@ -177,6 +177,7 @@
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="Services\DIFService.cs" />
+    <Compile Include="Services\RFQService.cs" />
     <Compile Include="Services\RIFService.cs" />
     <Compile Include="Services\RFIService.cs" />
     <Compile Include="Services\ShoppingCartItemService.cs" />
