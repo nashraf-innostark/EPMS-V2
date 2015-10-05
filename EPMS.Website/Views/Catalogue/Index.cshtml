@@ -2,9 +2,9 @@
 @model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
-    ViewBag.Title = "Steve Jobs";
+    ViewBag.Title = "Catalogue";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var Date = DateTime.Now;
+    var date = DateTime.Now;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
