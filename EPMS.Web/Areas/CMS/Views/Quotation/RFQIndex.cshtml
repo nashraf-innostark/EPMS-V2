@@ -100,11 +100,11 @@
                                     <td>@count</td>
                                     @if (rfq.RFQItems.Any())
                                     {
-                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId?from=Client">@EPMS.WebModels.Resources.CMS.RFQ.Quotation @count</a></td>
+                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId?from=Client">@EPMS.WebModels.Resources.CMS.RFQ.Quotation @count</a></td>
                                     }
                                     else
                                     {
-                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">Quotation @count</a></td>
+                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">Quotation @count</a></td>
                                     }
                                     @switch (rfq.Status)
                                     {

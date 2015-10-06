@@ -129,6 +129,18 @@
   <data name="ClientName" xml:space="preserve">
     <value>Client Name</value>
   </data>
+  <data name="CreateQuotation" xml:space="preserve">
+    <value>Create Quotation</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="DeleteItemError" xml:space="preserve">
+    <value>Error in deleting RFQ Item</value>
+  </data>
+  <data name="DeleteItemNoAccess" xml:space="preserve">
+    <value>Error: You are not authorized to delete.</value>
+  </data>
   <data name="DiscountLimit" xml:space="preserve">
     <value>The total % of discount should not exceed 100 and must be number</value>
   </data>
@@ -147,6 +159,9 @@
   <data name="Quotation" xml:space="preserve">
     <value>Quotation</value>
   </data>
+  <data name="RequestforQoutation" xml:space="preserve">
+    <value>Request for Qoutation</value>
+  </data>
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
   </data>
@@ -157,6 +172,6 @@
     <value>Request for Quotation has been successfully Updated</value>
   </data>
   <data name="UpdateQuotation" xml:space="preserve">
-    <value>تحديث الاقتباس</value>
+    <value>Update Quotation</value>
   </data>
 </root>

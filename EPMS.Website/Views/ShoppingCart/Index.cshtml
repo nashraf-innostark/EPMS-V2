@@ -1,4 +1,5 @@
-﻿@using System.Globalization
+﻿@using System.Configuration
+@using System.Globalization
 @using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
 @using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
@@ -93,7 +94,7 @@
                             </table>
                             <div class="control-group">
                                 <div class="controls">
-                                    <a href="http://localhost/EPMSWebsiteCP/CMS/Quotation/Create?from=Client" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>
+                                    <a href="@ConfigurationManager.AppSettings["CpLink"]/CMS/Quotation/RFQ?from=Client" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>
                                     @*<a href="http://localhost/EPMSWebsiteCP/CMS/Quotation/Create" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>*@
                                 </div>
                             </div>

@@ -196,6 +196,7 @@
     <Compile Include="Repository\IDIFItemRepository.cs" />
     <Compile Include="Repository\IDIFRepository.cs" />
     <Compile Include="Repository\IRFIHistoryRepository.cs" />
+    <Compile Include="Repository\IRFQItemRepository.cs" />
     <Compile Include="Repository\IRFQRepository.cs" />
     <Compile Include="Repository\IRIFHistoryRepository.cs" />
     <Compile Include="Repository\IRIFItemRepository.cs" />

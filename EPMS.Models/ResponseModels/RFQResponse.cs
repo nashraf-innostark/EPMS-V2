@@ -7,6 +7,7 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<RFQ> Rfqs { get; set; }
         public RFQ Rfq { get; set; }
+        public CompanyProfile Profile { get; set; }
         /// <summary>
         /// Total Count
         /// </summary>

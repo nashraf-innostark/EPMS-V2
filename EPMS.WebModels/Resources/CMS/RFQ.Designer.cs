@@ -97,6 +97,42 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Create Quotation.
+        /// </summary>
+        public static string CreateQuotation {
+            get {
+                return ResourceManager.GetString("CreateQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Date.
+        /// </summary>
+        public static string Date {
+            get {
+                return ResourceManager.GetString("Date", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: Cann&apos;t delet RFQ Item..
+        /// </summary>
+        public static string DeleteItemError {
+            get {
+                return ResourceManager.GetString("DeleteItemError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: You are not authorized to delete..
+        /// </summary>
+        public static string DeleteItemNoAccess {
+            get {
+                return ResourceManager.GetString("DeleteItemNoAccess", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to The total % of discount should not exceed 100 and must be number.
         /// </summary>
         public static string DiscountLimit {
@@ -147,6 +183,15 @@ namespace EPMS.WebModels.Resources.CMS {
         public static string Quotation {
             get {
                 return ResourceManager.GetString("Quotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Request for Qoutation.
+        /// </summary>
+        public static string RequestforQoutation {
+            get {
+                return ResourceManager.GetString("RequestforQoutation", resourceCulture);
             }
         }
         

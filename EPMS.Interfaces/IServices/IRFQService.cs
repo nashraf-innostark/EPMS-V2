@@ -9,7 +9,10 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<RFQ> GetAllRfqs() ;
         RFQ FindRfqById(long id);
         RFQResponse GetRfqResponse(long quotationId, long customerId, string from);
+        RFQDetailResponse GetRfqDetailResponse(long rfqId);
         bool AddRfq(RFQ rfq);
         bool UpdateRfq(RFQ rfq);
+        void DeleteRfq(long id);
+        void DeleteRfqItem(long id);
     }
 }

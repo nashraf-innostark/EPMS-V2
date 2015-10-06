@@ -492,7 +492,6 @@
         });
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
-            $("#Discount").val(0);
             $("#Installment1").val(0);
             $("#Installment2").val(0);
             $("#Installment3").val(0);
@@ -506,6 +505,9 @@
             itemsDetailCount = parseInt('@Model.QuotationItemDetails.Count');
             isUpdate = true;
             $("#ClientName").val($("#Client option:selected").text());
+        }
+        if (isNaN(parseInt($("#Discount").val()))) {
+            $("#Discount").val(0);
         }
         var discount = parseInt('@Model.QuotationDiscount');
         if (discount == 0 || isNaN(discount)) {

@@ -394,6 +394,7 @@
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />
     <Compile Include="ResponseModels\RfiHistoryResponse.cs" />
+    <Compile Include="ResponseModels\RFQDetailResponse.cs" />
     <Compile Include="ResponseModels\RFQResponse.cs" />
     <Compile Include="ResponseModels\RifHistoryResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />

@@ -767,6 +767,7 @@
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
     <Compile Include="ViewModels\RFQ\RFQCreateViewModel.cs" />
+    <Compile Include="ViewModels\RFQ\RFQDetailViewModel.cs" />
     <Compile Include="ViewModels\RFQ\RFQListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RifHistoryViewModel.cs" />
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
@@ -946,6 +947,7 @@
     <EmbeddedResource Include="Resources\CMS\RFQ.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RFQ.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

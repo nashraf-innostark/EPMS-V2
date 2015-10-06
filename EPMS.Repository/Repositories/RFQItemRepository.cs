@@ -1,5 +1,9 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -7,13 +11,13 @@ using Microsoft.Practices.Unity;
 
 namespace EPMS.Repository.Repositories
 {
-    public class RFQRepository : BaseRepository<RFQ>, IRFQRepository
+    public class RFQItemRepository : BaseRepository<RFQItem>, IRFQItemRepository
     {
         #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public RFQRepository(IUnityContainer container)
+        public RFQItemRepository(IUnityContainer container)
             : base(container)
         {
         }
@@ -21,16 +25,11 @@ namespace EPMS.Repository.Repositories
         /// <summary>
         /// Primary database set
         /// </summary>
-        protected override IDbSet<RFQ> DbSet
+        protected override IDbSet<RFQItem> DbSet
         {
-            get { return db.Rfqs; }
+            get { return db.RfqItems; }
         }
 
         #endregion
-
-        public RFQ FindByCustomerAndRfqId(long customerId, long rfqId)
-        {
-            return DbSet.FirstOrDefault(x => x.CustomerId == customerId && x.RFQId == rfqId);
-        }
     }
 }
