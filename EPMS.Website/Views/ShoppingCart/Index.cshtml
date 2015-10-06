@@ -64,11 +64,11 @@
                                         <td class="product-id" style="display: none">@Model.ShoppingCart.ShoppingCartItems[i].ProductId</td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
-                                        <td class="image-column"><a href="#"><img src="@Model.ShoppingCart.ShoppingCartItems[i].ImagePath" alt=""></a></td>
+                                        <td class="image-column"><img src="@Model.ShoppingCart.ShoppingCartItems[i].ImagePath" alt=""></td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
-                                        <td><p><a href="#">@(direction == "ltr" ? Model.ShoppingCart.ShoppingCartItems[i].ItemNameEn : Model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)</a></p></td>
+                                        <td><p>@(direction == "ltr" ? Model.ShoppingCart.ShoppingCartItems[i].ItemNameEn : Model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)</p></td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
                                         <td><p>@Model.ShoppingCart.ShoppingCartItems[i].SkuCode</p></td>

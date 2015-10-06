@@ -480,6 +480,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
                 model.Profile = rfqResponse.Profile.CreateFromServerToClientForQuotation();
                 model.Rfq.CustomerId = customerId;
+                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 return View(model);
             }
             model.Rfq.CustomerId = customerId;
@@ -503,6 +504,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     }
                     model.Profile = companyProfileService.GetDetail().CreateFromServerToClientForQuotation();
                     model.Rfq.CustomerId = customerId;
+                    ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 }
             }
             return View(model);
