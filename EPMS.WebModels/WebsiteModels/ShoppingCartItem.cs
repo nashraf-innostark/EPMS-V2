@@ -1,7 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
+    [Serializable()]
     public class ShoppingCartItem
     {
         public long CartItemId { get; set; }

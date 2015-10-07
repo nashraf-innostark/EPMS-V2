@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace EPMS.WebModels.WebsiteModels
 {
+    [Serializable()]
     public class ShoppingCart
     {
         public ShoppingCart()
