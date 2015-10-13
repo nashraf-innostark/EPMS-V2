@@ -7,7 +7,7 @@ namespace EPMS.WebModels.ModelMappers
     {
         public static RFQ CreateFromClientToServer(this WebsiteModels.RFQ source)
         {
-            string request = source.Requests.Replace("\n", "");
+            string request = source.Requests==null?"":source.Requests.Replace("\n", "");
             request = request.Replace("\r", "");
             return new RFQ
             {
