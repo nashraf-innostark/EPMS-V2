@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.Repository
         ProductResponse GetByItemVariationId(IEnumerable<long> itemVariationIds, ProductSearchRequest request, long productSectionId);
         IEnumerable<Product> GetByProductSectionId(long productSectionId);
         Product FindByVariationId(long variationId);
+        WebsiteSearchResultData GetWebsiteSearchResultData(string search);
     }
 }

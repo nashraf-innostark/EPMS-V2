@@ -96,5 +96,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
         }
+
+        public WebsiteSearchResultData GetWebsiteSearchResultData(string search)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
