@@ -217,17 +217,24 @@
                                 <div class="tab-pane" id="shop-tab3">
                                     @if (Model.WebsiteServices.Any())
                                     {
+                                        string desc = "";
+                                        string more = "";
                                         foreach (var websiteService in Model.WebsiteServices)
                                         {
                                             <div class="itemView clearfix eBlog">
-                                                <h4><a href="~Services/Detail/@websiteService.ServiceId">New Device</a></h4>
+                                                <h4><a href="~/Services/Detail/@websiteService.ServiceId">New Device</a></h4>
 
                                                 <div class="itemBody ">
-
+                                                    @{
+                                                        desc = direction == "ltr" ? websiteService.DescriptionEn.Substring(0, (websiteService.DescriptionEn.Length > 700 ? 700 : (websiteService.DescriptionEn.Length - 1))) : websiteService.DescriptionAr.Substring(0, (websiteService.DescriptionAr.Length > 700 ? 700 : (websiteService.DescriptionAr.Length - 1)));
+                                                        if (desc.Length > 700)
+                                                        {
+                                                            more="<a href='~/Services/Detail/@websiteService.ServiceId' class='moreListing'>More...</a>";
+                                                        }
+                                                    }
                                                     <p>
-                                                        @(direction == "ltr" ? websiteService.DescriptionEn.Substring(0, (websiteService.DescriptionEn.Length > 700 ? 700 : (websiteService.DescriptionEn.Length - 1))) : websiteService.DescriptionAr.Substring(0, (websiteService.DescriptionAr.Length > 700 ? 700 : (websiteService.DescriptionAr.Length - 1))))
-
-                                                        <a href="~Services/Detail/@websiteService.ServiceId" class="moreListing">More...</a>
+                                                        @Html.Raw(desc)
+                                                        @Html.Raw(more)
                                                     </p>
                                                 </div><!-- end item body -->
                                                 <div class="clear"></div>
