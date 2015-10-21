@@ -215,40 +215,32 @@
                                     }
                                 </div>
                                 <div class="tab-pane" id="shop-tab3">
-                                    <div class="itemView clearfix eBlog">
-                                        <h4><a href="#">New Device</a></h4>
+                                    @if (Model.WebsiteServices.Any())
+                                    {
+                                        foreach (var websiteService in Model.WebsiteServices)
+                                        {
+                                            <div class="itemView clearfix eBlog">
+                                                <h4><a href="~Services/Detail/@websiteService.ServiceId">New Device</a></h4>
 
-                                        <div class="itemBody ">
+                                                <div class="itemBody ">
 
-                                            <p>
-                                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis
+                                                    <p>
+                                                        @(direction == "ltr" ? websiteService.DescriptionEn.Substring(0, (websiteService.DescriptionEn.Length > 700 ? 700 : (websiteService.DescriptionEn.Length - 1))) : websiteService.DescriptionAr.Substring(0, (websiteService.DescriptionAr.Length > 700 ? 700 : (websiteService.DescriptionAr.Length - 1))))
 
-                                                <a href="#" class="moreListing">More...</a>
-                                            </p>
-                                        </div><!-- end item body -->
-                                        <div class="clear"></div>
-
-
-
-
-                                    </div>
-                                    <div class="itemView clearfix eBlog">
-                                        <h4><a href="#">Visit Our New Branch</a></h4>
-
-                                        <div class="itemBody ">
-
-                                            <p>
-                                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis
-
-                                                <a href="#" class="moreListing">More...</a>
-                                            </p>
-                                        </div><!-- end item body -->
-                                        <div class="clear"></div>
-
-
-
-
-                                    </div>
+                                                        <a href="~Services/Detail/@websiteService.ServiceId" class="moreListing">More...</a>
+                                                    </p>
+                                                </div><!-- end item body -->
+                                                <div class="clear"></div>
+                                            </div>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <div class="itemView clearfix eBlog">
+                                            <h4>No service found.</h4>
+                                        </div>
+                                    }
+                                    
 
                                     <div class="span4">
                                         <div class="pagination">
