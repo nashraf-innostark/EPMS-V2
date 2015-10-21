@@ -5,5 +5,6 @@ namespace EPMS.Interfaces.Repository
     public interface IAboutUsRepository : IBaseRepository<AboutUs, long>
     {
         AboutUs GetAboutUs();
+        AboutUs SearchAboutUs(string search);
     }
 }

@@ -7,6 +7,8 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<Product> Products { get; set; }
         public IEnumerable<NewsAndArticle> NewsAndArticles { get; set; }
-        public IEnumerable<WebsiteService> WebsiteServices { get; set; } 
+        public IEnumerable<WebsiteService> WebsiteServices { get; set; }
+        public AboutUs AboutUs { get; set; }
+        public ContactUs ContactUs { get; set; }
     }
 }

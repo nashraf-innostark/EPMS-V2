@@ -13,12 +13,16 @@ namespace EPMS.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly INewsAndArticleRepository newsAndArticleRepository;
         private readonly IWebsiteServicesRepository websiteServicesRepository;
+        private readonly IAboutUsRepository aboutUsRepository;
+        private readonly IContactUsRepository contactUsRepository;
 
-        public WebsiteSearchService(IProductRepository productRepository, INewsAndArticleRepository newsAndArticleRepository, IWebsiteServicesRepository websiteServicesRepository)
+        public WebsiteSearchService(IProductRepository productRepository, INewsAndArticleRepository newsAndArticleRepository, IWebsiteServicesRepository websiteServicesRepository, IAboutUsRepository aboutUsRepository, IContactUsRepository contactUsRepository)
         {
             this.productRepository = productRepository;
             this.newsAndArticleRepository = newsAndArticleRepository;
             this.websiteServicesRepository = websiteServicesRepository;
+            this.aboutUsRepository = aboutUsRepository;
+            this.contactUsRepository = contactUsRepository;
         }
 
         public WebsiteSearchResultData GetWebsiteSearchResultData(string search)
@@ -27,7 +31,9 @@ namespace EPMS.Implementation.Services
             {
                 Products = productRepository.SearchInProducts(search).ToList(),
                 NewsAndArticles = newsAndArticleRepository.SearchInNewsAndArticle(search).ToList(),
-                WebsiteServices = websiteServicesRepository.SearchInWebsiteService(search).ToList()
+                WebsiteServices = websiteServicesRepository.SearchInWebsiteService(search).ToList(),
+                AboutUs = aboutUsRepository.SearchAboutUs(search),
+                ContactUs = contactUsRepository.SearchContactUs(search)
             };
             return searchResultData;
         }

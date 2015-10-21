@@ -14,5 +14,7 @@ namespace EPMS.WebModels.ViewModels.Search
         public List<WebModel.Product> Products { get; set; }
         public List<WebModel.NewsAndArticle> NewsAndArticles { get; set; }
         public List<WebModel.WebsiteService> WebsiteServices { get; set; } 
+        public WebModel.AboutUs AboutUs { get; set; }
+        public WebModel.ContactUs ContactUs { get; set; } 
     }
 }

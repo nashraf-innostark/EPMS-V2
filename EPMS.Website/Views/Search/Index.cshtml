@@ -63,41 +63,57 @@
 
                             <div class="tab-content">
                                 <div class="tab-pane active" id="shop-tab1">
+                                    @if (Model.AboutUs != null)
+                                    {
+                                        string desc = "";
+                                        string more = "";
+                                     
+                                        <div class="itemView clearfix eBlog">
+                                            <h4><a href="~/AboutUs/Detail">About Us</a></h4>
 
-                                    <div class="itemView clearfix eBlog">
-                                        <h4><a href="#">New Device</a></h4>
-
-                                        <div class="itemBody ">
-
-                                            <p>
-                                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis
-
-                                                <a href="#" class="moreListing">More...</a>
-                                            </p>
-                                        </div><!-- end item body -->
+                                            <div class="itemBody ">
+                                                    @{
+                                        desc = direction == "ltr" ? Model.AboutUs.ContentEn.Substring(0, (Model.AboutUs.ContentEn.Length > 700 ? 700 : (Model.AboutUs.ContentEn.Length - 1))) : Model.AboutUs.ContentAr.Substring(0, (Model.AboutUs.ContentAr.Length > 700 ? 700 : (Model.AboutUs.ContentAr.Length - 1)));
+                                            if (desc.Length > 700)
+                                            {
+                                                more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
+                                            }
+                                                    }
+                                                    <p>
+                                                        @Html.Raw(desc)
+                                                        @Html.Raw(more)
+                                                    </p>
+                                            </div><!-- end item body -->
                                         <div class="clear"></div>
+                                        </div>
+                                    }
+                                    
+                                    @if (Model.ContactUs != null)
+                                    {
+                                        string desc = "";
+                                        string more = "";
 
+                                        <div class="itemView clearfix eBlog">
+                                            <h4><a href="~/ContactUs/Detail">Contact Us</a></h4>
 
-
-
-                                    </div>
-                                    <div class="itemView clearfix eBlog">
-                                        <h4><a href="#">Visit Our New Branch</a></h4>
-
-                                        <div class="itemBody ">
-
-                                            <p>
-                                                Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. Aenean ultricies mi vitae est. Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, commodo vitae, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. Donec non enim in turpis pulvinar facilisis. Ut felis. Praesent dapibus, neque id cursus faucibus, tortor neque egestas augue, eu vulputate magna eros eu erat. Aliquam erat volutpat. Nam dui mi, tincidunt quis
-
-                                                <a href="#" class="moreListing">More...</a>
-                                            </p>
-                                        </div><!-- end item body -->
-                                        <div class="clear"></div>
-
-
-
-
-                                    </div>
+                                            <div class="itemBody ">
+                                                @{
+                                        desc = direction == "ltr" ? Model.ContactUs.ContentEn.Substring(0, (Model.ContactUs.ContentEn.Length > 700 ? 700 : (Model.ContactUs.ContentEn.Length - 1))) : Model.ContactUs.ContentAr.Substring(0, (Model.ContactUs.ContentAr.Length > 700 ? 700 : (Model.ContactUs.ContentAr.Length - 1)));
+                                        if (desc.Length > 700)
+                                        {
+                                            more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
+                                        }
+                                                }
+                                                <p>
+                                                    @Html.Raw(desc)
+                                                    @Html.Raw(more)
+                                                </p>
+                                            </div><!-- end item body -->
+                                            <div class="clear"></div>
+                                        </div>
+                                    }
+                                 
+                                
                                     <!-- End Item Layout -->
 
                                     <div class="span4">
