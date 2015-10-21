@@ -92,14 +92,21 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.ProductSectionId == productSectionId);
         }
 
+        public IEnumerable<Product> SearchInProducts(string search)
+        {
+            return
+                DbSet.Where(
+                    x =>
+                        (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
+                         x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
+                         x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
+                        )
+                       );
+        }
+
         public Product FindByVariationId(long variationId)
         {
             return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
-        }
-
-        public WebsiteSearchResultData GetWebsiteSearchResultData(string search)
-        {
-            throw new NotImplementedException();
         }
     }
 }

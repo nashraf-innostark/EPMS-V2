@@ -156,7 +156,6 @@
     $(document).ready(function () {
     });
     jQuery(document).on('click', '.page-button', function () {
-        debugger;
         jQuery('#pagination a').removeClass("active");
         this.parentElement.classList.add("active");
         var pageNo = parseInt(this.textContent);

@@ -394,6 +394,15 @@ namespace EPMS.Website.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Search Results.
+        /// </summary>
+        public static string SearchResults {
+            get {
+                return ResourceManager.GetString("SearchResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial.
         /// </summary>
         public static string Serial {

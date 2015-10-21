@@ -201,9 +201,9 @@
                 <div id="search">
                     <a href="#" class="searchBtn"><span class="icon-search icon-white"></span></a>
                     <div class="search">
-                        <form action="http://www.google.com/search" method="get" onsubmit="Gsitesearch(this)" target="_blank">
-                            <input name="q" type="hidden" />
-                            <input name="qfront" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
+                        <form action="~/Search/Index" method="get" @*onsubmit="Gsitesearch(this)" target="_blank"*@>
+                            @*<input name="q" type="hidden" />*@
+                            <input name="search" maxlength="20" class="inputbox" type="text" size="20" value="Search ..." onblur="if (this.value=='') this.value='Search ...';" onfocus="if (this.value=='Search ...') this.value='';" />
                             <input type="submit" value="go" class=" icon-search" />
                         </form>
                     </div>

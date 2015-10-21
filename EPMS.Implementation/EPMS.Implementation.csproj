@@ -126,6 +126,7 @@
     <Compile Include="Services\AboutUsService.cs" />
     <Compile Include="Services\AllowanceService.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\WebsiteSearchService.cs" />
     <Compile Include="Services\ColorService.cs" />
     <Compile Include="Services\CompanyBankService.cs" />
     <Compile Include="Services\CompanyDocumentService.cs" />

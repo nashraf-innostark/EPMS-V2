@@ -210,6 +210,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
     <Compile Include="Controllers\PaypalController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\WebsiteFooterController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -1778,6 +1779,7 @@
     <Content Include="Views\Paypal\CancelFromPaypal.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
     <Content Include="Views\Catalogue\SteveJobsHtml.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

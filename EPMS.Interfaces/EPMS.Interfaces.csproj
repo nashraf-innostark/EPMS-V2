@@ -58,6 +58,7 @@
     <Compile Include="IServices\IAboutUsService.cs" />
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IWebsiteSearchService.cs" />
     <Compile Include="IServices\IColorService.cs" />
     <Compile Include="IServices\ICompanyBankService.cs" />
     <Compile Include="IServices\ICompanyDocumentService.cs" />

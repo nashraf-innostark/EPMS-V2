@@ -1,4 +1,6 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -26,5 +28,14 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
+        public IEnumerable<WebsiteService> SearchInWebsiteService(string search)
+        {
+            return DbSet.Where(x => (x.ServiceNameEn.Contains(search) || x.ServiceNameAr.Contains(search) ||
+                x.DescriptionEn.Contains(search)||x.DescriptionAr.Contains(search)||
+                x.MetaDescriptionEn.Contains(search)||x.MetaDescriptionAr.Contains(search)||
+                x.MetaKeywordsEn.Contains(search)||x.MetaKeywordsAr.Contains(search)
+                ));
+        }
     }
 }
