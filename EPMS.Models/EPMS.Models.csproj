@@ -323,6 +323,7 @@
     <Compile Include="RequestModels\TransferItemSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="RequestModels\WarehouseRequest.cs" />
+    <Compile Include="RequestModels\WebsiteServiceSearchRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -403,6 +404,7 @@
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteSearchResponse.cs" />
     <Compile Include="ResponseModels\WebsiteSearchResultData.cs" />
     <Compile Include="ResponseModels\ShoppingCartResponse.cs" />
     <Compile Include="ResponseModels\TIRCreateResponse.cs" />
