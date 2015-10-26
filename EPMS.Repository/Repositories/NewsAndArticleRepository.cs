@@ -35,8 +35,35 @@ namespace EPMS.Repository.Repositories
             return response;
         }
 
-        public IEnumerable<NewsAndArticle> SearchInNewsAndArticle(string search)
+        public NewsAndArticleResponse GetNewsAndArticleListForSearch(NewsAndArticleSearchRequest request, string search)
         {
+            int fromRow = request.iDisplayStart;
+            int toRow = request.iDisplayLength;
+
+            NewsAndArticleResponse response = new NewsAndArticleResponse
+            {
+                TotalCount = DbSet.Count(x => (x.TitleEn.Contains(search) || x.TitleAr.Contains(search) ||
+                                               x.AuthorNameEn.Contains(search) || x.AuthorNameAr.Contains(search) ||
+                                               x.ContentEn.Contains(search) || x.ContentAr.Contains(search) ||
+                                               x.MetaDesc.Contains(search) || x.MetaDescAr.Contains(search) ||
+                                               x.MetaKeywords.Contains(search) || x.MetaKeywordsAr.Contains(search))),
+                NewsAndArticles = DbSet.Where(
+                    x =>
+                        (x.TitleEn.Contains(search) || x.TitleAr.Contains(search) ||
+                         x.AuthorNameEn.Contains(search) || x.AuthorNameAr.Contains(search) ||
+                         x.ContentEn.Contains(search) || x.ContentAr.Contains(search) ||
+                         x.MetaDesc.Contains(search) || x.MetaDescAr.Contains(search) ||
+                         x.MetaKeywords.Contains(search) || x.MetaKeywordsAr.Contains(search))).OrderBy(x => x.NewsArticleId).Skip(fromRow).Take(toRow).ToList()
+            };
+
+            return response;
+        }
+
+        public IEnumerable<NewsAndArticle> SearchInNewsAndArticle(NewsAndArticleSearchRequest request, string search)
+        {
+            int fromRow = request.iDisplayStart;
+            int toRow = request.iDisplayLength;
+
             return
                 DbSet.Where(
                     x =>
@@ -44,7 +71,7 @@ namespace EPMS.Repository.Repositories
                          x.AuthorNameEn.Contains(search) || x.AuthorNameAr.Contains(search) || 
                          x.ContentEn.Contains(search) || x.ContentAr.Contains(search) ||
                          x.MetaDesc.Contains(search) || x.MetaDescAr.Contains(search) ||
-                         x.MetaKeywords.Contains(search) || x.MetaKeywordsAr.Contains(search)));
+                         x.MetaKeywords.Contains(search) || x.MetaKeywordsAr.Contains(search))).OrderBy(x => x.NewsArticleId).Skip(fromRow).Take(toRow).ToList();
         }
     }
 }

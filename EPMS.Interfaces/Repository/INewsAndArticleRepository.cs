@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.Repository
     public interface INewsAndArticleRepository : IBaseRepository<NewsAndArticle, long>
     {
         NewsAndArticleResponse GetNewsAndArticleList(NewsAndArticleSearchRequest request, bool type);
-        IEnumerable<NewsAndArticle> SearchInNewsAndArticle(string search);
+        NewsAndArticleResponse GetNewsAndArticleListForSearch(NewsAndArticleSearchRequest request, string search);
+        IEnumerable<NewsAndArticle> SearchInNewsAndArticle(NewsAndArticleSearchRequest request, string search);
     }
 }

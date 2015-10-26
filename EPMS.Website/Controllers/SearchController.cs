@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.Services;
@@ -24,14 +25,73 @@ namespace EPMS.Website.Controllers
             {
                 return View(new SearchResult());
             }
-            var searchResultData = websiteSearchService.GetWebsiteSearchResultData(search);
-            SearchResult searchResult=new SearchResult
-            {
-                Products = searchResultData.Products.Select(x => x.CreateFromServerToClientFromInventory()).ToList(),
-                NewsAndArticles = searchResultData.NewsAndArticles.Select(x => x.CreateFromServerToClient()).ToList(),
-                WebsiteServices = searchResultData.WebsiteServices.Select(x => x.CreateFromServerToClient()).ToList()
-            };
+            SearchResult searchResult = new SearchResult();
+            searchResult.NewsAndArticleSearchRequest.iDisplayLength = 5;
+            searchResult.ProductSearchRequest.iDisplayLength = 5;
+            searchResult.WebsiteServiceSearchRequest.iDisplayLength = 5;
+
+            var searchResultData =
+                websiteSearchService.GetWebsiteSearchResultData(searchResult.NewsAndArticleSearchRequest,
+                    searchResult.ProductSearchRequest, searchResult.WebsiteServiceSearchRequest, search);
+
+            //Products Mapping
+            searchResult.Products =
+                searchResultData.ProductResponse.Products.Select(x => x.CreateFromServerToClientFromInventory())
+                    .ToList();
+            searchResult.ProductSearchRequest.TotalCount = searchResultData.ProductResponse.TotalCount;
+
+            //News and Articles Mapping
+            searchResult.NewsAndArticles =
+                searchResultData.NewsAndArticleResponse.NewsAndArticles.Select(x => x.CreateFromServerToClient())
+                    .ToList();
+
+            searchResult.NewsAndArticleSearchRequest.TotalCount = searchResultData.NewsAndArticleResponse.TotalCount;
+
+            //Services Mapping
+            searchResult.WebsiteServices =
+                searchResultData.WebsiteSearchResponse.WebsiteServices.Select(x => x.CreateFromServerToClient())
+                    .ToList();
+            searchResult.WebsiteServiceSearchRequest.TotalCount = searchResultData.WebsiteSearchResponse.TotalCount;
+
+
+            ViewBag.SearchText = search;
             return View(searchResult);
         }
+
+        [HttpPost]
+        public ActionResult Index(SearchResult searchResult)
+        {
+            var search = searchResult.searchText;
+            searchResult.NewsAndArticleSearchRequest.iDisplayLength = 5;
+            searchResult.ProductSearchRequest.iDisplayLength = 5;
+            searchResult.WebsiteServiceSearchRequest.iDisplayLength = 5;
+
+            var searchResultData =
+                websiteSearchService.GetWebsiteSearchResultData(searchResult.NewsAndArticleSearchRequest,
+                    searchResult.ProductSearchRequest, searchResult.WebsiteServiceSearchRequest, search);
+
+            //Products Mapping
+            searchResult.Products =
+                searchResultData.ProductResponse.Products.Select(x => x.CreateFromServerToClientFromInventory())
+                    .ToList();
+            searchResult.ProductSearchRequest.TotalCount = searchResultData.ProductResponse.TotalCount;
+
+            //News and Articles Mapping
+            searchResult.NewsAndArticles =
+                searchResultData.NewsAndArticleResponse.NewsAndArticles.Select(x => x.CreateFromServerToClient())
+                    .ToList();
+            searchResult.NewsAndArticleSearchRequest.TotalCount = searchResultData.NewsAndArticleResponse.TotalCount;
+
+            //Services Mapping
+            searchResult.WebsiteServices =
+                searchResultData.WebsiteSearchResponse.WebsiteServices.Select(x => x.CreateFromServerToClient())
+                    .ToList();
+            searchResult.WebsiteServiceSearchRequest.TotalCount = searchResultData.WebsiteSearchResponse.TotalCount;
+
+            //To set the Search Text through ViewBag
+            ViewBag.SearchText = searchResult.searchText;
+            return View(searchResult);
+        }
+
     }
 }

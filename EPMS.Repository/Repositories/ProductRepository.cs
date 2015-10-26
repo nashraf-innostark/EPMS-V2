@@ -104,6 +104,28 @@ namespace EPMS.Repository.Repositories
                        );
         }
 
+        public ProductResponse SearchInProducts(ProductSearchRequest productSearchRequest, string search)
+        {
+            int fromRow = productSearchRequest.iDisplayStart;
+            int toRow = productSearchRequest.iDisplayLength;
+
+            ProductResponse response = new ProductResponse
+            {
+                TotalCount = DbSet.Count(x => (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
+                                               x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
+                                               x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
+                    )),
+                    Products = DbSet.Where(
+                    x =>
+                        (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
+                         x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
+                         x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
+                        )
+                       ).OrderBy(x => x.ProductId).Skip(fromRow).Take(toRow).ToList(),
+            };
+            return response;
+        }
+
         public Product FindByVariationId(long variationId)
         {
             return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
