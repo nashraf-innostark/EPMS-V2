@@ -70,6 +70,15 @@ namespace EPMS.Website.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to About Us.
+        /// </summary>
+        public static string AboutUs {
+            get {
+                return ResourceManager.GetString("AboutUs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to AddNewNode.
         /// </summary>
         public static string AddNewNode {
@@ -120,6 +129,15 @@ namespace EPMS.Website.Resources.Shared {
         public static string Contact {
             get {
                 return ResourceManager.GetString("Contact", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Contact Us.
+        /// </summary>
+        public static string ContactUs {
+            get {
+                return ResourceManager.GetString("ContactUs", resourceCulture);
             }
         }
         
@@ -214,6 +232,15 @@ namespace EPMS.Website.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        public static string General {
+            get {
+                return ResourceManager.GetString("General", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Welcome.
         /// </summary>
         public static string Heading {
@@ -264,6 +291,15 @@ namespace EPMS.Website.Resources.Shared {
         public static string Manager {
             get {
                 return ResourceManager.GetString("Manager", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to News &amp; Articles.
+        /// </summary>
+        public static string NewsArticles {
+            get {
+                return ResourceManager.GetString("NewsArticles", resourceCulture);
             }
         }
         
@@ -349,6 +385,15 @@ namespace EPMS.Website.Resources.Shared {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register.
         /// </summary>
         public static string Register {
@@ -408,6 +453,15 @@ namespace EPMS.Website.Resources.Shared {
         public static string Serial {
             get {
                 return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Services.
+        /// </summary>
+        public static string Services {
+            get {
+                return ResourceManager.GetString("Services", resourceCulture);
             }
         }
         

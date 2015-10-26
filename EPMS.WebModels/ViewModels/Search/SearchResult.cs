@@ -21,6 +21,8 @@ namespace EPMS.WebModels.ViewModels.Search
         public NewsAndArticleSearchRequest NewsAndArticleSearchRequest { get; set; }
         public List<WebModel.WebsiteService> WebsiteServices { get; set; }
         public WebsiteServiceSearchRequest WebsiteServiceSearchRequest { get; set; }
+        public WebModel.AboutUs AboutUs { get; set; }
+        public WebModel.ContactUs ContactUs { get; set; }
 
         public string searchText { get; set; }
     }

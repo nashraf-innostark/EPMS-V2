@@ -14,25 +14,33 @@ namespace EPMS.Implementation.Services
         private readonly IProductRepository productRepository;
         private readonly INewsAndArticleRepository newsAndArticleRepository;
         private readonly IWebsiteServicesRepository websiteServicesRepository;
+        private readonly IAboutUsRepository aboutUsRepository;
+        private readonly IContactUsRepository contactUsRepository;
 
         public WebsiteSearchService(IProductRepository productRepository,
-            INewsAndArticleRepository newsAndArticleRepository, IWebsiteServicesRepository websiteServicesRepository)
+            INewsAndArticleRepository newsAndArticleRepository, IWebsiteServicesRepository websiteServicesRepository,
+            IAboutUsRepository aboutUsRepository, IContactUsRepository contactUsRepository)
         {
             this.productRepository = productRepository;
             this.newsAndArticleRepository = newsAndArticleRepository;
             this.websiteServicesRepository = websiteServicesRepository;
+            this.aboutUsRepository = aboutUsRepository;
+            this.contactUsRepository = contactUsRepository;
         }
 
         public WebsiteSearchResultData GetWebsiteSearchResultData(
-            NewsAndArticleSearchRequest newsAndArticleSearchRequest, ProductSearchRequest productSearchRequest, WebsiteServiceSearchRequest websiteServiceSearchRequest,
-            string search)
+            NewsAndArticleSearchRequest newsAndArticleSearchRequest, ProductSearchRequest productSearchRequest,
+            WebsiteServiceSearchRequest websiteServiceSearchRequest, string search)
         {
             WebsiteSearchResultData searchResultData = new WebsiteSearchResultData
             {
                 ProductResponse = productRepository.SearchInProducts(productSearchRequest, search),
                 NewsAndArticleResponse =
                     newsAndArticleRepository.GetNewsAndArticleListForSearch(newsAndArticleSearchRequest, search),
-                WebsiteSearchResponse = websiteServicesRepository.SearchInWebsiteService(websiteServiceSearchRequest, search)
+                WebsiteSearchResponse =
+                    websiteServicesRepository.SearchInWebsiteService(websiteServiceSearchRequest, search),
+                AboutUs = aboutUsRepository.SearchAboutUs(search),
+                ContactUs = contactUsRepository.SearchContactUs(search)
             };
             return searchResultData;
         }

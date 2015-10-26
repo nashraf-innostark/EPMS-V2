@@ -2,6 +2,8 @@
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels;
+using EPMS.WebModels.ModelMappers.Website.AboutUs;
+using EPMS.WebModels.ModelMappers.Website.ContactUs;
 using EPMS.WebModels.ModelMappers.Website.NewsAndArticles;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.Services;
@@ -69,6 +71,10 @@ namespace EPMS.Website.Controllers
             var searchResultData =
                 websiteSearchService.GetWebsiteSearchResultData(searchResult.NewsAndArticleSearchRequest,
                     searchResult.ProductSearchRequest, searchResult.WebsiteServiceSearchRequest, search);
+            if (searchResultData.AboutUs != null)
+                searchResult.AboutUs = searchResultData.AboutUs.CreateFromServerToClient();
+            if (searchResultData.ContactUs != null)
+            searchResult.ContactUs = searchResultData.ContactUs.CreateFromServerToClient();
 
             //Products Mapping
             searchResult.Products =
