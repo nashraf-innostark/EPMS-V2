@@ -346,11 +346,11 @@
                                                 string path = "";
                                                 if (newArrival.ItemVariationId != null)
                                                 {
-                                                    path = !string.IsNullOrEmpty(newArrival.ItemImage) ? itemImageFolder + newArrival.ItemImage : noImage;
+                                                    path = !string.IsNullOrEmpty(newArrival.ItemImage) ? ConfigurationManager.AppSettings["InventoryImage"] + newArrival.ItemImage : noImage;
                                                 }
                                                 else
                                                 {
-                                                    path = !string.IsNullOrEmpty(newArrival.ProductImage) ? itemImageFolder + newArrival.ProductImage : noImage;
+                                                    path = !string.IsNullOrEmpty(newArrival.ProductImage) ? ConfigurationManager.AppSettings["ProductImage"] + newArrival.ProductImage : noImage;
                                                 }
                                                 if (newArrival.ItemVariationId != null)
                                                 {
@@ -429,11 +429,11 @@
                                                 string path = "";
                                                 if (bestSell.ItemVariationId != null)
                                                 {
-                                                    path = !string.IsNullOrEmpty(bestSell.ItemImage) ? itemImageFolder + bestSell.ItemImage : noImage;
+                                                    path = !string.IsNullOrEmpty(bestSell.ItemImage) ? ConfigurationManager.AppSettings["InventoryImage"] + bestSell.ItemImage : noImage;
                                                 }
                                                 else
                                                 {
-                                                    path = !string.IsNullOrEmpty(bestSell.ProductImage) ? itemImageFolder + bestSell.ProductImage : noImage;
+                                                    path = !string.IsNullOrEmpty(bestSell.ProductImage) ? ConfigurationManager.AppSettings["ProductImage"] + bestSell.ProductImage : noImage;
                                                 }
                                                 if (bestSell.ItemVariationId != null)
                                                 {
@@ -512,11 +512,11 @@
                                                 string path = "";
                                                 if (randomProduct.ItemVariationId != null)
                                                 {
-                                                    path = !string.IsNullOrEmpty(randomProduct.ItemImage) ? itemImageFolder + randomProduct.ItemImage : noImage;
+                                                    path = !string.IsNullOrEmpty(randomProduct.ItemImage) ? ConfigurationManager.AppSettings["InventoryImage"] + randomProduct.ItemImage : noImage;
                                                 }
                                                 else
                                                 {
-                                                    path = !string.IsNullOrEmpty(randomProduct.ProductImage) ? itemImageFolder + randomProduct.ProductImage : noImage;
+                                                    path = !string.IsNullOrEmpty(randomProduct.ProductImage) ? ConfigurationManager.AppSettings["ProductImage"] + randomProduct.ProductImage : noImage;
                                                 }
                                                 if (randomProduct.ItemVariationId != null)
                                                 {
@@ -595,11 +595,11 @@
                                                 string path = "";
                                                 if (featuredProduct.ItemVariationId != null)
                                                 {
-                                                    path = !string.IsNullOrEmpty(featuredProduct.ItemImage) ? itemImageFolder + featuredProduct.ItemImage : noImage;
+                                                    path = !string.IsNullOrEmpty(featuredProduct.ItemImage) ? ConfigurationManager.AppSettings["InventoryImage"] + featuredProduct.ItemImage : noImage;
                                                 }
                                                 else
                                                 {
-                                                    path = !string.IsNullOrEmpty(featuredProduct.ProductImage) ? itemImageFolder + featuredProduct.ProductImage : noImage;
+                                                    path = !string.IsNullOrEmpty(featuredProduct.ProductImage) ? ConfigurationManager.AppSettings["ProductImage"] + featuredProduct.ProductImage : noImage;
                                                 }
                                                 if (featuredProduct.ItemVariationId != null)
                                                 {

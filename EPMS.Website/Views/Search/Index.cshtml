@@ -72,27 +72,27 @@
                                     {
                                         string desc = "";
                                         string more = "";
-                                     
+
                                         <div class="itemView clearfix eBlog">
                                             <h4><a href="~/AboutUs/Detail">@EPMS.Website.Resources.Shared.Common.AboutUs</a></h4>
 
                                             <div class="itemBody ">
-                                                    @{
+                                                @{
                                         desc = direction == "ltr" ? Model.AboutUs.ContentEn.Substring(0, (Model.AboutUs.ContentEn.Length > 700 ? 700 : (Model.AboutUs.ContentEn.Length - 1))) : Model.AboutUs.ContentAr.Substring(0, (Model.AboutUs.ContentAr.Length > 700 ? 700 : (Model.AboutUs.ContentAr.Length - 1)));
-                                            if (desc.Length > 700)
-                                            {
-                                                more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
-                                            }
-                                                    }
-                                                    <p>
-                                                        @Html.Raw(desc)
-                                                        @Html.Raw(more)
-                                                    </p>
+                                        if (desc.Length > 700)
+                                        {
+                                            more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
+                                        }
+                                                }
+                                                <p>
+                                                    @Html.Raw(desc)
+                                                    @Html.Raw(more)
+                                                </p>
                                             </div><!-- end item body -->
-                                        <div class="clear"></div>
+                                            <div class="clear"></div>
                                         </div>
                                     }
-                                    
+
                                     @if (Model.ContactUs != null)
                                     {
                                         string desc = "";
@@ -117,19 +117,18 @@
                                             <div class="clear"></div>
                                         </div>
                                     }
-                                 
-                                
-                                    <!-- End Item Layout -->
 
-                                    <div class="span4">
-                                        <div class="pagination">
-                                            <a href="#"><div class="previous"><i class="fa fa-long-arrow-left"></i></div></a>
-                                            <a href="#" class="active"><div class="page-button">1</div></a>
-                                            <a href="#"><div class="page-button">2</div></a>
-                                            <a href="#"><div class="page-button">3</div></a>
-                                            <a href="#"><div class="next"><i class="fa fa-long-arrow-right"></i></div></a>
-                                        </div>
-                                    </div>
+
+                                    <!-- End Item Layout -->
+                                    @*<div class="span4">
+                                            <div class="pagination">
+                                                <a href="#"><div class="previous"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                <a href="#" class="active"><div class="page-button">1</div></a>
+                                                <a href="#"><div class="page-button">2</div></a>
+                                                <a href="#"><div class="page-button">3</div></a>
+                                                <a href="#"><div class="next"><i class="fa fa-long-arrow-right"></i></div></a>
+                                            </div>
+                                        </div>*@
 
                                 </div>
                                 <div class="tab-pane" id="shop-tab2">
@@ -210,29 +209,31 @@
                                             </div>
                                         }
                                         <div class="span4">
-                                                <div class="pagination" id="paginationpro">
-                                                    <a onclick="$(this).closest('form').submit();"><div class="cursorHand first-page-pro"><i class="fa fa-long-arrow-right"></i></div></a>
-                                                    @for (int i = 0; i < Model.ProductSearchRequest.TotalCount; i += Model.ProductSearchRequest.iDisplayLength)
+                                            <div class="pagination" id="paginationpro">
+                                                <a onclick="$(this).closest('form').submit();"><div class="cursorHand first-page-pro"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                @for (int i = 0; i < Model.ProductSearchRequest.TotalCount; i += Model.ProductSearchRequest.iDisplayLength)
+                                                {
+                                                    if (i == Model.ProductSearchRequest.iDisplayStart)
                                                     {
-                                                        if (i == Model.ProductSearchRequest.iDisplayStart)
-                                                        {
-                                                            <a class="active cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
-                                                        }
-                                                        else
-                                                        {
-                                                            <a class="cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
-                                                        }
-                                                        pageNo++;
+                                                        <a class="active cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
                                                     }
-                                                    <a onclick="$(this).closest('form').submit();"><div class="cursorHand last-page-pro"><i class="fa fa-long-arrow-left"></i></div></a>
-                                                </div>
+                                                    else
+                                                    {
+                                                        <a class="cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
+                                                    }
+                                                    pageNo++;
+                                                }
+                                                <a onclick="$(this).closest('form').submit();"><div class="cursorHand last-page-pro"><i class="fa fa-long-arrow-left"></i></div></a>
                                             </div>
+                                        </div>
                                     }
-                                    @*else
+                                    else
                                     {
-                                        <h4>No product found.</h4>
-                                    }*@
-                                            </div>
+                                        <div class="itemView clearfix eBlog">
+                                            <h4>No Product found.</h4>
+                                        </div>
+                                    }
+                                </div>
                                 <div class="tab-pane" id="shop-tab3">
                                     @if (Model.WebsiteServices.Any())
                                     {
@@ -259,149 +260,144 @@
                                                 <div class="clear"></div>
                                             </div>
                                         }
-                                    }
-                                    @*else
-                                    {
-                                                    <div class="itemView clearfix eBlog">
-                                                        <h4>No service found.</h4>
-                                                    </div>
-                                    }*@
-
-
-                                                <div class="span4">
-                                        <div class="paginationWeb">
-                                            <a onclick="$(this).closest('form').submit();"><div class="cursorHand first-page-web"><i class="fa fa-long-arrow-right"></i></div></a>
-                                            @for (int i = 0; i < Model.WebsiteServiceSearchRequest.TotalCount; i += Model.WebsiteServiceSearchRequest.iDisplayLength)
-                                            {
-                                                if (i == Model.WebsiteServiceSearchRequest.iDisplayStart)
+                                        <div class="span4">
+                                            <div class="paginationWeb">
+                                                @if (Model.WebsiteServiceSearchRequest.TotalCount > 0)
                                                 {
-                                                    <a class="active cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-web">@pageNoServices</div></a>
+                                                    <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand first-page-web"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                    for (int i = 0; i < Model.WebsiteServiceSearchRequest.TotalCount; i += Model.WebsiteServiceSearchRequest.iDisplayLength)
+                                                    {
+                                                        if (i == Model.WebsiteServiceSearchRequest.iDisplayStart)
+                                                        {
+                                                            <a class="active cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-web">@pageNoServices</div></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-web">@pageNoServices</div></a>
+                                                        }
+                                                        pageNo++;
+                                                    }
+                                                    <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand last-page-web"><i class="fa fa-long-arrow-left"></i></div></a>
                                                 }
-                                                else
-                                                {
-                                                    <a class="cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-web">@pageNoServices</div></a>
-                                                }
-                                                pageNo++;
-                                            }
-                                            <a onclick="$(this).closest('form').submit();"><div class="cursorHand last-page-web"><i class="fa fa-long-arrow-left"></i></div></a>
-                                                    </div>
-                                                </div>
                                             </div>
-                            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", @id = "newsAndArticleForm", role = "form", enctype = "multipart/form-data" }))
-                            {
-                                <div class="tab-pane" id="shop-tab4">
-                                    @if (Model.NewsAndArticles.Any())
-                                    {
-                                        foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
-                                        {
-
-                                            if (direction == "ltr")
-                                            {
-                                            <div class="itemView clearfix eBlog">
-                                                <h4>@newsOrArticle.TitleEn</h4>
-                                                <div class="itemHeader">
-                                                    <div class="post_details">
-                                                        <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
-                                                        <span class="infSep"> / </span>
-                                                        <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
-                                                    </div>
-                                                </div><!-- end itemheader -->
-                                                <div class="itemBody ">
-                                                    <p>
-                                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
-                                                            @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
-                                                                {
-                                                                <img src="~/Images/noimage_department.png" />
-                                                                }
-                                                                else
-                                                                {
-                                                                <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
-                                                                }
-                                                        </a>
-                                                    </p>
-                                                    <p style="text-align: justify">
-                                                        @newsOrArticle.ContentEn
-                                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
-                                                    </p>
-                                                </div><!-- end item body -->
-                                                <div class="clear"></div>
-                                            </div>
-                                            }
-                                            else
-                                            {
-                                            <div class="itemView clearfix eBlog">
-                                                <h4>@newsOrArticle.TitleAr</h4>
-                                                <div class="itemHeader">
-                                                    <div class="post_details">
-                                                        <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
-                                                        <span class="infSep"> / </span>
-                                                        <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
-                                                    </div>
-                                                </div><!-- end itemheader -->
-                                                <div class="itemBody ">
-                                                    <p>
-                                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
-                                                            @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
-                                                                {
-                                                                <img src="~/Images/noimage_department.png" />
-                                                                }
-                                                                else
-                                                                {
-                                                                <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
-                                                                }
-                                                        </a>
-                                                    </p>
-                                                    <p style="text-align: justify">
-                                                        @newsOrArticle.ContentAr
-                                                    </p>
-                                                    <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
-                                                </div><!-- end item body -->
-                                                <div class="clear"></div>
-                                            </div>
-                                            }
-                                        }
+                                        </div>
                                     }
-                                    @*else
+                                    else
                                     {
                                         <div class="itemView clearfix eBlog">
-                                            <h4>No News or Article found.</h4>
+                                            <h4>No Service found.</h4>
                                         </div>
-                                    }*@
-
-                                                <div class="span4">
-                                                    <div class="pagination">
-                                            <a><div class="cursorHand first-page-naa"><i class="fa fa-long-arrow-right"></i></div></a>
-                                            @for (int i = 0; i <= Model.NewsAndArticleSearchRequest.TotalCount; i += Model.NewsAndArticleSearchRequest.iDisplayLength)
+                                    }
+                                </div>
+                                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", @id = "newsAndArticleForm", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    <div class="tab-pane" id="shop-tab4">
+                                        @if (Model.NewsAndArticles.Any())
+                                        {
+                                            foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
                                             {
-                                                if (i == Model.NewsAndArticleSearchRequest.iDisplayStart)
+
+                                                if (direction == "ltr")
                                                 {
-                                                    <a class="active cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
+                                                    <div class="itemView clearfix eBlog">
+                                                        <h4>@newsOrArticle.TitleEn</h4>
+                                                        <div class="itemHeader">
+                                                            <div class="post_details">
+                                                                <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
+                                                                <span class="infSep"> / </span>
+                                                                <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
+                                                            </div>
+                                                        </div><!-- end itemheader -->
+                                                        <div class="itemBody ">
+                                                            <p>
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                                    @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                                    {
+                                                                        <img src="~/Images/noimage_department.png" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
+                                                                    }
+                                                                </a>
+                                                            </p>
+                                                            <p style="text-align: justify">
+                                                                @newsOrArticle.ContentEn
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                                            </p>
+                                                        </div><!-- end item body -->
+                                                        <div class="clear"></div>
+                                                    </div>
                                                 }
                                                 else
                                                 {
-                                                    <a class="cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
-                                                }
-                                                pageNoNewsAndArticle++;
-                                            }
-                                            <a onclick="$(this).closest('form').submit();"><div class="cursorHand last-page-naa"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                    <div class="itemView clearfix eBlog">
+                                                        <h4>@newsOrArticle.TitleAr</h4>
+                                                        <div class="itemHeader">
+                                                            <div class="post_details">
+                                                                <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
+                                                                <span class="infSep"> / </span>
+                                                                <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
+                                                            </div>
+                                                        </div><!-- end itemheader -->
+                                                        <div class="itemBody ">
+                                                            <p>
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                                    @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                                    {
+                                                                        <img src="~/Images/noimage_department.png" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
+                                                                    }
+                                                                </a>
+                                                            </p>
+                                                            <p style="text-align: justify">
+                                                                @newsOrArticle.ContentAr
+                                                            </p>
+                                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                                        </div><!-- end item body -->
+                                                        <div class="clear"></div>
                                                     </div>
+                                                }
+                                            }
+                                            <div class="span4">
+                                                <div class="pagination">
+                                                    @if (Model.NewsAndArticleSearchRequest.TotalCount > 0)
+                                                    {
+                                                        <a><div class="cursorHand first-page-naa"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                        for (int i = 0; i <= Model.NewsAndArticleSearchRequest.TotalCount; i += Model.NewsAndArticleSearchRequest.iDisplayLength)
+                                                        {
+                                                            if (i == Model.NewsAndArticleSearchRequest.iDisplayStart)
+                                                            {
+                                                                <a class="active cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
+                                                            }
+                                                            pageNoNewsAndArticle++;
+                                                        }
+                                                        <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand last-page-naa"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                    }
                                                 </div>
-
-                                            </div><!-- End Tabs -->
-                            }
-                                        </div><!-- end tabbable -->
-
-
-
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="itemView clearfix eBlog">
+                                                <h4>No News or Article found.</h4>
+                                            </div>
+                                        }
+                                    </div><!-- End Tabs -->
+                                }
+                            </div><!-- end tabbable -->
                         </div>
-
-
                     </div><!-- end row -->
-
                 </div>
             }
         </div><!-- end mainbody -->
-
     </div><!-- end container -->
 </section><!-- end #content -->
 

@@ -1,6 +1,8 @@
-﻿
+﻿using System;
+
 namespace EPMS.WebModels.ViewModels.Common
 {
+    [Serializable]
     public class MessageViewModel
     {
         public bool IsSaved { get; set; }
