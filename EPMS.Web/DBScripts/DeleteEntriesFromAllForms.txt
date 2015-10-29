@@ -1,0 +1,29 @@
+delete from [dbo].[RFIItemHistory]
+delete from [dbo].[RFIItem]
+delete from [dbo].[RIFHistory]
+delete from [dbo].[RFI]
+
+delete from [dbo].[ItemReleaseDetailHistory]
+delete from [dbo].[ItemReleaseDetail]
+delete from [dbo].[ItemReleaseHistory]
+delete from [dbo].[ItemRelease]
+
+delete from [dbo].[RIFItemHistory]
+delete from [dbo].[RIFItem]
+delete from [dbo].[RIFHistory]
+delete from [dbo].[RIF]
+
+delete from [dbo].[DIFItemHistory]
+delete from [dbo].[DIFItem]
+delete from [dbo].[DIFHistory]
+delete from [dbo].[DIF]
+
+delete from [dbo].[TIRItemHistory]
+delete from [dbo].[TIRItem]
+delete from [dbo].[TIRHistory]
+delete from [dbo].[TIR]
+
+delete from [dbo].[PurchaseOrderItemHistory]
+delete from [dbo].[PurchaseOrderItem]
+delete from [dbo].[PurchaseOrderHistory]
+delete from [dbo].[PurchaseOrder]
