@@ -247,12 +247,18 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         public JsonResult GetLastItemSKuCode()
         {
-            var itemCode = itemVariationService.GetAll().OrderByDescending(x => x.SKUCode).FirstOrDefault().SKUCode;
-            var itemDescription =
-                inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault().ItemCode;
             List<string> list = new List<string>();
-            list.Add(itemCode);
-            list.Add(itemDescription);
+            var firstOrDefault = itemVariationService.GetAll().OrderByDescending(x => x.SKUCode).FirstOrDefault();
+            if (firstOrDefault != null)
+            {
+                var itemCode = firstOrDefault.SKUCode;
+                var itemDescription =
+                    inventoryItemService.GetAll().OrderByDescending(x => x.ItemCode).FirstOrDefault().ItemCode;
+                list.Add(itemCode);
+                list.Add(itemDescription);
+                return Json(list, JsonRequestBehavior.AllowGet);
+            }
+            list.Add(null);
             return Json(list, JsonRequestBehavior.AllowGet);
         }
 

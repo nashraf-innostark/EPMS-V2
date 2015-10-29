@@ -131,7 +131,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public string GenerateWarehouseNumber()
         {
             string lastWarehouseNumber = warehouseService.GetLastWarehouseNumber();
-            string warehouseNumber = "";
+            string warehouseNumber = "War101";
             if (lastWarehouseNumber != "")
             {
                 long number = Convert.ToInt64(lastWarehouseNumber.Substring(3));
@@ -141,10 +141,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 switch (len)
                 {
                     case 1:
-                        zeros = "00";
+                        zeros = "10";
                         break;
                     case 2:
-                        zeros = "0";
+                        zeros = "1";
                         break;
                     case 3:
                         zeros = "";
