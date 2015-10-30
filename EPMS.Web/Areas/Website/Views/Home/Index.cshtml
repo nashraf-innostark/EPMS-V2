@@ -337,11 +337,11 @@
     function deleteSliderRow(sliderId, imageName) {
         if ('@userPermissionsSet.Contains("DeleteSlider")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
+            m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg');
             m.show();
             return;
         }
-        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
         }
 
@@ -364,18 +364,18 @@
                         reActivateSliderSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg');
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                 m.show();
             }
         });
@@ -386,11 +386,11 @@
     function deleteDepartmentRow(departmentId, imageName) {
         if ('@userPermissionsSet.Contains("WebsiteDepartmentDelete")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
+            m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg');
             m.show();
             return;
         }
-        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
         }
 
@@ -413,18 +413,18 @@
                         reActivateDepartmentSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg');
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                 m.show();
             }
         });
@@ -435,11 +435,11 @@
     function deletePartnerRoW(partnerId, imageName) {
         if ('@userPermissionsSet.Contains("DeletePartner")' == 'False') {
             var m = $(".alert-error");
-            m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg);
+            m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.NoDeletePermissionMsg');
             m.show();
             return;
         }
-        if (confirm(@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation) == false) {
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
         }
 
@@ -462,18 +462,18 @@
                         reActivatePartnerSerial();
                     }
                     var m = $(".alert-success");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteSuccessMsg');
                     m.show();
                 }
                 if (result == "Error") {
                     var m = $(".alert-error");
-                    m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                    m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                     m.show();
                 }
             },
             error: function () {
                 var m = $(".alert-error");
-                m.children("span").text(@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg);
+                m.children("span").text('@EPMS.WebModels.Resources.Website.Common.Common.DeleteErrorMsg');
                 m.show();
             }
         });

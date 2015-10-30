@@ -26,5 +26,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.FirstOrDefault();
         }
+
+        public ContactUs SearchContactUs(string search)
+        {
+            return DbSet.FirstOrDefault(x => (x.ContentAr.Contains(search) || x.ContentEn.Contains(search)));
+        }
     }
 }

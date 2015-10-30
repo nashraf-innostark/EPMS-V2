@@ -7,6 +7,7 @@ namespace EPMS.Models.ResponseModels
     {
         public IEnumerable<Quotation> Quotations { get; set; }
         public Quotation Quotation { get; set; }
+        public RFQ Rfq { get; set; }
         public IEnumerable<Order> Orders { get; set; }
         public IEnumerable<Customer> Customers { get; set; }
         /// <summary>

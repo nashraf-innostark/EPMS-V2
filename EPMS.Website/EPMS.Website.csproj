@@ -210,6 +210,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\NewsAndArticleController.cs" />
     <Compile Include="Controllers\PaypalController.cs" />
+    <Compile Include="Controllers\SearchController.cs" />
     <Compile Include="Controllers\ServicesController.cs" />
     <Compile Include="Controllers\WebsiteFooterController.cs" />
     <Compile Include="Controllers\ShoppingCartController.cs" />
@@ -319,6 +320,7 @@
     <Content Include="Content\jquery.ui.html4.css" />
     <Content Include="Content\steve-jobs-html4.css" />
     <Content Include="Content\steve-jobs.css" />
+    <Content Include="Content\template.css" />
     <Content Include="Content\turnjs.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\cloud-zoom.css" />
@@ -1160,7 +1162,6 @@
     <Content Include="Sliders\wow_slider\js\blur.js" />
     <Content Include="Sliders\wow_slider\js\fly.js" />
     <Content Include="Sliders\wow_slider\js\wowslider.js" />
-    <Content Include="Content\template.css" />
     <Content Include="Content\updates.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
@@ -1778,6 +1779,7 @@
     <Content Include="Views\Paypal\CancelFromPaypal.cshtml" />
     <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
     <Content Include="Views\Catalogue\SteveJobsHtml.cshtml" />
+    <Content Include="Views\Search\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">

@@ -120,7 +120,7 @@ namespace EPMS.Repository.Repositories
             RIF rif = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             if (rif != null)
                 return rif.FormNumber;
-            return "RI00000001";
+            return "RI00000000";
         }
     }
 }

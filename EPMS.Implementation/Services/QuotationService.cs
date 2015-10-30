@@ -20,11 +20,12 @@ namespace EPMS.Implementation.Services
         private readonly INotificationService notificationService;
         private readonly ICustomerService customerService;
         private readonly IOrdersService ordersService;
+        private readonly IRFQRepository rfqRepository;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService, ICustomerService customerService, IOrdersService ordersService)
+        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService, ICustomerService customerService, IOrdersService ordersService, IRFQRepository rfqRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -32,6 +33,7 @@ namespace EPMS.Implementation.Services
             this.notificationService = notificationService;
             this.customerService = customerService;
             this.ordersService = ordersService;
+            this.rfqRepository = rfqRepository;
         }
 
         public IEnumerable<Quotation> GetAll()
@@ -69,6 +71,16 @@ namespace EPMS.Implementation.Services
                     }
                 }
             }
+            return response;
+        }
+
+        public QuotationResponse GetQuotationResponseForRfq(long customerId, long rfqId)
+        {
+            QuotationResponse response = new QuotationResponse
+            {
+                Rfq = rfqRepository.FindByCustomerAndRfqId(customerId, rfqId),
+                Customers = customerService.GetAll()
+            };
             return response;
         }
 

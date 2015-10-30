@@ -264,7 +264,7 @@
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
             $("#CKDescp").show();
-            $("#SaveNewNode").hide();
+            $("#SaveNewNode").show();
             $("#UpdateNode").hide();
             $("#Edit").hide();
         }
@@ -413,14 +413,14 @@
     function AddNewNode() {
         if (level >= 3) {
             var m = $(".alert-error");
-            m.children("span").text(@EPMS.WebModels.Resources.Website.WebsiteService.Service.LimitExceedMsg);
+            m.children("span").text('@EPMS.WebModels.Resources.Website.WebsiteService.Service.LimitExceedMsg');
             m.show();
             return false;
         }
         var parentId = $('#' + divId).jstree('get_selected')[0];
         if (parentId == "" || parentId == null || parentId == undefined) {
             var m = $(".alert-error");
-            m.children("span").text(@EPMS.WebModels.Resources.Website.WebsiteService.Service.SelectionErrorMsg);
+            m.children("span").text('@EPMS.WebModels.Resources.Website.WebsiteService.Service.SelectionErrorMsg');
             m.show();
             return false;
         }

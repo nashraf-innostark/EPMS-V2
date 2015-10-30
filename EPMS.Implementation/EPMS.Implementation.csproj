@@ -126,6 +126,7 @@
     <Compile Include="Services\AboutUsService.cs" />
     <Compile Include="Services\AllowanceService.cs" />
     <Compile Include="Services\AspNetUserService.cs" />
+    <Compile Include="Services\WebsiteSearchService.cs" />
     <Compile Include="Services\ColorService.cs" />
     <Compile Include="Services\CompanyBankService.cs" />
     <Compile Include="Services\CompanyDocumentService.cs" />
@@ -177,6 +178,7 @@
     <Compile Include="Services\QuotationItemService.cs" />
     <Compile Include="Services\QuotationService.cs" />
     <Compile Include="Services\DIFService.cs" />
+    <Compile Include="Services\RFQService.cs" />
     <Compile Include="Services\RIFService.cs" />
     <Compile Include="Services\RFIService.cs" />
     <Compile Include="Services\ShoppingCartItemService.cs" />

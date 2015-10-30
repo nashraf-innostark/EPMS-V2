@@ -167,6 +167,8 @@
     <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
+    <Compile Include="DomainModels\RFQ.cs" />
+    <Compile Include="DomainModels\RFQItem.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFHistory.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
@@ -321,6 +323,7 @@
     <Compile Include="RequestModels\TransferItemSearchRequest.cs" />
     <Compile Include="RequestModels\VendorRequest.cs" />
     <Compile Include="RequestModels\WarehouseRequest.cs" />
+    <Compile Include="RequestModels\WebsiteServiceSearchRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -392,6 +395,8 @@
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />
     <Compile Include="ResponseModels\RfiHistoryResponse.cs" />
+    <Compile Include="ResponseModels\RFQDetailResponse.cs" />
+    <Compile Include="ResponseModels\RFQResponse.cs" />
     <Compile Include="ResponseModels\RifHistoryResponse.cs" />
     <Compile Include="ResponseModels\RifRequestResponse.cs" />
     <Compile Include="ResponseModels\RfiRequestResponse.cs" />
@@ -399,6 +404,8 @@
     <Compile Include="ResponseModels\SaveInventoryDepartmentResponse.cs" />
     <Compile Include="ResponseModels\SaveInventoryItemResponse.cs" />
     <Compile Include="ResponseModels\SaveMeetingResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteSearchResponse.cs" />
+    <Compile Include="ResponseModels\WebsiteSearchResultData.cs" />
     <Compile Include="ResponseModels\ShoppingCartResponse.cs" />
     <Compile Include="ResponseModels\TIRCreateResponse.cs" />
     <Compile Include="ResponseModels\TirHistoryResponse.cs" />

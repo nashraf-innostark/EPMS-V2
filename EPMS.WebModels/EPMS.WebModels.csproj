@@ -115,6 +115,8 @@
     <Compile Include="ModelMappers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemMapper.cs" />
+    <Compile Include="ModelMappers\RFQItemMapper.cs" />
+    <Compile Include="ModelMappers\RFQMapper.cs" />
     <Compile Include="ModelMappers\RifHistoryMapper.cs" />
     <Compile Include="ModelMappers\RifItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\RIFItemMapper.cs" />
@@ -181,6 +183,16 @@
       <DependentUpon>Quotation.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CMS\RFQ.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFQ.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\CMS\RFQ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RFQ.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CP\Profile.ar.Designer.cs">
       <DependentUpon>Profile.ar.resx</DependentUpon>
@@ -754,10 +766,14 @@
     <Compile Include="ViewModels\RFI\RFIHistoryViewModel.cs" />
     <Compile Include="ViewModels\RFI\RfiListViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIViewModel.cs" />
+    <Compile Include="ViewModels\RFQ\RFQCreateViewModel.cs" />
+    <Compile Include="ViewModels\RFQ\RFQDetailViewModel.cs" />
+    <Compile Include="ViewModels\RFQ\RFQListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RifHistoryViewModel.cs" />
     <Compile Include="ViewModels\RIF\RifListViewModel.cs" />
     <Compile Include="ViewModels\RIF\RIFViewModel.cs" />
     <Compile Include="ViewModels\RightsManagement\RightsManagementViewModel.cs" />
+    <Compile Include="ViewModels\Search\SearchResult.cs" />
     <Compile Include="ViewModels\WebsiteClient\ReturnUrlModel.cs" />
     <Compile Include="ViewModels\WebsiteClient\ShoppingCartListViewModel.cs" />
     <Compile Include="ViewModels\Website\Footer\FooterViewModel.cs" />
@@ -785,6 +801,7 @@
     <Compile Include="WebsiteModels\Color.cs" />
     <Compile Include="WebsiteModels\Common\JsTree.cs" />
     <Compile Include="WebsiteModels\Common\JsTreeJson.cs" />
+    <Compile Include="WebsiteModels\Common\RFQStatus.cs" />
     <Compile Include="WebsiteModels\CompanyBankDetail.cs" />
     <Compile Include="WebsiteModels\CompanyDocumentDetail.cs" />
     <Compile Include="WebsiteModels\CompanyLicenseInformation.cs" />
@@ -854,6 +871,8 @@
     <Compile Include="WebsiteModels\RequestDetail.cs" />
     <Compile Include="WebsiteModels\RFI.cs" />
     <Compile Include="WebsiteModels\RFIItem.cs" />
+    <Compile Include="WebsiteModels\RFQ.cs" />
+    <Compile Include="WebsiteModels\RFQItem.cs" />
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />
     <Compile Include="WebsiteModels\ShoppingCart.cs" />
@@ -920,6 +939,15 @@
     <EmbeddedResource Include="Resources\CMS\Quotation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\RFQ.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RFQ.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\RFQ.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RFQ.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.ar.resx">

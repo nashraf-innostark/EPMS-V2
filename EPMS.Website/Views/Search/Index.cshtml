@@ -1,0 +1,587 @@
+﻿@using System.Configuration
+@using EPMS.WebModels.Resources.WebsiteClient.Product
+@model EPMS.WebModels.ViewModels.Search.SearchResult
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var Date = DateTime.Now;
+    var title = EPMS.Website.Resources.Shared.Common.SearchResults;
+    int pageNo = 1;
+    int pageNoNewsAndArticle = 1;
+    int pageNoServices = 1;
+    string NewsAndArticleImageFolder = ConfigurationManager.AppSettings["NewsAndArticleImage"];
+    string ProductImageFolder = ConfigurationManager.AppSettings["ProductImage"];
+
+    string siteURL = ConfigurationManager.AppSettings["SiteURL"];
+    string noImage = siteURL + "/images/noimage_department.png";
+    DateTime today = DateTime.Now;
+    string link;
+}
+
+<div id="page_header" class="gradient bottom-shadow">
+    <div class="bgback bg3"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="span6">
+                <ul class="breadcrumbs fixclear">
+                    <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
+                    <li>@title</li>
+                </ul>
+                <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@title</h2>
+
+                </div>
+            </div>
+        </div><!-- end row -->
+    </div>
+
+    <div class="shadowUP"></div>
+</div><!-- end page_header -->
+
+<section id="content">
+    <div class="container">
+
+        <div id="mainbody">
+            @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", @id = "filter-products", role = "form", enctype = "multipart/form-data" }))
+            {
+                @Html.HiddenFor(model => model.NewsAndArticleSearchRequest.iDisplayStart, new { @id = "displayStartNewsAndArticle" })
+                @Html.HiddenFor(model => model.ProductSearchRequest.iDisplayStart, new { @id = "displayStartProduct" })
+                @Html.HiddenFor(model => model.WebsiteServiceSearchRequest.iDisplayStart, new { @id = "displayStartService" })
+                @Html.HiddenFor(model => model.searchText, new { @id = "searchText" })
+                <div class="row">
+                    <div class="span12 directionR listing">
+
+
+                        <div class="tabbable tabs_style2">
+                            <ul class="nav fixclear">
+                                <li class="active"><a href="#shop-tab1" data-toggle="tab">@EPMS.Website.Resources.Shared.Common.General</a></li>
+                                <li><a href="#shop-tab2" data-toggle="tab">@EPMS.Website.Resources.Shared.Common.Products</a></li>
+                                <li><a href="#shop-tab3" data-toggle="tab">@EPMS.Website.Resources.Shared.Common.Services</a></li>
+                                <li><a href="#shop-tab4" data-toggle="tab">@EPMS.Website.Resources.Shared.Common.NewsArticles</a></li>
+
+                            </ul>
+
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="shop-tab1">
+                                    @if (Model.AboutUs != null)
+                                    {
+                                        string desc = "";
+                                        string more = "";
+
+                                        <div class="itemView clearfix eBlog">
+                                            <h4><a href="~/AboutUs/Detail">@EPMS.Website.Resources.Shared.Common.AboutUs</a></h4>
+
+                                            <div class="itemBody ">
+                                                @{
+                                        desc = direction == "ltr" ? Model.AboutUs.ContentEn.Substring(0, (Model.AboutUs.ContentEn.Length > 700 ? 700 : (Model.AboutUs.ContentEn.Length - 1))) : Model.AboutUs.ContentAr.Substring(0, (Model.AboutUs.ContentAr.Length > 700 ? 700 : (Model.AboutUs.ContentAr.Length - 1)));
+                                        if (desc.Length > 700)
+                                        {
+                                            more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
+                                        }
+                                                }
+                                                <p>
+                                                    @Html.Raw(desc)
+                                                    @Html.Raw(more)
+                                                </p>
+                                            </div><!-- end item body -->
+                                            <div class="clear"></div>
+                                        </div>
+                                    }
+
+                                    @if (Model.ContactUs != null)
+                                    {
+                                        string desc = "";
+                                        string more = "";
+
+                                        <div class="itemView clearfix eBlog">
+                                            <h4><a href="~/ContactUs/Detail">@EPMS.Website.Resources.Shared.Common.ContactUs</a></h4>
+
+                                            <div class="itemBody ">
+                                                @{
+                                        desc = direction == "ltr" ? Model.ContactUs.ContentEn.Substring(0, (Model.ContactUs.ContentEn.Length > 700 ? 700 : (Model.ContactUs.ContentEn.Length - 1))) : Model.ContactUs.ContentAr.Substring(0, (Model.ContactUs.ContentAr.Length > 700 ? 700 : (Model.ContactUs.ContentAr.Length - 1)));
+                                        if (desc.Length > 700)
+                                        {
+                                            more = "<a href='~/AboutUs/Detail' class='moreListing'>More...</a>";
+                                        }
+                                                }
+                                                <p>
+                                                    @Html.Raw(desc)
+                                                    @Html.Raw(more)
+                                                </p>
+                                            </div><!-- end item body -->
+                                            <div class="clear"></div>
+                                        </div>
+                                    }
+
+
+                                    <!-- End Item Layout -->
+                                    @*<div class="span4">
+                                            <div class="pagination">
+                                                <a href="#"><div class="previous"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                <a href="#" class="active"><div class="page-button">1</div></a>
+                                                <a href="#"><div class="page-button">2</div></a>
+                                                <a href="#"><div class="page-button">3</div></a>
+                                                <a href="#"><div class="next"><i class="fa fa-long-arrow-right"></i></div></a>
+                                            </div>
+                                        </div>*@
+
+                                </div>
+                                <div class="tab-pane" id="shop-tab2">
+                                    @if (Model.Products.Any())
+                                    {
+                                        for (int i = 0; i < Model.Products.Count; i += 3)
+                                        {
+                                            <div class="row">
+                                                @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
+                                                {
+                                                    <div class="span3">
+                                                        <div class="product-list-item">
+                                                            <span class="hover"></span>
+                                                            <div class="image">
+                                                                @{
+                                                    string path = !string.IsNullOrEmpty(Model.Products[j].ProductImage) ? ProductImageFolder + Model.Products[j].ProductImage : noImage;
+                                                    //if (requestFrom == "Inventory")
+                                                    //{
+                                                    //    path = !string.IsNullOrEmpty(Model.Products[j].ItemImage) ? itemImageFolder + Model.Products[j].ItemImage : noImage;
+                                                    //}
+                                                    //if (requestFrom == "Sections")
+                                                    //{
+                                                    //    path = !string.IsNullOrEmpty(Model.Products[j].ProductImage) ? ProductImageFolder + Model.Products[j].ProductImage : noImage;
+                                                    //}
+                                                    if (Model.Products[j].ItemVariationId != null)
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
+                                                            <img src="@path" alt="">
+                                                        </a>
+                                                    }
+                                                                }
+                                                            </div>
+                                                            <div class="details fixclear">
+                                                                @if (direction == "ltr")
+                                                                {
+                                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
+                                                                }
+                                                                <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
+                                                                <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
+                                                                <div class="actions">
+                                                                    <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
+                                                                    @if (Model.Products[j].ItemVariationId != null)
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">@Product.More</a>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
+                                                                    }
+                                                                </div>
+                                                                <div class="price">
+                                                                    @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                                    {
+                                                                        <span>@Model.Products[j].DiscountedPrice</span>
+                                                                        <span>SR</span>
+                                                                        <small>@Model.Products[j].ProductPrice</small>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span>@Model.Products[j].ProductPrice</span>
+                                                                        <span>SR</span>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                        <div class="span4">
+                                            <div class="pagination" id="paginationpro">
+                                                <a onclick="$(this).closest('form').submit();"><div class="cursorHand first-page-pro"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                @for (int i = 0; i < Model.ProductSearchRequest.TotalCount; i += Model.ProductSearchRequest.iDisplayLength)
+                                                {
+                                                    if (i == Model.ProductSearchRequest.iDisplayStart)
+                                                    {
+                                                        <a class="active cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
+                                                    }
+                                                    else
+                                                    {
+                                                        <a class="cursorHand" onclick="$(this).closest('form').submit();"><div class="page-button-pro">@pageNo</div></a>
+                                                    }
+                                                    pageNo++;
+                                                }
+                                                <a onclick="$(this).closest('form').submit();"><div class="cursorHand last-page-pro"><i class="fa fa-long-arrow-left"></i></div></a>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="itemView clearfix eBlog">
+                                            <h4>No Product found.</h4>
+                                        </div>
+                                    }
+                                </div>
+                                <div class="tab-pane" id="shop-tab3">
+                                    @if (Model.WebsiteServices.Any())
+                                    {
+                                        string desc = "";
+                                        string more = "";
+                                        foreach (var websiteService in Model.WebsiteServices)
+                                        {
+                                            <div class="itemView clearfix eBlog">
+                                                <h4><a href="~/Services/Detail/@websiteService.ServiceId">New Device</a></h4>
+
+                                                <div class="itemBody ">
+                                                    @{
+                                            desc = direction == "ltr" ? websiteService.DescriptionEn.Substring(0, (websiteService.DescriptionEn.Length > 700 ? 700 : (websiteService.DescriptionEn.Length - 1))) : websiteService.DescriptionAr.Substring(0, (websiteService.DescriptionAr.Length > 700 ? 700 : (websiteService.DescriptionAr.Length - 1)));
+                                            if (desc.Length > 700)
+                                            {
+                                                more = "<a href='~/Services/Detail/@websiteService.ServiceId' class='moreListing'>More...</a>";
+                                            }
+                                                    }
+                                                    <p>
+                                                        @Html.Raw(desc)
+                                                        @Html.Raw(more)
+                                                    </p>
+                                                </div><!-- end item body -->
+                                                <div class="clear"></div>
+                                            </div>
+                                        }
+                                        <div class="span4">
+                                            <div class="paginationWeb">
+                                                @if (Model.WebsiteServiceSearchRequest.TotalCount > 0)
+                                                {
+                                                    <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand first-page-web"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                    for (int i = 0; i < Model.WebsiteServiceSearchRequest.TotalCount; i += Model.WebsiteServiceSearchRequest.iDisplayLength)
+                                                    {
+                                                        if (i == Model.WebsiteServiceSearchRequest.iDisplayStart)
+                                                        {
+                                                            <a class="active cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-web">@pageNoServices</div></a>
+                                                        }
+                                                        else
+                                                        {
+                                                            <a class="cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-web">@pageNoServices</div></a>
+                                                        }
+                                                        pageNo++;
+                                                    }
+                                                    <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand last-page-web"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                }
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="itemView clearfix eBlog">
+                                            <h4>No Service found.</h4>
+                                        </div>
+                                    }
+                                </div>
+                                @using (Html.BeginForm("Index", "Search", FormMethod.Post, new { @class = "form-horizontal", @id = "newsAndArticleForm", role = "form", enctype = "multipart/form-data" }))
+                                {
+                                    <div class="tab-pane" id="shop-tab4">
+                                        @if (Model.NewsAndArticles.Any())
+                                        {
+                                            foreach (var newsOrArticle in Model.NewsAndArticles.ToList())
+                                            {
+
+                                                if (direction == "ltr")
+                                                {
+                                                    <div class="itemView clearfix eBlog">
+                                                        <h4>@newsOrArticle.TitleEn</h4>
+                                                        <div class="itemHeader">
+                                                            <div class="post_details">
+                                                                <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
+                                                                <span class="infSep"> / </span>
+                                                                <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
+                                                            </div>
+                                                        </div><!-- end itemheader -->
+                                                        <div class="itemBody ">
+                                                            <p>
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                                    @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                                    {
+                                                                        <img src="~/Images/noimage_department.png" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
+                                                                    }
+                                                                </a>
+                                                            </p>
+                                                            <p style="text-align: justify">
+                                                                @newsOrArticle.ContentEn
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                                            </p>
+                                                        </div><!-- end item body -->
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                }
+                                                else
+                                                {
+                                                    <div class="itemView clearfix eBlog">
+                                                        <h4>@newsOrArticle.TitleAr</h4>
+                                                        <div class="itemHeader">
+                                                            <div class="post_details">
+                                                                <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
+                                                                <span class="infSep"> / </span>
+                                                                <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
+                                                            </div>
+                                                        </div><!-- end itemheader -->
+                                                        <div class="itemBody ">
+                                                            <p>
+                                                                <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                                    @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                                    {
+                                                                        <img src="~/Images/noimage_department.png" />
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <img src="@NewsAndArticleImageFolder@Url.Content(newsOrArticle.ImagePath)" />
+                                                                    }
+                                                                </a>
+                                                            </p>
+                                                            <p style="text-align: justify">
+                                                                @newsOrArticle.ContentAr
+                                                            </p>
+                                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                                        </div><!-- end item body -->
+                                                        <div class="clear"></div>
+                                                    </div>
+                                                }
+                                            }
+                                            <div class="span4">
+                                                <div class="pagination">
+                                                    @if (Model.NewsAndArticleSearchRequest.TotalCount > 0)
+                                                    {
+                                                        <a><div class="cursorHand first-page-naa"><i class="fa fa-long-arrow-right"></i></div></a>
+                                                        for (int i = 0; i <= Model.NewsAndArticleSearchRequest.TotalCount; i += Model.NewsAndArticleSearchRequest.iDisplayLength)
+                                                        {
+                                                            if (i == Model.NewsAndArticleSearchRequest.iDisplayStart)
+                                                            {
+                                                                <a class="active cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
+                                                            }
+                                                            else
+                                                            {
+                                                                <a class="cursorHand" onclick=" $(this).closest('form').submit(); "><div class="page-button-naa">@pageNoNewsAndArticle</div></a>
+                                                            }
+                                                            pageNoNewsAndArticle++;
+                                                        }
+                                                        <a onclick=" $(this).closest('form').submit(); "><div class="cursorHand last-page-naa"><i class="fa fa-long-arrow-left"></i></div></a>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                        else
+                                        {
+                                            <div class="itemView clearfix eBlog">
+                                                <h4>No News or Article found.</h4>
+                                            </div>
+                                        }
+                                    </div><!-- End Tabs -->
+                                }
+                            </div><!-- end tabbable -->
+                        </div>
+                    </div><!-- end row -->
+                </div>
+            }
+        </div><!-- end mainbody -->
+    </div><!-- end container -->
+</section><!-- end #content -->
+
+<script>
+    var siteUrl;
+    $(document).ready(function () {
+        var searchText = '@ViewBag.SearchText';
+        $('#searchText').val(searchText);
+
+        siteUrl = $("#siteURL").val();
+        // latest & bestsellers carousels
+        $('.shop-latest-carousel > ul').each(function (index, element) {
+            $(this).carouFredSel({
+                responsive: true,
+                scroll: 1,
+                auto: false,
+                height: 406,
+                items: { width: 260, visible: { min: 1, max: 4 } },
+                prev: { button: $(this).parent().find('a.prev'), key: "left" },
+                next: { button: $(this).parent().find('a.next'), key: "right" },
+            });
+        });
+    });
+    $(document).on('change', '.filter', function () {
+        var sortBy = parseInt($("#SortBy").val());
+        if (sortBy == 1 || sortBy == 3 || sortBy == 5) {
+            $("#SortDirection").val("asc");
+        } else {
+            $("#SortDirection").val("desc");
+        }
+        if (sortBy == 1 || sortBy == 2) {
+            $("#sortCol").val("1");
+        }
+        else if (sortBy == 5 || sortBy == 6) {
+            $("#sortCol").val("2");
+        }
+        else if (sortBy == 3 || sortBy == 4) {
+            $("#sortCol").val("3");
+        }
+        // submit from
+        $("#filter-products").submit();
+    });
+    $(document).on('click', '.page-button', function () {
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var pageNo = parseInt(this.textContent);
+        var length = parseInt($('#displayLength').val());
+        var displayStart = (pageNo - 1) * length;
+        $('#displayStart').val(displayStart);
+        // submit from
+        $("#filter-products").submit();
+    });
+    $(document).on('click', '.first-page', function () {
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        $('#displayStart').val(0);
+        // submit from
+        $("#filter-products").submit();
+    });
+    @*$(document).on('click', '.last-page', function () {
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var totalCount = parseInt('@Model.SearchRequest.TotalCount');
+        var length = parseInt($('#displayLength').val());
+        $('#displayStart').val(getLastPage(totalCount, length));
+        // submit from
+        $("#filter-products").submit();
+    });*@
+    function getLastPage(totalCount, length) {
+        var totalPages = Math.ceil(totalCount / length);
+        return ((totalPages - 1) * length);
+    }
+
+    //Pagination for News and Articles
+
+    $(document).on('click', '.page-button-naa', function () {
+        debugger;
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var pageNo = parseInt(this.textContent);
+        var length = 5;
+        var displayStart = (pageNo - 1) * length;
+        $('#displayStartNewsAndArticle').val(displayStart);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.first-page-naa', function () {
+        debugger;
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        $('#displayStartNewsAndArticle').val(0);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.last-page-naa', function () {
+        debugger;
+        $('#pagination a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var totalCount = parseInt('@Model.NewsAndArticleSearchRequest.TotalCount');
+        var length = 5;
+        $('#displayStartNewsAndArticle').val(getLastPage(totalCount, length));
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    //Pagination for Products
+
+    $(document).on('click', '.page-button-pro', function () {
+        debugger;
+        $('#paginationpro a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var pageNo = parseInt(this.textContent);
+        var length = 5;
+        var displayStart = (pageNo - 1) * length;
+        $('#displayStartProduct').val(displayStart);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.first-page-pro', function () {
+        debugger;
+        $('#paginationpro a').removeClass("active");
+        this.parentElement.classList.add("active");
+        $('#displayStartProduct').val(0);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.last-page-pro', function () {
+        debugger;
+        $('#paginationpro a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var totalCount = parseInt('@Model.ProductSearchRequest.TotalCount');
+        var length = 5;
+        $('#displayStartProduct').val(getLastPage(totalCount, length));
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    //Pagination for Services
+
+    $(document).on('click', '.page-button-web', function () {
+        debugger;
+        $('#paginationWeb a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var pageNo = parseInt(this.textContent);
+        var length = 5;
+        var displayStart = (pageNo - 1) * length;
+        $('#displayStartService').val(displayStart);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.first-page-web', function () {
+        debugger;
+        $('#paginationWeb a').removeClass("active");
+        this.parentElement.classList.add("active");
+        $('#displayStartService').val(0);
+        // submit from
+        $("#filter-products").submit();
+    });
+
+    $(document).on('click', '.last-page-web', function () {
+        debugger;
+        $('#paginationWeb a').removeClass("active");
+        this.parentElement.classList.add("active");
+        var totalCount = parseInt('@Model.ProductSearchRequest.TotalCount');
+        var length = 5;
+        $('#displayStartService').val(getLastPage(totalCount, length));
+        // submit from
+        $("#filter-products").submit();
+    });
+
+
+    function getLastPage(totalCount, length) {
+        debugger;
+        var totalPages = Math.ceil(totalCount / length);
+        return ((totalPages - 1) * length);
+    }
+
+
+</script>
+
+
+

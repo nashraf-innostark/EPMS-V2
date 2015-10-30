@@ -58,6 +58,7 @@
     <Compile Include="IServices\IAboutUsService.cs" />
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
+    <Compile Include="IServices\IWebsiteSearchService.cs" />
     <Compile Include="IServices\IColorService.cs" />
     <Compile Include="IServices\ICompanyBankService.cs" />
     <Compile Include="IServices\ICompanyDocumentService.cs" />
@@ -88,6 +89,7 @@
     <Compile Include="IServices\IMeetingAttendeeService.cs" />
     <Compile Include="IServices\IMeetingDocumentService.cs" />
     <Compile Include="IServices\IMeetingService.cs" />
+    <Compile Include="IServices\IRFQService.cs" />
     <Compile Include="IServices\IShoppingCartItemService.cs" />
     <Compile Include="IServices\IWebsiteCustomerService.cs" />
     <Compile Include="IServices\IWebsiteFooterService.cs" />
@@ -195,6 +197,8 @@
     <Compile Include="Repository\IDIFItemRepository.cs" />
     <Compile Include="Repository\IDIFRepository.cs" />
     <Compile Include="Repository\IRFIHistoryRepository.cs" />
+    <Compile Include="Repository\IRFQItemRepository.cs" />
+    <Compile Include="Repository\IRFQRepository.cs" />
     <Compile Include="Repository\IRIFHistoryRepository.cs" />
     <Compile Include="Repository\IRIFItemRepository.cs" />
     <Compile Include="Repository\IRFIItemRepository.cs" />

@@ -111,14 +111,14 @@
         </div>
         @if (userPermissionsSet.Contains("OrderCreate"))
         {
-            if (!isDetailView)
-            {
+            //if (!isDetailView)
+            //{
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
                         <button type="submit" class="btn" onclick=" validateForm(event) ">@Model.BtnText</button>
                     </div>
                 </div>
-            }
+            //}
         }
         @if (userPermissionsSet.Contains("OrderDetails"))
         {

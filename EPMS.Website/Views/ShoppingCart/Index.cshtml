@@ -1,4 +1,5 @@
-﻿@using System.Globalization
+﻿@using System.Configuration
+@using System.Globalization
 @using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
 @using EPMS.Website.Resources.Shared
 @model EPMS.WebModels.ViewModels.WebsiteClient.ShoppingCartListViewModel
@@ -8,6 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = Common.TextDirection;
     DateTime today = DateTime.Now;
+    var checkoutUrl = ConfigurationManager.AppSettings["CpLink"]+"/CMS/Quotation/RFQ?from=Client&C_Id="+Session["UserID"];
 }
 <link href="~/Content/pnotify.core.min.css" rel="stylesheet" />
 
@@ -63,11 +65,11 @@
                                         <td class="product-id" style="display: none">@Model.ShoppingCart.ShoppingCartItems[i].ProductId</td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ImagePath)
-                                        <td class="image-column"><a href="#"><img src="@Model.ShoppingCart.ShoppingCartItems[i].ImagePath" alt=""></a></td>
+                                        <td class="image-column"><img src="@Model.ShoppingCart.ShoppingCartItems[i].ImagePath" alt=""></td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameEn)
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)
-                                        <td><p><a href="#">@(direction == "ltr" ? Model.ShoppingCart.ShoppingCartItems[i].ItemNameEn : Model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)</a></p></td>
+                                        <td><p>@(direction == "ltr" ? Model.ShoppingCart.ShoppingCartItems[i].ItemNameEn : Model.ShoppingCart.ShoppingCartItems[i].ItemNameAr)</p></td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].SkuCode)
                                         <td><p>@Model.ShoppingCart.ShoppingCartItems[i].SkuCode</p></td>
@@ -93,7 +95,7 @@
                             </table>
                             <div class="control-group">
                                 <div class="controls">
-                                    <a href="http://localhost/EPMSWebsiteCP/CMS/Quotation/Create?from=Client" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>
+                                    <a href="@checkoutUrl" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>
                                     @*<a href="http://localhost/EPMSWebsiteCP/CMS/Quotation/Create" class="btn" onclick="setFromValue(event)">Proceed to CheckOut</a>*@
                                 </div>
                             </div>

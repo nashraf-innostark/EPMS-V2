@@ -5,7 +5,6 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
-
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.EncryptDecrypt;
@@ -15,8 +14,9 @@ using EPMS.WebModels.ViewModels.Quotation;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
-using EPMS.WebModels.ViewModels.WebsiteClient;
+using EPMS.WebModels.ViewModels.RFQ;
 using EPMS.WebModels.WebsiteModels;
+using EPMS.WebModels.WebsiteModels.Common;
 using Microsoft.AspNet.Identity;
 using Order = EPMS.WebModels.WebsiteModels.Order;
 using Quotation = EPMS.WebModels.Resources.CMS.Quotation;
@@ -32,14 +32,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IAspNetUserService AspNetUserService;
         private readonly IOrdersService OrdersService;
         private readonly IQuotationService QuotationService;
+        private readonly IRFQService rfqService;
         private readonly IQuotationItemService QuotationItemService;
         private readonly ICompanyProfileService ProfileService;
         private readonly IShoppingCartService cartService;
+        private readonly ICompanyProfileService companyProfileService;
         #endregion
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService)
+        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService, IRFQService rfqService, ICompanyProfileService companyProfileService)
         {
             CustomerService = customerService;
             AspNetUserService = aspNetUserService;
@@ -48,13 +50,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationItemService = quotationItemService;
             ProfileService = profileService;
             this.cartService = cartService;
+            this.rfqService = rfqService;
+            this.companyProfileService = companyProfileService;
         }
 
         #endregion
 
         #region Public
 
-        #region ListView
+        #region ListView Quotation
 
         // GET: CMS/Quotation
         [SiteAuthorize(PermissionKey = "QuotationIndex")]
@@ -82,7 +86,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 searchRequest.CustomerId = (long)Session["CustomerID"];
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
-            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
+            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x=>x.QuotationId);
             viewModel.iTotalRecords = quotationList.TotalCount;
             viewModel.iTotalDisplayRecords = quotationList.TotalCount;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
@@ -90,10 +94,23 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
-        #region Add/Update
+        #region ListView RFQ
+        [SiteAuthorize(PermissionKey = "RFQIndex")]
+        public ActionResult RFQIndex()
+        {
+            RFQListViewModel viewModel = new RFQListViewModel
+            {
+                Rfqs = rfqService.GetAllRfqs().Select(x => x.CreateFromServerToClient()),
+            };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(viewModel);
+        }
+        #endregion
+
+        #region Add/Update Quotation
 
         [SiteAuthorize(PermissionKey = "QuotationsCreate")]
-        public ActionResult Create(long? id, string from)
+        public ActionResult Create(long? id, string from, long? rfqId)
         {
             var direction = WebModels.Resources.Shared.Common.TextDirection;
             long quotationId = 0;
@@ -105,30 +122,31 @@ namespace EPMS.Web.Areas.CMS.Controllers
             long employeeId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"]) : 0;
             if (from == "Client")
             {
-                string userId = User.Identity.GetUserId();
-                var response = cartService.FindByUserCartId(userId);
-                QuotationCreateViewModel model = new QuotationCreateViewModel();
-                if (response != null)
+                QuotationCreateViewModel model = new QuotationCreateViewModel
+                {
+                    CustomerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0
+                };
+                QuotationResponse response = QuotationService.GetQuotationResponseForRfq(model.CustomerId, (long)rfqId);
+                
+                if (response.Rfq != null)
                 {
                     model.QuotationItemDetails = new List<QuotationItemDetail>();
-                    var shoppingCart = response.CreateFromServerToClient();
-                    foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
+                    var rfqItems = response.Rfq.RFQItems.Select(x=>x.CreateFromServerToClient());
+                    foreach (var rfqItem in rfqItems)
                     {
                         QuotationItemDetail item = new QuotationItemDetail
                         {
-                            ItemDetails = direction == "ltr" ? shoppingCartItem.ItemNameEn : shoppingCartItem.ItemNameAr,
-                            ItemQuantity = shoppingCartItem.Quantity,
-                            UnitPrice = shoppingCartItem.UnitPrice,
-                            TotalPrice = (shoppingCartItem.Quantity * shoppingCartItem.UnitPrice)
+                            ItemDetails = rfqItem.ItemDetails,
+                            ItemQuantity = rfqItem.ItemQuantity,
+                            UnitPrice = rfqItem.UnitPrice,
+                            TotalPrice = (rfqItem.ItemQuantity * rfqItem.UnitPrice)
                         };
                         model.QuotationItemDetails.Add(item);
                     }
-                    model.CustomerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
-                    QuotationResponse quotClientResponse = QuotationService.GetQuotationResponse(quotationId, model.CustomerId, from);
-                    ViewBag.Customers = quotClientResponse.Customers.Any() ? 
-                        quotClientResponse.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
-                    ViewBag.Orders = quotClientResponse.Orders.Any() ?
-                        quotClientResponse.Orders.Select(x => x.CreateFromServerToClient()) : new List<Order>();
+                    model.QuotationDiscount = response.Rfq.Discount;
+                    ViewBag.Customers = response.Customers.Any() ?
+                        response.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
+                    ViewBag.Orders = new List<Order>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
                     model.CreatedByEmployee = employeeId;
@@ -240,31 +258,34 @@ namespace EPMS.Web.Areas.CMS.Controllers
             // Save Quotation
             viewModel.RecCreatedBy = User.Identity.GetUserId();
             viewModel.RecCreatedDt = DateTime.Now;
+            viewModel.RecUpdatedBy = User.Identity.GetUserId();
+            viewModel.RecUpdatedDt = DateTime.Now;
             var quotationToAdd = viewModel.CreateFromClientToServer();
             var quotaionId = QuotationService.AddQuotation(quotationToAdd);
-            bool addStatus = false;
+            //bool addStatus = false;
+            //if (quotaionId > 0)
+            //{
+            //    //Save Item Details
+            //    foreach (var itemDetail in viewModel.QuotationItemDetails)
+            //    {
+            //        bool isItemEDetailEmpty = !string.IsNullOrEmpty(itemDetail.ItemDetails) ||
+            //                                  itemDetail.ItemQuantity == 0 || itemDetail.UnitPrice == 0;
+            //        if (!isItemEDetailEmpty)
+            //        {
+            //            itemDetail.QuotationId = quotaionId;
+            //            itemDetail.RecCreatedBy = User.Identity.GetUserId();
+            //            itemDetail.RecCreatedDt = DateTime.Now;
+            //            var itemDetailToAdd = itemDetail.CreateFromClientToServer();
+            //            addStatus = QuotationItemService.AddQuotationItem(itemDetailToAdd);
+            //        }
+            //        if (viewModel.QuotationItemDetails.Count > 0 && isItemEDetailEmpty)
+            //        {
+            //            addStatus = true;
+            //        }
+            //    }
+            //}
+            //if (addStatus && quotaionId > 0)
             if (quotaionId > 0)
-            {
-                //Save Item Details
-                foreach (var itemDetail in viewModel.QuotationItemDetails)
-                {
-                    bool isItemEDetailEmpty = !string.IsNullOrEmpty(itemDetail.ItemDetails) ||
-                                              itemDetail.ItemQuantity == 0 || itemDetail.UnitPrice == 0;
-                    if (!isItemEDetailEmpty)
-                    {
-                        itemDetail.QuotationId = quotaionId;
-                        itemDetail.RecCreatedBy = User.Identity.GetUserId();
-                        itemDetail.RecCreatedDt = DateTime.Now;
-                        var itemDetailToAdd = itemDetail.CreateFromClientToServer();
-                        addStatus = QuotationItemService.AddQuotationItem(itemDetailToAdd);
-                    }
-                    if (viewModel.QuotationItemDetails.Count > 0 && isItemEDetailEmpty)
-                    {
-                        addStatus = true;
-                    }
-                }
-            }
-            if (addStatus && quotaionId > 0)
             {
                 TempData["message"] = new MessageViewModel
                 {
@@ -280,6 +301,213 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 IsError = true
             };
             return View(viewModel);
+        }
+
+        #endregion
+
+        #region Add/Update RFQ
+        [SiteAuthorize(PermissionKey = "RFQCreate")]
+        public ActionResult RFQ(long? id, string from)
+        {
+            var direction = WebModels.Resources.Shared.Common.TextDirection;
+            long customerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
+            RFQCreateViewModel model = new RFQCreateViewModel();
+            if (from == "Client")
+            {
+                model.FromClient = true;
+            }
+            if (id != null)
+            {
+                long quotationId = (long)id;
+                RFQResponse rfqResponse = rfqService.GetRfqResponse(quotationId, customerId, from);
+                if (rfqResponse.Rfq != null)
+                {
+                    model.Rfq = rfqResponse.Rfq.CreateFromServerToClient();
+                }
+                model.Rfq.CustomerId = customerId;
+                return View(model);
+            }
+            model.Rfq.CustomerId = customerId;
+            if (from == "Client")
+            {
+                string userId = User.Identity.GetUserId();
+                var response = cartService.FindByUserCartId(userId);
+                if (response != null)
+                {
+                    var shoppingCart = response.CreateFromServerToClient();
+                    foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
+                    {
+                        RFQItem item = new RFQItem
+                        {
+                            ItemDetails = direction == "ltr" ? shoppingCartItem.ItemNameEn : shoppingCartItem.ItemNameAr,
+                            ItemQuantity = shoppingCartItem.Quantity,
+                            UnitPrice = shoppingCartItem.UnitPrice,
+                            TotalPrice = (shoppingCartItem.Quantity * shoppingCartItem.UnitPrice)
+                        };
+                        model.Rfq.RFQItems.Add(item);
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateInput(false)]
+        public ActionResult RFQ(RFQCreateViewModel model)
+        {
+            if (model.FromClient)
+            {
+                if (model.Rfq.RFQId > 0)
+                {
+                    model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecLastUpdatedDate = DateTime.Now;
+                    foreach (var rfqItem in model.Rfq.RFQItems)
+                    {
+                        rfqItem.RecLastUpdatedBy = User.Identity.GetUserId();
+                        rfqItem.RecLastUpdatedDate = DateTime.Now;
+                    }
+                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    var rfqToUpdate = model.Rfq.CreateFromClientToServer();
+                    if (rfqToUpdate.CustomerId == 0)
+                    {
+                        rfqToUpdate.CustomerId = null;
+                    }
+                    if (rfqService.UpdateRfq(rfqToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.CMS.RFQ.UpdateMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("RFQIndex");
+                    }
+                }
+                else
+                {
+                    model.Rfq.RecCreatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecCreatedDate = DateTime.Now;
+                    model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecLastUpdatedDate = DateTime.Now;
+                    foreach (var rfqItem in model.Rfq.RFQItems)
+                    {
+                        rfqItem.RecCreatedBy = User.Identity.GetUserId();
+                        rfqItem.RecCreatedDate = DateTime.Now;
+                        rfqItem.RecLastUpdatedBy = User.Identity.GetUserId();
+                        rfqItem.RecLastUpdatedDate = DateTime.Now;
+                    }
+                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    var rfqToAdd = model.Rfq.CreateFromClientToServer();
+                    if (rfqToAdd.CustomerId == 0)
+                    {
+                        rfqToAdd.CustomerId = null;
+                    }
+                    if (rfqService.AddRfq(rfqToAdd))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.CMS.RFQ.AddMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("RFQIndex");
+                    }
+                }
+            }
+            else
+            {
+                if (model.Rfq.RFQId > 0)
+                {
+                    model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecLastUpdatedDate = DateTime.Now;
+                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    var rfqToUpdate = model.Rfq.CreateFromClientToServer();
+                    if (rfqToUpdate.CustomerId == 0)
+                    {
+                        rfqToUpdate.CustomerId = null;
+                    }
+                    if (rfqService.UpdateRfq(rfqToUpdate))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.CMS.RFQ.UpdateMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("RFQIndex");
+                    }
+                }
+                else
+                {
+                    model.Rfq.RecCreatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecCreatedDate = DateTime.Now;
+                    model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
+                    model.Rfq.RecLastUpdatedDate = DateTime.Now;
+                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    var rfqToAdd = model.Rfq.CreateFromClientToServer();
+                    if (rfqToAdd.CustomerId == 0)
+                    {
+                        rfqToAdd.CustomerId = null;
+                    }
+                    if (rfqService.AddRfq(rfqToAdd))
+                    {
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.CMS.RFQ.AddMessage,
+                            IsUpdated = true
+                        };
+                        return RedirectToAction("RFQIndex");
+                    }
+                }
+            }
+            return View(model);
+        }
+
+        #endregion
+
+        #region RFQ Details
+
+        public ActionResult RFQDetail(long? id, string from)
+        {
+            var direction = WebModels.Resources.Shared.Common.TextDirection;
+            long customerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
+            RFQDetailViewModel model = new RFQDetailViewModel();
+            long quotationId = 0;
+            if (id != null)
+            {
+                quotationId = (long)id;
+                RFQResponse rfqResponse = rfqService.GetRfqResponse(quotationId, customerId, from);
+                if (rfqResponse.Rfq != null)
+                {
+                    model.Rfq = rfqResponse.Rfq.CreateFromServerToClient();
+                }
+                model.Profile = rfqResponse.Profile.CreateFromServerToClientForQuotation();
+                model.Rfq.CustomerId = customerId;
+                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
+                return View(model);
+            }
+            model.Rfq.CustomerId = customerId;
+            if (from == "Client")
+            {
+                string userId = User.Identity.GetUserId();
+                var response = cartService.FindByUserCartId(userId);
+                if (response != null)
+                {
+                    var shoppingCart = response.CreateFromServerToClient();
+                    foreach (var shoppingCartItem in shoppingCart.ShoppingCartItems)
+                    {
+                        RFQItem item = new RFQItem
+                        {
+                            ItemDetails = direction == "ltr" ? shoppingCartItem.ItemNameEn : shoppingCartItem.ItemNameAr,
+                            ItemQuantity = shoppingCartItem.Quantity,
+                            UnitPrice = shoppingCartItem.UnitPrice,
+                            TotalPrice = (shoppingCartItem.Quantity * shoppingCartItem.UnitPrice)
+                        };
+                        model.Rfq.RFQItems.Add(item);
+                    }
+                    model.Profile = companyProfileService.GetDetail().CreateFromServerToClientForQuotation();
+                    model.Rfq.CustomerId = customerId;
+                    ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
+                }
+            }
+            return View(model);
         }
 
         #endregion
@@ -358,6 +586,32 @@ namespace EPMS.Web.Areas.CMS.Controllers
             try
             {
                 QuotationItemService.DeleteQuotationItem(itemDetailToBeDeleted);
+                return Json(new
+                {
+                    Status = "Success"
+                }, JsonRequestBehavior.AllowGet);
+
+            }
+            catch (Exception exp)
+            {
+                return Json(
+                    new
+                    {
+                        Status = "Error"
+                    }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
+
+        #region Delete RFQ Item
+
+        [SiteAuthorize(PermissionKey = "RFQDelete")]
+        public ActionResult DeleteRfqItem(long itemId)
+        {
+            try
+            {
+                rfqService.DeleteRfqItem(itemId);
                 return Json(new
                 {
                     Status = "Success"

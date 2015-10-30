@@ -33,6 +33,11 @@ namespace EPMS.WebModels.ModelMappers
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDt = source.RecUpdatedDt,
             };
+            if (source.QuotationItemDetails.Any())
+            {
+                caseType.QuotationItemDetails =
+                    source.QuotationItemDetails.Select(x => x.CreateFromClientToServer()).ToList();
+            }
             return caseType;
         }
 

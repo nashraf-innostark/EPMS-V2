@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
+    [Serializable]
     public class Product
     {
         public long ProductId { get; set; }

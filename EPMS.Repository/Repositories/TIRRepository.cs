@@ -220,7 +220,7 @@ namespace EPMS.Repository.Repositories
             TIR tir = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
             if (tir != null)
                 return tir.FormNumber;
-            return "TI00000001";
+            return "TI00000000";
         }
     }
 }

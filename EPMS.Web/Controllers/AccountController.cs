@@ -174,11 +174,32 @@ namespace IdentitySample.Controllers
         #endregion
 
         #region Login & Logoff
+
+        private async Task<ClaimsIdentity> CustomAuthenticationOfUser(string returnUrl)
+        {
+            Uri myUri = new Uri(ConfigurationManager.AppSettings["CpLink"]+returnUrl);
+            string clientId = HttpUtility.ParseQueryString(myUri.Query).Get("C_Id");
+            var user = await UserManager.FindByIdAsync(clientId);
+            if (user != null)
+            {
+                return await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+               
+            }
+            return null;
+        }
+
         [AllowAnonymous]
-        public ActionResult Login(string returnUrl)
+        public async Task<ActionResult> Login(string returnUrl)
         {
             if (!User.Identity.IsAuthenticated)
             {
+                if (returnUrl != null && returnUrl.Contains("C_Id"))
+                {
+                    var userIdentity = await CustomAuthenticationOfUser(returnUrl);
+                    AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+
+                    return Redirect(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
+                }
                 ViewBag.ReturnUrl = returnUrl;
                 var successNote = TempData["Note"];
                 if (successNote != "")

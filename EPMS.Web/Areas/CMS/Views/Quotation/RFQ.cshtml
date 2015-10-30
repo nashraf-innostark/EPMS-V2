@@ -1,0 +1,293 @@
+﻿@model EPMS.WebModels.ViewModels.RFQ.RFQCreateViewModel
+
+@{
+    ViewBag.Title = Model.Rfq.RFQId > 0 ? EPMS.WebModels.Resources.CMS.RFQ.UpdateQuotation : EPMS.WebModels.Resources.CMS.RFQ.PageTitleCreate;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var userRole = (string)Session["RoleName"];
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/CMS/Quotation/RFQIndex">
+                @EPMS.WebModels.Resources.CMS.RFQ.PageTitleIndex
+            </a>
+        </li>
+        <li>
+            @EPMS.WebModels.Resources.CMS.RFQ.Header
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("RFQ", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateRFQ", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @*@Html.HiddenFor(model => model.CreatedByEmployee)*@
+        @Html.HiddenFor(model => model.Rfq.RFQId)
+        @Html.HiddenFor(model => model.Rfq.Status)
+        @Html.HiddenFor(model => model.Rfq.CustomerId)
+        @Html.HiddenFor(model => model.Rfq.RecCreatedBy)
+        @Html.HiddenFor(model => model.Rfq.RecCreatedDate)
+        @Html.HiddenFor(model => model.FromClient)
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="GreetingEn">@EPMS.WebModels.Resources.CMS.RFQ.Notes</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextBoxFor(model => model.Rfq.Notes, new { @id = "Notes", @class = "" })
+                </div>
+            </div>
+        </div>
+        @if (Model.FromClient)
+        {
+            <div class="row-fluid" id="ress">
+                <div class="span12">
+                    <table class="table table-striped table-responsive ">
+                        <thead class="">
+                            <tr>
+                                <th style="width: 70%">@EPMS.WebModels.Resources.CMS.Quotation.ItemDetails</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.Quantity</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.UnitPrice</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.Total</th>
+                                <th style="width: 4%">@EPMS.WebModels.Resources.CMS.Quotation.Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody class="qouteAdd">
+                            <tr class="ItemDetailError Error center"></tr>
+                            @if (Model.Rfq.RFQItems.Any())
+                            {
+                                for (int i = 0; i < Model.Rfq.RFQItems.Count(); i++)
+                                {
+                                    <tr>
+                                        @Html.HiddenFor(model => model.Rfq.RFQItems[i].ItemId, new { @class = "RFQItemId" })
+                                        @Html.HiddenFor(model => model.Rfq.RFQItems[i].RFQId)
+                                        @Html.HiddenFor(model => model.Rfq.RFQItems[i].RecCreatedBy)
+                                        @Html.HiddenFor(model => model.Rfq.RFQItems[i].RecCreatedDate)
+                                        <td>
+                                            @Html.TextAreaFor(model => model.Rfq.RFQItems[i].ItemDetails, new { @class = "auto-resize", @readonly = true })
+                                        </td>
+                                        <td class="quantity">
+                                            @Html.TextBoxFor(model => model.Rfq.RFQItems[i].ItemQuantity, new { @id = "", @class = "n1", @readonly = true })
+                                        </td>
+                                        <td class="unitPrice">
+                                            @Html.TextBoxFor(model => model.Rfq.RFQItems[i].UnitPrice, new { @id = "", @class = "n2", @readonly = true })
+                                        </td>
+                                        <td class="total">
+                                            @Html.TextBoxFor(model => model.Rfq.RFQItems[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
+                                        </td>
+                                        <td class="delete">
+                                            <i class="icon-photon minus deleteRow"></i>
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            @*else
+                                {
+                                    <tr>
+                                        <td>
+                                            <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails"></textarea>
+                                        </td>
+                                        <td class="quantity">
+                                            <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity">
+                                        </td>
+                                        <td class="unitPrice">
+                                            <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice">
+                                        </td>
+                                        <td class="total">
+                                            <input class="n3" type="text" value="0" name="QuotationItemDetails[0].TotalPrice" readonly>
+                                        </td>
+                                        <td class="delete">
+                                            <i class="icon-photon minus deleteRow"></i>
+                                        </td>
+                                    </tr>
+                                }*@
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="subtotal">@EPMS.WebModels.Resources.CMS.Quotation.Subtotal</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input id="subtotal" type="text" value="0" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="Discount">@EPMS.WebModels.Resources.CMS.Quotation.Discount<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="0-100"><i class="icon-photon info-circle"></i></a></label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(model => model.Rfq.Discount, new { @id = "Discount", @class = "" })
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="GrandTotal">@EPMS.WebModels.Resources.CMS.Quotation.GrandTotal</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input id="GrandTotal" type="text" value="0" readonly />
+                    </div>
+                </div>
+            </div>
+        }
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="GreetingEn">@EPMS.WebModels.Resources.CMS.RFQ.Requests</label>
+            </div>
+            <div class="span9">
+                <div class="controls">
+                    @Html.TextAreaFor(model => model.Rfq.Requests, new { @id = "Requests", @class = "" })
+                </div>
+            </div>
+        </div>
+        @if (!Model.FromClient)
+        {
+            if (Model.Rfq.RFQId > 0)
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                    </div>
+                </div>
+            }
+            else
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnCreate</button>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            if (Model.Rfq.RFQId > 0 && Model.Rfq.RFQItems.Any())
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                    </div>
+                </div>
+            }
+            if (Model.Rfq.RFQId == 0 && Model.Rfq.RFQItems.Any())
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnCreate</button>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}
+
+<script src="~/RichTextEditor/ckeditor.js"></script>
+<script>
+    var siteUrl;
+    var elementToDelete;
+    $(document).ready(function () {
+        siteUrl = $('#siteURL').val();
+        CKEDITOR.replace('Requests', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        if (parseInt('@Model.Rfq.RFQId') == 0) {
+            $('#Discount').val(0);
+        }
+        reactivateCount();
+        calDiscount();
+        $('#Discount').on("blur", function () {
+            var b;
+            b = parseInt($('#Discount').val());
+            if (b > 100 || isNaN(b)) {
+                discount();
+                $(this).val(0);
+                calDiscount();
+                return;
+            }
+            function discount() {
+                $.pnotify({
+                    title: 'Sorry',
+                    type: 'info',
+                    text: '@EPMS.WebModels.Resources.CMS.RFQ.DiscountLimit'
+                });
+            }
+            calDiscount();
+        });
+        $('.deleteRow').on("click", function () {
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            var id = parseInt($(this).closest('tr').children(".RFQItemId").val());
+            elementToDelete = $(this).parent().parent();
+            var url = siteUrl + "/CMS/Quotation/DeleteRfqItem";
+            //var isErrorInDeleting = true;
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    itemId: id
+                },
+                success: function (data) {
+                    if (data.Status == "Success") {
+                        var count = $('.qouteAdd tr').length;
+                        if (count > 1) {
+                            elementToDelete.remove();
+                            reactivateCount();
+                            calDiscount();
+                        }
+                        $.unblockUI();
+                    }
+                    if (data.Status == "Error") {
+                        $.unblockUI();
+                        alert('@EPMS.WebModels.Resources.CMS.RFQ.DeleteItemError');
+                        return;
+                    }
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('@EPMS.WebModels.Resources.CMS.RFQ.DeleteItemNoAccess');
+                    return;
+                }
+            });
+        });
+    });
+    function reactivateCount() {
+        var x = 0;
+        $('.qouteAdd tr .n3').each(function () {
+            x = x + parseInt($(this).val());
+        });
+        $('#subtotal').val(x);
+        calDiscount();
+        return;
+    }
+    function calDiscount() {
+        var subtotal = parseInt($('#subtotal').val());
+        var discount = parseInt($('#Discount').val());
+        var grand = subtotal - (subtotal * (discount / 100));
+        $('#GrandTotal').val(grand);
+        return;
+    }
+</script>
