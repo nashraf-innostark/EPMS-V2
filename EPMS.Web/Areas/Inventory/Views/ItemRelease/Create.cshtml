@@ -96,11 +96,11 @@
                 <div class="controls rfiDDL">
                     @if (direction == "ltr")
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "FormNumber"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "RFIId"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
+                        @Html.DropDownListFor(m => m.ItemRelease.RFIId, new SelectList(Model.Rfis, "RFIId", "FormNumber"), "--Select--", new { @class = "select2me disableDdl", @id = "RfiId" })
                     }
                     <label id="rfiValidationError" class="required"></label>
                 </div>

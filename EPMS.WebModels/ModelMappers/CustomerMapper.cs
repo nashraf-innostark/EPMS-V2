@@ -83,7 +83,7 @@ namespace EPMS.WebModels.ModelMappers
             WebsiteModels.ContactList contactList = new WebsiteModels.ContactList();
             contactList.NameE = source.CustomerNameE ?? "";
             contactList.NameA = source.CustomerNameA ?? "";
-            contactList.Link = "/CMS/Customer/Create/" + source.CustomerId;
+            contactList.Link = "CMS/Customer/Details/" + source.CustomerId;
             contactList.Type = "Customer";
             contactList.MobileNumber = source.CustomerMobile ?? "";
             var firstOrDefault = source.AspNetUsers.Where(x=>x.CustomerId==source.CustomerId).FirstOrDefault();

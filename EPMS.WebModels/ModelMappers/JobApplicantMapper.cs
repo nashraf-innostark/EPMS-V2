@@ -122,7 +122,7 @@ namespace EPMS.WebModels.ModelMappers
         {
             return new WebsiteModels.ContactList
             {
-                Link = "/HR/JobApplicant/Detail/" + source.ApplicantId,
+                Link = "HR/JobApplicant/Detail/" + source.ApplicantId,
                 NameE = source.ApplicantFirstNameE + " " + source.ApplicantMiddleNameE ?? "",
                 NameA = source.ApplicantFirstNameA + " " + source.ApplicantMiddleNameA ?? "",
                 Type = "Applicant",

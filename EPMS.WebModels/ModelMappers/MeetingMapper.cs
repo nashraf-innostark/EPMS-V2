@@ -52,7 +52,7 @@ namespace EPMS.WebModels.ModelMappers
             }
             meetingModel.AgendaAr = agendaA;
             var discussion = source.Discussion;
-            if (!String.IsNullOrEmpty(source.Agenda))
+            if (!String.IsNullOrEmpty(source.Discussion))
             {
                 discussion = discussion.Replace("\n", "");
                 discussion = discussion.Replace("\r", "");
@@ -60,7 +60,7 @@ namespace EPMS.WebModels.ModelMappers
             }
             meetingModel.Discussion = discussion;
             var discussionA = source.DiscussionAr;
-            if (!String.IsNullOrEmpty(source.Agenda))
+            if (!String.IsNullOrEmpty(source.DiscussionAr))
             {
                 discussionA = discussionA.Replace("\n", "");
                 discussionA = discussionA.Replace("\r", "");
@@ -68,7 +68,7 @@ namespace EPMS.WebModels.ModelMappers
             }
             meetingModel.DiscussionAr = discussionA;
             var decision = source.Decisions;
-            if (!String.IsNullOrEmpty(source.Agenda))
+            if (!String.IsNullOrEmpty(source.Decisions))
             {
                 decision = decision.Replace("\n", "");
                 decision = decision.Replace("\r", "");
@@ -76,7 +76,7 @@ namespace EPMS.WebModels.ModelMappers
             }
             meetingModel.Decisions = decision;
             var decisionA = source.DecisionsAr;
-            if (!String.IsNullOrEmpty(source.Agenda))
+            if (!String.IsNullOrEmpty(source.DecisionsAr))
             {
                 decisionA = decisionA.Replace("\n", "");
                 decisionA = decisionA.Replace("\r", "");

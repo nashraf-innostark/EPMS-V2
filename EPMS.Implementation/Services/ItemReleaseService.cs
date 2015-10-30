@@ -112,10 +112,10 @@ namespace EPMS.Implementation.Services
 
             IrfHistoryResponse response = new IrfHistoryResponse
             {
-                Irfs = irfList.Select(x => x.CreateFromIrfHistoryToIrf()),
+                Irfs = irfList.Select(x => x.CreateFromIrfHistoryToIrf()).ToList(),
                 RecentIrf = itemReleaseRepository.Find((long)parentId)
             };
-            response.IrfItems = response.RecentIrf.ItemReleaseDetails;
+            response.IrfItems = response.RecentIrf.ItemReleaseDetails.ToList();
             if (response.RecentIrf != null)
             {
                 if (!string.IsNullOrEmpty(response.RecentIrf.ManagerId) && response.RecentIrf.Manager.Employee != null)

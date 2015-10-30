@@ -273,7 +273,7 @@ namespace EPMS.WebModels.ModelMappers
         {
             return new WebsiteModels.ContactList
             {
-                Link = "/HR/Employee/Create/" + source.EmployeeId,
+                Link = "HR/Employee/Create/" + source.EmployeeId,
                 NameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
                 NameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
                 Type = "Employee",
