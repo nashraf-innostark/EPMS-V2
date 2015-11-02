@@ -30,9 +30,6 @@
     }*@
 </header>
 
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-<!--Notifications end-->
 <!-- Page heading ends -->
 
 <form class="form-horizontal">
@@ -44,7 +41,7 @@
                 <table class="table table-striped table-responsive" id="projectTaskTable">
                     <thead class="">
                         <tr>
-                            <th></th>
+                            <th>@EPMS.Web.Resources.Shared.Common.Serial</th>
                             <th>@EPMS.WebModels.Resources.PMS.Task.TaskName</th>
                             <th>@EPMS.WebModels.Resources.PMS.Task.ProjectName</th>
                             <th>@EPMS.WebModels.Resources.PMS.Task.StartDate</th>
@@ -71,10 +68,7 @@
                 {
                     "aTargets": [0],
                     "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["TaskId"];
-                    },
-                    "bVisible": false,
+                    "bVisible": true,
                     "bSortable": false
                 },
                 {
@@ -127,7 +121,8 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var taskProgress = full["TaskProgress"];
-                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgress + "</div> </div>";
+                        var taskProgressText = full["TaskProgressText"];
+                        var html = "<div class=\"progress progress-info\"> <div class=\"bar\" style=\"width:" + taskProgress + "%\">" + taskProgressText + "</div> </div>";
                         return html;
                     }
                 }
@@ -142,6 +137,11 @@
                 //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
                 "sInfoEmpty": "No matching record(s) found",
                 "sEmptyTable": "No record(s) found",
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
             },
         });
         $(".dataTables_length select").select2({

@@ -170,9 +170,13 @@ namespace EPMS.Implementation.Services
 
         public long AddNotification(NotificationResponse notification)
         {
+            
             var _notification = notification.CreateFromClientToServer();
             notificationRepository.Add(_notification);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
+            
             notificationRepository.SaveChanges();
+
             return _notification.NotificationId;
         }
         public long UpdateNotification(NotificationResponse notification)
@@ -632,7 +636,7 @@ namespace EPMS.Implementation.Services
                     fileText = fileText.Replace("[MeetingTopicEng]", meeting.TopicName);
                     fileText = fileText.Replace("[MeetingTopicAr]", meeting.TopicNameAr);
                 }
-                
+
             }
             return fileText;
         }

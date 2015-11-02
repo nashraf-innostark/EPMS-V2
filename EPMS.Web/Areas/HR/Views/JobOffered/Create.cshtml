@@ -3,7 +3,6 @@
 
 @{
     //ViewBag.Title = Model.JobOffered.JobTitleId > 0 ? EPMS.WebModels.Resources.HR.JobTitle.UpdatePageTitle : EPMS.WebModels.Resources.HR.JobTitle.CreatePageTitle;
-    ViewBag.Title = "Add New Job";
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
@@ -12,7 +11,7 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
@@ -76,7 +75,7 @@
                 {
                     <div class="controls">
                         @Html.TextBoxFor((model => model.JobOffered.JobTitleDescE), new { @disabled = true, @id = "jobTitleDesc" })
-                        
+
                     </div>
                 }
                 else
@@ -85,7 +84,7 @@
                         @Html.TextBoxFor(model => model.JobOffered.JobTitleDescA, new { @disabled = true, @id = "jobTitleDesc" })
                     </div>
                 }
-                
+
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -96,16 +95,16 @@
                 @if (direction == "ltr")
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new {@disabled = true, @id = "departmentName"})
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameE, new { @disabled = true, @id = "departmentName" })
                     </div>
                 }
                 else
                 {
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new {@disabled = true, @id = "departmentName"})
+                        @Html.TextBoxFor(model => model.JobOffered.DepartmentNameA, new { @disabled = true, @id = "departmentName" })
                     </div>
                 }
-                
+
             </div>
         </div>
         <div class="control-group row-fluid">
@@ -122,11 +121,22 @@
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.HR.JobOffered.ShowBasicSalary</label>
             </div>
-            <div class="span9 span-inset">
-                <div data-on-label="Show" data-off-label="Hide" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
-                    @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
+            @if (direction == "ltr")
+            {
+                <div class="span9 span-inset">
+                    <div data-on-label="Show" data-off-label="Hide" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                        @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="span9 span-inset">
+                    <div data-on-label="اظهار" data-off-label="اخفاء" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                        @Html.CheckBoxFor(model => model.JobOffered.ShowBasicSalary, new { @id = "ShowBasicSalary" })
+                    </div>
+                </div>
+            }
         </div>
         <div id="basicSal" class="control-group row-fluid" style="display: none">
             <div class="span3">
@@ -143,11 +153,23 @@
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.HR.JobOffered.IsOpen</label>
             </div>
-            <div class="span9 span-inset">
-                <div data-on-label="Open" data-off-label="Close" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
-                    @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
+            @if (direction == "ltr")
+            {
+                <div class="span9 span-inset">
+                    <div data-on-label="Open" data-off-label="Close" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                        @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
+                    </div>
                 </div>
-            </div>
+            }
+            else
+            {
+                <div class="span9 span-inset">
+                    <div data-on-label="مفتوح" data-off-label="مغلق" class="switch switch-small" data-on="success" data-off="danger" style="margin-top: 2px">
+                        @Html.CheckBoxFor(model => model.JobOffered.IsOpen, new { @id = "IsOpen" })
+                    </div>
+                </div>
+            }
+
         </div>
         <div class="control-group row-fluid">
             <div class="span3">

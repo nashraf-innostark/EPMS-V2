@@ -12,6 +12,6 @@ namespace EPMS.Interfaces.IServices
         string GetLastWarehouseNumber();
         bool AddWarehouse(Warehouse warehouse);
         bool Updatewarehouse(Warehouse warehouse);
-        void DeleteWarehouse(Warehouse warehouse);
+        string DeleteWarehouse(long id);
     }
 }

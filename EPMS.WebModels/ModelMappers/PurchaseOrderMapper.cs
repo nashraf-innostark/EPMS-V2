@@ -29,13 +29,15 @@ namespace EPMS.WebModels.ModelMappers
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RequesterName = direction == "ltr" ?
                 source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE :
-                source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA
+                source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA,
+                EmpJobId = source.AspNetUser.Employee.EmployeeJobId
             };
             if (source.Manager != null)
             {
                 purchaseOrder.ManagerName = direction == "ltr" ?
                 source.Manager.Employee.EmployeeFirstNameE + " " + source.Manager.Employee.EmployeeMiddleNameE + " " + source.Manager.Employee.EmployeeLastNameE
                 : source.Manager.Employee.EmployeeFirstNameA + " " + source.Manager.Employee.EmployeeMiddleNameA + " " + source.Manager.Employee.EmployeeLastNameA;
+                
             }
             return purchaseOrder;
         }
@@ -197,6 +199,7 @@ namespace EPMS.WebModels.ModelMappers
             var rfi = new POWidget
             {
                 Id = source.PurchaseOrderId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,

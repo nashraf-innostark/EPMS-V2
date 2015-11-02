@@ -51,29 +51,50 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.Sections = sections;
             if (id != null)
             {
-                if (id == 1)
+                switch (id)
                 {
-                    TempData["message"] = new MessageViewModel
-                    {
+                    case 1:
+                        TempData["message"] = new MessageViewModel
+                        {
                         Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.DepartmentSaved,
-                        IsUpdated = true
-                    };
-                }
-                if (id == 2)
-                {
-                    TempData["message"] = new MessageViewModel
-                    {
+                            IsUpdated = true
+                        };
+                        break;
+                    case 2:
+                        TempData["message"] = new MessageViewModel
+                        {
                         Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.SectionSaved,
-                        IsUpdated = true
-                    };
-                }
-                if (id == 3)
-                {
-                    TempData["message"] = new MessageViewModel
-                    {
+                            IsUpdated = true
+                        };
+                        break;
+                    case 3:
+                        TempData["message"] = new MessageViewModel
+                        {
                         Message = EPMS.WebModels.Resources.Inventory.InventoryDepartment.RecordUpdated,
-                        IsUpdated = true
-                    };
+                            IsUpdated = true
+                        };
+                        break;
+                    case 4:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Inventory.InventoryDepartment.IsDeleted,
+                            IsUpdated = true
+                        };
+                        break;
+                    case 5:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Inventory.InventoryDepartment.IsAssociated,
+                            IsError = true
+                        };
+                        break;
+                    case 6:
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Inventory.InventoryDepartment.IsError,
+                            IsError = true
+                        };
+                        break;
                 }
             }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -198,6 +219,41 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return Json(exception.Message, JsonRequestBehavior.AllowGet);
             }
             return Json(null, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Delete Inventory Department
+        [HttpPost]
+        public ActionResult DeleteInventoryDepartment(long id)
+        {
+            try
+            {
+                string deleteStatus = departmentService.DeleteInventoryDepartment(id);
+                return Json(deleteStatus, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception exception)
+            {
+                return Json(exception.Message, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        #endregion
+
+        #region Delete
+
+        public JsonResult Delete(long departmentId)
+        {
+            var message = departmentService.DeleteInventoryDepartment(departmentId);
+            if (message == "AssociatedDepartments")
+            {
+                return Json("AssociatedDepartments", JsonRequestBehavior.AllowGet);
+            }
+            if (message == "AssociatedInventoryItems")
+            {
+                return Json("AssociatedInventoryItems", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Deleted", JsonRequestBehavior.AllowGet);
         }
 
         #endregion

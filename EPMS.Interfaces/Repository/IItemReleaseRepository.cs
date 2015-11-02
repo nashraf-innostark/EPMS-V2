@@ -11,5 +11,6 @@ namespace EPMS.Interfaces.Repository
         ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest);
         IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date);
         string GetLastFormNumber();
+        IEnumerable<ItemRelease> GetItemReleaseByOrder(long orderId);
     }
 }

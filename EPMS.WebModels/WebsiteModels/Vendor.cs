@@ -29,5 +29,6 @@ namespace EPMS.WebModels.WebsiteModels
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public List<VendorItem> VendorItems { get; set; }
+        public List<PurchaseOrderItem> PurchaseOrderItems { get; set; }
     }
 }

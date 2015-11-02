@@ -4,7 +4,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
-using EPMS.Web.ModelMappers;
+using EPMS.WebModels.ModelMappers;
 using EPMS.Web.Models.Common;
 
 namespace EPMS.Web.Areas.Api.Controllers
@@ -29,7 +29,7 @@ namespace EPMS.Web.Areas.Api.Controllers
         public JsonResult GetTreeData(long? id, string direction)
         {
             var departments = departmentService.GetAll();
-            IList<JsTreeJson> details = Utility.InventoryDepartmentTree(departments, direction);
+            IList<WebModels.WebsiteModels.Common.JsTreeJson> details = Utility.InventoryDepartmentTree(departments, direction);
             var serializer = new JavaScriptSerializer();
             var serializedResult = serializer.Serialize(details);
             return Json(serializedResult, JsonRequestBehavior.AllowGet);

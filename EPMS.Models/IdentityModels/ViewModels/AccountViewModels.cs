@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
-using EPMS.Web.Models;
 
 namespace EPMS.Models.IdentityModels.ViewModels
 {

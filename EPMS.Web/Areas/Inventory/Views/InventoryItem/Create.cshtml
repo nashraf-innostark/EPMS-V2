@@ -32,6 +32,14 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
+    @if (Model.InventoryItem.ItemImagePath != null)
+    {
+        <img class="employeeImg" src='/Images/InventoryItemImage/@Url.Content(Model.InventoryItem.ItemImagePath)' alt="user" />
+    }
+    else
+    {
+        <img class="employeeImg" src='/Images/NoImageAvailable.jpg' alt="user" />
+    }
 </header>
 
 <!--Notifications begin-->
@@ -46,6 +54,7 @@
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedBy)
         @Html.HiddenFor(m => m.InventoryItem.RecCreatedDt)
         @Html.HiddenFor(m => m.InventoryItem.DepartmentId, new {@id = "departmentId"})
+        @Html.HiddenFor(m => m.InventoryItem.ItemImagePath, new {@id = "ItemImagePath"})
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
 
         <div class="control-group row-fluid">
@@ -54,7 +63,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemCode, new { @dir = "ltr", id = "ItemCode", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemCode, new {id = "ItemCode", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemCode)
                 </div>
             </div>
@@ -66,7 +75,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameEn, new { @dir = "ltr", id = "ItemNameEn", @class = "tbdisable toBeRequired"})
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameEn, new {id = "ItemNameEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameEn, "" ,new { @class = "required" })
                 </div>
             </div>
@@ -78,20 +87,36 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameAr, new { @dir = "ltr", id = "ItemNameAr", @class = "tbdisable toBeRequired"})
+                    @Html.TextBoxFor(m => m.InventoryItem.ItemNameAr, new {id = "ItemNameAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.ItemNameAr, "", new { @class = "required" })
                 </div>
             </div>
         </div>
+        
+        <!--Drag And Drop Upload begin-->
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid ignore">
+            <div class="span3">
+                <label class="control-label">
+                    Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9 row-fluid">
+                <div class="upload-boxes row-fluid">
+                    <div class="span3" id="upload"></div>
+                    <div class="span9" id="uploaded"></div>
+                </div>
+            </div>
+        </div>
+        <!--Drag And Drop Upload end-->
 
-        <div id="CKEditorDescp">
+        <div id="CKEditorDescpD">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescriptionEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionEn, new { @dir = "ltr", id = "ItemDescriptionEn", @class = "tbdisable toBeRequired"})
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionEn, new {id = "ItemDescriptionEn", @class = "tbdisable toBeRequired"})
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -103,19 +128,57 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionAr, new { @dir = "ltr", id = "ItemDescriptionAr", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.InventoryItem.ItemDescriptionAr, new {id = "ItemDescriptionAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.ItemDescriptionAr, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3">
+        
+        <div id="noCkEditorD">
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.ItemDescriptionEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.DescriptionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="descA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.ItemDescriptionAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'descA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        @*<div class="control-group row-fluid">
+            <div class="span3">
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new { @dir = "ltr", id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired"})
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationEn, new {id = "DescriptionForQuotationEn", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -127,20 +190,20 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new { @dir = "ltr", id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired"})
+                    @Html.TextBoxFor(m => m.InventoryItem.DescriptionForQuotationAr, new {id = "DescriptionForQuotationAr", @class = "tbdisable toBeRequired"})
                     @Html.ValidationMessageFor(m => m.InventoryItem.DescriptionForQuotationAr, "", new { @class = "required" })
                 </div>
             </div>
-        </div>
-
+        </div>*@
+        
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.AveragePrice</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AveragePrice, new { @dir = "ltr", id = "AveragePrice", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.AveragePrice, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.InventoryItem.AverageCost, new { id = "AverageCost", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.AverageCost, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -151,8 +214,8 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AverageCost, new { @dir = "ltr", id = "AverageCost", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.InventoryItem.AverageCost, "", new { @class = "required" })
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePrice, new {id = "AveragePrice", @readonly = "true" })
+                    @Html.ValidationMessageFor(m => m.InventoryItem.AveragePrice, "", new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -163,7 +226,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.AveragePackagePrice, new { @dir = "ltr", id = "AveragePackagePrice", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.InventoryItem.AveragePackagePrice, new {id = "AveragePackagePrice", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.AveragePackagePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -175,7 +238,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new { @dir = "ltr", id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInPackage, new {id = "QuantityInPackage", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
@@ -187,7 +250,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInHand, new { @dir = "ltr", id = "QuantityInHand", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantityInHand, new {id = "QuantityInHand", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -199,20 +262,20 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.QuantitySold, new { @dir = "ltr", id = "QuantitySold", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.InventoryItem.QuantitySold, new {id = "QuantitySold", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.InventoryItem.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
         </div>
 
-        <div id="CKEditorDescp">
+        <div id="CKEditorDescpH">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.HazardousEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.HazardousEn, new { @dir = "ltr", id = "HazardousEn", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousEn, new {id = "HazardousEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -224,7 +287,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.HazardousAr, new { @dir = "ltr", id = "HazardousAr", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.InventoryItem.HazardousAr, new {id = "HazardousAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.HazardousAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -236,7 +299,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.UsageEn, new { @dir = "ltr", id = "UsageEn", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageEn, new {id = "UsageEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -248,31 +311,104 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.InventoryItem.UsageAr, new { @dir = "ltr", id = "UsageAr", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.InventoryItem.UsageAr, new {id = "UsageAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.InventoryItem.UsageAr, "", new { @class = "required" })
                     </div>
                 </div>
             </div>
         </div>
+        
+        <div id="noCkEditorH">
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="hazE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.HazardousEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'hazE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.HazardousAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="hazA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.HazardousAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'hazA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="usageE" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.UsageEn)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'usageE').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.Web.Resources.Inventory.InventoryItem.UsageAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <input type="text" id="usageA" class="tbdisable" />
+                        <script>
+                            var descpE = '@Html.Raw(Model.InventoryItem.UsageAr)';
+                            var regex = /(<([^>]+)>)/ig;
+                            var result = descpE.replace(regex, "");
+                            $("#" + 'usageA').val(result);
+                        </script>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.ReorderPoint</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.InventoryItem.ReorderLevel, new { @dir = "ltr", id = "ReorderLevel", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
+                    @Html.TextBoxFor(m => m.InventoryItem.ReorderLevel, new {id = "ReorderLevel", @class = "tbdisable toBeRequired", @ViewBag.Disabled })
                     @Html.ValidationMessageFor(m => m.InventoryItem.ReorderLevel, "", new { @class = "required" })
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="inputFielda">Department Information</label>
             </div>
             <div class="span9">
 
-                @Html.TextBoxFor(m => m.InventoryItem.DepartmentPath, new { @dir = "ltr", id = "DepartmentPath", @readonly = "true" })
+                @Html.TextBoxFor(m => m.InventoryItem.DepartmentPath, new {id = "DepartmentPath", @readonly = "true" })
                 <div class="control-group row-fluid">
                     <div class="span12 span-inset">
                         <a href="#modal-dialog" role="button" class="btn treeSelectorButton" data-toggle="modal">Tree Selector</a>
@@ -281,7 +417,7 @@
                 </div>
             </div>
         </div>
-        
+
 
         @if (Model.InventoryItem.ItemId > 0)
         {
@@ -305,7 +441,7 @@
                                     <th>Condition</th>
                                     <th>Color</th>
                                     <th>Unit Price</th>
-                                    <th>Avrage Cost</th>
+                                    <th>Average Cost</th>
                                     <th>Package Price</th>
                                     <th>On-hand Quantity</th>
                                     <th>Quantity Sold</th>
@@ -355,11 +491,11 @@
                                             <td>@item.UnitPrice</td>
                                             @if (direction == "ltr")
                                             {
-                                                <td>@item.SKUDescriptionEn</td>
+                                                <td>@item.UnitCost</td>
                                             }
                                             else
                                             {
-                                                <td>@item.SKUDescriptionAr</td>
+                                                <td>@item.AverageCost</td>
                                             }
                                             <td>@item.PackagePrice</td>
                                             <td>@item.QuantityInHand</td>
@@ -382,6 +518,9 @@
                 <div class="span3 span-inset">
                     <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
                     <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
+                </div>
+                <div class="span3 span-inset">
+                    <button id="delete" class="btn" type="submit" name="Delete">@EPMS.Web.Resources.Inventory.Vendor.DeleteButton</button>
                 </div>
                 <div class="span3 span-inset">
                     <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
@@ -458,15 +597,65 @@
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            $("#delete").hide();
             $('.treeSelectorButton').show();
             showCkEditors();
+            $('#noCkEditorD').hide();
+            $('#noCkEditorH').hide();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
+            $("#delete").hide();
             $("#edit").show();
+            $("#CKEditorDescpD").hide();
+            $("#CKEditorDescpH").hide();
             $('.treeSelectorButton').hide();
         }
+
+        // upload Image
+        var errors = "";
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Inventory/InventoryItem/UploadImage";
+        $('#upload').mfupload({
+            type: 'jpg,png,tif,jpeg', //all types
+            maxsize: 10,
+            post_upload: url,
+            folder: "./",
+            ini_text: "Drag your file here or click (max: 10MB)",
+            over_text: "Drop Here",
+            over_col: '#666666',
+            over_bkcol: '#f0f0f0',
+
+            init: function () {
+                $("#uploaded").empty();
+            },
+
+            start: function (result) {
+                $("#uploaded").append("<div id='FILE" + result.fileno + "' class='files'>" + result.filename + "<div class='progress progress-info progress-thin'><div class='bar' id='PRO" + result.fileno + "'></div></div></div>");
+            },
+
+            loaded: function (result) {
+                $("#PRO" + result.fileno).remove();
+                $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
+                $("#ItemImagePath").val(result.filename);
+            },
+
+            progress: function (result) {
+                $("#PRO" + result.fileno).css("width", result.perc + "%");
+            },
+
+            error: function (error) {
+                errors += error.filename + ": " + error.err_des + "\n";
+            },
+
+            completed: function () {
+                if (errors != "") {
+                    alert(errors);
+                    errors = "";
+                }
+            }
+        });
 
         //Departments Tree
         var treeInitialData;
@@ -519,7 +708,12 @@
         var requestUrl = "/Inventory/InventoryItem/GetAllDepartments";
         populateTree(0, "jstree", requestUrl);
 
-        $("#selectDepartment").on("click", function() {
+        //// new version of jsTree
+        //var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+        //populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
+
+        $("#selectDepartment").on("click", function () {
+            debugger;
             $('#DepartmentPath').val("Selected: " + textTillParent);
             $('#departmentId').val($('#jstree').jstree('get_selected').attr('id'));
             $('#modal-dialog').modal('toggle');
@@ -532,10 +726,14 @@
     $("#edit").click(function(event) {
         $('.' + 'tbdisable' + ':input').attr('disabled', false);
         $("#savebtn").show();
+        $("#delete").show();
         $("#cancel").show();
         $("#edit").hide();
         $("#itemVariationTable").hide();
-        $("#CKEditorDescp").show();
+        $("#CKEditorDescpD").show();
+        $("#CKEditorDescpH").show();
+        $('#noCkEditorD').hide();
+        $('#noCkEditorH').hide();
         showCkEditors();
         $('.treeSelectorButton').show();
         event.preventDefault();

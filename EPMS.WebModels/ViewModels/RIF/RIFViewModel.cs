@@ -14,6 +14,8 @@ namespace EPMS.WebModels.ViewModels.RIF
         public IEnumerable<Order> Orders { get; set; }
         public WebsiteModels.RIF Rif { get; set; }
         public List<WebsiteModels.RIFItem> RifItem { get; set; }
+        public List<WebsiteModels.ItemWarehouse> ItemWarehouses { get; set; }
+        public List<WebsiteModels.ItemReleaseForRif> ItemReleases { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }

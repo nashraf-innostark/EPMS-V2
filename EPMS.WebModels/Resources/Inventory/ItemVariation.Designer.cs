@@ -124,7 +124,7 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Add To Average Price Calculation.
+        ///   Looks up a localized string similar to Add To Average Price Calculation?.
         /// </summary>
         public static string AddToAveragePrice {
             get {
@@ -156,6 +156,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string Cancel {
             get {
                 return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add to Average Cost Calculation?.
+        /// </summary>
+        public static string CostCalculation {
+            get {
+                return ResourceManager.GetString("CostCalculation", resourceCulture);
             }
         }
         
@@ -385,6 +394,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity in Package.
+        /// </summary>
+        public static string QuantityInPackage {
+            get {
+                return ResourceManager.GetString("QuantityInPackage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reorder Point.
         /// </summary>
         public static string ReorderPoint {
@@ -444,6 +462,24 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string SKUDescEn {
             get {
                 return ResourceManager.GetString("SKUDescEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Total Quantity In Hand.
+        /// </summary>
+        public static string TotalQuantity {
+            get {
+                return ResourceManager.GetString("TotalQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Cost.
+        /// </summary>
+        public static string UnitCost {
+            get {
+                return ResourceManager.GetString("UnitCost", resourceCulture);
             }
         }
         

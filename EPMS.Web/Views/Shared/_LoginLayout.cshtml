@@ -1,5 +1,10 @@
 ﻿@using System.Configuration
 ﻿@using System.Configuration
+
+@{
+    var url = ViewBag.CompanyURL;
+}
+
 <!DOCTYPE html>
 
 <html>
@@ -89,8 +94,8 @@
     <script src="~/Scripts/App/architecture.js"></script>
     <!--Data Annotation Starts-->
     @*<script src="@Url.Content("~/Scripts/plugins/jquery.validate.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
-    <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>*@
+        <script src="@Url.Content("~/Scripts/jquery.validate.unobtrusive.min.js")" type="text/javascript"></script>
+        <script src="@Url.Content("~/Scripts/jquery.unobtrusive-ajax.js")" type="text/javascript"></script>*@
     <!--Data Annotation Ends-->
     <!--Calendar Starts-->
     <script src="~/Scripts/JqueryCalendar/jquery.plugin.js"></script>
@@ -104,6 +109,44 @@
     <script src="~/Scripts/moment.min.js"></script>
 </head>
 <body class="body-login">
+
+    <div class="nav-fixed-topright" style="">
+
+        <ul class="nav nav-user-menu">
+            <li class="user-sub-menu-container">
+                <a href="javascript:;">
+                    @if (Session["Culture"] == null || Session["Culture"].ToString() == "en")
+                    {
+                        <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.EN</i>
+                    }
+                    else
+                    {
+                        <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" /><i>@EPMS.Web.Resources.Shared.Common.AR</i>
+                    }
+                </a>
+                <ul class="nav user-sub-menu">
+                    <li class="">
+                        <a href="~/Culture/Set?id=EN&login=true">
+                            <img src="~/Images/photon/flag-uk.png" alt="English" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.EN
+                        </a>
+                    </li>
+                    <li class="">
+                        <a href="~/Culture/Set?id=AR&login=true">
+                            <img src="~/Images/photon/saudi_arabia_flag_small.PNG" alt="Arabic" style="margin:0 5px;" />@EPMS.Web.Resources.Shared.Common.AR
+                        </a>
+                    </li>
+                </ul>
+            </li>
+
+            <li>
+                <a href="http://@url" target="_blank">
+                    <i class="icon-photon target"></i>
+                </a>
+            </li>
+        </ul>
+
+    </div>
+
     <!-- Page content starts -->
     <div class="container-fluid dashboard dashboard-widget-group">
         <div class="row-fluid">
@@ -119,14 +162,7 @@
         </span>
     </div>
 
-    @if (ViewBag.MessageVM != null)
-    {
-        <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />
-        <input type="hidden" id="IsSaved" value="@ViewBag.MessageVM.IsSaved" />
-        <input type="hidden" id="IsUpdated" value="@ViewBag.MessageVM.IsUpdated" />
-        <input type="hidden" id="IsError" value="@ViewBag.MessageVM.IsError" />
-        <input type="hidden" id="IsInfo" value="@ViewBag.MessageVM.IsInfo" />
-    }
+
     <input type="hidden" id="siteURL" value="@(ConfigurationManager.AppSettings["SiteURL"].ToString())" />
 
     <script>

@@ -239,23 +239,24 @@
             </div>
         </div>
     </div>
-        <!-- end container -->
+    <!-- end container -->
 }
-
-
-
 @section popups
 {
     @Html.Partial("_ItemsPopUp")
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var siteUrl;
+    var divId;
     var textTillParent = "";
     var dir = '@direction';
+    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
     var variationIds = new Array();
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
+        divId = "jstree";
         CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
@@ -292,55 +293,6 @@
                 placeholder: "Select",
             });
         });
-        var treeInitialData;
-        if (dir == "ltr") {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "Departments",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
-        } else {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "الإدارات",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
-        }
-        $("#jstree").jstree({
-            "json_data": {
-                "data": treeInitialData
-            },
-            "plugins": ["themes", "json_data", "ui"],
-            "ui": {
-                "initially_select": ["parentNode"]
-            },
-            "core": {
-                "initially_open": ["parentNode"]
-            }
-        }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked          
-            if (data.inst._get_parent(data.rslt.obj) != -1) {
-                var parents = [];
-                textTillParent = "";
-                data.rslt.obj.parents("li").each(function () {
-                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
-                });
-                $.each(parents, function (key, value) {
-                    textTillParent = value.description + " >" + textTillParent;
-                });
-                textTillParent = textTillParent + $(".jstree-clicked").text();
-            }
-        });
-        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
-        populateTree(0, "jstree", requestUrl);
 
         $("#btnTreeSelector").click(function (event) {
             $('#itemTreeSelector').modal('show');
@@ -348,9 +300,33 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
         $("#selectDepartment").on("click", function () {
-            var index = parseInt($("#ItemModalIndex").val());
-            $("#RfiItem_" + index + "__PlaceInDepartment").val(textTillParent);
-            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            var selectedItem = $(".jstree-clicked").text();
+            // validation
+            if (selectedItem == "" || selectedItem == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $("#ItemVariationTree").val("");
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
+                    $("#ItemVariationTree").val(value.ItemVariationId);
+                }
+            });
+            var item = $("#ItemVariationTree").val();
+            if (item == "" || item == 0 || item == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
             $('#itemTreeSelector').modal('toggle');
             return true;
         });
@@ -385,13 +361,68 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
-            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
         });
         $("#SaveChanges").on("click", function () {
-            if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
-                getModalControlsValues();
+            var createFrom = $("input[name=ItemFrom]:checked").val();
+            if (createFrom == "dropdown") {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                    getModalControlsValues();
+                }
+            } else {
+                getModalControlsValuesForTree();
             }
         });
+        function getModalControlsValuesForTree() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationTree").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#RfiItem_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#RfiItem_" + index + "__IsItemSKU").val(isItemSku);
+            $("#RfiItem_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#RfiItem_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
+                        } else {
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
+                        }
+                    }
+                    $("#RfiItem_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+            $('#itemSearcher').modal('toggle');
+        }
         function getModalControlsValues() {
             //get item's values
             var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
@@ -422,9 +453,18 @@
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
                         } else {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
                         }
                     }
                     $("#RfiItem_" + index + "__ItemDetails").val(textToAppend);
@@ -432,7 +472,7 @@
             });
             $('#itemSearcher').modal('toggle');
         };
-        
+
         $('.trAdder').on("click", function () {
             var index = $("#RFIItemsTableBody").children("tr").length;
             var indexCell = "<td style='display:none'>" +
@@ -501,9 +541,22 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
+        var $radios = $('input:radio[name=ItemFrom]');
+        $radios.filter('[value=dropdown]').prop('checked', true);
+        $("#Simple_Select_Box_with_Filter_Search").show();
+        $("#treeControl").hide();
+        $("input[name=ItemFrom]:radio").change(function () {
+            if ($(this).val() == "dropdown") {
+                $("#Simple_Select_Box_with_Filter_Search").show();
+                $("#treeControl").hide();
+            }
+            if ($(this).val() == "tree") {
+                $("#Simple_Select_Box_with_Filter_Search").hide();
+                $("#treeControl").show();
+            }
+        });
 
 
-        
     });
 
     $('#tiny').elrte({

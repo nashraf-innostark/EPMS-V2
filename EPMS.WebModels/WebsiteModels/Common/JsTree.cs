@@ -1,4 +1,5 @@
-﻿namespace EPMS.WebModels.WebsiteModels.Common
+﻿
+namespace EPMS.WebModels.WebsiteModels.Common
 {
     public class JsTree
     {

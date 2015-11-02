@@ -32,12 +32,15 @@ namespace EPMS.WebModels.WebsiteModels
         public string EndDateAr { get; set; }
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]
+        [Range(0, 100, ErrorMessage = "Value for Task Wight must be between {1} and {2}.")]
         public string TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
+        [Range(0, 100, ErrorMessage = "Value for TaskProgress must be between {1} and {2}.")]
         [Required(ErrorMessage = "Task Progress is required.")]
         //[Range(0, 100, ErrorMessage = "ABC")]
         public string TaskProgress { get; set; }
+        public string TaskProgressText { get; set; }
         public DateTime? RecCreatedDt { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
@@ -46,7 +49,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string ProjectNameA { get; set; }
         public long? ParentTask { get; set; }
         //public int SubTasksPercentageCount { get; set; }
-        public int PrevTasksWeightSum { get; set; }
+        public decimal PrevTasksWeightSum { get; set; }
         
         public string PreReqTasks { get; set; }
         public List<ProjectTask> RequisitTasks { get; set; }

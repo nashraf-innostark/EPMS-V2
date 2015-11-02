@@ -104,6 +104,11 @@ namespace EPMS.Repository.Repositories
         }
         public IEnumerable<RFI> GetRfiByRequesterId(string requesterId)
         {
+            return DbSet.Where(x => x.RecCreatedBy == requesterId && x.Status == 6);
+        }
+
+        public IEnumerable<RFI> GetAllRfiByRequesterId(string requesterId)
+        {
             return DbSet.Where(x => x.RecCreatedBy == requesterId);
         }
 

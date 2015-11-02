@@ -11,7 +11,7 @@ namespace EPMS.WebModels.ModelMappers
             var itemDetails = source.ItemDetails;
             itemDetails = itemDetails.Replace("\r", " ");
             itemDetails = itemDetails.Replace("\t", " ");
-            itemDetails = itemDetails.Replace("\n", " ");
+            itemDetails = itemDetails.Replace("\n", " , ");
             var retVal = new WebsiteModels.ItemReleaseDetail
             {
                 IRFDetailId = source.IRFDetailId,
@@ -36,6 +36,12 @@ namespace EPMS.WebModels.ModelMappers
                     : source.ItemVariation.InventoryItem.ItemNameAr;
                 retVal.ItemCode = source.ItemVariation.InventoryItem.ItemCode;
                 retVal.ItemSKUCode = source.ItemVariation.SKUCode;
+            }
+            var rfi = source.ItemRelease.RFI;
+            if (rfi != null && rfi.RFIItems.Any())
+            {
+                retVal.RequestedQuantity =
+                    rfi.RFIItems.FirstOrDefault(x => x.ItemVariationId == retVal.ItemVariationId).ItemQty;
             }
             return retVal;
         }

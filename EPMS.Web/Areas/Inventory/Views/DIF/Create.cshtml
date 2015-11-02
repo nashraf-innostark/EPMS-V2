@@ -35,11 +35,11 @@
 @using (Html.BeginForm("Create", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x=>x.Dif.Id)
+    @Html.HiddenFor(x=>x.Dif.FormNumber)
     @Html.HiddenFor(x => x.Dif.ManagerId)
     @Html.HiddenFor(x => x.Dif.RecCreatedBy)
     @Html.HiddenFor(x => x.Dif.RecCreatedDate)
     <div class="container-fluid">
-        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="createdBy">@EPMS.WebModels.Resources.RFI.RFI.CreatedBy  </label>
@@ -50,8 +50,28 @@
                 </div>
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
+        <div class="control-group row-fluid warehouseDDL">
+            <div class="span3">
+                <label class="control-label">@EPMS.Web.Resources.Inventory.DIF.DIF.Warehouse</label>
+            </div>
+            <div class="span2">
+                <div class="controls ">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "Warehouse", @class = "select2me disableDdl" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(model => model.Dif.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "--Select--", new { @id = "Warehouse", @class = "select2me disableDdl" })
+                        </div>
+                    }
+                    <label id="warehousetValidation"></label>
+                </div>
+            </div>
+        </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="greeting">@EPMS.WebModels.Resources.Inventory.DIF.DIF.Defectiveness</label>
@@ -61,11 +81,8 @@
                     @Html.TextBoxFor(model => model.Dif.DefectivenessE)
                 </div>
                 @Html.ValidationMessageFor(m => m.Dif.DefectivenessE, String.Empty, new { @class = "required" })
-
             </div>
         </div>
-        <!--Input Field end-->
-        <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="greetinga">@EPMS.WebModels.Resources.Inventory.DIF.DIF.DefectivenessArabic</label>
@@ -77,9 +94,6 @@
                 @Html.ValidationMessageFor(m => m.Dif.DefectivenessA, String.Empty, new { @class = "required" })
             </div>
         </div>
-        <!--Input Field end-->
-        
-        <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
                 <table class="table table-striped table-responsive ">
@@ -215,12 +229,16 @@
     @Html.Partial("_ItemsPopUp")
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var siteUrl;
+    var divId;
     var textTillParent = "";
     var dir = '@direction';
+    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
+        divId = "jstree";
         CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
@@ -260,9 +278,18 @@
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
                         } else {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
                         }
                     }
                     $("#DifItem_" + index + "__ItemDetails").val(textToAppend);
@@ -270,56 +297,57 @@
             });
 
             $('#itemSearcher').modal('toggle');
-        };
-        var treeInitialData;
-        if (dir == "ltr") {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "Departments",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
-        } else {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "الإدارات",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
         }
-        $("#jstree").jstree({
-            "json_data": {
-                "data": treeInitialData
-            },
-            "plugins": ["themes", "json_data", "ui"],
-            "ui": {
-                "initially_select": ["parentNode"]
-            },
-            "core": {
-                "initially_open": ["parentNode"]
-            }
-        }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked          
-            if (data.inst._get_parent(data.rslt.obj) != -1) {
-                var parents = [];
-                textTillParent = "";
-                data.rslt.obj.parents("li").each(function () {
-                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
-                });
-                $.each(parents, function (key, value) {
-                    textTillParent = value.description + " >" + textTillParent;
-                });
-                textTillParent = textTillParent + $(".jstree-clicked").text();
-            }
-        });
-        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
-        populateTree(0, "jstree", requestUrl);
+        function getModalControlsValuesForTree() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationTree").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#DifItem_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#DifItem_" + index + "__IsItemSKU").val(isItemSku);
+            $("#DifItem_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#DifItem_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
+                        } else {
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
+                        }
+                    }
+                    $("#DifItem_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+
+            $('#itemSearcher').modal('toggle');
+        } 
 
         $("#btnTreeSelector").click(function (event) {
             $('#itemTreeSelector').modal('show');
@@ -327,15 +355,44 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
         $("#selectDepartment").on("click", function () {
-            var index = parseInt($("#ItemModalIndex").val());
-            $("#DifItem_" + index + "__PlaceInDepartment").val(textTillParent);
-            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            var selectedItem = $(".jstree-clicked").text();
+            // validation
+            if (selectedItem == "" || selectedItem == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $("#ItemVariationTree").val("");
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
+                    $("#ItemVariationTree").val(value.ItemVariationId);
+                }
+            });
+            var item = $("#ItemVariationTree").val();
+            if (item == "" || item == 0 || item == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
             $('#itemTreeSelector').modal('toggle');
             return true;
         });
         $("#SaveChanges").on("click", function () {
-            if (validateSelect2Ddl("#ItemVariationDropDownList")) {
-                getModalControlsValues();
+            var createFrom = $("input[name=ItemFrom]:checked").val();
+            if (createFrom == "dropdown") {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                    getModalControlsValues();
+                }
+            } else {
+                getModalControlsValuesForTree();
             }
         });
 
@@ -370,7 +427,8 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
-            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
         });
         //add data in row from popup
         $('.trAdder').on("click", function () {
@@ -433,6 +491,46 @@
                 $(this).find(".serialNumber").text(add);
             });
         }
+        var $radios = $('input:radio[name=ItemFrom]');
+        $radios.filter('[value=dropdown]').prop('checked', true);
+        $("#Simple_Select_Box_with_Filter_Search").show();
+        $("#treeControl").hide();
+        $("input[name=ItemFrom]:radio").change(function () {
+            if ($(this).val() == "dropdown") {
+                $("#Simple_Select_Box_with_Filter_Search").show();
+                $("#treeControl").hide();
+            }
+            if ($(this).val() == "tree") {
+                $("#Simple_Select_Box_with_Filter_Search").hide();
+                $("#treeControl").show();
+            }
+        });
+        
+        $("#Warehouse").on("change", function () {
+            var warehouseId = parseInt($(this).val());
+            if (isNaN(warehouseId)) {
+                return false;
+            }
+            var url = siteUrl + "/Inventory/DIF/GetWarehouseItems";
+            ajaxLoader();
+            $.ajax({
+                url: url,
+                type: 'GET',
+                dataType: "json",
+                data: {
+                    warehouseId: warehouseId,
+                    direction: dir
+                },
+                success: function (data) {
+                    populateDDItems(data.ItemVariationDropDownListItems);
+                    reDrawTree(data.InventoryDepartments);
+                },
+                error: function (e) {
+                    $.unblockUI();
+                    alert('Error=' + e.toString());
+                }
+            });
+        });
     });
 
     $('#tiny').elrte({
@@ -442,6 +540,57 @@
         toolbar: 'tiny'
     });
     function jsTreeClick(event) {
+        return true;
+    }
+    function populateDDItems(data) {
+        $("#ItemVariationDropDownList").empty();
+        if (data.length > 0) {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("--Select--")
+            );
+            for (var i = 0; i < data.length; i++) {
+                $("#ItemVariationDropDownList").append(
+                    $('<option></option>').val(data[i].ItemVariationId).html(data[i].ItemCodeSKUCodeDescriptoinEn)
+                );
+            }
+        } else {
+            $("#ItemVariationDropDownList").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
+        return true;
+    }
+    function reDrawTree(data)
+    {
+        var tree = JSON.parse(data);
+        $("#" + divId).jstree({
+            'core': {
+                'check_callback': true,
+                'data': tree
+            },
+            "plugins": ["themes", "json_data", "ui" ],
+        });
+    }
+    function validateForm(event) {
+        var warehouseId = $("#Warehouse").val();
+        if (warehouseId == null || warehouseId == "" || warehouseId == 0) {
+            $("#warehousetValidation").text("Please Select Warehouse");
+            $("#warehousetValidation").addClass("Error");
+            $('html,body').animate({
+                    scrollTop: $(".warehouseDDL").offset().top
+                },
+            'slow');
+            event.preventDefault();
+            return false;
+        } else {
+            $("#warehousetValidation").text("");
+            $("#warehousetValidation").removeClass("Error");
+        }
         return true;
     }
 </script>

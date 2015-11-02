@@ -68,7 +68,7 @@ namespace EPMS.Implementation.Services
             if (vendorToSave.Vendor.VendorId < 1)
             {
                 SaveNewVendor(vendorToSave.Vendor);
-                SaveVendorItems(vendorToSave);
+                //SaveVendorItems(vendorToSave);
             }
 
                 #endregion
@@ -78,7 +78,7 @@ namespace EPMS.Implementation.Services
             else
             {
                 UpdateExistingVendor(vendorToSave.Vendor);
-                UpdateVendorItems(vendorToSave);
+                //UpdateVendorItems(vendorToSave);
             }
 
             #endregion

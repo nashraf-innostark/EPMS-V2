@@ -19,5 +19,6 @@ namespace EPMS.Models.DomainModels
         public virtual Warehouse Warehouse { get; set; }
         public virtual ICollection<WarehouseDetail> WarehouseDetails { get; set; }
         public virtual WarehouseDetail ParentDetail { get; set; }
+        public virtual ICollection<ItemWarehouse> ItemWarehouses { get; set; }
     }
 }

@@ -827,6 +827,7 @@
     <Compile Include="WebsiteModels\ItemManufacturer.cs" />
     <Compile Include="WebsiteModels\ItemRelease.cs" />
     <Compile Include="WebsiteModels\ItemReleaseDetail.cs" />
+    <Compile Include="WebsiteModels\ItemReleaseForRif.cs" />
     <Compile Include="WebsiteModels\ItemReleaseQuantity.cs" />
     <Compile Include="WebsiteModels\ItemVariation.cs" />
     <Compile Include="WebsiteModels\ItemWarehouse.cs" />

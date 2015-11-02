@@ -70,6 +70,42 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Item Description.
+        /// </summary>
+        public static string AddItemDescription {
+            get {
+                return ResourceManager.GetString("AddItemDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Item SKU.
+        /// </summary>
+        public static string AddItemSKU {
+            get {
+                return ResourceManager.GetString("AddItemSKU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Warhouse.
+        /// </summary>
+        public static string AddWarhouse {
+            get {
+                return ResourceManager.GetString("AddWarhouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created By.
         /// </summary>
         public static string CreatedBy {
@@ -102,6 +138,15 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         public static string DeliveryInfoArabic {
             get {
                 return ResourceManager.GetString("DeliveryInfoArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dropdown.
+        /// </summary>
+        public static string Dropdown {
+            get {
+                return ResourceManager.GetString("Dropdown", resourceCulture);
             }
         }
         
@@ -187,6 +232,24 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Search.
+        /// </summary>
+        public static string ItemSearch {
+            get {
+                return ResourceManager.GetString("ItemSearch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Tree Selector.
+        /// </summary>
+        public static string ItemTreeSelector {
+            get {
+                return ResourceManager.GetString("ItemTreeSelector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Order #.
         /// </summary>
         public static string Order {
@@ -214,6 +277,15 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Place in Departments.
+        /// </summary>
+        public static string PlaceInDepartments {
+            get {
+                return ResourceManager.GetString("PlaceInDepartments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity.
         /// </summary>
         public static string Quantity {
@@ -223,7 +295,7 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form has successfully Added..
+        ///   Looks up a localized string similar to Item Release Form has added successfully..
         /// </summary>
         public static string RecordAdded {
             get {
@@ -232,11 +304,20 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Item Release Form has successfully Updated..
+        ///   Looks up a localized string similar to Item Release Form has updated successfully..
         /// </summary>
         public static string RecordUpdated {
             get {
                 return ResourceManager.GetString("RecordUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Requested Quantity.
+        /// </summary>
+        public static string RequestedQuantity {
+            get {
+                return ResourceManager.GetString("RequestedQuantity", resourceCulture);
             }
         }
         
@@ -259,6 +340,33 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select Item.
+        /// </summary>
+        public static string SelectItem {
+            get {
+                return ResourceManager.GetString("SelectItem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select one or more Warhouses.
+        /// </summary>
+        public static string SelectWarhouses {
+            get {
+                return ResourceManager.GetString("SelectWarhouses", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial.
         /// </summary>
         public static string Serial {
@@ -273,6 +381,15 @@ namespace EPMS.WebModels.Resources.Inventory.IRF.AddEdit {
         public static string Submit {
             get {
                 return ResourceManager.GetString("Submit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tree.
+        /// </summary>
+        public static string Tree {
+            get {
+                return ResourceManager.GetString("Tree", resourceCulture);
             }
         }
         

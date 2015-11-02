@@ -12,7 +12,9 @@
     color: #e02222;
     text-align: left !important;
 }
-
+.body-login .nav-user-menu > li{
+  display: block !important;
+}
 .displayCK {
     display: inline-block;
     vertical-align: middle;
@@ -311,5 +313,9 @@
 }
 
 .tableBtn {
-      margin-top: 26% !important;
+    margin-top: 26% !important;
+}
+
+.tableLabel {
+    margin-top: 18%;
 }

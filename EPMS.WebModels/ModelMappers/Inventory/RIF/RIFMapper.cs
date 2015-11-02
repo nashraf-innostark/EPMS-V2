@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using EPMS.Models.DashboardModels;
+using EPMS.Models.DomainModels;
 using EPMS.WebModels.ViewModels.RIF;
+using RIFItem = EPMS.WebModels.WebsiteModels.RIFItem;
 
 namespace EPMS.WebModels.ModelMappers.Inventory.RIF
 {
@@ -22,6 +25,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
                 ManagerId = source.Rif.ManagerId,
+                IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -43,6 +47,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 ItemQty = source.ItemQty,
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
+                WarehouseId = source.WarehouseId,
 
                 RecCreatedBy = createdBy,
                 RecCreatedDate = createdDate,
@@ -64,6 +69,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 NotesE = source.Rif.NotesE,
                 NotesA = source.Rif.NotesA,
                 ManagerId = source.Rif.ManagerId,
+                IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
                 RecCreatedDate = source.Rif.RecCreatedDate,
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
@@ -84,6 +90,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 ManagerId = source.ManagerId,
+                IRFId = source.IRFId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -103,6 +110,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
             var rfi = new RIFWidget
             {
                 Id = source.RIFId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
@@ -123,6 +131,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 NotesE = source.NotesE,
                 NotesA = source.NotesA,
                 Status = source.Status,
+                IRFId = source.IRFId,
                 RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
@@ -135,7 +144,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
             return rif;
         }
 
-        public static WebsiteModels.RIFItem CreateRifItemServerToClient(this EPMS.Models.DomainModels.RIFItem source)
+        public static WebsiteModels.RIFItem CreateRifItemServerToClient(this EPMS.Models.DomainModels.RIFItem source, List<WebsiteModels.ItemWarehouse> itemWarehouses)
         {
             var rifItem = new WebsiteModels.RIFItem
             {
@@ -149,13 +158,21 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+                RecUpdatedDate = source.RecUpdatedDate,
+                WarehouseId = source.WarehouseId,
+                ItemWarehouses = itemWarehouses.Where(x=>x.ItemVariationId == source.ItemVariationId)
             };
             if (source.ItemVariation != null)
             {
                 rifItem.ItemVariationId = source.ItemVariationId;
                 rifItem.ItemSKUCode = source.ItemVariation.SKUCode;
             }
+            ItemReleaseDetail itemReleaseDetail = source.RIF.ItemRelease.ItemReleaseDetails.FirstOrDefault(x => x.ItemVariationId == source.ItemVariationId);
+            if (
+                itemReleaseDetail != null)
+                rifItem.ReleasedQty =
+                    itemReleaseDetail.ItemQty;
+
             return rifItem;
         }
         #endregion
@@ -175,7 +192,8 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+                RecUpdatedDate = source.RecUpdatedDate,
+                WarehouseId = source.WarehouseId
             };
             if (source.ItemVariation != null)
             {

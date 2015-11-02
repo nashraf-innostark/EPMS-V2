@@ -16,9 +16,11 @@ namespace EPMS.Models.DomainModels
         public int Status { get; set; }
         public string ManagerId { get; set; }
         public string FormNumber { get; set; }
+        public long WarehouseId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual AspNetUser Manager { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
         public virtual ICollection<DIFItem> DIFItems { get; set; }
     }
 }

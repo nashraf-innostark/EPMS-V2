@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Web.Mvc.Routing.Constraints;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -12,7 +13,10 @@ namespace EPMS.WebModels.WebsiteModels
         public long ItemVariationId { get; set; }
         public string ItemBarcode { get; set; }
         public string SKUCode { get; set; }
+        public double? UnitCost { get; set; }
+        public bool CostCalculation { get; set; }
         public double? UnitPrice { get; set; }
+        public double? QuantityInPackage { get; set; }
         public double? PackagePrice { get; set; }
         public bool PriceCalculation { get; set; }
         public string DescriptionEn { get; set; }
@@ -20,7 +24,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string SKUDescriptionEn { get; set; }
         public string SKUDescriptionAr { get; set; }
         public string QuantityInHand { get; set; }
-        public string QuantitySold { get; set; }
+        public long? QuantitySold { get; set; }
         public string ReorderPoint { get; set; }
         public string QuantityInManufacturing { get; set; }
         public string Weight { get; set; }
@@ -31,6 +35,8 @@ namespace EPMS.WebModels.WebsiteModels
         public string NotesAr { get; set; }
         public string AdditionalInfoEn { get; set; }
         public string AdditionalInfoAr { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
@@ -47,6 +53,8 @@ namespace EPMS.WebModels.WebsiteModels
         public string StatusNameAr { get; set; }
         public string ColorNameEn { get; set; }
         public string ColorNameAr { get; set; }
+        public double? AverageCost { get; set; }
+        public double? TotalQuantityInHand { get; set; }
 
         public List<ItemManufacturer> ItemManufacturers { get; set; }
         public List<Status> Statuses { get; set; }

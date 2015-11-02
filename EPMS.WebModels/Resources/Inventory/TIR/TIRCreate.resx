@@ -144,6 +144,9 @@
   <data name="ExcelImport" xml:space="preserve">
     <value>Excel Import</value>
   </data>
+  <data name="FromWarehouse" xml:space="preserve">
+    <value>From Warehouse</value>
+  </data>
   <data name="Header" xml:space="preserve">
     <value>Inventory Transfer Item Request (TIR)</value>
   </data>
@@ -157,13 +160,16 @@
     <value>Inventory Transfer Item Request (TIR) Edit</value>
   </data>
   <data name="RecordAdded" xml:space="preserve">
-    <value>Transfer Item Request has been successfully Updated.</value>
+    <value>Transfer Item Request has been successfully Added.</value>
   </data>
   <data name="RecordUpdated" xml:space="preserve">
     <value>Transfer Item Request has been successfully Updated.</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
+  </data>
+  <data name="ToWarehouse" xml:space="preserve">
+    <value>To Warehouse</value>
   </data>
   <data name="TransferQuantity" xml:space="preserve">
     <value>Transfer Quantity</value>

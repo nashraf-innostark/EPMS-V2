@@ -98,6 +98,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rfiViewModel.Rfi.CustomerName = rfiresponse.CustomerNameA;
                     rfiViewModel.Rfi.ManagerName = rfiresponse.ManagerNameA;
                 }
+                rfiViewModel.Rfi.EmpJobId = rfiresponse.EmpJobId;
                 rfiViewModel.Rfi.OrderNo = rfiresponse.OrderNo;
                 rfiViewModel.RfiItem = rfiresponse.RfiItem.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList();
             }
@@ -169,13 +170,14 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             if (loadCustomersAndOrders)
             {
-                rfiViewModel.Customers = rfiresponse.Customers.Any()?rfiresponse.Customers.Select(x => x.CreateForDashboard()):new List<Customer>();
-                rfiViewModel.Orders = rfiresponse.Orders.Any()?rfiresponse.Orders.Select(x => x.CreateForDashboard()):new List<Order>();
+                rfiViewModel.Customers = rfiresponse.Customers.Any() ? rfiresponse.Customers.Select(x => x.CreateForDashboard()) : new List<Customer>();
+                rfiViewModel.Orders = rfiresponse.Orders.Any() ? rfiresponse.Orders.Select(x => x.CreateForDashboard()) : new List<Order>();
                 //set customerId
                 if (rfiViewModel.Rfi.OrderId > 0)
                     rfiViewModel.Rfi.CustomerId = rfiViewModel.Orders.FirstOrDefault(x => x.OrderId == rfiViewModel.Rfi.OrderId).CustomerId;
             }
             rfiViewModel.ItemVariationDropDownList = rfiresponse.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(rfiViewModel);
         }
 
@@ -230,7 +232,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.Rfis = response.Rfis.Any() ? response.Rfis.Select(x => x.CreateRfiServerToClient()).ToList() : new List<WebModels.WebsiteModels.RFI>();
             viewModel.RfiItems = response.RfiItems != null ? response.RfiItems.Select(x => x.CreateRfiItemDetailsServerToClient()).ToList() : new List<WebModels.WebsiteModels.RFIItem>();
             viewModel.RecentRfi = (response.RecentRfi != null && response.RecentRfi.RFIId > 0) ? response.RecentRfi.CreateRfiServerToClient() : new WebModels.WebsiteModels.RFI();
-            
+
             if (viewModel.RecentRfi != null)
             {
                 viewModel.RecentRfi.RequesterName = response.RequesterNameEn;

@@ -3,8 +3,10 @@ using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Threading;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
-using EPMS.Web.Models;
+using EPMS.WebModels.WebsiteModels;
+using Employee = EPMS.Models.DomainModels.Employee;
 
 namespace EPMS.WebModels.ModelMappers
 {

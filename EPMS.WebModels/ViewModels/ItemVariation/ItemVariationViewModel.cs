@@ -22,6 +22,7 @@ namespace EPMS.WebModels.ViewModels.ItemVariation
             WarehousesForDdl = new List<WebsiteModels.Warehouse>();
         }
         public WebsiteModels.ItemVariation ItemVariation { get; set; }
+        public IList<WebsiteModels.Vendor> VendorsForDdl { get; set; }
         public IEnumerable<WebsiteModels.ItemVariation> ItemVariations { get; set; }
 
         public WebsiteModels.Color Color { get; set; }

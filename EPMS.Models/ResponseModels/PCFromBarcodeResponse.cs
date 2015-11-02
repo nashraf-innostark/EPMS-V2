@@ -11,5 +11,6 @@ namespace EPMS.Models.ResponseModels
         public string SKUDescriptionAr { get; set; }
         public double ItemsInPackage { get; set; }
         public long ItemVariationId { get; set; }
+        public long? TotalItemsCountInWarehouse { get; set; }
     }
 }

@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -32,12 +34,15 @@ namespace EPMS.WebModels.WebsiteModels
         public string ManagerNameAr { get; set; }
         public string ManagerId { get; set; }
         public string FormNumber { get; set; }
+        public string EmpJobId { get; set; }
 
         public string OrderNo { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecCreatedDateString { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
-        public System.DateTime RecUpdatedDate { get; set; }
+        public DateTime RecUpdatedDate { get; set; }
+
+        public IEnumerable<RFIItem> RFIItems { get; set; }
     }
 }

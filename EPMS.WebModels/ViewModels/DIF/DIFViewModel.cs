@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.DashboardModels;
 using EPMS.Models.ResponseModels;
 
 namespace EPMS.WebModels.ViewModels.DIF
@@ -12,5 +13,6 @@ namespace EPMS.WebModels.ViewModels.DIF
         public WebsiteModels.DIF Dif { get; set; }
         public List<WebsiteModels.DIFItem> DifItem { get; set; }
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+        public IEnumerable<WarehousDDL> Warehouses { get; set; }
     }
 }

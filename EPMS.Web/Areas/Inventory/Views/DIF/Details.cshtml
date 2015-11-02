@@ -37,6 +37,8 @@
 @using (Html.BeginForm("Details", "DIF", FormMethod.Post, new { @id = "DIFForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Dif.Id)
+    @Html.HiddenFor(x => x.Dif.FormNumber)
+    @Html.HiddenFor(x => x.Dif.WarehouseId)
     @Html.HiddenFor(x => x.Dif.ManagerId)
     @Html.HiddenFor(x => x.Dif.DefectivenessA)
     @Html.HiddenFor(x => x.Dif.DefectivenessE)
@@ -70,11 +72,11 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.EmployeeId:</th>
-                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        <td>@Model.Dif.EmpJobId</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.DIF.DIF.DIFNumber:</th>
-                                        <td>@Model.Dif.Id</td>
+                                        <td>@Model.Dif.FormNumber</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.DIF.DIF.Defectiveness:</th>

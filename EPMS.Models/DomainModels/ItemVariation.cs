@@ -8,7 +8,10 @@ namespace EPMS.Models.DomainModels
         public long ItemVariationId { get; set; }
         public string ItemBarcode { get; set; }
         public string SKUCode { get; set; }
+        public double? UnitCost { get; set; }
+        public bool CostCalculation { get; set; }
         public double? UnitPrice { get; set; }
+        public double? QuantityInPackage { get; set; }
         public double? PackagePrice { get; set; }
         public bool PriceCalculation { get; set; }
         public string DescriptionEn { get; set; }
@@ -27,6 +30,8 @@ namespace EPMS.Models.DomainModels
         public string NotesAr { get; set; }
         public string AdditionalInfoEn { get; set; }
         public string AdditionalInfoAr { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }

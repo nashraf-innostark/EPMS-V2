@@ -145,6 +145,13 @@
                     </div>
                 </div>
             </div>
+            <div id="DeleteNode" style="display: none">
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button type="button" class="btn disableBtn" onclick="DeleteNode(event);">@EPMS.Web.Resources.Inventory.InventoryDepartment.BtnDelete</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </form>
 </div>
@@ -287,9 +294,10 @@
         $('.' + 'toBeDiabled' + ':input').attr('disabled', false);
         $("#CKEditorDescp").show();
         $("#Descp").hide();
-        $("#SaveNewNode").css("display", "none");
-        $("#UpdateNode").css("display", "block");
-        $("#Edit").css("display", "none");
+        $("#SaveNewNode").hide();
+        $("#UpdateNode").show();
+        $("#DeleteNode").show();
+        $("#Edit").hide();
         $("#colorpicker").removeClass('disableList');
         CKEDITOR.replace('description', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
@@ -304,13 +312,15 @@
             isDetail = true;
         }
         if (isDetail == true) {
-            $("#SaveNewNode").css("display", "none");
-            $("#UpdateNode").css("display", "none");
-            $("#Edit").css("display", "none");
+            $("#SaveNewNode").hide();
+            $("#UpdateNode").hide();
+            $("#DeleteNode").hide();
+            $("#Edit").hide;
         } else {
-            $("#SaveNewNode").css("display", "none");
-            $("#UpdateNode").css("display", "none");
-            $("#Edit").css("display", "block");
+            $("#SaveNewNode").hide();
+            $("#UpdateNode").hide();
+            $("#DeleteNode").hide();
+            $("#Edit").show();
         }
     }
     function jsTreeClick(event) {
@@ -325,12 +335,15 @@
             $("#nameAr").val("");
             $("#color").val("#FFF8BE");
             $("#description").val("");
+            $("#descpEn").val("");
             $("#ParentId").val(0);
             CKEDITOR.replace('description', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
-            $("#SaveNewNode").css("display", "none");
-            $("#UpdateNode").css("display", "none");
+            $("#SaveNewNode").hide();
+            $("#UpdateNode").hide();
+            $("#DeleteNode").hide();
+            $("#Edit").hide();
             //$("#InventoryDepartmentForm").valid();
             return true;
         }
@@ -382,9 +395,10 @@
         CKEDITOR.replace('description', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
-        $("#UpdateNode").css("display", "none");
-        $("#SaveNewNode").css("display", "block");
-        $("#Edit").css("display", "none");
+        $("#UpdateNode").hide();
+        $("#DeleteNode").hide();
+        $("#SaveNewNode").show();
+        $("#Edit").hide();
         return true;
     }
     function SaveNewNode(event) {
@@ -443,6 +457,7 @@
             },
             error: callError
         });
+        $("button.disableBtn").attr("disabled", false);
     }
     function successCreatingNode(data) {
         if (data != null) {
@@ -465,6 +480,43 @@
         }
         else {
             alert("Problem in Saving Changes.");
+        }
+    }
+    function DeleteNode(event) {
+        if (confirm('Are you sure you want to Delete')) {
+            var nodeId = parseInt($("#DepartmentId").val());
+            if (nodeId == 0 || nodeId == "" || isNaN(nodeId)) {
+                return;
+            } else {
+                var postUrl = $("#siteURL").val() + "/Inventory/InventoryDepartment/DeleteInventoryDepartment";
+                $.ajax({
+                    type: "POST",
+                    datatype: "json",
+                    url: postUrl,
+                    data: {
+                        id: nodeId
+                    },
+                    success: function (data) {
+                        // Set values
+                        successDeletingDepartment(data);
+                    },
+                    error: callError
+                });
+            }
+        } else {
+        }
+    }
+    function successDeletingDepartment(data) {
+        var href;
+        if (data == "Success") {
+            href = window.location.origin + $("#siteURL").val() + "/Inventory/InventoryDepartment/Index/4";
+            window.location.href = href;
+        } else if (data == "Associated") {
+            href = window.location.origin + $("#siteURL").val() + "/Inventory/InventoryDepartment/Index/5";
+            window.location.href = href;
+        } else if (data == "Error") {
+            href = window.location.origin + $("#siteURL").val() + "/Inventory/InventoryDepartment/Index/6";
+            window.location.href = href;
         }
     }
     function callError() {

@@ -47,14 +47,26 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult Index()
         {
-            ProjectListViewModel projectsList=new ProjectListViewModel
+            ProjectListViewModel projectsList = new ProjectListViewModel();
+            string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
+            var roleName = Session["RoleName"].ToString();
+            if (roleName == "Customer")
             {
-                Projects =
-                    Session["RoleName"].ToString() == "Customer"
-                        ? projectService.LoadAllUnfinishedProjectsByCustomerId(
-                            Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient())
-            };
+                var customerId = Convert.ToInt64(Session["CustomerID"]);
+                projectsList.Projects = projectService.LoadAllUnfinishedProjectsByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
+            }
+            else
+            {
+                if (userPermissionsSet.Contains("ListviewAllProjects"))
+                {
+                    projectsList.Projects = projectService.LoadAllUnfinishedProjects().Select(x => x.CreateFromServerToClient());
+                }
+                else
+                {
+                    projectsList.Projects = projectService.LoadAllUnfinishedProjectsByUserId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+                }
+            }
+            
             ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             ViewBag.UserRole = Session["RoleName"];
             
@@ -64,14 +76,19 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [SiteAuthorize(PermissionKey = "ProjectIndex")]
         public ActionResult Finished()
         {
-            ProjectListViewModel projectsList = new ProjectListViewModel
+            ProjectListViewModel projectsList = new ProjectListViewModel();
+            if (Session["RoleName"].ToString() == "Employee")
             {
-                Projects =
+                projectsList.Projects = projectService.LoadAllFinishedProjectsByEmployeeId(Session["UserID"].ToString()).Select(x => x.CreateFromServerToClient());
+            }
+            else
+            {
+                projectsList.Projects =
                     Session["RoleName"].ToString() == "Customer"
                         ? projectService.LoadAllFinishedProjectsByCustomerId(
                             Convert.ToInt64(Session["CustomerID"].ToString())).Select(x => x.CreateFromServerToClient())
-                        : projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient())
-            };
+                        : projectService.LoadAllFinishedProjects().Select(x => x.CreateFromServerToClient());
+            }
             return View(projectsList);
         }
         #endregion
@@ -101,12 +118,12 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreate());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreateForProjectDetails());
                         foreach (var projectTask in projectViewModel.ProjectTasks)
                         {
                             projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
-                            var tempTaskProgress = projectTask.TaskProgress.Split('%');
-                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(tempTaskProgress[0]);
+                            var tempTaskProgress = projectTask.TaskProgress;
+                            projectViewModel.Project.ProgressTotal += Convert.ToDouble(tempTaskProgress);
                         }
                     }
                     //Load project documents
@@ -149,6 +166,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "ProjectCreate")]
         public ActionResult Create(ProjectViewModel projectViewModel)
         {
             try
@@ -281,7 +299,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     var projectTasks = projectTaskService.GetTasksByProjectId((long)id);
                     if (projectTasks != null)
                     {
-                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreate());
+                        projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreateForProjectDetails());
                         foreach (var projectTask in projectViewModel.ProjectTasks)
                         {
                             projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
@@ -321,6 +339,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
             return Json(orders, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
         #region Get Customer Quotations
         [HttpGet]
         public JsonResult GetCustomerQuotations(long customerId)

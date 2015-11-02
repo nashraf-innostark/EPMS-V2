@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace EPMS.Web.Models
+namespace EPMS.WebModels.WebsiteModels
 {
     public class ItemReleaseForRif
     {

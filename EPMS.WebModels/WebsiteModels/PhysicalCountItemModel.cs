@@ -23,6 +23,7 @@ namespace EPMS.WebModels.WebsiteModels
         public double ItemsInPackage { get; set; }
         public long TotalItemsInPackages { get; set; }
         public long TotalItemsCount { get; set; }
+        public long? TotalItemsCountInWarehouse { get; set; }
         public string RecCreatedByName { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }

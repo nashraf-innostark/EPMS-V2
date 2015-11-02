@@ -5,6 +5,7 @@ namespace EPMS.WebModels.WebsiteModels
     public class PurchaseOrder
     {
         public long PurchaseOrderId { get; set; }
+        public string EmpJobId { get; set; }
         public string FormNumber { get; set; }
         public string NotesA { get; set; }
         public string NotesE { get; set; }

@@ -37,6 +37,7 @@
 @using (Html.BeginForm("Details", "RIF", FormMethod.Post, new { @id = "RIFForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Rif.RIFId)
+    @Html.HiddenFor(x => x.Rif.FormNumber)
     @Html.HiddenFor(x => x.Rif.OrderId)
     @Html.HiddenFor(x => x.Rif.ManagerId)
     @Html.HiddenFor(x => x.Rif.ReasonE)
@@ -71,11 +72,11 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.EmployeeId:</th>
-                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        <td>@Model.Rif.EmpJobId</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.RIF.RIF.RIFNumber:</th>
-                                        <td>@Model.Rif.RIFId</td>
+                                        <td>@Model.Rif.FormNumber</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.RIF.RIF.ReturningReason:</th>

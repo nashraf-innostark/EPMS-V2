@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.Common;
 using EPMS.Models.ResponseModels;
-using EPMS.Web.Models;
+using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ViewModels.IRF
 {
@@ -9,6 +10,7 @@ namespace EPMS.WebModels.ViewModels.IRF
         public ItemReleaseCreateViewModel()
         {
             Rfis = new List<WebsiteModels.RFI>();
+            ItemReleaseDetails = new List<ItemReleaseDetail>();
             ItemVariationDropDownList = new List<ItemVariationDropDownListItem>();
         }
 

@@ -18,9 +18,11 @@ namespace EPMS.Models.DomainModels
         public string ManagerId { get; set; }
         public long ParentId { get; set; }
         public string FormNumber { get; set; }
+        public long WarehouseId { get; set; }
 
         public virtual AspNetUser CreatedBy { get; set; }
         public virtual AspNetUser Manager { get; set; }
+        public virtual Warehouse Warehouse { get; set; }
         public virtual ICollection<DIFItemHistory> DIFItemHistories { get; set; }
     }
 }

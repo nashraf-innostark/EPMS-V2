@@ -15,29 +15,29 @@
                     <img src="~/Content/Images/LoginLogo.png" alt="Desert Stars" />
                 </div>
                 
-                <h2 class="login-title">Welcome to Desert Starts</h2>
+                <h2 class="login-title">@EPMS.Web.Resources.Shared.Login.Welcome</h2>
                 <div class="login-member">
-                    Not a Member?&nbsp;<a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Account/Signup">Sign Up &#187;</a>
+                    @EPMS.Web.Resources.Shared.Login.NotAMember &nbsp;<a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Account/Signup">@EPMS.Web.Resources.Shared.Login.Signup &#187;</a>
                 </div>
-                <div class="login-or">Or</div>
+                <div class="login-or">@EPMS.Web.Resources.Shared.Login.Or</div>
                 <div class="login-input-area">
-                    <span class="help-block">Login With Your Desert Stars Account</span>
+                    <span class="help-block">@EPMS.Web.Resources.Shared.Login.LoginWith</span>
                     @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
                         @*@Html.Partial("_Alert")*@
                         <div>
-                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = "Username" })
+                            @Html.TextBoxFor(m => m.Email, new { @class = "form-control ", placeholder = EPMS.Web.Resources.Shared.Login.Email })
                             @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger required" })
                         </div>
                         <div>
-                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Password" })
+                            @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = EPMS.Web.Resources.Shared.Login.Password })
                             @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger required" })
                         </div>
-                        <button type="submit" class="btn btn-large btn-success btn-login">Login</button>
+                        <button type="submit" class="btn btn-large btn-success btn-login">@EPMS.Web.Resources.Shared.Login.Signin</button>
                     }
-                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Account/ForgotPassword" class="forgot-pass">Forgot Your Password?</a>
+                    <a href="@(ConfigurationManager.AppSettings["SiteURL"])/Account/ForgotPassword" class="forgot-pass">@EPMS.Web.Resources.Shared.Login.Forgot</a>
                     @*@Html.ActionLink("Forgot Your Password?", "ForgotPassword")*@
                 </div>
             </div>

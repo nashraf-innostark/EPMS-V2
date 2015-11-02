@@ -118,17 +118,18 @@ namespace EPMS.Implementation.Services
                 if (!task.IsParent && task.ParentTask != 0 && task.ParentTask != null)
                 {
                     var parentTask = Repository.Find(Convert.ToInt32(task.ParentTask));
-                    int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress.Split('%')[0]));
-                    int taskWeight = Convert.ToInt32(task.TotalWeight.Split('%')[0]);
-                    var progressToAdd = Convert.ToInt32(task.TaskProgress.Split('%')[0]) * taskWeight;
-                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd / 100));
+                    int countOtherTasksProgress = parentTask.SubTasks.Where(projectTask => projectTask.TaskId != task.TaskId).Sum(projectTask => Convert.ToInt32(projectTask.TaskProgress));
+                    //int taskWeight = Convert.ToInt32(task.TotalWeight);
+                    //var progressToAdd = Convert.ToInt32(task.TaskProgress) * taskWeight;
+                    var progressToAdd = Convert.ToInt32(task.TaskProgress);
+                    int parentTaskProgress = (countOtherTasksProgress + (progressToAdd));
                     if (parentTaskProgress <= 100)
                     {
-                        parentTask.TaskProgress = parentTaskProgress + "%";
-                        if (parentTaskProgress < 10)
-                        {
-                            parentTask.TaskProgress = "0" + parentTaskProgress + "%";
-                        }
+                        parentTask.TaskProgress = parentTaskProgress;
+                        //if (parentTaskProgress < 10)
+                        //{
+                        //    parentTask.TaskProgress = parentTaskProgress;
+                        //}
                         Repository.Update(parentTask);
                         Repository.SaveChanges();
                     }
@@ -184,17 +185,17 @@ namespace EPMS.Implementation.Services
                     {
                         if (projectTask.TaskId != task.TaskId)
                         {
-                            otherTasksProgress += Convert.ToDouble(projectTask.TaskProgress.Split('%')[0]);
+                            otherTasksProgress += Convert.ToDouble(projectTask.TaskProgress);
                         }
                     }
-                    otherTasksProgress = otherTasksProgress + Convert.ToInt32(task.TaskProgress.Split('%')[0]);
+                    otherTasksProgress = otherTasksProgress + Convert.ToInt32(task.TaskProgress);
                     int parentTaskProgress = Convert.ToInt32(otherTasksProgress);
                     if (parentTaskProgress <= 100)
                     {
-                        parentTask.TaskProgress = parentTaskProgress + "%";
+                        parentTask.TaskProgress = parentTaskProgress;
                         if (parentTaskProgress < 10)
                         {
-                            parentTask.TaskProgress = "0" + parentTaskProgress + "%";
+                            parentTask.TaskProgress = parentTaskProgress;
                         }
                         Repository.Update(parentTask);
                         Repository.SaveChanges();

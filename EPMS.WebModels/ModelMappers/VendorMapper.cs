@@ -1,4 +1,5 @@
-﻿using EPMS.Models.RequestModels;
+﻿using System.Linq;
+using EPMS.Models.RequestModels;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -21,7 +22,7 @@ namespace EPMS.WebModels.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                
+                PurchaseOrderItems = source.PurchaseOrderItems.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
 

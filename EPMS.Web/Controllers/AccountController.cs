@@ -1,4 +1,5 @@
-﻿using EPMS.Implementation.Identity;
+﻿using DataAnnotationsExtensions;
+using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
 using EPMS.Models.IdentityModels.ViewModels;
@@ -45,6 +46,7 @@ namespace IdentitySample.Controllers
         private ICustomerService customerService;
         private IUserPrefrencesService userPrefrencesService;
         private IDashboardWidgetPreferencesService PreferencesService;
+        private ICompanyProfileService companyProfileService;
         /// <summary>
         /// Set User Permission
         /// </summary>
@@ -67,7 +69,20 @@ namespace IdentitySample.Controllers
         private void SetCultureInfo(string userId)
         {
             var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
-            CultureInfo info = userPrefrences != null
+
+            //check last saved culture and newley if changed from login page
+            //if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
+            //{
+            //    userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+            //}
+            if (Session["Culture"] == null)
+            {
+                userPrefrencesService.AddUpdateCulture(userId, "en");
+            }
+            else {
+                userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+            }
+           CultureInfo info = userPrefrences != null
                 ? new CultureInfo(userPrefrences.Culture)
                 : new CultureInfo("en");
             Session["Culture"] = info.Name;
@@ -79,7 +94,9 @@ namespace IdentitySample.Controllers
 
         #region Constructor
 
-        public AccountController(IDashboardWidgetPreferencesService preferencesService, IUserPrefrencesService userPrefrencesService, IMenuRightsService menuRightService, IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService)
+        public AccountController(IDashboardWidgetPreferencesService preferencesService,
+            IUserPrefrencesService userPrefrencesService, IMenuRightsService menuRightService,
+            IEmployeeService employeeService, IAspNetUserService aspNetUserService, ICustomerService customerService, ICompanyProfileService companyProfileService)
         {
             this.menuRightService = menuRightService;
             this.employeeService = employeeService;
@@ -87,6 +104,7 @@ namespace IdentitySample.Controllers
             this.customerService = customerService;
             this.userPrefrencesService = userPrefrencesService;
             this.PreferencesService = preferencesService;
+            this.companyProfileService = companyProfileService;
         }
 
         #endregion
@@ -201,12 +219,22 @@ namespace IdentitySample.Controllers
                     return Redirect(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
                 }
                 ViewBag.ReturnUrl = returnUrl;
+                var companyDetails = companyProfileService.GetDetail();
+                if (companyDetails != null)
+                {
+                    ViewBag.CompanyURL = companyProfileService.GetDetail().CompanyWebsite;
+                }
                 var successNote = TempData["Note"];
-                if (successNote != "")
+                if (successNote!=null)
                 {
                     ViewBag.SuccessMessage = successNote;
                 }
                 ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+                if (Session["Culture"] != null && Session["Culture"] == "ar")
+                {
+                    System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                    System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+                }
                 return View();
             }
             else
@@ -593,6 +621,11 @@ namespace IdentitySample.Controllers
         public ActionResult Signup()
         {
             SignupViewModel signupViewModel = new SignupViewModel();
+            if (Session["Culture"] != null && Session["Culture"] == "ar")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+            }
             return View(signupViewModel);
         }
 
@@ -857,6 +890,11 @@ namespace IdentitySample.Controllers
         [AllowAnonymous]
         public ActionResult ForgotPassword()
         {
+            if (Session["Culture"] != null && Session["Culture"] == "ar")
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
+            }
             return View();
         }
 

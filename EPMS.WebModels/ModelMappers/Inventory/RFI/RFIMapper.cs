@@ -104,6 +104,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
             var rfi = new RFIWidget
             {
                 RFIId = source.RFIId,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length>7?empName.Substring(0,7):empName,
@@ -198,10 +199,12 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
             {
                 RFIId = source.RFIId,
                 OrderId = source.OrderId,
+                FormNumber = source.FormNumber,
                 //RequesterName = source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE,
                 CustomerName = source.Order.Customer.CustomerNameE,
                 OrderNumber = source.Order != null ? source.Order.OrderNo : string.Empty,
                 CustomerDeliveryInfo = (source.Order != null && source.Order.Customer != null) ? source.Order.Customer.CustomerAddress : string.Empty,
+                RFIItems = source.RFIItems.Select(x=>x.CreateRfiItemDetailsServerToClient())
             };
             return rfi;
         }

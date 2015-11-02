@@ -1,7 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
+using System.IO;
 using System.Linq;
+using System.Net;
+using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
@@ -58,6 +65,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 itemViewModel.InventoryItem = inventoryItemService.FindItemById((long)id).CreateFromServerToClient();
             }
+            //ViewBag.IsIncludeNewJsTree = true;
             return View(itemViewModel);
         }
 
@@ -65,27 +73,59 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [ValidateInput(false)]//this is due to CK Editor
         public ActionResult Create(InventoryItemViewModel itemViewModel)
         {
-            if (itemViewModel.InventoryItem.ItemId > 0)
+            if (Request.Form["Save"] != null)
             {
-                //Update Case
-                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
-                inventoryItemService.SaveItem(itemToSave);
+                if (itemViewModel.InventoryItem.ItemId > 0)
                 {
+                    //Update Case
+                    InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                    inventoryItemService.SaveItem(itemToSave);
+                    {
                     TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.InventoryItem.IsUpdated, IsSaved = true };
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
                 }
-            }
-            else
-            {
-                //Add Case
-                InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
-                inventoryItemService.SaveItem(itemToSave);
+                else
                 {
+                    //Add Case
+                    InventoryItemRequest itemToSave = itemViewModel.InventoryItem.CreateFromClientToServer();
+                    inventoryItemService.SaveItem(itemToSave);
+                    {
                     TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.InventoryItem.IsSaved, IsSaved = true };
-                    return RedirectToAction("Index");
+                        return RedirectToAction("Index");
+                    }
                 }
             }
-            
+            if (Request.Form["Delete"] != null)
+            {
+                string deleteeStatus = inventoryItemService.DeleteItem(itemViewModel.InventoryItem.ItemId);
+                switch (deleteeStatus)
+                {
+                    case "Success":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = EPMS.WebModels.Resources.Inventory.InventoryItem.IsDeleted, 
+                            IsUpdated = true
+                        };
+                        break;
+                    case "Associated":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Inventory.InventoryItem.IsAssociated, 
+                            IsError = true
+                        };
+                        break;
+                    case "Error":
+                        TempData["message"] = new MessageViewModel
+                        {
+                            Message = WebModels.Resources.Inventory.InventoryItem.IsError, 
+                            IsError = true
+                        };
+                        break;
+                }
+                return RedirectToAction("Index");
+            }
+            return View(itemViewModel);
         }
 
         #endregion
@@ -116,6 +156,61 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(details, JsonRequestBehavior.AllowGet);
         }
         #endregion
+
+        #region Delete
+
+        public JsonResult Delete(long inventoryItemId)
+        {
+            if (inventoryItemService.DeleteItem(inventoryItemId) == "Success")
+            {
+                return Json("Deleted", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Associated", JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #endregion
+
+        #region Upload Image
+
+        public ActionResult UploadImage()
+        {
+            HttpPostedFileBase image = Request.Files[0];
+            var filename = "";
+            try
+            {
+                //Save File to Folder
+                if ((image != null))
+                {
+                    filename =
+                        (DateTime.Now.ToString(CultureInfo.InvariantCulture).Replace(".", "") + image.FileName)
+                            .Replace("/", "").Replace("-", "").Replace(":", "").Replace(" ", "").Replace("+", "");
+                    var filePathOriginal = Server.MapPath(ConfigurationManager.AppSettings["InventoryItemImage"]);
+                    string savedFileName = Path.Combine(filePathOriginal, filename);
+                    image.SaveAs(savedFileName);
+                }
+            }
+            catch (Exception exp)
+            {
+                return
+                    Json(
+                        new
+                        {
+                            response = "Failed to upload. Error: " + exp.Message,
+                            status = (int)HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
+            }
+            return
+                Json(
+                    new
+                    {
+                        filename = filename,
+                        size = image.ContentLength / 1024 + "KB",
+                        response = "Successfully uploaded!",
+                        status = (int)HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
+        }
 
         #endregion
 

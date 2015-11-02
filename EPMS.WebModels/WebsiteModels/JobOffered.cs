@@ -12,7 +12,8 @@ namespace EPMS.WebModels.WebsiteModels
         public string DescriptionA { get; set; }
         public bool ShowBasicSalary { get; set; }
         public bool IsOpen { get; set; }
-        public string IsOpenStatus { get; set; }
+        public string IsOpenStatusEn { get; set; }
+        public string IsOpenStatusAr { get; set; }
         public int? NoOfPosts { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime? RecCreatedDt { get; set; }

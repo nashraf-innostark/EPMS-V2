@@ -28,7 +28,6 @@
     <i class="icon-big-notepad"></i>
     <h2><small>@EPMS.WebModels.Resources.Inventory.RIF.RIF.CreatePageHeading</small></h2>
 </header>
-
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
@@ -72,6 +71,26 @@
                 </div>
             </div>
         }
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="MaritalStatus">IRF #</label>
+            </div>
+            <div class="span2">
+                <div class="controls irfDDL">
+                    @if (Model.Rif.RIFId > 0)
+                    {
+                        @Html.DropDownListFor(m => m.Rif.IRFId, new SelectList(Model.ItemReleases, "ItemReleaseId", "FormNumber"), "--Select--", new { @class = "select2me", @id = "IRFId" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(m => m.Rif.IRFId, Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me", @id = "IRFId" })
+                    }
+                    <label id="irfValidationError" class="required"></label>
+                </div>
+            </div>
+        </div>
+
+
 
         <!--Input Field begin-->
         <div class="control-group row-fluid">
@@ -95,7 +114,6 @@
                     @Html.TextBoxFor(model => model.Rif.ReasonE)
                 </div>
                 @Html.ValidationMessageFor(m => m.Rif.ReasonE, String.Empty, new { @class = "required" })
-
             </div>
         </div>
         <!--Input Field end-->
@@ -115,14 +133,15 @@
         <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
-                <table class="table table-striped table-responsive ">
+                <table class="table table-striped table-responsive">
                     <thead class="">
                         <tr>
                             <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
                             <th style="width: 85%">@EPMS.WebModels.Resources.RFI.RFI.ItemDetails</th>
                             <th>@EPMS.WebModels.Resources.RFI.RFI.Quantity</th>
-
-                            <th style="width: 4%">@EPMS.WebModels.Resources.RFI.RFI.Delete</th>
+                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.Warehouse</th>
+                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.ReleasedQuantity</th>
+                            <th style="width: 4%">@EPMS.Web.Resources.RFI.RFI.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="RifItemsTableBody">
@@ -154,11 +173,18 @@
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2 })
+                                        @Html.TextBoxFor(m => m.RifItem[i].ItemQty, new { @class = "n1", @rows = 2, data_val_range_max = Model.RifItem[i].ReleasedQty, data_val_range = "Please enter quantity equal or less than Released quantity" })
                                         @Html.ValidationMessageFor(m => m.RifItem[i].ItemQty, null, new { @class = "required" })
                                     </td>
-
-
+                                    <td>
+                                        <div class="span9 WarehouseError_@(i +1)">
+                                            @Html.DropDownListFor(m => m.RifItem[i].WarehouseId, new SelectList(Model.RifItem[i].ItemWarehouses, "WarehouseId", "WarehouseNo", Model.RifItem[i].WarehouseId), "--Select--", new { @class = "select2me disableDdl" })
+                                            <label id="WarehouseError_@(i + 1)" class="required"></label>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <label id="ReleasedQuantity_@i" class="tableLabel">@Model.RifItem[i].ReleasedQty</label>
+                                    </td>
                                     <td class="delete">
                                         <i class="icon-photon minus deleteRow"></i>
                                     </td>
@@ -191,8 +217,17 @@
                                     <input class="n1" type="text" name="RifItem[0].ItemQty" value="0" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required.">
                                     <span class="field-validation-valid required" data-valmsg-for="RifItem[0].ItemQty" data-valmsg-replace="true"></span>
                                 </td>
-
-
+                                <td>
+                                    <div class="span9 WarehouseError_0">
+                                        <div class="controls">
+                                            @Html.DropDownList("RifItem[0].WarehouseId", Enumerable.Empty<SelectListItem>(), "none", new { @class = "select2me disableDdl" })
+                                        </div>
+                                        <label id="WarehouseError_0" class="required"></label>
+                                    </div>
+                                </td>
+                                <td>
+                                    <label id="ReleasedQuantity_0" class="tableLabel"></label>
+                                </td>
                                 <td class="delete">
                                     <i class="icon-photon minus deleteRow"></i>
                                 </td>
@@ -248,12 +283,19 @@
     @Html.Partial("_ItemsPopUp")
 }
 <script src="~/RichTextEditor/ckeditor.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var siteUrl;
+    var divId;
+    var IRFItems = new Array();
     var textTillParent = "";
     var dir = '@direction';
+    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var itemWarehousesList = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
+    var itemWarehouses = JSON.parse(itemWarehousesList);
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
+        divId = "jstree";
         CKEDITOR.replace('RFINotesE', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
@@ -290,7 +332,43 @@
                 placeholder: "Select",
             });
         });
-
+        $("#OrderNo").on("change", function () {
+            var orderId = $(this).val();
+            if (orderId != "" && orderId != 0) {
+                ajaxLoader();
+                var url = siteUrl + "/Inventory/ItemRelease/GetIrfByOrder";
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        orderId: orderId
+                    },
+                    success: function (data) {
+                        populateIRFDDL(data);
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error=' + e.toString());
+                    }
+                });
+            }
+        });
+        $("#IRFId").on("change", function () {
+            var irfId = $(this).val();
+            if (irfId != "" && irfId != 0) {
+                $.each(IRFItems, function (key, value) {
+                    if (value.ItemReleaseId == irfId) {
+                        $('.qouteAdd').empty();
+                        var index = 0;
+                        $.each(value.ItemReleaseDetails, function (key1, value1) {
+                            addIrfItems(value1, index);
+                            index++;
+                        });
+                    }
+                });
+            }
+        });
         function getModalControlsValues() {
             //get item's values
             var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
@@ -321,9 +399,18 @@
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
                         } else {
-                            textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
                         }
                     }
                     $("#RifItem_" + index + "__ItemDetails").val(textToAppend);
@@ -331,57 +418,57 @@
             });
 
             $('#itemSearcher').modal('toggle');
-        };
-        var treeInitialData;
-        if (dir == "ltr") {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "Departments",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
-        } else {
-            treeInitialData = [
-                {
-                    "data": {
-                        "title": "الإدارات",
-                        "attr": { "href": "#", "onclick": "jsTreeClick(event)" }
-                    },
-                    "attr": { "id": "parentNode" },
-                }
-            ];
         }
-        $("#jstree").jstree({
-            "json_data": {
-                "data": treeInitialData
-            },
-            "plugins": ["themes", "json_data", "ui"],
-            "ui": {
-                "initially_select": ["parentNode"]
-            },
-            "core": {
-                "initially_open": ["parentNode"]
-            }
-        }).bind("select_node.jstree", function (event, data) {
-            //`data.rslt.obj` is the jquery extended node that was clicked
-            if (data.inst._get_parent(data.rslt.obj) != -1) {
-                var parents = [];
-                textTillParent = "";
-                data.rslt.obj.parents("li").each(function () {
-                    parents.push({ id: $(this).attr("id"), description: $(this).children("a").text() });
-                });
-                $.each(parents, function (key, value) {
-                    textTillParent = value.description + " >" + textTillParent;
-                });
-                textTillParent = textTillParent + $(".jstree-clicked").text();
-            }
-        });
-        var requestUrl = siteUrl + "/Inventory/InventoryDepartment/GetAllDepartments";
-        populateTree(0, "jstree", requestUrl);
+        function getModalControlsValuesForTree() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationTree").val();
 
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#RifItem_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#RifItem_" + index + "__IsItemSKU").val(isItemSku);
+            $("#RifItem_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#RifItem_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
+                        } else {
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
+                        }
+                    }
+                    $("#RifItem_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+
+            $('#itemSearcher').modal('toggle');
+        }
         $("#btnTreeSelector").click(function (event) {
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
@@ -389,14 +476,45 @@
         });
 
         $("#SaveChanges").on("click", function () {
-            if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
-                getModalControlsValues();
+            var createFrom = $("input[name=ItemFrom]:checked").val();
+            if (createFrom == "dropdown") {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                    appendWarehouseDD($("#ItemVariationDropDownList").val());
+                    getModalControlsValues();
+                }
+            } else {
+                appendWarehouseDD($("#ItemVariationTree").val());
+                getModalControlsValuesForTree();
             }
         });
         $("#selectDepartment").on("click", function () {
-            var index = parseInt($("#ItemModalIndex").val());
-            $("#RifItem_" + index + "__PlaceInDepartment").val(textTillParent);
-            $("#txtSelectedDepartmentName").text("Selected :" + textTillParent);
+            var selectedItem = $(".jstree-clicked").text();
+            // validation
+            if (selectedItem == "" || selectedItem == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $("#ItemVariationTree").val("");
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
+                    $("#ItemVariationTree").val(value.ItemVariationId);
+                }
+            });
+            var item = $("#ItemVariationTree").val();
+            if (item == "" || item == 0 || item == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
             $('#itemTreeSelector').modal('toggle');
             return true;
         });
@@ -430,11 +548,13 @@
             } else {
                 $('#ItemSKUModalChk').attr('checked', true);
             }
-            $("#txtSelectedDepartmentName").text("Selected :" + placeInDepartment);
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJsonWTCkb(itemTreeUrl, divId, dir);
         });
         //add data in row from popup
         $('.trAdder').on("click", function () {
             var index = $("#RifItemsTableBody").children("tr").length;
+            var warehouseColumn = getItemWarehouseDD(index, 0);
             var indexCell = "<td style='display:none'>" +
                 "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
                 "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' type='hidden' />" +
@@ -459,6 +579,11 @@
                 '<input class="n1" type="text" id="RifItem_' + index + '_ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value=0>' +
                 '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
                 '</td>' +
+                '<td>' + warehouseColumn +
+                '</td>' +
+                '<td>' +
+                '<label id="RequestedQuantity_' + index + '" class="tableLabel"></label>' +
+                '</td>' +
                 '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
                 '</td></tr>';
 
@@ -469,30 +594,31 @@
 
             //Parse the form again to apply new validations
             $.validator.unobtrusive.parse("form");
-
+            $(".select2me").select2("destroy");
+            $('.select2me').select2({
+                placeholder: "Select",
+            });
             activateSerial();
             reActivateDelete();
         });
         reActivateDelete();
 
-        function reActivateDelete() {
-            $('.deleteRow').on("click", function () {
-                var count = $('.qouteAdd tr').length;
-                if (count > 1) {
-                    $(this).parent().parent().remove();
-                }
-                activateSerial();
-            });
-        }
 
-        function activateSerial() {
-            var count = $('.qouteAdd tr').length;
-            var add = 0;
-            $('.qouteAdd tr').each(function () {
-                add++;
-                $(this).find(".serialNumber").text(add);
-            });
-        }
+
+        var $radios = $('input:radio[name=ItemFrom]');
+        $radios.filter('[value=dropdown]').prop('checked', true);
+        $("#Simple_Select_Box_with_Filter_Search").show();
+        $("#treeControl").hide();
+        $("input[name=ItemFrom]:radio").change(function () {
+            if ($(this).val() == "dropdown") {
+                $("#Simple_Select_Box_with_Filter_Search").show();
+                $("#treeControl").hide();
+            }
+            if ($(this).val() == "tree") {
+                $("#Simple_Select_Box_with_Filter_Search").hide();
+                $("#treeControl").show();
+            }
+        });
     });
 
     $('#tiny').elrte({
@@ -501,8 +627,51 @@
         height: 200,
         toolbar: 'tiny'
     });
+    function reActivateDelete() {
+        $('.deleteRow').on("click", function () {
+            var count = $('.qouteAdd tr').length;
+            if (count > 1) {
+                $(this).parent().parent().remove();
+            }
+            activateSerial();
+        });
+    }
+
+    function activateSerial() {
+        var count = $('.qouteAdd tr').length;
+        var add = 0;
+        $('.qouteAdd tr').each(function () {
+            add++;
+            $(this).find(".serialNumber").text(add);
+        });
+    }
     function jsTreeClick(event) {
         return true;
+    }
+
+    function populateIRFDDL(data) {
+        $("#IRFId").empty();
+        if (data.length > 0) {
+            $("#IRFId").append(
+                $('<option></option>').val(0).html("- Select IRF -")
+            );
+
+            $.each(data, function (key, value) {
+                $("#IRFId").append(
+                        $('<option></option>').val(value.ItemReleaseId).html(value.FormNumber)
+                    );
+                IRFItems.push(value);
+            });
+        } else {
+            $("#IRFId").append(
+                $('<option></option>').val(0).html("none")
+            );
+        }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+        $.unblockUI();
     }
     function validateForm(event) {
         var client = $("#Client").val();
@@ -527,6 +696,134 @@
         } else {
             $("#orderValidationError").text("");
         }
+        var irf = $("#IRFId").val();
+        if (irf == 0 || irf == "" || irf == null) {
+            event.preventDefault();
+            $("#irfValidationError").text("Please Select IRF");
+            $('html,body').animate({
+                scrollTop: $(".irfDDL").offset().top
+            }, 'slow');
+            return false;
+        } else {
+            $("#irfValidationError").text("");
+        }
+        
+        var count = $('.qouteAdd tr').length;
+        // Validate Returned Quantity <= Released Quantity
+        //for (var x = 0; x < count; x++) {
+        //    if (!$("#RifItem_" + x + "__ItemQty").valid()) {
+        //        $('html,body').animate({
+        //            scrollTop: $(".WarehouseError_" + x).offset().top
+        //        }, 'slow');
+        //        event.preventDefault();
+        //        return false;
+        //    }
+        //}
+        for (var x = 0; x < count; x++) {
+            var warehouse = $("#RifItem_" + x + "__WarehouseId").val();
+            if (warehouse == 0 || warehouse == "" || warehouse == null) {
+                $("#WarehouseError_" + x).text("Please select Warehouse");
+                $('html,body').animate({
+                    scrollTop: $(".WarehouseError_" + x).offset().top
+                }, 'slow');
+                event.preventDefault();
+                return false;
+            } else {
+                $("#WarehouseError_" + x).text("");
+            }
+        }
+        return true;
+    }
+    function appendWarehouseDD(varId)
+    {
+        var index = $("#ItemModalIndex").val();
+        $("#RifItem_" + index + "__WarehouseId").empty();
+        $("#RifItem_" + index + "__WarehouseId").append(
+                    $('<option></option>').val(0).html("--Select--")
+                );
+        $.each(itemWarehouses, function (key, value) {
+            if (value.ItemVariationId == varId) {
+                $("#RifItem_" + index + "__WarehouseId").append(
+                    $('<option></option>').val(value.WarehouseId).html(value.WarehouseNo)
+                );
+                //options += '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + '</option>';
+            }
+        });
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
+    }
+    function getItemWarehouseDD(index, varId) {
+        var options = "";
+        if (varId > 0) {
+            options = '<option value="">--Select--</option>';
+            $.each(itemWarehouses, function (key, value) {
+                if (value.ItemVariationId == varId) {
+                    options += '<option value="' + value.WarehouseId + '">' + value.WarehouseNo + '</option>';
+                }
+            });
+        } else {
+            options = '<option value="">none</option>';
+        }
+        var control = '<div class="span9 WarehouseError_' + index + '">' +
+            '<div class="controls">' +
+            '<select class="select2me disableDdl" id="RifItem_' + index + '__WarehouseId" name="RifItem[' + index + '].WarehouseId">' +
+                options +
+            '</select>' +
+            '</div>' +
+            '<label id="WarehouseError_' + index + '" class="required"></label>' +
+            '</div>';
+        return control;
+    }
+    function addIrfItems(data, index) {
+        var warehouseColumn = getItemWarehouseDD(index, data.ItemVariationId);
+        var indexCell = "<td style='display:none'>" +
+            "<input name='RifItem.Index' type='hidden' value='" + index + "' />" +
+            "<input name='RifItem[" + index + "].IsItemDescription' id='RifItem_" + index + "__IsItemDescription' value='" + data.IsItemDescription + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].IsItemSKU' id='RifItem_" + index + "__IsItemSKU' value='" + data.IsItemSKU + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].ItemVariationId' id='RifItem_" + index + "__ItemVariationId' value='" + data.ItemVariationId + "' type='hidden' />" +
+            "<input name='RifItem[" + index + "].PlaceInDepartment' id='RifItem_" + index + "__PlaceInDepartment' value='" + data.PlaceInWarehouse + "' type='hidden' />" +
+            "</td>";
+        var details = data.ItemDetails;
+        var regex = new RegExp(", ", 'g');
+        details = details.replace(regex, '\n');
+        //IRFItem
+        var html = '<tr data-id=' + index + '>' +
+            indexCell +
+            '<td>' +
+            '<div class="control-group row-fluid">' +
+            '<div class="span1">' +
+            '<label class="control-label serialNumber">' + (index + 1) + '</label>' +
+            '</div></div>' +
+            '</td>' +
+            '<td><textarea rows="2"  class="auto-resize"  id="RifItem_' + index + '__ItemDetails" name="RifItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + details + '</textarea>' +
+            '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+            '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td class="quantity"> ' +
+            '<input class="n1" type="text" id="RifItem_' + index + '__ItemQty" name="RifItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter quantity equal or less than Released quantity" data-val-range-max="' + data.ItemQty + '" data-val-range-min="1" data-val-required="The Item Qty field is required.">' +
+            '<span class="field-validation-valid required" data-valmsg-for="RifItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td>' + warehouseColumn +
+            '</td>' +
+            '<td>' +
+            '<label id="ReleasedQuantity_' + index + '" class="tableLabel">' + data.ItemQty + '</label>' +
+            '</td>' +
+            '<td class="delete"> <i class="icon-photon minus deleteRow"></i>' +
+            '</td></tr>';
+        $('.qouteAdd').append(html);
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
+        reActivateDelete();
+        activateSerial();
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
         return true;
     }
 </script>

@@ -19,5 +19,6 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList();
 
         ItemVariationResponse ItemVariationResponse(long id, long itemVariationId);
+        ItemVariationForWarehouse GetItemVariationByWarehouseId(long warehouseId);
     }
 }

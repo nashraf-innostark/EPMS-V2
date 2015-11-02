@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace EPMS.Models.DomainModels
 {
@@ -29,6 +30,22 @@ namespace EPMS.Models.DomainModels
         public double? QuantityInPackage { get; set; }
 
         public virtual ICollection<ItemVariation> ItemVariations { get; set; }
+
+        public double QuantityInHand
+        {
+            get
+            {
+                if (ItemVariations != null)
+                {
+                    return ItemVariations.Sum(x => Convert.ToDouble(x.QuantityInHand)) +
+                      ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => Convert.ToDouble(y.Quantity)))
+                      + ItemVariations.Sum(x => x.RIFItems.Sum(y => y.ItemQty)) -
+                      (ItemVariations.Sum(x => x.ItemReleaseQuantities.Sum(y => Convert.ToDouble(y.Quantity)))
+                      + ItemVariations.Sum(x=>x.DIFItems.Sum(y=>y.ItemQty)));
+                }
+                return 0;
+            }
+        }
         public virtual InventoryDepartment InventoryDepartment { get; set; }
     }
 }

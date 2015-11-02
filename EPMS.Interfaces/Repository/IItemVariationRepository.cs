@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.Repository
     {
         long GetItemVariationId(string item);
         IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList();
+        IEnumerable<ItemVariation> GetItemVariationByWarehouseId(long warehouseId);
         IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId);
         ItemVariation FindVariationByBarcode(string barcode);
     }

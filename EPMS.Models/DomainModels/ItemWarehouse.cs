@@ -1,4 +1,6 @@
-﻿namespace EPMS.Models.DomainModels
+﻿using System.Collections.Generic;
+
+namespace EPMS.Models.DomainModels
 {
     public class ItemWarehouse
     {
@@ -6,8 +8,12 @@
         public long ItemVariationId { get; set; }
         public long? Quantity { get; set; }
         public string PlaceInWarehouse { get; set; }
+        public long? WarehouseDetailId { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
+        public virtual WarehouseDetail WarehouseDetail { get; set; }
         public virtual Warehouse Warehouse { get; set; }
+        public virtual ICollection<RIFItem> RIFItems { get; set; }
+        public virtual ICollection<RIFItemHistory> RIFItemHistories { get; set; }
     }
 }

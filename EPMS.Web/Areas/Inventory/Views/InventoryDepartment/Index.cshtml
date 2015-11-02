@@ -15,6 +15,7 @@
             <div class="panel-logo"></div>
             <div class="panel-header">
                 <h1><small>@EPMS.WebModels.Resources.Inventory.InventoryDepartment.InventoryDepartmentsJSTreeTitle</small></h1>
+                <button type="submit" class="btn btn-mini" onclick="deleteRow();">@EPMS.Web.Resources.Shared.Common.DeleteNode</button>
             </div>
             <div class="panel-search container-fluid">
                 <form class="form-horizontal" action="javascript:;">
@@ -68,7 +69,7 @@
                             <h3> <small><a href="~/Inventory/InventoryDepartment/Create">@EPMS.WebModels.Resources.Inventory.InventoryDepartment.AddNewDepartment</a></small></h3>
                         }
                         <div class="container-fluid">
-                            <table class="table table-striped table-responsive" id="tableSortableResMed">
+                            <table class="table table-striped table-responsive" id="tableSortableDepartments">
                                 <thead>
                                     <tr>
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptSerial</th>
@@ -77,6 +78,7 @@
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptDescription</th>
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptNumberOfSections</th>
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptNumberOfSubSections</th>
+                                        <th>@EPMS.Web.Resources.Inventory.InventoryItem.Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -103,6 +105,7 @@
                                             </script>
                                             <td class="center">@departments.NoOfSections</td>
                                             <td class="center">-</td>
+                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteTableRow(this)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
                                         </tr>
                                     }
                                 </tbody>
@@ -117,7 +120,7 @@
                         <div class="container-fluid">
                             <div class="row-fluid">
                                 <div class="span12">
-                                    <table class="table table-striped table-responsive" id="tableSortableResMed2">
+                                    <table class="table table-striped table-responsive" id="tableSortableSections">
                                         <thead>
                                             <tr>
                                                 <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptSerial</th>
@@ -165,14 +168,14 @@
                                                     {
                                                         <td class="center"><a href="~/Inventory/InventoryDepartment/Create/@departments.DepartmentId">@departments.DepartmentNameAr</a></td>
                                                     }
-                                                    <td class="center @departments.DepartmentId"></td>
+                                                    <td class="@departments.DepartmentId"></td>
                                                     <script>
                                                         var descpE = '@Html.Raw(departments.DepartmentDesc)';
                                                         var regex = /(<([^>]+)>)/ig;
                                                         var result = descpE.replace(regex, "");
                                                         $("." + '@departments.DepartmentId').text(result);
                                                     </script>
-                                                    <td class="center">@departments.NoOfSubSections</td>
+                                                    <td class="center">@departments.NoOfSections</td>
                                                 </tr>
                                             }
                                         </tbody>
@@ -194,27 +197,35 @@
     var parsed = JSON.parse(inventoryDepartments);
     var inventorySections = '@Html.Raw(Json.Encode(Model.Sections))';
     var parsedSection = JSON.parse(inventorySections);
-    $(document).ready(function () {
+    $(document).ready(function() {
         $("#layoutMainContent").removeClass("main-content");
-        $('#tableSortableResMed').dataTable({
+        $('#tableSortableDepartments').dataTable({
             "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
+            "fnInitComplete": function() {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
             },
-            "fnDrawCallback": function (oSettings) {
+            "fnDrawCallback": function(oSettings) {
                 subItemsOfDepartments();
             }
         });
-        $('#tableSortableResMed2').dataTable({
+        $('#tableSortableSections').dataTable({
             "sPaginationType": "bootstrap",
-            "fnInitComplete": function () {
+            "aoColumns": [
+                null,
+                null,
+                null,
+                null,
+                null,
+                null
+            ],
+            "fnInitComplete": function() {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
             },
-            "fnDrawCallback": function (oSettings) {
+            "fnDrawCallback": function(oSettings) {
                 subItemsOfSections();
             }
         });
@@ -265,10 +276,10 @@
         var parentNode;
         var mainParent;
         var newNode;
-        setTimeout(function () {
-            $.each(parsed, function (key, value) {
+        setTimeout(function() {
+            $.each(parsed, function(key, value) {
                 if (value.ParentId != null) {
-                    $('ul li').each(function () {
+                    $('ul li').each(function() {
                         if ($(this).attr('id') == value.ParentId) {
                             parentNode = this;
                         }
@@ -323,26 +334,130 @@
             $('#jstree').jstree('open_node', '#parentNode');
             $('.panel, .main-content').toggleClass('retracted');
         }, 0);
-        setTimeout(function () {
+        setTimeout(function() {
             subItemsOfSections();
             subItemsOfDepartments();
         }, 1);
         //$(".dataTables_paginate").on("click", "a", function () { alert("clicked"); });
     });
+
     function subItemsOfSections() {
-        $.each(parsedSection, function (key, value) {
+        $.each(parsedSection, function(key, value) {
             var deptId = value.DepartmentId;
             var parent = $('#jstree').find("[id='" + deptId + "']");
             var childs = $(parent).find("li").length;
-            $("#" + deptId + "_tableSection td:eq( 4 )").text(childs);
+            $("#" + deptId + "_tableDepartment td:eq( 4 )").text(childs);
         });
     }
+
     function subItemsOfDepartments() {
-        $.each(parsed, function (key, value) {
+        $.each(parsed, function(key, value) {
             var deptId = value.DepartmentId;
             var parent = $('#jstree').find("[id='" + deptId + "']");
             var childs = $(parent).find("li").length;
             $("#" + deptId + "_tableDepartment td:eq( 5 )").text(childs);
+        });
+    }
+
+    function deleteRow() {
+        if (confirm("Are you sure you want to delete this row ?") == false) {
+            return;
+        }
+
+        debugger;
+        if (parseInt($("#Warehouse_WarehouseId").val()) == 0) {
+            return false;
+        }
+        var parentId = $('#jstree').jstree('get_selected').attr('id');
+
+        var serviceUrl = '/Inventory/InventoryDepartment/Delete';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                departmentId: parentId
+            },
+            success: function(data) {
+                if (data == "Deleted") {
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'success',
+                        text: 'Record has been Deleted.'
+                    });
+                    //var row = $("." + departmentId).parent().get(0);
+                    //var atable = $('#tableSortableDepartments').dataTable();
+                    //var pos = atable.fnGetPosition(row);
+                    //atable.fnDeleteRow(pos);
+                    location.reload();
+                } else if (data == "AssociatedDepartments") {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, sections exist.'
+                    });
+                } else {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, inventory items exist.'
+                    });
+                }
+
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
+    }
+
+    function jsTreeClick(event) {
+        return true;
+    }
+    function deleteTableRow(elem) {
+        debugger;
+        var rowId = $(elem).parent().parent().attr('id');
+        var departmentId = rowId.split('_')[0];
+        var serviceUrl = '/Inventory/InventoryDepartment/Delete';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                departmentId: departmentId
+            },
+            success: function (data) {
+                if (data == "Deleted") {
+                    $.pnotify({
+                        title: 'Success',
+                        type: 'success',
+                        text: 'Record has been Deleted.'
+                    });
+                    //var row = $("." + departmentId).parent().get(0);
+                    //var atable = $('#tableSortableDepartments').dataTable();
+                    //var pos = atable.fnGetPosition(row);
+                    //atable.fnDeleteRow(pos);
+                    location.reload();
+                } else if (data == "AssociatedDepartments") {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, sections exist.'
+                    });
+                } else {
+                    $.pnotify({
+                        title: 'Failure',
+                        type: 'error',
+                        text: 'Cannot delete, inventory items exist.'
+                    });
+                }
+
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
         });
     }
 </script>

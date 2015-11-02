@@ -1,10 +1,15 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Web.Script.Serialization;
 using EPMS.Implementation;
+using EPMS.WebModels.ModelMappers;
+using EPMS.Web.Models.Common;
+using DomainModels = EPMS.Models.DomainModels;
 
 namespace EPMS.Web
 {
@@ -79,7 +84,9 @@ namespace EPMS.Web
             client.Send(oEmail);
 
         }
-        public bool SendSms(string smsText, string mobileNo)
+
+        // Mobile Number format : +923347109848
+        public static bool SendSms(string smsText, string mobileNo)
         {
             string username = ConfigurationManager.AppSettings["MobileUsername"];
             string password = ConfigurationManager.AppSettings["MobilePassword"];
@@ -119,6 +126,75 @@ namespace EPMS.Web
                 return true;
             }
             return false;
+        }
+
+        public static IList<WebModels.WebsiteModels.Common.JsTreeJson> InventoryDepartmentTree(IEnumerable<DomainModels.InventoryDepartment> departments, string direction)
+        {
+            IList<WebModels.WebsiteModels.Common.JsTreeJson> details = new List<WebModels.WebsiteModels.Common.JsTreeJson>();
+            foreach (var inventoryDepartment in departments)
+            {
+                details.Add(direction == "ltr" ? inventoryDepartment.CreateForJsTreeJsonEn() : inventoryDepartment.CreateForJsTreeJsonAr());
+                if (inventoryDepartment.InventoryItems.ToList().Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.ToList().Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                WebModels.WebsiteModels.Common.JsTreeJson item = new WebModels.WebsiteModels.Common.JsTreeJson
+                                {
+                                    id = itemVariation.ItemVariationId + "_Item",
+                                    text = direction == "ltr" ?
+                                        itemVariation.SKUDescriptionEn + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode :
+                                        itemVariation.SKUDescriptionAr + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
+                                    parent = inventoryDepartment.DepartmentId + "_department"
+                                };
+                                details.Add(item);
+                            }
+                        }
+                    }
+                }
+            }
+            return details;
+        }
+        public static IList<WebModels.WebsiteModels.Common.JsTreeJson> InventoryDepartmentTreeByWarehouse(IEnumerable<DomainModels.InventoryDepartment> departments, long warehouseId, string direction)
+        {
+            IList<WebModels.WebsiteModels.Common.JsTreeJson> details = new List<WebModels.WebsiteModels.Common.JsTreeJson>();
+            foreach (var inventoryDepartment in departments)
+            {
+                details.Add(direction == "ltr"
+                    ? inventoryDepartment.CreateForJsTreeJsonEn()
+                    : inventoryDepartment.CreateForJsTreeJsonAr());
+                if (inventoryDepartment.InventoryItems.ToList().Any())
+                {
+                    foreach (var inventoryItem in inventoryDepartment.InventoryItems)
+                    {
+                        if (inventoryItem.ItemVariations.ToList().Any())
+                        {
+                            foreach (var itemVariation in inventoryItem.ItemVariations)
+                            {
+                                foreach (var itemWarehouse in itemVariation.ItemWarehouses)
+                                {
+                                    if (itemWarehouse.WarehouseId == warehouseId)
+                                    {
+                                        WebModels.WebsiteModels.Common.JsTreeJson item = new WebModels.WebsiteModels.Common.JsTreeJson
+                                        {
+                                            id = itemVariation.ItemVariationId + "_Item",
+                                            text = direction == "ltr" ?
+                                                itemVariation.SKUDescriptionEn + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode :
+                                                itemVariation.SKUDescriptionAr + " - " + inventoryItem.ItemCode + " - " + itemVariation.SKUCode,
+                                            parent = inventoryDepartment.DepartmentId + "_department"
+                                        };
+                                        details.Add(item);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return details;
         }
 
         public static bool DeleteFile(string path)

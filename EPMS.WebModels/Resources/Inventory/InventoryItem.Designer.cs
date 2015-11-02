@@ -61,7 +61,7 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to AverageCost.
+        ///   Looks up a localized string similar to Average Cost.
         /// </summary>
         public static string AverageCost {
             get {
@@ -88,7 +88,7 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to CreateNew.
+        ///   Looks up a localized string similar to Create New.
         /// </summary>
         public static string CreateNew {
             get {
@@ -102,6 +102,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string CreateTitle {
             get {
                 return ResourceManager.GetString("CreateTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Delete.
+        /// </summary>
+        public static string Delete {
+            get {
+                return ResourceManager.GetString("Delete", resourceCulture);
             }
         }
         
@@ -165,6 +174,33 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string HazardousEn {
             get {
                 return ResourceManager.GetString("HazardousEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to Delete Inventory Item because it is Associated..
+        /// </summary>
+        public static string IsAssociated {
+            get {
+                return ResourceManager.GetString("IsAssociated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Item Successfully Deleted..
+        /// </summary>
+        public static string IsDeleted {
+            get {
+                return ResourceManager.GetString("IsDeleted", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unable to delete Inventory Item..
+        /// </summary>
+        public static string IsError {
+            get {
+                return ResourceManager.GetString("IsError", resourceCulture);
             }
         }
         

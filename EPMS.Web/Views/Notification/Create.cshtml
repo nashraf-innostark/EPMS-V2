@@ -250,7 +250,8 @@
         if (employOrNot == "") {
             $("#mobile").removeAttr('readonly');
             $("#mailAlert").removeAttr('readonly');
-
+            $("#mobile").val("");
+            $("#mailAlert").val("");
         }
         else {
             $("#mobile").attr('readonly', 'readonly');

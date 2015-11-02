@@ -214,6 +214,15 @@ namespace EPMS.WebModels.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Released Quantity.
+        /// </summary>
+        public static string ReleasedQuantity {
+            get {
+                return ResourceManager.GetString("ReleasedQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Requester.
         /// </summary>
         public static string Requester {
@@ -286,6 +295,24 @@ namespace EPMS.WebModels.Resources.Inventory.RIF {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Error in saving Returned Item Form..
+        /// </summary>
+        public static string RIFError {
+            get {
+                return ResourceManager.GetString("RIFError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string RIFItem_WarehouseId_Warehouse {
+            get {
+                return ResourceManager.GetString("RIFItem_WarehouseId_Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Returned Item Form (RIF) Number.
         /// </summary>
         public static string RifNo {
@@ -327,6 +354,24 @@ namespace EPMS.WebModels.Resources.Inventory.RIF {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string String1 {
+            get {
+                return ResourceManager.GetString("String1", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -51,14 +52,20 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
-        public void DeleteItem(InventoryItem item)
+        public string DeleteItem(long itemId)
         {
-            if (!inventoryItemRepository.ItemExists(item))
+            InventoryItem item = inventoryItemRepository.Find(itemId);
+            if (item == null)
             {
-                throw new ArgumentException("Item does not exist.");
+                return "Error";
+            }
+            if (CheckAssociation(item))
+            {
+                return "Associated";
             }
             inventoryItemRepository.Delete(item);
             inventoryItemRepository.SaveChanges();
+            return "Success";
         }
 
         public SaveInventoryItemResponse SaveItem(InventoryItemRequest itemToSave)
@@ -100,6 +107,15 @@ namespace EPMS.Implementation.Services
             inventoryItem.RecLastUpdatedDt = DateTime.Now;
             inventoryItemRepository.Update(inventoryItem);
             inventoryItemRepository.SaveChanges();
+        }
+
+        private bool CheckAssociation(InventoryItem item)
+        {
+            if (item.ItemVariations.ToList().Any())
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

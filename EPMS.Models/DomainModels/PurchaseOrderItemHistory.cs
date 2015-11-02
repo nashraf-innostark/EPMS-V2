@@ -17,6 +17,7 @@ namespace EPMS.Models.DomainModels
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
         public long? VendorId { get; set; }
+        public decimal? UnitPrice { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
         public virtual PurchaseOrderHistory PurchaseOrderHistory { get; set; }

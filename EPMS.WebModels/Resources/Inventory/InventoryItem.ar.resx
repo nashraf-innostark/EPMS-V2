@@ -118,87 +118,99 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="AverageCost" xml:space="preserve">
-    <value>AverageCost</value>
+    <value>متوسط ​​التكلفة</value>
   </data>
   <data name="AveragePackagePrice" xml:space="preserve">
-    <value>Average Package Price</value>
+    <value>متوسط ​​ السعر للرزمة</value>
   </data>
   <data name="AveragePrice" xml:space="preserve">
-    <value>Average Price</value>
+    <value>متوسط ​​السعر</value>
   </data>
   <data name="CreateNew" xml:space="preserve">
-    <value>CreateNew</value>
+    <value>انشاء جديد</value>
   </data>
   <data name="CreateTitle" xml:space="preserve">
-    <value>Create Inventory Item</value>
+    <value>انشاء منتج جديد</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
   </data>
   <data name="DeptInfo" xml:space="preserve">
-    <value>Department Information</value>
+    <value>معلومات الادارة</value>
   </data>
   <data name="DescForQuotationAr" xml:space="preserve">
-    <value>Description for Quotation in Arabic</value>
+    <value>تفاصيل عرض السعربالعربي</value>
   </data>
   <data name="DescForQuotationEn" xml:space="preserve">
-    <value>Description for Quotation</value>
+    <value>تفاصيل عرض السعر بالانجليزي</value>
   </data>
   <data name="DescriptionAr" xml:space="preserve">
-    <value>Description in Arabic</value>
+    <value>تفاصيل بالعربي</value>
   </data>
   <data name="DescriptionEn" xml:space="preserve">
-    <value>Description</value>
+    <value>تفاصيل بالانجليزي</value>
   </data>
   <data name="HazardousAr" xml:space="preserve">
-    <value>Hazardous Arabic</value>
+    <value>الاخطار بالعربي</value>
   </data>
   <data name="HazardousEn" xml:space="preserve">
-    <value>Hazardous</value>
+    <value>الاخطار بالعربي</value>
+  </data>
+  <data name="IsAssociated" xml:space="preserve">
+    <value>Unable to Delete Inventory Item because it is Associated.</value>
+  </data>
+  <data name="IsDeleted" xml:space="preserve">
+    <value>Inventory Item Successfully Deleted.</value>
+  </data>
+  <data name="IsError" xml:space="preserve">
+    <value>Unable to delete Inventory Item.</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
-    <value>ItemCode</value>
+    <value>رقم المنتج</value>
   </data>
   <data name="ItemName" xml:space="preserve">
-    <value>Item Name</value>
+    <value>اسم المنتج </value>
   </data>
   <data name="ItemNameAr" xml:space="preserve">
-    <value>Item Name Arabic</value>
+    <value>اسم المنتج بالعربي</value>
   </data>
   <data name="ItemNameEn" xml:space="preserve">
-    <value>Item Name</value>
+    <value>اسم المنتج بالانجليزي</value>
   </data>
   <data name="Label" xml:space="preserve">
-    <value>Inventory Items List</value>
+    <value>قائمة المنتجات</value>
   </data>
   <data name="QOnHand" xml:space="preserve">
-    <value>Quantity On Hand</value>
+    <value>الكمية المتوفرة</value>
   </data>
   <data name="QSold" xml:space="preserve">
-    <value>Quantity Sold</value>
+    <value>الكمية المباعة</value>
   </data>
   <data name="QuantityInHand" xml:space="preserve">
-    <value>Quantity In Hand</value>
+    <value>الكمية المتوفرة</value>
   </data>
   <data name="QuantityInPackage" xml:space="preserve">
-    <value>Quantity In Package</value>
+    <value>كمية في الرزمة</value>
   </data>
   <data name="QuantitySold" xml:space="preserve">
-    <value>Quantity Sold</value>
+    <value>الكمية المباعة</value>
   </data>
   <data name="ReorderPoint" xml:space="preserve">
-    <value>Reorder Point</value>
+    <value>نقطة اعادة طلب</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial</value>
+    <value>تسلسل</value>
   </data>
   <data name="SkuDesc" xml:space="preserve">
-    <value>Item Variation (SkU) Description</value>
+    <value>تفصيل منتج مختلف</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
-    <value>Update Inventory Item</value>
+    <value>تحديث منتج</value>
   </data>
   <data name="UsageAr" xml:space="preserve">
-    <value>Usage Arabic</value>
+    <value>الاستخدام بالعربي</value>
   </data>
   <data name="UsageEn" xml:space="preserve">
-    <value>Usage</value>
+    <value>الاستخدام بالانجليزي</value>
   </data>
 </root>

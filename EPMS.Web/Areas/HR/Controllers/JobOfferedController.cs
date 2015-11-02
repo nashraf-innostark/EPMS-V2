@@ -67,6 +67,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         }
 
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "RecruitmentCreate")]
         public ActionResult Create(JobOfferedViewModel jobOfferedViewModel)
         {
             try

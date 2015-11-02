@@ -241,6 +241,15 @@ namespace EPMS.WebModels.Resources.Inventory.PC {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Total Items Count In Warehouse.
+        /// </summary>
+        public static string TotalItemsCountInWarehouse {
+            get {
+                return ResourceManager.GetString("TotalItemsCountInWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Total Items in packages.
         /// </summary>
         public static string TotalItemsInPackages {

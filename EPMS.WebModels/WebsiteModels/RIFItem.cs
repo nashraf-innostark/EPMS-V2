@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -14,6 +15,7 @@ namespace EPMS.WebModels.WebsiteModels
         [Display(Name = "Item Qty")]
         [Range(1, int.MaxValue, ErrorMessage = "Please enter valid quantity")]
         public long ItemQty { get; set; }
+        public long ReleasedQty { get; set; }
         public bool IsItemDescription { get; set; }
         public bool IsItemSKU { get; set; }
         public string ItemName { get; set; }
@@ -23,5 +25,10 @@ namespace EPMS.WebModels.WebsiteModels
         public System.DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
+        [Required]
+        [Display(ResourceType = typeof (Resources.Inventory.RIF.RIF), Name = "RIFItem_WarehouseId_Warehouse")]
+        public long WarehouseId { get; set; }
+
+        public IEnumerable<ItemWarehouse> ItemWarehouses { get; set; }
     }
 }

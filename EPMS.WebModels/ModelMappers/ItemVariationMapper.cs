@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -14,25 +15,72 @@ namespace EPMS.WebModels.ModelMappers
             model.InventoryItemId = source.InventoryItemId;
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
+            model.CostCalculation = source.CostCalculation;
             model.UnitPrice = source.UnitPrice;
+            model.QuantityInPackage = source.QuantityInPackage;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
-            model.DescriptionEn = source.InventoryItem.ItemDescriptionEn;
-            model.DescriptionAr = source.InventoryItem.ItemDescriptionAr;
+            var descE = source.InventoryItem.ItemDescriptionEn;
+            if (!string.IsNullOrEmpty(descE))
+            {
+                descE = descE.Replace("\r", "");
+                descE = descE.Replace("\t", "");
+                descE = descE.Replace("\n", "");
+            }
+            model.DescriptionEn = descE;
+            var descA = source.InventoryItem.ItemDescriptionAr;
+            if (!string.IsNullOrEmpty(descE))
+            {
+                descA = descA.Replace("\r", "");
+                descA = descA.Replace("\t", "");
+                descA = descA.Replace("\n", "");
+            }
+            model.DescriptionAr = descA;
+            model.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
+            model.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
             model.QuantityInHand = source.QuantityInHand;
-            model.QuantitySold = source.QuantitySold;
+            var qtySold = source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId).Sum(x => x.Quantity);
+            model.QuantitySold = qtySold;
             model.ReorderPoint = source.ReorderPoint;
             model.QuantityInManufacturing = source.QuantityInManufacturing;
             model.Weight = source.Weight;
             model.Height = source.Height;
             model.Width = source.Width;
             model.Depth = source.Depth;
-            model.NotesEn = source.NotesEn;
-            model.NotesAr = source.NotesAr;
-            model.AdditionalInfoEn = source.AdditionalInfoEn;
-            model.AdditionalInfoAr = source.AdditionalInfoAr;
+            var notesEn = source.NotesEn;
+            if (!string.IsNullOrEmpty(notesEn))
+            {
+                notesEn = notesEn.Replace("\r", "");
+                notesEn = notesEn.Replace("\t", "");
+                notesEn = notesEn.Replace("\n", "");
+            }
+            model.NotesEn = notesEn;
+            var notesAr = source.NotesAr;
+            if (!string.IsNullOrEmpty(notesAr))
+            {
+                notesAr = notesAr.Replace("\r", "");
+                notesAr = notesAr.Replace("\t", "");
+                notesAr = notesAr.Replace("\n", "");
+            }
+            model.NotesAr = notesAr;
+            var infoEn = source.AdditionalInfoEn;
+            if (!string.IsNullOrEmpty(infoEn))
+            {
+                infoEn = infoEn.Replace("\r", "");
+                infoEn = infoEn.Replace("\t", "");
+                infoEn = infoEn.Replace("\n", "");
+            }
+            model.AdditionalInfoEn = infoEn;
+            var infoAr = source.AdditionalInfoAr;
+            if (!string.IsNullOrEmpty(infoAr))
+            {
+                infoAr = infoAr.Replace("\r", "");
+                infoAr = infoAr.Replace("\t", "");
+                infoAr = infoAr.Replace("\n", "");
+            }
+            model.AdditionalInfoAr = infoAr;
             model.RecCreatedBy = source.RecCreatedBy;
             model.RecCreatedDt = source.RecCreatedDt;
             model.RecLastUpdatedBy = source.RecLastUpdatedBy;
@@ -42,6 +90,7 @@ namespace EPMS.WebModels.ModelMappers
             model.Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemManufacturers = source.ItemManufacturers.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()).ToList();
+            
             model.ItemWarehouses = source.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
             var descEn = source.InventoryItem.ItemDescriptionEn;
             if (!string.IsNullOrEmpty(descEn))
@@ -66,6 +115,22 @@ namespace EPMS.WebModels.ModelMappers
             model.ColorNameAr = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameAr: "";
             model.StatusNameEn = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameEn : "";
             model.StatusNameAr = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameAr : "";
+            var totalCost = source.ItemManufacturers.Sum(y => y.Quantity * Convert.ToDouble(y.Price));
+            var totalQuantity = source.ItemManufacturers.Sum(y => y.Quantity);
+            if (totalCost > 0 && totalQuantity > 0)
+            {
+                model.UnitCost = Math.Round((double) (totalCost / totalQuantity), 2);
+            }
+            else
+            {
+                model.UnitCost = 0;
+            }
+            var manufacturerCount = model.ItemManufacturers.Count;
+            model.AverageCost = model.UnitCost / manufacturerCount;
+            var defectedItemQuantity = source.DIFItems.Sum(x => x.ItemQty);
+            var returnItemQuantity = source.RIFItems.Sum(x => x.ItemQty);
+            model.TotalQuantityInHand = (Convert.ToDouble(source.QuantityInHand) +
+                                        source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity) - (qtySold + defectedItemQuantity);
             return model;
         }
         public static WebsiteModels.ItemVariation CreateFromServerToClient(this Models.DomainModels.ItemVariation source, IEnumerable<ItemWarehouse> itemWarehouses)
@@ -75,15 +140,20 @@ namespace EPMS.WebModels.ModelMappers
             model.InventoryItemId = source.InventoryItemId;
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
+            model.UnitCost = source.UnitCost;
+            model.CostCalculation = source.CostCalculation;
             model.UnitPrice = source.UnitPrice;
+            model.QuantityInPackage = source.QuantityInPackage;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
             model.DescriptionEn = source.InventoryItem.ItemDescriptionEn;
             model.DescriptionAr = source.InventoryItem.ItemDescriptionAr;
+            model.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
+            model.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
             model.QuantityInHand = source.QuantityInHand;
-            model.QuantitySold = source.QuantitySold;
+            //model.QuantitySold = source.QuantitySold;
             model.ReorderPoint = source.ReorderPoint;
             model.QuantityInManufacturing = source.QuantityInManufacturing;
             model.Weight = source.Weight;
@@ -132,13 +202,18 @@ namespace EPMS.WebModels.ModelMappers
                 InventoryItemId = source.InventoryItemId,
                 ItemBarcode = source.ItemBarcode,
                 SKUCode = source.SKUCode,
+                UnitCost = source.UnitCost,
+                CostCalculation = source.CostCalculation,
                 UnitPrice = source.UnitPrice,
+                QuantityInPackage = source.QuantityInPackage,
                 PackagePrice = source.PackagePrice,
                 PriceCalculation = source.PriceCalculation,
+                DescriptionForQuotationEn = source.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = source.DescriptionForQuotationAr,
                 SKUDescriptionEn = source.SKUDescriptionEn,
                 SKUDescriptionAr = source.SKUDescriptionAr,
                 QuantityInHand = source.QuantityInHand,
-                QuantitySold = source.QuantitySold,
+                QuantitySold = Convert.ToString(source.QuantitySold),
                 ReorderPoint = source.ReorderPoint,
                 QuantityInManufacturing = source.QuantityInManufacturing,
                 Weight = source.Weight,
@@ -195,7 +270,8 @@ namespace EPMS.WebModels.ModelMappers
                 ItemVariationId = source.ItemVariationId,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 Quantity = source.Quantity,
-                WarehouseId = source.WarehouseId
+                WarehouseId = source.WarehouseId,
+                WarehouseDetailId = source.WarehouseDetailId
             };
         }
     }

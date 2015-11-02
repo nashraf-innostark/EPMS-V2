@@ -38,6 +38,7 @@
 @using (Html.BeginForm("Details", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
 {
     @Html.HiddenFor(x => x.Rfi.RFIId)
+    @Html.HiddenFor(x => x.Rfi.FormNumber)
     @Html.HiddenFor(x => x.Rfi.OrderId)
     @Html.HiddenFor(x => x.Rfi.ManagerId)
     @Html.HiddenFor(x => x.Rfi.UsageE)
@@ -72,11 +73,11 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.EmployeeId:</th>
-                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        <td>@Model.Rfi.EmpJobId</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.RFINumber:</th>
-                                        <td>@Model.Rfi.RFIId</td>
+                                        <td>@Model.Rfi.FormNumber</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.Usage:</th>

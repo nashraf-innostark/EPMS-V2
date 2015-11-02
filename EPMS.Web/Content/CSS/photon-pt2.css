@@ -10998,6 +10998,10 @@ li.L9 {
 .nav-side-menu > li.userManageSys:hover a {
     background-color: rgba(103, 236, 206, 0.34) !important;
 }
+
+.nav-side-menu > li.inventorySys:hover a{
+background-color: rgba(152, 236, 220, 0.27) !important;
+}
 /*Inventory >*/
 
 .lightBlue {

@@ -172,7 +172,7 @@
             <!--Sortable Responsive Table begin-->
             <div class="row-fluid">
                 <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableSortableVariations">
+                    <table class="table table-striped table-responsive" id="poTableBody">
                         <thead>
                             <tr>
                                 <th> Serial</th>
@@ -207,7 +207,7 @@
             <!--Sortable Responsive Table begin-->
             <div class="row-fluid">
                 <div class="span12">
-                    <table class="table table-striped table-responsive" id="tableSortableVariations">
+                    <table class="table table-striped table-responsive" id="vendorItemTableBody">
                         <thead>
                             <tr>
                                 <th> Serial</th>
@@ -220,7 +220,7 @@
                             @if (Model.PurchaseOrders != null)
                             {
                                 var serial = 0;
-                                foreach (var item in Model.Vendor.VendorItems.ToList())
+                                foreach (var item in Model.Vendor.PurchaseOrderItems.ToList())
                                 {
                                     serial = serial + 1;
                                     <tr class="gradeX">
@@ -233,16 +233,9 @@
                                         }
                                         else
                                         {
-                                            if (direction == "ltr")
-                                            {
-                                                <td>@item.ItemVariation.InventoryItem.ItemNameEn</td>
-                                            }
-                                            else
-                                            {
-                                                <td>@item.ItemVariation.InventoryItem.ItemNameAr</td>
-                                            }
-                                            <td>@item.ItemVariation.InventoryItem.ItemCode</td>
-                                            <td>@item.ItemVariation.SKUCode</td>
+                                            <td>@item.ItemName</td>
+                                            <td>@item.ItemCode</td>
+                                            <td>@item.ItemSKUCode</td>
                                         }
                                     </tr>
                                 }
@@ -254,7 +247,7 @@
             </div>
         </div>
 
-        <div id="itemAddition">
+        @*<div id="itemAddition">
             <!--WYSIWYG Editor - Minimum Options begin-->
             <div id="WYSIWYG_Editor_-_Minimum_Options" class="control-group row-fluid">
                 <div class="span3">
@@ -319,7 +312,6 @@
                                         </td>
                                         <td>
                                             @Html.TextAreaFor(model => model.Vendor.VendorItems[i].ItemDetails, new { @class = "auto-resize vendorItem" })
-                                            @*<textarea rows="2" class= "auto-resize"></textarea>*@
                                             <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
                                         </td>
                                         <td class="delete">
@@ -364,7 +356,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>*@
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -473,6 +465,16 @@
     var dir = '@direction';
     var vendorId = parseInt($('#Vendor_VendorId').val());
     $(document).ready(function () {
+
+        $('#vendorItemTableBody, #poTableBody').dataTable({
+            "sPaginationType": "bootstrap",
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            }
+        });
+
         if (vendorId == 0 || vendorId == "") {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();

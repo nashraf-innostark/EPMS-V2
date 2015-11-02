@@ -207,4 +207,19 @@
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="RIFItem_WarehouseId_Warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="ReleasedQuantity" xml:space="preserve">
+    <value>Released Quantity</value>
+  </data>
+  <data name="RIFError" xml:space="preserve">
+    <value>Error in saving Returned Item Form.</value>
+  </data>
 </root>

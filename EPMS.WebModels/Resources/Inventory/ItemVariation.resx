@@ -139,7 +139,7 @@
     <value>Add New Status</value>
   </data>
   <data name="AddToAveragePrice" xml:space="preserve">
-    <value>Add To Average Price Calculation</value>
+    <value>Add To Average Price Calculation?</value>
   </data>
   <data name="AddWarehouse" xml:space="preserve">
     <value>Add New Warehouse</value>
@@ -263,5 +263,17 @@
   </data>
   <data name="IsUpdated" xml:space="preserve">
     <value>Item Variation has been Updated.</value>
+  </data>
+  <data name="CostCalculation" xml:space="preserve">
+    <value>Add to Average Cost Calculation?</value>
+  </data>
+  <data name="UnitCost" xml:space="preserve">
+    <value>Unit Cost</value>
+  </data>
+  <data name="TotalQuantity" xml:space="preserve">
+    <value>Total Quantity In Hand</value>
+  </data>
+  <data name="QuantityInPackage" xml:space="preserve">
+    <value>Quantity in Package</value>
   </data>
 </root>

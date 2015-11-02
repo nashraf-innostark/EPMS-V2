@@ -19,6 +19,7 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerRepository customerRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IItemWarehouseRepository itemWarehouseRepository;
 
         #region Constructor
 
@@ -31,7 +32,7 @@ namespace EPMS.Implementation.Services
         /// <param name="customerRepository"></param>
         /// <param name="ordersRepository"></param>
         /// <param name="aspNetUserRepository"></param>
-        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository)
+        public RIFService(IRIFRepository rifRepository, IItemVariationRepository itemVariationRepository, IRIFItemRepository rifItemRepository, ICustomerRepository customerRepository, IOrdersRepository ordersRepository, IAspNetUserRepository aspNetUserRepository, IRIFHistoryRepository historyRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IItemWarehouseRepository itemWarehouseRepository)
         {
             this.rifRepository = rifRepository;
             this.itemVariationRepository = itemVariationRepository;
@@ -40,6 +41,7 @@ namespace EPMS.Implementation.Services
             this.ordersRepository = ordersRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             this.historyRepository = historyRepository;
+            this.itemWarehouseRepository = itemWarehouseRepository;
         }
 
         #endregion
@@ -106,7 +108,7 @@ namespace EPMS.Implementation.Services
             else
             {
                 //save
-                AddRIF(rfi);
+                return AddRIF(rfi);
             }
             return true;
         }
@@ -149,9 +151,16 @@ namespace EPMS.Implementation.Services
 
         public bool AddRIF(RIF rfi)
         {
-            rifRepository.Add(rfi);
-            rifRepository.SaveChanges();
-            return true;
+            try
+            {
+                rifRepository.Add(rfi);
+                rifRepository.SaveChanges();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool UpdateRIF(RIF rif)
@@ -179,7 +188,8 @@ namespace EPMS.Implementation.Services
             RifCreateResponse rifResponse = new RifCreateResponse
             {
                 ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
-                LastFormNumber = rifRepository.GetLastFormNumber()
+                LastFormNumber = rifRepository.GetLastFormNumber(),
+                ItemWarehouses = itemWarehouseRepository.GetAll()
             };
             if (id != null)
             {
@@ -195,10 +205,16 @@ namespace EPMS.Implementation.Services
                 if (rif != null)
                 {
                     rifResponse.Rif = rif;
+                    var rfis = rif.Order.RFIs.Where(x => x.OrderId == rif.OrderId).ToList();
+                    rifResponse.ItemReleases = rfis.SelectMany(x => x.ItemReleases).ToList();
                     var employee = aspNetUserRepository.Find(rif.RecCreatedBy).Employee;
-                    rifResponse.RequesterNameE = employee != null ? employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE : "";
-                    rifResponse.RequesterNameA = employee != null ? employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA : "";
-
+                    if (employee != null)
+                    {
+                        rifResponse.RequesterNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE ;
+                        rifResponse.RequesterNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA ;
+                        rifResponse.EmpJobId = employee.EmployeeJobId;
+                    }
+                   
                     if (rif.Order != null)
                     {
                         rifResponse.OrderNo = rif.Order.OrderNo;

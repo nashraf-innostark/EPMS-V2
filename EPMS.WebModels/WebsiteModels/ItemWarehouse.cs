@@ -8,5 +8,6 @@
         public string PlaceInWarehouse { get; set; }
         public string WarehouseNumber { get; set; }
         public string WarehouseNo { get; set; }
+        public long? WarehouseDetailId { get; set; }
     }
 }

@@ -26,8 +26,9 @@ namespace EPMS.Implementation.Services
         private readonly IItemReleaseHistoryRepository releaseHistoryRepository;
         private readonly IItemReleaseQuantityRepository releaseQuantityRepository;
         private readonly IRFIRepository rfiRepository;
+        private readonly IRFIHistoryRepository rfiHistoryRepository;
 
-        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository, INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository, IRFIRepository rfiRepository)
+        public ItemReleaseService(IItemWarehouseRepository itemWarehouseRepository, INotificationService notificationService, IItemVariationRepository itemVariationRepository, IItemReleaseRepository itemReleaseRepository, IOrdersRepository ordersRepository, IItemReleaseDetailRepository detailRepository, IAspNetUserRepository aspNetUserRepository, IItemReleaseHistoryRepository releaseHistoryRepository, IItemReleaseQuantityRepository releaseQuantityRepository, IEmployeeRepository employeeRepository, IRFIRepository rfiRepository, IRFIHistoryRepository rfiHistoryRepository)
         {
             this.itemWarehouseRepository = itemWarehouseRepository;
             this.notificationService = notificationService;
@@ -40,6 +41,7 @@ namespace EPMS.Implementation.Services
             this.releaseQuantityRepository = releaseQuantityRepository;
             this.employeeRepository = employeeRepository;
             this.rfiRepository = rfiRepository;
+            this.rfiHistoryRepository = rfiHistoryRepository;
         }
 
         public IRFCreateResponse GetCreateResponse(long id)
@@ -57,7 +59,7 @@ namespace EPMS.Implementation.Services
             response.Rfis = new List<RFI>();
             if (id > 0)
             {
-                response.Rfis = rfiRepository.GetRfiByRequesterId(response.ItemRelease.RequesterId);
+                response.Rfis = rfiRepository.GetAllRfiByRequesterId(response.ItemRelease.RequesterId);
             }
             var itemVariations = itemVariationRepository.GetAll();
             response.ItemWarehouses = new List<ItemWarehouse>();
@@ -72,11 +74,13 @@ namespace EPMS.Implementation.Services
             foreach (var itemWarehouse in response.ItemWarehouses)
             {
                 ItemWarehouse warehouse = itemWarehouse;
-                var item = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehouseId && x.ItemVariationId == warehouse.ItemVariationId);
-                var quantity = item.Sum(x => x.Quantity);
+                var itemReleasedQty = itemReleaseQuantity.Where(x => x.WarehouseId == warehouse.WarehouseId && x.ItemVariationId == warehouse.ItemVariationId);
+                var rifQty = itemWarehouse.ItemVariation.RIFItems.Sum(x => x.ItemQty);
+                var difQty = itemWarehouse.ItemVariation.DIFItems.Sum(x => x.ItemQty);
+                var quantity = itemReleasedQty.Sum(x => x.Quantity);
                 if (quantity != null)
                 {
-                    itemWarehouse.Quantity -= quantity;
+                    itemWarehouse.Quantity = itemWarehouse.Quantity + rifQty - (quantity + difQty);
                 }
             }
             return response;
@@ -170,7 +174,13 @@ namespace EPMS.Implementation.Services
                 }
                 itemReleaseRepository.Add(itemRelease);
                 itemReleaseRepository.SaveChanges();
-
+                RFI rfiToUpdate = rfiRepository.Find((long)itemRelease.RFIId);
+                rfiToUpdate.Status = 2;
+                rfiRepository.Update(rfiToUpdate);
+                rfiRepository.SaveChanges();
+                RFIHistory rfiHistoryToAdd = rfiToUpdate.CreateFromRfiToRfiHistory(rfiToUpdate.RFIItems);
+                rfiHistoryRepository.Add(rfiHistoryToAdd);
+                rfiHistoryRepository.SaveChanges();
 
 
                 //Send notification
@@ -320,6 +330,11 @@ namespace EPMS.Implementation.Services
         {
             itemReleaseRepository.Delete(itemRelease);
             itemReleaseRepository.SaveChanges();
+        }
+
+        public IEnumerable<ItemRelease> GetItemReleaseByOrder(long orderId)
+        {
+            return itemReleaseRepository.GetItemReleaseByOrder(orderId);
         }
 
         public IEnumerable<ItemRelease> GetRecentIRFs(int status, string requester, DateTime date)

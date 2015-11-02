@@ -35,12 +35,22 @@ namespace EPMS.Repository.Repositories
             {
                 ItemVariationId = x.ItemVariationId,
                 ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinEn = x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinAr = x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
                 SKUCode = x.SKUCode,
+                ItemSKUDescriptoinEn = x.SKUDescriptionEn,
+                ItemSKUDescriptoinAr = x.SKUDescriptionAr,
                 ItemVariationDescriptionA = x.DescriptionAr,
                 ItemVariationDescriptionE = x.DescriptionEn,
                 ItemNameA = x.InventoryItem.ItemNameAr,
                 ItemNameE = x.InventoryItem.ItemNameEn
             });
+        }
+
+        public IEnumerable<ItemVariation> GetItemVariationByWarehouseId(long warehouseId)
+        {
+            var itemVariation = DbSet.Where(x => x.ItemWarehouses.Any(y => y.WarehouseId == warehouseId));
+            return itemVariation;
         }
 
         public IEnumerable<ItemVariation> GetVariationsByInventoryItemId(long inventoryItemId)

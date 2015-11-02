@@ -181,15 +181,54 @@
     <value>Edit</value>
   </data>
   <data name="RecordUpdated" xml:space="preserve">
-    <value>Item Release Form has successfully Updated.</value>
+    <value>Item Release Form has updated successfully.</value>
   </data>
   <data name="RecordAdded" xml:space="preserve">
-    <value>Item Release Form has successfully Added.</value>
+    <value>Item Release Form has added successfully.</value>
   </data>
   <data name="HeaderEdit" xml:space="preserve">
     <value>Inventory IRF Edit Form</value>
   </data>
   <data name="PageTitleEdit" xml:space="preserve">
     <value>Inventory IRF Edit</value>
+  </data>
+  <data name="AddItemDescription" xml:space="preserve">
+    <value>Add Item Description</value>
+  </data>
+  <data name="AddItemSKU" xml:space="preserve">
+    <value>Add Item SKU</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Dropdown" xml:space="preserve">
+    <value>Dropdown</value>
+  </data>
+  <data name="ItemSearch" xml:space="preserve">
+    <value>Item Search</value>
+  </data>
+  <data name="ItemTreeSelector" xml:space="preserve">
+    <value>Item Tree Selector</value>
+  </data>
+  <data name="PlaceInDepartments" xml:space="preserve">
+    <value>Place in Departments</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="SelectItem" xml:space="preserve">
+    <value>Select Item</value>
+  </data>
+  <data name="Tree" xml:space="preserve">
+    <value>Tree</value>
+  </data>
+  <data name="AddWarhouse" xml:space="preserve">
+    <value>Add Warhouse</value>
+  </data>
+  <data name="SelectWarhouses" xml:space="preserve">
+    <value>Select one or more Warhouses</value>
+  </data>
+  <data name="RequestedQuantity" xml:space="preserve">
+    <value>Requested Quantity</value>
   </data>
 </root>

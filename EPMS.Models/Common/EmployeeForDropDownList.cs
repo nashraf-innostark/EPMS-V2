@@ -1,4 +1,4 @@
-﻿namespace EPMS.Web.Models
+﻿namespace EPMS.Models.Common
 {
     public class EmployeeForDropDownList
     {

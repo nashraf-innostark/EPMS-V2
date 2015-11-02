@@ -13,6 +13,7 @@ using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.EncryptDecrypt;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
@@ -23,13 +24,23 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RIFController : BaseController
     {
+        #region Private
+
         private readonly IRIFService rifService;
 
+        #endregion
+
+        #region Constructor
         public RIFController(IRIFService rifService)
         {
             this.rifService = rifService;
         }
 
+        #endregion
+
+        #region Public
+
+        #region Index
         // GET: Inventory/Rif
         [SiteAuthorize(PermissionKey = "RIFIndex")]
         public ActionResult Index()
@@ -77,29 +88,34 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Details
+
         // GET: Inventory/Rif/Details/5
         [SiteAuthorize(PermissionKey = "RIFDetails")]
         public ActionResult Details(int id, string from)
         {
-            var Rifresponse = rifService.LoadRifResponseData(id, false, from);
+            var rifresponse = rifService.LoadRifResponseData(id, false, from);
             RIFViewModel rifViewModel = new RIFViewModel();
-            if (Rifresponse.Rif != null)
+            if (rifresponse.Rif != null)
             {
-                rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
+                rifViewModel.Rif = rifresponse.Rif.CreateRifServerToClient();
                 if (EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr")
                 {
-                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameE;
-                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameE;
-                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameE;
+                    rifViewModel.Rif.RequesterName = rifresponse.RequesterNameE;
+                    rifViewModel.Rif.CustomerName = rifresponse.CustomerNameE;
+                    rifViewModel.Rif.ManagerName = rifresponse.ManagerNameE;
                 }
                 else
                 {
-                    rifViewModel.Rif.RequesterName = Rifresponse.RequesterNameA;
-                    rifViewModel.Rif.CustomerName = Rifresponse.CustomerNameA;
-                    rifViewModel.Rif.ManagerName = Rifresponse.ManagerNameA;
+                    rifViewModel.Rif.RequesterName = rifresponse.RequesterNameA;
+                    rifViewModel.Rif.CustomerName = rifresponse.CustomerNameA;
+                    rifViewModel.Rif.ManagerName = rifresponse.ManagerNameA;
                 }
-                rifViewModel.Rif.OrderNo = Rifresponse.OrderNo;
-                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemDetailsServerToClient()).ToList();
+                rifViewModel.Rif.EmpJobId = rifresponse.EmpJobId;
+                rifViewModel.Rif.OrderNo = rifresponse.OrderNo;
+                rifViewModel.RifItem = rifresponse.RifItem.Select(x => x.CreateRifItemDetailsServerToClient()).ToList();
             }
             else
             {
@@ -109,7 +125,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 };
                 rifViewModel.RifItem = new List<RIFItem>();
             }
-            rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            //rifViewModel.Warehouses = rifresponse.Warehouses.Select(x => x.CreateDDL());
+            rifViewModel.ItemVariationDropDownList = rifresponse.ItemVariationDropDownList;
             ViewBag.From = from;
             return View(rifViewModel);
         }
@@ -135,13 +152,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                return View();
             }
             catch (Exception)
             {
-                return View(); 
+                return View();
             }
         }
+
+        #endregion
+
+        #region Create
 
         // GET: Inventory/Rif/Create
         [SiteAuthorize(PermissionKey = "RIFCreate")]
@@ -149,12 +170,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             bool loadCustomersAndOrders = CheckHasCustomerModule();
             var Rifresponse = rifService.LoadRifResponseData(id, loadCustomersAndOrders, "");
-            RIFViewModel rifViewModel = new RIFViewModel();
+            RIFViewModel rifViewModel = new RIFViewModel
+            {
+                ItemWarehouses = Rifresponse.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList()
+            };
             if (Rifresponse.Rif != null)
             {
                 rifViewModel.Rif = Rifresponse.Rif.CreateRifServerToClient();
                 rifViewModel.Rif.RequesterName = EPMS.WebModels.Resources.Shared.Common.TextDirection == "ltr" ? Rifresponse.RequesterNameE : Rifresponse.RequesterNameA;
-                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient()).ToList();
+                rifViewModel.RifItem = Rifresponse.RifItem.Select(x => x.CreateRifItemServerToClient(rifViewModel.ItemWarehouses)).ToList();
+                rifViewModel.ItemReleases = 
+                    Rifresponse.ItemReleases != null ? Rifresponse.ItemReleases.Select(x=>x.CreateForRif()).ToList() : new List<ItemReleaseForRif>();
             }
             else
             {
@@ -170,10 +196,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 rifViewModel.Customers = Rifresponse.Customers.Select(x => x.CreateForDashboard());
                 rifViewModel.Orders = Rifresponse.Orders.Select(x => x.CreateForDashboard());
                 //set customerId
-                if (rifViewModel.Rif.OrderId>0)
+                if (rifViewModel.Rif.OrderId > 0)
                     rifViewModel.Rif.CustomerId = rifViewModel.Orders.FirstOrDefault(x => x.OrderId == rifViewModel.Rif.OrderId).CustomerId;
             }
             rifViewModel.ItemVariationDropDownList = Rifresponse.ItemVariationDropDownList;
+            
+            ViewBag.IsIncludeNewJsTree = true;
             return View(rifViewModel);
         }
 
@@ -204,21 +232,31 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
                     TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.Inventory.RIF.RIF.RIFCreated, IsSaved = true };
                 }
-                
+
                 var RifToBeSaved = rifViewModel.CreateRifClientToServer();
-                if(rifService.SaveRIF(RifToBeSaved))
+                if (rifService.SaveRIF(RifToBeSaved))
                 {
                     //success
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View(); 
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.Inventory.RIF.RIF.RIFError, 
+                    IsSaved = true
+                };
+                return View(rifViewModel);
             }
             catch
             {
-                return View();
+                return View(rifViewModel);
             }
         }
+
+        #endregion
+
+        #region History
+
         [SiteAuthorize(PermissionKey = "RIFHistory")]
         public ActionResult History(long? id)
         {
@@ -267,11 +305,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View();
             }
         }
+        #endregion
         private bool CheckHasCustomerModule()
         {
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
             var splitLicenseKey = LicenseKey.Split('|');
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
@@ -285,5 +324,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return false;
             }
         }
+
+        #endregion
     }
 }

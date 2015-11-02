@@ -25,5 +25,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string RequesterNameAr { get; set; }
         public string ManagerName { get; set; }
         public string ManagerNameAr { get; set; }
+        public string EmpJobId { get; set; }
+        public long WarehouseId { get; set; }
     }
 }

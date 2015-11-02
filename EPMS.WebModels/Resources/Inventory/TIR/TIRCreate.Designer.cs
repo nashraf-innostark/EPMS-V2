@@ -142,6 +142,15 @@ namespace EPMS.WebModels.Resources.Inventory.TIR {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From Warehouse.
+        /// </summary>
+        public static string FromWarehouse {
+            get {
+                return ResourceManager.GetString("FromWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Transfer Item Request (TIR).
         /// </summary>
         public static string Header {
@@ -178,7 +187,7 @@ namespace EPMS.WebModels.Resources.Inventory.TIR {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transfer Item Request has been successfully Updated..
+        ///   Looks up a localized string similar to Transfer Item Request has been successfully Added..
         /// </summary>
         public static string RecordAdded {
             get {
@@ -201,6 +210,15 @@ namespace EPMS.WebModels.Resources.Inventory.TIR {
         public static string Serial {
             get {
                 return ResourceManager.GetString("Serial", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to To Warehouse.
+        /// </summary>
+        public static string ToWarehouse {
+            get {
+                return ResourceManager.GetString("ToWarehouse", resourceCulture);
             }
         }
         

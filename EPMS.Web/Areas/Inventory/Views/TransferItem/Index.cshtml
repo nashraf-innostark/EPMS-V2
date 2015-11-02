@@ -95,7 +95,7 @@
                             var irfId;
                             val = full["FormNumber"];
                             irfId = full["Id"];
-                            element = '<a href="Detail/' + irfId + '">' + val + '</a>';
+                            element = '<a href="History/' + irfId + '">' + val + '</a>';
                             return element;
                         }
                     },
@@ -177,6 +177,7 @@
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
+                        "bVisible": false,
                         //"mRender": function (data, type, full) {
                         //    return full["RequesterName"];
                         //}

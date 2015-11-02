@@ -128,6 +128,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         /// <returns></returns>
         [HttpPost]
         [ValidateInput(false)]
+        [SiteAuthorize(PermissionKey = "OrderCreate")]
         public ActionResult Create(OrdersCreateViewModel viewModel)
         {
             var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;

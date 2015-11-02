@@ -138,6 +138,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 viewModel.PoItems = new List<PurchaseOrderItem>();
             }
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(viewModel);
         }
 

@@ -48,6 +48,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             {
                 Warehouses = warehouses.Select(x=>x.CreateFromServerToClient())
             };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
         #endregion
@@ -81,38 +82,70 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             try
             {
-                if (model.Warehouse.WarehouseId > 0)
+                if (Request.Form["Delete"] != null)
                 {
-                    // Update
-                    model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
-                    model.Warehouse.RecLastUpdatedDt = DateTime.Now;
-                    var warehouseToUpdate = model.Warehouse.CreateFromClientToServer();
-                    if (warehouseService.Updatewarehouse(warehouseToUpdate))
+                    string deleteStatus = warehouseService.DeleteWarehouse(model.Warehouse.WarehouseId);
+                    switch (deleteStatus)
                     {
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = "Warehouse Updated Successfully",
-                            IsUpdated = true
-                        };
-                        return RedirectToAction("Index");
+                        case "Associated":
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = WebModels.Resources.Inventory.InventoryWarehouse.IsAssociated,
+                                IsUpdated = true
+                            };
+                            break;
+                        case "Success":
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = WebModels.Resources.Inventory.InventoryWarehouse.IsDeleted,
+                                IsUpdated = true
+                            };
+                            break;
+                        case "Error":
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = WebModels.Resources.Inventory.InventoryWarehouse.IsError,
+                                IsUpdated = true
+                            };
+                            break;
                     }
+                    return RedirectToAction("Index");
                 }
-                else
+                if (Request.Form["Create"] != null || Request.Form["Update"] != null)
                 {
-                    // Add
-                    model.Warehouse.RecCreatedBy = User.Identity.GetUserId();
-                    model.Warehouse.RecCreatedDt = DateTime.Now;
-                    model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
-                    model.Warehouse.RecLastUpdatedDt = DateTime.Now;
-                    var warehouseToAdd = model.Warehouse.CreateFromClientToServer();
-                    if (warehouseService.AddWarehouse(warehouseToAdd))
+                    if (model.Warehouse.WarehouseId > 0)
                     {
-                        TempData["message"] = new MessageViewModel
+                        // Update
+                        model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
+                        model.Warehouse.RecLastUpdatedDt = DateTime.Now;
+                        var warehouseToUpdate = model.Warehouse.CreateFromClientToServer();
+                        if (warehouseService.Updatewarehouse(warehouseToUpdate))
                         {
-                            Message = "Warehouse Updated Successfully",
-                            IsUpdated = true
-                        };
-                        return RedirectToAction("Index");
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = WebModels.Resources.Inventory.InventoryWarehouse.IsUpdated,
+                                IsUpdated = true
+                            };
+                            return RedirectToAction("Index");
+                        }
+                    }
+                    else
+                    {
+                        // Add
+                        model.Warehouse.RecCreatedBy = User.Identity.GetUserId();
+                        model.Warehouse.RecCreatedDt = DateTime.Now;
+                        model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
+                        model.Warehouse.RecLastUpdatedDt = DateTime.Now;
+                        var warehouseToAdd = model.Warehouse.CreateFromClientToServer();
+                        if (warehouseService.AddWarehouse(warehouseToAdd))
+                        {
+                            TempData["message"] = new MessageViewModel
+                            {
+                                Message = WebModels.Resources.Inventory.InventoryWarehouse.IsAdded,
+                                IsUpdated = true
+                            };
+                            return RedirectToAction("Index");
+                        }
                     }
                 }
             }
@@ -122,6 +155,46 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             model.Employees = employeeService.GetAll().Select(x => x.CreateForEmployeeDDL());
             return View(model);
+        }
+
+        #endregion
+
+        #region Delete
+
+        public JsonResult Delete(string id)
+        {
+            long idToPass;
+            if (!id.Contains("_Parent"))
+            {
+                idToPass = Convert.ToInt64(id);
+                var message = detailService.DeleteWarehouseDetail(idToPass);
+                if (message == "Success")
+                {
+                    return Json("Deleted", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "Associateditems")
+                {
+                    return Json("Associateditems", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "AssociatedDetails")
+                {
+                    return Json("AssociatedDetails", JsonRequestBehavior.AllowGet);
+                }
+            }
+            else
+            {
+                idToPass = Convert.ToInt64(id.Replace("_Parent", ""));
+                var message = warehouseService.DeleteWarehouse(idToPass);
+                if (message == "Success")
+                {
+                    return Json("Deleted", JsonRequestBehavior.AllowGet);
+                }
+                if (message == "Associated")
+                {
+                    return Json("AssociatedDetails", JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json("Error", JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -164,7 +237,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public JsonResult GetWarehouseDetails(long id)
         {
             var warehouse = warehouseService.FindWarehouseById(id);
-            IList<JsTree> details = warehouse.WarehouseDetails.Select(x => x.CreateForJsTree()).ToList();
+            IList<JsTree> details = new List<JsTree>();
+            if (warehouse != null)
+            {
+                details = warehouse.WarehouseDetails.Select(x => x.CreateForJsTree()).ToList();
+            }
             return Json(details, JsonRequestBehavior.AllowGet);
         }
         #endregion

@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Linq;
 using EPMS.Models.DashboardModels;
 using EPMS.Models.DomainModels;
+using EPMS.WebModels.WebsiteModels;
 using Employee = EPMS.Models.DomainModels.Employee;
+using ItemRelease = EPMS.Models.DomainModels.ItemRelease;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -31,6 +34,7 @@ namespace EPMS.WebModels.ModelMappers
                 Notes = source.Notes,
                 NotesAr = source.NotesAr,
                 ManagerId = source.ManagerId,
+                EmpJobId = requester.EmployeeJobId,
                 RequesterNameE = requester.EmployeeFirstNameE + " " + requester.EmployeeMiddleNameE + " " + requester.EmployeeLastNameE,
                 RequesterNameA = requester.EmployeeFirstNameA + " " + requester.EmployeeMiddleNameA + " " + requester.EmployeeLastNameA,
                 ManagerName = manager.EmployeeFirstNameE + " " + manager.EmployeeMiddleNameE + " " + manager.EmployeeLastNameE,
@@ -126,12 +130,23 @@ namespace EPMS.WebModels.ModelMappers
             var rfi = new IRFWidget
             {
                 Id = source.ItemReleaseId,
+                FormNumber = source.FormNumber,
                 Status = Convert.ToInt32(source.Status),
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,
                 RecCreatedDate = source.RecCreatedDate.ToShortDateString()
             };
             return rfi;
+        }
+
+        public static ItemReleaseForRif CreateForRif(this ItemRelease source)
+        {
+            return new ItemReleaseForRif
+            {
+                ItemReleaseId = source.ItemReleaseId,
+                FormNumber = source.FormNumber,
+                ItemReleaseDetails = source.ItemReleaseDetails.Select(x=>x.CreateFromServerToClient()).ToList()
+            };
         }
     }
 }

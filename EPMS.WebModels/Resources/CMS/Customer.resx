@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AccountHeader" xml:space="preserve">
+    <value>Account Creation</value>
+  </data>
   <data name="Address" xml:space="preserve">
     <value>Address</value>
   </data>
@@ -155,6 +158,9 @@
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
+  </data>
+  <data name="SignupButton" xml:space="preserve">
+    <value>Create Account</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Customers Page</value>

@@ -18,9 +18,11 @@ namespace EPMS.Models.DomainModels
         public int Status { get; set; }
         public string ManagerId { get; set; }
         public string FormNumber { get; set; }
+        public long? IRFId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Order Order { get; set; }
         public virtual ICollection<RIFItem> RIFItems { get; set; }
+        public virtual ItemRelease ItemRelease { get; set; }
     }
 }

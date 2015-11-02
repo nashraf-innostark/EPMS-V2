@@ -72,6 +72,7 @@ namespace EPMS.Web.Areas.HR.Controllers
 
         [HttpPost]
         [ValidateInput(false)]//this is due to CK Editor
+        [SiteAuthorize(PermissionKey = "JobTitleCreate")]
         public ActionResult Create(JobTitleViewModel jobTitleViewModel)
         {
             try

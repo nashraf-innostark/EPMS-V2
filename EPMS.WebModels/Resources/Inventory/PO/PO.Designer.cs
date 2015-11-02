@@ -340,6 +340,15 @@ namespace EPMS.WebModels.Resources.Inventory.PO {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unit Price.
+        /// </summary>
+        public static string PurchaseOrderItem_UnitPrice_Unit_Price {
+            get {
+                return ResourceManager.GetString("PurchaseOrderItem_UnitPrice_Unit_Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purchase Order (PO) Number.
         /// </summary>
         public static string PurchaseOrderNumber {

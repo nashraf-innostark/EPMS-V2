@@ -13,6 +13,7 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Inventory.RFI;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.IRF;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 using ItemRelease = EPMS.WebModels.WebsiteModels.ItemRelease;
 using ItemReleaseDetail = EPMS.WebModels.WebsiteModels.ItemReleaseDetail;
@@ -44,6 +45,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Public
+
+        #region Index
         // GET List View: Inventory/IRF
         [SiteAuthorize(PermissionKey = "ItemReleaseIndex")]
         public ActionResult Index()
@@ -83,6 +86,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Details
         // GET Details: Inventory/IRF
         [SiteAuthorize(PermissionKey = "IRFViewComplete,ItemReleaseDetail")]
         public ActionResult Detail(long? id, string from)
@@ -129,6 +135,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             return View(viewModel);
         }
 
+        #endregion
+
+        #region Create
         /// <summary>
         /// GET: Inventory/IRF
         /// </summary>
@@ -169,6 +178,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             viewModel.ItemWarehouses = response.ItemWarehouses.Any() ?
                 response.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList() : new List<ItemWarehouse>();
             viewModel.ItemVariationDropDownList = response.ItemVariationDropDownList;
+            ViewBag.IsIncludeNewJsTree = true;
             return View(viewModel);
         }
 
@@ -243,6 +253,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+
+        #endregion
+
+        #region History
         [SiteAuthorize(PermissionKey = "IRFHistory")]
         public ActionResult History(long? id)
         {
@@ -282,6 +296,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 
         #endregion
 
+        #endregion
+
         #region Get Customer RFIs
 
         [HttpGet]
@@ -290,6 +306,17 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             var rfis = rfiService.GetRfiByRequesterId(requesterId);
             IList<RFI> requesterRfis = rfis.Select(x => x.CreateRfiServerToClientForDropdown()).ToList();
             return Json(requesterRfis, JsonRequestBehavior.AllowGet);
+        }
+
+        #endregion
+
+        #region Get Irf By Order
+        [HttpGet]
+        public JsonResult GetIrfByOrder(long orderId)
+        {
+            var irf = itemReleaseService.GetItemReleaseByOrder(orderId);
+            IEnumerable<ItemReleaseForRif> model = irf.Select(x => x.CreateForRif());
+            return Json(model, JsonRequestBehavior.AllowGet);
         }
         #endregion
     }

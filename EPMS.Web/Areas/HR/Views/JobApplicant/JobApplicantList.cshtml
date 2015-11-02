@@ -1,21 +1,22 @@
 ﻿@model EPMS.WebModels.ViewModels.JobApplicant.JobApplicantListViewModel
 
 @{
-    ViewBag.Title = "Recruitment List";
+    ViewBag.Title = EPMS.Web.Resources.HR.JobApplicant.Title;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.Web.Resources.Shared.Common.TextDirection;
 }
 
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="/Home/Index">
+            <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
         <li>
             <a href="">
-                Recruitment List
+                @ViewBag.Title
             </a>
         </li>
     </ul>
@@ -38,11 +39,11 @@
                     <thead class="cf sorthead">
                         <tr>
                             <th></th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <th>Job Offered</th>
-                            <th>Department</th>
+                            <th>@EPMS.Web.Resources.HR.JobApplicant.Name</th>
+                            <th>@EPMS.Web.Resources.HR.JobApplicant.Email</th>
+                            <th>@EPMS.Web.Resources.HR.JobApplicant.MobileNumber</th>
+                            <th>@EPMS.Web.Resources.HR.JobApplicant.JobTitle</th>
+                            <th>@EPMS.Web.Resources.HR.JobApplicant.Department</th>
                         </tr>
                     </thead>
                     <tbody></tbody>
@@ -53,6 +54,7 @@
 </form>
 <script>
     $(document).ready(function () {
+        var dir = '@direction';
         var siteUrl = $('#siteURL').val();
         var oTable = $('#jobApplicantsTable').dataTable({
             "sPaginationType": "bootstrap",
@@ -71,10 +73,17 @@
                 {
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
-                    "mRender": function(data, type, full) {
-                        var name = full["ApplicantName"];
-                        var id = full["JobApplicantId"];
-                        var element = '<a href="ApplicantDetail/' + id + '">' + name + '</a>';
+                    "mRender": function (data, type, full) {
+                        if (dir == "ltr") {
+                            var name = full["ApplicantNameEn"];
+                            var id = full["JobApplicantId"];
+                            var element = '<a href="ApplicantDetail/' + id + '">' + name + '</a>';
+                        } else {
+                            var name = full["ApplicantNameAr"];
+                            var id = full["JobApplicantId"];
+                            var element = '<a href="ApplicantDetail/' + id + '">' + name + '</a>';
+                        }
+                        
                         return element;
                     },
                     "bSortable": false
@@ -96,17 +105,27 @@
                 {
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
-                    "mRender": function(data, type, full) {
-                        var jobOffered = full["JobOffered"];
+                    "mRender": function (data, type, full) {
+                        var jobOffered;
+                        if (dir == "ltr") {
+                            jobOffered = full["JobOfferedEn"];
+                        } else {
+                            jobOffered = full["JobOfferedAr"];
+                        }
                         return jobOffered;
                     },
                 },
                 {
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
-                    "mRender": function(data, type, full) {
-                        var jobOffered = full["DepartmentName"];
-                        return jobOffered;
+                    "mRender": function (data, type, full) {
+                        var department;
+                        if (dir == "ltr") {
+                            department = full["DepartmentNameEn"];
+                        } else {
+                            department = full["DepartmentNameAr"];
+                        }
+                        return department;
                     },
                 }
             ],

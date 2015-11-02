@@ -144,6 +144,10 @@
     <Reference Include="Microsoft.Web.Helpers">
       <HintPath>..\packages\Microsoft.AspNet.WebHelpers.3.2.2\lib\net45\Microsoft.Web.Helpers.dll</HintPath>
     </Reference>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.6.0.4\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="Owin">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -168,9 +172,9 @@
     <Reference Include="System.Drawing">
       <Private>True</Private>
     </Reference>
-    <Reference Include="System.Net.Http.Formatting, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.0.0\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.DynamicData">
       <Private>True</Private>
@@ -194,13 +198,13 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\Microsoft.AspNet.WebPages.3.2.2\lib\net45\System.Web.Helpers.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.0.0\lib\net45\System.Web.Http.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.3\lib\net45\System.Web.Http.dll</HintPath>
     </Reference>
-    <Reference Include="System.Web.Http.WebHost, Version=5.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.0.0\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.3\lib\net45\System.Web.Http.WebHost.dll</HintPath>
     </Reference>
     <Reference Include="System.Web.Mvc, Version=5.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -263,10 +267,6 @@
     <Reference Include="System.Net.Http.WebRequest">
       <Private>True</Private>
     </Reference>
-    <Reference Include="Newtonsoft.Json">
-      <Private>True</Private>
-      <HintPath>..\packages\Newtonsoft.Json.5.0.6\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\WebActivatorEx.2.0\lib\net40\WebActivatorEx.dll</HintPath>
@@ -294,6 +294,8 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\TreeController.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
@@ -334,7 +336,6 @@
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
-    <Compile Include="Areas\Website\Controllers\HomeController.cs" />
     <Compile Include="Areas\Website\Controllers\PartnerController.cs" />
     <Compile Include="Areas\Website\Controllers\NewsAndArticleController.cs" />
     <Compile Include="Areas\Website\Controllers\ProductController.cs" />
@@ -342,7 +343,6 @@
     <Compile Include="Areas\Website\Controllers\WebsiteServicesController.cs" />
     <Compile Include="Areas\Website\Controllers\SliderController.cs" />
     <Compile Include="Areas\Website\Controllers\TestController.cs" />
-    <Compile Include="Areas\Website\WebsiteAreaRegistration.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\CultureController.cs" />
@@ -355,16 +355,39 @@
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\UnauthorizedRequestController.cs" />
     <Compile Include="Controllers\UserAdminController.cs" />
+    <Compile Include="DateTimeBinder.cs" />
     <Compile Include="EncryptDecrypt\StringCipher.cs" />
     <Compile Include="EnumForDropDown\Position.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Helper\CultureHelper.cs" />
+    <Compile Include="Models\Common\JsTreeJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Resources\Inventory\Barcode\Barcode.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Barcode.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Shared\ForgotPassword.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ForgotPassword.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Shared\Login.ar.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.ar.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Shared\Login.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.resx</DependentUpon>
+    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
+    <Compile Include="ViewModels\DIF\WarehouseItems.cs" />
     <Compile Include="Views\Shared\ES.Master.cs">
       <DependentUpon>ES.Master</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -391,6 +414,9 @@
     <Content Include="Content\CSS\help-photon.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\32px.png" />
     <Content Include="Content\CSS\jsTreeCheckbox\40px.png" />
+    <Content Include="Content\CSS\jsTreeCheckbox\style.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\style.min.css" />
+    <Content Include="Content\CSS\jsTreeCheckbox\throbber.gif" />
     <Content Include="Content\CSS\jsTreeCheckbox\bootstrap.min.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\docs.css" />
     <Content Include="Content\CSS\jsTreeCheckbox\images\tree.png" />
@@ -416,11 +442,14 @@
     <Content Include="Content\themes\default\style.css" />
     <Content Include="Content\themes\default\style.min.css" />
     <Content Include="Content\themes\default\throbber.gif" />
+    <Content Include="DBScripts\DeleteEntriesFromAllForms.txt" />
     <Content Include="Images\CKUploads\10947672_10152685878817657_642879663_n.jpg" />
     <Content Include="Images\CKUploads\10966523_10152685879702657_1713565689_n.jpg" />
     <Content Include="Images\CKUploads\11079327_10152685878212657_284329175_n.jpg" />
     <Content Include="Images\CKUploads\11106462_10152685879987657_1716894699_n.jpg" />
     <Content Include="Images\loading.gif" />
+    <Content Include="Images\NoImageAvailable.jpg" />
+    <Content Include="Images\CompanyLogo\No_Logo.png" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateEmail.txt" />
     <Content Include="NotificationsTextFiles\ChamberCertificateExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\CommercialRegisterExpiryDateEmail.txt" />
@@ -1418,7 +1447,6 @@
     <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
-    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryDepartment\Create.cshtml" />
     <Content Include="Areas\Common\Views\FileUploadCkController\UploadOld.cshtml" />
     <Content Include="Areas\Common\Views\Shared\_CKFinderLayout.cshtml" />
@@ -1438,7 +1466,6 @@
     <Content Include="Areas\Inventory\Views\Vendor\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\Vendor\Create.cshtml" />
     <Content Include="Views\Shared\_HelpAdminLayout.cshtml" />
-    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\InventoryItem\Index.cshtml" />
     <Content Include="Areas\HR\Views\JobApplicant\Apply.cshtml" />
     <Content Include="Views\Shared\_ApplicantApplyLayout.cshtml" />
@@ -1481,12 +1508,16 @@
     </Content>
     <Content Include="Areas\Inventory\Views\PhysicalCount\Index.cshtml" />
     <Content Include="Areas\Inventory\Views\PhysicalCount\Create.cshtml" />
-    <Content Include="Areas\Website\Views\web.config" />
-    <Content Include="Areas\Website\Views\Home\Index.cshtml" />
+    <Content Include="Areas\Inventory\Views\InventoryDepartment\Index.cshtml" />
+    <Content Include="Areas\Api\Views\web.config" />
     <Content Include="Areas\Website\Views\Slider\Create.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\Index.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\Create.cshtml" />
     <Content Include="Areas\Website\Views\Partner\Create.cshtml" />
+    <Content Include="Content\themes\default-dark\Thumbs.db" />
+    <Content Include="Content\themes\default\Thumbs.db" />
+    <Content Include="Content\CSS\jsTreeCheckbox\Thumbs.db" />
+    <Content Include="Views\Shared\_BarcodeItemsPopUp.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <Content Include="Areas\Website\Views\ProductSection\Index.cshtml" />
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
@@ -3422,6 +3453,32 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
+    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\PO\PO.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\ItemVariation.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
+    <EmbeddedResource Include="Resources\Shared\ForgotPassword.ar.resx" />
+    <EmbeddedResource Include="Resources\Shared\ForgotPassword.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ForgotPassword.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared\Login.ar.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.ar.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Shared\Login.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="Scripts\App\select2\bower.json" />
@@ -3445,6 +3502,8 @@
     <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="RichTextEditor\samples\sample_posteddata.php" />
     <Content Include="RichTextEditor\skins\moono\readme.md" />
+    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
+    <Content Include="RTB\userfiles\.htaccess" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap\application.js" />
     <Content Include="Scripts\bootstrap\bootstrap-affix.js" />
@@ -3705,6 +3764,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
+    <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\Shared\" />
+    <Folder Include="Areas\Api\Views\Tree\" />
     <Folder Include="Areas\CMS\Models\" />
     <Folder Include="Areas\CMS\Views\Shared\" />
     <Folder Include="Areas\Common\Models\" />
@@ -3717,21 +3779,17 @@
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
-    <Folder Include="Areas\Website\Models\" />
-    <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="DashboardModels\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
+    <Folder Include="Images\InventoryItemImage\" />
     <Folder Include="Images\ItemImage\" />
     <Folder Include="Images\NewsOrArticle\" />
     <Folder Include="Images\ProductImage\" />
     <Folder Include="Migrations\" />
     <Folder Include="ModelMappers\" />
-    <Folder Include="Models\Common\" />
     <Folder Include="Reports\" />
-    <Folder Include="Resources\" />
-    <Folder Include="ViewModels\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />

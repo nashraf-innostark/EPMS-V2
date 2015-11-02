@@ -200,6 +200,7 @@ namespace EPMS.Web.Areas.HR.Controllers
         /// <param name="viewModel"></param>
         /// <returns></returns>
         [HttpPost]
+        [SiteAuthorize(PermissionKey = "PayrollDetail")]
         public JsonResult Detail(PayrollViewModel viewModel)
         {
             long id = viewModel.Id;

@@ -22,6 +22,8 @@ namespace EPMS.WebModels.ModelMappers
                 NotesA = source.NotesA,
                 ManagerId = source.ManagerId,
                 Status = source.Status,
+                FromWarehouseId = source.FromWarehouseId,
+                ToWarehouseId = source.ToWarehouseId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -33,6 +35,7 @@ namespace EPMS.WebModels.ModelMappers
                 retVal.RequesterName = direction == "ltr" ?
                 source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE
                 : source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA;
+                retVal.EmpJobId = source.AspNetUser.Employee.EmployeeJobId;
             }
             if (source.Manager != null)
             {
@@ -68,6 +71,8 @@ namespace EPMS.WebModels.ModelMappers
                 NotesA = notesA,
                 ManagerId = source.ManagerId,
                 Status = source.Status,
+                FromWarehouseId = source.FromWarehouseId,
+                ToWarehouseId = source.ToWarehouseId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
@@ -100,6 +105,8 @@ namespace EPMS.WebModels.ModelMappers
                 NotesA = notesA,
                 ManagerId = source.Tir.ManagerId,
                 Status = source.Tir.Status,
+                FromWarehouseId = source.Tir.FromWarehouseId,
+                ToWarehouseId = source.Tir.ToWarehouseId,
                 RecCreatedBy = source.Tir.RecCreatedBy,
                 RecCreatedDate = source.Tir.RecCreatedDate,
                 RecUpdatedBy = source.Tir.RecUpdatedBy,
@@ -118,6 +125,7 @@ namespace EPMS.WebModels.ModelMappers
             var rfi = new TIRWidget
             {
                 Id = source.Id,
+                FormNumber = source.FormNumber,
                 Status = source.Status,
                 RequesterName = empName,
                 RequesterNameShort = empName.Length > 7 ? empName.Substring(0, 7) : empName,

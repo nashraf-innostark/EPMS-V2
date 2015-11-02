@@ -21,5 +21,9 @@ namespace EPMS.Interfaces.IServices
         /// Update WarehouseDetail
         /// </summary>
         bool UpdateWarehouseDetail(WarehouseDetail warehouseDetail);
+        /// <summary>
+        /// Delete Warehouse Detail
+        /// </summary>
+        string DeleteWarehouseDetail(long id);
     }
 }

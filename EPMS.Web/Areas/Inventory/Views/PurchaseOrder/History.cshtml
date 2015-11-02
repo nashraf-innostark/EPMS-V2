@@ -123,7 +123,7 @@
                                     </tr>
                                 }
                             </thead>
-                            <tbody class="qouteAdd">
+                            <tbody class="qouteAdd" id="POTableBody">
                                 @if (ViewBag.IsManager)
                                 {
                                     i = 0;
@@ -138,33 +138,38 @@
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].PlaceInDepartment)
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].RecCreatedBy)
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].RecCreatedDate)
-                                        <tr>
-                                            <td>@(i += 1)</td>
+                                        <tr id="@i">
+                                            <td>@(i + 1)</td>
                                             <td>@Html.DisplayFor(m => m.PurchaseOrdersItems[po].ItemName)</td>
                                             <td>@Html.DisplayFor(m => m.PurchaseOrdersItems[po].ItemCode)</td>
                                             <td>@Html.DisplayFor(m => m.PurchaseOrdersItems[po].ItemSKUCode)</td>
                                             <td>
-                                                <div class="span9">
+                                                <div class="span9 VendorError_@(i +1)">
                                                     @if (direction == "ltr")
                                                     {
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(m => m.PurchaseOrdersItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameEn", Model.PurchaseOrdersItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                            @Html.DropDownListFor(m => m.PurchaseOrdersItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameEn", Model.PurchaseOrdersItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                         </div>
                                                     }
                                                     else
                                                     {
                                                         <div class="controls">
-                                                            @Html.DropDownListFor(m => m.PurchaseOrdersItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.PurchaseOrdersItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM" })
+                                                            @Html.DropDownListFor(m => m.PurchaseOrdersItems[po].VendorId, new SelectList(Model.Vendors, "VendorId", "VendorNameAr", Model.PurchaseOrdersItems[po].VendorId), "--Select--", new { @class = "select2me tableDbM disableDdl" })
                                                         </div>
                                                     }
+                                                    <label id="VendorError_@(i + 1)" class="required"></label>
                                                 </div>
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].ItemQty, new { @class = "tableDbM" })
+                                                @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].ItemQty, new { @class = "tableDbM toBeDisabled" })
                                             </td>
-                                            <td>@Html.DisplayFor(m => m.PurchaseOrdersItems[po].UnitPrice)</td>
-                                            <td>@(Model.PurchaseOrdersItems[po].ItemQty * Model.PurchaseOrdersItems[po].UnitPrice)</td>
+                                            <td>
+                                                @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].UnitPrice, new { @class = "tableDbM UnitPrice toBeDisabled" })
+                                                @Html.ValidationMessageFor(m => m.PurchaseOrdersItems[po].UnitPrice, String.Empty, new { @class = "required" })
+                                            </td>
+                                            <td><label id="Total_@i">@Model.PurchaseOrdersItems[po].Total</label></td>
                                         </tr>
+                                                    i = i + 1;
                                     }
                                 }
                             </tbody>
@@ -235,7 +240,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextAreaFor(model => model.RecentPo.NotesE, new { @id = "NotesEn", @class = "" })
+                                @Html.TextAreaFor(model => model.RecentPo.NotesE, new { @id = "NotesEn", @class = "toBeDisabledCK" })
                             </div>
                         </div>
                     </div>
@@ -245,7 +250,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextAreaFor(model => model.RecentPo.NotesA, new { @id = "NotesAr", @class = "" })
+                                @Html.TextAreaFor(model => model.RecentPo.NotesA, new { @id = "NotesAr", @class = "toBeDisabledCK" })
                             </div>
                         </div>
                     </div>
@@ -314,9 +319,11 @@
 
         if ('@ViewBag.IsManager' != "True" || '@Model.RecentPo.Status' == '1') {
             $('.' + 'toBeDisable' + ':input').attr('readonly', true);
+            $('.toBeDisabledCK:input').attr('disabled', true);
+            $('.toBeDisabled:input').attr('disabled', true);
             $('.disableDdl').select2('disable');
             $("#SubmitTir").hide();
-            var noteEn = '@Html.Raw(Model.RecentPo.NotesE)';
+            @*var noteEn = '@Html.Raw(Model.RecentPo.NotesE)';
             var regex = /(<([^>]+)>)/ig;
             var result = noteEn.replace(regex, "");
             $("#notesE").val(result);
@@ -324,15 +331,48 @@
             regex = /(<([^>]+)>)/ig;
             result = noteAr.replace(regex, "");
             $("#notesA").val(result);
-            $("#Notes").show();
+            $("#Notes").show();*@
         } else {
-            CKEDITOR.replace('NotesEn', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            CKEDITOR.replace('NotesAr', {
-                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            });
-            $("#CKNotes").show();
+
         }
+        CKEDITOR.replace('NotesEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('NotesAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#CKNotes").show();
+        $(document).on('focusout', '.UnitPrice', function (ev) {
+            debugger;
+            if ('@ViewBag.IsManager' == 'True') {
+                var rowId = $(this).parent().parent().attr("id");
+                var itemQty = parseInt($("#PurchaseOrdersItems_" + rowId + "__ItemQty").val());
+                var unitPrice = parseInt($("#PurchaseOrdersItems_" + rowId + "__UnitPrice").val());
+                if (!isNaN(itemQty) && !isNaN(unitPrice)) {
+                    $("#Total_" + rowId).text(itemQty * unitPrice);
+                }
+                return true;
+            }
+            return;
+        });
     });
+    function validateVendors(event) {
+        if ('@ViewBag.IsManager' == "True" && parseInt($("#Status").val()) == 1) {
+            var index = $("#POTableBody").children("tr").length;
+            for (var i = 0; i < index; i++) {
+                var vendorId = $("#PurchaseOrdersItems_" + i + "__VendorId").val();
+                if (vendorId == 0 || vendorId == "" || vendorId == null) {
+                    $("#VendorError_" + (i + 1)).text("Please select vendor");
+                    $('html,body').animate({
+                        scrollTop: $(".VendorError_" + (i + 1)).offset().top
+                    }, 'slow');
+                    event.preventDefault();
+                    return false;
+                } else {
+                    $("#VendorError_" + (i + 1)).text("");
+                }
+            }
+        }
+        return true;
+    }
 </script>
