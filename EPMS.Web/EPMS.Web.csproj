@@ -1535,7 +1535,7 @@
     <Content Include="Areas\Website\Views\web.config" />
     <Content Include="Areas\Website\Views\AboutUs\Detail.cshtml" />
     <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
-     Include="Areas\Report\Views\web.config" />
+    <Content Include="Areas\Report\Views\web.config" />
     <Content Include="Areas\Report\Views\ProjectsAndTasks\Index.cshtml" />
     <Content Include="Areas\Report\Views\Project\Index.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
@@ -1557,6 +1557,8 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Generate.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

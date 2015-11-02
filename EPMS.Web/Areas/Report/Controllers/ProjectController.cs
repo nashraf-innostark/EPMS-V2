@@ -13,5 +13,13 @@ namespace EPMS.Web.Areas.Report.Controllers
         {
             return View();
         }
+        public ActionResult Generate()
+        {
+            return View();
+        }
+        public ActionResult Details()
+        {
+            return View();
+        }
     }
 }
