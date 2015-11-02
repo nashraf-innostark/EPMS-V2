@@ -139,9 +139,9 @@
                             <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
                             <th style="width: 85%">@EPMS.WebModels.Resources.RFI.RFI.ItemDetails</th>
                             <th>@EPMS.WebModels.Resources.RFI.RFI.Quantity</th>
-                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.Warehouse</th>
-                            <th>@EPMS.Web.Resources.Inventory.RIF.RIF.ReleasedQuantity</th>
-                            <th style="width: 4%">@EPMS.Web.Resources.RFI.RFI.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.RIF.RIF.Warehouse</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.RIF.RIF.ReleasedQuantity</th>
+                            <th style="width: 4%">@EPMS.WebModels.Resources.RFI.RFI.Delete</th>
                         </tr>
                     </thead>
                     <tbody class="qouteAdd" id="RifItemsTableBody">
@@ -290,7 +290,7 @@
     var IRFItems = new Array();
     var textTillParent = "";
     var dir = '@direction';
-    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     var itemWarehousesList = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
     var itemWarehouses = JSON.parse(itemWarehousesList);
     $(document).ready(function () {
@@ -478,7 +478,7 @@
         $("#SaveChanges").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
-                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
                     appendWarehouseDD($("#ItemVariationDropDownList").val());
                     getModalControlsValues();
                 }

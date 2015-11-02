@@ -186,8 +186,8 @@
                             <th style="width:50%">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.ItemDetails</th>
                             <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Warehouse</th>
                             <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Quantity</th>
-                            <th>@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.RequestedQuantity</th>
-                            <th style="width:4%">@EPMS.Web.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.RequestedQuantity</th>
+                            <th style="width:4%">@EPMS.WebModels.Resources.Inventory.IRF.AddEdit.IRFCreate.Delete</th>
                         </tr>
                     </thead>
                     <tbody id="ItemReleaseDetailsTableBody" class="qouteAdd">
@@ -322,8 +322,8 @@
     var dir;
     var divId;
     var dir = '@direction';
-    var errorMessage = '@EPMS.Web.Resources.Shared.Common.RequiredDdlField';
-    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var errorMessage = '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField';
+    var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     var textTillParent = "";
     var itemWarehouses = '@Html.Raw(Json.Encode(Model.ItemWarehouses))';
     var parsedWarehouses = JSON.parse(itemWarehouses);

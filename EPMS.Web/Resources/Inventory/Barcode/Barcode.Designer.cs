@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Inventory.Barcode {
+namespace EPMS.WebModels.Resources.Inventory.Barcode {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Inventory.Barcode {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Inventory.Barcode.Barcode", typeof(Barcode).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.Inventory.Barcode.Barcode", typeof(Barcode).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -46,13 +46,13 @@
                             <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.ItemName</th>
                             <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.DescriptionEn</th>
                             <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.DeptInfo</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.SkuDesc</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.QOnHand</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.QSold</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.AveragePrice</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.AverageCost</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.ReorderPoint</th>
-                            <th>@EPMS.Web.Resources.Inventory.InventoryItem.Delete</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.SkuDesc</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.QOnHand</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.QSold</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.AveragePrice</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.AverageCost</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.ReorderPoint</th>
+                            <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Delete</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -85,7 +85,7 @@
                                 <td>@item.AveragePrice</td>
                                 <td>@item.AverageCost</td>
                                 <td>@item.ReorderLevel</td>
-                                <td class="@item.ItemId"><a href="#" id="delete" onclick="deleteRow(@item.ItemId)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
+                                <td class="@item.ItemId"><a href="#" id="delete" onclick="deleteRow(@item.ItemId)">@EPMS.WebModels.Resources.Inventory.InventoryItem.Delete</a></td>
 
                             </tr>
                         }

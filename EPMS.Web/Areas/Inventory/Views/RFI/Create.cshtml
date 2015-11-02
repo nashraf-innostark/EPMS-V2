@@ -252,7 +252,7 @@
     var divId;
     var textTillParent = "";
     var dir = '@direction';
-    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     var variationIds = new Array();
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
@@ -367,7 +367,7 @@
         $("#SaveChanges").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
-                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
                     getModalControlsValues();
                 }
             } else {

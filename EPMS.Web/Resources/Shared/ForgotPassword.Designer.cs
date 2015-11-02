@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Web.Resources.Shared {
+namespace EPMS.WebModels.Resources.Shared {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace EPMS.Web.Resources.Shared {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Web.Resources.Shared.ForgotPassword", typeof(ForgotPassword).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.Shared.ForgotPassword", typeof(ForgotPassword).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

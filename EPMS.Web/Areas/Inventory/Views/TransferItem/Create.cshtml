@@ -62,7 +62,7 @@
         </div>
         <div class="control-group row-fluid warehouseDDLFrom">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.FromWarehouse</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.FromWarehouse</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -84,7 +84,7 @@
         </div>
         <div class="control-group row-fluid warehouseDDLTo">
             <div class="span3">
-                <label class="control-label">@EPMS.Web.Resources.Inventory.TIR.TIRCreate.ToWarehouse</label>
+                <label class="control-label">@EPMS.WebModels.Resources.Inventory.TIR.TIRCreate.ToWarehouse</label>
             </div>
             <div class="span2">
                 <div class="controls">
@@ -289,7 +289,7 @@
     var divId;
     var textTillParent = "";
     var dir = '@direction';
-    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
         siteUrl = $("#siteURL").val();
         divId = "jstree";
@@ -529,7 +529,7 @@
         $("#SaveChanges").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
-                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
                     getModalControlsValues();
                 }
             } else {
