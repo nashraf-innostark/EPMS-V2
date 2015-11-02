@@ -15,7 +15,7 @@
             <div class="panel-logo"></div>
             <div class="panel-header">
                 <h1><small>@EPMS.WebModels.Resources.Inventory.InventoryDepartment.InventoryDepartmentsJSTreeTitle</small></h1>
-                <button type="submit" class="btn btn-mini" onclick="deleteRow();">@EPMS.Web.Resources.Shared.Common.DeleteNode</button>
+                <button type="submit" class="btn btn-mini" onclick="deleteRow();">@EPMS.WebModels.Resources.Shared.Common.DeleteNode</button>
             </div>
             <div class="panel-search container-fluid">
                 <form class="form-horizontal" action="javascript:;">
@@ -78,7 +78,7 @@
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptDescription</th>
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptNumberOfSections</th>
                                         <th class="center"> @EPMS.WebModels.Resources.Inventory.InventoryDepartment.DeptNumberOfSubSections</th>
-                                        <th>@EPMS.Web.Resources.Inventory.InventoryItem.Delete</th>
+                                        <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -105,7 +105,7 @@
                                             </script>
                                             <td class="center">@departments.NoOfSections</td>
                                             <td class="center">-</td>
-                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteTableRow(this)">@EPMS.Web.Resources.Inventory.InventoryItem.Delete</a></td>
+                                            <td class="@departments.DepartmentId"><a href="#" id="delete" onclick="deleteTableRow(this)">@EPMS.WebModels.Resources.Inventory.InventoryItem.Delete</a></td>
                                         </tr>
                                     }
                                 </tbody>

@@ -183,7 +183,7 @@
     var siteUrl;
     var textTillParent = "";
     var dir = '@direction';
-    var errorMessageTree = '@EPMS.Web.Resources.Shared.Common.RequiredTreeField';
+    var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
         status = '@Model.Order.Status';
         siteUrl = $("#siteURL").val();
@@ -429,7 +429,7 @@
         $("#SaveChanges").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
-                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.Web.Resources.Shared.Common.RequiredDdlField')) {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
                     getModalControlsValues();
                 }
             } else {
