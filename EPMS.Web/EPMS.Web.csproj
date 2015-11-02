@@ -333,6 +333,9 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
@@ -1546,6 +1549,9 @@
     <Content Include="Areas\CMS\Views\Quotation\RFQ.cshtml" />
     <Content Include="Areas\CMS\Views\Quotation\RFQIndex.cshtml" />
     <Content Include="Areas\CMS\Views\Quotation\RFQDetail.cshtml" />
+    <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="Areas\Report\Views\ProjectsAndTasks\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3779,6 +3785,8 @@
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
+    <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="DashboardModels\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
