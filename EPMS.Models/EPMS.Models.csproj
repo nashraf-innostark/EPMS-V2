@@ -102,6 +102,7 @@
     <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
+    <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -165,6 +166,7 @@
     <Compile Include="DomainModels\PurchaseOrderHistory.cs" />
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
+    <Compile Include="DomainModels\Report.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RFQ.cs" />

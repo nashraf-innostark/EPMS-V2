@@ -333,6 +333,9 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
+    <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
     <Compile Include="Areas\Website\Controllers\DepartmentController.cs" />
@@ -1517,6 +1520,9 @@
     <Content Include="Areas\Website\Views\web.config" />
     <Content Include="Areas\Website\Views\AboutUs\Detail.cshtml" />
     <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
+    <Content Include="Areas\Report\Views\web.config" />
+    <Content Include="Areas\Report\Views\ProjectsAndTasks\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Index.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <Content Include="Areas\Website\Views\Home\Index.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\ArticleCreate.cshtml" />
@@ -1536,6 +1542,8 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Generate.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3756,6 +3764,8 @@
     <Folder Include="Areas\Inventory\Views\Shared\" />
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
+    <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />
     <Folder Include="DashboardModels\" />
