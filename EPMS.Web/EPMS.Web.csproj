@@ -374,21 +374,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Barcode.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Shared\ForgotPassword.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ForgotPassword.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Shared\Login.ar.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Login.ar.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Shared\Login.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Login.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -3479,19 +3464,6 @@
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
-    <EmbeddedResource Include="Resources\Shared\ForgotPassword.ar.resx" />
-    <EmbeddedResource Include="Resources\Shared\ForgotPassword.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>ForgotPassword.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Shared\Login.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Login.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Shared\Login.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Login.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="Scripts\App\select2\bower.json" />
@@ -3807,6 +3779,7 @@
     <Folder Include="Migrations\" />
     <Folder Include="ModelMappers\" />
     <Folder Include="Reports\" />
+    <Folder Include="Resources\Shared\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
     <Folder Include="Views\Culture\" />
