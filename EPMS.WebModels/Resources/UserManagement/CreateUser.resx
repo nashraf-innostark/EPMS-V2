@@ -117,118 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddMeeting" xml:space="preserve">
-    <value>اضف اجتماع</value>
+  <data name="BtnSave" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="Any" xml:space="preserve">
-    <value>Any</value>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>Update</value>
   </data>
-  <data name="Complaints" xml:space="preserve">
-    <value>شكاوي</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
   </data>
-  <data name="EmployeeRequests" xml:space="preserve">
-    <value>طلبات الموظفين</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="Employees" xml:space="preserve">
-    <value>الموظفين</value>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
   </data>
-  <data name="FilterByClient" xml:space="preserve">
-    <value>ترتيب حسب العميل</value>
+  <data name="EnterUsername" xml:space="preserve">
+    <value>Enter Username</value>
   </data>
-  <data name="FilterByDepartment" xml:space="preserve">
-    <value>ترتيب حسب الادارة</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Register User</value>
   </data>
-  <data name="FilterByEmployee" xml:space="preserve">
-    <value>ترتيب حسب الموظف</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="FilterbyMonth" xml:space="preserve">
-    <value>ترتيب حسب الشهر</value>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
   </data>
-  <data name="FilterByProjectProgress" xml:space="preserve">
-    <value>ترتيب حسب حالة المشروع</value>
+  <data name="SelectEmployee" xml:space="preserve">
+    <value>Select Employee</value>
   </data>
-  <data name="FilterByProjects" xml:space="preserve">
-    <value>ترتيب حسب المشروع</value>
+  <data name="SelectRole" xml:space="preserve">
+    <value>Select Role</value>
   </data>
-  <data name="FilterByStatus" xml:space="preserve">
-    <value>ترتيب حسب حالة الطلب</value>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>Update User</value>
   </data>
-  <data name="MakeComplaint" xml:space="preserve">
-    <value>اضافة شكوى جديدة</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
-  <data name="Meeting" xml:space="preserve">
-    <value>اجتماعات</value>
-  </data>
-  <data name="MyProfile" xml:space="preserve">
-    <value>السيرة الذاتية</value>
-  </data>
-  <data name="MyTasks" xml:space="preserve">
-    <value>مهامي</value>
-  </data>
-  <data name="Payroll" xml:space="preserve">
-    <value>الرواتب</value>
-  </data>
-  <data name="Project" xml:space="preserve">
-    <value>مشاريع</value>
-  </data>
-  <data name="Recruitment" xml:space="preserve">
-    <value>طلبات الوظائف</value>
-  </data>
-  <data name="Allowances" xml:space="preserve">
-    <value>مجموع البدلات</value>
-  </data>
-  <data name="BasicSalary" xml:space="preserve">
-    <value>الراتب الأساسي</value>
-  </data>
-  <data name="CurrentMonth" xml:space="preserve">
-    <value>الشهر1</value>
-  </data>
-  <data name="DashboardTitle" xml:space="preserve">
-    <value>لوحة التحكم</value>
-  </data>
-  <data name="Deductions" xml:space="preserve">
-    <value>مجموع الخصومات</value>
-  </data>
-  <data name="Orders" xml:space="preserve">
-    <value>طلبات</value>
-  </data>
-  <data name="PreviousMonth" xml:space="preserve">
-    <value>الشهر2</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>المجموع</value>
-  </data>
-  <data name="IdExpiry" xml:space="preserve">
-    <value>تاريخ انتهاء البطاقة الشخصية</value>
-  </data>
-  <data name="JobId" xml:space="preserve">
-    <value>رقم الوظيفي</value>
-  </data>
-  <data name="JobTitle" xml:space="preserve">
-    <value>اسم الوظيفي</value>
-  </data>
-  <data name="DIF" xml:space="preserve">
-    <value>DIF</value>
-  </data>
-  <data name="IRF" xml:space="preserve">
-    <value>IRF</value>
-  </data>
-  <data name="PO" xml:space="preserve">
-    <value>PO</value>
-  </data>
-  <data name="RFI" xml:space="preserve">
-    <value>RFI</value>
-  </data>
-  <data name="RIF" xml:space="preserve">
-    <value>RIF</value>
-  </data>
-  <data name="TIF" xml:space="preserve">
-    <value>TIF</value>
-  </data>
-  <data name="FilterByDate" xml:space="preserve">
-    <value>Filter by Date</value>
-  </data>
-  <data name="FilterByWarehouseDestination" xml:space="preserve">
-    <value>تصفية حسب مستودع الوجهة</value>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
   </data>
 </root>

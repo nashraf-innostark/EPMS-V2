@@ -5,11 +5,13 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mime;
 using System.Text.RegularExpressions;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebBase.EncryptDecrypt;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Project;
@@ -18,6 +20,7 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using Microsoft.AspNet.Identity;
+using Project = EPMS.WebModels.Resources.PMS.Project;
 
 namespace EPMS.Web.Areas.PMS.Controllers
 {
@@ -148,7 +151,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         {
             // check license
             var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string LicenseKey = WebBase.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
             var splitLicenseKey = LicenseKey.Split('|');
             string[] Modules = splitLicenseKey[4].Split(';');
             if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
@@ -180,7 +183,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     SaveProjectDocuments(projectViewModel);
                     TempData["MessageVm"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.PMS.Project.ProjectUpdatedMsg,
+                        Message = Project.ProjectUpdatedMsg,
                         IsUpdated = true
                     };
                 }
@@ -199,19 +202,36 @@ namespace EPMS.Web.Areas.PMS.Controllers
 
                     TempData["MessageVm"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.PMS.Project.ProjectCreatedMsg,
+                        Message = Project.ProjectCreatedMsg,
                         IsSaved = true
                     };
                 }
             }
             catch (Exception e)
             {
-                return View(projectViewModel);
+                
             }
-            var customers = customerService.GetAll();
-            var orders = ordersService.GetAll();
-            CheckHasCustomerModule(projectViewModel, customers, orders);
-            return RedirectToAction("Index", "Project");
+            var customer = customerService.GetAll();
+            var order = ordersService.GetAll();
+            CheckHasCustomerModule(projectViewModel, customer, order);
+            var projectTasks = projectTaskService.GetTasksByProjectId(projectViewModel.Project.ProjectId);
+            if (projectTasks != null)
+            {
+                projectViewModel.ProjectTasks = projectTasks.Select(x => x.CreateFromServerToClientCreateForProjectDetails());
+                foreach (var projectTask in projectViewModel.ProjectTasks)
+                {
+                    projectViewModel.Project.TotalTasksCost += projectTask.TotalCost;
+                    var tempTaskProgress = projectTask.TaskProgress;
+                    projectViewModel.Project.ProgressTotal += Convert.ToDouble(tempTaskProgress);
+                }
+            }
+            TempData["MessageVm"] = new MessageViewModel
+            {
+                Message = Project.ProjectAddEditError,
+                IsSaved = true
+            };
+            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            return View(projectViewModel);
         }
 
         public void SaveProjectDocuments(ProjectViewModel projectViewModel)
@@ -327,7 +347,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
         public FileResult Download(string fileName)
         {
             byte[] fileBytes = System.IO.File.ReadAllBytes(Server.MapPath(ConfigurationManager.AppSettings["ProjectDocuments"] + fileName));
-            return File(fileBytes, System.Net.Mime.MediaTypeNames.Application.Octet, fileName);
+            return File(fileBytes, MediaTypeNames.Application.Octet, fileName);
         }
         #endregion
 

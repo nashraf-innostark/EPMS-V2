@@ -494,6 +494,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\UserManagement\CreateUser.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateUser.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\UserManagement\MyProfile.Designer.cs">
       <DependentUpon>MyProfile.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1074,6 +1079,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="Resources\InventoryWarehouse.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.ar.Designer.cs</LastGenOutput>
@@ -1232,6 +1238,10 @@
     <EmbeddedResource Include="Resources\UserManagement\ChangePassword.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\CreateUser.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateUser.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\MyProfile.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\MyProfile.resx">

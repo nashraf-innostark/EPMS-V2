@@ -4,6 +4,7 @@
     ViewBag.Title = @EPMS.WebModels.Resources.CP.Profile.CompanyProfile;
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -193,12 +194,25 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterIssueDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDate", onchange = "GregorianToHijri(this,'#CommercialRegisterIssueDateAr')", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDate", onchange = "GregorianToHijri(this,'#CommercialRegisterIssueDateAr')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterIssueDate", onchange = "GregorianToHijri(this,'#CommercialRegisterIssueDateAr')", @readonly = "readonly" })
+                                    </div>
+
+                                }
                             </div>
                         </div>
                         <div id="Date_Picker" class="control-group row-fluid">
@@ -208,12 +222,25 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterExpiryDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDate", onchange = "GregorianToHijri(this, CommercialRegisterExpiryDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDate", onchange = "GregorianToHijri(this, CommercialRegisterExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDateAr", onchange = "HijriToGregorian(this,'#CommercialRegisterExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.CommercialRegisterExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "CommercialRegisterExpiryDate", onchange = "GregorianToHijri(this, CommercialRegisterExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                                 <label id="CommercialRegisterDateValidation"></label>
                             </div>
                         </div>
@@ -234,12 +261,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateIssueDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDate", onchange = "GregorianToHijri(this, InsuranceCertificateIssueDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDate", onchange = "GregorianToHijri(this, InsuranceCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateIssueDate", onchange = "GregorianToHijri(this, InsuranceCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div id="Date_Picker" class="control-group row-fluid">
@@ -250,12 +291,25 @@
                             </div>
                             <div class="span9">
                                 <div class="controls">
-                                    <div class="controls span4">
-                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateExpiryDate')", @readonly = "readonly" })
-                                    </div>
-                                    <div class="controls span4">
-                                        @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDate", onchange = "GregorianToHijri(this, InsuranceCertificateExpiryDateAr)", @readonly = "readonly" })
-                                    </div>
+                                    @if (direction == "ltr")
+                                    {
+                                        <div class="controls span4">
+                                            @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDate", onchange = "GregorianToHijri(this, InsuranceCertificateExpiryDateAr)", @readonly = "readonly" })
+                                        </div>
+                                        <div class="controls span4">
+                                            @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateExpiryDate')", @readonly = "readonly" })
+                                        </div>
+
+                                    }
+                                    else
+                                    {
+                                        <div class="controls span4">
+                                            @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#InsuranceCertificateExpiryDate')", @readonly = "readonly" })
+                                        </div>
+                                        <div class="controls span4">
+                                            @Html.TextBoxFor(model => model.CompanyDocuments.InsuranceCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "InsuranceCertificateExpiryDate", onchange = "GregorianToHijri(this, InsuranceCertificateExpiryDateAr)", @readonly = "readonly" })
+                                        </div>
+                                    }
                                     <label id="InsuranceCertificateDateValidation"></label>
                                 </div>
                             </div>
@@ -277,12 +331,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateIssueDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDate", onchange = "GregorianToHijri(this, ChamberCertificateIssueDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDate", onchange = "GregorianToHijri(this, ChamberCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateIssueDate", onchange = "GregorianToHijri(this, ChamberCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div id="Date_Picker" class="control-group row-fluid">
@@ -292,12 +360,24 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateExpiryDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDate", onchange = "GregorianToHijri(this, ChamberCertificateExpiryDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDate", onchange = "GregorianToHijri(this, ChamberCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#ChamberCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.ChamberCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "ChamberCertificateExpiryDate", onchange = "GregorianToHijri(this, ChamberCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
                                 <label id="ChamberCertificateDateValidation"></label>
                             </div>
                         </div>
@@ -318,12 +398,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateIssueDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateIssueDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateIssueDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div id="Date_Picker" class="control-group row-fluid">
@@ -333,12 +427,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateExpiryDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateExpiryDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#IncomeAndZakaCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.IncomeAndZakaCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "IncomeAndZakaCertificateExpiryDate", onchange = "GregorianToHijri(this, IncomeAndZakaCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                                 <label id="IncomeAndZakaCertificateDateValidation"></label>
                             </div>
                         </div>
@@ -359,12 +467,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateIssueDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDate", onchange = "GregorianToHijri(this, SaudilizationCertificateIssueDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDate", onchange = "GregorianToHijri(this, SaudilizationCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateIssueDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateIssueDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateIssueDate", onchange = "GregorianToHijri(this, SaudilizationCertificateIssueDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                             </div>
                         </div>
                         <div id="Date_Picker" class="control-group row-fluid">
@@ -374,12 +496,26 @@
                                 </label>
                             </div>
                             <div class="span9">
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateExpiryDate')", @readonly = "readonly" })
-                                </div>
-                                <div class="controls span4">
-                                    @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDate", onchange = "GregorianToHijri(this, SaudilizationCertificateExpiryDateAr)", @readonly = "readonly" })
-                                </div>
+                                @if (direction == "ltr")
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDate", onchange = "GregorianToHijri(this, SaudilizationCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+
+                                }
+                                else
+                                {
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDateAr, new { @class = "col-lg-2 datepickerArabic form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDateAr", onchange = "HijriToGregorian(this,'#SaudilizationCertificateExpiryDate')", @readonly = "readonly" })
+                                    </div>
+                                    <div class="controls span4">
+                                        @Html.TextBoxFor(model => model.CompanyDocuments.SaudilizationCertificateExpiryDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand tbdisable", @id = "SaudilizationCertificateExpiryDate", onchange = "GregorianToHijri(this, SaudilizationCertificateExpiryDateAr)", @readonly = "readonly" })
+                                    </div>
+                                }
+
                                 <label id="SaudilizationCertificateDateValidation"></label>
                             </div>
                         </div>
