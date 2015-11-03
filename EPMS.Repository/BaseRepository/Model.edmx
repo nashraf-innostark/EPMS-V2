@@ -1265,6 +1265,18 @@
           <Property Name="RecUpdatedDt" Type="datetime" />
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="200" />
         </EntityType>
+        <EntityType Name="Reports">
+          <Key>
+            <PropertyRef Name="ReportId" />
+          </Key>
+          <Property Name="ReportId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportCategoryId" Type="int" Nullable="false" />
+          <Property Name="ReportCategoryItemId" Type="bigint" Nullable="false" />
+          <Property Name="ReportFromDate" Type="datetime" Nullable="false" />
+          <Property Name="ReportToDate" Type="datetime" Nullable="false" />
+          <Property Name="ReportCreatedBy" Type="bigint" Nullable="false" />
+          <Property Name="ReportCreatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
             <PropertyRef Name="RequestDetailId" />
@@ -2946,6 +2958,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reports_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="ReportCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
           <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
@@ -3588,6 +3612,7 @@
           <EntitySet Name="QuickLaunchItems" EntityType="Self.QuickLaunchItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RequestDetails" EntityType="Self.RequestDetails" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFI" EntityType="Self.RFI" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFIHistory" EntityType="Self.RFIHistory" Schema="dbo" store:Type="Tables" />
@@ -4020,6 +4045,10 @@
           <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
             <End Role="Quotation" EntitySet="Quotation" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Employee" Association="Self.FK_Reports_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Reports" EntitySet="Reports" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
             <End Role="EmployeeRequests" EntitySet="EmployeeRequests" />
@@ -4602,6 +4631,7 @@
           <NavigationProperty Name="NotificationRecipients" Relationship="Self.FK_NotificationRecipient_Employee" FromRole="Employee" ToRole="NotificationRecipient" />
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
           <NavigationProperty Name="Warehouses" Relationship="EPMSInventoryModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
+          <NavigationProperty Name="Reports" Relationship="EPMSInventoryModel.FK_Reports_Employee" FromRole="Employee" ToRole="Report" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -6455,6 +6485,11 @@
           <AssociationSet Name="PreRequisitTask" Association="EPMSInventoryModel.PreRequisitTask">
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="ProjectTask1" EntitySet="ProjectTasks" />
+          </AssociationSet>
+          <EntitySet Name="Reports" EntityType="EPMSInventoryModel.Report" />
+          <AssociationSet Name="FK_Reports_Employee" Association="EPMSInventoryModel.FK_Reports_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="Warehouse">
@@ -8552,6 +8587,31 @@
           <End Type="EPMSInventoryModel.ProjectTask" Role="ProjectTask" Multiplicity="*" />
           <End Type="EPMSInventoryModel.ProjectTask" Role="ProjectTask1" Multiplicity="*" />
         </Association>
+        <EntityType Name="Report">
+          <Key>
+            <PropertyRef Name="ReportId" />
+          </Key>
+          <Property Name="ReportId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportCategoryId" Type="Int32" Nullable="false" />
+          <Property Name="ReportCategoryItemId" Type="Int64" Nullable="false" />
+          <Property Name="ReportFromDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportToDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ReportCreatedBy" Type="Int64" Nullable="false" />
+          <Property Name="ReportCreatedDate" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="EPMSInventoryModel.FK_Reports_Employee" FromRole="Report" ToRole="Employee" />
+        </EntityType>
+        <Association Name="FK_Reports_Employee">
+          <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="ReportCreatedBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10372,6 +10432,19 @@
               <ScalarProperty Name="TaskId" ColumnName="PreReqTaskId" />
             </EndProperty>
           </AssociationSetMapping>
+          <EntitySetMapping Name="Reports">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Report">
+              <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="ReportCreatedDate" ColumnName="ReportCreatedDate" />
+                <ScalarProperty Name="ReportCreatedBy" ColumnName="ReportCreatedBy" />
+                <ScalarProperty Name="ReportToDate" ColumnName="ReportToDate" />
+                <ScalarProperty Name="ReportFromDate" ColumnName="ReportFromDate" />
+                <ScalarProperty Name="ReportCategoryItemId" ColumnName="ReportCategoryItemId" />
+                <ScalarProperty Name="ReportCategoryId" ColumnName="ReportCategoryId" />
+                <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -10636,6 +10709,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ProjectTask_ProjectTask" />
         <AssociationConnector Association="EPMSInventoryModel.FK_TaskEmployee_Task" />
         <AssociationConnector Association="EPMSInventoryModel.PreRequisitTask" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Report" Width="1.5" PointX="8.25" PointY="17.625" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Reports_Employee" />
       </Diagram>
     </Diagrams>
   </Designer>
