@@ -102,6 +102,7 @@
     <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
+    <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
