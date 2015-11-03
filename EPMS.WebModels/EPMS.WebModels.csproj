@@ -112,6 +112,7 @@
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
+    <Compile Include="ModelMappers\Reports\ProjectReportMapper.cs" />
     <Compile Include="ModelMappers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemMapper.cs" />
@@ -883,6 +884,7 @@
     <Compile Include="WebsiteModels\QuickLaunchUserItems.cs" />
     <Compile Include="WebsiteModels\Quotation.cs" />
     <Compile Include="WebsiteModels\QuotationItemDetail.cs" />
+    <Compile Include="WebsiteModels\Report.cs" />
     <Compile Include="WebsiteModels\Request.cs" />
     <Compile Include="WebsiteModels\RequestDetail.cs" />
     <Compile Include="WebsiteModels\RFI.cs" />
