@@ -22,7 +22,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class CreateUser {
+    public class CreateUser {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.UserManagement.CreateUser", typeof(CreateUser).Assembly);
@@ -51,7 +51,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Save.
         /// </summary>
-        internal static string BtnSave {
+        public static string BtnSave {
             get {
                 return ResourceManager.GetString("BtnSave", resourceCulture);
             }
@@ -72,7 +72,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Update.
         /// </summary>
-        internal static string BtnUpdate {
+        public static string BtnUpdate {
             get {
                 return ResourceManager.GetString("BtnUpdate", resourceCulture);
             }
@@ -81,7 +81,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Confirm Password.
         /// </summary>
-        internal static string ConfirmPassword {
+        public static string ConfirmPassword {
             get {
                 return ResourceManager.GetString("ConfirmPassword", resourceCulture);
             }
@@ -90,7 +90,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
-        internal static string Email {
+        public static string Email {
             get {
                 return ResourceManager.GetString("Email", resourceCulture);
             }
@@ -99,7 +99,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Employee.
         /// </summary>
-        internal static string Employee {
+        public static string Employee {
             get {
                 return ResourceManager.GetString("Employee", resourceCulture);
             }
@@ -108,7 +108,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Enter Username.
         /// </summary>
-        internal static string EnterUsername {
+        public static string EnterUsername {
             get {
                 return ResourceManager.GetString("EnterUsername", resourceCulture);
             }
@@ -117,7 +117,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Register User.
         /// </summary>
-        internal static string PageTitle {
+        public static string PageTitle {
             get {
                 return ResourceManager.GetString("PageTitle", resourceCulture);
             }
@@ -126,7 +126,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Password.
         /// </summary>
-        internal static string Password {
+        public static string Password {
             get {
                 return ResourceManager.GetString("Password", resourceCulture);
             }
@@ -135,7 +135,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Role.
         /// </summary>
-        internal static string Role {
+        public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
             }
@@ -144,7 +144,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Select Employee.
         /// </summary>
-        internal static string SelectEmployee {
+        public static string SelectEmployee {
             get {
                 return ResourceManager.GetString("SelectEmployee", resourceCulture);
             }
@@ -153,7 +153,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Select Role.
         /// </summary>
-        internal static string SelectRole {
+        public static string SelectRole {
             get {
                 return ResourceManager.GetString("SelectRole", resourceCulture);
             }
@@ -162,7 +162,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Update User.
         /// </summary>
-        internal static string UpdateUser {
+        public static string UpdateUser {
             get {
                 return ResourceManager.GetString("UpdateUser", resourceCulture);
             }
@@ -171,7 +171,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Username.
         /// </summary>
-        internal static string Username {
+        public static string Username {
             get {
                 return ResourceManager.GetString("Username", resourceCulture);
             }
@@ -180,7 +180,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Users.
         /// </summary>
-        internal static string Users {
+        public static string Users {
             get {
                 return ResourceManager.GetString("Users", resourceCulture);
             }

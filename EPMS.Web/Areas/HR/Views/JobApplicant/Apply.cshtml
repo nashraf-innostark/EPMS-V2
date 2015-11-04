@@ -9,10 +9,9 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-
 @using (Html.BeginForm("Apply", "JobApplicant", FormMethod.Post, new { @class = "form-horizontal", @id = "AddEditEmployeeForm", role = "form", enctype = "multipart/form-data" }))
 {
-    
+
     <div class="container-fluid">
         @Html.HiddenFor(model => model.JobApplicant.JobOfferedId)
         <div class="control-group row-fluid">
@@ -124,8 +123,17 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.JobApplicant.DateOfBirth, new { @class = "datepickerGregorian cursorHand span4", @id = "DateOfBirth", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#DateOfBirthAr')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "DateOfBirthAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#DateOfBirth')" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.JobApplicant.DateOfBirth, new { @class = "datepickerGregorian cursorHand span4", @id = "DateOfBirth", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#DateOfBirthAr')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "DateOfBirthAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#DateOfBirth')" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span4", @id = "DateOfBirthAr", @readonly = true, @placeholder = "Hijri", onchange = "HijriToGregorian(this,'#DateOfBirth')" })
+                        @Html.TextBoxFor(model => model.JobApplicant.DateOfBirth, new { @class = "datepickerGregorian cursorHand span4", @id = "DateOfBirth", @readonly = true, @placeholder = "Gregorian", onchange = "GregorianToHijri(this,'#DateOfBirthAr')" })
+                    }
+
                 </div>
             </div>
         </div>
@@ -1287,9 +1295,16 @@
             </div>
             <div class="span4">
                 <div class="controls">
-                    @*@Html.TextBoxFor(model => model.JobApplicant.JobLeavingDate, new { @class = "datepickerGregorian cursorHand span6", @id = "JobLeavingDate", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavinfDate })*@
-                    @Html.TextBoxFor(model => model.JobApplicant.JobLeavingDate, new { @class = "datepickerGregorian cursorHand span6", @id = "JobLeavingDate", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateG, onchange = "GregorianToHijri(this,'#JobLeavingDateAR')" })
-                    @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span6", @id = "JobLeavingDateAR", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateH, onchange = "HijriToGregorian(this,'#JobLeavingDate')" })
+                    @if (direction == "ltr")
+                    {
+                        @Html.TextBoxFor(model => model.JobApplicant.JobLeavingDate, new { @class = "datepickerGregorian cursorHand span6", @id = "JobLeavingDate", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateG, onchange = "GregorianToHijri(this,'#JobLeavingDateAR')" })
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span6", @id = "JobLeavingDateAR", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateH, onchange = "HijriToGregorian(this,'#JobLeavingDate')" })
+                    }
+                    else
+                    {
+                        @Html.TextBox("Start Date", null, new { @class = "datepickerArabic cursorHand span6", @id = "JobLeavingDateAR", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateH, onchange = "HijriToGregorian(this,'#JobLeavingDate')" })
+                        @Html.TextBoxFor(model => model.JobApplicant.JobLeavingDate, new { @class = "datepickerGregorian cursorHand span6", @id = "JobLeavingDate", @readonly = true, @placeholder = EPMS.WebModels.Resources.HR.JobApplicant.GovtJobLeavingDateG, onchange = "GregorianToHijri(this,'#JobLeavingDateAR')" })
+                    }
                 </div>
             </div>
         </div>

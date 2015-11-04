@@ -26,7 +26,7 @@ namespace EPMS.Web.Controllers
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("ar");
                 System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("ar");
 
-                if (Session["UserID"] != null && Session["UserID"].ToString() != "")
+                if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
                     userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "ar");
 
                 Session["Culture"] = "ar";
@@ -36,7 +36,7 @@ namespace EPMS.Web.Controllers
                 System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo("en");
                 System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
 
-                if (Session["UserID"] != null && Session["UserID"].ToString() != "")
+                if (Session["UserID"] != null && !string.IsNullOrEmpty(Session["UserID"].ToString()))
                     userPrefrencesService.AddUpdateCulture(Session["UserID"].ToString(), "en");
                 Session["Culture"] = "en";
             }

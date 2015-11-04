@@ -117,40 +117,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="DetailNameAr" xml:space="preserve">
-    <value>اسم بالعربي</value>
-  </data>
-  <data name="DetailNameEn" xml:space="preserve">
-    <value>اسم بالانجليزي</value>
-  </data>
-  <data name="NumberOfAisles" xml:space="preserve">
-    <value>عدد الممرات</value>
-  </data>
-  <data name="NumberOfSections" xml:space="preserve">
-    <value>عدد التقسيمات</value>
-  </data>
-  <data name="NumberOfSectionsOnShalves" xml:space="preserve">
-    <value>عدد التقسيمات في الرف الواحد</value>
-  </data>
-  <data name="NumberOfShalves" xml:space="preserve">
-    <value>عدد الارفف</value>
-  </data>
-  <data name="NumberOfSpaces" xml:space="preserve">
-    <value>عدد المساحات</value>
-  </data>
-  <data name="TreeTitle" xml:space="preserve">
-    <value>خلق مستودع شجرة</value>
-  </data>
-  <data name="WarehouseLocation" xml:space="preserve">
-    <value>موقع المستودع</value>
-  </data>
-  <data name="WarehouseManager" xml:space="preserve">
-    <value>مدير مستودع</value>
-  </data>
-  <data name="WarehouseNumber" xml:space="preserve">
-    <value>رقم المستودع</value>
-  </data>
-  <data name="WarehouseSize" xml:space="preserve">
-    <value>حجم المستودع</value>
+  <data name="NoRecordsFound" xml:space="preserve">
+    <value>No records found</value>
   </data>
 </root>

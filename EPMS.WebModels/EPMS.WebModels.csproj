@@ -194,6 +194,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RFQ.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CP\Profile.ar.Designer.cs">
       <DependentUpon>Profile.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -971,6 +976,11 @@
       <LastGenOutput>RFQ.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Common.ar.resx" />
+    <EmbeddedResource Include="Resources\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Profile.ar.Designer.cs</LastGenOutput>
@@ -1079,7 +1089,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Resources\InventoryWarehouse.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.ar.Designer.cs</LastGenOutput>
@@ -1169,7 +1178,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Resources\Menu.ar.resx" />
     <EmbeddedResource Include="Resources\Notification1.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification1.ar.Designer.cs</LastGenOutput>
@@ -1240,7 +1248,7 @@
       <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\CreateUser.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CreateUser.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\MyProfile.ar.resx" />

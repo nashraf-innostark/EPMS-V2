@@ -632,6 +632,11 @@
     });
 
     $('#IsParentTask').change(function () {
+        $("#ParentTaskId").val("");
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
         if ($('#IsParentTask').is(":checked")) {
             $("#checked").addClass('disableList');
             $('#ParentTaskId').select2('disable');
@@ -645,6 +650,17 @@
             //$("#TaskProgress").removeClass('disableList');
             //$('#TaskProgress').attr('readonly', false);
         }
+        
+    });
+    $('#ParentTaskId').change(function () {
+        // remove this task from Pre-Requisite list
+        var taskId = $("#ParentTaskId").val();
+        $('#dualMulti option[value="' + taskId + '"]').remove();
+        $("#dualMulti").pickList("destroy");
+        $("#dualMulti").pickList({
+            sourceListLabel: "Tasks",
+            targetListLabel: "Prerquisit Tasks",
+        });
     });
 
     function validateForm(event) {
