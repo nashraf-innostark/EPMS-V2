@@ -656,7 +656,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank1MobileNumber, new { id = "BankMobileNumber1", @class = "tbdisable" })
-                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank1MobileNumber, String.Empty, new { @class = "required" })
+                                    <label class="BankMobileNumberError1 required"></label>
                                 </div>
                             </div>
                         </div>
@@ -712,7 +712,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank2MobileNumber, new { id = "BankMobileNumber2", @class = "tbdisable" })
-                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank2MobileNumber, String.Empty, new { @class = "required" })
+                                    <label class="BankMobileNumberError2 required"></label>
                                 </div>
                             </div>
                         </div>
@@ -768,7 +768,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank3MobileNumber, new { id = "BankMobileNumber3", @class = "tbdisable" })
-                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank3MobileNumber, String.Empty, new { @class = "required" })
+                                    <label class="BankMobileNumberError3 required"></label>
                                 </div>
                             </div>
                         </div>
@@ -824,7 +824,7 @@
                             <div class="span9">
                                 <div class="controls">
                                     @Html.TextBoxFor(m => m.CompanyBank.Bank4MobileNumber, new { id = "BankMobileNumber4", @class = "tbdisable" })
-                                    @Html.ValidationMessageFor(m => m.CompanyBank.Bank4MobileNumber, String.Empty, new { @class = "required" })
+                                    <label class="BankMobileNumberError4 required"></label>
                                 </div>
                             </div>
                         </div>
@@ -835,7 +835,7 @@
                         </div>
                         <div class="control-group row-fluid">
                             <div class="span3 span-inset">
-                                <button id="savebtn" class="btn saveButton" type="submit" onclick=" SetTabId(4) ">Save</button>
+                                <button id="savebtn" class="btn saveButton" type="submit" onclick=" SetTabId(4) ">@EPMS.WebModels.Resources.CP.Profile.SaveButton</button>
                             </div>
                         </div>
                     }
@@ -1356,10 +1356,16 @@
     });
 
     function SetDetail(id, event) {
-        var validationStatus = $('#BankMobileNumber' + id).valid();
-        if (!validationStatus) {
+        //validate mobile number
+        var number = $("#BankMobileNumber" + id).val();
+        if (number == undefined || number == "") {
+            $(".BankMobileNumberError" + id).text("Bank mobile number is required");
             return false;
         }
+        //var validationStatus = $('#BankMobileNumber' + id).valid();
+        //if (!validationStatus) {
+        //    return false;
+        //}
         var bankName = $('#BankName' + id).val();
         var bankNameAr = $('#BankNameArabic' + id).val();
         var bankAccountNo = $('#BankAccountNumber' + id).val();

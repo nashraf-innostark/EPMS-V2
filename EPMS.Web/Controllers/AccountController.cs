@@ -218,6 +218,13 @@ namespace IdentitySample.Controllers
 
                     return Redirect(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
                 }
+                //if (!string.IsNullOrEmpty(Request.QueryString["C_Id"]))
+                //{
+                //    var userIdentity = await CustomAuthenticationOfUser(Request.QueryString["C_Id"]);
+                //    AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+
+                //    return Redirect(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
+                //}
                 ViewBag.ReturnUrl = returnUrl;
                 var companyDetails = companyProfileService.GetDetail();
                 if (companyDetails != null)

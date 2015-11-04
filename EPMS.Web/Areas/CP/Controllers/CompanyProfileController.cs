@@ -112,7 +112,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var profileToUpdate = companyProfileViewModel.CompanyProfile.CreateFromProfile();
                 if (profileService.UpdateDetail(profileToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.CP.Profile.RecordUpdated, IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -123,7 +123,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var documentToUpdate = companyProfileViewModel.CompanyDocuments.CreateFromDocument();
                 if (documentService.UpdateDetail(documentToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.CP.Profile.RecordUpdated, IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -134,7 +134,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var bankToUpdate = companyProfileViewModel.CompanyBank.CreateFromBank();
                 if (bankService.UpdateDetail(bankToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.CP.Profile.RecordUpdated, IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }
@@ -145,7 +145,7 @@ namespace EPMS.Web.Areas.CP.Controllers
                 var socialToUpdate = companyProfileViewModel.CompanySocial.CreateFromSocial();
                 if (socialService.UpdateDetail(socialToUpdate))
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.CP.Profile.RecordUpdated, IsUpdated = true };
                     return RedirectToAction("Detail");
                 }
             }

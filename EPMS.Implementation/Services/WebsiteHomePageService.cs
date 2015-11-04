@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -38,7 +39,7 @@ namespace EPMS.Implementation.Services
         {
             WebsiteHomeResponse response = new WebsiteHomeResponse
             {
-                WebsiteDepartments = websiteDepartmentService.GetAll(),
+                WebsiteDepartments = websiteDepartmentService.GetAll().Where(x=>x.ShowToPublic),
                 Partners = partnerService.GetAll(),
             };
             return response;
