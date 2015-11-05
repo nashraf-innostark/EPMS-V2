@@ -7,6 +7,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         // GET: Report/ProjectsAndTasks
         public ActionResult Index()
         {
+
             return View();
         }
     }

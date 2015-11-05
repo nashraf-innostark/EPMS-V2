@@ -1,6 +1,9 @@
-﻿using EPMS.Interfaces.IServices;
+﻿using System.Collections.Generic;
+using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Implementation.Services
 {
@@ -25,6 +28,12 @@ namespace EPMS.Implementation.Services
             reportRepository.SaveChanges();
             return true;
         }
+
+        public ProjectReportRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
+        {
+            return reportRepository.GetProjectsReports(projectReportSearchRequest);
+        }
+
         #endregion
     }
 }

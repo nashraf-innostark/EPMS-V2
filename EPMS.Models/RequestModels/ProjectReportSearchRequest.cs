@@ -2,14 +2,14 @@
 
 namespace EPMS.Models.RequestModels
 {
-    public class ReportSearchRequest : GetPagedListRequest
+    public class ProjectReportSearchRequest : GetPagedListRequest
     {
-        public string Requester { get; set; }
-        public ReportByColumn RequestByColumn
+        public string searchString { get; set; }
+        public ProjectReportByColumn RequestByColumn
         {
             get
             {
-                return (ReportByColumn)iSortCol_0;
+                return (ProjectReportByColumn)iSortCol_0;
             }
             set
             {

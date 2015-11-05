@@ -4,16 +4,23 @@
     {
         public static WebsiteModels.Report CreateFromServerToClient(this Models.DomainModels.Report source)
         {
-            return new WebsiteModels.Report
+            var report = new WebsiteModels.Report
             {
                 ReportId = source.ReportId,
                 ReportCategoryId = source.ReportCategoryId,
-                ReportCategoryItemId = source.ReportCategoryItemId,
                 ReportFromDate = source.ReportFromDate,
                 ReportToDate = source.ReportToDate,
-                ReportCreatedBy = source.ReportCreatedBy,
+                ReportCreatedById = source.ReportCreatedBy,
                 ReportCreatedDate = source.ReportCreatedDate
             };
+            if (source.ProjectId != null)
+            {
+                report.ReportCategoryItemId = (long)source.ProjectId;
+                report.ReportCategoryItemTitleE = source.Project.NameE;
+                report.ReportCategoryItemTitleA = source.Project.NameA;
+            }
+
+            return report;
         }
     }
 }

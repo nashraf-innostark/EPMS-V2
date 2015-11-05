@@ -1,6 +1,6 @@
 ﻿namespace EPMS.Models.Common
 {
-    public enum ReportByColumn
+    public enum ProjectReportByColumn
     {
         ReportId = 1,
         ReportCreatedBy = 2,
