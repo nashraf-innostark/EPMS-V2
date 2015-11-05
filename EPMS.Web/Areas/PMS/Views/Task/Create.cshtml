@@ -987,9 +987,9 @@
     }
     function verifyTaskWeight(elem) {
         var currVal = parseInt($(elem).val());
-        var parentTaskId = $("#ParentTaskId").val();
+        var parentTaskId = parseInt($("#ParentTaskId").val());
         if (currVal > 0) {
-            if (parentTaskId != "" && parentTaskId != null) {
+            if (parentTaskId != 0 && parentTaskId != null && parentTaskId != undefined) {
                 var subTasksWeightSum = 0;
                 var parentTaskWeight = 0;
                 for (var i = 0; i < projAllTasksList.length; i++) {
