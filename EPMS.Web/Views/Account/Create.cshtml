@@ -187,7 +187,7 @@
             $("#passwordAuthentication").text("");
             $("#passwordAuthentication").removeClass("Error");
             $("#password").css("background-color", "white");
-            if ((confirmpassword == null || confirmpassword == "" || confirmpassword == undefined)) {
+            if ((confirmpassword == null || confirmpassword == "" || confirmpassword == undefined || userPassword != confirmpassword)) {
                 $("#confirmPasswordValidate").text("Password and Confirmation Password do not match.");
                 $("#confirmPasswordValidate").addClass("Error");
                 $("#confirmPassword").css("background-color", "pink");

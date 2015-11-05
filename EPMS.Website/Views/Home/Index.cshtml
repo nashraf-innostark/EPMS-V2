@@ -3,7 +3,7 @@
 
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "MASAR Scientific Company";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Home.Home.Title;
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
 }
@@ -21,7 +21,7 @@
 <section id="content">
     <div class="container">
         <div class="row image-boxes imgboxes_style1 catagoryBox">
-            <h3>Main Departments</h3>
+            <h3>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.MainDepartments</h3>
             @foreach (var department in Model.WebsiteDepartments)
             {
                 <div class="span4 box">
@@ -34,7 +34,7 @@
                         {
                             <img src="~/images/noimage_department.png" alt="" />
                         }
-                        <h6>For More +</h6>
+                        <h6>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.ForMore +</h6>
                     </a>
                     <h3 class="m_title">@(direction == "ltr" ? department.NameEn : department.NameAr)</h3>
                     <p style="text-align: justify" class="descp-@department.DepartmentId"></p>
@@ -53,7 +53,7 @@
     <div class="container">
         <div class="row partners_carousel">
             <div class="span2 floatRight">
-                <h3 class="title"><span>Our Partners</span></h3>
+                <h3 class="title"><span>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.OurPartners</span></h3>
                 <div class="controls">
                     <a href="#" class="prev"><span class="icon-chevron-left"></span></a>
                     <a href="#" class="next"><span class="icon-chevron-right"></span></a>
@@ -72,10 +72,9 @@
 
         <div class="row">
             <div class="span12">
-                <div class="keywordbox"> We always provide you the best we can to help you get what you want </div>
+                <div class="keywordbox">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.BottomMessage</div>
             </div>
         </div><!-- end row // keywords-->
-
     </div>
     <!-- end container -->
 </section><!-- end #content -->

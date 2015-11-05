@@ -112,7 +112,7 @@
                     </div>
                     <ul class="topnav navRight">
                         <li class="drop">
-                            <a href="~/ShoppingCart/Index">Cart</a>
+                            <a href="~/ShoppingCart/Index">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Cart</a>
                             <div class="pPanel">
                                 <div class="inner">
                                     @{
@@ -122,42 +122,42 @@
                                             ShoppingCart cart = (ShoppingCart)Session["ShoppingCartItems"];
                                             if (cart.ShoppingCartItems.Any())
                                             {
-                                                <span class="cart_details shopping-cart">Number of items @cart.ShoppingCartItems.Count <a href="~/ShoppingCart/Index" class="checkout checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
+                                                <span class="cart_details shopping-cart">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.NumberOfItems @cart.ShoppingCartItems.Count <a href="~/ShoppingCart/Index" class="checkout checkoutBtn">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Checkout<span class="icon-chevron-right"></span></a></span>
                                             }
                                             else
                                             {
-                                                <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
+                                                <span class="cart_details_no_item shopping-cart">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.NumberOfItems 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Checkout<span class="icon-chevron-right"></span></a></span>
                                             }
                                         }
                                         else
                                         {
-                                            <span class="cart_details_no_item shopping-cart">Number of items 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">Checkout<span class="icon-chevron-right"></span></a></span>
+                                            <span class="cart_details_no_item shopping-cart">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.NumberOfItems 0 <a href="~/ShoppingCart/Index" class="checkout div-hide checkoutBtn">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Checkout<span class="icon-chevron-right"></span></a></span>
                                         }
                                     }
                                 </div>
                             </div>
                         </li>
                         <li class="languages drop">
-                            <a href="#"><span class="icon-globe icon-white"></span> Language</a>
+                            <a href="#"><span class="icon-globe icon-white"></span>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Language</a>
                             <div class="pPanel">
                                 <ul class="inner">
                                     @if (Session["Culture"] != null)
                                     {
                                         if (Session["Culture"].ToString() == "en")
                                         {
-                                            <li><a href="~/Culture/Set/AR">Arabic </a></li>
-                                            <li class="active"><a href="~/Culture/Set/EN">English <span class="icon-ok"></span></a></li>
+                                            <li><a href="~/Culture/Set/AR">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Arabic </a></li>
+                                            <li class="active"><a href="~/Culture/Set/EN">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.English <span class="icon-ok"></span></a></li>
                                         }
                                         else
                                         {
-                                            <li class="active"><a href="~/Culture/Set/AR">Arabic <span class="icon-ok"></span></a></li>
-                                            <li><a href="~/Culture/Set/EN">English </a></li>
+                                            <li class="active"><a href="~/Culture/Set/AR">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Arabic <span class="icon-ok"></span></a></li>
+                                            <li><a href="~/Culture/Set/EN">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.English </a></li>
                                         }
                                     }
                                     else
                                     {
-                                        <li><a href="~/Culture/Set/AR">Arabic </a></li>
-                                        <li class="active"><a href="~/Culture/Set/EN">English <span class="icon-ok"></span></a></li>
+                                        <li><a href="~/Culture/Set/AR">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Arabic </a></li>
+                                        <li class="active"><a href="~/Culture/Set/EN">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.English <span class="icon-ok"></span></a></li>
                                     }
                                 </ul>
                             </div>
@@ -166,13 +166,18 @@
                     <ul class="topnav navLeft">
                         @if (User.Identity.IsAuthenticated)
                         {
+                            {
+                                string cplink = "http://localhost:43063/Dashboard/Index?from=Client&C_Id=" + Session["UserID"];
+                                //string cplink = "http://localhost/EPMSWebsiteCP?C_Id=" + Session["UserID"];
+                                <li><a href="@cplink">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.System</a></li>
+                            }
                             <li class="drop">
-                                <a href="#">User</a>
+                                <a href="#">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.User</a>
                                 <div class="pPanel">
                                     <div class="inner">
                                         <span class="cart_details">
-                                            Logged in as : @User.Identity.Name
-                                            <a href="~/Account/LogOff" class="checkout">Logout<span class="icon-chevron-right"></span></a>
+                                            @EPMS.WebModels.Resources.WebsiteClient.Home.Home.LoggedInAs : @User.Identity.Name
+                                            <a href="~/Account/LogOff" class="checkout">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Logout<span class="icon-chevron-right"></span></a>
                                         </span>
                                     </div>
                                 </div>
@@ -180,7 +185,7 @@
                         }
                         else
                         {
-                            <li><a id="loginPopUp" href="#login_panel" data-rel="prettyPhoto[login_panel]">Login</a></li>
+                            <li><a id="loginPopUp" href="#login_panel" data-rel="prettyPhoto[login_panel]">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Login</a></li>
                         }
                     </ul><!-- end topnav // left aligned -->
                 </div>
@@ -223,7 +228,7 @@
     </div>
 
 
-    <a href="#" id="totop">TOP</a>
+    <a href="#" id="totop">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.TOP</a>
     @if (ViewBag.MessageVM != null)
     {
         <input type="hidden" id="Message" value="@ViewBag.MessageVM.Message" />

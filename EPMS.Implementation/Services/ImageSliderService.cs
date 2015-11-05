@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -34,9 +35,9 @@ namespace EPMS.Implementation.Services
         {
             HomePageResponse response = new HomePageResponse
             {
-                ImageSlider = repository.GetAll(),
-                Partners = partnerRepository.GetAll(),
-                WebsiteDepartments = departmentRepository.GetAll()
+                ImageSlider = repository.GetAll().OrderBy(x=>x.ImageOrder),
+                Partners = partnerRepository.GetAll().OrderBy(x=>x.ImageOrder),
+                WebsiteDepartments = departmentRepository.GetAll().OrderBy(x=>x.DepartmentOrder)
             };
             return response;
         }

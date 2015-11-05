@@ -385,6 +385,15 @@ namespace EPMS.WebModels.Resources.CP {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Record has been updated successfully..
+        /// </summary>
+        public static string RecordUpdated {
+            get {
+                return ResourceManager.GetString("RecordUpdated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Saudilization Certificate.
         /// </summary>
         public static string SaudilizationCertificate {

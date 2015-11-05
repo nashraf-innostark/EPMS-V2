@@ -186,6 +186,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                         Message = Project.ProjectUpdatedMsg,
                         IsUpdated = true
                     };
+                    return RedirectToAction("Index");
                 }
                 else//New
                 {
@@ -205,6 +206,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                         Message = Project.ProjectCreatedMsg,
                         IsSaved = true
                     };
+                    return RedirectToAction("Index");
                 }
             }
             catch (Exception e)
@@ -228,9 +230,9 @@ namespace EPMS.Web.Areas.PMS.Controllers
             TempData["MessageVm"] = new MessageViewModel
             {
                 Message = Project.ProjectAddEditError,
-                IsSaved = true
+                IsError = true
             };
-            ViewBag.MessageVM = TempData["message"] as MessageViewModel;
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             return View(projectViewModel);
         }
 

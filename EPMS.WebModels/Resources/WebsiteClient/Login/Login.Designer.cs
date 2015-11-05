@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.WebModels.Resources.UserManagement {
+namespace EPMS.WebModels.Resources.WebsiteClient.Login {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EPMS.WebModels.Resources.UserManagement {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class CreateUser {
+    public class Login {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal CreateUser() {
+        internal Login() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.WebModels.Resources.UserManagement {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.UserManagement.CreateUser", typeof(CreateUser).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.WebsiteClient.Login.Login", typeof(Login).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,128 +61,119 @@ namespace EPMS.WebModels.Resources.UserManagement {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save.
+        ///   Looks up a localized string similar to ALREADY HAVE AN ACCOUNT?.
         /// </summary>
-        public static string BtnSave {
+        public static string AleadyHaveAccount {
             get {
-                return ResourceManager.GetString("BtnSave", resourceCulture);
+                return ResourceManager.GetString("AleadyHaveAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update.
+        ///   Looks up a localized string similar to ALREADY RESET?.
         /// </summary>
-        public static string BtnUpdate {
+        public static string AlreadyReset {
             get {
-                return ResourceManager.GetString("BtnUpdate", resourceCulture);
+                return ResourceManager.GetString("AlreadyReset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Confirm Password.
+        ///   Looks up a localized string similar to CREATE ACCOUNT.
         /// </summary>
-        public static string ConfirmPassword {
+        public static string CreateAccount {
             get {
-                return ResourceManager.GetString("ConfirmPassword", resourceCulture);
+                return ResourceManager.GetString("CreateAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Email.
+        ///   Looks up a localized string similar to CREATE MY ACCOUNT.
         /// </summary>
-        public static string Email {
+        public static string CreateMyAccount {
             get {
-                return ResourceManager.GetString("Email", resourceCulture);
+                return ResourceManager.GetString("CreateMyAccount", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee.
+        ///   Looks up a localized string similar to FORGOT YOUR DETAILS?.
         /// </summary>
-        public static string Employee {
+        public static string ForgotDetails {
             get {
-                return ResourceManager.GetString("Employee", resourceCulture);
+                return ResourceManager.GetString("ForgotDetails", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enter Username.
+        ///   Looks up a localized string similar to FORGOT YOUR PASSWORD?.
         /// </summary>
-        public static string EnterUsername {
+        public static string ForgotYourPassword {
             get {
-                return ResourceManager.GetString("EnterUsername", resourceCulture);
+                return ResourceManager.GetString("ForgotYourPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Register User.
+        ///   Looks up a localized string similar to LOG IN.
         /// </summary>
-        public static string PageTitle {
+        public static string LogIn {
             get {
-                return ResourceManager.GetString("PageTitle", resourceCulture);
+                return ResourceManager.GetString("LogIn", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Password.
+        ///   Looks up a localized string similar to SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES.
         /// </summary>
-        public static string Password {
+        public static string LoginTitle {
             get {
-                return ResourceManager.GetString("Password", resourceCulture);
+                return ResourceManager.GetString("LoginTitle", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Role.
+        ///   Looks up a localized string similar to AAH, WAIT, I REMEMBER NOW!.
         /// </summary>
-        public static string Role {
+        public static string RememberNow {
             get {
-                return ResourceManager.GetString("Role", resourceCulture);
+                return ResourceManager.GetString("RememberNow", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Employee.
+        ///   Looks up a localized string similar to RESET.
         /// </summary>
-        public static string SelectEmployee {
+        public static string Reset {
             get {
-                return ResourceManager.GetString("SelectEmployee", resourceCulture);
+                return ResourceManager.GetString("Reset", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Select Role.
+        ///   Looks up a localized string similar to Reset Password.
         /// </summary>
-        public static string SelectRole {
+        public static string ResetPassword {
             get {
-                return ResourceManager.GetString("SelectRole", resourceCulture);
+                return ResourceManager.GetString("ResetPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update User.
+        ///   Looks up a localized string similar to RESET YOUR PASSWORD?.
         /// </summary>
-        public static string UpdateUser {
+        public static string ResetYourPassword {
             get {
-                return ResourceManager.GetString("UpdateUser", resourceCulture);
+                return ResourceManager.GetString("ResetYourPassword", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Username.
+        ///   Looks up a localized string similar to SEND MY DETAILS!.
         /// </summary>
-        public static string Username {
+        public static string SendDetails {
             get {
-                return ResourceManager.GetString("Username", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Users.
-        /// </summary>
-        public static string Users {
-            get {
-                return ResourceManager.GetString("Users", resourceCulture);
+                return ResourceManager.GetString("SendDetails", resourceCulture);
             }
         }
     }
