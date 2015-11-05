@@ -403,7 +403,7 @@ namespace EPMS.WebModels.Resources.PMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Error in adding/updating project..
+        ///   Looks up a localized string similar to Error in saving project.
         /// </summary>
         public static string ProjectAddEditError {
             get {

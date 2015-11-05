@@ -65,7 +65,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 NotesForCustomerE = notesForCusE,
                 NotesForCustomerA = notesForCusA,
                 RecCreatedBy = source.RecCreatedBy,
-                //RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationId = source.QuotationId
