@@ -405,6 +405,7 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
+    var projAllTasksList;
     $(document).ready(function () {
         // this is tak weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
         var taskWeight = parseFloat('@Model.ProjectTask.TotalWeight');
@@ -682,7 +683,7 @@
                     $('html,body').animate({
                         scrollTop: $(".projectDDL").offset().top
                     },
-        'fast');
+                        'fast');
                     event.preventDefault();
                     return false;
                 }
@@ -877,6 +878,7 @@
         return true;
     }
     function populateTaskDDL(data) {
+        projAllTasksList = data;
         var projectPrevTaskWeight = 0;
         $("#dualMulti").empty();
         if (data.length > 0) {
@@ -984,15 +986,33 @@
         return true;
     }
     function verifyTaskWeight(elem) {
-        var prevVal = parseInt($("#prevTasksWeight").val());
         var currVal = parseInt($(elem).val());
+        var parentTaskId = parseInt($("#ParentTaskId").val());
         if (currVal > 0) {
-            if (parseInt($('#ProjectId').val()) != 0 && (parseInt($('#ParentTaskId').val()) == 0 || $('#ParentTaskId').val() == 0)) {
-                if ((prevVal + currVal) > 100 || isNaN(currVal)) {
-                    notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
+            if (parentTaskId != 0 && parentTaskId != null && parentTaskId != undefined) {
+                var subTasksWeightSum = 0;
+                var parentTaskWeight = 0;
+                for (var i = 0; i < projAllTasksList.length; i++) {
+                    if (projAllTasksList[i].TaskId == parentTaskId) {
+                        parentTaskWeight = projAllTasksList[i].TotalWeight;
+                        var subTask = projAllTasksList[i].SubTasks;
+                        for (var j = 0; j < subTask.length; j++) {
+                            subTasksWeightSum += subTask[i].TotalWeight;
+                        }
+                    }
+                }
+                if ((currVal + subTasksWeightSum) > parentTaskWeight) {
+                    notify('This task weight and sum of weight of sub tasks of this Parent Task should not exceed 100 and must be number.');
                     return false;
                 }
-                @*var projectTasksWeightSum;
+            } else {
+                var prevTasksVal = parseInt($("#prevTasksWeight").val());
+                if (parseInt($('#ProjectId').val()) != 0 && (parseInt($('#ParentTaskId').val()) == 0 || $('#ParentTaskId').val() == 0)) {
+                    if ((prevTasksVal + currVal) > 100 || isNaN(currVal)) {
+                        notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
+                        return false;
+                    }
+                    @*var projectTasksWeightSum;
                 var projectsList = '@Html.Raw(Json.Encode(Model.ProjectsForDdls))';
                 var parsed = JSON.parse(projectsList);
                 $.each(parsed, function (key, value) {
@@ -1000,31 +1020,35 @@
                         projectTasksWeightSum = value.ProjectTasksSum;
                     }
                 });*@
-                if ((currVal + parseFloat('@Model.ProjectTask.PrevTasksWeightSum')) > 100) {
-                    notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
-                    return false;
-                }
-            }
-            if ($('#ParentTaskId').val() != "" && parseInt($('#ParentTaskId').val()) != 0) {
-                var parentWeight = 0;
-                var parentSubTasksWeight = 0;
-                var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
-                var parsed = JSON.parse(parentTasksList);
-                $.each(parsed, function (key, value) {
-                    if (value.TaskId == $('#ParentTaskId').val()) {
-                        parentWeight = parseInt(value.TotalWeight);
-                        $.each(value.SubTasksWeight, function (key1, value1) {
-                            if (value1.TaskId != parseInt($('#TaskId').val())) {
-                                parentSubTasksWeight += value1.TaskWeight;
-                            }
-                        });
+                    if ((currVal + parseFloat('@Model.ProjectTask.PrevTasksWeightSum')) > 100) {
+                        notify('This task weight and sum of weight of tasks of this Project should not exceed 100 and must be number.');
+                        return false;
                     }
-                });
-                if ((parentSubTasksWeight + currVal) > parentWeight || isNaN(currVal)) {
-                    notify('Sum of Child Tasks weight should not exceed Parent task weight and must be number.');
-                    return false;
+                }
+                if ($('#ParentTaskId').val() != "" && parseInt($('#ParentTaskId').val()) != 0) {
+                    var parentWeight = 0;
+                    var parentSubTasksWeight = 0;
+                    var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
+                    var parsed = JSON.parse(parentTasksList);
+                    $.each(parsed, function (key, value) {
+                        if (value.TaskId == $('#ParentTaskId').val()) {
+                            parentWeight = parseInt(value.TotalWeight);
+                            $.each(value.SubTasksWeight, function (key1, value1) {
+                                if (value1.TaskId != parseInt($('#TaskId').val())) {
+                                    parentSubTasksWeight += value1.TaskWeight;
+                                }
+                            });
+                        }
+                    });
+                    if ((parentSubTasksWeight + currVal) > parentWeight || isNaN(currVal)) {
+                        notify('Sum of Child Tasks weight should not exceed Parent task weight and must be number.');
+                        return false;
+                    }
                 }
             }
+
+
+
         }
         function notify(error) {
             $.pnotify({
