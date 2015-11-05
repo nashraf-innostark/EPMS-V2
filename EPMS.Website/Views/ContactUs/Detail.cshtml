@@ -40,18 +40,21 @@
                                         <label class="control-label" for="rp_name">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Name</label>
                                         <div class="controls">
                                             @Html.TextBoxFor(m => m.Name, new { @dir = "ltr", id = "formName", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Name })
+                                            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "required" })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
                                         <label class="control-label" for="rp_email">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email</label>
                                         <div class="controls">
                                             @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "FormEmail", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = @EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email })
+                                            @Html.ValidationMessageFor(m => m.Email, "", new { @class = "required" })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">
                                         <label class="control-label" for="rp_subject">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address</label>
                                         <div class="controls">
                                             @Html.TextBoxFor(m => m.Address, new { @dir = "ltr", id = "FormAddress", @class = "tbdisable toBeRequired inputbox input-xlarge", @placeholder = @EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Address })
+                                            @Html.ValidationMessageFor(m => m.Address, "", new { @class = "required" })
                                         </div>
                                     </div><!-- end control group -->
                                     <div class="control-group">

@@ -25,7 +25,7 @@ namespace EPMS.Repository.Repositories
 
         public AboutUs GetAboutUs()
         {
-            return DbSet.FirstOrDefault(x => x.ShowToPublic);
+            return DbSet.FirstOrDefault();
         }
 
         public AboutUs SearchAboutUs(string search)

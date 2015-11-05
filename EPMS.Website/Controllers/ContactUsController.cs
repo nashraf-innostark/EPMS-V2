@@ -48,7 +48,7 @@ namespace EPMS.Website.Controllers
             {
                 Utility.SendEmailAsync(email, subject, body);
             }
-            return View(contactUsViewModel);
+            return RedirectToAction("Detail");
         }
 
         #endregion
