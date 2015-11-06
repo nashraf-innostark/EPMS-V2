@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ViewModels.Reports
@@ -7,9 +9,10 @@ namespace EPMS.WebModels.ViewModels.Reports
     {
         public ProjectsReportsListViewModel()
         {
-            Reports=new List<Report>();
+            aaData = new List<Report>();
         }
-        public List<Report> Reports { get; set; }
+        public ProjectReportSearchRequest ProjectReportSearchRequest { get; set; }
+        public List<Report> aaData { get; set; }
         /// <summary>
         /// Total Records in DB
         /// </summary>

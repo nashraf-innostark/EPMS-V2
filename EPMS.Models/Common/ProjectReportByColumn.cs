@@ -2,6 +2,7 @@
 {
     public enum ProjectReportByColumn
     {
+        Serial=0,
         ReportId = 1,
         ReportCreatedBy = 2,
         ReportDateRange = 3,

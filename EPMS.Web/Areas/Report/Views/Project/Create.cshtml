@@ -1,5 +1,7 @@
-﻿@{
+﻿@model EPMS.WebModels.ViewModels.Reports.ProjectsReportsCreateViewModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -25,7 +27,8 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 
-<form class="form-horizontal" id="validation_form">
+@using (Html.BeginForm("Details", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
     <div class="container-fluid">
 
         <div class="control-group row-fluid">
@@ -34,33 +37,17 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    <select>
-                        <option>All</option>
-                        <option>Website</option>
-                        <option>Designing</option>
-                    </select>
+                    @Html.DropDownListFor(model => model.ProjectId, @direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), "--Select--", new { @class = "select2me"})
                 </div>
             </div>
 
         </div>
-
-        <!--Input Field end-->
-
-
-
-
-
-
-
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Generate Report</button>
+                <button type="submit" class="btn">Generate Report</button>
             </div>
 
         </div>
-    </div><!-- end container -->
-
-
-
-
-</form>
+    </div>
+    <!-- end container -->
+}

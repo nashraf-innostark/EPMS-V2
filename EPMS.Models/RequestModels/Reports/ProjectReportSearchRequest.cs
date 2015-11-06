@@ -1,10 +1,9 @@
 ﻿using EPMS.Models.Common;
 
-namespace EPMS.Models.RequestModels
+namespace EPMS.Models.RequestModels.Reports
 {
     public class ProjectReportSearchRequest : GetPagedListRequest
     {
-        public string searchString { get; set; }
         public ProjectReportByColumn RequestByColumn
         {
             get

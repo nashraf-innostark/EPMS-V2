@@ -16,8 +16,9 @@
             if (source.ProjectId != null)
             {
                 report.ReportCategoryItemId = (long)source.ProjectId;
-                report.ReportCategoryItemTitleE = source.Project.NameE;
-                report.ReportCategoryItemTitleA = source.Project.NameA;
+                report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? source.Project.NameE
+                    : source.Project.NameA;
             }
 
             return report;

@@ -455,6 +455,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Reports\Reports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reports.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
       <DependentUpon>RFI.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -777,6 +782,8 @@
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ProjectReportDetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\ProjectsReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\ProjectsReportsListViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
@@ -818,6 +825,7 @@
     <Compile Include="WebsiteModels\Color.cs" />
     <Compile Include="WebsiteModels\Common\JsTree.cs" />
     <Compile Include="WebsiteModels\Common\JsTreeJson.cs" />
+    <Compile Include="WebsiteModels\Common\ProjectStatus.cs" />
     <Compile Include="WebsiteModels\Common\RFQStatus.cs" />
     <Compile Include="WebsiteModels\CompanyBankDetail.cs" />
     <Compile Include="WebsiteModels\CompanyDocumentDetail.cs" />
@@ -1199,6 +1207,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Reports.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

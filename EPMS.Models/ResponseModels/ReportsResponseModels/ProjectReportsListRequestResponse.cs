@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 
-namespace EPMS.Models.ResponseModels
+namespace EPMS.Models.ResponseModels.ReportsResponseModels
 {
-    public class ProjectReportRequestResponse
+    public class ProjectReportsListRequestResponse
     {
-        public ProjectReportRequestResponse()
+        public ProjectReportsListRequestResponse()
         {
             Projects = new List<Report>();
         }

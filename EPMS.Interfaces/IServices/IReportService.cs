@@ -1,6 +1,7 @@
 ﻿using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
-using EPMS.Models.ResponseModels;
+using EPMS.Models.RequestModels.Reports;
+using EPMS.Models.ResponseModels.ReportsResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -10,6 +11,7 @@ namespace EPMS.Interfaces.IServices
         /// Add Report
         /// </summary>
         bool AddReport(Report report);
-        ProjectReportRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
+        ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
+        ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
     }
 }

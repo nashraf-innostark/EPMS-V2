@@ -1542,7 +1542,7 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
-    <Content Include="Areas\Report\Views\Project\Generate.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>

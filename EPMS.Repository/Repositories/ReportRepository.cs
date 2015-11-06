@@ -7,7 +7,9 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.ReportsResponseModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
@@ -35,6 +37,7 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<ProjectReportByColumn, Func<Report, object>>
                     {
+                        { ProjectReportByColumn.Serial,  c => c.ReportId},
                         { ProjectReportByColumn.ReportId,  c => c.ReportId},
                         { ProjectReportByColumn.ReportCreatedBy, c => c.Employee.EmployeeFirstNameE},
                         { ProjectReportByColumn.ReportType, c => c.Project.NameE},
@@ -42,7 +45,7 @@ namespace EPMS.Repository.Repositories
                         { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
         #endregion
-        public ProjectReportRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
+        public ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
@@ -70,7 +73,7 @@ namespace EPMS.Repository.Repositories
                 DbSet.Include(x => x.Employee).Include(x => x.Project)
                 .Where(query).OrderByDescending(projectReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
             
-            return  new ProjectReportRequestResponse
+            return  new ProjectReportsListRequestResponse
             {
                 Projects = queryData.ToList(), 
                 FilteredCount = DbSet.Count(query), 

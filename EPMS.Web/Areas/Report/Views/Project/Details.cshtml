@@ -1,5 +1,8 @@
-﻿@{
+﻿@using EPMS.WebModels.WebsiteModels.Common
+@model EPMS.WebModels.ViewModels.Reports.ProjectReportDetailVeiwModel
+@{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int taskSerial = 1;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -38,20 +41,17 @@
             <!--Simple Chart end-->
         </div>
         <script>
-    $(".auto-resize").keyup(function () {
-        autoGrowField($(this).get(0));
-    });
-        </script>
+            $(".auto-resize").keyup(function () {
+                autoGrowField($(this).get(0));
+            });
 
-
-        <script type="text/javascript">
             $(window).load(function () {
 
 
 
                 var markings = [
 
-        { color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
+                    { color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
                 ];
                 var datasets = {
                     "Price": {
@@ -186,7 +186,6 @@
                             pan: {
                                 interactive: true
                             }
-
                         });
                     }
                 }
@@ -225,36 +224,31 @@
                 $("#chart_01").bind("plotpan", function (event, plot) {
                     var axes = plot.getAxes();
                     $(".message").html("Panning to x: " + axes.xaxis.min.toFixed(2)
-                    + " &ndash; " + axes.xaxis.max.toFixed(2)
-                    + " and y: " + axes.yaxis.min.toFixed(2)
-                    + " &ndash; " + axes.yaxis.max.toFixed(2));
+                        + " &ndash; " + axes.xaxis.max.toFixed(2)
+                        + " and y: " + axes.yaxis.min.toFixed(2)
+                        + " &ndash; " + axes.yaxis.max.toFixed(2));
                 });
 
                 $("#chart_01").bind("plotzoom", function (event, plot) {
                     var axes = plot.getAxes();
                     $(".message").html("Zooming to x: " + axes.xaxis.min.toFixed(2)
-                    + " &ndash; " + axes.xaxis.max.toFixed(2)
-                    + " and y: " + axes.yaxis.min.toFixed(2)
-                    + " &ndash; " + axes.yaxis.max.toFixed(2));
+                        + " &ndash; " + axes.xaxis.max.toFixed(2)
+                        + " and y: " + axes.yaxis.min.toFixed(2)
+                        + " &ndash; " + axes.yaxis.max.toFixed(2));
                 });
 
                 // drawGraphs();
             });
-        </script>
-        <script>
-                       $(document).ready(function() {
-                           $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
-                               "sPaginationType": "bootstrap",
-                               "fnInitComplete": function(){
-                                   $(".dataTables_wrapper select").select2({
-                                       dropdownCssClass: 'noSearch'
-                                   });
-                               }
-                           });
-                           //                            $("#simpleSelectBox").select2({
-                           //                                dropdownCssClass: 'noSearch'
-                           //                            });
-                       });
+            $(document).ready(function() {
+                $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function(){
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+            });
         </script>
 
 
@@ -274,40 +268,37 @@
                                 <th>Delivery Date</th>
                                 <th>Total Number of Tasks</th>
                                 <th>Status</th>
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
+                            
+                            @foreach (var project in Model.Projects)
+                            {
+                                <tr class="gradeX">
 
-                                <td>1</td>
-                                <td>  Website development and designing</td>
-                                <td>
-                                    20
+                                    <td>1</td>
+                                    <td>@project.NameE</td>
+                                    <td>
+                                        @project.Price
+                                    </td>
+                                    <td>
+                                        @project.OtherCost
+                                    </td>
+                                    <td>
+                                       @project.StartDate
+                                    </td>
+                                    <td>
+                                        @project.EndDate
+                                    </td>
+                                    <td>
+                                       @project.TotalTasks
+                                    </td>
+                                    <td>
+                                        @((ProjectStatus)project.Status)
+                                    </td>
 
-                                </td>
-                                <td>
-                                    10
-
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    finished
-                                </td>
-
-                            </tr>
-
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -327,33 +318,30 @@
                                 <th>Start Date</th>
                                 <th>Delivery Date</th>
                                 <th>Status</th>
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
+                            @foreach (var task in Model.ProjectTasks)
+                            {
+                                <tr class="gradeX">
 
-                                <td>1</td>
-                                <td> Requirement Gathering </td>
+                                    <td>@(taskSerial++)</td>
+                                    <td>@task.TaskNameE</td>
+                                    <td>
+                                        @task.TotalCost
+                                    </td>
+                                    <td>
+                                        @task.StartDate
+                                    </td>
+                                    <td>
+                                        @task.EndDate
+                                    </td>
+                                    <td>
+                                        @(task.TaskProgressText)
+                                    </td>
 
-                                <td>
-                                    1000
-
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    finished
-                                </td>
-
-                            </tr>
+                                </tr>
+                            }
 
 
                         </tbody>
