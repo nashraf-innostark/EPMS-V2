@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
@@ -59,7 +60,14 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.Status == 4 && x.RecCreatedBy.Equals(id));//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
-
+        public IEnumerable<Project> GetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
+        {
+            long customerid = 0;
+            if (request.RequesterRole != "Admin")
+                Int64.TryParse(request.RequesterId, out customerid);
+            var response = request.RequesterRole == "Admin" ? DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)) : DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid));
+            return response;
+        }
         public Project GetProjectForDashboard(string requester, long projectId)
         {
             if (requester == "Admin")

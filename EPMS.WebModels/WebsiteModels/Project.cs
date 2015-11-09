@@ -37,5 +37,8 @@ namespace EPMS.WebModels.WebsiteModels
         public decimal OtherCost { get; set; }
         public decimal Profit { get; set; }
         public double ProgressTotal { get; set; }
+        
+        //for report
+        public int TotalTasks { get; set; }
     }
 }

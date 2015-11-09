@@ -1415,6 +1415,8 @@
     <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
     <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
+    <Content Include="Scripts\html2canvas.js" />
+    <Content Include="Scripts\jsPDF.js" />
     <Content Include="Scripts\jstree.js" />
     <Content Include="Scripts\jstree.min.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\bootstrap.min.js" />
@@ -1542,7 +1544,7 @@
     <Content Include="Areas\Website\Views\WebsiteServices\Index.cshtml" />
     <Content Include="Areas\Website\Views\Test\JsTree.cshtml" />
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
-    <Content Include="Areas\Report\Views\Project\Generate.cshtml" />
+    <Content Include="Areas\Report\Views\Project\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>

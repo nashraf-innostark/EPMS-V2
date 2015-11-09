@@ -55,6 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IServices\IReportService.cs" />
     <Compile Include="IServices\IAboutUsService.cs" />
     <Compile Include="IServices\IAllowanceService.cs" />
     <Compile Include="IServices\IAspNetUserService.cs" />
@@ -131,6 +132,7 @@
     <Compile Include="IServices\IWebsiteServicesService.cs" />
     <Compile Include="IServices\IWebsiteUserPreferenceService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\IReportRepository.cs" />
     <Compile Include="Repository\IAboutUsRepository.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />
     <Compile Include="Repository\IApplicantExperienceRepository.cs" />

@@ -1,4 +1,4 @@
-﻿namespace EPMS.Models.DomainModels
+﻿namespace EPMS.WebModels.WebsiteModels
 {
     public class Report
     {
@@ -11,8 +11,11 @@
         public long? ProjectId { get; set; }
         public long? TaskId { get; set; }
 
-        public virtual AspNetUser AspNetUser { get; set; }
-        public virtual Project Project { get; set; }
-        public virtual ProjectTask ProjectTask { get; set; }
+
+        public string ReportCreatedDateString { get; set; }
+        public string ReportFromDateString { get; set; }
+        public string ReportToDateString { get; set; }
+        public string ReportCategoryItemTitle { get; set; }
+        public long ReportCreatedByName { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using System.Threading;
 
 namespace EPMS.WebModels.ModelMappers.PMS
@@ -159,6 +160,33 @@ namespace EPMS.WebModels.ModelMappers.PMS
             foreach (var projectTask in source.ProjectTasks)
             {
                 project.ProjectTasksSum += projectTask.TotalWeight !=0 ? Convert.ToInt32(projectTask.TotalWeight) : 0;
+            }
+            return project;
+        }
+        public static WebsiteModels.Project CreateForReportDetails(this Models.DomainModels.Project source)
+        {
+            WebsiteModels.Project project = new WebsiteModels.Project
+            {
+                ProjectId = source.ProjectId,
+                NameE = Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? source.NameE
+                    : source.NameA,
+                StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                Price = Convert.ToInt64(source.Price),
+                OtherCost = Convert.ToInt64(source.OtherCost + source.ProjectTasks.Sum(x => x.TotalCost)),
+                Status = source.Status,
+                TotalTasks = source.ProjectTasks.Count
+            };
+
+            foreach (var projectTask in source.ProjectTasks)
+            {
+                decimal progress = 0;
+                if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)
+                {
+                    progress = (decimal)projectTask.TaskProgress;
+                }
+                project.ProgressTotal += Convert.ToDouble(progress);
             }
             return project;
         }

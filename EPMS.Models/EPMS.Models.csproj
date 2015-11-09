@@ -103,6 +103,7 @@
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\ReportCategory.cs" />
+    <Compile Include="Common\ProjectReportByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -215,6 +216,8 @@
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
+    <Compile Include="RequestModels\Reports\ProjectReportCreateOrDetailsRequest.cs" />
+    <Compile Include="RequestModels\Reports\ProjectReportSearchRequest.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
     <Compile Include="RequestModels\NewsAndArticleSearchRequest.cs" />
     <Compile Include="RequestModels\PhysicalCountSearchRequest.cs" />
@@ -354,6 +357,8 @@
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportDetailsResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />

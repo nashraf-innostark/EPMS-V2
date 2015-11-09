@@ -33,5 +33,6 @@ namespace EPMS.Models.DomainModels
         public virtual Quotation Quotation { get; set; }
         public virtual ICollection<ProjectTask> ProjectTasks { get; set; }
         public virtual ICollection<ProjectDocument> ProjectDocuments { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }
