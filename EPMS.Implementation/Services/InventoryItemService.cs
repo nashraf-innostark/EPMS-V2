@@ -5,6 +5,7 @@ using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using Microsoft.AspNet.Identity;
@@ -105,8 +106,13 @@ namespace EPMS.Implementation.Services
         {
             inventoryItem.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             inventoryItem.RecLastUpdatedDt = DateTime.Now;
-            inventoryItemRepository.Update(inventoryItem);
-            inventoryItemRepository.SaveChanges();
+            var dbData = inventoryItemRepository.Find(inventoryItem.ItemId);
+            if (dbData != null)
+            {
+                var itemToUpdate = dbData.UpdateDbDataFromClient(inventoryItem);
+                inventoryItemRepository.Update(itemToUpdate);
+                inventoryItemRepository.SaveChanges();
+            }
         }
 
         private bool CheckAssociation(InventoryItem item)

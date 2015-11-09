@@ -120,9 +120,6 @@
   <data name="BCTitle" xml:space="preserve">
     <value>قائمة نماذج طلب اخراج منتج</value>
   </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
   <data name="ContainerTitle" xml:space="preserve">
     <value>نموذج طلب اخراج منتج</value>
   </data>
@@ -135,26 +132,14 @@
   <data name="EmployeeId" xml:space="preserve">
     <value>رقم الوطيفي</value>
   </data>
-  <data name="EmployeeName" xml:space="preserve">
-    <value>اسم الموظف</value>
-  </data>
   <data name="Header" xml:space="preserve">
     <value>معاينة نموذج طلب اخراج منتج</value>
-  </data>
-  <data name="HistoryHeader" xml:space="preserve">
-    <value>نموذج طلب اخراج منتج</value>
-  </data>
-  <data name="HistoryTableHeader" xml:space="preserve">
-    <value>سجل نموذج طلب اخراج منتج</value>
   </data>
   <data name="InventoryManagerName" xml:space="preserve">
     <value>اسم مدير المستودع</value>
   </data>
   <data name="IRF" xml:space="preserve">
     <value>IRF : </value>
-  </data>
-  <data name="IRFFormNo" xml:space="preserve">
-    <value>رقم نموذج طلب اخراج منتج</value>
   </data>
   <data name="IRFNo" xml:space="preserve">
     <value>IRF# : </value>
@@ -177,17 +162,8 @@
   <data name="PageTitle" xml:space="preserve">
     <value>معاينة نموذج طلب اخراج منتج</value>
   </data>
-  <data name="Print" xml:space="preserve">
-    <value>طباعة</value>
-  </data>
   <data name="QuantityRelease" xml:space="preserve">
     <value>الكمية المخرجة</value>
-  </data>
-  <data name="RecordUpdated" xml:space="preserve">
-    <value>تم تحديث نموذج طلب اخراج منتج بنجاح .</value>
-  </data>
-  <data name="Requester" xml:space="preserve">
-    <value>طالب</value>
   </data>
   <data name="RequesterName" xml:space="preserve">
     <value>اسم الطالب</value>
@@ -204,6 +180,39 @@
   <data name="SKUCode" xml:space="preserve">
     <value>SKU Code</value>
   </data>
+  <data name="Submit" xml:space="preserve">
+    <value>ارسال</value>
+  </data>
+  <data name="Usage" xml:space="preserve">
+    <value>الاستخدام</value>
+  </data>
+  <data name="Warhouse" xml:space="preserve">
+    <value>مستودع</value>
+  </data>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>اسم الموظف</value>
+  </data>
+  <data name="ClientName" xml:space="preserve">
+    <value>اسم العميل</value>
+  </data>
+  <data name="RecordUpdated" xml:space="preserve">
+    <value>تم تحديث نموذج طلب اخراج منتج بنجاح .</value>
+  </data>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
+  </data>
+  <data name="HistoryHeader" xml:space="preserve">
+    <value>نموذج طلب اخراج منتج</value>
+  </data>
+  <data name="HistoryTableHeader" xml:space="preserve">
+    <value>سجل نموذج طلب اخراج منتج</value>
+  </data>
+  <data name="IRFFormNo" xml:space="preserve">
+    <value>رقم نموذج طلب اخراج منتج</value>
+  </data>
+  <data name="Requester" xml:space="preserve">
+    <value>طالب</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>حالة</value>
   </data>
@@ -216,16 +225,7 @@
   <data name="StatusRejected" xml:space="preserve">
     <value>مرفوض</value>
   </data>
-  <data name="Submit" xml:space="preserve">
-    <value>ارسال</value>
-  </data>
   <data name="TableHeaderDate" xml:space="preserve">
     <value>التاريخ</value>
-  </data>
-  <data name="Usage" xml:space="preserve">
-    <value>الاستخدام</value>
-  </data>
-  <data name="Warhouse" xml:space="preserve">
-    <value>مستودع</value>
   </data>
 </root>

@@ -117,112 +117,70 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>اضف</value>
+  <data name="PageTitleIndex" xml:space="preserve">
+    <value>قائمة الجرد</value>
   </data>
-  <data name="CreatedBy" xml:space="preserve">
-    <value>المنشئ</value>
+  <data name="PC" xml:space="preserve">
+    <value>الجرد</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="CreatePageHeading" xml:space="preserve">
+    <value>معاينة الجرد</value>
+  </data>
+  <data name="CreatePageListBreadcrumbs" xml:space="preserve">
+    <value>قائمة الجرد</value>
+  </data>
+  <data name="CreatePageTitle" xml:space="preserve">
+    <value>معاينة الجرد</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
   <data name="Delete" xml:space="preserve">
     <value>حذف</value>
   </data>
-  <data name="DeliveryInfo" xml:space="preserve">
-    <value>معلومات التوصيل</value>
+  <data name="EmployeeId" xml:space="preserve">
+    <value>رقم الموظف</value>
   </data>
-  <data name="DeliveryInfoArabic" xml:space="preserve">
-    <value>معلومات التوصيل بالعربي</value>
+  <data name="EmployeeName" xml:space="preserve">
+    <value>اسم الموظف</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
-  </data>
-  <data name="ExcelImport" xml:space="preserve">
-    <value>استيراد من ملف اكسل</value>
-  </data>
-  <data name="Header" xml:space="preserve">
-    <value>رأسية</value>
-  </data>
-  <data name="HeaderEdit" xml:space="preserve">
-    <value>تعديل رأسية</value>
-  </data>
-  <data name="Import" xml:space="preserve">
-    <value>استيراد</value>
-  </data>
-  <data name="ImportFromOrder" xml:space="preserve">
-    <value>استيراد  من طلبية</value>
-  </data>
-  <data name="InventoryIRFEdit" xml:space="preserve">
-    <value>تعديل نموذج طلب منتج</value>
+  <data name="ItemBarcode" xml:space="preserve">
+    <value>Item Barcode</value>
   </data>
   <data name="ItemDetails" xml:space="preserve">
-    <value>تفاصيل المنتج</value>
+    <value>Item Name - SKU Descriptoin</value>
   </data>
-  <data name="ItemReleaseFormNumber" xml:space="preserve">
-    <value>رقم نموذج طلب منتج </value>
+  <data name="ItemsInPackage" xml:space="preserve">
+    <value>كمية في الرزمة</value>
   </data>
-  <data name="Order" xml:space="preserve">
-    <value>طلبية</value>
+  <data name="ItemsInWharewhouse" xml:space="preserve">
+    <value>الكمية المتواجدة في المستودع</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>عنوان الصفحة</value>
+  <data name="Notes" xml:space="preserve">
+    <value>ملاحظات بالانجليزي</value>
   </data>
-  <data name="PageTitleEdit" xml:space="preserve">
-    <value>تعديل عنوان الصفحة</value>
+  <data name="NotesAr" xml:space="preserve">
+    <value>ملاحظات بالعربي</value>
   </data>
-  <data name="Quantity" xml:space="preserve">
-    <value>الكمية</value>
+  <data name="NumberOfPackages" xml:space="preserve">
+    <value>عدد الرزم في المستودع</value>
   </data>
-  <data name="RecordAdded" xml:space="preserve">
-    <value>تم اضافة نموذج طلب منتج بنجاح.</value>
-  </data>
-  <data name="RecordUpdated" xml:space="preserve">
-    <value>تم تعديل نموذج طلب المنتج بنجاح.</value>
-  </data>
-  <data name="Requester" xml:space="preserve">
-    <value>طالب</value>
-  </data>
-  <data name="RFI" xml:space="preserve">
-    <value>RFI #</value>
+  <data name="PCNo" xml:space="preserve">
+    <value>PC#</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>تسلسل</value>
   </data>
-  <data name="Submit" xml:space="preserve">
-    <value>ارسال</value>
+  <data name="TotalItemsCount" xml:space="preserve">
+    <value>عدد الكامل للتعداد</value>
   </data>
-  <data name="Warehouse" xml:space="preserve">
+  <data name="TotalItemsInPackages" xml:space="preserve">
+    <value>عدد الكامل للرزم</value>
+  </data>
+  <data name="Warhouse" xml:space="preserve">
     <value>مستودع</value>
-  </data>
-  <data name="AddItemDescription" xml:space="preserve">
-    <value>Add Item Description</value>
-  </data>
-  <data name="AddItemSKU" xml:space="preserve">
-    <value>Add Item SKU</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Dropdown" xml:space="preserve">
-    <value>Dropdown</value>
-  </data>
-  <data name="ItemSearch" xml:space="preserve">
-    <value>Item Search</value>
-  </data>
-  <data name="ItemTreeSelector" xml:space="preserve">
-    <value>Item Tree Selector</value>
-  </data>
-  <data name="PlaceInDepartments" xml:space="preserve">
-    <value>Place in Departments</value>
-  </data>
-  <data name="Select" xml:space="preserve">
-    <value>Select</value>
-  </data>
-  <data name="SelectItem" xml:space="preserve">
-    <value>Select Item</value>
-  </data>
-  <data name="Tree" xml:space="preserve">
-    <value>Tree</value>
-  </data>
-  <data name="RequestedQuantity" xml:space="preserve">
-    <value>Requested Quantity</value>
   </data>
 </root>

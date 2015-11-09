@@ -117,9 +117,18 @@ namespace EPMS.WebModels.Resources.UserManagement {
         /// <summary>
         ///   Looks up a localized string similar to Register User.
         /// </summary>
-        public static string PageTitle {
+        public static string PageTitleCreate {
             get {
-                return ResourceManager.GetString("PageTitle", resourceCulture);
+                return ResourceManager.GetString("PageTitleCreate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Update User.
+        /// </summary>
+        public static string PageTitleUpdate {
+            get {
+                return ResourceManager.GetString("PageTitleUpdate", resourceCulture);
             }
         }
         

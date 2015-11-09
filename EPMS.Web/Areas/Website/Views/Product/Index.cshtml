@@ -74,7 +74,18 @@
                                 </td>
                                 <td>@item.ProductPrice</td>
                                 <td>@item.DiscountedPrice</td>
-                                <td>@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
+                                <td class="@item.ProductId">@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
+                                @*<script>
+                                    var descp;
+                                    if ('@direction' == 'ltr') {
+                                        descp = '@item.ProductDescEn';
+                                    } else {
+                                        descp = '@item.ProductDescAr';
+                                    }
+                                    regex = /(<([^>]+)>)/ig;
+                                    result = descp.replace(regex, "");
+                                    $(".@item.ProductId").text(result);
+                                </script>*@
                                 <td>@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
                                 <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId, this)">Delete</a></td>
                             </tr>
@@ -150,9 +161,10 @@
                 var url = siteUrl + "/Website/Product/ImportProducts";
                 saveImportedProducts(url);
             }
+            
         });
     });
-
+    
     function deleteRow(productId, elem) {
         if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;

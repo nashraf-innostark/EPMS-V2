@@ -117,82 +117,79 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddNew" xml:space="preserve">
-    <value>انشاء مورد جديد</value>
+  <data name="Add" xml:space="preserve">
+    <value>اضف</value>
   </data>
-  <data name="CancelButton" xml:space="preserve">
-    <value>الغاء</value>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>المنشئ</value>
   </data>
-  <data name="ContactPerson" xml:space="preserve">
-    <value>الشخص المتواصل به</value>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
-  <data name="CreatePageTitle" xml:space="preserve">
-    <value>انشاء مورد</value>
+  <data name="DeliveryInfo" xml:space="preserve">
+    <value>معلومات التوصيل</value>
   </data>
-  <data name="EditButton" xml:space="preserve">
-    <value>تعديل</value>
-  </data>
-  <data name="Email" xml:space="preserve">
-    <value>بريد الكتروني للمورد</value>
+  <data name="DeliveryInfoArabic" xml:space="preserve">
+    <value>معلومات التوصيل بالعربي</value>
   </data>
   <data name="ExcelImport" xml:space="preserve">
-    <value>استيراد ملف اكسل</value>
+    <value>استيراد من ملف اكسل</value>
   </data>
-  <data name="Field" xml:space="preserve">
-    <value>خانة</value>
+  <data name="Header" xml:space="preserve">
+    <value>رأسية</value>
   </data>
-  <data name="FieldOnCreate" xml:space="preserve">
-    <value>خانة المورد</value>
+  <data name="Import" xml:space="preserve">
+    <value>استيراد</value>
   </data>
-  <data name="ItemsProvided" xml:space="preserve">
-    <value>البنود المقدمة</value>
+  <data name="ImportFromOrder" xml:space="preserve">
+    <value>استيراد  من طلبية</value>
   </data>
-  <data name="Label" xml:space="preserve">
-    <value>قائمة الموردين</value>
+  <data name="InventoryIRFEdit" xml:space="preserve">
+    <value>تعديل نموذج طلب منتج</value>
   </data>
-  <data name="Name" xml:space="preserve">
-    <value>اسم المورد</value>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>تفاصيل المنتج</value>
   </data>
-  <data name="NoOfTransactions" xml:space="preserve">
-    <value>مجموع المعاملات</value>
+  <data name="ItemReleaseFormNumber" xml:space="preserve">
+    <value>رقم نموذج طلب منتج </value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات</value>
+  <data name="Order" xml:space="preserve">
+    <value>طلبية</value>
   </data>
-  <data name="NotesAr" xml:space="preserve">
-    <value>ملاحظات بالعربي</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>عنوان الصفحة</value>
   </data>
-  <data name="Number" xml:space="preserve">
-    <value>رقم المورد</value>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
   </data>
-  <data name="SaveButton" xml:space="preserve">
-    <value>حفظ</value>
+  <data name="Requester" xml:space="preserve">
+    <value>طالب</value>
   </data>
-  <data name="SaveVendor" xml:space="preserve">
-    <value>تم حفظ المورد بنجاح</value>
+  <data name="RFI" xml:space="preserve">
+    <value>RFI #</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>تسلسل</value>
   </data>
-  <data name="UpdateVendor" xml:space="preserve">
-    <value>تم تعديل المورد بنجاح</value>
+  <data name="Submit" xml:space="preserve">
+    <value>ارسال</value>
   </data>
-  <data name="UpdatPageTitle" xml:space="preserve">
-    <value>تعديل مورد</value>
+  <data name="Warehouse" xml:space="preserve">
+    <value>مستودع</value>
   </data>
-  <data name="VendorNameAr" xml:space="preserve">
-    <value>اسم المورد بالعربي</value>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
   </data>
-  <data name="VendorNameEn" xml:space="preserve">
-    <value>اسم المورد</value>
+  <data name="RecordUpdated" xml:space="preserve">
+    <value>تم تعديل نموذج طلب المنتج بنجاح.</value>
   </data>
-  <data name="VendorNameValidation" xml:space="preserve">
-    <value>اسم المورد الزامي</value>
+  <data name="RecordAdded" xml:space="preserve">
+    <value>تم اضافة نموذج طلب منتج بنجاح.</value>
   </data>
-  <data name="VendorStringLengthValidation" xml:space="preserve">
-    <value>اسم لا يمكن أن يتجاوز 400 حرفا.</value>
+  <data name="HeaderEdit" xml:space="preserve">
+    <value>تعديل رأسية</value>
   </data>
-  <data name="DeleteButton" xml:space="preserve">
-    <value>حذف</value>
+  <data name="PageTitleEdit" xml:space="preserve">
+    <value>تعديل عنوان الصفحة</value>
   </data>
 </root>
