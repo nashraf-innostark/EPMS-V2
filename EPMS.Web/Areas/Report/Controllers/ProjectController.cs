@@ -39,12 +39,16 @@ namespace EPMS.Web.Areas.Report.Controllers
             var request = new ProjectReportCreateOrDetailsRequest
             {
                 ProjectId = projectsReportsCreateViewModel.ProjectId,
-                Requester = "Admin"
+                ReportId = projectsReportsCreateViewModel.ReportId,
+                RequesterRole = "Admin",
+                RequesterId = Session["UserID"].ToString()
             };
+
+            //Check if request came from "Report Create Page"
             var refrel=Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("/Project/Create"))
+            if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
                 request.IsCreate = true;
-            if (projectsReportsCreateViewModel.ProjectId > 0)
+            if (projectsReportsCreateViewModel.ProjectId > 0 || projectsReportsCreateViewModel.ReportId > 0)
             {
                 var response = reportService.SaveAndGetProjectReportDetails(request);
                 detailVeiwModel.Projects = response.Projects.Select(x => x.CreateForReportDetails()).ToList();

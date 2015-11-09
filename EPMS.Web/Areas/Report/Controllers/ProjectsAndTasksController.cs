@@ -38,7 +38,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             searchRequest.SearchString = Request["search"];
             var projectsAndTasksResponse = reportService.GetProjectsReports(searchRequest);
             var projectsList =
-                projectsAndTasksResponse.Projects.Select(x => x.CreateFromServerToClient()).ToList();
+                projectsAndTasksResponse.Projects.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
             ProjectsReportsListViewModel projectsListViewModel = new ProjectsReportsListViewModel
             {
                 aaData = projectsList,

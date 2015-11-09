@@ -185,22 +185,11 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var val = full["ReportId"];
-                        var element = '<a href="Details/' + val + '">' + val + '</a>';
+                        var element = '<a href="' + siteUrl + '/Report/Project/Details?ReportId=' + val + '">' + val + '</a>';
                         return element;
                     }
                 },
                 {
-                    //"aTargets": [2],
-                    //"sDefaultContent": "No Data",
-                    //"mRender": function (data, type, full) {
-                    //    var val;
-                    //    if (dir == "ltr") {
-                    //        val = full["ReportCreatedByNameE"];
-                    //    } else {
-                    //        val = full["ReportCreatedByNameA"];
-                    //    }
-                    //    return val;
-                    //}
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
@@ -211,7 +200,7 @@
                     "aTargets": [3],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["ReportFromDate"] + "-" + full["ReportToDate"];
+                        return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
                     }
                 },
                 {
@@ -225,7 +214,7 @@
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["ReportCreatedDate"];
+                        return full["ReportCreatedDateString"];
                     }
                 }
             ],

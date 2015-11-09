@@ -39,7 +39,7 @@ namespace EPMS.Repository.Repositories
                     {
                         { ProjectReportByColumn.Serial,  c => c.ReportId},
                         { ProjectReportByColumn.ReportId,  c => c.ReportId},
-                        { ProjectReportByColumn.ReportCreatedBy, c => c.Employee.EmployeeFirstNameE},
+                        { ProjectReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
                         { ProjectReportByColumn.ReportType, c => c.Project.NameE},
                         { ProjectReportByColumn.ReportDateRange, c => c.ReportFromDate},
                         { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
@@ -56,21 +56,21 @@ namespace EPMS.Repository.Repositories
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString))
                     ||
                     (s.ReportId.Equals(reportId)) ||
-                    (s.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
-                    (s.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
-                    (s.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
-                    (s.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
-                    (s.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
-                    (s.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
                     (s.Project.NameE.Contains(searchRequest.SearchString))||
                     (s.Project.NameA.Contains(searchRequest.SearchString))
                     );
            
             IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
-                DbSet.Include(x=>x.Employee).Include(x=>x.Project)
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
                 .Where(query).OrderBy(projectReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList()
                 :
-                DbSet.Include(x => x.Employee).Include(x => x.Project)
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
                 .Where(query).OrderByDescending(projectReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
             
             return  new ProjectReportsListRequestResponse

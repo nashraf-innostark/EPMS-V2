@@ -2,7 +2,7 @@
 {
     public static class ProjectReportMapper
     {
-        public static WebsiteModels.Report CreateFromServerToClient(this Models.DomainModels.Report source)
+        public static WebsiteModels.Report CreateProjectReportFromServerToClient(this Models.DomainModels.Report source)
         {
             var report = new WebsiteModels.Report
             {
@@ -10,12 +10,16 @@
                 ReportCategoryId = source.ReportCategoryId,
                 ReportFromDate = source.ReportFromDate,
                 ReportToDate = source.ReportToDate,
-                ReportCreatedById = source.ReportCreatedBy,
-                ReportCreatedDate = source.ReportCreatedDate
+                ReportCreatedBy = source.ReportCreatedBy,
+                ReportCreatedDate = source.ReportCreatedDate,
+
+                ReportCreatedDateString = source.ReportCreatedDate.ToShortDateString(),
+                ReportFromDateString = source.ReportFromDate.ToShortDateString(),
+                ReportToDateString = source.ReportToDate.ToShortDateString(),
             };
             if (source.ProjectId != null)
             {
-                report.ReportCategoryItemId = (long)source.ProjectId;
+                report.ProjectId = source.ProjectId;
                 report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
                     ? source.Project.NameE
                     : source.Project.NameA;

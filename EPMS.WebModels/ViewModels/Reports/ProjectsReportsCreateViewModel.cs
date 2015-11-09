@@ -10,6 +10,7 @@ namespace EPMS.WebModels.ViewModels.Reports
         }
 
         public long ProjectId { get; set; }
+        public long ReportId { get; set; }
         public IList<Models.DashboardModels.Project> Projects { get; set; }
     }
 }
