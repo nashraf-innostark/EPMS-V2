@@ -59,7 +59,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.ItemBarcode, new { @dir = "ltr", id = "ItemBarcode", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.ItemBarcode, new { @id = "ItemBarcode", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.ItemBarcode)
                 </div>
             </div>
@@ -71,7 +71,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUCode, new { @dir = "ltr", id = "SKUCode", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUCode, new { @id = "SKUCode", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUCode)
                 </div>
             </div>
@@ -83,7 +83,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @dir = "ltr", @id = "UnitCost", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitCost, new { @id = "UnitCost", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitCost, "", new { @class = "required" })
                 </div>
             </div>
@@ -106,7 +106,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @dir = "ltr", @id = "UnitPrice", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.UnitPrice, new { @id = "UnitPrice", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.UnitPrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -129,7 +129,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInPackage, new { @dir = "ltr", @id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInPackage, new { @id = "QuantityInPackage", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInPackage, "", new { @class = "required" })
                 </div>
             </div>
@@ -141,7 +141,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @dir = "ltr", @id = "PackagePrice", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.PackagePrice, new { @id = "PackagePrice", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.PackagePrice, "", new { @class = "required" })
                 </div>
             </div>
@@ -212,7 +212,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @dir = "ltr", @id = "SKUDescriptionEn", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionEn, new { @id = "SKUDescriptionEn", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionEn)
                 </div>
             </div>
@@ -224,7 +224,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @dir = "ltr", @id = "SKUDescriptionAr", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.SKUDescriptionAr, new { @id = "SKUDescriptionAr", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.SKUDescriptionAr)
                 </div>
             </div>
@@ -236,7 +236,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @dir = "ltr", @id = "QuantityInHand", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @id = "QuantityInHand", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -248,7 +248,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @dir = "ltr", @id = "TotalQuantityInHand", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @id = "TotalQuantityInHand", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.TotalQuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -260,7 +260,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @dir = "ltr", @id = "QuantitySold", @readonly = "true" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantitySold, new { @id = "QuantitySold", @readonly = "true" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantitySold, "", new { @class = "required" })
                 </div>
             </div>
@@ -272,7 +272,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @dir = "ltr", @id = "ReorderPoint", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.ReorderPoint, new { @id = "ReorderPoint", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.ReorderPoint, "", new { @class = "required" })
                 </div>
             </div>
@@ -284,7 +284,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @dir = "ltr", @id = "QuantityInManufacturing", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInManufacturing, new { @id = "QuantityInManufacturing", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInManufacturing, "", new { @class = "required" })
                 </div>
             </div>
@@ -296,7 +296,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @dir = "ltr", @id = "Weight", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Weight, new { @id = "Weight", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Weight, "", new { @class = "required" })
                 </div>
             </div>
@@ -308,7 +308,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @dir = "ltr", @id = "Height", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Height, new { @id = "Height", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Height, "", new { @class = "required" })
                 </div>
             </div>
@@ -320,7 +320,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @dir = "ltr", @id = "Width", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Width, new { @id = "Width", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Width, "", new { @class = "required" })
                 </div>
             </div>
@@ -332,7 +332,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @dir = "ltr", @id = "Depth", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.Depth, new { @id = "Depth", @class = "tbdisable toBeRequired" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.Depth, "", new { @class = "required" })
                 </div>
             </div>
@@ -345,7 +345,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.ItemVariation.NotesEn, new { @dir = "ltr", @id = "NotesEn", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.ItemVariation.NotesEn, new { @id = "NotesEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.ItemVariation.NotesEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -356,7 +356,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.ItemVariation.NotesAr, new { @dir = "ltr", @id = "NotesAr", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.ItemVariation.NotesAr, new { @id = "NotesAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.ItemVariation.NotesAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -367,7 +367,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoEn, new { @dir = "ltr", @id = "AdditionalInfoEn", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoEn, new { @id = "AdditionalInfoEn", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoEn, "", new { @class = "required" })
                     </div>
                 </div>
@@ -379,7 +379,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoAr, new { @dir = "ltr", @id = "AdditionalInfoAr", @class = "tbdisable toBeRequired" })
+                        @Html.TextAreaFor(m => m.ItemVariation.AdditionalInfoAr, new { @id = "AdditionalInfoAr", @class = "tbdisable toBeRequired" })
                         @Html.ValidationMessageFor(m => m.ItemVariation.AdditionalInfoAr, "", new { @class = "required" })
                     </div>
                 </div>
@@ -823,7 +823,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Size.SizeNameEn, new { @dir = "ltr", id = "SizeNameEn", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Size.SizeNameEn, new { id = "SizeNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Size.SizeNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -834,7 +834,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Size.SizeNameAr, new { @dir = "ltr", id = "SizeNameAr", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Size.SizeNameAr, new { id = "SizeNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Size.SizeNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1006,7 +1006,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameEn, new { @dir = "ltr", id = "ManufacturerNameEn", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameEn, new { id = "ManufacturerNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1017,7 +1017,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameAr, new { @dir = "ltr", id = "ManufacturerNameAr", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Manufacturer.ManufacturerNameAr, new { id = "ManufacturerNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Manufacturer.ManufacturerNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1079,7 +1079,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Status.StatusNameEn, new { @dir = "ltr", id = "StatusNameEn", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Status.StatusNameEn, new { id = "StatusNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Status.StatusNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1090,7 +1090,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Status.StatusNameAr, new { @dir = "ltr", id = "StatusNameAr", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Status.StatusNameAr, new { id = "StatusNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Status.StatusNameAr, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1160,7 +1160,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Color.ColorNameEn, new { @dir = "ltr", id = "ColorNameEn", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Color.ColorNameEn, new { id = "ColorNameEn", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Color.ColorNameEn, "", new { @class = "required" })
                         </div>
                     </div>
@@ -1171,7 +1171,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.Color.ColorNameAr, new { @dir = "ltr", id = "ColorNameAr", @class = "toClear" })
+                            @Html.TextBoxFor(m => m.Color.ColorNameAr, new { id = "ColorNameAr", @class = "toClear" })
                             @Html.ValidationMessageFor(m => m.Color.ColorNameAr, "", new { @class = "required" })
                         </div>
                     </div>

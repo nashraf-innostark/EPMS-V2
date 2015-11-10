@@ -233,7 +233,8 @@ namespace EPMS.Implementation.Services
                 inventoryItemRepository.Find(variationToSave.ItemVariation.InventoryItemId);
             ItemVariation itemVariationFromDatabase = variationRepository.Find(variationToSave.ItemVariation.ItemVariationId);
             var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
-            
+
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             if (variationToSave.ItemVariation.ItemVariationId > 0)
             {
                 UpdateItemVariation(variationToSave, itemVariationFromDatabase);
@@ -255,8 +256,6 @@ namespace EPMS.Implementation.Services
                 AddColorList(variationToSave);
                 AddImages(variationToSave);
             }
-
-            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
             variationRepository.SaveChanges();
             System.Threading.Thread.CurrentThread.CurrentCulture = currentCulture;
             return new ItemVariationResponse

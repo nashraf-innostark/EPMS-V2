@@ -552,19 +552,21 @@ namespace IdentitySample.Controllers
             string[] adminWidgets =
             {
                 "MeetingWidget", "OrdersWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
-                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget"
+                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget",
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
             string[] employeeWidgets =
             {
                 "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
-                "MyTasksWidget"
+                "MyTasksWidget", "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
             string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
 
             string[] allWidgets =
             {
                 "RecruitmentWidget", "EmployeeRequestsWidget","OrdersWidget","ComplaintsWidget", "EmployeesWidget", 
-                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
+                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget", 
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
 
             switch (roleName)
