@@ -16,6 +16,6 @@
         public string ReportFromDateString { get; set; }
         public string ReportToDateString { get; set; }
         public string ReportCategoryItemTitle { get; set; }
-        public long ReportCreatedByName { get; set; }
+        public string ReportCreatedByName { get; set; }
     }
 }

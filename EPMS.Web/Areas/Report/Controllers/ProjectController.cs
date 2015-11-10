@@ -6,6 +6,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Reports;
+using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -33,9 +34,11 @@ namespace EPMS.Web.Areas.Report.Controllers
             };
             return View(projectsReportsCreateViewModel);
         }
+
         public ActionResult Details(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
         {
             ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
+
             var request = new ProjectReportCreateOrDetailsRequest
             {
                 ProjectId = projectsReportsCreateViewModel.ProjectId,
@@ -53,8 +56,14 @@ namespace EPMS.Web.Areas.Report.Controllers
                 var response = reportService.SaveAndGetProjectReportDetails(request);
                 detailVeiwModel.Projects = response.Projects.Select(x => x.CreateForReportDetails()).ToList();
                 detailVeiwModel.ProjectTasks = response.ProjectTasks.Select(x => x.CreateForReport()).ToList();
+                detailVeiwModel.ReportId = response.ReportId;
             }
+            
             return View(detailVeiwModel);
+        }
+        public ActionResult GeneratePDF(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
+        {
+            return new ActionAsPdf("Create") { FileName = "ProjectDetailedReport.pdf" };
         }
     }
 }
