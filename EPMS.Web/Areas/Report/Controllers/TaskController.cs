@@ -11,6 +11,7 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Reports;
 using Microsoft.AspNet.Identity;
+using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -54,6 +55,16 @@ namespace EPMS.Web.Areas.Report.Controllers
             detailVeiwModel.ProjectTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList();
             detailVeiwModel.SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList();
             return View(detailVeiwModel);
+        }
+
+        public ActionResult GeneratePdf(long reportId)
+        {
+            return new ActionAsPdf("Simple", new { ReportId = reportId }) { FileName = "Task Report.pdf" };
+        }
+
+        public ActionResult Simple()
+        {
+            return View();
         }
     }
 }

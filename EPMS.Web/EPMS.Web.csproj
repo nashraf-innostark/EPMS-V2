@@ -1563,6 +1563,7 @@
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\Create.cshtml" />
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Task\Simple.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

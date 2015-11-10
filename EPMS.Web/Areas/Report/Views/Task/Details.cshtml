@@ -11,19 +11,17 @@
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
         <li>
-            <a href="dashboard-En.html">
+            <a href="~/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
         </li>
         <li>
-            <a href="Employees(Admin)En.html">
+            <a href="~/Report/ProjectsAndTasks/Index">
                 Project Management Report List
             </a>
         </li>
         <li class="current">
             <a href="javascript:;">View Task Report</a>
-
-
         </li>
     </ul>
 </div>
@@ -113,7 +111,8 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Generate Report As PDF</button>
+                <a class="btn" href="~/Report/Task/GeneratePdf">Generate Report As PDF</a>
+                @*<button type="button" class="btn">Generate Report As PDF</button>*@
             </div>
         </div>
     </div><!-- end container -->

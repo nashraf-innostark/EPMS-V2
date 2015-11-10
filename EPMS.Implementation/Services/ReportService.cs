@@ -89,7 +89,7 @@ namespace EPMS.Implementation.Services
             TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse
             {
                 ProjectTasks = response.Where(x=>x.ParentTask == null),
-                SubTasks = response.Where(x=>x.ParentTask != null)
+                SubTasks = response.Where(x=>x.SubTasks != null).SelectMany(x=>x.SubTasks)
             };
             return detailResponse;
         }
