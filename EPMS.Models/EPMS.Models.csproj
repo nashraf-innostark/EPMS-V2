@@ -200,6 +200,8 @@
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\ImageSliderMapper.cs" />
+    <Compile Include="ModelMapers\InventoryItemMapper.cs" />
     <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />

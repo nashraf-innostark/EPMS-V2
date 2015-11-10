@@ -117,17 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Arabic" xml:space="preserve">
+    <value>Arabic</value>
+  </data>
   <data name="BottomMessage" xml:space="preserve">
     <value>We always provide you the best we can to help you get what you want</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>Checkout</value>
   </data>
   <data name="DepartmentDetail" xml:space="preserve">
     <value>Department Detail</value>
   </data>
+  <data name="English" xml:space="preserve">
+    <value>English</value>
+  </data>
   <data name="ForMore" xml:space="preserve">
     <value>For More</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="LoggedInAs" xml:space="preserve">
+    <value>Logged in as</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="MainDepartments" xml:space="preserve">
     <value>Main Departments</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="NumberOfItems" xml:space="preserve">
+    <value>Number of items</value>
   </data>
   <data name="OurDepartments" xml:space="preserve">
     <value>Our Departments</value>
@@ -138,7 +168,28 @@
   <data name="PoductClassification" xml:space="preserve">
     <value>Poduct Classification</value>
   </data>
+  <data name="Previous" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>System</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>MASAR Scientific Company</value>
+  </data>
+  <data name="TOP" xml:space="preserve">
+    <value>TOP</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="AllRightsReserved" xml:space="preserve">
+    <value>All rights reserved</value>
+  </data>
+  <data name="GoogleMapLocation" xml:space="preserve">
+    <value>Google Map Location</value>
+  </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>Powered by</value>
   </data>
 </root>

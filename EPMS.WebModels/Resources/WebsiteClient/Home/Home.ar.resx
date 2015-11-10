@@ -117,17 +117,47 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Arabic" xml:space="preserve">
+    <value>العربىة</value>
+  </data>
   <data name="BottomMessage" xml:space="preserve">
     <value>ونحن نقدم دائما أفضل ما في وسعنا لمساعدتك على الحصول على ما تريدون</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>سلة</value>
+  </data>
+  <data name="Checkout" xml:space="preserve">
+    <value>الخروج</value>
   </data>
   <data name="DepartmentDetail" xml:space="preserve">
     <value>تفاصيل القسم</value>
   </data>
+  <data name="English" xml:space="preserve">
+    <value>إنجليزي</value>
+  </data>
   <data name="ForMore" xml:space="preserve">
     <value>للمزيد</value>
   </data>
+  <data name="Language" xml:space="preserve">
+    <value>اللغة</value>
+  </data>
+  <data name="LoggedInAs" xml:space="preserve">
+    <value>تسجيل الدخول ك</value>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>تسجيل الدخول</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>تسجيل الخروج</value>
+  </data>
   <data name="MainDepartments" xml:space="preserve">
     <value>الاقسام الاساسية</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>التالي</value>
+  </data>
+  <data name="NumberOfItems" xml:space="preserve">
+    <value>عدد العناصر</value>
   </data>
   <data name="OurDepartments" xml:space="preserve">
     <value>اقسامنا</value>
@@ -138,7 +168,28 @@
   <data name="PoductClassification" xml:space="preserve">
     <value>تصنيف المنتجات</value>
   </data>
+  <data name="Previous" xml:space="preserve">
+    <value>السابق</value>
+  </data>
+  <data name="System" xml:space="preserve">
+    <value>نظام</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>شركة مسار العلمية</value>
+  </data>
+  <data name="TOP" xml:space="preserve">
+    <value>الأعلى</value>
+  </data>
+  <data name="User" xml:space="preserve">
+    <value>مستخمي</value>
+  </data>
+  <data name="AllRightsReserved" xml:space="preserve">
+    <value>جميع الحقوق محفوظة</value>
+  </data>
+  <data name="GoogleMapLocation" xml:space="preserve">
+    <value>خريطة جوجل الموقع</value>
+  </data>
+  <data name="PoweredBy" xml:space="preserve">
+    <value>تعمل بالطاقة عن طريق</value>
   </data>
 </root>

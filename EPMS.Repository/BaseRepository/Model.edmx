@@ -8042,7 +8042,7 @@
           <Property Name="SubTitleEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="SubTitleAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImageOrder" Type="Int32" />
-          <Property Name="ImageName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="Int32" />

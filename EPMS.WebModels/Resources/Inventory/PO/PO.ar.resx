@@ -117,26 +117,14 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>اضافة</value>
-  </data>
   <data name="CenterTitleView" xml:space="preserve">
     <value>نموذج طلب شراء</value>
-  </data>
-  <data name="CreatedBy" xml:space="preserve">
-    <value>المنشئ</value>
   </data>
   <data name="CreateNew" xml:space="preserve">
     <value>انشاء نموذج طلب شراء</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>التاريخ</value>
-  </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل</value>
   </data>
   <data name="EditPO" xml:space="preserve">
     <value>تعديل نموذج طلب شراء</value>
@@ -147,17 +135,8 @@
   <data name="EmployeeName" xml:space="preserve">
     <value>اسم الموظف</value>
   </data>
-  <data name="ExcelImport" xml:space="preserve">
-    <value>استورد من اكسل</value>
-  </data>
-  <data name="Import" xml:space="preserve">
-    <value>استيراد</value>
-  </data>
   <data name="InventoryManager" xml:space="preserve">
     <value>مدير المستودع</value>
-  </data>
-  <data name="InventoryManagerName" xml:space="preserve">
-    <value>اسم مدير المستودع</value>
   </data>
   <data name="InventoryPurchaseOrderView" xml:space="preserve">
     <value>معاينة نموذج طلب شراء</value>
@@ -165,23 +144,11 @@
   <data name="ItemCode" xml:space="preserve">
     <value>رقم المنتج</value>
   </data>
-  <data name="ItemDetails" xml:space="preserve">
-    <value>تفاصيل المنتج</value>
-  </data>
   <data name="ItemName" xml:space="preserve">
     <value>اسم المنتج</value>
   </data>
   <data name="NeededQuantity" xml:space="preserve">
     <value>الكمية المحتاجة</value>
-  </data>
-  <data name="PageTitleCreate" xml:space="preserve">
-    <value>انشاء نموذج طلب شراء</value>
-  </data>
-  <data name="PageTitleEdit" xml:space="preserve">
-    <value>تعديل نموذج طلب شراء</value>
-  </data>
-  <data name="PageTitleHistory" xml:space="preserve">
-    <value>معاينة نموذج طلب شراء</value>
   </data>
   <data name="PageTitleIndex" xml:space="preserve">
     <value>قائمة نماذج طلب شراء</value>
@@ -189,26 +156,8 @@
   <data name="PageTitleView" xml:space="preserve">
     <value>معاينة نموذج طلب شراء</value>
   </data>
-  <data name="POAdded" xml:space="preserve">
-    <value>تم اضافة نموذج طلب شراء بنجاح .</value>
-  </data>
-  <data name="POCreate" xml:space="preserve">
-    <value>اضافة نموذج طلب شراء</value>
-  </data>
-  <data name="POEdit" xml:space="preserve">
-    <value>تعديل نموذج طلب شراء</value>
-  </data>
   <data name="PONumber" xml:space="preserve">
     <value>PO#</value>
-  </data>
-  <data name="POStatusUpdated" xml:space="preserve">
-    <value>تم تحديث حالة طلب شراء بنجاح .</value>
-  </data>
-  <data name="POUpdated" xml:space="preserve">
-    <value>تم تحديث طلب شراء بنجاح .</value>
-  </data>
-  <data name="PurchaseOrderHistory" xml:space="preserve">
-    <value>سجل طلب شراء </value>
   </data>
   <data name="PurchaseOrderNumber" xml:space="preserve">
     <value>رقم نموذج طلب شراء</value>
@@ -245,5 +194,56 @@
   </data>
   <data name="Vendor" xml:space="preserve">
     <value>مورد</value>
+  </data>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
+  </data>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>المنشئ</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>تعديل</value>
+  </data>
+  <data name="ExcelImport" xml:space="preserve">
+    <value>استورد من اكسل</value>
+  </data>
+  <data name="Import" xml:space="preserve">
+    <value>استيراد</value>
+  </data>
+  <data name="InventoryManagerName" xml:space="preserve">
+    <value>اسم مدير المستودع</value>
+  </data>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>تفاصيل المنتج</value>
+  </data>
+  <data name="PageTitleCreate" xml:space="preserve">
+    <value>انشاء نموذج طلب شراء</value>
+  </data>
+  <data name="PageTitleEdit" xml:space="preserve">
+    <value>تعديل نموذج طلب شراء</value>
+  </data>
+  <data name="PageTitleHistory" xml:space="preserve">
+    <value>معاينة نموذج طلب شراء</value>
+  </data>
+  <data name="POCreate" xml:space="preserve">
+    <value>اضافة نموذج طلب شراء</value>
+  </data>
+  <data name="POEdit" xml:space="preserve">
+    <value>تعديل نموذج طلب شراء</value>
+  </data>
+  <data name="PurchaseOrderHistory" xml:space="preserve">
+    <value>سجل طلب شراء </value>
+  </data>
+  <data name="POAdded" xml:space="preserve">
+    <value>تم اضافة نموذج طلب شراء بنجاح .</value>
+  </data>
+  <data name="POStatusUpdated" xml:space="preserve">
+    <value>تم تحديث حالة طلب شراء بنجاح .</value>
+  </data>
+  <data name="POUpdated" xml:space="preserve">
+    <value>تم تحديث طلب شراء بنجاح .</value>
   </data>
 </root>

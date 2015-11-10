@@ -195,6 +195,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>RFQ.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Common.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Common.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\CP\Profile.ar.Designer.cs">
       <DependentUpon>Profile.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -312,6 +317,11 @@
     </Compile>
     <Compile Include="Resources\HR\Tasks.Designer.cs">
       <DependentUpon>Tasks.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Inventory\Barcode\Barcode.Designer.cs">
+      <DependentUpon>Barcode.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
@@ -500,6 +510,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\UserManagement\CreateUser.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CreateUser.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\UserManagement\MyProfile.Designer.cs">
       <DependentUpon>MyProfile.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -569,6 +584,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Home.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\WebsiteClient\Login\Login.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Login.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\WebsiteClient\Menu\Menu.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -980,6 +1000,11 @@
       <LastGenOutput>RFQ.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Common.ar.resx" />
+    <EmbeddedResource Include="Resources\Common.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Common.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Profile.ar.Designer.cs</LastGenOutput>
@@ -1088,6 +1113,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.ar.Designer.cs</LastGenOutput>
@@ -1117,28 +1146,34 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventoryWarehouse.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFCreate.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFView.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\ItemVariation.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ItemVariation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PhysicalCount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PO\PO.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PO.Designer.cs</LastGenOutput>
@@ -1152,14 +1187,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RIF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRCreate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRDetail.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRIndex.Designer.cs</LastGenOutput>
@@ -1177,7 +1215,6 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <None Include="Resources\Menu.ar.resx" />
     <EmbeddedResource Include="Resources\Notification1.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification1.ar.Designer.cs</LastGenOutput>
@@ -1251,6 +1288,11 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\CreateUser.ar.resx" />
+    <EmbeddedResource Include="Resources\UserManagement\CreateUser.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CreateUser.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\UserManagement\MyProfile.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\MyProfile.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1311,6 +1353,11 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Home\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\WebsiteClient\Login\Login.ar.resx" />
+    <EmbeddedResource Include="Resources\WebsiteClient\Login\Login.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Login.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Menu\Menu.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

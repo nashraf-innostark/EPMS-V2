@@ -136,16 +136,60 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                IList<ItemVariation> items = new List<ItemVariation>();
+                string userId = "";
                 foreach (var product in products)
                 {
                     productRepository.Add(product);
+                    userId = product.RecCreatedBy;
                     productRepository.SaveChanges();
+                    var item = itemVariationRepository.Find((long)product.ItemVariationId);
+                    if (item != null)
+                    {
+                        items.Add(item);
+                    }
                 }
+                AddProductSections(items, userId);
                 return true;
             }
             catch (Exception)
             {
                 return false;
+            }
+        }
+
+        void AddProductSections(IEnumerable<ItemVariation> items, string userId)
+        {
+            IList<InventoryDepartment> productSections = new List<InventoryDepartment>();
+            foreach (var itemVariation in items)
+            {
+                var department = itemVariation.InventoryItem.InventoryDepartment;
+                while (department.ParentDepartment != null)
+                {
+                    department = department.ParentDepartment;
+                }
+                if (!productSections.Contains(department))
+                {
+                    productSections.Add(department);
+                }
+            }
+            foreach (var productSection in productSections)
+            {
+                ProductSection sectionToAdd = new ProductSection
+                {
+                    InventoyDepartmentId = productSection.DepartmentId,
+                    ShowToPublic = true,
+                    RecCreatedBy = userId,
+                    RecCreatedDt = DateTime.Now,
+                    RecLastUpdatedBy = userId,
+                    RecLastUpdatedDt = DateTime.Now
+                };
+                var section = productSectionRepository.FindByDepartmentId(productSection.DepartmentId);
+                if (section == null)
+                {
+                    productSectionRepository.Add(sectionToAdd);
+                    productSectionRepository.SaveChanges();
+                }
             }
         }
 

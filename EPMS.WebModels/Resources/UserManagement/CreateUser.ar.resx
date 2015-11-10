@@ -117,79 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="BCTitleIndex" xml:space="preserve">
-    <value>قائمة نماذج طلب تحويل منتج </value>
+  <data name="BtnSave" xml:space="preserve">
+    <value>حفظ</value>
   </data>
-  <data name="BCTitleView" xml:space="preserve">
-    <value>معاينة قائمة نماذج طلب تحويل منتج</value>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>تحديث</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>التاريخ: </value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>تاكيد كلمة المرور</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل TIR</value>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
   </data>
-  <data name="EmployeeId" xml:space="preserve">
-    <value>رقم الوظيفي: </value>
+  <data name="Employee" xml:space="preserve">
+    <value>موظف</value>
   </data>
-  <data name="EmployeeName" xml:space="preserve">
-    <value>اسم الموظف: </value>
+  <data name="EnterUsername" xml:space="preserve">
+    <value>ادخل اسم المستخدم</value>
   </data>
-  <data name="Header" xml:space="preserve">
-    <value> نموذج طلب تحويل منتج</value>
+  <data name="PageTitleCreate" xml:space="preserve">
+    <value>تسجيل مستخدم جديد</value>
   </data>
-  <data name="HistoryPageTitle" xml:space="preserve">
-    <value>معاينة نموذج طلب تحويل منتج</value>
+  <data name="PageTitleUpdate" xml:space="preserve">
+    <value>تحديث تسجيل مستخدم</value>
   </data>
-  <data name="ItemCode" xml:space="preserve">
-    <value>رقم المنتج</value>
+  <data name="Password" xml:space="preserve">
+    <value>كلمة السر</value>
   </data>
-  <data name="ItemName" xml:space="preserve">
-    <value>اسم المنتج</value>
+  <data name="Role" xml:space="preserve">
+    <value>دور الوظيفي</value>
   </data>
-  <data name="ManagerName" xml:space="preserve">
-    <value>رئيس المستودع: </value>
+  <data name="SelectEmployee" xml:space="preserve">
+    <value>اختر موظف</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات</value>
+  <data name="SelectRole" xml:space="preserve">
+    <value>اختر الدور الوظيفي</value>
   </data>
-  <data name="NotesAr" xml:space="preserve">
-    <value>ملاحظات بالعربي</value>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>تحديث موظف</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
-    <value>انشاء نموذج طلب تحويل منتج</value>
+  <data name="Username" xml:space="preserve">
+    <value>اسم المستخدم</value>
   </data>
-  <data name="Print" xml:space="preserve">
-    <value>طباعة</value>
-  </data>
-  <data name="RecordUpdated" xml:space="preserve">
-    <value>تم تعديل نموذج طلب تحويل منتج بنجاح.</value>
-  </data>
-  <data name="RequesterName" xml:space="preserve">
-    <value>اسم الطالب: </value>
-  </data>
-  <data name="RequestStatus" xml:space="preserve">
-    <value>حالة الطلب</value>
-  </data>
-  <data name="Serial" xml:space="preserve">
-    <value>تسلسل</value>
-  </data>
-  <data name="SKUCode" xml:space="preserve">
-    <value>SKU Code</value>
-  </data>
-  <data name="Submit" xml:space="preserve">
-    <value>ارسال</value>
-  </data>
-  <data name="TIRNo" xml:space="preserve">
-    <value>TIR#:</value>
-  </data>
-  <data name="Title" xml:space="preserve">
-    <value>نموذج طلب تحويل منتج</value>
-  </data>
-  <data name="TransferQuantity" xml:space="preserve">
-    <value>كمية التحويل</value>
-  </data>
-  <data name="TransferReason" xml:space="preserve">
-    <value>سبب التحويل:</value>
+  <data name="Users" xml:space="preserve">
+    <value>مستخدمين</value>
   </data>
 </root>

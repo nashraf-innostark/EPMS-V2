@@ -42,8 +42,8 @@
                                 break;
                         }
                         <div class="caption style1 @textClass">
-                            <h2 class="main_title">@imageSlider.TitleEn</h2>
-                            <h3 class="title_big">@imageSlider.SubTitleEn</h3>
+                            <h2 class="main_title">@(direction == "ltr" ? imageSlider.TitleEn : imageSlider.TitleAr)</h2>
+                            <h3 class="title_big">@(direction == "ltr" ? imageSlider.SubTitleEn : imageSlider.SubTitleAr)</h3>
                             <a href="@imageSlider.Link" class="more"><img src="@siteUrl/sliders/iosslider/arr01.png" alt=""></a>
                             <h4 class="title_small descp-@imageSlider.SliderId"></h4>
                             <script>
@@ -59,11 +59,11 @@
         }
 
         <div class="prev">
-            <div class="btn-label">Previous</div>
+            <div class="btn-label">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Previous</div>
         </div>
 
         <div class="next">
-            <div class="btn-label">Next</div>
+            <div class="btn-label">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.Next</div>
         </div>
 
         <div class="selectorsBlock bullets">

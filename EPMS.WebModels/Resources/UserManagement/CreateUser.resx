@@ -117,73 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Add" xml:space="preserve">
-    <value>اضافة</value>
+  <data name="BtnSave" xml:space="preserve">
+    <value>Save</value>
   </data>
-  <data name="CreatePageHeading" xml:space="preserve">
-    <value>معاينة الجرد</value>
+  <data name="BtnUpdate" xml:space="preserve">
+    <value>Update</value>
   </data>
-  <data name="CreatePageListBreadcrumbs" xml:space="preserve">
-    <value>قائمة الجرد</value>
+  <data name="ConfirmPassword" xml:space="preserve">
+    <value>Confirm Password</value>
   </data>
-  <data name="CreatePageTitle" xml:space="preserve">
-    <value>معاينة الجرد</value>
+  <data name="Email" xml:space="preserve">
+    <value>Email</value>
   </data>
-  <data name="Date" xml:space="preserve">
-    <value>التاريخ</value>
+  <data name="Employee" xml:space="preserve">
+    <value>Employee</value>
   </data>
-  <data name="Delete" xml:space="preserve">
-    <value>حذف</value>
+  <data name="EnterUsername" xml:space="preserve">
+    <value>Enter Username</value>
   </data>
-  <data name="EmployeeId" xml:space="preserve">
-    <value>رقم الموظف</value>
+  <data name="PageTitleCreate" xml:space="preserve">
+    <value>Register User</value>
   </data>
-  <data name="EmployeeName" xml:space="preserve">
-    <value>اسم الموظف</value>
+  <data name="PageTitleUpdate" xml:space="preserve">
+    <value>Update User</value>
   </data>
-  <data name="ItemBarcode" xml:space="preserve">
-    <value>Item Barcode</value>
+  <data name="Password" xml:space="preserve">
+    <value>Password</value>
   </data>
-  <data name="ItemDetails" xml:space="preserve">
-    <value>Item Name - SKU Descriptoin</value>
+  <data name="Role" xml:space="preserve">
+    <value>Role</value>
   </data>
-  <data name="ItemsInPackage" xml:space="preserve">
-    <value>كمية في الرزمة</value>
+  <data name="SelectEmployee" xml:space="preserve">
+    <value>Select Employee</value>
   </data>
-  <data name="ItemsInWharewhouse" xml:space="preserve">
-    <value>الكمية المتواجدة في المستودع</value>
+  <data name="SelectRole" xml:space="preserve">
+    <value>Select Role</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات بالانجليزي</value>
+  <data name="UpdateUser" xml:space="preserve">
+    <value>Update User</value>
   </data>
-  <data name="NotesAr" xml:space="preserve">
-    <value>ملاحظات بالعربي</value>
+  <data name="Username" xml:space="preserve">
+    <value>Username</value>
   </data>
-  <data name="NumberOfPackages" xml:space="preserve">
-    <value>عدد الرزم في المستودع</value>
-  </data>
-  <data name="PageTitleIndex" xml:space="preserve">
-    <value>قائمة الجرد</value>
-  </data>
-  <data name="PC" xml:space="preserve">
-    <value>الجرد</value>
-  </data>
-  <data name="PCNo" xml:space="preserve">
-    <value>PC#</value>
-  </data>
-  <data name="Serial" xml:space="preserve">
-    <value>تسلسل</value>
-  </data>
-  <data name="TotalItemsCount" xml:space="preserve">
-    <value>عدد الكامل للتعداد</value>
-  </data>
-  <data name="TotalItemsInPackages" xml:space="preserve">
-    <value>عدد الكامل للرزم</value>
-  </data>
-  <data name="Warhouse" xml:space="preserve">
-    <value>مستودع</value>
-  </data>
-  <data name="TotalItemsCountInWarehouse" xml:space="preserve">
-    <value>Total Items Count In Warehouse</value>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
   </data>
 </root>
