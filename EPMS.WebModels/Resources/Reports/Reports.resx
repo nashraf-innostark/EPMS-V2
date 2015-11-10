@@ -120,6 +120,9 @@
   <data name="Createdby" xml:space="preserve">
     <value>Created by</value>
   </data>
+  <data name="CreatProjectReport" xml:space="preserve">
+    <value>Creat Project Report</value>
+  </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
   </data>
@@ -131,5 +134,11 @@
   </data>
   <data name="Type" xml:space="preserve">
     <value>Type</value>
+  </data>
+  <data name="ProjectManagementReportListPageHeading" xml:space="preserve">
+    <value>Project Management Reports</value>
+  </data>
+  <data name="ProjectReportTab" xml:space="preserve">
+    <value>Project Report</value>
   </data>
 </root>
