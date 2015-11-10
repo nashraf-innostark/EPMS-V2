@@ -785,6 +785,8 @@
     <Compile Include="ViewModels\Reports\ProjectReportDetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\ProjectsReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\ProjectsReportsListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\TaskReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIHistoryViewModel.cs" />
@@ -886,6 +888,7 @@
     <Compile Include="WebsiteModels\Project.cs" />
     <Compile Include="WebsiteModels\ProjectsForDDL.cs" />
     <Compile Include="WebsiteModels\ProjectTask.cs" />
+    <Compile Include="WebsiteModels\ProjectTaskDropDown.cs" />
     <Compile Include="WebsiteModels\PurchaseOrder.cs" />
     <Compile Include="WebsiteModels\PurchaseOrderItem.cs" />
     <Compile Include="WebsiteModels\QuickLaunchItems.cs" />

@@ -8,6 +8,7 @@ using EPMS.Models.RequestModels;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Employee;
@@ -26,6 +27,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             this.reportService = reportService;
         }
 
+        [SiteAuthorize(PermissionKey = "ProjectsTasksReport")]
         public ActionResult Index()
         {
             var projectsReports = new ProjectsReportsListViewModel();

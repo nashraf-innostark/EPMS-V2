@@ -4,7 +4,8 @@
     {
         Project=1,
         AllProjects=2,
-        Task=3,
-        AllTasks=4
+        ProjectTask=3,
+        ProjectAllTasks=4,
+        AllProjectsAllTasks=5,
     }
 }

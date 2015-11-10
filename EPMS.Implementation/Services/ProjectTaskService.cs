@@ -71,6 +71,15 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public CreateTaskReportsResponse GetAllProjectsAndTasks()
+        {
+            return new CreateTaskReportsResponse
+            {
+                Tasks = Repository.GetAllNonSubTasks().ToList(),
+                Projects = projectService.GetAllProjects().ToList()
+            };
+        }
+
         public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)
         {
             return Repository.GetProjectTasksForEmployee(searchRequest, employeeId);

@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using EPMS.Models.DomainModels;
+using EPMS.WebModels.WebsiteModels;
+using ProjectTask = EPMS.Models.DomainModels.ProjectTask;
 
 namespace EPMS.WebModels.ModelMappers.PMS
 {
@@ -448,6 +449,17 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 projectTask.SubTasksWeight.Add(model);
             }
             return projectTask;
+        }
+
+        public static ProjectTaskDropDown CreateFoDropDown(this ProjectTask source)
+        {
+            return new ProjectTaskDropDown
+            {
+                TaskId = source.TaskId,
+                TaskNameE = source.TaskNameE,
+                TaskNameA = source.TaskNameA,
+                ProjectId = source.ProjectId
+            };
         }
     }
 }

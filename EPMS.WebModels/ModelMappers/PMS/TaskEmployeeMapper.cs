@@ -6,7 +6,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
     {
         public static WebsiteModels.TaskEmployee CreateFromServerToClient(this TaskEmployee source)
         {
-            return new WebsiteModels.TaskEmployee
+            var retval = new WebsiteModels.TaskEmployee
             {
                 TaskEmployeeId = source.TaskEmployeeId,
                 TaskId = source.TaskId,
@@ -17,6 +17,14 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ProjectTask = source.ProjectTask.CreateFromServerToClientForEmployee()
             };
+            if (source.Employee != null)
+            {
+                retval.EmployeeNameEn = source.Employee.EmployeeFirstNameE + " " + source.Employee.EmployeeMiddleNameE +
+                                        " " + source.Employee.EmployeeLastNameE;
+                retval.EmployeeNameAr = source.Employee.EmployeeFirstNameA + " " + source.Employee.EmployeeMiddleNameA +
+                                        " " + source.Employee.EmployeeLastNameA;
+            }
+            return retval;
         }
     }
 }
