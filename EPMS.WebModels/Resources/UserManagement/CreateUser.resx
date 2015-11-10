@@ -135,8 +135,11 @@
   <data name="EnterUsername" xml:space="preserve">
     <value>Enter Username</value>
   </data>
-  <data name="PageTitle" xml:space="preserve">
+  <data name="PageTitleCreate" xml:space="preserve">
     <value>Register User</value>
+  </data>
+  <data name="PageTitleUpdate" xml:space="preserve">
+    <value>Update User</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>

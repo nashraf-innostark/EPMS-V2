@@ -334,6 +334,12 @@ namespace IdentitySample.Controllers
         [SiteAuthorize(PermissionKey = "UserCreate")]
         public ActionResult Create(string userName)
         {
+            var culture = Session["Culture"];
+            if (culture != null)
+            {
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.ToString());
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(culture.ToString());
+            }
             EPMS.Models.IdentityModels.ViewModels.RegisterViewModel Result = new EPMS.Models.IdentityModels.ViewModels.RegisterViewModel();
             // Check allowed no of users
             // check license

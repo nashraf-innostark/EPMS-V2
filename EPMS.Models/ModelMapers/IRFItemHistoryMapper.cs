@@ -42,6 +42,7 @@ namespace EPMS.Models.ModelMapers
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ItemVariation = source.ItemVariation,
+                ItemRelease = source.ItemReleaseHistory.CreateFromIrfHistoryToIrfNoDetails()
             };
         }
     }

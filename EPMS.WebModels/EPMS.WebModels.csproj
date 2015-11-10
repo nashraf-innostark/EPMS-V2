@@ -319,6 +319,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\Inventory\Barcode\Barcode.Designer.cs">
+      <DependentUpon>Barcode.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Resources\Inventory\DIF\DIF.ar.Designer.cs">
       <DependentUpon>DIF.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1094,6 +1099,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Inventory\DIF\DIF.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>DIF.ar.Designer.cs</LastGenOutput>
@@ -1123,28 +1132,34 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>InventoryWarehouse.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFCreate.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFIndex.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>IRFView.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\ItemVariation.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\ItemVariation.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ItemVariation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PhysicalCount.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\PO\PO.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\PO\PO.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>PO.Designer.cs</LastGenOutput>
@@ -1158,14 +1173,17 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RIF.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRCreate.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRDetail.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>TIRIndex.Designer.cs</LastGenOutput>
@@ -1252,6 +1270,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ChangePassword.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\UserManagement\CreateUser.ar.resx" />
     <EmbeddedResource Include="Resources\UserManagement\CreateUser.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CreateUser.Designer.cs</LastGenOutput>

@@ -1,19 +1,19 @@
-﻿@using System.Web.UI.WebControls
-@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
+﻿@model  EPMS.Models.IdentityModels.ViewModels.RegisterViewModel
 @{
-    ViewBag.Title = "Register User";
-    string btnText = "Save";
+    ViewBag.Title = EPMS.WebModels.Resources.UserManagement.CreateUser.PageTitleCreate;
+    string btnText = EPMS.WebModels.Resources.UserManagement.CreateUser.BtnSave;
     var setDiasble = "false";
     if (Model != null)
     {
         if (!string.IsNullOrEmpty(Model.UserId))
         {
-            ViewBag.Title = "Update User";
-            btnText = "Update";
+            ViewBag.Title = EPMS.WebModels.Resources.UserManagement.CreateUser.PageTitleUpdate;
+            btnText = EPMS.WebModels.Resources.UserManagement.CreateUser.BtnUpdate;
             setDiasble = "readonly";
         }
     }
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     ViewBag.MessageVM = TempData["message"];
 }
 
@@ -30,7 +30,7 @@
         </li>
         <li>
             <a href="~/Account/Users">
-                Users
+                @EPMS.WebModels.Resources.UserManagement.CreateUser.Users
             </a>
         </li>
         <li class="current">
@@ -61,32 +61,35 @@
         @Html.HiddenFor(m => m.oldRole)
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="selectedEmployee">Employee</label>
+                <label class="control-label" for="selectedEmployee">@EPMS.WebModels.Resources.UserManagement.CreateUser.Employee</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.EmployeesDDL, "EmployeeId", "EmployeeNameE"), "Select Employee", new { @class = "select2me", id = "selectedEmployee" })
+                    @(direction == "ltr" ?
+                        Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.EmployeesDDL, "EmployeeId", "EmployeeNameE"), EPMS.WebModels.Resources.UserManagement.CreateUser.SelectEmployee, new { @class = "select2me", id = "selectedEmployee" }) :
+                        Html.DropDownListFor(x => x.SelectedEmployee, new SelectList(Model.EmployeesDDL, "EmployeeId", "EmployeeNameA"), EPMS.WebModels.Resources.UserManagement.CreateUser.SelectEmployee, new { @class = "select2me", id = "selectedEmployee" })
+                    )
                     <label id="emloyeeValidate"></label>
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="useremail">Email</label>
+                <label class="control-label" for="useremail">@EPMS.WebModels.Resources.UserManagement.CreateUser.Email</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Email, new { @dir = "ltr", id = "useremail", @readonly = "readonly" })
+                    @Html.TextBoxFor(m => m.Email, new { id = "useremail", @readonly = "readonly" })
                 </div>
             </div>
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="UserName">Username</label>
+                <label class="control-label" for="UserName">@EPMS.WebModels.Resources.UserManagement.CreateUser.Username</label>
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.UserName, new { @dir = "ltr", placeholder = "Enter Username", id = "UserName", @readonly = @setDiasble })
+                    @Html.TextBoxFor(m => m.UserName, new { placeholder = EPMS.WebModels.Resources.UserManagement.CreateUser.EnterUsername, id = "UserName", @readonly = @setDiasble })
                     <label id="usernameValidation"></label>
                     @*@Html.ValidationMessageFor(m => m.UserName, "", new { @class = "required" })*@
                 </div>
@@ -96,33 +99,33 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="roleId">Role</label>
+                    <label class="control-label" for="roleId">@EPMS.WebModels.Resources.UserManagement.CreateUser.Role</label>
                 </div>
                 <div class="span2">
                     <div class="controls">
-                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), "Select Role", new { @class = "select2me", id = "roleId" })
+                        @Html.DropDownListFor(x => x.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), EPMS.WebModels.Resources.UserManagement.CreateUser.SelectRole, new { @class = "select2me", id = "roleId" })
                         <label id="roleValidation"></label>
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="password">Password</label>
+                    <label class="control-label" for="password">@EPMS.WebModels.Resources.UserManagement.CreateUser.Password</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = "Password", id = "password" })
+                        @Html.PasswordFor(m => m.Password, new { @class = "form-control ltr", placeholder = EPMS.WebModels.Resources.UserManagement.CreateUser.Password, id = "password" })
                         <label id="passwordAuthentication"></label>
                     </div>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                    <label class="control-label" for="confirmPassword">Confirm Password</label>
+                    <label class="control-label" for="confirmPassword">@EPMS.WebModels.Resources.UserManagement.CreateUser.ConfirmPassword</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = "Confirm Password", id = "confirmPassword" })
+                        @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control ltr", placeholder = EPMS.WebModels.Resources.UserManagement.CreateUser.Password, id = "confirmPassword" })
                         <label id="confirmPasswordValidate"></label>
                         @*@Html.ValidationMessageFor(m => m.ConfirmPassword, "", new { @class = "required" })*@
                     </div>

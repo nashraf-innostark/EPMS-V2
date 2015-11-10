@@ -369,11 +369,6 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\Common\JsTreeJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Inventory\Barcode\Barcode.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Barcode.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -3451,19 +3446,6 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
-    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\PO\PO.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\ItemVariation.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="Scripts\App\select2\bower.json" />

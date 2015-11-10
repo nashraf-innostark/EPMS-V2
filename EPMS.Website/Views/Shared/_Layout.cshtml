@@ -167,7 +167,7 @@
                         @if (User.Identity.IsAuthenticated)
                         {
                             {
-                                string cplink = "http://localhost:43063/Dashboard/Index?from=Client&C_Id=" + Session["UserID"];
+                                string cplink = ConfigurationManager.AppSettings["CpDashboard"] + "?from=Client&C_Id=" + Session["UserID"];
                                 //string cplink = "http://localhost/EPMSWebsiteCP?C_Id=" + Session["UserID"];
                                 <li><a href="@cplink">@EPMS.WebModels.Resources.WebsiteClient.Home.Home.System</a></li>
                             }
