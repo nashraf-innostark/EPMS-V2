@@ -1,4 +1,5 @@
-﻿@using EPMS.WebModels.WebsiteModels.Common
+﻿@using System.Configuration
+@using EPMS.WebModels.WebsiteModels.Common
 @model EPMS.WebModels.ViewModels.Reports.ProjectReportDetailVeiwModel
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -362,17 +363,30 @@
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 
-                <button type="button" class="btn" id="generatePDF">Generate Report As PDF</button>
+                @*<a type="button" class="btn" href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Project/GeneratePDF?ReportId=@Model.ReportId">Generate Report As PDF</a>*@
+                <button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>
             </div>
 
         </div>
     </div><!-- end form -->
 </form>
+@*<script src="~/Scripts/jsPDF/jsPDF.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.addimage.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.cell.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.from_html.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.ie_below_9_shim.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.javascript.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.sillysvgrenderer.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.split_text_to_size.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.plugin.standard_fonts_metrics.js"></script>
+<script src="~/Scripts/jsPDF/jspdf.PLUGINTEMPLATE.js"></script>*@
 @*<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>
 <script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>*@
-<script src="~/Scripts/jsPDF.js"></script>
+
+<script src="~/Scripts/jsPDF/jsPDF.js"></script>
 <script src="~/Scripts/html2canvas.js"></script>
 <script>
+    
     (function () {
         var
          form = $('#container'),
@@ -393,7 +407,7 @@
                     format: 'a4'
                 });
                 doc.addImage(img, 'JPEG', 20, 20);
-                doc.save('techumber-html-to-pdf.pdf');
+                doc.save('Project-Report.pdf');
                 form.width(cache_width);
             });
         }
@@ -406,7 +420,6 @@
                 removeContainer: true
             });
         }
-
     }());
     //$(document).ready(function() {
     //    $('#generatePDF').click(function () {
@@ -428,7 +441,7 @@
     //    // source can be HTML-formatted string, or a reference
     //    // to an actual DOM element from which the text will be scraped.
     //    source = $('#container')[0];
-
+        
     //    // we support special element handlers. Register them with jQuery-style 
     //    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
     //    // There is no support for any other type of selectors 
@@ -454,16 +467,8 @@
     //    margins.top, { // y coord
     //        'width': margins.width, // max width of content on PDF
     //        'elementHandlers': specialElementHandlers
-    //    },
-
-    //    function (dispose) {
-    //        // dispose: object with X, Y of the last line add to the PDF 
-    //        //          this allow the insertion of new lines after html
-    //        pdf.save('Test.pdf');
     //    }, margins);
+
+    //    pdf.save('Test.pdf');
     //}
-    //$(document).ready(function () {
-    //    //console.log( "ready!" );
-    //    demoFromHTML();
-    //});
 </script>

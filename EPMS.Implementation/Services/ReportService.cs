@@ -55,6 +55,7 @@ namespace EPMS.Implementation.Services
                 };
                 reportRepository.Add(projectNewReport);
                 reportRepository.SaveChanges();
+                request.ReportId = projectNewReport.ReportId;
             }
             else
             {
@@ -64,6 +65,7 @@ namespace EPMS.Implementation.Services
             var response = projectRepository.GetProjectReportDetails(request).ToList();
             return new ProjectReportDetailsResponse
             {
+                ReportId = request.ReportId,
               Projects  = response,
               ProjectTasks = response.FirstOrDefault().ProjectTasks
             };
