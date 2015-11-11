@@ -8,7 +8,9 @@ using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.ViewModels.Reports;
+using EPMS.WebModels.WebsiteModels;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -29,6 +31,24 @@ namespace EPMS.Web.Areas.Report.Controllers
         {
             return View();
         }
+
+
+        public ActionResult All(long? ReportId)
+        {
+            var request = new ProjectReportCreateOrDetailsRequest();
+            if(ReportId!=null)
+            {
+                request.ReportId = (long)ReportId;
+                request.RequesterRole = "Admin";
+                request.RequesterId = Session["UserID"].ToString();
+                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+            }
+            
+            var projects = TempData["Projects"] as IEnumerable<Project>;
+            if (projects == null)
+                return RedirectToAction("Index", "ProjectsAndTasks");
+            return View(TempData["Projects"] as IEnumerable<Project>);
+        }
         public ActionResult Create()
         {
             ProjectsReportsCreateViewModel projectsReportsCreateViewModel=new ProjectsReportsCreateViewModel
@@ -40,8 +60,6 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         public ActionResult Details(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
         {
-            ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
-
             var request = new ProjectReportCreateOrDetailsRequest
             {
                 ProjectId = projectsReportsCreateViewModel.ProjectId,
@@ -49,11 +67,20 @@ namespace EPMS.Web.Areas.Report.Controllers
                 RequesterRole = "Admin",
                 RequesterId = Session["UserID"].ToString()
             };
-
             //Check if request came from "Report Create Page"
-            var refrel=Request.UrlReferrer;
+            var refrel = Request.UrlReferrer;
             if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
                 request.IsCreate = true;
+
+            if (projectsReportsCreateViewModel.ProjectId == 0 && projectsReportsCreateViewModel.ReportId == 0)
+            {
+                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+
+                return RedirectToAction("All");
+            }
+              
+            ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
+            
             if (projectsReportsCreateViewModel.ProjectId > 0 || projectsReportsCreateViewModel.ReportId > 0)
             {
                 var response = reportService.SaveAndGetProjectReportDetails(request);
@@ -141,7 +168,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             {
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
-                    ItemLabel = "Task",
+                    ItemLabel = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? "Task_" + projectTask.TaskNameE : projectTask.TaskNameA,
                     ItemValue = new List<GraphLabel>
                     {
                         new GraphLabel

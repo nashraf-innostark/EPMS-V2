@@ -193,6 +193,37 @@ namespace EPMS.WebModels.ModelMappers.PMS
             return project;
         }
 
-       
+        public static WebsiteModels.Project CreateForReport(this Models.DomainModels.Project source)
+        {
+            WebsiteModels.Project project = new WebsiteModels.Project
+            {
+                ProjectId = source.ProjectId,
+                NameE = Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? source.NameE
+                    : source.NameA,
+                StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
+                Price = Convert.ToInt64(source.Price),
+                OtherCost = Convert.ToInt64(source.OtherCost + source.ProjectTasks.Sum(x => x.TotalCost)),
+                Status = source.Status,
+                TotalTasks = source.ProjectTasks.Count,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                CustomerNameE = Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? source.Customer.CustomerNameE
+                    : source.Customer.CustomerNameA
+            };
+
+            foreach (var projectTask in source.ProjectTasks)
+            {
+                decimal progress = 0;
+                if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)
+                {
+                    progress = (decimal)projectTask.TaskProgress;
+                }
+                project.ProgressTotal += Convert.ToDouble(progress);
+            }
+            return project;
+        }
     }
 }

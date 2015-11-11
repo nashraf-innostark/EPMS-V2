@@ -101,6 +101,10 @@ namespace EPMS.Repository.Repositories
                 return DbSet.Where(x => x.CustomerId==customerId && x.Status == status);
         }
 
+        public IEnumerable<Project> GetAllProjects(DateTime createdBefore)
+        {
+            return DbSet.Where(x => x.RecCreatedDate<=createdBefore).Include(x=>x.Customer);
+        }
         public IEnumerable<Project> GetAllProjectsByEmployeeId(long employeeId)
         {
             return DbSet.Where(x => x.ProjectTasks.Any(y => y.TaskEmployees.Any(z => z.EmployeeId == employeeId)));

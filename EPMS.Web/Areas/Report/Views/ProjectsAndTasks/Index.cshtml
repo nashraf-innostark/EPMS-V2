@@ -187,9 +187,14 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
+                        var ProjectId = full["ProjectId"];
                         var val = full["ReportId"];
-                        var element = '<a href="' + siteUrl + '/Report/Project/Details?ReportId=' + val + '">' + val + '</a>';
-                        return element;
+                        if (parseInt(ProjectId) > 0) {
+                            return '<a href="' + siteUrl + '/Report/Project/Details?ReportId=' + val + '">' + val + '</a>';
+                        }
+                        else {
+                            return '<a href="' + siteUrl + '/Report/Project/All?ReportId=' + val + '">' + val + '</a>';
+                        }
                     }
                 },
                 {
