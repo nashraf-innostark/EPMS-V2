@@ -176,9 +176,11 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 Price = Convert.ToInt64(source.Price),
                 OtherCost = Convert.ToInt64(source.OtherCost + source.ProjectTasks.Sum(x => x.TotalCost)),
                 Status = source.Status,
-                TotalTasks = source.ProjectTasks.Count
+                TotalTasks = source.ProjectTasks.Count,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedDate = source.RecLastUpdatedDate
             };
-
+           
             foreach (var projectTask in source.ProjectTasks)
             {
                 decimal progress = 0;
@@ -190,5 +192,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
             }
             return project;
         }
+
+       
     }
 }

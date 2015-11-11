@@ -13,8 +13,14 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
+        <li >
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            </a>
+           
+        </li>
         <li class="current">
-            @EPMS.WebModels.Resources.PMS.Project.ProjectsList
+            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
         </li>
     </ul>
 </div>
@@ -22,7 +28,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.PMS.Project.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -42,48 +48,56 @@
             <!--Simple Chart end-->
         </div>
         <script>
-            $(".auto-resize").keyup(function () {
-                autoGrowField($(this).get(0));
-            });
+    $(".auto-resize").keyup(function () {
+        autoGrowField($(this).get(0));
+    });
 
-            $(window).load(function () {
-
-
-
-                var markings = [
-
-                    { color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
-                ];
-                var datasets = {
-                    "Price": {
-                        label: "Price",
-                        data: [[1249301600000, 483994], [1349301600000, 483994]]
-
-                    },
-                    "Cost": {
-                        label: "Cost",
-                        data: [[1249301600000, 200000], [1349301600000, 200000]]
-
-                    },
-                    "Task1": {
-                        label: "Task1",
-                        data: [[1249301600000, 500000], [1249901600000, 500000]]
-
-                    },
-                    "Task2": {
-                        label: "Task2",
-                        data: [[1249901600000, 500000], [1259901600000, 500000]]
-
-                    },
-                    "Task3": {
-                        label: "Task3",
-                        data: [[1259901600000, 500000], [1299901600000, 500000]]
-
-                    }
+    $(window).load(function () {
 
 
-                };
 
+        var markings = [
+
+            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
+        ];
+
+        var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
+
+        var parsed = JSON.parse(graphItems);
+
+
+        var datasets = [];
+        //{
+                    //"Price": {
+                    //    label: "Price",
+                    //    data: [[1249301600000, 483994], [1349301600000, 483994]]
+                    //},
+                    //"Cost": {
+                    //    label: "Cost",
+                    //    data: [[1249301600000, 200000], [1349301600000, 200000]]
+
+                    //},
+                    //"Task1": {
+                    //    label: "Task1",
+                    //    data: [[1249301600000, 500000], [1249901600000, 500000]]
+
+                    //},
+                    //"Task2": {
+                    //    label: "Task2",
+                    //    data: [[1249901600000, 500000], [1259901600000, 500000]]
+                    //},
+                    //"Task3": {
+                    //    label: "Task3",
+                    //    data: [[1259901600000, 500000], [1299901600000, 500000]]
+                    //}
+                //};
+        $.each(parsed, function (index, val) {
+            var dataset = {
+                label: val.ItemLabel,
+                data: [[val.ItemValue[0].data[0].dataValue[0].TimeStamp, val.ItemValue[0].data[0].dataValue[0].Value], [val.ItemValue[0].data[0].dataValue[1].TimeStamp, val.ItemValue[0].data[0].dataValue[1].Value]]
+            };
+            datasets.push(dataset);
+        });
                 var i = 0;
                 $.each(datasets, function (key, val) {
                     val.color = i;
@@ -138,7 +152,6 @@
                             if (ymin > d2) {
                                 ymin = d2;
                             }
-
                         }
 
                         if (xmaxl < xmax) {
