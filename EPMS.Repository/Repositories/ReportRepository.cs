@@ -56,7 +56,7 @@ namespace EPMS.Repository.Repositories
                         { TaskReportByColumn.Serial,  c => c.ReportId},
                         { TaskReportByColumn.ReportId,  c => c.ReportId},
                         { TaskReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
-                        { TaskReportByColumn.ReportType, c => c.Project.NameE},
+                        { TaskReportByColumn.ReportType, c => c.Project.NameE + c.ProjectTask.TaskNameE},
                         { TaskReportByColumn.ReportDateRange, c => c.ReportFromDate},
                         { TaskReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
