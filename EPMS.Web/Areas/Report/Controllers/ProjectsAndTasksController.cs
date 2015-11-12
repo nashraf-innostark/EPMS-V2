@@ -1,20 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
-using EPMS.Implementation.Services;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.RequestModels;
 using EPMS.Models.RequestModels.Reports;
-using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
-using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
-using EPMS.WebModels.ViewModels.Employee;
 using EPMS.WebModels.ViewModels.Reports;
-using EPMS.WebModels.WebsiteModels;
-using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {

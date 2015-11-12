@@ -61,6 +61,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created by.
         /// </summary>
         public static string Createdby {
@@ -88,11 +97,29 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Project Management Reports List.
+        /// </summary>
+        public static string ProjectManagementReportList {
+            get {
+                return ResourceManager.GetString("ProjectManagementReportList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Management Reports.
         /// </summary>
         public static string ProjectManagementReportListPageHeading {
             get {
                 return ResourceManager.GetString("ProjectManagementReportListPageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Report.
+        /// </summary>
+        public static string ProjectReport {
+            get {
+                return ResourceManager.GetString("ProjectReport", resourceCulture);
             }
         }
         
@@ -129,6 +156,15 @@ namespace EPMS.WebModels.Resources.Reports {
         public static string Type {
             get {
                 return ResourceManager.GetString("Type", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Project Report.
+        /// </summary>
+        public static string ViewProjectReport {
+            get {
+                return ResourceManager.GetString("ViewProjectReport", resourceCulture);
             }
         }
     }

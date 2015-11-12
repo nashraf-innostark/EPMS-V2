@@ -13,7 +13,7 @@
             </a>
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportListPageHeading
+            @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
         </li>
     </ul>
 </div>
@@ -187,9 +187,14 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
+                        var ProjectId = full["ProjectId"];
                         var val = full["ReportId"];
-                        var element = '<a href="' + siteUrl + '/Report/Project/Details?ReportId=' + val + '">' + val + '</a>';
-                        return element;
+                        if (parseInt(ProjectId) > 0) {
+                            return '<a href="' + siteUrl + '/Report/Project/Details?ReportId=' + val + '">' + val + '</a>';
+                        }
+                        else {
+                            return '<a href="' + siteUrl + '/Report/Project/All?ReportId=' + val + '">' + val + '</a>';
+                        }
                     }
                 },
                 {
@@ -253,7 +258,7 @@
         $(".dataTables_filter input").unbind()
             .bind("input", function (e) {
                 // Bind our desired behavior
-                if (this.value.length >= 3 || e.keyCode == 13) {
+                if (this.value.length >= 1 || e.keyCode == 13) {
                     $("#searchString").val(this.value);
                     oTable.fnDraw();
                 }

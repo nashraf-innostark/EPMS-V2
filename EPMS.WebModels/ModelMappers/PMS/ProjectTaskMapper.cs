@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Linq;
 using EPMS.WebModels.WebsiteModels;
 using ProjectTask = EPMS.Models.DomainModels.ProjectTask;
+using EPMS.WebModels.WebsiteModels.Common;
 
 namespace EPMS.WebModels.ModelMappers.PMS
 {
@@ -20,9 +21,13 @@ namespace EPMS.WebModels.ModelMappers.PMS
             projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
-            projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
+
+            //projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
+            projectTask.TaskProgressText = source.TaskProgress < 100 ? ProjectStatus.OnGoing.ToString() : ProjectStatus.Finished.ToString();
+
             var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
             projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
+            
             
             return projectTask;
         }

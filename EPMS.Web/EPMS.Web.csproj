@@ -1428,6 +1428,7 @@
     <Content Include="Scripts\jsPDF\jspdf.PLUGINTEMPLATE.js" />
     <Content Include="Scripts\jstree.js" />
     <Content Include="Scripts\jstree.min.js" />
+    <Content Include="Scripts\plugins\jquery.flot.navigate.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\bootstrap.min.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\highlight.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\jquery.min.js" />
@@ -1556,6 +1557,7 @@
     <Content Include="Areas\Report\Views\Project\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Project\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\ReportAsPdf.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />

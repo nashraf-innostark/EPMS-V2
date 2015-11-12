@@ -70,7 +70,7 @@ namespace EPMS.Repository.Repositories
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
             Expression<Func<Report, bool>> query =
-                s => ((string.IsNullOrEmpty(searchRequest.SearchString))
+                s => (s.ReportCategoryId.Equals(ReportCategory.Project) || s.ReportCategoryId.Equals(ReportCategory.AllProjects)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
                     ||
                     (s.ReportId.Equals(reportId)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
