@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Project;
@@ -15,6 +16,8 @@ using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [Authorize]
+    [SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
     public class ProjectController : BaseController
     {
         private readonly IProjectService projectService;
@@ -26,13 +29,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             this.reportService = reportService;
         }
 
-        // GET: Report/Project
-        public ActionResult Index()
-        {
-            return View();
-        }
-
-
+        [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult All(long? ReportId)
         {
             var request = new ProjectReportCreateOrDetailsRequest();
@@ -49,6 +46,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 return RedirectToAction("Index", "ProjectsAndTasks");
             return View(TempData["Projects"] as IEnumerable<Project>);
         }
+        [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()
         {
             ProjectsReportsCreateViewModel projectsReportsCreateViewModel=new ProjectsReportsCreateViewModel
@@ -57,14 +55,14 @@ namespace EPMS.Web.Areas.Report.Controllers
             };
             return View(projectsReportsCreateViewModel);
         }
-
+        [SiteAuthorize(PermissionKey = "DetailsSingleProjectReport")]
         public ActionResult Details(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
         {
             var request = new ProjectReportCreateOrDetailsRequest
             {
                 ProjectId = projectsReportsCreateViewModel.ProjectId,
                 ReportId = projectsReportsCreateViewModel.ReportId,
-                RequesterRole = "Admin",
+                RequesterRole = Session["RoleName"].ToString(),
                 RequesterId = Session["UserID"].ToString()
             };
             //Check if request came from "Report Create Page"
