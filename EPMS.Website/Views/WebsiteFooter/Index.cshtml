@@ -26,15 +26,22 @@
             </div>
             <div class="span4 footerMid">
                 <div class="newsletter-signup">
-                    <h3 class="m_title">Latest News</h3>
+                    <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.LatestNews</h3>
                     <ul class="menu">
                         @if (Model.NewsAndArticles != null && Model.NewsAndArticles.Any())
                         {
                             foreach (var item in Model.NewsAndArticles.ToList())
                             {
                                 <li>
-                                    <a href="#" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Detail/@item.NewsArticleId'">@item.TitleEn</a>
-                                    <p><span>@item.RecCreatedDt.ToShortDateString()</span><br />@item.ContentEn.Substring(0, item.ContentEn.Length > 100 ? 100 : item.ContentEn.Length)...</p>
+                                    <a href="#" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/NewsAndArticle/Detail/@item.NewsArticleId'">@(direction == "ltr" ? item.TitleEn : item.TitleAr)</a>
+                                    @if (direction == "ltr")
+                                    {
+                                        <p><span>@item.RecCreatedDt.ToShortDateString()</span><br />@item.ContentEn.Substring(0, item.ContentEn.Length > 100 ? 100 : item.ContentEn.Length)...</p>
+                                    }
+                                    else
+                                    {
+                                        <p><span>@item.RecCreatedDt.ToShortDateString()</span><br />@item.ContentAr.Substring(0, item.ContentAr.Length > 100 ? 100 : item.ContentAr.Length)...</p>
+                                    }
                                 </li>
                             }
                         }
@@ -46,18 +53,26 @@
         {
             <div class="span3 footerCont">
                 <div class="contact-details">
-                    <h3 class="m_title">Contact us</h3>
+                    <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Title</h3>
                     <p>
-                        @Model.ContactUs.Title<br />
+                        @if (direction == "ltr")
+                        {
+                            @Model.ContactUs.Title<br />
                             @Model.ContactUs.Address
+                        }
+                        else
+                        {
+                            @Model.ContactUs.TitleAr<br />
+                            @Model.ContactUs.AddressAr
+                        }
                     </p>
 
                     <p>
-                        <strong>Phone: </strong>@Model.ContactUs.Phone<br />
-                        <strong>Email: </strong> <a href="#">@Model.ContactUs.FormEmail</a>
+                        <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Telephone: </strong>@Model.ContactUs.Phone<br />
+                        <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email: </strong> <a href="#">@Model.ContactUs.FormEmail</a>
                     </p>
 
-                    <p><a href="http://www.google.com/maps/place/@Model.ContactUs.Latitude,@Model.ContactUs.Longitude" target="_blank" class="map-link"><span class="icon-map-marker icon-white"></span> Google Map Location</a></p>
+                    <p><a href="http://www.google.com/maps/place/@Model.ContactUs.Latitude,@Model.ContactUs.Longitude" target="_blank" class="map-link"><span class="icon-map-marker icon-white"></span>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.GoogleMapLocation</a></p>
                 </div><!-- end contact-details -->
             </div>
         }
@@ -65,16 +80,16 @@
         {
             <div class="span3 footerCont">
                 <div class="contact-details">
-                    <h3 class="m_title">Contact us</h3>
+                    <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Title</h3>
                     <p>
                     </p>
 
                     <p>
-                        <strong>Phone: </strong><br />
-                        <strong>Email: </strong> <a href="#"></a>
+                        <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Telephone: </strong><br />
+                        <strong>@EPMS.WebModels.Resources.WebsiteClient.ContactUs.ContactUs.Email: </strong> <a href="#"></a>
                     </p>
 
-                    <p><a href="http://www.google.com/maps/place/" target="_blank" class="map-link"><span class="icon-map-marker icon-white"></span> Google Map Location</a></p>
+                    <p><a href="http://www.google.com/maps/place/" target="_blank" class="map-link"><span class="icon-map-marker icon-white"></span>@EPMS.WebModels.Resources.WebsiteClient.Home.Home.GoogleMapLocation</a></p>
                 </div><!-- end contact-details -->
             </div>
         }
@@ -89,8 +104,8 @@
                     <div class="copyright">
                         <a href="~/Home/Index"><img src="~/images/logoDark.png" alt="" /></a>
                         <p>
-                            &copy; 2015 <strong>Masar Scientific Company</strong>. All rights reserved -
-                            Powered by <a href="http://www.cr3ativ3mind.com/" target="_blank">CR3ATIV3MIND</a>
+                            &copy; 2015 <strong>@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PageTitle</strong>. @EPMS.WebModels.Resources.WebsiteClient.Home.Home.AllRightsReserved -
+                            @EPMS.WebModels.Resources.WebsiteClient.Home.Home.PoweredBy<a href="http://www.cr3ativ3mind.com/" target="_blank">CR3ATIV3MIND</a>
                         </p>
                     </div><!-- end copyright -->
                 </div><!-- end bottom -->

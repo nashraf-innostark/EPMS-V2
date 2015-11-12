@@ -78,7 +78,10 @@ namespace EPMS.Web.Areas.HR.Controllers
         {
             try
             {
-
+                var culture = CultureInfo.CurrentCulture;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture.Name);
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(culture.Name);
+                Session["Culture"] = culture.Name;
                 #region Add
                 {
                     jobApplicantViewModel.JobApplicant.CreatedBy = User.Identity.GetUserId();

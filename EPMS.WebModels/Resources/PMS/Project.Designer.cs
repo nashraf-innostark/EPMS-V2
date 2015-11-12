@@ -39,7 +39,7 @@ namespace EPMS.WebModels.Resources.PMS {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.PMS.Project", typeof(WebsiteModels.Project).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.PMS.Project", typeof(Project).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -399,6 +399,15 @@ namespace EPMS.WebModels.Resources.PMS {
         public static string Progress {
             get {
                 return ResourceManager.GetString("Progress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in saving project.
+        /// </summary>
+        public static string ProjectAddEditError {
+            get {
+                return ResourceManager.GetString("ProjectAddEditError", resourceCulture);
             }
         }
         

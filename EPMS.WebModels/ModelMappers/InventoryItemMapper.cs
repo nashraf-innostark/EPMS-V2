@@ -109,10 +109,10 @@ namespace EPMS.WebModels.ModelMappers
                 ReorderLevel = source.ReorderLevel,
                 DepartmentId = source.DepartmentId,
                 WarehouseID = source.WarehouseID,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                //RecCreatedBy = source.RecCreatedBy,
+                //RecCreatedDt = source.RecCreatedDt,
+                //RecLastUpdatedBy = source.RecLastUpdatedBy,
+                //RecLastUpdatedDt = source.RecLastUpdatedDt,
                 DepartmentPath = source.DepartmentPath,
                 QuantityInPackage = source.QuantityInPackage
             };

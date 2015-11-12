@@ -26,6 +26,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string NotesForCustomerE { get; set; }
         public string NotesForCustomerA { get; set; }
         public string RecCreatedBy { get; set; }
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd MMM yyyy}")]
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }

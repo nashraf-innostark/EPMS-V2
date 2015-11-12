@@ -30,16 +30,18 @@ namespace EPMS.Web.Areas.Website.Controllers
         private readonly IProductService productService;
         private readonly IProductSectionService productSectionService;
         private readonly IInventoryDepartmentService departmentService;
+        private readonly IItemVariationService itemVariationService;
 
         #endregion
 
         #region Constructor
 
-        public ProductController(IProductService productService, IProductSectionService productSectionService, IInventoryDepartmentService departmentService)
+        public ProductController(IProductService productService, IProductSectionService productSectionService, IInventoryDepartmentService departmentService, IItemVariationService itemVariationService)
         {
             this.productService = productService;
             this.productSectionService = productSectionService;
             this.departmentService = departmentService;
+            this.itemVariationService = itemVariationService;
         }
 
         #endregion
@@ -173,7 +175,6 @@ namespace EPMS.Web.Areas.Website.Controllers
         public JsonResult ImportProducts(string[] itemVariationIds, string[] sectionIds)
         {
             bool isProductAdded = false;
-            bool isProductSectionAdded = false;
             // select products that are not in DB
             IList<long> noItemDuplication = productService.RemoveDuplication(itemVariationIds);
             // save Products
@@ -197,31 +198,31 @@ namespace EPMS.Web.Areas.Website.Controllers
                     isProductAdded = true;
                 }
             }
-            // select product section that are not in DB
-            IList<long> noSectionDuplication = productSectionService.RemoveDuplication(sectionIds);
-            // save Product Sections
-            IList<EPMS.Models.DomainModels.ProductSection> productSectionsToAdd = new List<EPMS.Models.DomainModels.ProductSection>();
-            foreach (var id in noSectionDuplication)
-            {
-                EPMS.Models.DomainModels.ProductSection addToList = new EPMS.Models.DomainModels.ProductSection
-                {
-                    InventoyDepartmentId = id,
-                    ShowToPublic = true,
-                    RecCreatedBy = User.Identity.GetUserId(),
-                    RecCreatedDt = DateTime.Now,
-                    RecLastUpdatedBy = User.Identity.GetUserId(),
-                    RecLastUpdatedDt = DateTime.Now
-                };
-                productSectionsToAdd.Add(addToList);
-            }
-            if (productSectionsToAdd.Any())
-            {
-                if (productSectionService.SaveProductSections(productSectionsToAdd))
-                {
-                    isProductSectionAdded = true;
-                }
-            }
-            if ((isProductAdded || productsToAdd.Count == 0) && (isProductSectionAdded || productSectionsToAdd.Count == 0))
+            //// select product section that are not in DB
+            //IList<long> noSectionDuplication = productSectionService.RemoveDuplication(sectionIds);
+            //// save Product Sections
+            //IList<EPMS.Models.DomainModels.ProductSection> productSectionsToAdd = new List<EPMS.Models.DomainModels.ProductSection>();
+            //foreach (var id in noSectionDuplication)
+            //{
+            //    EPMS.Models.DomainModels.ProductSection addToList = new EPMS.Models.DomainModels.ProductSection
+            //    {
+            //        InventoyDepartmentId = id,
+            //        ShowToPublic = true,
+            //        RecCreatedBy = User.Identity.GetUserId(),
+            //        RecCreatedDt = DateTime.Now,
+            //        RecLastUpdatedBy = User.Identity.GetUserId(),
+            //        RecLastUpdatedDt = DateTime.Now
+            //    };
+            //    productSectionsToAdd.Add(addToList);
+            //}
+            //if (productSectionsToAdd.Any())
+            //{
+            //    if (productSectionService.SaveProductSections(productSectionsToAdd))
+            //    {
+            //        isProductSectionAdded = true;
+            //    }
+            //}
+            if ((isProductAdded || productsToAdd.Count == 0))
             {
                 return Json("Success", JsonRequestBehavior.AllowGet);
             }

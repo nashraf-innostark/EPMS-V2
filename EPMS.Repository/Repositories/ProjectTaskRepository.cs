@@ -8,6 +8,7 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
@@ -33,6 +34,7 @@ namespace EPMS.Repository.Repositories
             get { return db.ProjectTasks; }
         }
         #endregion
+
         #region Private
 
         /// <summary>
@@ -56,9 +58,9 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.ProjectId == projectId);
         }
 
-        public IEnumerable<ProjectTask> GetAllParentTasks()
+        public IEnumerable<ProjectTask> GetAllParentTasksOfProject(long projectId)
         {
-            return DbSet.Where(pt => pt.IsParent);
+            return DbSet.Where(pt => pt.IsParent && pt.ProjectId == projectId);
         }
 
         public IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid)
@@ -159,6 +161,29 @@ namespace EPMS.Repository.Repositories
                                            DbSet
                                            .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+        }
+
+        public IEnumerable<ProjectTask> GetAllNonSubTasks()
+        {
+            return DbSet.Where(x => x.ParentTask == null);
+        }
+
+        public IEnumerable<ProjectTask> GetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
+        {
+            IList<ProjectTask> response = new List<ProjectTask>();
+            if (request.TaskId == 0 && request.ProjectId == 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).ToList();
+            }
+            else if (request.ProjectId > 0 && request.TaskId == 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)).ToList();
+            }
+            else if (request.ProjectId > 0 && request.TaskId > 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId)).ToList();
+            }
+            return response;
         }
     }
 }

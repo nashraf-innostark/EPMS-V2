@@ -1,6 +1,6 @@
 ﻿@using System.Configuration
 @using System.Web.UI.WebControls
-@using iTextSharp.text.pdf.qrcode
+@*@using iTextSharp.text.pdf.qrcode*@
 @using EPMS.Models.Common
 @model EPMS.WebModels.ViewModels.Dashboard.DashboardViewModel
 
@@ -125,7 +125,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
                                         </ul>
                                     </div>
@@ -222,7 +222,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -327,7 +327,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
                                             @if (ViewBag.UserRole == "Customer")
                                             {
@@ -403,7 +403,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -450,7 +450,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
                                             @if (ViewBag.UserRole == "Admin")
                                             {
@@ -642,7 +642,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -760,7 +760,7 @@
                                             else
                                             {
                                                 <li class="processed-pct">
-                                                    <span>No record found</span>
+                                                    <span>@EPMS.WebModels.Resources.Common.NoRecordsFound</span>
                                                 </li>
                                             }
                                         </ul>
@@ -873,7 +873,7 @@
                                             else
                                             {
                                                 <li class="processed-pct">
-                                                    <span>No record found</span>
+                                                    <span>@EPMS.WebModels.Resources.Common.NoRecordsFound</span>
                                                 </li>
                                             }
                                         </ul>
@@ -971,7 +971,7 @@
                                             }
                                             else
                                             {
-                                            <li>No record found</li>
+                                            <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -1102,7 +1102,7 @@
                                             }
                                             else
                                             {
-                                            <li>No record found</li>
+                                            <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -1233,7 +1233,7 @@
                                             }
                                             else
                                             {
-                                            <li>No record found</li>
+                                            <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -1364,7 +1364,7 @@
                                             }
                                             else
                                             {
-                                            <li>No record found</li>
+                                            <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -1495,7 +1495,7 @@
                                             }
                                             else
                                             {
-                                                <li>No record found</li>
+                                                <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>
@@ -1628,7 +1628,7 @@
                                             }
                                             else
                                             {
-                                            <li>No record found</li>
+                                            <li>@EPMS.WebModels.Resources.Common.NoRecordsFound</li>
                                             }
 
                                         </ul>

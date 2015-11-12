@@ -141,7 +141,8 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 ? TaskService.GetResponseForAddEdit((long)id)
                 : TaskService.GetResponseForAddEdit(0);
             ViewBag.Customers = response.Customers.Select(x => x.CreateFromServerToClient());
-            viewModel.AllParentTasks = response.AllParentTasks.Select(x => x.CreateFromServerToClientParentTasks());
+            viewModel.AllParentTasks = response.AllParentTasks.Any() ?
+                response.AllParentTasks.Where(x=>x.TaskId != viewModel.ProjectTask.TaskId).Select(x => x.CreateFromServerToClientParentTasks()) : new List<ProjectTask>();
             if (id == null)
             {
                 viewModel.AllEmployees = response.Employees.Select(x => x.CreateFromServerToClientForTask());

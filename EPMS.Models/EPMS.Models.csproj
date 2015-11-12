@@ -104,6 +104,7 @@
     <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\ProjectReportByColumn.cs" />
+    <Compile Include="Common\TaskReportByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -200,6 +201,8 @@
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\ImageSliderMapper.cs" />
+    <Compile Include="ModelMapers\InventoryItemMapper.cs" />
     <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />
@@ -225,6 +228,8 @@
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
+    <Compile Include="RequestModels\Reports\TaskReportCreateOrDetailsRequest.cs" />
+    <Compile Include="RequestModels\Reports\TaskReportSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
@@ -353,6 +358,7 @@
     <Compile Include="ResponseModels\ComplaintResponse.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
+    <Compile Include="ResponseModels\CreateTaskReportsResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
@@ -399,6 +405,8 @@
     <Compile Include="ResponseModels\PurchaseOrderListResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\PCCreateResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\TaskReportDetailsResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\TaskReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />

@@ -1,0 +1,104 @@
+﻿@model EPMS.WebModels.ViewModels.Reports.TaskReportsCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/Report/ProjectsAndTasks/Index">
+                Project Management Report List
+            </a>
+        </li>
+        <li class="current">
+            <a href="javascript:;">Create Task Report</a>
+        </li>
+    </ul>
+</div>
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>Create Task Report</small></h2>
+</header>
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+@using (Html.BeginForm("Details", "Task", new {area="Report"}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+{
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="jobTitle">Project Name</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.ProjectId, direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), "All", new {@class = "select2me"})
+                </div>
+            </div>
+        </div>
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label" for="jobTitle">Task Name</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @Html.DropDownListFor(model => model.TaskId, Enumerable.Empty<SelectListItem>(), "All", new { @class = "select2me" })
+                    @*@Html.DropDownListFor(model => model.TaskId, direction == "ltr" ? new SelectList(Model.Tasks, "TaskId", "TaskNameE") : new SelectList(Model.Projects, "TaskId", "TaskNameA"), "--Select--", new { @class = "select2me" })*@
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="submit" class="btn">Generate Report</button>
+            </div>
+        </div>
+    </div>
+    <!-- end container -->
+}
+
+<script>
+    var tasks = '@Html.Raw(Json.Encode(Model.Tasks))';
+    var tasksList = JSON.parse(tasks);
+    $(document).ready(function () {
+
+        $("#ProjectId").on("change", function () {
+            var projId = parseInt($("#ProjectId").val());
+            if (isNaN(projId)) {
+                $("#TaskId").empty();
+                $("#TaskId").append(
+                        $('<option></option>').val(0).html("All")
+                    );
+                $(".select2me").select2("destroy");
+                $('.select2me').select2({
+                });
+            } else {
+                if (tasksList.length > 0) {
+                    $.each(tasksList, function (key, value) {
+                        if (value.ProjectId == projId) {
+                            $("#TaskId").append(
+                                $('<option></option>').val(value.TaskId).html(value.TaskNameE)
+                            );
+                        }
+                    });
+                } else {
+                    $("#TaskId").empty();
+                    $("#TaskId").append(
+                        $('<option></option>').val(0).html("none")
+                    );
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                    });
+                }
+            }
+        });
+    });
+</script>

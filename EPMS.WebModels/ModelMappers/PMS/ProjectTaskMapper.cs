@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using EPMS.Models.DomainModels;
+using EPMS.WebModels.WebsiteModels;
+using ProjectTask = EPMS.Models.DomainModels.ProjectTask;
 using EPMS.WebModels.WebsiteModels.Common;
 
 namespace EPMS.WebModels.ModelMappers.PMS
@@ -139,8 +140,9 @@ namespace EPMS.WebModels.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
             projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
-            var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
-            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
+            //var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            //projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
+            projectTask.TaskProgress = source.TaskProgress != 0 ? String.Format("{0:###.##}", source.TaskProgress) : "0";
             string notesEn = "";
             if (!String.IsNullOrEmpty(source.NotesE))
             {
@@ -453,6 +455,17 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 projectTask.SubTasksWeight.Add(model);
             }
             return projectTask;
+        }
+
+        public static ProjectTaskDropDown CreateFoDropDown(this ProjectTask source)
+        {
+            return new ProjectTaskDropDown
+            {
+                TaskId = source.TaskId,
+                TaskNameE = source.TaskNameE,
+                TaskNameA = source.TaskNameA,
+                ProjectId = source.ProjectId
+            };
         }
     }
 }

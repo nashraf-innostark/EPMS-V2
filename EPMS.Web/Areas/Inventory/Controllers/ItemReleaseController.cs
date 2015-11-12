@@ -66,7 +66,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         public ActionResult Index(ItemReleaseSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
+            //ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
             if (Session["RoleName"] != null && Session["RoleName"].ToString() == "InventoryManager")
                 ViewBag.UserRole = Session["RoleName"].ToString().ToLower();
 
