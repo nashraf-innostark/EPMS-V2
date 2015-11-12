@@ -29,9 +29,10 @@ namespace EPMS.Repository.Repositories
         }
 
         #endregion
+
         #region Private
         /// <summary>
-        /// Order by Column Names Dictionary statements
+        /// Order by Column Names Dictionary statements for Project
         /// </summary>
         private readonly Dictionary<ProjectReportByColumn, Func<Report, object>> projectReportClause =
 
@@ -44,7 +45,23 @@ namespace EPMS.Repository.Repositories
                         { ProjectReportByColumn.ReportDateRange, c => c.ReportFromDate},
                         { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
+
+        /// <summary>
+        /// Order by Column Names Dictionary statements for Task
+        /// </summary>
+        private readonly Dictionary<TaskReportByColumn, Func<Report, object>> taskReportClause =
+
+            new Dictionary<TaskReportByColumn, Func<Report, object>>
+                    {
+                        { TaskReportByColumn.Serial,  c => c.ReportId},
+                        { TaskReportByColumn.ReportId,  c => c.ReportId},
+                        { TaskReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
+                        { TaskReportByColumn.ReportType, c => c.Project.NameE},
+                        { TaskReportByColumn.ReportDateRange, c => c.ReportFromDate},
+                        { TaskReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
+                    };
         #endregion
+
         public ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
@@ -77,6 +94,43 @@ namespace EPMS.Repository.Repositories
             {
                 Projects = queryData.ToList(), 
                 FilteredCount = DbSet.Count(query), 
+                TotalCount = DbSet.Count()
+            };
+        }
+
+        public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest searchRequest)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            long reportId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.SearchString))
+                Int64.TryParse(searchRequest.SearchString, out reportId);
+
+            Expression<Func<Report, bool>> query =
+                s => ((string.IsNullOrEmpty(searchRequest.SearchString))
+                    ||
+                    (s.ReportId.Equals(reportId)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.Project.NameE.Contains(searchRequest.SearchString)) ||
+                    (s.Project.NameA.Contains(searchRequest.SearchString))
+                    );
+
+            IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderBy(taskReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList()
+                :
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderByDescending(taskReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+
+            return new TaskReportsListRequestResponse
+            {
+                Tasks = queryData.ToList(),
+                FilteredCount = DbSet.Count(query),
                 TotalCount = DbSet.Count()
             };
         }

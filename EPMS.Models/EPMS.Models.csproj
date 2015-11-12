@@ -104,6 +104,7 @@
     <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\ProjectReportByColumn.cs" />
+    <Compile Include="Common\TaskReportByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -228,6 +229,7 @@
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\Reports\TaskReportCreateOrDetailsRequest.cs" />
+    <Compile Include="RequestModels\Reports\TaskReportSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
@@ -404,6 +406,7 @@
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\PCCreateResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\TaskReportDetailsResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\TaskReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />

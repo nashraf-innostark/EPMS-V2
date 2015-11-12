@@ -50,5 +50,11 @@ namespace EPMS.Web.Areas.Report.Controllers
             };
             return Json(projectsListViewModel, JsonRequestBehavior.AllowGet);
         }
+
+        [HttpPost]
+        public ActionResult TaskIndex(TaskReportSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+        }
     }
 }

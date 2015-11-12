@@ -73,6 +73,11 @@ namespace EPMS.Implementation.Services
             };
         }
 
+        public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
+        {
+            return reportRepository.GetTasksReports(taskReportSearchRequest);
+        }
+
         public TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
         {
             if (request.IsCreate)

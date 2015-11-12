@@ -806,6 +806,7 @@
     <Compile Include="ViewModels\Reports\ProjectsReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\ProjectsReportsListViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\TasksReportListViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />

@@ -10,6 +10,7 @@ namespace EPMS.WebModels.ViewModels.Reports
             ProjectTasks = new List<ProjectTask>();
             SubTasks = new List<ProjectTask>();
         }
+        public long ReportId { get; set; }
         public IList<ProjectTask> ProjectTasks { get; set; }
         public IList<ProjectTask> SubTasks { get; set; }
     }
