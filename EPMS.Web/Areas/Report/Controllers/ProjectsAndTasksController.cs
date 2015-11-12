@@ -47,7 +47,17 @@ namespace EPMS.Web.Areas.Report.Controllers
         public ActionResult TaskIndex(TaskReportSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            return Json(null, JsonRequestBehavior.AllowGet);
+            var tasksResponse = reportService.GetTasksReports(searchRequest);
+            var tasksList =
+                tasksResponse.Tasks.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
+            TasksReportListViewModel tasksListViewModel = new TasksReportListViewModel
+            {
+                aaData = tasksList,
+                iTotalRecords = Convert.ToInt32(tasksResponse.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(tasksResponse.FilteredCount),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(tasksListViewModel, JsonRequestBehavior.AllowGet);
         }
     }
 }
