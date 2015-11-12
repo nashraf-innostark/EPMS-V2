@@ -52,8 +52,10 @@ namespace EPMS.Repository.Repositories
             long reportId=0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
+            int projectReportCategory = (int)ReportCategory.Project;
+            int allProjectsReportCategory = (int)ReportCategory.AllProjects;
             Expression<Func<Report, bool>> query =
-                s => (s.ReportCategoryId.Equals(ReportCategory.Project) || s.ReportCategoryId.Equals(ReportCategory.AllProjects)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
+                s => (s.ReportCategoryId.Equals(projectReportCategory) || s.ReportCategoryId.Equals(allProjectsReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
                     ||
                     (s.ReportId.Equals(reportId)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
