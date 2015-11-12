@@ -47,6 +47,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         public ActionResult TaskIndex(TaskReportSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
+            return Json(null, JsonRequestBehavior.AllowGet);
         }
     }
 }

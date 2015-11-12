@@ -74,6 +74,34 @@ namespace EPMS.Implementation.Services
             };
         }
 
+        public IEnumerable<Project> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
+        {
+            var createdBefore = DateTime.Now;
+            if (request.IsCreate)
+            {
+                var projectNewReport = new Report
+                {
+                    ReportCategoryId = (int)ReportCategory.AllProjects,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.ProjectId > 0)
+                    projectNewReport.ProjectId = request.ProjectId;
+                reportRepository.Add(projectNewReport);
+                reportRepository.SaveChanges();
+                request.ReportId = projectNewReport.ReportId;
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                createdBefore = report.ReportCreatedDate;
+            }
+            var response = projectRepository.GetAllProjects(createdBefore).ToList();
+            return response;
+        }
+
         public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
         {
             return reportRepository.GetTasksReports(taskReportSearchRequest);
