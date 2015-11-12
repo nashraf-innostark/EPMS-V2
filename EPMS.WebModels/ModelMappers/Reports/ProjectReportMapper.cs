@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Reports
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Reports
 {
     public static class ProjectReportMapper
     {
@@ -16,6 +19,7 @@
                 ReportCreatedDateString = source.ReportCreatedDate.ToShortDateString(),
                 ReportFromDateString = source.ReportFromDate.ToShortDateString(),
                 ReportToDateString = source.ReportToDate.ToShortDateString(),
+                //ReportFromDateString = Convert.ToDateTime(source.ReportFromDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + DateTime.ParseExact(source.ReportFromDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToShortDateString(),
             };
             if (source.ProjectId != null)
             {
@@ -23,6 +27,10 @@
                 report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
                     ? source.Project.NameE
                     : source.Project.NameA;
+            }
+            else
+            {
+                report.ReportCategoryItemTitle = Resources.Reports.Reports.All;
             }
             if (source.AspNetUser.Employee != null)
             {

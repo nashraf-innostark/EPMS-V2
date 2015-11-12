@@ -61,6 +61,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to All.
+        /// </summary>
+        public static string All {
+            get {
+                return ResourceManager.GetString("All", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Created by.
         /// </summary>
         public static string Createdby {

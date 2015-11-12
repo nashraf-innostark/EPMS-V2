@@ -68,9 +68,11 @@ namespace EPMS.Web.Areas.Report.Controllers
                 RequesterId = Session["UserID"].ToString()
             };
             //Check if request came from "Report Create Page"
-            var refrel = Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
-                request.IsCreate = true;
+            //var refrel = Request.UrlReferrer;
+            //if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
+            //    request.IsCreate = true;
+            if (projectsReportsCreateViewModel.ReportId==0)
+                    request.IsCreate = true;
 
             if (projectsReportsCreateViewModel.ProjectId == 0 && projectsReportsCreateViewModel.ReportId == 0)
             {

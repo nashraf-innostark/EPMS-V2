@@ -40,5 +40,6 @@ namespace EPMS.WebModels.WebsiteModels
         
         //for report
         public int TotalTasks { get; set; }
+        public string Date { get; set; }
     }
 }
