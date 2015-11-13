@@ -6,6 +6,7 @@
         public long ProjectId { get; set; }
         public long TaskId { get; set; }
         public string RequesterId { get; set; }
+        public string RoleId { get; set; }
         public bool IsCreate { get; set; }
     }
 }
