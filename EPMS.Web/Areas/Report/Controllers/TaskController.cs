@@ -86,6 +86,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 ProjectTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList(),
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
+            SetGraphData(detailViewModel);
             return View(detailViewModel);
             //return new RazorPDF.PdfResult(detailViewModel, "ReportAsPdf");
         }
