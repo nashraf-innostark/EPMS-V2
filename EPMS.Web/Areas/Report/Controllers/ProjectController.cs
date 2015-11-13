@@ -17,7 +17,7 @@ using Rotativa;
 namespace EPMS.Web.Areas.Report.Controllers
 {
     [Authorize]
-    [SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
+    //[SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
     public class ProjectController : BaseController
     {
         private readonly IProjectService projectService;
