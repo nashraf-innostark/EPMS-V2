@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -61,6 +63,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 ProjectTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList(),
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
+            SetGraphData(detailViewModel);
             return View(detailViewModel);
         }
 
@@ -87,6 +90,118 @@ namespace EPMS.Web.Areas.Report.Controllers
             //return new RazorPDF.PdfResult(detailViewModel, "ReportAsPdf");
         }
 
+        private static long GetJavascriptTimestamp(DateTime input)
+        {
+            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
+            DateTime time = input.Subtract(span);
+            return (time.Ticks / 10000);
+        }
+        private TaskReportDetailVeiwModel SetGraphData(TaskReportDetailVeiwModel detailVeiwModel)
+        {
+            var task = detailVeiwModel.ProjectTasks.FirstOrDefault();
+            if (task != null)
+            {
+                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(task.StartDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
+                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(task.EndDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
+
+                //detailVeiwModel.GraphItems.Add(new GraphItem
+                //{
+                //    ItemLabel = "Price",
+                //    ItemValue = new List<GraphLabel>
+                //    {
+                //        new GraphLabel
+                //        {
+                //            label = "Price",
+                //            data = new List<GraphLabelData>
+                //            {
+                //                new GraphLabelData
+                //                {
+                //                    dataValue = new List<GraphLabelDataValues>
+                //                    {
+                //                        new GraphLabelDataValues
+                //                        {
+                //                            TimeStamp = detailVeiwModel.GrpahStartTimeStamp,
+                //                            Value = task.TotalCost
+                //                        },
+                //                        new GraphLabelDataValues
+                //                        {
+                //                            TimeStamp = detailVeiwModel.GrpahEndTimeStamp,
+                //                            Value = task.TotalCost
+                //                        }
+                //                    }
+                //                }
+                //            }
+                //        }
+                //    }
+                //});
+
+                detailVeiwModel.GraphItems.Add(new GraphItem
+                {
+                    ItemLabel = "Cost",
+                    ItemValue = new List<GraphLabel>
+                    {
+                        new GraphLabel
+                        {
+                            label = "Cost",
+                            data = new List<GraphLabelData>
+                            {
+                                new GraphLabelData
+                                {
+                                    dataValue = new List<GraphLabelDataValues>
+                                    {
+                                        new GraphLabelDataValues
+                                        {
+                                            TimeStamp = detailVeiwModel.GrpahStartTimeStamp,
+                                            Value = task.TotalCost
+                                        },
+                                        new GraphLabelDataValues
+                                        {
+                                            TimeStamp = detailVeiwModel.GrpahEndTimeStamp,
+                                            Value = task.TotalCost
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+
+            foreach (var projectTask in detailVeiwModel.SubTasks)
+            {
+                detailVeiwModel.GraphItems.Add(new GraphItem
+                {
+                    ItemLabel = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? "SubTask_" + projectTask.TaskNameE : projectTask.TaskNameA,
+                    ItemValue = new List<GraphLabel>
+                    {
+                        new GraphLabel
+                        {
+                            label = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? projectTask.TaskNameE : projectTask.TaskNameA,
+                            data = new List<GraphLabelData>
+                            {
+                                new GraphLabelData
+                                {
+                                    dataValue = new List<GraphLabelDataValues>
+                                    {
+                                        new GraphLabelDataValues
+                                        {
+                                            TimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(projectTask.StartDate.ToString(), "dd/MM/yyyy", new CultureInfo("en"))),
+                                            Value = projectTask.TotalCost
+                                        },
+                                        new GraphLabelDataValues
+                                        {
+                                            TimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(projectTask.EndDate.ToString(), "dd/MM/yyyy", new CultureInfo("en"))),
+                                            Value = projectTask.TotalCost
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+            }
+            return detailVeiwModel;
+        }
         
     }
 }

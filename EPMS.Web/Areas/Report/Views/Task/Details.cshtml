@@ -135,33 +135,22 @@
 
         var markings = [
 
-{ color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
+{ color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
         ];
-        var datasets = {
 
-            "Cost": {
-                label: "Cost",
-                data: [[1249301600000, 200000], [1349301600000, 200000]]
+        var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
 
-            },
-            "SubTask1": {
-                label: "SubTask1",
-                data: [[1249301600000, 500000], [1249901600000, 500000]]
+        var parsed = JSON.parse(graphItems);
 
-            },
-            "SubTask2": {
-                label: "SubTask2",
-                data: [[1249901600000, 500000], [1259901600000, 500000]]
+        var datasets = [];
 
-            },
-            "SubTask3": {
-                label: "SubTask3",
-                data: [[1259901600000, 500000], [1299901600000, 500000]]
-
-            }
-
-
-        };
+        $.each(parsed, function (index, val) {
+            var dataset = {
+                label: val.ItemLabel,
+                data: [[val.ItemValue[0].data[0].dataValue[0].TimeStamp, val.ItemValue[0].data[0].dataValue[0].Value], [val.ItemValue[0].data[0].dataValue[1].TimeStamp, val.ItemValue[0].data[0].dataValue[1].Value]]
+            };
+            datasets.push(dataset);
+        });
 
         var i = 0;
         $.each(datasets, function (key, val) {
@@ -169,7 +158,7 @@
             ++i;
         });
 
-        // insert checkboxes 
+        // insert checkboxes
         var choiceContainer = $("#choices");
         $.each(datasets, function (key, val) {
             choiceContainer.append("<input type='checkbox' style='float:left;margin-left: 20px;' name='" + key +
