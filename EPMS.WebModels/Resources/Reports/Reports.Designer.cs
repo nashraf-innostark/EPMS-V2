@@ -97,6 +97,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Items Report.
+        /// </summary>
+        public static string ItemsReport {
+            get {
+                return ResourceManager.GetString("ItemsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Project Management Reports List.
         /// </summary>
         public static string ProjectManagementReportList {
@@ -133,6 +142,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Projects Report.
+        /// </summary>
+        public static string ProjectsReport {
+            get {
+                return ResourceManager.GetString("ProjectsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Report.
         /// </summary>
         public static string Report {
@@ -147,6 +165,15 @@ namespace EPMS.WebModels.Resources.Reports {
         public static string ReportDate {
             get {
                 return ResourceManager.GetString("ReportDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tasks Report.
+        /// </summary>
+        public static string TasksReport {
+            get {
+                return ResourceManager.GetString("TasksReport", resourceCulture);
             }
         }
         
