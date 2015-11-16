@@ -210,13 +210,13 @@
                     "mRender": function (data, type, full) {
                         var ProjectId = full["ProjectId"];
                         var val = full["ReportId"];
-                        return '<a href="' + siteUrl + '/Report/Task/Details?ReportId=' + val + '">' + val + '</a>';
-                        //if (parseInt(ProjectId) > 0) {
-                        //    return '<a href="' + siteUrl + '/Report/Task/Details?ReportId=' + val + '">' + val + '</a>';
-                        //}
-                        //else {
-                        //    return '<a href="' + siteUrl + '/Report/Task/All?ReportId=' + val + '">' + val + '</a>';
-                        //}
+                        //return '<a href="' + siteUrl + '/Report/Task/Details?ReportId=' + val + '">' + val + '</a>';
+                        if (parseInt(ProjectId) > 0) {
+                            return '<a href="' + siteUrl + '/Report/Task/Details?ReportId=' + val + '">' + val + '</a>';
+                        }
+                        else {
+                            return '<a href="' + siteUrl + '/Report/Task/All?ReportId=' + val + '">' + val + '</a>';
+                        }
                     }
                 },
                 {

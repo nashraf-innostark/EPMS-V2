@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.RequestModels.Reports;
@@ -13,6 +14,7 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid);
         IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId);
         TaskResponse GetAllTasks(TaskSearchRequest searchRequest);
+        IEnumerable<ProjectTask> GetAllTasks(DateTime createdBefore);
         ProjectTask FindTaskWithPreRequisites(long id);
         IEnumerable<ProjectTask> GetProjectTasksByEmployeeId(long employeeId, long projectId);
         TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId);

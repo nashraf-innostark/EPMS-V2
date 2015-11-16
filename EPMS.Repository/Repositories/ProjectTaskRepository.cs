@@ -72,6 +72,12 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.ProjectId == projectid && x.TaskId != taskId);
         }
+
+        public IEnumerable<ProjectTask> GetAllTasks(DateTime createdBefore)
+        {
+            return DbSet.Where(x => x.RecCreatedDt <= createdBefore);
+        }
+
         public ProjectTask FindTaskWithPreRequisites(long id)
         {
             return DbSet.Include(x => x.PreRequisitTask).SingleOrDefault(x => x.TaskId == id);

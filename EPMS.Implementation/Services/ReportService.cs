@@ -185,6 +185,18 @@ namespace EPMS.Implementation.Services
             return detailResponse;
         }
 
+        public IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request)
+        {
+            var createdBefore = DateTime.Now;
+            var report = reportRepository.Find(request.ReportId);
+            if (report != null)
+            {
+                createdBefore = report.ReportCreatedDate;
+            }
+            var response = taskRepository.GetAllTasks(createdBefore).ToList();
+            return response;
+        }
+
         private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)
         {
             if (request.ProjectId == 0 && request.TaskId == 0)

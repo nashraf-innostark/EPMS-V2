@@ -159,6 +159,13 @@ namespace EPMS.Web.Controllers
                 string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
                 Session["UserPermissionSet"] = userPermissions;
             }
+
+            Dictionary<string, string> cookieCollection = new Dictionary<string, string>();
+            foreach (var key in Request.Cookies.AllKeys)
+            {
+                cookieCollection.Add(key, Request.Cookies.Get(key).Value);
+            }
+            Session["Cookies"] = cookieCollection;
         }
         public ApplicationUserManager UserManager
         {

@@ -12,6 +12,8 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Reports;
 //using RazorPDF;
+using EPMS.WebModels.WebsiteModels;
+using Org.BouncyCastle.Ocsp;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -69,12 +71,9 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         public ActionResult GeneratePdf(TaskReportsCreateViewModel viewModel)
         {
-            Dictionary<string, string> cookieCollection = new Dictionary<string, string>();
-            foreach (var key in Request.Cookies.AllKeys)
-            {
-                cookieCollection.Add(key, Request.Cookies.Get(key).Value);
-            }
-            return new ActionAsPdf("ReportAsPdf", new { ReportId = viewModel.ReportId}) { FileName = "Test.pdf", Cookies = cookieCollection };
+            Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("ReportAsPdf", new { ReportId = viewModel.ReportId }) { FileName = "Test.pdf", Cookies = cookies };
+            //return new ActionAsPdf("TestTable") { FileName = "Test.pdf", Cookies = cookies };
         }
 
         public ActionResult ReportAsPdf(TaskReportsCreateViewModel viewModel)
@@ -86,6 +85,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 ProjectTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList(),
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
+            SetGraphData(detailViewModel);
             return View(detailViewModel);
             //return new RazorPDF.PdfResult(detailViewModel, "ReportAsPdf");
         }
@@ -103,38 +103,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             {
                 detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(task.StartDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
                 detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(task.EndDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
-
-                //detailVeiwModel.GraphItems.Add(new GraphItem
-                //{
-                //    ItemLabel = "Price",
-                //    ItemValue = new List<GraphLabel>
-                //    {
-                //        new GraphLabel
-                //        {
-                //            label = "Price",
-                //            data = new List<GraphLabelData>
-                //            {
-                //                new GraphLabelData
-                //                {
-                //                    dataValue = new List<GraphLabelDataValues>
-                //                    {
-                //                        new GraphLabelDataValues
-                //                        {
-                //                            TimeStamp = detailVeiwModel.GrpahStartTimeStamp,
-                //                            Value = task.TotalCost
-                //                        },
-                //                        new GraphLabelDataValues
-                //                        {
-                //                            TimeStamp = detailVeiwModel.GrpahEndTimeStamp,
-                //                            Value = task.TotalCost
-                //                        }
-                //                    }
-                //                }
-                //            }
-                //        }
-                //    }
-                //});
-
+                
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
                     ItemLabel = "Cost",
@@ -202,6 +171,25 @@ namespace EPMS.Web.Areas.Report.Controllers
             }
             return detailVeiwModel;
         }
-        
+
+        public ActionResult All(long? ReportId)
+        {
+            IEnumerable<ProjectTask> tasksList = new List<ProjectTask>();
+            var request = new TaskReportCreateOrDetailsRequest();
+            if (ReportId != null)
+            {
+                request.ReportId = (long)ReportId;
+                request.RequesterId = Session["UserID"].ToString();
+                request.RoleId = Session["RoleId"].ToString();
+                var tasks = reportService.GetAllProjectTasks(request).ToList();
+                tasksList = tasks.Any() ? tasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
+            }
+            return View(tasksList);
+        }
+
+        public ActionResult TestTable()
+        {
+            return View();
+        }
     }
 }

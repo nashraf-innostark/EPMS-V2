@@ -1809,6 +1809,7 @@
     <Content Include="Views\ShoppingCart\CheckOut.cshtml" />
     <Content Include="Views\Catalogue\SteveJobsHtml.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
+    <Content Include="Views\Catalogue\Table.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\EPMS.Implementation\EPMS.Implementation.csproj">
