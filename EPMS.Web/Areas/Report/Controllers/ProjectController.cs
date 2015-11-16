@@ -49,14 +49,14 @@ namespace EPMS.Web.Areas.Report.Controllers
         [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()
         {
-            ProjectsReportsCreateViewModel projectsReportsCreateViewModel=new ProjectsReportsCreateViewModel
+            CreateViewModel projectsReportsCreateViewModel=new CreateViewModel
             {
                 Projects = projectService.GetAllProjects().ToList().Select(x => x.CreateForDashboardDDL()).ToList()
             };
             return View(projectsReportsCreateViewModel);
         }
         [SiteAuthorize(PermissionKey = "DetailsSingleProjectReport")]
-        public ActionResult Details(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
+        public ActionResult Details(CreateViewModel projectsReportsCreateViewModel)
         {
             var request = new ProjectReportCreateOrDetailsRequest
             {
@@ -79,7 +79,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 return RedirectToAction("All");
             }
               
-            ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
+            DetailVeiwModel detailVeiwModel = new DetailVeiwModel();
             
             if (projectsReportsCreateViewModel.ProjectId > 0 || projectsReportsCreateViewModel.ReportId > 0)
             {
@@ -97,7 +97,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             DateTime time = input.Subtract(span);
             return (time.Ticks / 10000);
         }
-        private ProjectReportDetailVeiwModel SetGraphData(ProjectReportDetailVeiwModel detailVeiwModel)
+        private DetailVeiwModel SetGraphData(DetailVeiwModel detailVeiwModel)
         {
             var project = detailVeiwModel.Projects.FirstOrDefault();
             detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(project.StartDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
@@ -199,7 +199,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             }
             return detailVeiwModel;
         }
-        public ActionResult GeneratePDF(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
+        public ActionResult GeneratePDF(CreateViewModel projectsReportsCreateViewModel)
         {
             return new ActionAsPdf("Create") { FileName = "ProjectDetailedReport.pdf" };
         }

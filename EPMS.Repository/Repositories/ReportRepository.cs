@@ -6,9 +6,7 @@ using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
-using EPMS.Models.RequestModels;
 using EPMS.Models.RequestModels.Reports;
-using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.ReportsResponseModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
@@ -60,9 +58,22 @@ namespace EPMS.Repository.Repositories
                         { TaskReportByColumn.ReportDateRange, c => c.ReportFromDate},
                         { TaskReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
+
+        private readonly Dictionary<ProjectReportByColumn, Func<Report, object>> warehouseReportClause =
+
+            new Dictionary<ProjectReportByColumn, Func<Report, object>>
+                    {
+                        { ProjectReportByColumn.Serial,  c => c.ReportId},
+                        { ProjectReportByColumn.ReportId,  c => c.ReportId},
+                        { ProjectReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
+                        { ProjectReportByColumn.ReportType, c => c.Warehouse.WarehouseNumber},
+                        { ProjectReportByColumn.ReportDateRange, c => c.ReportFromDate},
+                        { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
+                    };
+
         #endregion
 
-        public ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
+        public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
@@ -91,10 +102,10 @@ namespace EPMS.Repository.Repositories
                 :
                 DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
                 .Where(query).OrderByDescending(projectReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
-            
-            return  new ProjectReportsListRequestResponse
+
+            return new ReportsListRequestResponse
             {
-                Projects = queryData.ToList(), 
+                Reports = queryData.ToList(), 
                 FilteredCount = DbSet.Count(query), 
                 TotalCount = DbSet.Count()
             };
@@ -136,6 +147,44 @@ namespace EPMS.Repository.Repositories
             return new TaskReportsListRequestResponse
             {
                 Tasks = queryData.ToList(),
+                FilteredCount = DbSet.Count(query),
+                TotalCount = DbSet.Count()
+            };
+        }
+
+        public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            long reportId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.SearchString))
+                Int64.TryParse(searchRequest.SearchString, out reportId);
+            int reportCategory = (int)ReportCategory.Warehouse;
+            int allReportCategory = (int)ReportCategory.AllWarehouse;
+            Expression<Func<Report, bool>> query =
+                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
+                    ||
+                    (s.ReportId.Equals(reportId)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.Warehouse.WarehouseNumber.Contains(searchRequest.SearchString)) ||
+                    (s.Warehouse.WarehouseNumber.Contains(searchRequest.SearchString))
+                    );
+
+            IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderBy(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList()
+                :
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderByDescending(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+
+            return new ReportsListRequestResponse
+            {
+                Reports = queryData.ToList(),
                 FilteredCount = DbSet.Count(query),
                 TotalCount = DbSet.Count()
             };

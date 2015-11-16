@@ -17,15 +17,17 @@ namespace EPMS.Implementation.Services
         private readonly IReportRepository reportRepository;
         private readonly IProjectRepository projectRepository;
         private readonly IProjectTaskRepository taskRepository;
+        private readonly IWarehouseRepository warehouseRepository;
 
         #endregion
 
         #region Constructor
-        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, IProjectTaskRepository taskRepository)
+        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
         {
             this.reportRepository = reportRepository;
             this.projectRepository = projectRepository;
             this.taskRepository = taskRepository;
+            this.warehouseRepository = warehouseRepository;
         }
 
         #endregion
@@ -38,9 +40,14 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
-        public ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
+        public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
         {
             return reportRepository.GetProjectsReports(projectReportSearchRequest);
+        }
+
+        public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
+        {
+            return reportRepository.GetWarehousesReports(searchRequest);
         }
 
         public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
@@ -56,6 +63,15 @@ namespace EPMS.Implementation.Services
                     ReportFromDate = DateTime.Now,
                     ReportToDate = DateTime.Now
                 };
+                if (request.ProjectId > 0)
+                {
+                    projectNewReport.WarehouseId = request.ProjectId;
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
+                }
+                else
+                {
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
+                } 
                 reportRepository.Add(projectNewReport);
                 reportRepository.SaveChanges();
                 request.ReportId = projectNewReport.ReportId;
@@ -71,6 +87,47 @@ namespace EPMS.Implementation.Services
                 ReportId = request.ReportId,
               Projects  = response,
               ProjectTasks = response.FirstOrDefault().ProjectTasks
+            };
+        }
+
+        public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var newReport = new Report
+                {
+                   
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.WarehouseId > 0)
+                {
+                    newReport.WarehouseId = request.WarehouseId;
+                    newReport.ReportCategoryId = (int) ReportCategory.Warehouse;
+                }
+                else
+                {
+                    newReport.ReportCategoryId = (int)ReportCategory.AllWarehouse;
+                } 
+
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+                request.ReportId = newReport.ReportId;
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                if (report.WarehouseId!=null)
+                    request.WarehouseId = (long)report.WarehouseId;
+            }
+            var warehouses = warehouseRepository.GetWarehouseReportDetails(request);
+
+            return new WarehouseReportDetailsResponse
+            {
+                ReportId = request.ReportId,
+                Warehouses = warehouses
             };
         }
 

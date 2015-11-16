@@ -1562,6 +1562,8 @@
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\ReportAsPdf.cshtml" />
     <Content Include="Areas\Report\Views\Inventory\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

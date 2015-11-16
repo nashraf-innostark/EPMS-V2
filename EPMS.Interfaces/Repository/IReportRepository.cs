@@ -6,7 +6,8 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IReportRepository : IBaseRepository<Report, long>
     {
-        ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
+        ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
+        ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
     }
 }

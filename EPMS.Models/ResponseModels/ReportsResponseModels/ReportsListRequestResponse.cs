@@ -3,13 +3,13 @@ using EPMS.Models.DomainModels;
 
 namespace EPMS.Models.ResponseModels.ReportsResponseModels
 {
-    public class ProjectReportsListRequestResponse
+    public class ReportsListRequestResponse
     {
-        public ProjectReportsListRequestResponse()
+        public ReportsListRequestResponse()
         {
-            Projects = new List<Report>();
+            Reports = new List<Report>();
         }
-        public IEnumerable<Report> Projects { get; set; }
+        public IEnumerable<Report> Reports { get; set; }
 
         /// <summary>
         /// Total Count

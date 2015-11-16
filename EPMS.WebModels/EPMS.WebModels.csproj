@@ -802,9 +802,9 @@
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
-    <Compile Include="ViewModels\Reports\ProjectReportDetailVeiwModel.cs" />
-    <Compile Include="ViewModels\Reports\ProjectsReportsCreateViewModel.cs" />
-    <Compile Include="ViewModels\Reports\ProjectsReportsListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ListViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\TasksReportListViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportsCreateViewModel.cs" />

@@ -3,9 +3,9 @@ using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ViewModels.Reports
 {
-    public class ProjectReportDetailVeiwModel
+    public class DetailVeiwModel
     {
-        public ProjectReportDetailVeiwModel()
+        public DetailVeiwModel()
         {
             Projects=new List<WebsiteModels.Project>();
             ProjectTasks=new List<ProjectTask>();

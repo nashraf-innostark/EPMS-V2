@@ -22,7 +22,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         [SiteAuthorize(PermissionKey = "ProjectsTasksReport")]
         public ActionResult Index()
         {
-            var projectsReports = new ProjectsReportsListViewModel();
+            var projectsReports = new ListViewModel();
 
             return View(projectsReports);
         }
@@ -32,8 +32,8 @@ namespace EPMS.Web.Areas.Report.Controllers
             searchRequest.SearchString = Request["search"];
             var projectsAndTasksResponse = reportService.GetProjectsReports(searchRequest);
             var projectsList =
-                projectsAndTasksResponse.Projects.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
-            ProjectsReportsListViewModel projectsListViewModel = new ProjectsReportsListViewModel
+                projectsAndTasksResponse.Reports.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
+            ListViewModel projectsListViewModel = new ListViewModel
             {
                 aaData = projectsList,
                 iTotalRecords = Convert.ToInt32(projectsAndTasksResponse.TotalCount),

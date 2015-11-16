@@ -4,7 +4,6 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
-using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
@@ -22,22 +21,20 @@ namespace EPMS.Web.Areas.Report.Controllers
         //[SiteAuthorize(PermissionKey = "InventoryReports")]
         public ActionResult Index()
         {
-            var projectsReports = new ProjectsReportsListViewModel();
-
-            return View(projectsReports);
+            return View();
         }
         [HttpPost]
-        public ActionResult Index(ProjectReportSearchRequest searchRequest)
+        public ActionResult WarehouseIndex(WarehouseReportSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            var projectsAndTasksResponse = reportService.GetProjectsReports(searchRequest);
-            var projectsList =
-                projectsAndTasksResponse.Projects.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
-            ProjectsReportsListViewModel projectsListViewModel = new ProjectsReportsListViewModel
+            var response = reportService.GetWarehousesReports(searchRequest);
+            var data =
+                response.Reports.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
+            WarehouseReportsListViewModel projectsListViewModel = new WarehouseReportsListViewModel
             {
-                aaData = projectsList,
-                iTotalRecords = Convert.ToInt32(projectsAndTasksResponse.TotalCount),
-                iTotalDisplayRecords = Convert.ToInt32(projectsAndTasksResponse.FilteredCount),
+                aaData = data,
+                iTotalRecords = Convert.ToInt32(response.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(response.FilteredCount),
                 sEcho = searchRequest.sEcho
             };
             return Json(projectsListViewModel, JsonRequestBehavior.AllowGet);

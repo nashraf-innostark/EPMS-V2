@@ -97,11 +97,47 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Full.
+        /// </summary>
+        public static string Full {
+            get {
+                return ResourceManager.GetString("Full", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory System Reports.
+        /// </summary>
+        public static string InventorySystemListPageHeading {
+            get {
+                return ResourceManager.GetString("InventorySystemListPageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory System Reports List.
+        /// </summary>
+        public static string InventorySystemReportList {
+            get {
+                return ResourceManager.GetString("InventorySystemReportList", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Items Report.
         /// </summary>
         public static string ItemsReport {
             get {
                 return ResourceManager.GetString("ItemsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Not Full.
+        /// </summary>
+        public static string NotFull {
+            get {
+                return ResourceManager.GetString("NotFull", resourceCulture);
             }
         }
         
@@ -120,6 +156,15 @@ namespace EPMS.WebModels.Resources.Reports {
         public static string ProjectManagementReportListPageHeading {
             get {
                 return ResourceManager.GetString("ProjectManagementReportListPageHeading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Project Name.
+        /// </summary>
+        public static string ProjectName {
+            get {
+                return ResourceManager.GetString("ProjectName", resourceCulture);
             }
         }
         
@@ -192,6 +237,60 @@ namespace EPMS.WebModels.Resources.Reports {
         public static string ViewProjectReport {
             get {
                 return ResourceManager.GetString("ViewProjectReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Warehouse Report.
+        /// </summary>
+        public static string ViewWarehouseReport {
+            get {
+                return ResourceManager.GetString("ViewWarehouseReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creat Warehouse Report.
+        /// </summary>
+        public static string WarehouseCreateReport {
+            get {
+                return ResourceManager.GetString("WarehouseCreateReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Name.
+        /// </summary>
+        public static string WarehouseName {
+            get {
+                return ResourceManager.GetString("WarehouseName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Report.
+        /// </summary>
+        public static string WarehouseReport {
+            get {
+                return ResourceManager.GetString("WarehouseReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Report.
+        /// </summary>
+        public static string WarehouseReportTab {
+            get {
+                return ResourceManager.GetString("WarehouseReportTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouses Report.
+        /// </summary>
+        public static string WarehousesReport {
+            get {
+                return ResourceManager.GetString("WarehousesReport", resourceCulture);
             }
         }
     }

@@ -10,6 +10,7 @@
         public System.DateTime ReportCreatedDate { get; set; }
         public long? ProjectId { get; set; }
         public long? TaskId { get; set; }
+        public long? WarehouseId { get; set; }
 
 
         public string ReportCreatedDateString { get; set; }

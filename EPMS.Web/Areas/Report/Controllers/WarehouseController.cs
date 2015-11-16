@@ -5,6 +5,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
+using EPMS.Models.ResponseModels.ReportsResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
@@ -20,75 +21,45 @@ namespace EPMS.Web.Areas.Report.Controllers
     //[SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
     public class WarehouseController : BaseController
     {
-        private readonly IProjectService projectService;
         private readonly IReportService reportService;
+        private readonly IWarehouseService warehouseService;
 
-        public WarehouseController(IProjectService projectService, IReportService reportService)
+        public WarehouseController(IReportService reportService, IWarehouseService warehouseService)
         {
-            this.projectService = projectService;
             this.reportService = reportService;
+            this.warehouseService = warehouseService;
         }
 
-        //[SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
-        public ActionResult All(long? ReportId)
-        {
-            var request = new ProjectReportCreateOrDetailsRequest();
-            if(ReportId!=null)
-            {
-                request.ReportId = (long)ReportId;
-                request.RequesterRole = "Admin";
-                request.RequesterId = Session["UserID"].ToString();
-                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
-            }
-            
-            var projects = TempData["Projects"] as IEnumerable<Project>;
-            if (projects == null)
-                return RedirectToAction("Index", "ProjectsAndTasks");
-            return View(TempData["Projects"] as IEnumerable<Project>);
-        }
         //[SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()
         {
-            ProjectsReportsCreateViewModel projectsReportsCreateViewModel=new ProjectsReportsCreateViewModel
+            WarehouseReportCreateViewModel reportsCreateViewModel = new WarehouseReportCreateViewModel
             {
-                Projects = projectService.GetAllProjects().ToList().Select(x => x.CreateForDashboardDDL()).ToList()
+                Warehouses = warehouseService.GetAll().ToList().Select(x => x.CreateDDL()).ToList()
             };
-            return View(projectsReportsCreateViewModel);
+            return View(reportsCreateViewModel);
         }
         //[SiteAuthorize(PermissionKey = "DetailsSingleProjectReport")]
-        public ActionResult Details(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
+        public ActionResult Details(WarehouseReportCreateViewModel createViewModel)
         {
-            var request = new ProjectReportCreateOrDetailsRequest
+            var request = new WarehouseReportCreateOrDetailsRequest
             {
-                ProjectId = projectsReportsCreateViewModel.ProjectId,
-                ReportId = projectsReportsCreateViewModel.ReportId,
+                WarehouseId = createViewModel.WarehouseId,
+                ReportId = createViewModel.ReportId,
                 RequesterRole = Session["RoleName"].ToString(),
                 RequesterId = Session["UserID"].ToString()
             };
-            //Check if request came from "Report Create Page"
-            //var refrel = Request.UrlReferrer;
-            //if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
-            //    request.IsCreate = true;
-            if (projectsReportsCreateViewModel.ReportId==0)
+
+            if (createViewModel.ReportId == 0)
                     request.IsCreate = true;
 
-            if (projectsReportsCreateViewModel.ProjectId == 0 && projectsReportsCreateViewModel.ReportId == 0)
-            {
-                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+            var warehouses = reportService.SaveAndGetWarehouseReportDetails(request).Warehouses;
 
-                return RedirectToAction("All");
-            }
-              
-            ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
-            
-            if (projectsReportsCreateViewModel.ProjectId > 0 || projectsReportsCreateViewModel.ReportId > 0)
+            if (warehouses == null)
             {
-                var response = reportService.SaveAndGetProjectReportDetails(request);
-                detailVeiwModel.Projects = response.Projects.Select(x => x.CreateForReportDetails()).ToList();
-                detailVeiwModel.ProjectTasks = response.ProjectTasks.Select(x => x.CreateForReport()).ToList();
-                detailVeiwModel.ReportId = response.ReportId;
+                return RedirectToAction("Create");
             }
-            return View(detailVeiwModel);
+            return View(warehouses);
         }
     }
 }
