@@ -108,6 +108,7 @@
                     </table>
                 </div>
             </div>
+            
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
@@ -117,8 +118,15 @@
         </div>
     </div><!-- end container -->
 </form>
+<div id="GraphImage" style="display: none">
+    <img id="report_@Model.ReportId" />
+</div>
 
+
+<script src="~/Scripts/html2canvas/html2canvas.js"></script>
 <script>
+    var img;
+    var theCanvas;
     $(document).ready(function () {
         $('#tableProjectTasks,#tableProjectSubTasks').dataTable({
             "sPaginationType": "bootstrap",
@@ -128,20 +136,27 @@
                 });
             }
         });
+        DrawGraph();
+        // html to canvas
+        // here I am converting the html of graph to canvas
+        html2canvas($("#chart_01"), {
+            onrendered: function (canvas) {
+                // save canvas
+                theCanvas = canvas;
+                var imgId = "report_" + '@Model.ReportId';
+                SaveCanvasAsImage(theCanvas, imgId);
+                UploadImage(imgId);
+            }
+        });
     });
-    $(window).load(function () {
-
-
-
+    
+    function DrawGraph() {
         var markings = [
-
-{ color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
+            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
         ];
 
         var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
-
         var parsed = JSON.parse(graphItems);
-
         var datasets = [];
 
         $.each(parsed, function (index, val) {
@@ -162,18 +177,14 @@
         var choiceContainer = $("#choices");
         $.each(datasets, function (key, val) {
             choiceContainer.append("<input type='checkbox' style='float:left;margin-left: 20px;' name='" + key +
-				"' checked='checked' id='id" + key + "'></input>" +
-				"<label style='float:left;'for='id" + key + "'>"
-				+ val.label + "</label>");
+                "' checked='checked' id='id" + key + "'></input>" +
+                "<label style='float:left;'for='id" + key + "'>"
+                + val.label + "</label>");
         });
-
-
         choiceContainer.find("input").click(plotAccordingToChoices);
         function plotAccordingToChoices() {
-
             var data = [];
-            var dataArray = []
-
+            var dataArray = [];
             var xmaxl = 0;
             var xminl = 500000000;
             var ymaxl = 0;
@@ -185,11 +196,8 @@
                 var ymin = 5000000000;
                 var key = $(this).attr("name");
                 var datalenght = datasets[key].data.length;
-
                 for (n = 0; n < datalenght; n++) {
-
                     var x = datasets[key].data[n] + "";
-
                     var d = x.split(',');
                     var d1 = parseInt(d[0]);
                     var d2 = parseInt(d[1]);
@@ -206,9 +214,7 @@
                     if (ymin > d2) {
                         ymin = d2;
                     }
-
                 }
-
                 if (xmaxl < xmax) {
                     xmaxl = xmax;
                 }
@@ -221,14 +227,9 @@
                 if (yminl > ymin) {
                     yminl = ymin;
                 }
-
-
-
                 if (key && datasets[key]) {
                     data.push(datasets[key]);
                 }
-
-
             });
 
             var xzoomMin = xminl; var xZoomMax = xmaxl; var xPanMin = xminl; var xPanMax = xmaxl; var yzoomMin = yminl; var yZoomMax = ymaxl; var yPanMin = yminl; var yPanMax = ymaxl;
@@ -255,10 +256,7 @@
                     pan: {
                         interactive: true
                     }
-
-                }
-
-				);
+                });
             }
         }
 
@@ -296,19 +294,19 @@
         $("#chart_01").bind("plotpan", function (event, plot) {
             var axes = plot.getAxes();
             $(".message").html("Panning to x: " + axes.xaxis.min.toFixed(2)
-			+ " &ndash; " + axes.xaxis.max.toFixed(2)
-			+ " and y: " + axes.yaxis.min.toFixed(2)
-			+ " &ndash; " + axes.yaxis.max.toFixed(2));
+                + " &ndash; " + axes.xaxis.max.toFixed(2)
+                + " and y: " + axes.yaxis.min.toFixed(2)
+                + " &ndash; " + axes.yaxis.max.toFixed(2));
         });
 
         $("#chart_01").bind("plotzoom", function (event, plot) {
             var axes = plot.getAxes();
             $(".message").html("Zooming to x: " + axes.xaxis.min.toFixed(2)
-			+ " &ndash; " + axes.xaxis.max.toFixed(2)
-			+ " and y: " + axes.yaxis.min.toFixed(2)
-			+ " &ndash; " + axes.yaxis.max.toFixed(2));
+                + " &ndash; " + axes.xaxis.max.toFixed(2)
+                + " and y: " + axes.yaxis.min.toFixed(2)
+                + " &ndash; " + axes.yaxis.max.toFixed(2));
         });
 
         // drawGraphs();
-    });
+    }
 </script>

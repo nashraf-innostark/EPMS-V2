@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -92,6 +93,61 @@ namespace EPMS.Web.Areas.Report.Controllers
             }
             SetGraphData(detailVeiwModel);
             return View(detailVeiwModel);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdf(TaskReportsCreateViewModel viewModel)
+        {
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("ReportAsPdf", new { ReportId = viewModel.ReportId }) { FileName = "Project_Report.pdf" };
+        }
+
+        [AllowAnonymous]
+        public ActionResult ReportAsPdf(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
+        {
+            var request = new ProjectReportCreateOrDetailsRequest
+            {
+                ProjectId = projectsReportsCreateViewModel.ProjectId,
+                ReportId = projectsReportsCreateViewModel.ReportId,
+                RequesterRole = "Admin",
+                RequesterId = Session["UserID"].ToString()
+            };
+            //Check if request came from "Report Create Page"
+            //var refrel = Request.UrlReferrer;
+            //if (refrel != null && refrel.ToString().Contains("Report/Project/Create"))
+            //    request.IsCreate = true;
+            if (projectsReportsCreateViewModel.ReportId == 0)
+                request.IsCreate = true;
+
+            if (projectsReportsCreateViewModel.ProjectId == 0 && projectsReportsCreateViewModel.ReportId == 0)
+            {
+                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+
+                return RedirectToAction("All");
+            }
+
+            ProjectReportDetailVeiwModel detailVeiwModel = new ProjectReportDetailVeiwModel();
+
+            if (projectsReportsCreateViewModel.ProjectId > 0 || projectsReportsCreateViewModel.ReportId > 0)
+            {
+                var response = reportService.SaveAndGetProjectReportDetails(request);
+                detailVeiwModel.Projects = response.Projects.Select(x => x.CreateForReportDetails()).ToList();
+                detailVeiwModel.ProjectTasks = response.ProjectTasks.Select(x => x.CreateForReport()).ToList();
+                detailVeiwModel.ReportId = response.ReportId;
+            }
+            SetGraphData(detailVeiwModel);
+            var status = SetGraphImage(detailVeiwModel.ReportId);
+            detailVeiwModel.ImageSrc = SetGraphImage(detailVeiwModel.ReportId) != null ? status : "";
+            return View(detailVeiwModel);
+        }
+        private string SetGraphImage(long reportId)
+        {
+            string curFile = Server.MapPath(ConfigurationManager.AppSettings["ReportImage"]) + "report_" + reportId + ".png";
+            if (System.IO.File.Exists(curFile))
+            {
+                return "../.." + ConfigurationManager.AppSettings["ReportImage"] + "report_" + reportId + ".png";
+            }
+            return null;
         }
         private static long GetJavascriptTimestamp(DateTime input)
         {
@@ -200,10 +256,6 @@ namespace EPMS.Web.Areas.Report.Controllers
                 });
             }
             return detailVeiwModel;
-        }
-        public ActionResult GeneratePDF(ProjectsReportsCreateViewModel projectsReportsCreateViewModel)
-        {
-            return new ActionAsPdf("Create") { FileName = "ProjectDetailedReport.pdf" };
         }
     }
 }

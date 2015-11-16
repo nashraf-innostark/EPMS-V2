@@ -332,6 +332,7 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\ImageController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
     <Compile Include="Areas\Report\Controllers\TaskController.cs" />
@@ -1563,6 +1564,7 @@
     <Content Include="Areas\Report\Views\Task\ReportAsPdf.cshtml" />
     <Content Include="Areas\Report\Views\Task\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\TestTable.cshtml" />
+    <Content Include="Areas\Report\Views\Project\ReportAsPdf.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3771,6 +3773,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Report\Views\Image\" />
     <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />

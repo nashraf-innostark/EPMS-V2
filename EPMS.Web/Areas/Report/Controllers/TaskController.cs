@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
@@ -68,14 +69,13 @@ namespace EPMS.Web.Areas.Report.Controllers
             SetGraphData(detailViewModel);
             return View(detailViewModel);
         }
-
+        [AllowAnonymous]
         public ActionResult GeneratePdf(TaskReportsCreateViewModel viewModel)
         {
-            Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
-            return new ActionAsPdf("ReportAsPdf", new { ReportId = viewModel.ReportId }) { FileName = "Test.pdf", Cookies = cookies };
-            //return new ActionAsPdf("TestTable") { FileName = "Test.pdf", Cookies = cookies };
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("ReportAsPdf", new { ReportId = viewModel.ReportId }) { FileName = "Task_Report.pdf" };
         }
-
+        [AllowAnonymous]
         public ActionResult ReportAsPdf(TaskReportsCreateViewModel viewModel)
         {
             TaskReportDetailsResponse response = GetReportDetails(viewModel);
@@ -86,6 +86,8 @@ namespace EPMS.Web.Areas.Report.Controllers
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
             SetGraphData(detailViewModel);
+            var status = SetGraphImage(detailViewModel.ReportId);
+            detailViewModel.ImageSrc = SetGraphImage(detailViewModel.ReportId) != null ? status : "" ;
             return View(detailViewModel);
             //return new RazorPDF.PdfResult(detailViewModel, "ReportAsPdf");
         }
@@ -170,6 +172,16 @@ namespace EPMS.Web.Areas.Report.Controllers
                 });
             }
             return detailVeiwModel;
+        }
+
+        private string SetGraphImage(long reportId)
+        {
+            string curFile = Server.MapPath(ConfigurationManager.AppSettings["ReportImage"]) + "report_" + reportId + ".png";
+            if (System.IO.File.Exists(curFile))
+            {
+                return "../.." + ConfigurationManager.AppSettings["ReportImage"] + "report_" + reportId + ".png";
+            }
+            return null;
         }
 
         public ActionResult All(long? ReportId)
