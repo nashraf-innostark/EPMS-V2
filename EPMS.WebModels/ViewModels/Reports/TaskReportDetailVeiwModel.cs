@@ -12,6 +12,7 @@ namespace EPMS.WebModels.ViewModels.Reports
             GraphItems = new List<GraphItem>();
         }
         public long ReportId { get; set; }
+        public string ImageSrc { get; set; }
         public IList<ProjectTask> ProjectTasks { get; set; }
         public IList<ProjectTask> SubTasks { get; set; }
 

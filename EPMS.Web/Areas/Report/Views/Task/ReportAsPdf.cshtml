@@ -49,109 +49,133 @@
         #Reports table thead tr th {
             font-size: 15px !important;
         }
-        path.highcharts-tracker { display:none; }
-        g.highcharts-tracker, g.highcharts-tooltip, path[isShadow] { display:none; }
+
+        path.highcharts-tracker {
+            display: none;
+        }
+
+        g.highcharts-tracker, g.highcharts-tooltip, path[isShadow] {
+            display: none;
+        }
+        .main-content {
+            left: 0 !important;
+        }
+        body {
+            background-color: #F6F6F6;
+        }
     </style>
 </head>
 <body>
-    <form class="form-horizontal" id="validation_form">
-        <div class="container-fluid">
-            <div class="control-group row-fluid">
-                <!--Simple Chart begin-->
+    <div class="main-content">
+        <div class="breadcrumb-container">
+            <ul class="xbreadcrumbs">
+                <li>
+                    <a href="#">
+                        <i class="icon-photon home"></i>
+                    </a>
+                </li>
+                <li>
+                    <a href="#">
+                        @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+                    </a>
+                </li>
+                <li class="current">
+                    <a href="#">View Task Report</a>
+                </li>
+            </ul>
+        </div>
+        <header>
+            <i class="icon-big-notepad"></i>
+            <h2><small>View Task Report</small></h2>
+        </header>
+        <form class="form-horizontal" id="validation_form">
+            <div class="container-fluid">
                 <div class="control-group row-fluid">
-                    <div class="span12 span-inset-more">
-                        <div id="chart_01" style="height:250px;"></div>
-                        <div id="choices" style="height:20px;"></div>
+                    <!--Simple Chart begin-->
+                    <div class="control-group row-fluid">
+                        <div class="span12 span-inset-more">
+                            <img src="@Model.ImageSrc" />
+                            <div id="choices" style="height:20px;"></div>
+                        </div>
                     </div>
+                    <!--Simple Chart end-->
+
                 </div>
-                <!--Simple Chart end-->
-            </div>
-            <div class="control-group row-fluid" id="Reports">
-                <div class="row-fluid">
-                    <div class="span12">
-                        <table class="table table-striped table-responsive" id="tableProjectTasks">
-                            <thead class="cf sorthead">
-                                <tr>
-                                    <th>Serial</th>
-                                    <th>Task Name</th>
-                                    <th>Cost</th>
-                                    <th>Start Date</th>
-                                    <th>Delivery Date</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var tasks in Model.ProjectTasks)
-                                {
-                                    <tr class="gradeX">
-                                        <td>@(serialX++)</td>
-                                        <td>@(direction == "ltr" ? tasks.TaskNameE : tasks.TaskNameA)</td>
-                                        <td>@tasks.TotalCost</td>
-                                        <td>@tasks.StartDate</td>
-                                        <td>@tasks.EndDate</td>
-                                        <td></td>
+                <div class="control-group row-fluid" id="Reports">
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <table class="table table-striped table-responsive" id="tableProjectTasks">
+                                <thead class="cf sorthead">
+                                    <tr>
+                                        <th>Serial</th>
+                                        <th>Task Name</th>
+                                        <th>Cost</th>
+                                        <th>Start Date</th>
+                                        <th>Delivery Date</th>
+                                        <th>Status</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var tasks in Model.ProjectTasks)
+                                    {
+                                        <tr class="gradeX">
+                                            <td>@(serialX++)</td>
+                                            <td>@(direction == "ltr" ? tasks.TaskNameE : tasks.TaskNameA)</td>
+                                            <td>@tasks.TotalCost</td>
+                                            <td>@tasks.StartDate</td>
+                                            <td>@tasks.EndDate</td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
-                </div>
-                <br/>
-                <div class="row-fluid">
-                    <div class="span12">
-                        <table class="table table-striped table-responsive" id="tableProjectSubTasks">
-                            <thead class="cf sorthead">
-                                <tr>
-                                    <th>Serial</th>
-                                    <th>Sub Task Name</th>
-                                    <th>Cost</th>
-                                    <th>Start Date</th>
-                                    <th>Delivery Date</th>
-                                    <th>Assined to</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var subTasks in Model.SubTasks)
-                                {
-                                    <tr class="gradeX">
-                                        <td>@(serialY++)</td>
-                                        <td>@(direction == "ltr" ? subTasks.TaskNameE : subTasks.TaskNameA)</td>
-                                        <td>@subTasks.TotalCost</td>
-                                        <td>@subTasks.StartDate</td>
-                                        <td>@subTasks.EndDate</td>
-                                        <td>
-                                            @foreach (var emp in subTasks.TaskEmployees)
-                                            {
-                                                @:@(direction == "ltr" ? emp.EmployeeNameEn : emp.EmployeeNameAr)
-                                            }
-                                        </td>
-                                        <td></td>
+                    <div class="row-fluid">
+                        <div class="span12">
+                            <table class="table table-striped table-responsive" id="tableProjectSubTasks">
+                                <thead class="cf sorthead">
+                                    <tr>
+                                        <th>Serial</th>
+                                        <th>Sub Task Name</th>
+                                        <th>Cost</th>
+                                        <th>Start Date</th>
+                                        <th>Delivery Date</th>
+                                        <th>Assined to</th>
+                                        <th>Status</th>
                                     </tr>
-                                }
-                            </tbody>
-                        </table>
+                                </thead>
+                                <tbody>
+                                    @foreach (var subTasks in Model.SubTasks)
+                                    {
+                                        <tr class="gradeX">
+                                            <td>@(serialY++)</td>
+                                            <td>@(direction == "ltr" ? subTasks.TaskNameE : subTasks.TaskNameA)</td>
+                                            <td>@subTasks.TotalCost</td>
+                                            <td>@subTasks.StartDate</td>
+                                            <td>@subTasks.EndDate</td>
+                                            <td>
+                                                @foreach (var emp in subTasks.TaskEmployees)
+                                                {
+                                                    @:@(direction == "ltr" ? emp.EmployeeNameEn : emp.EmployeeNameAr)
+                                                }
+                                            </td>
+                                            <td></td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                        <div id="img-out"></div>
                     </div>
-                    <div id="img-out"></div>
                 </div>
-            </div>
-        </div><!-- end container -->
-    </form>
+            </div><!-- end container -->
+        </form>
+    </div>
     <script>
         var img;
         $(document).ready(function () {
             DrawGraph();
-            var theCanvas;
-            // html to canvas
-            // here i am converting the graph html to canvas
-            html2canvas($("#chart_01"), {
-                onrendered: function (canvas) {
-                    // save canvas
-                    theCanvas = canvas;
-                    SaveCanvasAsImage(theCanvas);
-                }
-            });
-
             //$('#tableProjectTasks,#tableProjectSubTasks').dataTable({
             //    "sPaginationType": "bootstrap",
             //    "fnInitComplete": function () {
@@ -161,26 +185,13 @@
             //    }
             //});
         });
-        $(window).load(function () {
-
-        });
-        function SaveCanvasAsImage(theCanvas) {
-            debugger;
-            img = theCanvas.toDataURL("image/png");
-            // remove graph and append image of this graph
-            //$("#chart_01").empty();
-            //$("#chart_01").append('<img src="' + img + '"/>');
-        }
         function DrawGraph() {
             var markings = [
-
                 { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
             ];
 
             var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
-
             var parsed = JSON.parse(graphItems);
-
             var datasets = [];
 
             $.each(parsed, function (index, val) {
@@ -205,14 +216,10 @@
                     "<label style='float:left;'for='id" + key + "'>"
                     + val.label + "</label>");
             });
-
-
             choiceContainer.find("input").click(plotAccordingToChoices);
             function plotAccordingToChoices() {
-
                 var data = [];
-                var dataArray = []
-
+                var dataArray = [];
                 var xmaxl = 0;
                 var xminl = 500000000;
                 var ymaxl = 0;
@@ -224,11 +231,8 @@
                     var ymin = 5000000000;
                     var key = $(this).attr("name");
                     var datalenght = datasets[key].data.length;
-
                     for (n = 0; n < datalenght; n++) {
-
                         var x = datasets[key].data[n] + "";
-
                         var d = x.split(',');
                         var d1 = parseInt(d[0]);
                         var d2 = parseInt(d[1]);
@@ -245,9 +249,7 @@
                         if (ymin > d2) {
                             ymin = d2;
                         }
-
                     }
-
                     if (xmaxl < xmax) {
                         xmaxl = xmax;
                     }
@@ -260,44 +262,36 @@
                     if (yminl > ymin) {
                         yminl = ymin;
                     }
-
-
-
                     if (key && datasets[key]) {
                         data.push(datasets[key]);
                     }
-
-
                 });
 
                 var xzoomMin = xminl; var xZoomMax = xmaxl; var xPanMin = xminl; var xPanMax = xmaxl; var yzoomMin = yminl; var yZoomMax = ymaxl; var yPanMin = yminl; var yPanMax = ymaxl;
                 if (data.length > 0) {
                     $.plot("#chart_01", data, {
-                            series: {
-                                lines: { show: true, fill: true }
-                            },
-                            grid: { hoverable: true, clickable: true, borderWidth: 1, color: '#bbb', markings: markings },
+                        series: {
+                            lines: { show: true, fill: true }
+                        },
+                        grid: { hoverable: true, clickable: true, borderWidth: 1, color: '#bbb', markings: markings },
 
-                            xaxis: {
-                                mode: "time",
-                                timeformat: "%y,%m",
-                                zoomRange: [xzoomMin, xZoomMax],
-                                panRange: [xPanMin, xPanMax]
-                            },
-                            yaxis: {
-                                zoomRange: [yzoomMin, yZoomMax],
-                                panRange: [yPanMin, yPanMax]
-                            },
-                            zoom: {
-                                interactive: true
-                            },
-                            pan: {
-                                interactive: true
-                            }
-
+                        xaxis: {
+                            mode: "time",
+                            timeformat: "%y,%m",
+                            zoomRange: [xzoomMin, xZoomMax],
+                            panRange: [xPanMin, xPanMax]
+                        },
+                        yaxis: {
+                            zoomRange: [yzoomMin, yZoomMax],
+                            panRange: [yPanMin, yPanMax]
+                        },
+                        zoom: {
+                            interactive: true
+                        },
+                        pan: {
+                            interactive: true
                         }
-
-                    );
+                    });
                 }
             }
 

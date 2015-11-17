@@ -28,6 +28,37 @@ function successSendMessage(data, status) {
 function errorSendMessage(e, status) {
 }
 
+// save canvas as image and append this image to div
+// parameters : canvas, div id to append image, image control id
+function SaveCanvasAsImage(theCanvas, imgId) {
+    img = theCanvas.toDataURL("image/png");
+    // append this image to form
+    $("#" + imgId).attr("src", img);
+}
+
+// upload graph image
+function UploadImage(imgId) {
+    //var formData = new FormData($('#' + formId)[0]);
+    var formData = $('#' + imgId).attr("src");
+    $.ajax({
+        type: "POST",
+        datatype: "json",
+        url: "/Report/Image/UploadReportChartImage",
+        data: {
+            base64String: formData,
+            imageName: imgId
+        },
+        success: function (data) {
+            // Set values
+            console.log(data.response);
+        },
+        error: function(data) {
+            console.log(data.response);
+        }
+    });
+    //$("#" + formId).submit();
+}
+
 function validateContactUsForm()
 {
     var listSimple = $('.contactus');
