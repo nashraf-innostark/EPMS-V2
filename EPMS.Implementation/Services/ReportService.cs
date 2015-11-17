@@ -75,8 +75,6 @@ namespace EPMS.Implementation.Services
                 {
                     var projectNewReport = new Report
                     {
-                        ProjectId = request.ProjectId,
-                        ReportCategoryId = (int)ReportCategory.Project,
                         ReportCreatedBy = request.RequesterId,
                         ReportCreatedDate = DateTime.Now,
                         ReportFromDate = DateTime.Now,
@@ -84,7 +82,7 @@ namespace EPMS.Implementation.Services
                     };
                     if (request.ProjectId > 0)
                     {
-                        projectNewReport.WarehouseId = request.ProjectId;
+                        projectNewReport.ProjectId = request.ProjectId;
                         projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
                     }
                     else
