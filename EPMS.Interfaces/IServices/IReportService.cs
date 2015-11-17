@@ -13,6 +13,7 @@ namespace EPMS.Interfaces.IServices
         bool AddReport(Report report);
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
         ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
         WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request);
         IEnumerable<Project> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request);

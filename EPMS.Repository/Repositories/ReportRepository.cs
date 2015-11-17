@@ -71,6 +71,17 @@ namespace EPMS.Repository.Repositories
                         { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
 
+        private readonly Dictionary<ProjectReportByColumn, Func<Report, object>> vendorReportClause =
+
+           new Dictionary<ProjectReportByColumn, Func<Report, object>>
+                    {
+                        { ProjectReportByColumn.Serial,  c => c.ReportId},
+                        { ProjectReportByColumn.ReportId,  c => c.ReportId},
+                        { ProjectReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
+                        { ProjectReportByColumn.ReportType, c => c.Warehouse.WarehouseNumber},
+                        { ProjectReportByColumn.ReportDateRange, c => c.ReportFromDate},
+                        { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
+                    };
         #endregion
 
         public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
@@ -80,10 +91,10 @@ namespace EPMS.Repository.Repositories
             long reportId=0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
-            int projectReportCategory = (int)ReportCategory.Project;
-            int allProjectsReportCategory = (int)ReportCategory.AllProjects;
+            int reportCategory = (int)ReportCategory.Project;
+            int allReportCategory = (int)ReportCategory.AllProjects;
             Expression<Func<Report, bool>> query =
-                s => (s.ReportCategoryId.Equals(projectReportCategory) || s.ReportCategoryId.Equals(allProjectsReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
+                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
                     ||
                     (s.ReportId.Equals(reportId)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
@@ -106,8 +117,8 @@ namespace EPMS.Repository.Repositories
             return new ReportsListRequestResponse
             {
                 Reports = queryData.ToList(), 
-                FilteredCount = DbSet.Count(query), 
-                TotalCount = DbSet.Count()
+                FilteredCount = DbSet.Count(query),
+                TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory))
             };
         }
 
@@ -148,7 +159,7 @@ namespace EPMS.Repository.Repositories
             {
                 Tasks = queryData.ToList(),
                 FilteredCount = DbSet.Count(query),
-                TotalCount = DbSet.Count()
+                TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(projectTaskReportCategory) || s.ReportCategoryId.Equals(projectAllTasksReportCategory) || s.ReportCategoryId.Equals(allProjectsAllTasksReportCategory))
             };
         }
 
@@ -162,8 +173,8 @@ namespace EPMS.Repository.Repositories
             int reportCategory = (int)ReportCategory.Warehouse;
             int allReportCategory = (int)ReportCategory.AllWarehouse;
             Expression<Func<Report, bool>> query =
-                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
-                    ||
+                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) && 
+                    ((string.IsNullOrEmpty(searchRequest.SearchString))||
                     (s.ReportId.Equals(reportId)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
@@ -177,8 +188,8 @@ namespace EPMS.Repository.Repositories
 
             IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
                 DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
-                .Where(query).OrderBy(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList()
-                :
+                .Where(query).OrderBy(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList():
+
                 DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
                 .Where(query).OrderByDescending(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
 
@@ -186,7 +197,43 @@ namespace EPMS.Repository.Repositories
             {
                 Reports = queryData.ToList(),
                 FilteredCount = DbSet.Count(query),
-                TotalCount = DbSet.Count()
+                TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory))
+            };
+        }
+
+        public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            long reportId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.SearchString))
+                Int64.TryParse(searchRequest.SearchString, out reportId);
+            int reportCategory = (int)ReportCategory.Vendor;
+            int allReportCategory = (int)ReportCategory.AllVendors;
+            Expression<Func<Report, bool>> query =
+                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) && ((string.IsNullOrEmpty(searchRequest.SearchString))
+                    ||
+                    (s.ReportId.Equals(reportId)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString))
+                    );
+
+            IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderBy(vendorReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList()
+                :
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderByDescending(vendorReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+
+            return new ReportsListRequestResponse
+            {
+                Reports = queryData.ToList(),
+                FilteredCount = DbSet.Count(query),
+                TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory))
             };
         }
     }

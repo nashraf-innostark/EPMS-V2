@@ -44,4 +44,24 @@ namespace EPMS.WebModels.ViewModels.Reports
 
         public string sEcho;
     }
+    public class VendorReportsListViewModel
+    {
+        public VendorReportsListViewModel()
+        {
+            aaData = new List<Report>();
+        }
+        public VendorReportSearchRequest VendorReportSearchRequest { get; set; }
+        public List<Report> aaData { get; set; }
+        /// <summary>
+        /// Total Records in DB
+        /// </summary>
+        public int iTotalRecords;
+
+        /// <summary>
+        /// Total Records Filtered
+        /// </summary>
+        public int iTotalDisplayRecords;
+
+        public string sEcho;
+    }
 }

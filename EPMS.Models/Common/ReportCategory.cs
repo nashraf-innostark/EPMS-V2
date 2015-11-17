@@ -9,5 +9,7 @@
         AllProjectsAllTasks=5,
         Warehouse=6,
         AllWarehouse=7,
+        Vendor=8,
+        AllVendors= 9,
     }
-    }
+}

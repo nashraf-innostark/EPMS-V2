@@ -65,7 +65,9 @@ namespace EPMS.Repository.Repositories
             long customerid = 0;
             if (request.RequesterRole != "Admin")
                 Int64.TryParse(request.RequesterId, out customerid);
-            var response = request.RequesterRole == "Admin" ? DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)) : DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid));
+            var response = request.RequesterRole == "Admin" ? 
+                DbSet.Include(x => x.ProjectTasks.All(y=>y.RecCreatedDt<=request.ReportCreatedDate)).Where(x => x.ProjectId.Equals(request.ProjectId)) :
+                DbSet.Include(x => x.ProjectTasks.All(y => y.RecCreatedDt <= request.ReportCreatedDate)).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid));
             return response;
         }
         public Project GetProjectForDashboard(string requester, long projectId)
