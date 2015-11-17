@@ -62,11 +62,32 @@ namespace EPMS.Repository.Repositories
         }
         public IEnumerable<Project> GetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
         {
+            var project=new Project();
+
             long customerid = 0;
-            if (request.RequesterRole != "Admin")
+            if (request.RequesterRole == "Customer")
                 Int64.TryParse(request.RequesterId, out customerid);
-            var response = request.RequesterRole == "Admin" ? DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)) : DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid));
-            return response;
+
+            var response = request.RequesterRole != "Customer" ?
+                DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)).ToList().Select(x=> new
+                {
+                    project=x,
+                    ProjectTasks = x.ProjectTasks.Where(y=>y.RecCreatedDt<=request.ReportCreatedDate).ToList()
+                }).Select(x=>x) :
+                DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid)).ToList().Select(x => new
+                {
+                    project = x,
+                    ProjectTasks = x.ProjectTasks.Where(y => y.RecCreatedDt <= request.ReportCreatedDate).ToList()
+                }).Select(x => x);
+
+            List<Project> projects=new List<Project>();
+            foreach (var projectInResponse in response)
+            {
+                var singleProject = projectInResponse.project;
+                singleProject.ProjectTasks = projectInResponse.ProjectTasks;
+                projects.Add(singleProject);
+            }
+            return projects;
         }
         public Project GetProjectForDashboard(string requester, long projectId)
         {

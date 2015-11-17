@@ -9,5 +9,6 @@ namespace EPMS.Interfaces.Repository
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
     }
 }

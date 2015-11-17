@@ -25,7 +25,7 @@
                     ? source.Project.NameE
                     : source.Project.NameA;
             }
-            if (source.WarehouseId != null)
+            else if (source.WarehouseId != null)
             {
                 report.WarehouseId = source.WarehouseId;
                 report.ReportCategoryItemTitle = source.Warehouse.WarehouseNumber;
