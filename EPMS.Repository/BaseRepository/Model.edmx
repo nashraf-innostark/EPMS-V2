@@ -1277,6 +1277,7 @@
           <Property Name="ReportCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="ProjectId" Type="bigint" />
           <Property Name="TaskId" Type="bigint" />
+          <Property Name="WarehouseId" Type="bigint" />
         </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
@@ -2995,6 +2996,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reports_Warehouse">
+          <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_RequestDetails_EmployeeRequests">
           <End Role="EmployeeRequests" Type="Self.EmployeeRequests" Multiplicity="1" />
           <End Role="RequestDetails" Type="Self.RequestDetails" Multiplicity="*" />
@@ -4081,6 +4094,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Reports_ReportCreatedByUser" Association="Self.FK_Reports_ReportCreatedByUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_Warehouse" Association="Self.FK_Reports_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouse" />
             <End Role="Reports" EntitySet="Reports" />
           </AssociationSet>
           <AssociationSet Name="FK_RequestDetails_EmployeeRequests" Association="Self.FK_RequestDetails_EmployeeRequests">
@@ -6533,6 +6550,10 @@
             <End Role="ProjectTask" EntitySet="ProjectTasks" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
+          <AssociationSet Name="FK_Reports_Warehouse" Association="EPMSInventoryModel.FK_Reports_Warehouse">
+            <End Role="Warehouse" EntitySet="Warehouses" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -6561,6 +6582,7 @@
           <NavigationProperty Name="ToTIRs" Relationship="EPMSInventoryModel.FK_TIRToWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIR" />
           <NavigationProperty Name="FromTIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistoryFromWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIRHistory" />
           <NavigationProperty Name="ToTIRHistories" Relationship="EPMSInventoryModel.FK_TIRHistoryToWarehouse_Warehouse" FromRole="Warehouse" ToRole="TIRHistory" />
+          <NavigationProperty Name="Reports" Relationship="EPMSInventoryModel.FK_Reports_Warehouse" FromRole="Warehouse" ToRole="Report" />
         </EntityType>
         <Association Name="FK_Warehouse_Employee">
           <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
@@ -8042,7 +8064,7 @@
           <Property Name="SubTitleEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="SubTitleAr" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="ImageOrder" Type="Int32" />
-          <Property Name="ImageName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImageName" Type="String" MaxLength="40" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Link" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="Position" Type="Int32" />
@@ -8645,6 +8667,8 @@
           <NavigationProperty Name="AspNetUser" Relationship="EPMSInventoryModel.FK_Reports_ReportCreatedByUser" FromRole="Report" ToRole="AspNetUser" />
           <NavigationProperty Name="Project" Relationship="EPMSInventoryModel.FK_Reports_Project" FromRole="Report" ToRole="Project" />
           <NavigationProperty Name="ProjectTask" Relationship="EPMSInventoryModel.FK_Reports_ProjectTask" FromRole="Report" ToRole="ProjectTask" />
+          <Property Name="WarehouseId" Type="Int64" />
+          <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_Reports_Warehouse" FromRole="Report" ToRole="Warehouse" />
         </EntityType>
         <Association Name="FK_Reports_ReportCreatedByUser">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -8679,6 +8703,18 @@
             </Principal>
             <Dependent Role="Report">
               <PropertyRef Name="TaskId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Reports_Warehouse">
+          <End Type="EPMSInventoryModel.Warehouse" Role="Warehouse" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Warehouse">
+              <PropertyRef Name="WarehouseId" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="WarehouseId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10505,6 +10541,7 @@
           <EntitySetMapping Name="Reports">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Report">
               <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
                 <ScalarProperty Name="ReportCreatedDate" ColumnName="ReportCreatedDate" />
@@ -10784,6 +10821,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_ReportCreatedByUser" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_Project" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_ProjectTask" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Reports_Warehouse" />
       </Diagram>
     </Diagrams>
   </Designer>

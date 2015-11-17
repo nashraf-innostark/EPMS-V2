@@ -1,7 +1,4 @@
-﻿using System;
-using System.Globalization;
-
-namespace EPMS.WebModels.ModelMappers.Reports
+﻿namespace EPMS.WebModels.ModelMappers.Reports
 {
     public static class ProjectReportMapper
     {
@@ -27,6 +24,11 @@ namespace EPMS.WebModels.ModelMappers.Reports
                 report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
                     ? source.Project.NameE
                     : source.Project.NameA;
+            }
+            if (source.WarehouseId != null)
+            {
+                report.WarehouseId = source.WarehouseId;
+                report.ReportCategoryItemTitle = source.Warehouse.WarehouseNumber;
             }
             else
             {

@@ -333,7 +333,9 @@
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Report\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\Report\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
     <Compile Include="Areas\Report\Controllers\TaskController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
@@ -1536,7 +1538,6 @@
     <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
     <Content Include="Areas\Report\Views\web.config" />
     <Content Include="Areas\Report\Views\ProjectsAndTasks\Index.cshtml" />
-    <Content Include="Areas\Report\Views\Project\Index.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <Content Include="Areas\Website\Views\Home\Index.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\ArticleCreate.cshtml" />
@@ -1562,9 +1563,12 @@
     <Content Include="Areas\Report\Views\Project\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\Inventory\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Details.cshtml" />
     <Content Include="Areas\Report\Views\Task\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\TestTable.cshtml" />
     <Content Include="Areas\Report\Views\Project\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

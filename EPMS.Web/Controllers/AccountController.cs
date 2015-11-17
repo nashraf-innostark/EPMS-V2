@@ -552,25 +552,109 @@ namespace IdentitySample.Controllers
             return View(model);
         }
 
-        private void UserWidgets(AspNetUser user, string roleName)
+        /*
+         * private void UserWidgets(AspNetUser user, string roleName)
         {
             var userId = user.Id;
             string[] adminWidgets =
             {
                 "MeetingWidget", "OrdersWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
-                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget"
+                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget",
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
             string[] employeeWidgets =
             {
                 "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
-                "MyTasksWidget"
+                "MyTasksWidget", "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
             string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
 
             string[] allWidgets =
             {
                 "RecruitmentWidget", "EmployeeRequestsWidget","OrdersWidget","ComplaintsWidget", "EmployeesWidget", 
-                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget"
+                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget", 
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
+            };
+
+            switch (roleName)
+            {
+                case "Admin":
+                    for (int i = 0; i < 10; i++)
+                    {
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = adminWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "Employee":
+                    for (int i = 0; i < 5; i++)
+                    {
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = employeeWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "Customer":
+                    for (int i = 0; i < 3; i++)
+                    {
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = customerWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+                case "All":
+                    for (int i = 0; i < allWidgets.Length; i++)
+                    {
+                        DashboardWidgetPreference preferences = new DashboardWidgetPreference
+                        {
+                            UserId = userId,
+                            WidgetId = allWidgets[i],
+                            SortNumber = i + 1
+                        };
+                        var preferenceToAdd = preferences.CreateFromClientToServerWidgetPreferences();
+                        PreferencesService.AddPreferences(preferenceToAdd);
+                    }
+                    break;
+            }
+        }
+         */
+
+        private void UserWidgets(AspNetUser user, string roleName)
+        {
+            var userId = user.Id;
+            string[] adminWidgets =
+            {
+                "MeetingWidget", "OrdersWidget", "ComplaintsWidget", "RecruitmentWidget", "MyTasksWidget",
+                "EmployeeRequestsWidget", "EmployeesWidget", "ProjectWidget", "PaymentWidget", "AlertsWidget",
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
+            };
+            string[] employeeWidgets =
+            {
+                "EmployeeRequestsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget",
+                "MyTasksWidget", "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
+            };
+            string[] customerWidgets = { "ComplaintsWidget", "OrdersWidget", "ProjectWidget" };
+
+            string[] allWidgets =
+            {
+                "RecruitmentWidget", "EmployeeRequestsWidget","OrdersWidget","ComplaintsWidget", "EmployeesWidget", 
+                "PaymentWidget", "AlertsWidget", "MeetingWidget", "MyProfileWidget", "PayrollWidget", "MyTasksWidget", "ProjectWidget", 
+                "RFIWidget", "RIFWidget", "DIFWidget", "TIRWidget", "IRFWidget", "POWidget"
             };
 
             switch (roleName)

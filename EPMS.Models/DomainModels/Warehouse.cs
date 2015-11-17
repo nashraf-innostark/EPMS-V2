@@ -30,5 +30,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<TIR> ToTIRs { get; set; }
         public virtual ICollection<TIRHistory> FromTIRHistories { get; set; }
         public virtual ICollection<TIRHistory> ToTIRHistories { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }

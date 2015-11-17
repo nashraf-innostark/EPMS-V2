@@ -1,7 +1,7 @@
 ﻿@using System.Configuration
-@model EPMS.WebModels.ViewModels.Reports.CreateViewModel
+@model EPMS.WebModels.ViewModels.Reports.WarehouseReportCreateViewModel
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport;
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.WarehouseCreateReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -14,13 +14,13 @@
             </a>
         </li>
         <li>
-            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
-                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Inventory/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.InventorySystemReportList
             </a>
 
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport
+            @EPMS.WebModels.Resources.Reports.Reports.WarehouseCreateReport
         </li>
     </ul>
 </div>
@@ -28,24 +28,24 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.WarehouseCreateReport</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
 
-@using (Html.BeginForm("Details", "Project", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Details", "Warehouse", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.Reports.Reports.ProjectName</label>
+                <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.Reports.Reports.WarehouseName</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.ProjectId, @direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), "All", new { @class = "select2me"})
+                    @Html.DropDownListFor(model => model.WarehouseId, new SelectList(Model.Warehouses, "WarehouseId", "WarehouseNumber"), "All", new { @class = "select2me" })
                 </div>
             </div>
 

@@ -364,7 +364,7 @@
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportDetailsResponse.cs" />
-    <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportsListRequestResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\ReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
@@ -407,6 +407,7 @@
     <Compile Include="ResponseModels\PCCreateResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\TaskReportDetailsResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\TaskReportsListRequestResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\WarehouseReportDetails.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />

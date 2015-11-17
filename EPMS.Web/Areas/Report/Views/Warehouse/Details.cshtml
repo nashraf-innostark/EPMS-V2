@@ -1,9 +1,9 @@
 ﻿@using System.Configuration
-@using EPMS.WebModels.WebsiteModels.Common
-@model IEnumerable<EPMS.WebModels.WebsiteModels.Project>
+@model IEnumerable<EPMS.Models.ResponseModels.ReportsResponseModels.WarehouseReportDetails>
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewWarehouseReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int serial = 1;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -14,13 +14,13 @@
             </a>
         </li>
         <li>
-            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
-                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            <a href="@ConfigurationManager.AppSettings["SiteURL"]/Report/Inventory/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.InventorySystemReportList
             </a>
 
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
+            @EPMS.WebModels.Resources.Reports.Reports.ViewWarehouseReport
         </li>
     </ul>
 </div>
@@ -28,7 +28,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.WarehouseReport</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -39,7 +39,6 @@
     <div class="container-fluid" id="container">
 
         <script>
-   
             $(document).ready(function() {
                 $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
                     "sPaginationType": "bootstrap",
@@ -62,13 +61,10 @@
                         <thead class="cf sorthead">
                             <tr>
                                 <th>Serial</th>
-                                <th>Project Name</th>
-                                <th>Price</th>
-                                <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Customer Name</th>
-                                <th>Status</th>
+                                <th>Warehouse Name</th>
+                                <th>Number of items Available</th>
+                                <th>Number of defective items Availabe</th>
+                                <th>Warehouses Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -77,27 +73,17 @@
                             {
                                 <tr class="gradeX">
 
-                                    <td>1</td>
-                                    <td>@project.NameE</td>
+                                    <td>@(serial++)</td>
+                                    <td>@project.WarehouseName</td>
                                     <td>
-                                        @project.Price
+                                        @project.AvailabelItems
                                     </td>
                                     <td>
-                                        @project.OtherCost
+                                        @project.DefectiveItems
                                     </td>
                                     <td>
-                                        @project.StartDate
+                                        @(project.IsFull?@EPMS.WebModels.Resources.Reports.Reports.Full:@EPMS.WebModels.Resources.Reports.Reports.NotFull)
                                     </td>
-                                    <td>
-                                        @project.EndDate
-                                    </td>
-                                    <td>
-                                        @project.CustomerNameE
-                                    </td>
-                                    <td>
-                                        @((ProjectStatus)project.Status)
-                                    </td>
-
                                 </tr>
                             }
                         </tbody>
@@ -110,11 +96,8 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-
-                @*<a type="button" class="btn" href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Project/GeneratePDF?ReportId=@Model.ReportId">Generate Report As PDF</a>*@
                 <button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>
             </div>
-
         </div>
     </div><!-- end form -->
 </form>
