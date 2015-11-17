@@ -1569,6 +1569,8 @@
     <Content Include="Areas\Report\Views\Task\TestTable.cshtml" />
     <Content Include="Areas\Report\Views\Project\ReportAsPdf.cshtml" />
     <Content Include="Areas\Report\Views\Warehouse\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Task\ReportAsPdfAll.cshtml" />
+    <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

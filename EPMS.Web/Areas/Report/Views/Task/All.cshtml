@@ -3,6 +3,7 @@
     ViewBag.Title = "Task Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    long reportId = (long) ViewBag.ReportId;
     int serial = 1;
 }
 
@@ -66,7 +67,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Generate Report As PDF</button>
+                <a class="btn" href="~/Report/Task/GeneratePdfAll?ReportId=@reportId">Generate Report As PDF</a>
             </div>
         </div>
     </div><!-- end container -->

@@ -1,4 +1,6 @@
-﻿namespace EPMS.Models.RequestModels.Reports
+﻿using System;
+
+namespace EPMS.Models.RequestModels.Reports
 {
     public class TaskReportCreateOrDetailsRequest
     {
@@ -8,5 +10,6 @@
         public string RequesterId { get; set; }
         public string RoleId { get; set; }
         public bool IsCreate { get; set; }
+        public DateTime ReportCreatedDate { get; set; }
     }
 }
