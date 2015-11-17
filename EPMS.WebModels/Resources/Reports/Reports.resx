@@ -184,9 +184,6 @@
     <value>Warehouse Report</value>
   </data>
   <data name="WarehouseReportTab" xml:space="preserve">
-    <value>Warehouse Report</value>
-  </data>
-  <data name="WarehousesReport" xml:space="preserve">
     <value>Warehouses Report</value>
   </data>
   <data name="Full" xml:space="preserve">
@@ -194,5 +191,20 @@
   </data>
   <data name="NotFull" xml:space="preserve">
     <value>Not Full</value>
+  </data>
+  <data name="CreateVendorReport" xml:space="preserve">
+    <value>Creat Vendor Report</value>
+  </data>
+  <data name="VendorName" xml:space="preserve">
+    <value>Vendor Name</value>
+  </data>
+  <data name="VendorReport" xml:space="preserve">
+    <value>Vendor Report</value>
+  </data>
+  <data name="VendorReportTab" xml:space="preserve">
+    <value>Vendors Report</value>
+  </data>
+  <data name="ViewVendorReport" xml:space="preserve">
+    <value>View Vendor Report</value>
   </data>
 </root>

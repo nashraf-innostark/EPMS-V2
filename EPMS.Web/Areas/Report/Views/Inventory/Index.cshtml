@@ -33,15 +33,15 @@
         <!--Tabs begin-->
         <div class="control-group row-fluid span-inset">
             <ul class="nav nav-tabs" id="myTab">
-                <li class="active"><a data-toggle="tab" href="#tab-example1">@EPMS.WebModels.Resources.Reports.Reports.ItemsReport</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-example2">Warehouses Report</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-example3">Vendors Report</a></li>
+                <li class="active"><a data-toggle="tab" href="#tab-items">@EPMS.WebModels.Resources.Reports.Reports.ItemsReport</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-warehouses">@EPMS.WebModels.Resources.Reports.Reports.WarehouseReportTab</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-vendors">@EPMS.WebModels.Resources.Reports.Reports.VendorReportTab</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-example4">Inventory Department Report</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-example5">Perchase Order Report</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-example6">Items Release Form Report</a></li>
             </ul>
             <div class="tab-content">
-                <div id="tab-example1" class="tab-pane fade active in">
+                <div id="tab-items" class="tab-pane fade active in">
                     <h3>
                         <small>
                             <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Project/Create">@EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport</a>
@@ -70,13 +70,36 @@
                         </div>
                     </div><!-- end container -->
                 </div>
-                <div id="tab-example2" class="tab-pane fade">
+                <div id="tab-warehouses" class="tab-pane fade">
                     <input type="hidden" id="warehousesTableSearchString" />
                     <h3> <small><a href="~/Report/Warehouse/Create">@EPMS.WebModels.Resources.Reports.Reports.WarehouseCreateReport</a></small></h3>
                     <div class="container-fluid">
                         <div class="row-fluid">
                             <div class="span12">
                                 <table class="table table-striped table-responsive" id="warehousesTable">
+                                    <thead class="cf sorthead">
+                                        <tr>
+                                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.Reports.Report</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.Reports.Createdby</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.Reports.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.Reports.Type</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.Reports.ReportDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div><!-- end container -->
+                </div>
+                <div id="tab-vendors" class="tab-pane fade">
+                    <input type="hidden" id="warehousesTableSearchString" />
+                    <h3> <small><a href="~/Report/Vendor/Create">@EPMS.WebModels.Resources.Reports.Reports.CreateVendorReport</a></small></h3>
+                    <div class="container-fluid">
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table class="table table-striped table-responsive" id="vendorsTable">
                                     <thead class="cf sorthead">
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
