@@ -662,6 +662,8 @@ namespace IdentitySample.Controllers
             customer.CustomerNameA = signupViewModel.CustomerNameA;
             customer.CustomerAddress = signupViewModel.Address;
             customer.CustomerMobile = signupViewModel.MobileNumber;
+            customer.RecCreatedDt = DateTime.Now;
+            customer.RecLastUpdatedDt = DateTime.Now;
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
             TempData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
 

@@ -12,6 +12,7 @@ namespace EPMS.Interfaces.IServices
         bool AddReport(Report report);
         ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
-
+        CustomerReportResponse SaveAndGetCustonerList(CustomerReportDetailRequest request);
+        QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request);
     }
 }

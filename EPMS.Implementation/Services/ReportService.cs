@@ -15,14 +15,18 @@ namespace EPMS.Implementation.Services
         #region Private
         private readonly IReportRepository reportRepository;
         private readonly IProjectRepository projectRepository;
+        private readonly ICustomerRepository customerRepository;
+        private readonly IQuotationRepository quotationRepository;
 
         #endregion
 
         #region Constructor
-        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository)
+        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository)
         {
             this.reportRepository = reportRepository;
             this.projectRepository = projectRepository;
+            this.customerRepository = customerRepository;
+            this.quotationRepository = quotationRepository;
         }
 
         #endregion
@@ -70,7 +74,66 @@ namespace EPMS.Implementation.Services
               ProjectTasks = response.FirstOrDefault().ProjectTasks
             };
         }
-        
+
+        public CustomerReportResponse SaveAndGetCustonerList(CustomerReportDetailRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var customerReport = new Report
+                {
+                    ReportCategoryId = (int) ReportCategory.AllCustomer,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                reportRepository.Add(customerReport);
+                reportRepository.SaveChanges();
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                request.StartDate = report.ReportFromDate;
+                request.EndDate = report.ReportToDate;
+
+            }
+            var response = customerRepository.GetCustomerReportList(request);
+            return new CustomerReportResponse
+            {
+                Customers = response
+            };
+        }
+
+        public QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var quotationInvoiceReport = new Report
+                {
+                    ReportCategoryId = (int)ReportCategory.AllQuotationInvoice,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                reportRepository.Add(quotationInvoiceReport);
+                reportRepository.SaveChanges();
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                request.StartDate = report.ReportFromDate;
+                request.EndDate = report.ReportToDate;
+            }
+            var quotationCount = quotationRepository.GetAll().Count();
+
+            return new QuotationInvoiceReportResponse
+            {
+                InvoicesCount = 0,
+                QuotationsCount = quotationCount,
+            };
+        }
+
         #endregion
     }
 }

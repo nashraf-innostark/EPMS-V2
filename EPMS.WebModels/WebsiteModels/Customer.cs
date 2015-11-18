@@ -25,6 +25,9 @@ namespace EPMS.WebModels.WebsiteModels
         [EmailAddress]
         public string Email { get; set; }
         public string UserId { get; set; }
+        
+        //For All Customers Report
+        public long ComplaintsCount { get; set; }
 
         //public IEnumerable<Order> Orders { get; set; }
     }

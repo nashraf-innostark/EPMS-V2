@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace EPMS.Models.Resources {
+namespace EPMS.WebModels.Resources.Reports {
     using System;
     
     
@@ -22,14 +22,14 @@ namespace EPMS.Models.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class General {
+    public class QuotationInvoice {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal General() {
+        internal QuotationInvoice() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.Models.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.Models.Resources.General", typeof(General).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.Reports.QuotationInvoice", typeof(QuotationInvoice).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,20 +61,65 @@ namespace EPMS.Models.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to This field is required.
+        ///   Looks up a localized string similar to All.
         /// </summary>
-        public static string RequiredField {
+        public static string All {
             get {
-                return ResourceManager.GetString("RequiredField", resourceCulture);
+                return ResourceManager.GetString("All", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Date is Required.
+        ///   Looks up a localized string similar to Employee Name.
         /// </summary>
-        public static string StartDateValidation {
+        public static string Employee {
             get {
-                return ResourceManager.GetString("StartDateValidation", resourceCulture);
+                return ResourceManager.GetString("Employee", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End Date.
+        /// </summary>
+        public static string EndDate {
+            get {
+                return ResourceManager.GetString("EndDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Report.
+        /// </summary>
+        public static string Generate {
+            get {
+                return ResourceManager.GetString("Generate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Generate Report as PDF.
+        /// </summary>
+        public static string GenerateAsPDF {
+            get {
+                return ResourceManager.GetString("GenerateAsPDF", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start Date.
+        /// </summary>
+        public static string StartDate {
+            get {
+                return ResourceManager.GetString("StartDate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create Quotation/Invoice Report.
+        /// </summary>
+        public static string Title {
+            get {
+                return ResourceManager.GetString("Title", resourceCulture);
             }
         }
     }

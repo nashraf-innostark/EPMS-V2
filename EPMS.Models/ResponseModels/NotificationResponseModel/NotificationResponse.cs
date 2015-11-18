@@ -7,10 +7,10 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
     public class NotificationResponse
     {
         public long NotificationId { get; set; }
-        [Required(ErrorMessageResourceType = typeof(WebModels.Resources.General), ErrorMessageResourceName = "RequiredField")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [StringLength(160, ErrorMessage = "Title cannot exceed 160 characters.")]
         public string TitleE { get; set; }
-        [Required(ErrorMessageResourceType = typeof(WebModels.Resources.General), ErrorMessageResourceName = "RequiredField")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         [StringLength(160, ErrorMessage = "Title cannot exceed 160 characters.")]
         public string TitleA { get; set; }
         public int CategoryId { get; set; }
@@ -18,9 +18,9 @@ namespace EPMS.Models.ResponseModels.NotificationResponseModel
         public long ItemId { get; set; }
         public int AlertBefore { get; set; }
         public int AlertDateType { get; set; }
-        [Required(ErrorMessageResourceType = typeof(WebModels.Resources.General), ErrorMessageResourceName = "RequiredField")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         public string AlertDate { get; set; }
-        [Required(ErrorMessageResourceType = typeof(WebModels.Resources.General), ErrorMessageResourceName = "RequiredField")]
+        [Required(ErrorMessageResourceType = typeof(Resources.General), ErrorMessageResourceName = "RequiredField")]
         public string AlertDateHijri { get; set; }
         public string UserId { get; set; }
         [Range(1, 10000000000000000000, ErrorMessage = "Please enter a valid number between 1 and 20.")]

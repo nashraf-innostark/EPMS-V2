@@ -216,6 +216,7 @@
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
+    <Compile Include="RequestModels\Reports\CustomerReportDetailRequest.cs" />
     <Compile Include="RequestModels\Reports\ProjectReportCreateOrDetailsRequest.cs" />
     <Compile Include="RequestModels\Reports\ProjectReportSearchRequest.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
@@ -225,6 +226,7 @@
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
+    <Compile Include="RequestModels\Reports\QuotationInvoiceDetailRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
@@ -330,14 +332,14 @@
     <Compile Include="RequestModels\WarehouseRequest.cs" />
     <Compile Include="RequestModels\WebsiteServiceSearchRequest.cs" />
     <Compile Include="Resources\General.ar.Designer.cs">
+      <DependentUpon>General.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>General.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\General.Designer.cs">
+      <DependentUpon>General.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>General.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Notification.ar.Designer.cs">
       <DependentUpon>Notification.ar.resx</DependentUpon>
@@ -357,6 +359,7 @@
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\CustomerReportResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportDetailsResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
@@ -399,6 +402,7 @@
     <Compile Include="ResponseModels\PurchaseOrderListResponse.cs" />
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\PCCreateResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\QuotationInvoiceReportResponse.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />
