@@ -334,31 +334,34 @@ namespace EPMS.Implementation.Services
         public void DeleteProjectTask(long taskId)
         {
             ProjectTask task = Repository.Find(taskId);
-            if (task != null)
-            {
-                if (task.TaskEmployees.Any())
-                {
-                    int count = task.TaskEmployees.Count();
-                    for (int i = 0; i < count; i++)
-                    {
-                        TaskEmployeeService.DeleteTaskEmployee(task.TaskEmployees.FirstOrDefault());
-                    }
-                }
-            }
-            if (task != null)
-            {
-                if (task.PreRequisitTask.Any())
-                {
-                    int count = task.PreRequisitTask.Count();
-                    for (int i = 0; i < count; i++)
-                    {
-                        //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
-                        task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
-                    }
-                    Repository.SaveChanges();
-                }
-            }
-            Repository.Delete(task);
+            task.IsDeleted = true;
+            task.DeletedDate = DateTime.Now;
+            //if (task != null)
+            //{
+            //    if (task.TaskEmployees.Any())
+            //    {
+            //        int count = task.TaskEmployees.Count();
+            //        for (int i = 0; i < count; i++)
+            //        {
+            //            TaskEmployeeService.DeleteTaskEmployee(task.TaskEmployees.FirstOrDefault());
+            //        }
+            //    }
+            //}
+            //if (task != null)
+            //{
+            //    if (task.PreRequisitTask.Any())
+            //    {
+            //        int count = task.PreRequisitTask.Count();
+            //        for (int i = 0; i < count; i++)
+            //        {
+            //            //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
+            //            task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
+            //        }
+            //        Repository.SaveChanges();
+            //    }
+            //}
+            //Repository.Delete(task);
+            Repository.Update(task);
             Repository.SaveChanges();
         }
 

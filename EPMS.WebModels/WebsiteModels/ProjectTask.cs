@@ -50,7 +50,9 @@ namespace EPMS.WebModels.WebsiteModels
         public long? ParentTask { get; set; }
         //public int SubTasksPercentageCount { get; set; }
         public decimal PrevTasksWeightSum { get; set; }
-        
+        public DateTime? DeletedDate { get; set; }
+        public bool IsDeleted { get; set; }
+
         public string PreReqTasks { get; set; }
         public List<ProjectTask> RequisitTasks { get; set; }
         public List<TaskEmployee> TaskEmployees { get; set; }

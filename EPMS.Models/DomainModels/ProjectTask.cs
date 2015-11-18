@@ -26,6 +26,8 @@ namespace EPMS.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public bool IsParent { get; set; }
         public long? ParentTask { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public bool IsDeleted { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual Project Project { get; set; }
