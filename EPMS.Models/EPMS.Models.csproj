@@ -173,6 +173,7 @@
     <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RFQ.cs" />
     <Compile Include="DomainModels\RFQItem.cs" />
+    <Compile Include="DomainModels\RfqOrder.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFHistory.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />

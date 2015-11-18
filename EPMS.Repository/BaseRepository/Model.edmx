@@ -1144,8 +1144,8 @@
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="IsParent" Type="bit" Nullable="false" />
           <Property Name="ParentTask" Type="bigint" />
-          <Property Name="DeletedDate" Type="datetime" />
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="PurchaseOrder">
           <Key>
@@ -1280,6 +1280,7 @@
           <Property Name="ProjectId" Type="bigint" />
           <Property Name="TaskId" Type="bigint" />
           <Property Name="WarehouseId" Type="bigint" />
+          <Property Name="RfqOrderId" Type="bigint" />
         </EntityType>
         <EntityType Name="RequestDetails">
           <Key>
@@ -1403,6 +1404,17 @@
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="RfqOrder">
+          <Key>
+            <PropertyRef Name="RfqOrderId" />
+          </Key>
+          <Property Name="RfqOrderId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="NoOfRfqs" Type="bigint" />
+          <Property Name="NoOfOrders" Type="bigint" />
+          <Property Name="CreatedByEn" Type="nvarchar" MaxLength="200" />
+          <Property Name="CreatedByAr" Type="nvarchar" MaxLength="200" />
         </EntityType>
         <EntityType Name="RIF">
           <Key>
@@ -2998,6 +3010,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Reports_RfqOrder">
+          <End Role="RfqOrder" Type="Self.RfqOrder" Multiplicity="0..1" />
+          <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RfqOrder">
+              <PropertyRef Name="RfqOrderId" />
+            </Principal>
+            <Dependent Role="Reports">
+              <PropertyRef Name="RfqOrderId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Reports_Warehouse">
           <End Role="Warehouse" Type="Self.Warehouse" Multiplicity="0..1" />
           <End Role="Reports" Type="Self.Reports" Multiplicity="*" />
@@ -3660,6 +3684,7 @@
           <EntitySet Name="RFIItemHistory" EntityType="Self.RFIItemHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFQ" EntityType="Self.RFQ" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RFQItem" EntityType="Self.RFQItem" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="RfqOrder" EntityType="Self.RfqOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIF" EntityType="Self.RIF" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFHistory" EntityType="Self.RIFHistory" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="RIFItem" EntityType="Self.RIFItem" Schema="dbo" store:Type="Tables" />
@@ -4096,6 +4121,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Reports_ReportCreatedByUser" Association="Self.FK_Reports_ReportCreatedByUser">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
+            <End Role="Reports" EntitySet="Reports" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Reports_RfqOrder" Association="Self.FK_Reports_RfqOrder">
+            <End Role="RfqOrder" EntitySet="RfqOrder" />
             <End Role="Reports" EntitySet="Reports" />
           </AssociationSet>
           <AssociationSet Name="FK_Reports_Warehouse" Association="Self.FK_Reports_Warehouse">
@@ -6556,6 +6585,11 @@
             <End Role="Warehouse" EntitySet="Warehouses" />
             <End Role="Report" EntitySet="Reports" />
           </AssociationSet>
+          <EntitySet Name="RfqOrders" EntityType="EPMSInventoryModel.RfqOrder" />
+          <AssociationSet Name="FK_Reports_RfqOrder" Association="EPMSInventoryModel.FK_Reports_RfqOrder">
+            <End Role="RfqOrder" EntitySet="RfqOrders" />
+            <End Role="Report" EntitySet="Reports" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -8673,6 +8707,8 @@
           <NavigationProperty Name="ProjectTask" Relationship="EPMSInventoryModel.FK_Reports_ProjectTask" FromRole="Report" ToRole="ProjectTask" />
           <Property Name="WarehouseId" Type="Int64" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_Reports_Warehouse" FromRole="Report" ToRole="Warehouse" />
+          <Property Name="RfqOrderId" Type="Int64" />
+          <NavigationProperty Name="RfqOrder" Relationship="EPMSInventoryModel.FK_Reports_RfqOrder" FromRole="Report" ToRole="RfqOrder" />
         </EntityType>
         <Association Name="FK_Reports_ReportCreatedByUser">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -8719,6 +8755,30 @@
             </Principal>
             <Dependent Role="Report">
               <PropertyRef Name="WarehouseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="RfqOrder">
+          <Key>
+            <PropertyRef Name="RfqOrderId" />
+          </Key>
+          <Property Name="RfqOrderId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="NoOfRfqs" Type="Int64" />
+          <Property Name="NoOfOrders" Type="Int64" />
+          <Property Name="CreatedByEn" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="CreatedByAr" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Reports" Relationship="EPMSInventoryModel.FK_Reports_RfqOrder" FromRole="RfqOrder" ToRole="Report" />
+        </EntityType>
+        <Association Name="FK_Reports_RfqOrder">
+          <End Type="EPMSInventoryModel.RfqOrder" Role="RfqOrder" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Report" Role="Report" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="RfqOrder">
+              <PropertyRef Name="RfqOrderId" />
+            </Principal>
+            <Dependent Role="Report">
+              <PropertyRef Name="RfqOrderId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -10547,6 +10607,7 @@
           <EntitySetMapping Name="Reports">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Report">
               <MappingFragment StoreEntitySet="Reports">
+                <ScalarProperty Name="RfqOrderId" ColumnName="RfqOrderId" />
                 <ScalarProperty Name="WarehouseId" ColumnName="WarehouseId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="ProjectId" ColumnName="ProjectId" />
@@ -10556,6 +10617,18 @@
                 <ScalarProperty Name="ReportFromDate" ColumnName="ReportFromDate" />
                 <ScalarProperty Name="ReportCategoryId" ColumnName="ReportCategoryId" />
                 <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="RfqOrders">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.RfqOrder">
+              <MappingFragment StoreEntitySet="RfqOrder">
+                <ScalarProperty Name="CreatedByAr" ColumnName="CreatedByAr" />
+                <ScalarProperty Name="CreatedByEn" ColumnName="CreatedByEn" />
+                <ScalarProperty Name="NoOfOrders" ColumnName="NoOfOrders" />
+                <ScalarProperty Name="NoOfRfqs" ColumnName="NoOfRfqs" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="RfqOrderId" ColumnName="RfqOrderId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -10828,6 +10901,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_Project" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_ProjectTask" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Reports_Warehouse" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.RfqOrder" Width="1.5" PointX="27.375" PointY="13.25" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Reports_RfqOrder" />
       </Diagram>
     </Diagrams>
   </Designer>
