@@ -174,15 +174,15 @@ namespace EPMS.Repository.Repositories
             IList<ProjectTask> response = new List<ProjectTask>();
             if (request.TaskId == 0 && request.ProjectId == 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x=>x.RecCreatedDt <= request.ReportCreatedDate).ToList();
             }
             else if (request.ProjectId > 0 && request.TaskId == 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.RecCreatedDt <= request.ReportCreatedDate).ToList();
             }
             else if (request.ProjectId > 0 && request.TaskId > 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId)).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId) && x.RecCreatedDt <= request.ReportCreatedDate).ToList();
             }
             return response;
         }

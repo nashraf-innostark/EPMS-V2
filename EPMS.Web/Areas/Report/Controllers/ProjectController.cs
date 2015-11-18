@@ -45,6 +45,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             var projects = TempData["Projects"] as IEnumerable<Project>;
             if (projects == null)
                 return RedirectToAction("Index", "ProjectsAndTasks");
+            ViewBag.ReportId = ReportId;
             return View(TempData["Projects"] as IEnumerable<Project>);
         }
         [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
@@ -137,6 +138,28 @@ namespace EPMS.Web.Areas.Report.Controllers
             var status = SetGraphImage(detailVeiwModel.ReportId);
             detailVeiwModel.ImageSrc = SetGraphImage(detailVeiwModel.ReportId) != null ? status : "";
             return View(detailVeiwModel);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long? ReportId)
+        {
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("ReportAsPdfAll", new { ReportId = ReportId }) { FileName = "Project_Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult ReportAsPdfAll(long? ReportId)
+        {
+            var request = new ProjectReportCreateOrDetailsRequest();
+            if (ReportId != null)
+            {
+                request.ReportId = (long)ReportId;
+                request.RequesterRole = "Admin";
+                request.RequesterId = Session["UserID"].ToString();
+                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+            }
+
+            var projects = TempData["Projects"] as IEnumerable<Project>;
+            return View(projects);
         }
         private string SetGraphImage(long reportId)
         {

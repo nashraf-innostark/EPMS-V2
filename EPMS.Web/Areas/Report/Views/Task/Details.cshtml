@@ -1,7 +1,7 @@
 ﻿@model EPMS.WebModels.ViewModels.Reports.TaskReportDetailVeiwModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "View Task Report";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     int serialX = 1;
@@ -112,7 +112,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn" href="~/Report/Task/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                <a class="btn disableBtn" href="~/Report/Task/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
                 @*<button type="button" class="btn">Generate Report As PDF</button>*@
             </div>
         </div>
@@ -127,7 +127,10 @@
 <script>
     var img;
     var theCanvas;
+    var reportId;
     $(document).ready(function () {
+        reportId = '@Model.ReportId';
+        $(".disableBtn").attr("disabled", true);
         $('#tableProjectTasks,#tableProjectSubTasks').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
@@ -143,11 +146,12 @@
             onrendered: function (canvas) {
                 // save canvas
                 theCanvas = canvas;
-                var imgId = "report_" + '@Model.ReportId';
+                var imgId = "report_" + reportId;
                 SaveCanvasAsImage(theCanvas, imgId);
                 UploadImage(imgId);
             }
         });
+        
     });
     
     function DrawGraph() {

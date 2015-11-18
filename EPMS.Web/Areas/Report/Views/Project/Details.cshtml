@@ -53,6 +53,7 @@
             });
 
             $(document).ready(function () {
+                $(".disableBtn").attr("disabled", true);
                 $('#tableSortableResMed,#tableSortableResMed2').dataTable({
                     "sPaginationType": "bootstrap",
                     "fnInitComplete": function () {
@@ -361,7 +362,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                <a class="btn disableBtn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
                 @*<button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>*@
             </div>
 

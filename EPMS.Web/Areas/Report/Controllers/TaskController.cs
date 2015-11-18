@@ -62,11 +62,12 @@ namespace EPMS.Web.Areas.Report.Controllers
             TaskReportDetailsResponse response = GetReportDetails(viewModel);
             TaskReportDetailVeiwModel detailViewModel = new TaskReportDetailVeiwModel
             {
-                ReportId = viewModel.ReportId,
+                ReportId = viewModel.ReportId != 0 ? viewModel.ReportId : response.ReportId,
                 ProjectTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()).ToList(),
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
             SetGraphData(detailViewModel);
+            ViewBag.QueryString = "?ReportId=" + detailViewModel.ReportId;
             return View(detailViewModel);
         }
         [AllowAnonymous]
@@ -90,6 +91,27 @@ namespace EPMS.Web.Areas.Report.Controllers
             detailViewModel.ImageSrc = SetGraphImage(detailViewModel.ReportId) != null ? status : "" ;
             return View(detailViewModel);
             //return new RazorPDF.PdfResult(detailViewModel, "ReportAsPdf");
+        }
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long? ReportId)
+        {
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("ReportAsPdfAll", new { ReportId = ReportId }) { FileName = "Task_Report.pdf" };
+        }
+
+        [AllowAnonymous]
+        public ActionResult ReportAsPdfAll(long? ReportId)
+        {
+            IEnumerable<ProjectTask> tasksList = new List<ProjectTask>();
+            var request = new TaskReportCreateOrDetailsRequest();
+            if (ReportId != null)
+            {
+                request.ReportId = (long)ReportId;
+                var tasks = reportService.GetAllProjectTasks(request).ToList();
+                tasksList = tasks.Any() ? tasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
+            }
+            return View(tasksList);
         }
 
         private static long GetJavascriptTimestamp(DateTime input)
@@ -196,6 +218,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 var tasks = reportService.GetAllProjectTasks(request).ToList();
                 tasksList = tasks.Any() ? tasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
             }
+            ViewBag.ReportId = ReportId;
             return View(tasksList);
         }
 

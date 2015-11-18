@@ -49,7 +49,8 @@ function UploadImage(imgId) {
             imageName: imgId
         },
         success: function (data) {
-            // Set values
+            // Enable button
+            $(".disableBtn").attr("disabled", false);
             console.log(data.response);
         },
         error: function(data) {

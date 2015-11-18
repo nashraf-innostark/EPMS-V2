@@ -194,22 +194,28 @@ namespace EPMS.Implementation.Services
                 else
                 {
                     var report = reportRepository.Find(request.ReportId);
+                if (report != null)
+                {
                     if (report.ProjectId != null) request.ProjectId = (long)report.ProjectId;
                     if (report.TaskId != null) request.TaskId = (long)report.TaskId;
+                    request.ReportCreatedDate = report.ReportCreatedDate;
+                }
                 }
                 var response = taskRepository.GetTaskReportDetails(request).ToList();
                 TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse
                 {
                     ProjectTasks = response.Where(x => x.ParentTask == null),
-                    SubTasks = response.Where(x => x.SubTasks != null).SelectMany(x => x.SubTasks)
+                SubTasks = response.Where(x=>x.SubTasks != null).SelectMany(x=>x.SubTasks),
+                ReportId = request.ReportId
                 };
                 return detailResponse;
             }
             private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)
             {
+            Report taskReportToCreate = new Report();
                 if (request.ProjectId == 0 && request.TaskId == 0)
                 {
-                    var taskReportToCreate = new Report
+                taskReportToCreate = new Report
                     {
                         ReportCategoryId = (int)ReportCategory.AllProjectsAllTasks,
                         ReportCreatedBy = request.RequesterId,
@@ -222,7 +228,7 @@ namespace EPMS.Implementation.Services
                 }
                 else if (request.ProjectId > 0 && request.TaskId == 0)
                 {
-                    var taskReportToCreate = new Report
+                taskReportToCreate = new Report
                     {
                         ProjectId = request.ProjectId,
                         ReportCategoryId = (int)ReportCategory.ProjectAllTasks,
@@ -236,7 +242,7 @@ namespace EPMS.Implementation.Services
                 }
                 else if (request.ProjectId > 0 && request.TaskId > 0)
                 {
-                    var taskReportToCreate = new Report
+                taskReportToCreate = new Report
                     {
                         ProjectId = request.ProjectId,
                         TaskId = request.TaskId,
@@ -249,6 +255,8 @@ namespace EPMS.Implementation.Services
                     reportRepository.Add(taskReportToCreate);
                     reportRepository.SaveChanges();
                 }
+            request.ReportId = taskReportToCreate.ReportId;
+            request.ReportCreatedDate = taskReportToCreate.ReportCreatedDate;
             }
         #endregion
     }
