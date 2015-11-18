@@ -470,6 +470,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Reports.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Reports\RfqOrder.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RfqOrder.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
       <DependentUpon>RFI.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -805,6 +810,7 @@
     <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\ListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\RfqOrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\TasksReportListViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportsCreateViewModel.cs" />
@@ -1252,6 +1258,10 @@
     <EmbeddedResource Include="Resources\Reports\Reports.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Reports.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\RfqOrder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RfqOrder.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

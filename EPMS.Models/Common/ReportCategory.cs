@@ -11,5 +11,7 @@
         AllWarehouse=7,
         Vendor=8,
         AllVendors= 9,
+        Customer=10,
+        AllCustomer=11,
     }
 }

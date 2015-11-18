@@ -174,22 +174,22 @@ namespace EPMS.Repository.Repositories
             IList<ProjectTask> response = new List<ProjectTask>();
             if (request.TaskId == 0 && request.ProjectId == 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).Where(x=>x.RecCreatedDt <= request.ReportCreatedDate).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
             }
             else if (request.ProjectId > 0 && request.TaskId == 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.RecCreatedDt <= request.ReportCreatedDate).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
             }
             else if (request.ProjectId > 0 && request.TaskId > 0)
             {
-                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId) && x.RecCreatedDt <= request.ReportCreatedDate).ToList();
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId) && x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
             }
             return response;
         }
 
         public IEnumerable<ProjectTask> GetAllTasks(DateTime createdBefore)
         {
-            return DbSet.Where(x => x.RecCreatedDt <= createdBefore);
+            return DbSet.Where(x => x.RecCreatedDt <= createdBefore && (!x.IsDeleted || x.DeletedDate >= createdBefore));
         }
     }
 }

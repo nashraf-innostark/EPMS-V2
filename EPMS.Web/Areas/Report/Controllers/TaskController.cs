@@ -12,9 +12,7 @@ using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Reports;
-//using RazorPDF;
 using EPMS.WebModels.WebsiteModels;
-using Org.BouncyCastle.Ocsp;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -57,6 +55,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             return View(model);
         }
 
+        [SiteAuthorize(PermissionKey = "ViewTaskReport")]
         public ActionResult Details(TaskReportsCreateViewModel viewModel)
         {
             TaskReportDetailsResponse response = GetReportDetails(viewModel);

@@ -333,6 +333,7 @@
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Report\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Report\Controllers\RFQOrderController.cs" />
     <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
     <Compile Include="Areas\Report\Controllers\InventoryController.cs" />
@@ -1571,6 +1572,7 @@
     <Content Include="Areas\Report\Views\Warehouse\Create.cshtml" />
     <Content Include="Areas\Report\Views\Task\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
+    <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
