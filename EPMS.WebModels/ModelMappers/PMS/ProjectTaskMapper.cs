@@ -22,7 +22,6 @@ namespace EPMS.WebModels.ModelMappers.PMS
             projectTask.TotalCost = source.TotalCost;
             projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
 
-            //projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
             projectTask.TaskProgressText = source.TaskProgress < 100 ? ProjectStatus.OnGoing.ToString() : ProjectStatus.Finished.ToString();
 
             var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;

@@ -1,8 +1,12 @@
-﻿namespace EPMS.WebModels.ModelMappers.Reports
+﻿using System;
+using System.Linq;
+using EPMS.Models.DomainModels;
+
+namespace EPMS.WebModels.ModelMappers.Reports
 {
     public static class ProjectReportMapper
     {
-        public static WebsiteModels.Report CreateProjectReportFromServerToClient(this Models.DomainModels.Report source)
+        public static WebsiteModels.Report CreateProjectReportFromServerToClient(this Report source)
         {
             var report = new WebsiteModels.Report
             {
@@ -46,7 +50,7 @@
             }
             return report;
         }
-        public static WebsiteModels.Report CreateTaskReportFromServerToClient(this Models.DomainModels.Report source)
+        public static WebsiteModels.Report CreateTaskReportFromServerToClient(this Report source)
         {
             var report = new WebsiteModels.Report
             {

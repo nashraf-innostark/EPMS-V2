@@ -1,4 +1,6 @@
-﻿namespace EPMS.Models.DomainModels
+﻿using System.Collections.Generic;
+
+namespace EPMS.Models.DomainModels
 {
     public class Report
     {
@@ -12,11 +14,17 @@
         public long? TaskId { get; set; }
         public long? WarehouseId { get; set; }
         public long? RfqOrderId { get; set; }
+        public long? EmployeeId { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Project Project { get; set; }
         public virtual ProjectTask ProjectTask { get; set; }
         public virtual Warehouse Warehouse { get; set; }
         public virtual RfqOrder RfqOrder { get; set; }
+        public virtual Employee Employee { get; set; }
+
+        public virtual ICollection<ReportProject> ReportProjects { get; set; }
+        public virtual ICollection<ReportProjectTask> ReportProjectTasks { get; set; }
+        public virtual ICollection<ReportTaskEmployee> ReportTaskEmployees { get; set; }
     }
 }

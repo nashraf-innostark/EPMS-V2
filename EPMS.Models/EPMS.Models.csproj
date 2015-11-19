@@ -216,6 +216,7 @@
     <Compile Include="ModelMapers\PoItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\ProjectMapper.cs" />
     <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
+    <Compile Include="ModelMapers\ReportsMappers.cs" />
     <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemMapper.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\Reports\QuotationInvoiceDetailRequest.cs" />
+    <Compile Include="RequestModels\Reports\RfqOrderCreateRequest.cs" />
     <Compile Include="RequestModels\Reports\TaskReportCreateOrDetailsRequest.cs" />
     <Compile Include="RequestModels\Reports\TaskReportSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />

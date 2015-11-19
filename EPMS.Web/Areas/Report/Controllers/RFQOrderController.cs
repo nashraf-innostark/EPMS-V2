@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
@@ -40,18 +41,21 @@ namespace EPMS.Web.Areas.Report.Controllers
         [HttpPost]
         public ActionResult Create(RfqOrderCreateViewModel viewModel)
         {
+            RfqOrderCreateRequest request = new RfqOrderCreateRequest
+            {
+                CustomerId = viewModel.CustomerId,
+                ReportFromDate = !string.IsNullOrEmpty(viewModel.StartDate) ? DateTime.ParseExact(viewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now,
+                ReportToDate = !string.IsNullOrEmpty(viewModel.EndDate) ? DateTime.ParseExact(viewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now,
+
+            };
             WebModels.WebsiteModels.Report report = new WebModels.WebsiteModels.Report();
             if (viewModel.CustomerId > 0)
             {
-                report.ReportCategoryId = (int) ReportCategory.Customer;
-                report.ReportFromDate = !string.IsNullOrEmpty(viewModel.StartDate) ? DateTime.ParseExact(viewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now;
-                report.ReportToDate = !string.IsNullOrEmpty(viewModel.EndDate) ? DateTime.ParseExact(viewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now;
+                request.ReportCategoryId = (int) ReportCategory.Customer;
             }
             else
             {
-                report.ReportCategoryId = (int) ReportCategory.AllCustomer;
-                report.ReportFromDate = !string.IsNullOrEmpty(viewModel.StartDate) ? DateTime.ParseExact(viewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now;
-                report.ReportToDate = !string.IsNullOrEmpty(viewModel.EndDate) ? DateTime.ParseExact(viewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : DateTime.Now;
+                request.ReportCategoryId = (int) ReportCategory.AllCustomer;
             }
 
             return RedirectToAction("");

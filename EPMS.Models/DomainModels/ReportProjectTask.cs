@@ -27,10 +27,11 @@ namespace EPMS.Models.DomainModels
         public Nullable<System.DateTime> DeletedDate { get; set; }
         public bool IsDeleted { get; set; }
         public int NoOfSubTasks { get; set; }
-
+        public long ReportId { get; set; }
         public virtual ReportProject ReportProject { get; set; }
         public virtual ICollection<ReportProjectTask> ReportProjectSubTasks { get; set; }
         public virtual ReportProjectTask ReportProjectParentTask { get; set; }
+        public virtual Report Report { get; set; }
         public virtual ICollection<ReportTaskEmployee> ReportTaskEmployees { get; set; }
     }
 }
