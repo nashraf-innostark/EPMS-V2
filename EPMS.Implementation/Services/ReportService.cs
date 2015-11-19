@@ -164,7 +164,8 @@ namespace EPMS.Implementation.Services
                 request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
 
                     //Fetch Report data
-                //projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
+                var response = projectRepository.GetProjectReportDetails(request).ToList();
+                projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
 
                     //Save Report and its data
                 reportRepository.Add(projectNewReport);
@@ -300,7 +301,7 @@ namespace EPMS.Implementation.Services
 
                     reportRepository.Add(taskReportToCreate);
                     reportRepository.SaveChanges();
-
+                    request.ReportId = taskReportToCreate.ReportId;
 
                     detailResponse.ProjectTasks = response.Where(x => x.ParentTask == null).Select(x => x.MapProjectTaskToReportProjectTask());
                     detailResponse.SubTasks = response.Where(x => x.SubTasks != null).SelectMany(x => x.SubTasks).Select(x => x.MapProjectTaskToReportProjectTask());
@@ -317,14 +318,7 @@ namespace EPMS.Implementation.Services
                         detailResponse.SubTasks = report.ReportProjectTasks.Where(x => x.ReportProjectSubTasks != null).SelectMany(x => x.ReportProjectSubTasks).ToList();
                     }
             }
-                //var response = taskRepository.GetTaskReportDetails(request).ToList();
-                //TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse
-                //{
-                //    ProjectTasks = response.Where(x => x.ParentTask == null),
-                //    SubTasks = response.Where(x=>x.SubTasks != null).SelectMany(x=>x.SubTasks),
-                //    detailResponse.ReportId = request.ReportId
-                //};
-                detailResponse.ReportId = request.ReportId;
+            detailResponse.ReportId = request.ReportId;
             return detailResponse;
         }
         private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)

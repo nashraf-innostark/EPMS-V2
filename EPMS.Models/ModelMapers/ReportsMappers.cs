@@ -64,7 +64,7 @@ namespace EPMS.Models.ModelMapers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
-                ReportProjectSubTasks = source.SubTasks.Select(x=>x.MapProjectTaskToReportProjectTask()).ToList(),
+                //ReportProjectSubTasks = source.SubTasks.Select(x=>x.MapProjectTaskToReportProjectTask()).ToList(),
                 ReportTaskEmployees = source.TaskEmployees.Select(x=>x.MapTaskEmployeeToReportTaskEmployee()).ToList()
             };
 
