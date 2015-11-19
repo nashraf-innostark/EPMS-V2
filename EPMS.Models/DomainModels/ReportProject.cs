@@ -11,21 +11,21 @@ namespace EPMS.Models.DomainModels
         public string SerialNo { get; set; }
         public string DescriptionE { get; set; }
         public string DescriptionA { get; set; }
-        public Nullable<System.DateTime> StartDate { get; set; }
-        public Nullable<System.DateTime> EndDate { get; set; }
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
         public int Status { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
         public string NotesForCustomerE { get; set; }
         public string NotesForCustomerA { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public System.DateTime RecLastUpdatedDate { get; set; }
-        public Nullable<decimal> OtherCost { get; set; }
-        public Nullable<decimal> Price { get; set; }
+        public DateTime RecLastUpdatedDate { get; set; }
+        public decimal? OtherCost { get; set; }
+        public decimal? Price { get; set; }
         public int NoOfTasks { get; set; }
-        public Nullable<long> ReportId { get; set; }
+        public long? ReportId { get; set; }
         public string CustomerNameE { get; set; }
         public string CustomerNameA { get; set; }
 

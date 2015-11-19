@@ -5,6 +5,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels.ReportsResponseModels;
 
@@ -61,7 +62,7 @@ namespace EPMS.Implementation.Services
             }
            
         #endregion
-        #region Reports Details Views
+        #region Create Reports and Details Views
             public bool AddReport(Report report)
             {
                 reportRepository.Add(report);
@@ -89,10 +90,14 @@ namespace EPMS.Implementation.Services
                     {
                         projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
                     }
+
+                    request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
+
+                    var response = projectRepository.GetProjectReportDetails(request).ToList();
+                    projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
                     reportRepository.Add(projectNewReport);
                     reportRepository.SaveChanges();
                     request.ReportId = projectNewReport.ReportId;
-                    request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
                 }
                 else
                 {
@@ -103,12 +108,12 @@ namespace EPMS.Implementation.Services
                         request.ReportCreatedDate = report.ReportCreatedDate;
                     }
                 }
-                var response = projectRepository.GetProjectReportDetails(request).ToList();
+                
                 return new ProjectReportDetailsResponse
                 {
                     ReportId = request.ReportId,
-                    Projects = response,
-                    ProjectTasks = response.FirstOrDefault().ProjectTasks
+                    //Projects = response,
+                    //ProjectTasks = response.FirstOrDefault().ProjectTasks
                 };
             }
             public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
