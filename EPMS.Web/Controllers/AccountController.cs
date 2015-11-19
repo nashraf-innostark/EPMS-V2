@@ -8,7 +8,6 @@ using EPMS.WebModels.ViewModels.Admin;
 using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
-//using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -1267,6 +1266,7 @@ namespace IdentitySample.Controllers
         }
 
         #endregion
+
         private void updateSessionValues(AspNetUser user)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());
