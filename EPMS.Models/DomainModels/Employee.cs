@@ -43,5 +43,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<NotificationRecipient> NotificationRecipients { get; set; }
         public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
-        }
+        public virtual ICollection<Report> Reports { get; set; }
+    }
 }

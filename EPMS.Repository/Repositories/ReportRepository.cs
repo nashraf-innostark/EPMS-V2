@@ -43,6 +43,18 @@ namespace EPMS.Repository.Repositories
                         { ProjectReportByColumn.ReportDateRange, c => c.ReportFromDate},
                         { ProjectReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
                     };
+        //For Customer Services Reports
+        private readonly Dictionary<CustomerReportByColumn, Func<Report, object>> customerReportClause =
+
+            new Dictionary<CustomerReportByColumn, Func<Report, object>>
+                    {
+                        { CustomerReportByColumn.Serial,  c => c.ReportId},
+                        { CustomerReportByColumn.ReportId,  c => c.ReportId},
+                        { CustomerReportByColumn.ReportCreatedBy, c => c.AspNetUser.Employee.EmployeeFirstNameE},
+                        { CustomerReportByColumn.ReportType, c => c.Employee.EmployeeFirstNameE},
+                        { CustomerReportByColumn.ReportDateRange, c => c.ReportFromDate},
+                        { CustomerReportByColumn.ReportCreatedDate, c => c.ReportCreatedDate}
+                    };
 
         /// <summary>
         /// Order by Column Names Dictionary statements for Task
@@ -235,6 +247,17 @@ namespace EPMS.Repository.Repositories
                 FilteredCount = DbSet.Count(query),
                 TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory))
             };
+        }
+
+        public CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request)
+        {
+            int fromRow = request.iDisplayStart;
+            int toRow = request.iDisplayStart + request.iDisplayLength;
+            long reportId = 0;
+            if (!string.IsNullOrEmpty(request.SearchString))
+                Int64.TryParse(request.SearchString, out reportId);
+
+            return new CustomerReportListResponse();
         }
     }
 }

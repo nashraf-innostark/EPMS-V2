@@ -332,6 +332,8 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Report\Controllers\CustomerServiceController.cs" />
     <Compile Include="Areas\Report\Controllers\ImageController.cs" />
     <Compile Include="Areas\Report\Controllers\RFQOrderController.cs" />
     <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
@@ -339,6 +341,7 @@
     <Compile Include="Areas\Report\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
     <Compile Include="Areas\Report\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Report\Controllers\QuotationInvoiceController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
@@ -1560,6 +1563,9 @@
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
     <Content Include="Areas\Report\Views\Project\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Customer\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Customer\Detail.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\Create.cshtml" />
     <Content Include="Areas\Report\Views\Task\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />

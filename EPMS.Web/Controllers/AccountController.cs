@@ -8,7 +8,6 @@ using EPMS.WebModels.ViewModels.Admin;
 using EPMS.WebModels.WebsiteModels;
 using EPMS.Web.Models;
 using IdentitySample.Models;
-//using iTextSharp.text.pdf.qrcode;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
@@ -759,6 +758,8 @@ namespace IdentitySample.Controllers
             customer.CustomerNameA = signupViewModel.CustomerNameA;
             customer.CustomerAddress = signupViewModel.Address;
             customer.CustomerMobile = signupViewModel.MobileNumber;
+            customer.RecCreatedDt = DateTime.Now;
+            customer.RecLastUpdatedDt = DateTime.Now;
             EPMS.Models.DomainModels.Customer addedCustomer = customerService.AddCustomer(customer);
             TempData["Note"] = "Confirmation Email has been sent to " + signupViewModel.Email + " Please verify your account.";
 
@@ -1265,6 +1266,7 @@ namespace IdentitySample.Controllers
         }
 
         #endregion
+
         private void updateSessionValues(AspNetUser user)
         {
             AspNetUser result = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().FindById(User.Identity.GetUserId());

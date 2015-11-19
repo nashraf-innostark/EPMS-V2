@@ -16,196 +16,264 @@ namespace EPMS.Implementation.Services
         #region Private
         private readonly IReportRepository reportRepository;
         private readonly IProjectRepository projectRepository;
+        private readonly ICustomerRepository customerRepository;
+        private readonly IQuotationRepository quotationRepository;
         private readonly IProjectTaskRepository taskRepository;
         private readonly IWarehouseRepository warehouseRepository;
 
         #endregion
         #region Constructor
-        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
+        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
         {
             this.reportRepository = reportRepository;
             this.projectRepository = projectRepository;
+            this.customerRepository = customerRepository;
+            this.quotationRepository = quotationRepository;
             this.taskRepository = taskRepository;
             this.warehouseRepository = warehouseRepository;
         }
 
         #endregion
         #region Reports List Views
-            public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
+        public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
+        {
+            return reportRepository.GetProjectsReports(projectReportSearchRequest);
+        }
+        public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
+        {
+            return reportRepository.GetWarehousesReports(searchRequest);
+        }
+        public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
+        {
+            return reportRepository.GetVendorsReports(searchRequest);
+        }
+
+        public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
+        {
+            return reportRepository.GetTasksReports(taskReportSearchRequest);
+        }
+
+        public IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request)
+        {
+            var createdBefore = DateTime.Now;
+            var report = reportRepository.Find(request.ReportId);
+            if (report != null)
             {
-                return reportRepository.GetProjectsReports(projectReportSearchRequest);
+                createdBefore = report.ReportCreatedDate;
             }
-            public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
+            var response = taskRepository.GetAllTasks(createdBefore).ToList();
+            return response;
+        }
+
+        public CustomerReportResponse SaveAndGetCustomerList(CustomerReportDetailRequest request)
+        {
+            if (request.IsCreate)
             {
-                return reportRepository.GetWarehousesReports(searchRequest);
-            }
-            public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
-            {
-                return reportRepository.GetVendorsReports(searchRequest);
-            }
-           
-            public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
-            {
-                return reportRepository.GetTasksReports(taskReportSearchRequest);
-            }
-          
-            public IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request)
-            {
-                var createdBefore = DateTime.Now;
-                var report = reportRepository.Find(request.ReportId);
-                if (report != null)
+                var customerReport = new Report
                 {
-                    createdBefore = report.ReportCreatedDate;
-                }
-                var response = taskRepository.GetAllTasks(createdBefore).ToList();
-                return response;
+                    ReportCategoryId = (int)ReportCategory.AllCustomer,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                reportRepository.Add(customerReport);
+                reportRepository.SaveChanges();
             }
-           
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                request.StartDate = report.ReportFromDate;
+                request.EndDate = report.ReportToDate;
+
+            }
+            var response = customerRepository.GetCustomerReportList(request);
+            return new CustomerReportResponse
+            {
+                Customers = response
+            };
+        }
+
+        public QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var quotationInvoiceReport = new Report
+                {
+                    ReportCategoryId = (int)ReportCategory.AllQuotationInvoice,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                reportRepository.Add(quotationInvoiceReport);
+                reportRepository.SaveChanges();
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                request.StartDate = report.ReportFromDate;
+                request.EndDate = report.ReportToDate;
+            }
+            var quotationCount = quotationRepository.GetAll().Count();
+
+            return new QuotationInvoiceReportResponse
+            {
+                InvoicesCount = 0,
+                QuotationsCount = quotationCount,
+            };
+        }
+
+        public CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request)
+        {
+            return reportRepository.GetCustomerServiceReports(request);
+        }
+
         #endregion
         #region Create Reports and Details Views
-            public bool AddReport(Report report)
-            {
-                reportRepository.Add(report);
-                reportRepository.SaveChanges();
-                return true;
-            }
-           
-            public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
-            {
-                ProjectReportDetailsResponse reportResponse=new ProjectReportDetailsResponse();
-                if (request.IsCreate)
-                {
-                    var projectNewReport = new Report
-                    {
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
-                    if (request.ProjectId > 0)
-                    {
-                        projectNewReport.ProjectId = request.ProjectId;
-                        projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
-                    }
-                    else
-                    {
-                        projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
-                    }
 
-                    request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
+        public bool AddReport(Report report)
+        {
+            reportRepository.Add(report);
+            reportRepository.SaveChanges();
+            return true;
+        }
+
+        public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
+        {
+                ProjectReportDetailsResponse reportResponse=new ProjectReportDetailsResponse();
+            if (request.IsCreate)
+            {
+                var projectNewReport = new Report
+                {
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.ProjectId > 0)
+                {
+                    projectNewReport.ProjectId = request.ProjectId;
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
+                }
+                else
+                {
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
+                }
+
+                request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
 
                     //Fetch Report data
-                    var response = projectRepository.GetProjectReportDetails(request).ToList();
+                //projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
 
                     //Save Report and its data
-                    projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
-                    reportRepository.Add(projectNewReport);
-                    reportRepository.SaveChanges();
+                reportRepository.Add(projectNewReport);
+                reportRepository.SaveChanges();
 
 
                     //Result Data to be Returned
-                    request.ReportId = projectNewReport.ReportId;
+                request.ReportId = projectNewReport.ReportId;
                     reportResponse.Projects = projectNewReport.ReportProjects;
                     reportResponse.ProjectTasks = projectNewReport.ReportProjectTasks;
-                }
-                else
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                if (report.ProjectId != null)
                 {
-                    var report = reportRepository.Find(request.ReportId);
-                    if (report.ProjectId != null)
-                    {
-                        request.ProjectId = (long)report.ProjectId;
-                        request.ReportCreatedDate = report.ReportCreatedDate;
+                    request.ProjectId = (long)report.ProjectId;
+                    request.ReportCreatedDate = report.ReportCreatedDate;
 
                         reportResponse.Projects = report.ReportProjects;
                         reportResponse.ProjectTasks = report.ReportProjectTasks;
-                    }
                 }
+            }
                 reportResponse.ReportId = request.ReportId;
                 return reportResponse;
-            }
-            public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
+        }
+        public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
+        {
+            if (request.IsCreate)
             {
-                if (request.IsCreate)
+                var newReport = new Report
                 {
-                    var newReport = new Report
-                    {
 
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
-                    if (request.WarehouseId > 0)
-                    {
-                        newReport.WarehouseId = request.WarehouseId;
-                        newReport.ReportCategoryId = (int)ReportCategory.Warehouse;
-                    }
-                    else
-                    {
-                        newReport.ReportCategoryId = (int)ReportCategory.AllWarehouse;
-                    }
-
-                    reportRepository.Add(newReport);
-                    reportRepository.SaveChanges();
-                    request.ReportId = newReport.ReportId;
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.WarehouseId > 0)
+                {
+                    newReport.WarehouseId = request.WarehouseId;
+                    newReport.ReportCategoryId = (int)ReportCategory.Warehouse;
                 }
                 else
                 {
-                    var report = reportRepository.Find(request.ReportId);
-                    if (report.WarehouseId != null)
-                    {
-                        request.ReportCreatedDate = report.ReportCreatedDate;
-                        request.WarehouseId = (long)report.WarehouseId;
-                    }
-                       
+                    newReport.ReportCategoryId = (int)ReportCategory.AllWarehouse;
                 }
-                var warehouses = warehouseRepository.GetWarehouseReportDetails(request);
 
-                return new WarehouseReportDetailsResponse
-                {
-                    ReportId = request.ReportId,
-                    Warehouses = warehouses
-                };
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+                request.ReportId = newReport.ReportId;
             }
-            public IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
+            else
             {
-                var createdBefore = DateTime.Now;
-                var resultResponse = new List<ReportProject>();
-                if (request.IsCreate)
+                var report = reportRepository.Find(request.ReportId);
+                if (report.WarehouseId != null)
                 {
-                    var projectNewReport = new Report
-                    {
-                        ReportCategoryId = (int)ReportCategory.AllProjects,
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
-                    if (request.ProjectId > 0)
-                    {
-                        projectNewReport.ProjectId = request.ProjectId;
-                        projectNewReport.ReportCreatedDate = request.ReportCreatedDate;
-                    }
+                    request.ReportCreatedDate = report.ReportCreatedDate;
+                    request.WarehouseId = (long)report.WarehouseId;
+                }
+
+            }
+            var warehouses = warehouseRepository.GetWarehouseReportDetails(request);
+
+            return new WarehouseReportDetailsResponse
+            {
+                ReportId = request.ReportId,
+                Warehouses = warehouses
+            };
+        }
+            public IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
+        {
+            var createdBefore = DateTime.Now;
+                var resultResponse = new List<ReportProject>();
+            if (request.IsCreate)
+            {
+                var projectNewReport = new Report
+                {
+                    ReportCategoryId = (int)ReportCategory.AllProjects,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.ProjectId > 0)
+                {
+                    projectNewReport.ProjectId = request.ProjectId;
+                    projectNewReport.ReportCreatedDate = request.ReportCreatedDate;
+                }
                     var response = projectRepository.GetAllProjects(createdBefore).ToList();
                     projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
-                    reportRepository.Add(projectNewReport);
-                    reportRepository.SaveChanges();
-                    request.ReportId = projectNewReport.ReportId;
+                reportRepository.Add(projectNewReport);
+                reportRepository.SaveChanges();
+                request.ReportId = projectNewReport.ReportId;
                     resultResponse = projectNewReport.ReportProjects.ToList();
-                }
-                else
-                {
-                    var report = reportRepository.Find(request.ReportId);
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
                     resultResponse = report.ReportProjects.ToList();
-                }
+            }
 
                 return resultResponse;
-            }
-            public TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
-            {
+        }
+        public TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
+        {
                 TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse();
-                if (request.IsCreate)
-                {
+            if (request.IsCreate)
+            {
                     //CreateTaskReport(request);
                     var taskReportToCreate = new Report
                     {
@@ -236,10 +304,10 @@ namespace EPMS.Implementation.Services
 
                     detailResponse.ProjectTasks = response.Where(x => x.ParentTask == null).Select(x => x.MapProjectTaskToReportProjectTask());
                     detailResponse.SubTasks = response.Where(x => x.SubTasks != null).SelectMany(x => x.SubTasks).Select(x => x.MapProjectTaskToReportProjectTask());
-                }
-                else
-                {
-                    var report = reportRepository.Find(request.ReportId);
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
                     if (report != null)
                     {
                         if (report.ProjectId != null) request.ProjectId = (long)report.ProjectId;
@@ -248,7 +316,7 @@ namespace EPMS.Implementation.Services
                         detailResponse.ProjectTasks = report.ReportProjectTasks.Where(x => x.ReportProjectParentTask == null).ToList();
                         detailResponse.SubTasks = report.ReportProjectTasks.Where(x => x.ReportProjectSubTasks != null).SelectMany(x => x.ReportProjectSubTasks).ToList();
                     }
-                }
+            }
                 //var response = taskRepository.GetTaskReportDetails(request).ToList();
                 //TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse
                 //{
@@ -257,13 +325,13 @@ namespace EPMS.Implementation.Services
                 //    detailResponse.ReportId = request.ReportId
                 //};
                 detailResponse.ReportId = request.ReportId;
-                return detailResponse;
-            }
-            private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)
-            {
+            return detailResponse;
+        }
+        private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)
+        {
                 Report taskReportToCreate = new Report();
-                if (request.ProjectId == 0 && request.TaskId == 0)
-                {
+            if (request.ProjectId == 0 && request.TaskId == 0)
+            {
                 taskReportToCreate = new Report
                     {
                         ReportCategoryId = (int)ReportCategory.AllProjectsAllTasks,
@@ -272,11 +340,11 @@ namespace EPMS.Implementation.Services
                         ReportFromDate = DateTime.Now,
                         ReportToDate = DateTime.Now
                     };
-                    reportRepository.Add(taskReportToCreate);
-                    reportRepository.SaveChanges();
-                }
-                else if (request.ProjectId > 0 && request.TaskId == 0)
-                {
+                reportRepository.Add(taskReportToCreate);
+                reportRepository.SaveChanges();
+            }
+            else if (request.ProjectId > 0 && request.TaskId == 0)
+            {
                 taskReportToCreate = new Report
                     {
                         ProjectId = request.ProjectId,
@@ -286,11 +354,11 @@ namespace EPMS.Implementation.Services
                         ReportFromDate = DateTime.Now,
                         ReportToDate = DateTime.Now
                     };
-                    reportRepository.Add(taskReportToCreate);
-                    reportRepository.SaveChanges();
-                }
-                else if (request.ProjectId > 0 && request.TaskId > 0)
-                {
+                reportRepository.Add(taskReportToCreate);
+                reportRepository.SaveChanges();
+            }
+            else if (request.ProjectId > 0 && request.TaskId > 0)
+            {
                 taskReportToCreate = new Report
                     {
                         ProjectId = request.ProjectId,
@@ -301,12 +369,12 @@ namespace EPMS.Implementation.Services
                         ReportFromDate = DateTime.Now,
                         ReportToDate = DateTime.Now
                     };
-                    reportRepository.Add(taskReportToCreate);
-                    reportRepository.SaveChanges();
-                }
+                reportRepository.Add(taskReportToCreate);
+                reportRepository.SaveChanges();
+            }
             request.ReportId = taskReportToCreate.ReportId;
             request.ReportCreatedDate = taskReportToCreate.ReportCreatedDate;
-            }
+        }
         #endregion
     }
 }
