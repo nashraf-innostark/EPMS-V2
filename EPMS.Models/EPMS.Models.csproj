@@ -233,6 +233,7 @@
     <Compile Include="RequestModels\ProductSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
+    <Compile Include="RequestModels\Reports\RfqOrderCreateRequest.cs" />
     <Compile Include="RequestModels\Reports\TaskReportCreateOrDetailsRequest.cs" />
     <Compile Include="RequestModels\Reports\TaskReportSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
