@@ -1,7 +1,8 @@
 ﻿@using System.Configuration
 @using EPMS.WebModels.WebsiteModels.Common
-@model EPMS.WebModels.ViewModels.Reports.ProjectReportDetailVeiwModel
+@model EPMS.WebModels.ViewModels.Reports.DetailVeiwModel
 @{
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     int taskSerial = 1;
 }
@@ -13,8 +14,14 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
+        <li>
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            </a>
+
+        </li>
         <li class="current">
-            @EPMS.WebModels.Resources.PMS.Project.ProjectsList
+            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
         </li>
     </ul>
 </div>
@@ -22,12 +29,9 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.PMS.Project.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
 </header>
 <!-- Page Heading End-->
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-<!--Notifications end-->
 
 <form class="form-horizontal" id="validation_form">
     <div class="container-fluid" id="container">
@@ -42,48 +46,55 @@
             <!--Simple Chart end-->
         </div>
         <script>
+            var img;
+            var theCanvas;
             $(".auto-resize").keyup(function () {
                 autoGrowField($(this).get(0));
             });
 
-            $(window).load(function () {
-
-
-
+            $(document).ready(function () {
+                $(".disableBtn").attr("disabled", true);
+                $('#tableSortableResMed,#tableSortableResMed2').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                DrawGraph();
+                // html to canvas
+                // here I am converting the html of graph to canvas
+                html2canvas($("#chart_01"), {
+                    onrendered: function (canvas) {
+                        // save canvas
+                        theCanvas = canvas;
+                        var imgId = "report_" + '@Model.ReportId';
+                        SaveCanvasAsImage(theCanvas, imgId);
+                        UploadImage(imgId);
+                    }
+                });
+            });
+            function DrawGraph() {
                 var markings = [
 
-                    { color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
+                    { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
                 ];
-                var datasets = {
-                    "Price": {
-                        label: "Price",
-                        data: [[1249301600000, 483994], [1349301600000, 483994]]
 
-                    },
-                    "Cost": {
-                        label: "Cost",
-                        data: [[1249301600000, 200000], [1349301600000, 200000]]
+                var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
 
-                    },
-                    "Task1": {
-                        label: "Task1",
-                        data: [[1249301600000, 500000], [1249901600000, 500000]]
-
-                    },
-                    "Task2": {
-                        label: "Task2",
-                        data: [[1249901600000, 500000], [1259901600000, 500000]]
-
-                    },
-                    "Task3": {
-                        label: "Task3",
-                        data: [[1259901600000, 500000], [1299901600000, 500000]]
-
-                    }
+                var parsed = JSON.parse(graphItems);
 
 
-                };
+                var datasets = [];
 
+                $.each(parsed, function (index, val) {
+                    var dataset = {
+                        label: val.ItemLabel,
+                        data: [[val.ItemValue[0].data[0].dataValue[0].TimeStamp, val.ItemValue[0].data[0].dataValue[0].Value], [val.ItemValue[0].data[0].dataValue[1].TimeStamp, val.ItemValue[0].data[0].dataValue[1].Value]]
+                    };
+                    datasets.push(dataset);
+                });
                 var i = 0;
                 $.each(datasets, function (key, val) {
                     val.color = i;
@@ -138,7 +149,6 @@
                             if (ymin > d2) {
                                 ymin = d2;
                             }
-
                         }
 
                         if (xmaxl < xmax) {
@@ -239,17 +249,7 @@
                 });
 
                 // drawGraphs();
-            });
-            $(document).ready(function() {
-                $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
-                    "sPaginationType": "bootstrap",
-                    "fnInitComplete": function(){
-                        $(".dataTables_wrapper select").select2({
-                            dropdownCssClass: 'noSearch'
-                        });
-                    }
-                });
-            });
+            }
         </script>
 
 
@@ -272,7 +272,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+
                             @foreach (var project in Model.Projects)
                             {
                                 <tr class="gradeX">
@@ -362,36 +362,25 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                
-                @*<a type="button" class="btn" href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Project/GeneratePDF?ReportId=@Model.ReportId">Generate Report As PDF</a>*@
-                <button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>
+                <a class="btn disableBtn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                @*<button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>*@
             </div>
 
         </div>
     </div><!-- end form -->
 </form>
-@*<script src="~/Scripts/jsPDF/jsPDF.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.addimage.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.cell.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.from_html.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.ie_below_9_shim.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.javascript.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.sillysvgrenderer.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.split_text_to_size.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.plugin.standard_fonts_metrics.js"></script>
-<script src="~/Scripts/jsPDF/jspdf.PLUGINTEMPLATE.js"></script>*@
-@*<script type="text/javascript" src="//cdn.rawgit.com/MrRio/jsPDF/master/dist/jspdf.min.js"></script>
-<script type="text/javascript" src="//cdn.rawgit.com/niklasvh/html2canvas/0.5.0-alpha2/dist/html2canvas.min.js"></script>*@
-
+<div id="GraphImage" style="display: none">
+    <img id="report_@Model.ReportId" />
+</div>
 <script src="~/Scripts/jsPDF/jsPDF.js"></script>
 <script src="~/Scripts/html2canvas.js"></script>
 <script>
-    
+
     (function () {
         var
-         form = $('#container'),
-         cache_width = form.width(),
-         a4 = [595.28, 841.89];  // for a4 size paper width and height
+            form = $('#container'),
+            cache_width = form.width(),
+            a4 = [595.28, 841.89];  // for a4 size paper width and height
 
         $('#generatePDF').on('click', function () {
             $('body').scrollTop(0);
@@ -401,11 +390,11 @@
         function createPDF() {
             getCanvas().then(function (canvas) {
                 var
-                img = canvas.toDataURL("image/png"),
-                doc = new jsPDF({
-                    unit: 'px',
-                    format: 'a4'
-                });
+                    img = canvas.toDataURL("image/png"),
+                    doc = new jsPDF({
+                        unit: 'px',
+                        format: 'a4'
+                    });
                 doc.addImage(img, 'JPEG', 20, 20);
                 doc.save('Project-Report.pdf');
                 form.width(cache_width);
@@ -421,54 +410,4 @@
             });
         }
     }());
-    //$(document).ready(function() {
-    //    $('#generatePDF').click(function () {
-    //        var doc = new jsPDF();
-    //        var specialElementHandlers = {
-    //            '#editor': function (element, renderer) {
-    //                return true;
-    //            }
-    //        };
-    //        doc.fromHTML($('#container').html(), 15, 15, {
-    //            'width': 170,
-    //            'elementHandlers': specialElementHandlers
-    //        });
-    //        doc.save('Project-Report.pdf');
-    //    });
-    //});
-    //function demoFromHTML() {
-    //    var pdf = new jsPDF('p', 'pt', 'letter');
-    //    // source can be HTML-formatted string, or a reference
-    //    // to an actual DOM element from which the text will be scraped.
-    //    source = $('#container')[0];
-        
-    //    // we support special element handlers. Register them with jQuery-style 
-    //    // ID selector for either ID or node name. ("#iAmID", "div", "span" etc.)
-    //    // There is no support for any other type of selectors 
-    //    // (class, of compound) at this time.
-    //    specialElementHandlers = {
-    //        // element with id of "bypass" - jQuery style selector
-    //        '#editor': function (element, renderer) {
-    //            // true = "handled elsewhere, bypass text extraction"
-    //            return true;
-    //        }
-    //    };
-    //    margins = {
-    //        top: 80,
-    //        bottom: 60,
-    //        left: 40,
-    //        width: 522
-    //    };
-    //    // all coords and widths are in jsPDF instance's declared units
-    //    // 'inches' in this case
-    //    pdf.fromHTML(
-    //    source, // HTML string or DOM elem ref.
-    //    margins.left, // x coord
-    //    margins.top, { // y coord
-    //        'width': margins.width, // max width of content on PDF
-    //        'elementHandlers': specialElementHandlers
-    //    }, margins);
-
-    //    pdf.save('Test.pdf');
-    //}
 </script>

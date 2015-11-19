@@ -71,10 +71,10 @@ namespace EPMS.Implementation.Services
             var rfiList = rfis as IList<RFIHistory> ?? rfis.ToList();
             RfiHistoryResponse response = new RfiHistoryResponse
             {
-                Rfis = rfiList.Select(x => x.CreateFromRfiHistoryToRfi()),
+                Rfis = rfiList.Select(x => x.CreateFromRfiHistoryToRfi()).ToList(),
                 RecentRfi = rfiRepository.Find((long)parentId)
             };
-            response.RfiItems = response.RecentRfi.RFIItems;
+            response.RfiItems = response.RecentRfi.RFIItems.ToList();
 
             if (response.RecentRfi != null)
             {

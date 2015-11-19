@@ -50,12 +50,8 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.6.1.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
-    <Reference Include="itextsharp, Version=5.5.6.0, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\iTextSharp.5.5.6\lib\itextsharp.dll</HintPath>
-    </Reference>
-    <Reference Include="itextsharp.xmlworker">
-      <HintPath>..\packages\itextsharp.xmlworker.5.5.6\lib\itextsharp.xmlworker.dll</HintPath>
+    <Reference Include="itextsharp">
+      <HintPath>..\packages\iTextSharp.4.1.2\lib\itextsharp.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -156,6 +152,9 @@
     </Reference>
     <Reference Include="PagedList.Mvc">
       <HintPath>..\packages\PagedList.Mvc.4.5.0.0\lib\net40\PagedList.Mvc.dll</HintPath>
+    </Reference>
+    <Reference Include="RazorPDF">
+      <HintPath>..\packages\RazorPDF.1.0.0\lib\net45\RazorPDF.dll</HintPath>
     </Reference>
     <Reference Include="Rotativa">
       <HintPath>..\packages\Rotativa.1.6.4\lib\net40\Rotativa.dll</HintPath>
@@ -334,9 +333,14 @@
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
     <Compile Include="Areas\Report\Controllers\CustomerController.cs" />
-    <Compile Include="Areas\Report\Controllers\CustomerService.cs" />
+    <Compile Include="Areas\Report\Controllers\CustomerServiceController.cs" />
+    <Compile Include="Areas\Report\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Report\Controllers\RFQOrderController.cs" />
+    <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
+    <Compile Include="Areas\Report\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
+    <Compile Include="Areas\Report\Controllers\TaskController.cs" />
     <Compile Include="Areas\Report\Controllers\QuotationInvoiceController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
@@ -372,11 +376,6 @@
     <Compile Include="Helper\CultureHelper.cs" />
     <Compile Include="Models\Common\JsTreeJson.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\Inventory\Barcode\Barcode.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Barcode.resx</DependentUpon>
-    </Compile>
     <Compile Include="Startup.cs" />
     <Compile Include="TypeRegistrations.cs" />
     <Compile Include="Utility.cs" />
@@ -1424,6 +1423,7 @@
     <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\html2canvas.js" />
+    <Content Include="Scripts\html2canvas\html2canvas.js" />
     <Content Include="Scripts\jsPDF\jsPDF.js" />
     <Content Include="Scripts\jsPDF\jspdf.plugin.addimage.js" />
     <Content Include="Scripts\jsPDF\jspdf.plugin.cell.js" />
@@ -1436,6 +1436,7 @@
     <Content Include="Scripts\jsPDF\jspdf.PLUGINTEMPLATE.js" />
     <Content Include="Scripts\jstree.js" />
     <Content Include="Scripts\jstree.min.js" />
+    <Content Include="Scripts\plugins\jquery.flot.navigate.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\bootstrap.min.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\highlight.js" />
     <Content Include="Scripts\plugins\newbootstrapswitch\jquery.min.js" />
@@ -1541,7 +1542,6 @@
     <Content Include="Areas\Website\Views\ContactUs\Detail.cshtml" />
     <Content Include="Areas\Report\Views\web.config" />
     <Content Include="Areas\Report\Views\ProjectsAndTasks\Index.cshtml" />
-    <Content Include="Areas\Report\Views\Project\Index.cshtml" />
     <Content Include="Areas\Website\Views\Department\Create.cshtml" />
     <Content Include="Areas\Website\Views\Home\Index.cshtml" />
     <Content Include="Areas\Website\Views\NewsAndArticle\ArticleCreate.cshtml" />
@@ -1566,6 +1566,19 @@
     <Content Include="Areas\Report\Views\Customer\Create.cshtml" />
     <Content Include="Areas\Report\Views\Customer\Detail.cshtml" />
     <Content Include="Areas\Report\Views\QuotationInvoice\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Task\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Project\All.cshtml" />
+    <Content Include="Areas\Report\Views\Task\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Task\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\Inventory\Index.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Task\All.cshtml" />
+    <Content Include="Areas\Report\Views\Task\TestTable.cshtml" />
+    <Content Include="Areas\Report\Views\Project\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\Warehouse\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Task\ReportAsPdfAll.cshtml" />
+    <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
+    <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3473,19 +3486,6 @@
     <Content Include="Images\photon\user_icon.psd" />
     <Content Include="Images\photon\w_arrow_red%402x.psd" />
     <Content Include="Areas\HR\Views\ContactList\Index.cshtml" />
-    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Inventory\IRF\AddEdit\IRFCreate.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\IRF\Index\IRFIndex.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\IRF\View\IRFView.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\PC\PhysicalCount.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\PO\PO.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\ItemVariation.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRCreate.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRDetail.ar.resx" />
-    <EmbeddedResource Include="Resources\Inventory\TIR\TIRIndex.ar.resx" />
     <None Include="Properties\PublishProfiles\Embassy System.pubxml" />
     <None Include="Properties\PublishProfiles\EPMS.pubxml" />
     <Content Include="Scripts\App\select2\bower.json" />
@@ -3787,6 +3787,7 @@
     <Folder Include="Areas\PMS\Models\" />
     <Folder Include="Areas\PMS\Views\Shared\" />
     <Folder Include="Areas\Report\Models\" />
+    <Folder Include="Areas\Report\Views\Image\" />
     <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />

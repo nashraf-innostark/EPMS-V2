@@ -97,6 +97,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Common\CustomerReportByColumn.cs" />
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
@@ -104,6 +105,7 @@
     <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\ProjectReportByColumn.cs" />
+    <Compile Include="Common\TaskReportByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />
     <Compile Include="Common\TirRequestByColumn.cs" />
@@ -168,10 +170,14 @@
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
     <Compile Include="DomainModels\Report.cs" />
+    <Compile Include="DomainModels\ReportProject.cs" />
+    <Compile Include="DomainModels\ReportProjectTask.cs" />
+    <Compile Include="DomainModels\ReportTaskEmployee.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
     <Compile Include="DomainModels\RFQ.cs" />
     <Compile Include="DomainModels\RFQItem.cs" />
+    <Compile Include="DomainModels\RfqOrder.cs" />
     <Compile Include="DomainModels\RIF.cs" />
     <Compile Include="DomainModels\RIFHistory.cs" />
     <Compile Include="DomainModels\RIFItem.cs" />
@@ -200,6 +206,8 @@
     <Compile Include="ModelMapers\DIFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\DIFMapper.cs" />
     <Compile Include="ModelMapers\EmployeeMapper.cs" />
+    <Compile Include="ModelMapers\ImageSliderMapper.cs" />
+    <Compile Include="ModelMapers\InventoryItemMapper.cs" />
     <Compile Include="ModelMapers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMapers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\NotificationMapper\NotificationMapper.cs" />
@@ -217,6 +225,7 @@
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
     <Compile Include="RequestModels\Reports\CustomerReportDetailRequest.cs" />
+    <Compile Include="RequestModels\Reports\CustomerServiceReportsSearchRequest.cs" />
     <Compile Include="RequestModels\Reports\ProjectReportCreateOrDetailsRequest.cs" />
     <Compile Include="RequestModels\Reports\ProjectReportSearchRequest.cs" />
     <Compile Include="RequestModels\ItemReleaseSearchRequest.cs" />
@@ -227,6 +236,8 @@
     <Compile Include="RequestModels\PurchaseOrderSearchRequest.cs" />
     <Compile Include="RequestModels\PurchaseOrderStatus.cs" />
     <Compile Include="RequestModels\Reports\QuotationInvoiceDetailRequest.cs" />
+    <Compile Include="RequestModels\Reports\TaskReportCreateOrDetailsRequest.cs" />
+    <Compile Include="RequestModels\Reports\TaskReportSearchRequest.cs" />
     <Compile Include="RequestModels\ShoppingCartSearchRequest.cs" />
     <Compile Include="RequestModels\TirSearchRequest.cs" />
     <Compile Include="RequestModels\PofSearchRequest.cs" />
@@ -355,13 +366,15 @@
     <Compile Include="ResponseModels\ComplaintResponse.cs" />
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
+    <Compile Include="ResponseModels\CreateTaskReportsResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\CustomerReportListResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\CustomerReportResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportDetailsResponse.cs" />
-    <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportsListRequestResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\ReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponse.cs" />
     <Compile Include="ResponseModels\EmployeeResponseModel\EmployeeDDL.cs" />
@@ -403,6 +416,9 @@
     <Compile Include="ResponseModels\QuotationResponse.cs" />
     <Compile Include="ResponseModels\PCCreateResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\QuotationInvoiceReportResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\TaskReportDetailsResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\TaskReportsListRequestResponse.cs" />
+    <Compile Include="ResponseModels\ReportsResponseModels\WarehouseReportDetails.cs" />
     <Compile Include="ResponseModels\RFICreateResponse.cs" />
     <Compile Include="ResponseModels\DifRequestResponse.cs" />
     <Compile Include="ResponseModels\DifCreateResponse.cs" />

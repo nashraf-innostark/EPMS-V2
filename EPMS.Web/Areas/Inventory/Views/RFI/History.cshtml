@@ -66,11 +66,11 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.EmployeeId:</th>
-                                        <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                        <td>@Model.RecentRfi.EmpJobId</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.RFINumber:</th>
-                                        <td>@Model.RecentRfi.RFIId</td>
+                                        <td>@Model.RecentRfi.FormNumber</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.Usage:</th>

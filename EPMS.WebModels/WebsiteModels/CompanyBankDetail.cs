@@ -15,8 +15,6 @@ namespace EPMS.WebModels.WebsiteModels
         [StringLength(500, ErrorMessage = "IBAN Number cannot exceed 500 characters.")]
         public string Bank1IBANNumber { get; set; }
         [StringLength(500, ErrorMessage = "Mobile Number cannot exceed 100 characters.")]
-        [Required]
-        [Display(Name = "Bank Mobile Number")]
         public string Bank1MobileNumber { get; set; }
         [StringLength(500, ErrorMessage = "Bank Name cannot exceed 500 characters.")]
         public string Bank2Name { get; set; }
@@ -27,8 +25,6 @@ namespace EPMS.WebModels.WebsiteModels
         [StringLength(500, ErrorMessage = "IBAN Number cannot exceed 500 characters.")]
         public string Bank2IBANNumber { get; set; }
         [StringLength(500, ErrorMessage = "Mobile Number cannot exceed 100 characters.")]
-        [Required]
-        [Display(Name = "Bank Mobile Number")]
         public string Bank2MobileNumber { get; set; }
         [StringLength(500, ErrorMessage = "Bank Name cannot exceed 500 characters.")]
         public string Bank3Name { get; set; }
@@ -39,8 +35,6 @@ namespace EPMS.WebModels.WebsiteModels
         [StringLength(500, ErrorMessage = "IBAN Number cannot exceed 500 characters.")]
         public string Bank3IBANNumber { get; set; }
         [StringLength(500, ErrorMessage = "Mobile Number cannot exceed 100 characters.")]
-        [Required]
-        [Display(Name = "Bank Mobile Number")]
         public string Bank3MobileNumber { get; set; }
         [StringLength(500, ErrorMessage = "Bank Name cannot exceed 500 characters.")]
         public string Bank4Name { get; set; }
@@ -51,8 +45,6 @@ namespace EPMS.WebModels.WebsiteModels
         [StringLength(500, ErrorMessage = "IBAN Number cannot exceed 500 characters.")]
         public string Bank4IBANNumber { get; set; }
         [StringLength(500, ErrorMessage = "Mobile Number cannot exceed 100 characters.")]
-        [Required]
-        [Display(Name = "Bank Mobile Number")]
         public string Bank4MobileNumber { get; set; }
         public string CompanyLogoPath { get; set; }
         public string RecCreatedBy { get; set; }

@@ -103,9 +103,12 @@ namespace EPMS.WebModels.ModelMappers
                 requestDetail.LoanAmount = source.LoanAmount;
                 if (source.IsMonetaryLocalFlag)
                 {
-                    requestDetail.LoanDate = DateTime.ParseExact(source.LoanDate, "dd/MM/yyyy", new CultureInfo("en"));
-                    requestDetail.FirstInstallmentDate = DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en"));
-                    requestDetail.LastInstallmentDate = DateTime.ParseExact(source.LastInstallmentDate, "dd/MM/yyyy", new CultureInfo("en"));
+                    requestDetail.LoanDate = !string.IsNullOrEmpty(source.LoanDate) ?
+                        DateTime.ParseExact(source.LoanDate, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null;
+                    requestDetail.FirstInstallmentDate = !string.IsNullOrEmpty(source.FirstInstallmentDate) ? 
+                        DateTime.ParseExact(source.FirstInstallmentDate, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null;
+                    requestDetail.LastInstallmentDate = !string.IsNullOrEmpty(source.LastInstallmentDate) ? 
+                        DateTime.ParseExact(source.LastInstallmentDate, "dd/MM/yyyy", new CultureInfo("en")) : (DateTime?)null;
                 }
                 requestDetail.InstallmentAmount = source.InstallmentAmount;
                 requestDetail.NumberOfMonths = source.NumberOfMonths;

@@ -73,11 +73,17 @@ namespace EPMS.Implementation.Services
 
         public long UpdateProject(Project project)
         {
-            projectRepository.Update(project);
-            projectRepository.SaveChanges();
-            SetOrderStatus(project);
-            SendNotification(project);
-            return project.ProjectId;
+            var dbData = projectRepository.Find(project.ProjectId);
+            if (dbData != null)
+            {
+                var projectToUpdate = dbData.UpdateDbDataFromClient(project);
+                projectRepository.Update(projectToUpdate);
+                projectRepository.SaveChanges();
+                SetOrderStatus(projectToUpdate);
+                SendNotification(projectToUpdate);
+                return projectToUpdate.ProjectId;
+            }
+            return 0;
         }
 
         public IEnumerable<Project> LoadAllUnfinishedProjects()

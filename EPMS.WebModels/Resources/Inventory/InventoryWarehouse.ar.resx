@@ -117,55 +117,100 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BCTitle" xml:space="preserve">
+    <value>قائمة المستودعات</value>
+  </data>
   <data name="DetailNameAr" xml:space="preserve">
-    <value>اسم بالعربي</value>
+    <value>الاسم بالعربي</value>
   </data>
   <data name="DetailNameEn" xml:space="preserve">
-    <value>اسم بالانجليزي</value>
+    <value>الاسم</value>
+  </data>
+  <data name="InventoryWarehouseCreate" xml:space="preserve">
+    <value>انشاء مستودع</value>
+  </data>
+  <data name="InventoryWarehouseDetail" xml:space="preserve">
+    <value>تفاصيل المستودع</value>
+  </data>
+  <data name="InventoryWarehouseEdit" xml:space="preserve">
+    <value>تعديل للمستودع</value>
   </data>
   <data name="IsAdded" xml:space="preserve">
-    <value>Inventory Warehouse Added Successfully</value>
+    <value>تم انشاء المستودع بنجاح</value>
   </data>
   <data name="IsAssociated" xml:space="preserve">
-    <value>Unable to Delete Inventory Warehouse because it is associated.</value>
+    <value>عدم امكانية حذف المستودع لارتباطها بمعلومات اخرى</value>
   </data>
   <data name="IsDeleted" xml:space="preserve">
-    <value>Inventory Warehouse Deleted Successfully.</value>
+    <value>تم حذف المستودع بنجاح</value>
   </data>
   <data name="IsError" xml:space="preserve">
-    <value>Unable to Delete Inventory Warehouse.</value>
+    <value>عدم امكان حذف المستودع</value>
+  </data>
+  <data name="IsFull" xml:space="preserve">
+    <value>ممتلئ</value>
+  </data>
+  <data name="IsFullNo" xml:space="preserve">
+    <value>لا</value>
+  </data>
+  <data name="IsFullYes" xml:space="preserve">
+    <value>نعم</value>
   </data>
   <data name="IsUpdated" xml:space="preserve">
-    <value>Inventory Warehouse Updated Successfully</value>
+    <value>تم تحديث المستودع بنجاح</value>
   </data>
   <data name="NumberOfAisles" xml:space="preserve">
-    <value>عدد الممرات</value>
+    <value>عدد الصفوف</value>
   </data>
   <data name="NumberOfSections" xml:space="preserve">
-    <value>عدد التقسيمات</value>
+    <value>عدد الاقسام</value>
   </data>
   <data name="NumberOfSectionsOnShalves" xml:space="preserve">
-    <value>عدد التقسيمات في الرف الواحد</value>
+    <value>عدد الاقسام على الرف</value>
   </data>
   <data name="NumberOfShalves" xml:space="preserve">
-    <value>عدد الارفف</value>
+    <value>عدد الرفوف</value>
   </data>
   <data name="NumberOfSpaces" xml:space="preserve">
     <value>عدد المساحات</value>
   </data>
+  <data name="PGTitleCreate" xml:space="preserve">
+    <value>انشاء مستودع</value>
+  </data>
+  <data name="PGTitleIndex" xml:space="preserve">
+    <value>قائمة المستودعات</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>تسلسل</value>
+  </data>
+  <data name="Shelf" xml:space="preserve">
+    <value>رف</value>
+  </data>
+  <data name="ShelfSpace" xml:space="preserve">
+    <value>رف / مساحة</value>
+  </data>
+  <data name="Space" xml:space="preserve">
+    <value>مساحة</value>
+  </data>
   <data name="TreeTitle" xml:space="preserve">
-    <value>خلق مستودع شجرة</value>
+    <value>انشاء شجرة المستودع</value>
+  </data>
+  <data name="WarehouseCreate" xml:space="preserve">
+    <value>انشاء مستودع جديد</value>
   </data>
   <data name="WarehouseLocation" xml:space="preserve">
-    <value>موقع المستودع</value>
+    <value>مكان المستودع</value>
   </data>
   <data name="WarehouseManager" xml:space="preserve">
-    <value>مدير مستودع</value>
+    <value>رئيس المستودع</value>
   </data>
   <data name="WarehouseNumber" xml:space="preserve">
     <value>رقم المستودع</value>
   </data>
   <data name="WarehouseSize" xml:space="preserve">
-    <value>حجم المستودع</value>
+    <value>مساحة المستودع</value>
+  </data>
+  <data name="WarehouseView" xml:space="preserve">
+    <value>معاينة المستودع</value>
   </data>
 </root>

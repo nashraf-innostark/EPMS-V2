@@ -141,4 +141,73 @@
   <data name="ProjectReportTab" xml:space="preserve">
     <value>Project Report</value>
   </data>
+  <data name="ProjectManagementReportList" xml:space="preserve">
+    <value>Project Management Reports List</value>
+  </data>
+  <data name="ProjectReport" xml:space="preserve">
+    <value>Project Report</value>
+  </data>
+  <data name="ViewProjectReport" xml:space="preserve">
+    <value>View Project Report</value>
+  </data>
+  <data name="All" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="ItemsReport" xml:space="preserve">
+    <value>Items Report</value>
+  </data>
+  <data name="ProjectsReport" xml:space="preserve">
+    <value>Projects Report</value>
+  </data>
+  <data name="TasksReport" xml:space="preserve">
+    <value>Tasks Report</value>
+  </data>
+  <data name="InventorySystemListPageHeading" xml:space="preserve">
+    <value>Inventory System Reports</value>
+  </data>
+  <data name="InventorySystemReportList" xml:space="preserve">
+    <value>Inventory System Reports List</value>
+  </data>
+  <data name="ProjectName" xml:space="preserve">
+    <value>Project Name</value>
+  </data>
+  <data name="ViewWarehouseReport" xml:space="preserve">
+    <value>View Warehouse Report</value>
+  </data>
+  <data name="WarehouseCreateReport" xml:space="preserve">
+    <value>Creat Warehouse Report</value>
+  </data>
+  <data name="WarehouseName" xml:space="preserve">
+    <value>Warehouse Name</value>
+  </data>
+  <data name="WarehouseReport" xml:space="preserve">
+    <value>Warehouse Report</value>
+  </data>
+  <data name="WarehouseReportTab" xml:space="preserve">
+    <value>Warehouses Report</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>Full</value>
+  </data>
+  <data name="NotFull" xml:space="preserve">
+    <value>Not Full</value>
+  </data>
+  <data name="CreateVendorReport" xml:space="preserve">
+    <value>Creat Vendor Report</value>
+  </data>
+  <data name="VendorName" xml:space="preserve">
+    <value>Vendor Name</value>
+  </data>
+  <data name="VendorReport" xml:space="preserve">
+    <value>Vendor Report</value>
+  </data>
+  <data name="VendorReportTab" xml:space="preserve">
+    <value>Vendors Report</value>
+  </data>
+  <data name="ViewVendorReport" xml:space="preserve">
+    <value>View Vendor Report</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>Serial</value>
+  </data>
 </root>

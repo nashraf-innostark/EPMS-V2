@@ -66,7 +66,7 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
-                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.FormNumber</td>
                                         </tr>
                                     }
                                     else
@@ -77,11 +77,11 @@
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.EmployeeId</th>
-                                            <td>@(Session["EmployeeID"] == null ? "" : Session["EmployeeID"].ToString())</td>
+                                            <td>@Model.ItemRelease.EmpJobId</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRFNo</th>
-                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.RFIId</td>
+                                            <td>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.IRF @Model.ItemRelease.FormNumber</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Usage</th>

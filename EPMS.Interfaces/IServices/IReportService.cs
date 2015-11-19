@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels.ReportsResponseModels;
 
@@ -10,9 +11,17 @@ namespace EPMS.Interfaces.IServices
         /// Add Report
         /// </summary>
         bool AddReport(Report report);
-        ProjectReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
+        ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
+        ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
         ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
-        CustomerReportResponse SaveAndGetCustonerList(CustomerReportDetailRequest request);
+        CustomerReportResponse SaveAndGetCustomerList(CustomerReportDetailRequest request);
         QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request);
+        WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request);
+        IEnumerable<Project> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request);
+        TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
+        TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request);
+        IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request);
+        CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request);
     }
 }

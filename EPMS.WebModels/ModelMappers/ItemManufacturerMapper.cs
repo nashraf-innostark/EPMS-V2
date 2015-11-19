@@ -9,8 +9,8 @@
                 ItemVariationId = source.ItemVariationId,
                 ManufacturerId = source.ManufacturerId,
                 Price = source.Price,
-                ManufacturerNameEn = source.Vendor.VendorNameEn,
-                ManufacturerNameAr = source.Vendor.VendorNameAr,
+                ManufacturerNameEn = source.Vendor != null ? source.Vendor.VendorNameEn : "",
+                ManufacturerNameAr = source.Vendor != null ? source.Vendor.VendorNameAr : "",
                 Quantity = source.Quantity
             };
         }

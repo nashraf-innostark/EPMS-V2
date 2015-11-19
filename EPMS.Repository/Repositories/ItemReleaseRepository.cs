@@ -101,7 +101,7 @@ namespace EPMS.Repository.Repositories
                     queery =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString) || (s.FormNumber.Contains(searchRequest.SearchString) ||
                     (s.DeliveryInfo.Contains(searchRequest.SearchString) || s.DeliveryInfoArabic.Contains(searchRequest.SearchString))))
-                    && s.RecCreatedBy.Equals(searchRequest.Requester));
+                    && s.RFI.RecCreatedBy.Equals(searchRequest.Requester));
                 }
             }
 

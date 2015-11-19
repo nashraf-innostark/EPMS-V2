@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 using System.Linq;
 using System.Web;
@@ -9,7 +8,6 @@ using System.Web.Mvc;
 using System.Web.Routing;
 using EPMS.Implementation.Identity;
 using EPMS.Interfaces.IServices;
-using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.MenuModels;
 using EPMS.Models.RequestModels.NotificationRequestModels;
@@ -161,6 +159,13 @@ namespace EPMS.Web.Controllers
                 string[] userPermissions = userRights.Select(user => user.Menu.PermissionKey).ToArray();
                 Session["UserPermissionSet"] = userPermissions;
             }
+
+            Dictionary<string, string> cookieCollection = new Dictionary<string, string>();
+            foreach (var key in Request.Cookies.AllKeys)
+            {
+                cookieCollection.Add(key, Request.Cookies.Get(key).Value);
+            }
+            Session["Cookies"] = cookieCollection;
         }
         public ApplicationUserManager UserManager
         {

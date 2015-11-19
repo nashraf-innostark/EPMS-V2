@@ -11,6 +11,8 @@ namespace EPMS.WebModels.WebsiteModels
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public string EmployeeNameEn { get; set; }
+        public string EmployeeNameAr { get; set; }
 
         public ProjectTask ProjectTask { get; set; }
     }

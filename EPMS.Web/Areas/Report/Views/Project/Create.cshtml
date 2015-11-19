@@ -1,5 +1,7 @@
-﻿@model EPMS.WebModels.ViewModels.Reports.ProjectsReportsCreateViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Reports.CreateViewModel
 @{
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -11,8 +13,14 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
+        <li>
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            </a>
+
+        </li>
         <li class="current">
-            @EPMS.WebModels.Resources.PMS.Project.ProjectsList
+            @EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport
         </li>
     </ul>
 </div>
@@ -20,7 +28,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.PMS.Project.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.CreatProjectReport</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -33,11 +41,11 @@
 
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="jobTitle">Project Name </label>
+                <label class="control-label" for="jobTitle">@EPMS.WebModels.Resources.Reports.Reports.ProjectName</label>
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.ProjectId, @direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), "--Select--", new { @class = "select2me"})
+                    @Html.DropDownListFor(model => model.ProjectId, @direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), "All", new { @class = "select2me"})
                 </div>
             </div>
 

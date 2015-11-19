@@ -7,23 +7,23 @@
     <!-- Login/Register Modal forms - hidded by default to be opened through modal -->
     <div id="login_panel">
         <div class="inner-container login-panel">
-            <h3 class="m_title">SIGN IN YOUR ACCOUNT TO HAVE ACCESS TO DIFFERENT FEATURES</h3>
+            <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.LoginTitle</h3>
             @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "LoginFrom", role = "form", enctype = "multipart/form-data" }))
             {
-                <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">CREATE ACCOUNT</a>
+                <a class="create_account cursorHand" onclick="ppOpen('#register_panel', '280');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.CreateAccount</a>
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="fromLogin" name="fromLogin" value="" />
                 @Html.TextBoxFor(model => model.Login.UserName, new { @id = "LoginUserName", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.UserName })
                 @Html.PasswordFor(model => model.Login.Password, new { @id = "LoginPassword", @class = "toBeRequired inputbox ", @placeholder = EPMS.WebModels.Resources.WebsiteClient.Customer.Customer.Password })
-                <input type="submit" id="login" name="submit" value="LOG IN" onclick="setSignUpFromValue(1)" />
-                <a href="#" class="login_facebook">login with facebook</a>
+    <input type="submit" id="login" name="submit" value="@EPMS.WebModels.Resources.WebsiteClient.Login.Login.LogIn" onclick="setSignUpFromValue(1)" />
+                @*<a href="#" class="login_facebook">login with facebook</a>*@
             }
-            <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen('#resetpassword_panel', '350');">RESET YOUR PASSWORD?</a></div>
+            <div class="links"><a href="#" onclick="ppOpen('#forgot_panel', '350');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.ForgotYourPassword</a> / <a href="#" onclick="ppOpen('#resetpassword_panel', '350');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.ResetYourPassword</a></div>
         </div>
     </div><!-- end login panel -->
     <div id="register_panel">
         <div class="inner-container register-panel">
-            <h3 class="m_title">CREATE ACCOUNT</h3>
+            <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.CreateAccount</h3>
             @using (Html.BeginForm("SignUp", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "SignUpFrom", role = "form" }))
             {
                 <input type="hidden" id="fromSignUp" name="fromSignUp" value="" />
@@ -48,15 +48,15 @@
                     @Html.ValidationMessageFor(m => m.SignUp.ConfirmPassword, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="create" value="CREATE MY ACCOUNT" onclick="setSignUpFromValue(2)" />
+                    <input type="submit" id="create" value="@EPMS.WebModels.Resources.WebsiteClient.Login.Login.CreateMyAccount" onclick="setSignUpFromValue(2)" />
                 </p>
             }
-            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY HAVE AN ACCOUNT?</a></div>
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.AleadyHaveAccount</a></div>
         </div>
     </div>
     <div id="forgot_panel">
         <div class="inner-container forgot-panel">
-            <h3 class="m_title">FORGOT YOUR DETAILS?</h3>
+            <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.ForgotDetails</h3>
             @using (Html.BeginForm("ForgotPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ForgotPasswordFrom", role = "form" }))
             {
                 <input type="hidden" id="fromForgot" name="fromForgot" value="" />
@@ -65,15 +65,15 @@
                     @Html.ValidationMessageFor(m => m.ForgotPassword.UserName, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="recover" name="submit" value="SEND MY DETAILS!" onclick="setSignUpFromValue(3)" />
+                    <input type="submit" id="recover" name="submit" value="@EPMS.WebModels.Resources.WebsiteClient.Login.Login.SendDetails" onclick="setSignUpFromValue(3)" />
                 </p>
             }
-            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">AAH, WAIT, I REMEMBER NOW!</a></div>
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.RememberNow</a></div>
         </div>
     </div>
     <div id="resetpassword_panel">
         <div class="inner-container register-panel">
-            <h3 class="m_title">Reset Password</h3>
+            <h3 class="m_title">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.ResetPassword</h3>
             @using (Html.BeginForm("ResetPassword", "Account", FormMethod.Post, new { @class = "form-horizontal", @id = "ResetPasswordFrom", role = "form" }))
             {
                 <input type="hidden" id="fromReset" name="fromReset" value="" />
@@ -88,10 +88,10 @@
                     @Html.ValidationMessageFor(m => m.ResetPassword.ConfirmPassword, String.Empty, new { @class = "required" })
                 </p>
                 <p>
-                    <input type="submit" id="reset" value="RESET" onclick="setSignUpFromValue(4)" />
+                    <input type="submit" id="reset" value="@EPMS.WebModels.Resources.WebsiteClient.Login.Login.Reset" onclick="setSignUpFromValue(4)" />
                 </p>
             }
-            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">ALREADY RESET?</a></div>
+            <div class="links"><a href="#" onclick="ppOpen('#login_panel', '800');">@EPMS.WebModels.Resources.WebsiteClient.Login.Login.AlreadyReset</a></div>
         </div>
     </div>
 </div><!-- end login register stuff -->

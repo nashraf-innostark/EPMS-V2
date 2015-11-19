@@ -50,7 +50,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             var refrel = Request.UrlReferrer;
             if (refrel != null && refrel.ToString().Contains("Report/Customer/Create"))
                 request.IsCreate = true;
-            var response = reportService.SaveAndGetCustonerList(request);
+            var response = reportService.SaveAndGetCustomerList(request);
             customerCreateViewModel.Customers = response.Customers.Select(x => x.CreateFromServerToClient()).ToList();
             customerCreateViewModel.ReportId = response.ReportId;
 

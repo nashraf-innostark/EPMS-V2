@@ -58,17 +58,32 @@ namespace EPMS.Implementation.Services
             response.Customers = customerService.GetAll();
             response.Employees = employeeService.GetAll();
             response.Projects = projectService.GetAllProjects();
-            response.AllParentTasks = Repository.GetAllParentTasks();
+
             if (id > 0)
             {
                 response.ProjectTask = Repository.FindTaskWithPreRequisites(id);
                 if (response.ProjectTask.CustomerId != null)
                 {
-                    response.Projects = projectService.FindProjectByCustomerId((long)response.ProjectTask.CustomerId);
+                    response.Projects = projectService.FindProjectByCustomerId((long) response.ProjectTask.CustomerId);
                 }
-                response.ProjectTasks = Repository.FindProjectTaskByProjectId(response.ProjectTask.ProjectId, response.ProjectTask.TaskId);
+                response.ProjectTasks = Repository.FindProjectTaskByProjectId(response.ProjectTask.ProjectId,
+                    response.ProjectTask.TaskId);
+                response.AllParentTasks = Repository.GetAllParentTasksOfProject(response.ProjectTask.ProjectId).ToList();
+            }
+            else
+            {
+                response.AllParentTasks = new List<ProjectTask>();
             }
             return response;
+        }
+
+        public CreateTaskReportsResponse GetAllProjectsAndTasks()
+        {
+            return new CreateTaskReportsResponse
+            {
+                Tasks = Repository.GetAllNonSubTasks().ToList(),
+                Projects = projectService.GetAllProjects().ToList()
+            };
         }
 
         public TaskResponse GetProjectTasksForEmployee(TaskSearchRequest searchRequest, long employeeId)
@@ -319,31 +334,34 @@ namespace EPMS.Implementation.Services
         public void DeleteProjectTask(long taskId)
         {
             ProjectTask task = Repository.Find(taskId);
-            if (task != null)
-            {
-                if (task.TaskEmployees.Any())
-                {
-                    int count = task.TaskEmployees.Count();
-                    for (int i = 0; i < count; i++)
-                    {
-                        TaskEmployeeService.DeleteTaskEmployee(task.TaskEmployees.FirstOrDefault());
-                    }
-                }
-            }
-            if (task != null)
-            {
-                if (task.PreRequisitTask.Any())
-                {
-                    int count = task.PreRequisitTask.Count();
-                    for (int i = 0; i < count; i++)
-                    {
-                        //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
-                        task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
-                    }
-                    Repository.SaveChanges();
-                }
-            }
-            Repository.Delete(task);
+            task.IsDeleted = true;
+            task.DeletedDate = DateTime.Now;
+            //if (task != null)
+            //{
+            //    if (task.TaskEmployees.Any())
+            //    {
+            //        int count = task.TaskEmployees.Count();
+            //        for (int i = 0; i < count; i++)
+            //        {
+            //            TaskEmployeeService.DeleteTaskEmployee(task.TaskEmployees.FirstOrDefault());
+            //        }
+            //    }
+            //}
+            //if (task != null)
+            //{
+            //    if (task.PreRequisitTask.Any())
+            //    {
+            //        int count = task.PreRequisitTask.Count();
+            //        for (int i = 0; i < count; i++)
+            //        {
+            //            //Repository.Delete(task.PreRequisitTask.FirstOrDefault());
+            //            task.PreRequisitTask.Remove(task.PreRequisitTask.FirstOrDefault());
+            //        }
+            //        Repository.SaveChanges();
+            //    }
+            //}
+            //Repository.Delete(task);
+            Repository.Update(task);
             Repository.SaveChanges();
         }
 

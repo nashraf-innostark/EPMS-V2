@@ -33,6 +33,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Catalogue()
         {
             return new ActionAsPdf("SteveJobsHtml") { FileName = "EPMS Catalogue.pdf" };
+            //return new ActionAsPdf("Table") { FileName = "Table.pdf" };
         }
 
         // view used to generate PDF
@@ -44,6 +45,11 @@ namespace EPMS.Website.Controllers
             };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
+        }
+
+        public ActionResult Table()
+        {
+            return View();
         }
 
         // load catalogue page

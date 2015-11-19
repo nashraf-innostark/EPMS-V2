@@ -90,7 +90,7 @@
                                     }
                                 </td>
                                 <td>@item.DateTimeForIndex</td>
-                                <td class="delete"><a href="#" id="delete" @*onclick="window.location.href = '/Website/NewsAndArticle/Delete?id=' + @item.NewsArticleId"*@ onclick="deleteRow(@item.NewsArticleId)">Delete</a></td>
+                                <td class="delete"><a href="#" id="delete" @*onclick="window.location.href = '/Website/NewsAndArticle/Delete?id=' + @item.NewsArticleId"*@ onclick="deleteRow(@item.NewsArticleId, this)">Delete</a></td>
                             </tr>
                         }
                     </tbody>
@@ -126,8 +126,12 @@
         });
     });
 
-    function deleteRow(abcd) {
+    function deleteRow(abcd, elem) {
         debugger;
+        var row = $(elem).parent().parent().get(0);
+        var atable = $('#NewsAndArticle').dataTable();
+        var pos = atable.fnGetPosition(row);
+        
         if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
         }
@@ -141,6 +145,7 @@
                 abcd: abcd
             },
             success: function () {
+                atable.fnDeleteRow(pos);
                 $.pnotify({
                     title: 'Success',
                     type: 'info',
