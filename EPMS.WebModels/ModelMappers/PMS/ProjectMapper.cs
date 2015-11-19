@@ -163,7 +163,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
             }
             return project;
         }
-        public static WebsiteModels.Project CreateForReportDetails(this Models.DomainModels.Project source)
+        public static WebsiteModels.Project CreateForReportDetails(this Models.DomainModels.ReportProject source)
         {
             WebsiteModels.Project project = new WebsiteModels.Project
             {
@@ -174,14 +174,14 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                 EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                 Price = Convert.ToInt64(source.Price),
-                OtherCost = Convert.ToInt64(source.OtherCost + source.ProjectTasks.Sum(x => x.TotalCost)),
+                OtherCost = Convert.ToInt64(source.OtherCost + source.ReportProjectTasks.Sum(x => x.TotalCost)),
                 Status = source.Status,
-                TotalTasks = source.ProjectTasks.Count,
+                TotalTasks = source.ReportProjectTasks.Count,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };
-           
-            foreach (var projectTask in source.ProjectTasks)
+
+            foreach (var projectTask in source.ReportProjectTasks)
             {
                 decimal progress = 0;
                 if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)
@@ -193,7 +193,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
             return project;
         }
 
-        public static WebsiteModels.Project CreateForReport(this Models.DomainModels.Project source)
+        public static WebsiteModels.Project CreateForReport(this Models.DomainModels.ReportProject source)
         {
             WebsiteModels.Project project = new WebsiteModels.Project
             {
@@ -204,17 +204,17 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                 EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en")),
                 Price = Convert.ToInt64(source.Price),
-                OtherCost = Convert.ToInt64(source.OtherCost + source.ProjectTasks.Sum(x => x.TotalCost)),
+                OtherCost = Convert.ToInt64(source.OtherCost + source.ReportProjectTasks.Sum(x => x.TotalCost)),
                 Status = source.Status,
-                TotalTasks = source.ProjectTasks.Count,
+                TotalTasks = source.ReportProjectTasks.Count,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 CustomerNameE = Thread.CurrentThread.CurrentCulture.ToString() == "en"
-                    ? source.Customer.CustomerNameE
-                    : source.Customer.CustomerNameA
+                    ? source.CustomerNameE
+                    : source.CustomerNameA
             };
 
-            foreach (var projectTask in source.ProjectTasks)
+            foreach (var projectTask in source.ReportProjectTasks)
             {
                 decimal progress = 0;
                 if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)

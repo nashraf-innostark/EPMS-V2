@@ -33,7 +33,8 @@ namespace EPMS.Models.ModelMapers
                 NotesForCustomerE = source.NotesForCustomerE,
                 SerialNo = source.SerialNo,
                 RecCreatedBy = source.RecCreatedBy,
-                RecLastUpdatedBy = source.RecLastUpdatedBy
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                ReportProjectTasks = source.ProjectTasks.Select(x=>x.MapProjectTaskToReportProjectTask()).ToList()
             };
 
             return project;
@@ -62,9 +63,35 @@ namespace EPMS.Models.ModelMapers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ReportProjectSubTasks = source.SubTasks.Select(x=>x.MapProjectTaskToReportProjectTask()).ToList(),
+                ReportTaskEmployees = source.TaskEmployees.Select(x=>x.MapTaskEmployeeToReportTaskEmployee()).ToList()
             };
 
+
+            return projectTask;
+        }
+        public static ReportTaskEmployee MapTaskEmployeeToReportTaskEmployee(this TaskEmployee source)
+        {
+            ReportTaskEmployee projectTask = new ReportTaskEmployee
+            {
+                TaskId = source.TaskId,
+                TaskEmployeeId = source.TaskEmployeeId,
+
+                EmployeeFirstNameA = source.Employee.EmployeeFirstNameA,
+                EmployeeFirstNameE = source.Employee.EmployeeFirstNameE,
+
+                EmployeeMiddleNameA = source.Employee.EmployeeMiddleNameE,
+                EmployeeMiddleNameE = source.Employee.EmployeeMiddleNameE,
+
+                EmployeeLastNameA = source.Employee.EmployeeLastNameA,
+                EmployeeLastNameE = source.Employee.EmployeeLastNameE,
+
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt
+            };
 
             return projectTask;
         }

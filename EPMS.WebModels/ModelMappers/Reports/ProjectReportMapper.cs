@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using EPMS.Models.DomainModels;
+﻿using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers.Reports
 {

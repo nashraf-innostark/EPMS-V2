@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using EPMS.Models.DomainModels;
 using EPMS.WebModels.WebsiteModels;
 using ProjectTask = EPMS.Models.DomainModels.ProjectTask;
 using EPMS.WebModels.WebsiteModels.Common;
@@ -10,7 +11,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
 {
     public static class ProjectTaskMapper
     {
-        public static WebsiteModels.ProjectTask CreateForReport(this ProjectTask source)
+        public static WebsiteModels.ProjectTask CreateForReport(this ReportProjectTask source)
         {
             WebsiteModels.ProjectTask projectTask = new WebsiteModels.ProjectTask();
             projectTask.TaskId = source.TaskId;
@@ -108,6 +109,85 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
             }
             projectTask.SubTasks = source.SubTasks.Any() ? source.SubTasks.Select(t => t.CreateFromServerToClientLv()).ToList() : new List<WebsiteModels.ProjectTask>();
+            return projectTask;
+        }
+        public static WebsiteModels.ProjectTask CreateFromServerToClientLv(this ReportProjectTask source)
+        {
+            WebsiteModels.ProjectTask projectTask = new WebsiteModels.ProjectTask();
+            projectTask.TaskId = source.TaskId;
+            projectTask.ProjectId = source.ProjectId;
+            projectTask.TaskNameE = source.TaskNameE;
+            projectTask.TaskNameA = source.TaskNameA;
+            projectTask.IsParent = source.IsParent;
+            projectTask.ParentTask = source.ParentTask;
+            string descpEn = "";
+            if (!String.IsNullOrEmpty(source.DescriptionE))
+            {
+                descpEn = source.DescriptionE.Replace("\n", "");
+                descpEn = descpEn.Replace("\r", "");
+            }
+            projectTask.DescriptionE = descpEn;
+            string descpAr = "";
+            if (!String.IsNullOrEmpty(source.DescriptionA))
+            {
+                descpAr = source.DescriptionA.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
+            projectTask.DescriptionA = descpAr;
+            projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.TotalCost = source.TotalCost;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
+            projectTask.TaskProgressText = String.Format("{0:###.##}", source.TaskProgress) + "%";
+            var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
+            string notesEn = "";
+            if (!String.IsNullOrEmpty(source.NotesE))
+            {
+                notesEn = source.NotesE.Replace("\n", "");
+                notesEn = notesEn.Replace("\r", "");
+            }
+            projectTask.NotesE = notesEn;
+            string notesAr = "";
+            if (!String.IsNullOrEmpty(source.NotesA))
+            {
+                notesAr = source.NotesA.Replace("\n", "");
+                notesAr = notesAr.Replace("\r", "");
+            }
+            projectTask.NotesA = notesAr;
+            projectTask.RecCreatedBy = source.RecCreatedBy;
+            projectTask.RecCreatedDt = source.RecCreatedDt;
+            projectTask.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            projectTask.RecLastUpdatedDt = source.RecLastUpdatedDt;
+            if (source.ReportProject != null)
+            {
+                projectTask.ProjectNameE = source.ReportProject.NameE;
+                projectTask.ProjectNameA = source.ReportProject.NameA;
+            }
+
+            //if (source.ReportTaskEmployees != null)
+            //{
+            //    projectTask.TaskEmployees = source.ReportTaskEmployees.Select(x => x.CreateFromServerToClient()).ToList();
+            //}
+            //if (source.PreRequisitTask.Count > 0)
+            //{
+            //    foreach (var preRequisitTask in source.PreRequisitTask)
+            //    {
+            //        projectTask.PreReqTasks = preRequisitTask.TaskNameE + " - " + projectTask.PreReqTasks;
+            //    }
+            //    projectTask.PreReqTasks = projectTask.PreReqTasks.Substring(0, projectTask.PreReqTasks.Length - 3);
+            //}
+            if (source.ReportTaskEmployees != null && source.ReportTaskEmployees.Count > 0)
+            {
+                foreach (var employee in source.ReportTaskEmployees)
+                {
+                    var empFullName = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE +
+                                      " " + employee.EmployeeLastNameE;
+                    projectTask.EmployeesAssigned = empFullName + " - " + projectTask.EmployeesAssigned;
+                }
+                projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
+            }
+            //projectTask.SubTasks = source.SubTasks.Any() ? source.SubTasks.Select(t => t.CreateFromServerToClientLv()).ToList() : new List<WebsiteModels.ProjectTask>();
             return projectTask;
         }
         public static WebsiteModels.ProjectTask CreateFromServerToClientCreate(this ProjectTask source)

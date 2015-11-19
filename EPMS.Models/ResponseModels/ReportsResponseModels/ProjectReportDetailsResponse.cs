@@ -6,8 +6,8 @@ namespace EPMS.Models.ResponseModels.ReportsResponseModels
     public class ProjectReportDetailsResponse
     {
         public long ReportId { get; set; }
-        public IEnumerable<DomainModels.Project> Projects { get; set; }
-        public IEnumerable<ProjectTask> ProjectTasks { get; set; }
+        public IEnumerable<ReportProject> Projects { get; set; }
+        public IEnumerable<ReportProjectTask> ProjectTasks { get; set; }
     }
     public class WarehouseReportDetailsResponse
     {
