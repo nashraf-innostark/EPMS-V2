@@ -3791,7 +3791,6 @@
     <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />
-    <Folder Include="DashboardModels\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
@@ -3799,9 +3798,6 @@
     <Folder Include="Images\ItemImage\" />
     <Folder Include="Images\NewsOrArticle\" />
     <Folder Include="Images\ProductImage\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="ModelMappers\" />
-    <Folder Include="Reports\" />
     <Folder Include="Resources\Shared\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />
