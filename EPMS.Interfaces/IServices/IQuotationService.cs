@@ -11,7 +11,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Quotation> GetAll();
         IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId);
         QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from);
-        QuotationResponse GetQuotationResponseForRfq(long customerId, long rfqId);
+        QuotationResponse GetRfqForQuotationResponse(long rfqId);
         Quotation FindQuotationById(long id);
         IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id);
         Quotation FindQuotationByOrderId(long orderId);

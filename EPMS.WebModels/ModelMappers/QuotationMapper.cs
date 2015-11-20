@@ -11,10 +11,8 @@ namespace EPMS.WebModels.ModelMappers
             var caseType = new Quotation
             {
                 QuotationId = source.QuotationId,
-                ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId,
-                CreatedByEmployee = source.CreatedByEmployee,
+                RFQId = source.RFQId,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
@@ -29,9 +27,9 @@ namespace EPMS.WebModels.ModelMappers
                 NotesEn = source.NotesEn,
                 NotesAr = source.NotesAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDt = source.RecUpdatedDt,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
             if (source.QuotationItemDetails.Any())
             {
@@ -46,10 +44,8 @@ namespace EPMS.WebModels.ModelMappers
             return new QuotationCreateViewModel
             {
                 QuotationId = source.QuotationId,
-                ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId ?? 0,
-                CreatedByEmployee = source.CreatedByEmployee,
+                RFQId = source.RFQId,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
@@ -64,9 +60,9 @@ namespace EPMS.WebModels.ModelMappers
                 NotesEn = source.NotesEn,
                 NotesAr = source.NotesAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDt = source.RecUpdatedDt,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
             };
         }
@@ -76,7 +72,6 @@ namespace EPMS.WebModels.ModelMappers
             return new WebsiteModels.Quotation
             {
                 QuotationId = source.QuotationId,
-                ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
                 Customers = source.Customer.CreateFromServerToClient(),
                 GreetingsEn = source.GreetingsEn,
@@ -89,12 +84,10 @@ namespace EPMS.WebModels.ModelMappers
             return new WebsiteModels.Quotation
             {
                 QuotationId = source.QuotationId,
-                ClientName = source.ClientName,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId ?? 0,
-                CreatedByEmployee = source.CreatedByEmployee,
+                RFQId = source.RFQId,
                 Customers = source.Customer.CreateFromServerToClient(),
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDate = source.RecCreatedDate,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 FirstInstallement = source.FirstInstallement,
@@ -116,10 +109,10 @@ namespace EPMS.WebModels.ModelMappers
             return new WebsiteModels.Quotation
             {
                 QuotationId = source.QuotationId,
-                ClientName = source.ClientName,
+                ClientNameEn = source.Customer.CustomerNameE,
+                ClientNameAr = source.Customer.CustomerNameA,
                 CustomerId = source.CustomerId,
-                OrderId = source.OrderId ?? 0,
-                CreatedByEmployee = source.CreatedByEmployee,
+                RFQId = source.RFQId,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
             };
@@ -131,14 +124,15 @@ namespace EPMS.WebModels.ModelMappers
             {
                 ItemId = source.ItemId,
                 QuotationId = source.QuotationId,
+                ItemVariationId = source.ItemVariationId,
                 ItemDetails = source.ItemDetails,
                 ItemQuantity = source.ItemQuantity,
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDt = source.RecUpdatedDt,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
             return caseType;
         }
@@ -149,14 +143,15 @@ namespace EPMS.WebModels.ModelMappers
             {
                 ItemId = source.ItemId,
                 QuotationId = source.QuotationId,
+                ItemVariationId = source.ItemVariationId,
                 ItemDetails = source.ItemDetails,
                 ItemQuantity = source.ItemQuantity,
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
-                RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDt = source.RecUpdatedDt,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
         }
     }

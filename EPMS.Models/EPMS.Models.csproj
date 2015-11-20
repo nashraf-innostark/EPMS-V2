@@ -104,6 +104,7 @@
     <Compile Include="Common\PurchaseStatus.cs" />
     <Compile Include="Common\ReportCategory.cs" />
     <Compile Include="Common\ProjectReportByColumn.cs" />
+    <Compile Include="Common\RFQStatus.cs" />
     <Compile Include="Common\TaskReportByColumn.cs" />
     <Compile Include="Common\UserRole.cs" />
     <Compile Include="Common\PurchaseOrderByColumn.cs" />

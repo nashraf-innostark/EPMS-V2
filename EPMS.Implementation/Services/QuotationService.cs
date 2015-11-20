@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
@@ -74,12 +75,13 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
-        public QuotationResponse GetQuotationResponseForRfq(long customerId, long rfqId)
+        public QuotationResponse GetRfqForQuotationResponse(long rfqId)
         {
             QuotationResponse response = new QuotationResponse
             {
-                Rfq = rfqRepository.FindByCustomerAndRfqId(customerId, rfqId),
-                Customers = customerService.GetAll()
+                Rfq = rfqRepository.FindByRfqId(rfqId),
+                Customers = customerService.GetAll().ToList(),
+                Rfqs = rfqRepository.GetAllPendingRfqs().ToList()
             };
             return response;
         }

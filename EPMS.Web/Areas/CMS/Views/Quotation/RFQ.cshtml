@@ -38,6 +38,7 @@
     <div class="container-fluid">
         @*@Html.HiddenFor(model => model.CreatedByEmployee)*@
         @Html.HiddenFor(model => model.Rfq.RFQId)
+        @Html.HiddenFor(model => model.Rfq.SerialNumber)
         @Html.HiddenFor(model => model.Rfq.Status)
         @Html.HiddenFor(model => model.Rfq.CustomerId)
         @Html.HiddenFor(model => model.Rfq.RecCreatedBy)

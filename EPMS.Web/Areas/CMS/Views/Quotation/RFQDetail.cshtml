@@ -1,10 +1,10 @@
-﻿@using iTextSharp.text.pdf.qrcode
-@model EPMS.WebModels.ViewModels.RFQ.RFQDetailViewModel
+﻿@model EPMS.WebModels.ViewModels.RFQ.RFQDetailViewModel
 
 @{
     ViewBag.Title = EPMS.WebModels.Resources.CMS.RFQ.Header;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
     var discount = Model.Rfq.Discount ?? 0;
     string date = Model.Rfq.RecCreatedDate.ToString();
     string[] str = date.Split(' ');
@@ -96,7 +96,7 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.CMS.RFQ.RequestforQoutation #:</th>
-                                        <td>123</td>
+                                        <td>@Model.Rfq.SerialNumber</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -177,12 +177,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="control-group row-fluid">
-                    <div class="span3 span-inset">
-                        <a href="~/CMS/Quotation/Create?from=Client&rfqId=@Model.Rfq.RFQId" class="btn">@EPMS.WebModels.Resources.CMS.RFQ.CreateQuotation</a>
-                        @*<button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.CreateQuotation</button>*@
+                @if (userPermissionsSet.Contains("QuotationsCreate"))
+                {
+                    <div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <a href="~/CMS/Quotation/Create?from=Client&rfqId=@Model.Rfq.RFQId" class="btn">@EPMS.WebModels.Resources.CMS.RFQ.CreateQuotation</a>
+                            @*<button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.CreateQuotation</button>*@
+                        </div>
                     </div>
-                </div>
+                }
             </div>
         </div>
     </div>

@@ -1,7 +1,8 @@
 ﻿@model EPMS.WebModels.ViewModels.Quotation.QuotationCreateViewModel
 
 @{
-    ViewBag.Title = Model.PageTitle;
+    ViewBag.Title = Model.QuotationId > 0 ?
+        EPMS.WebModels.Resources.CMS.Quotation.UpdateQuotation : EPMS.WebModels.Resources.CMS.Quotation.CreateNew;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -33,17 +34,14 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-
 <!-- Page heading ends -->
 @using (Html.BeginForm("Create", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @*@Html.HiddenFor(model => model.CreatedByEmployee)*@
         @Html.HiddenFor(model => model.QuotationId)
         @Html.HiddenFor(model => model.OldItemDetailsCount)
-        @Html.HiddenFor(model => model.ClientName)
         @Html.HiddenFor(model => model.RecCreatedBy)
-        @Html.HiddenFor(model => model.RecCreatedDt)
+        @Html.HiddenFor(model => model.RecCreatedDate)
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="Client">@EPMS.WebModels.Resources.CMS.Quotation.ClientName</label>
@@ -64,17 +62,17 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label" for="OrderNo">@EPMS.WebModels.Resources.CMS.Quotation.OrderNameNo</label>
+                <label class="control-label" for="RFQId">@EPMS.WebModels.Resources.CMS.RFQ.RfqNo</label>
             </div>
             <div class="span2">
                 <div class="controls">
                     @if (Model.CustomerId == 0)
                     {
-                        @Html.DropDownListFor(m => m.OrderId, Enumerable.Empty<SelectListItem>(), "--Select--", new { @id = "OrderId", @class = "select2me OrderDDL" })
+                        @Html.DropDownListFor(m => m.RFQId, Enumerable.Empty<SelectListItem>(), "No Request for Quotation", new { @id = "RFQId", @class = "select2me OrderDDL" })
                     }
                     else
                     {
-                        @Html.DropDownListFor(m => m.OrderId, new SelectList(ViewBag.Orders, "OrderId", "OrderNo"), "", new { @id = "OrderId", @class = "select2me OrderDDL", @disabled = (Model.OrderId == 0) })
+                        @Html.DropDownListFor(m => m.RFQId, new SelectList(ViewBag.Rfqs, "RFQId", "SerialNumber"), "--Select--", new { @id = "RFQId", @class = "select2me OrderDDL" })
                     }
                     <label id="orderValidation"></label>
                 </div>
@@ -140,7 +138,7 @@
                             <th style="width:4%">@EPMS.WebModels.Resources.CMS.Quotation.Delete</th>
                         </tr>
                     </thead>
-                    <tbody class="qouteAdd">
+                    <tbody class="qouteAdd" id="QuotationItemsTableBody">
                         <tr class="ItemDetailError Error center"></tr>
                         @if (Model.QuotationItemDetails.Any())
                         {
@@ -171,13 +169,16 @@
                         {
                             <tr>
                                 <td>
-                                    <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails"></textarea>
+                                    <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails" data-val="true" data-val-required="The Item Details are required."></textarea>
+                                    <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemDetails" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="quantity">
-                                    <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity">
+                                    <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1">
+                                    <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemQuantity" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="unitPrice">
-                                    <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice">
+                                    <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1">
+                                    <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].UnitPrice" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="total">
                                     <input class="n3" type="text" value="0" name="QuotationItemDetails[0].TotalPrice" readonly>
@@ -190,7 +191,7 @@
                     </tbody>
                 </table>
             </div>
-            <div class="control-group row-fluid">
+            <div class="control-group row-fluid add-item-row">
                 <div class="span3 span-inset">
                     <button type="button" class="btn trAdder">@EPMS.WebModels.Resources.CMS.Quotation.Add</button>
                 </div>
@@ -347,7 +348,9 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="setClientName(event)">@Model.BtnText</button>
+                <button type="submit" class="btn" onclick="setClientName(event)">
+                    @(Model.QuotationId > 0 ? EPMS.WebModels.Resources.CMS.Quotation.UpdateQuotation : EPMS.WebModels.Resources.CMS.Quotation.CreateQoute)
+                </button>
             </div>
         </div>
     </div>
@@ -452,25 +455,20 @@
             var control = listSimple[i];
             var fieldvalue = $(control).val();
             if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
-                //$(control).prop('placeholder', 'Required');
                 counter++;
-                $(control).addClass("Error");
-
+                $(control).css("background-color", "pink");
             } else {
-                $(control).removeClass("Error");
+                $(control).css("background-color", "white");
             }
         }
         if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'Please Complete Previous Item Details.'
-                });
-                event.preventDefault();
-                return false;
-            }
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: 'Please Complete Previous Item Details.'
+            });
+            event.preventDefault();
+            return false;
         }
         return true;
     }
@@ -478,19 +476,16 @@
     var iExcelData = false;
     var isUpdate = false;
     var elementToDelete;
+    var rfqItems;
+    var siteUrl;
     $(document).ready(function () {
-        editor = CKEDITOR.replace('ExtraInformationEn', {
+        CKEDITOR.replace('ExtraInformationEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
-        editor = CKEDITOR.replace('ExtraInformationAr', {
+        CKEDITOR.replace('ExtraInformationAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
-            filebrowserUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Files&currentFolder=/archive/',
-            filebrowserImageUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Images&currentFolder=/cars/',
-            filebrowserFlashUploadUrl: $("#siteURL").val() + '/RTB/core/connector/aspx/connector.aspx?command=QuickUpload&type=Flash',
         });
+
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $("#Installment1").val(0);
@@ -581,13 +576,12 @@
                 }
             });
         }
-        var siteUrl = $('#siteURL').val();
-        var url = siteUrl + "/CMS/Quotation/GetCustomerOrders";
+        siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/CMS/Quotation/GetCustomerRfqs";
         $("#Client").on("change", function () {
             var customerId = parseInt($(this).val());
             if (customerId > 0) {
-                $("#ClientName").val($("#Client option:selected").text());
-                //$('#SearchRequest_JobId').empty();
+                //$("#ClientName").val($("#Client option:selected").text());
                 $.blockUI({
                     message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
@@ -600,7 +594,8 @@
                         customerId: customerId
                     },
                     success: function (data) {
-                        populateDDL(data);
+                        populateRfqDropDown(data.Rfqs);
+                        rfqItems = data.RfqItems;
                     },
                     error: function (e) {
                         $.unblockUI();
@@ -612,6 +607,51 @@
             }
 
         });
+        $("#RFQId").on("change", function () {
+            var count = 0;
+            var rfqId = parseInt($(this).val());
+            if (rfqId > 0) {
+                $(".add-item-row").hide();
+                $.each(rfqItems, function(key, value) {
+                    if (value.RFQId == rfqId) {
+                        if (count == 0) {
+                            $('.qouteAdd').html("");
+                        }
+                        count++;
+                        addQuotationItem(value);
+                    }
+                });
+            } else {
+                $(".add-item-row").show();
+                $('.qouteAdd').html("");
+                var html = '<tr>' +
+                                '<td>' +
+                                    '<textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails" data-val="true" data-val-required="The Item Details are required."></textarea>' +
+                                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemDetails" data-valmsg-replace="true"></span>' +
+                                '</td>' +
+                                '<td class="quantity">' +
+                                    '<input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1">' +
+                                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemQuantity" data-valmsg-replace="true"></span>' +
+                                '</td>' +
+                                '<td class="unitPrice">' +
+                                    '<input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1">' +
+                                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].UnitPrice" data-valmsg-replace="true"></span>' +
+                                '</td>' +
+                                '<td class="total">' +
+                                    '<input class="n3" type="text" value="0" name="QuotationItemDetails[0].TotalPrice" readonly>' +
+                                '</td>' +
+                                '<td class="delete">' +
+                                    '<i class="icon-photon minus deleteRow"></i>' +
+                                '</td>' +
+                            '</tr>';
+                $('.qouteAdd').html(html);
+                //remove validation
+                $("form").removeData("validator").removeData("unobtrusiveValidation");
+                //Parse the form again to apply new validations
+                $.validator.unobtrusive.parse("form");
+            }
+        });
+
         $("#AddUpdateQuotationForm").validate({
             errorElement: "span",
             errorClass: "error",
@@ -640,12 +680,24 @@
                 if (!iExcelData && !isUpdate) {
                     itemsDetailCount = itemsDetailCount + 1;
                 }
-                var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails"></textarea> </td> ' +
-                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
-                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
+                //var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails"></textarea> </td> ' +
+                //    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
+                //    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
+                //    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
+                //    '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+                var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails" data-val="true" data-val-required="The Item Details are required."></textarea> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity" data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
+                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
                     ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
                     '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
                 $('.qouteAdd').append(html);
+                //remove validation
+                $("form").removeData("validator").removeData("unobtrusiveValidation");
+                //Parse the form again to apply new validations
+                $.validator.unobtrusive.parse("form");
                 iExcelData = false;
                 isUpdate = false;
                 reActivateDelete();
@@ -654,98 +706,11 @@
         });
         reActivateDelete();
         reactivateCount();
-        function reActivateDelete() {
-            $('.deleteRow').on("click", function () {
-                $.blockUI({
-                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-                });
-                var id = parseInt($(this).closest('tr').children(".itemDetailId").val());
-                elementToDelete = $(this).parent().parent();
-                var quotationId = parseInt('@Model.QuotationId');
-                if (quotationId > 0) {
 
-                    url = siteUrl + "/CMS/Quotation/Delete";
-                    //var isErrorInDeleting = true;
-                    $.ajax({
-                        url: url,
-                        type: 'GET',
-                        dataType: "json",
-                        data: {
-                            itemDetailId: id
-                        },
-                        success: function (data) {
-                            if (data.Status == "Success") {
-                                itemsDetailCount = itemsDetailCount - 1;
-                                var count = $('.qouteAdd tr').length;
-                                if (count > 1) {
-                                    elementToDelete.remove();
-                                    var x = 0;
-                                    $('.qouteAdd tr .n3').each(function () {
-                                        x = x + parseInt($(this).val());
-                                    });
-                                    $('#subtotal').val(x);
-                                    calDiscount();
-                                }
-                                //isErrorInDeleting = false;
-                                $.unblockUI();
-                            }
-                            if (data.Status == "Error") {
-                                $.unblockUI();
-                                alert("Error in deleting Item Detail");
-                                return;
-                            }
-                        },
-                        error: function (e) {
-                            $.unblockUI();
-                            alert('Error: You are not authorized');
-                            return;
-                        }
-                    });
-                } else {
-                    itemsDetailCount = itemsDetailCount - 1;
-                    elementToDelete.remove();
-                    var x = 0;
-                    $('.qouteAdd tr .n3').each(function () {
-                        x = x + parseInt($(this).val());
-                    });
-                    $('#subtotal').val(x);
-                    calDiscount();
-                    $.unblockUI();
-                }
-            });
-        }
-        function reactivateCount() {
-            $('.quantity .n1').on("blur", function () {
-                var n2Val = $(this).parent().parent().find(".n2").val();
-                $(this).parent().parent().find(".n3").val($(this).val() * n2Val);
-                var x = 0;
-                $('.qouteAdd tr .n3').each(function () {
-                    x = x + parseInt($(this).val());
-                });
-                $('#subtotal').val(x);
-                calDiscount();
-            });
-            $('.unitPrice .n2').on("blur", function () {
-                var n2Va2 = $(this).parent().parent().find(".n1").val();
-                $(this).parent().parent().find(".n3").val($(this).val() * n2Va2);
-                var x = 0;
-                $('.qouteAdd tr .n3').each(function () {
-                    x = x + parseInt($(this).val());
-                });
-                $('#subtotal').val(x);
-                calDiscount();
-            });
-        }
         $('#Discount').on("blur", function () {
             calDiscount();
         });
-        function calDiscount() {
-            var subtotal = parseInt($('#subtotal').val());
-            var discount = parseInt($('#Discount').val());
-            var grand = subtotal - (subtotal * (discount / 100));
-            $('#GrandTotal').val(grand);
-        }
+
         //$.nToWord({number:n,language:"ar"});
         $('#actDe').on("click", function () {
             if ('@direction' == "ltr") {
@@ -869,22 +834,133 @@
             }
         });
     });
-    function populateDDL(data) {
-        $("#OrderId").empty();
+    function populateRfqDropDown(data) {
+        $("#RFQId").empty();
         if (data.length > 0) {
-            $("#OrderId").append(
+            $("#RFQId").append(
                     $('<option></option>').val("").html("--Select--")
                 );
             for (var i = 0; i < data.length; i++) {
-                $("#OrderId").append(
-                    $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
+                $("#RFQId").append(
+                    $('<option></option>').val(data[i].RFQId).html(data[i].SerialNumber)
                 );
             }
         } else {
-            $("#OrderId").append(
-                    $('<option></option>').val("").html("none")
+            $("#RFQId").append(
+                    $('<option></option>').val("").html("No Request for Quotation")
                 );
         }
+        $(".select2me").select2("destroy");
+        $('.select2me').select2({
+            placeholder: "Select",
+        });
         $.unblockUI();
+    }
+    function addQuotationItem(value) {
+        var index = $("#QuotationItemsTableBody").children("tr").length;
+        var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details are required.">' + value.ItemDetails + '</textarea> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="' + value.ItemQuantity + '" name="QuotationItemDetails[' + index + '].ItemQuantity" data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
+                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="' + value.UnitPrice + '" name="QuotationItemDetails[' + index + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
+                    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + index + '].TotalPrice"> </td> ' +
+                    '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+        $('.qouteAdd').append(html);
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
+        reActivateDelete();
+        reactivateCount();
+    }
+    function reActivateDelete() {
+        $('.deleteRow').on("click", function () {
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            var id = parseInt($(this).closest('tr').children(".itemDetailId").val());
+            elementToDelete = $(this).parent().parent();
+            var quotationId = parseInt('@Model.QuotationId');
+            if (quotationId > 0) {
+
+                url = siteUrl + "/CMS/Quotation/Delete";
+                //var isErrorInDeleting = true;
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        itemDetailId: id
+                    },
+                    success: function (data) {
+                        if (data.Status == "Success") {
+                            itemsDetailCount = itemsDetailCount - 1;
+                            var count = $('.qouteAdd tr').length;
+                            if (count > 1) {
+                                elementToDelete.remove();
+                                var x = 0;
+                                $('.qouteAdd tr .n3').each(function () {
+                                    x = x + parseInt($(this).val());
+                                });
+                                $('#subtotal').val(x);
+                                calDiscount();
+                            }
+                            //isErrorInDeleting = false;
+                            $.unblockUI();
+                        }
+                        if (data.Status == "Error") {
+                            $.unblockUI();
+                            alert("Error in deleting Item Detail");
+                            return;
+                        }
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error: You are not authorized');
+                        return;
+                    }
+                });
+            } else {
+                itemsDetailCount = itemsDetailCount - 1;
+                elementToDelete.remove();
+                var x = 0;
+                $('.qouteAdd tr .n3').each(function () {
+                    x = x + parseInt($(this).val());
+                });
+                $('#subtotal').val(x);
+                calDiscount();
+                $.unblockUI();
+            }
+        });
+    }
+    function reactivateCount() {
+        $('.quantity .n1').on("blur", function () {
+            var n2Val = $(this).parent().parent().find(".n2").val();
+            $(this).parent().parent().find(".n3").val($(this).val() * n2Val);
+            var x = 0;
+            $('.qouteAdd tr .n3').each(function () {
+                x = x + parseInt($(this).val());
+            });
+            $('#subtotal').val(x);
+            calDiscount();
+        });
+        $('.unitPrice .n2').on("blur", function () {
+            var n2Va2 = $(this).parent().parent().find(".n1").val();
+            $(this).parent().parent().find(".n3").val($(this).val() * n2Va2);
+            var x = 0;
+            $('.qouteAdd tr .n3').each(function () {
+                x = x + parseInt($(this).val());
+            });
+            $('#subtotal').val(x);
+            calDiscount();
+        });
+    }
+    function calDiscount() {
+        var subtotal = parseInt($('#subtotal').val());
+        var discount = parseInt($('#Discount').val());
+        var grand = subtotal - (subtotal * (discount / 100));
+        $('#GrandTotal').val(grand);
     }
 </script>

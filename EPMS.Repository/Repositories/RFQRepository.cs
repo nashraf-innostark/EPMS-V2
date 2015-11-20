@@ -1,6 +1,8 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
@@ -28,9 +30,19 @@ namespace EPMS.Repository.Repositories
 
         #endregion
 
-        public RFQ FindByCustomerAndRfqId(long customerId, long rfqId)
+        public RFQ FindByRfqId(long rfqId)
         {
-            return DbSet.FirstOrDefault(x => x.CustomerId == customerId && x.RFQId == rfqId);
+            return DbSet.FirstOrDefault(x => x.RFQId == rfqId);
+        }
+
+        public IEnumerable<RFQ> GetAllPendingRfqs()
+        {
+            return DbSet.Where(x => x.Status == (int) RFQStatus.Pending);
+        }
+
+        public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)
+        {
+            return DbSet.Where(x => x.CustomerId == customerId && x.Status == (int) RFQStatus.Pending);
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EPMS.WebModels.ViewModels.Customer;
+using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -90,6 +91,16 @@ namespace EPMS.WebModels.ModelMappers
             if (firstOrDefault != null)
                 contactList.Email = firstOrDefault.Email;
             return contactList;
+        }
+
+        public static CustomerDropDown CreateForDropDown(this Models.DomainModels.Customer source)
+        {
+            return new CustomerDropDown
+            {
+                CustomerId = source.CustomerId,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA
+            };
         }
     }
 }

@@ -806,6 +806,7 @@
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\RfqRfqItemsForQuotation.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
@@ -855,7 +856,6 @@
     <Compile Include="WebsiteModels\Common\JsTree.cs" />
     <Compile Include="WebsiteModels\Common\JsTreeJson.cs" />
     <Compile Include="WebsiteModels\Common\ProjectStatus.cs" />
-    <Compile Include="WebsiteModels\Common\RFQStatus.cs" />
     <Compile Include="WebsiteModels\CompanyBankDetail.cs" />
     <Compile Include="WebsiteModels\CompanyDocumentDetail.cs" />
     <Compile Include="WebsiteModels\CompanyLicenseInformation.cs" />
@@ -865,6 +865,7 @@
     <Compile Include="WebsiteModels\ContactList.cs" />
     <Compile Include="WebsiteModels\ContactUs.cs" />
     <Compile Include="WebsiteModels\Customer.cs" />
+    <Compile Include="WebsiteModels\CustomerDropDown.cs" />
     <Compile Include="WebsiteModels\DashboardWidgetPreferences.cs" />
     <Compile Include="WebsiteModels\Department.cs" />
     <Compile Include="WebsiteModels\DIF.cs" />
@@ -929,6 +930,7 @@
     <Compile Include="WebsiteModels\RFI.cs" />
     <Compile Include="WebsiteModels\RFIItem.cs" />
     <Compile Include="WebsiteModels\RFQ.cs" />
+    <Compile Include="WebsiteModels\RfqDropDown.cs" />
     <Compile Include="WebsiteModels\RFQItem.cs" />
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />

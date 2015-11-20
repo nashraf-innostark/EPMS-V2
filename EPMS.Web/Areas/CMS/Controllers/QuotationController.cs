@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.EncryptDecrypt;
@@ -37,6 +38,20 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly ICompanyProfileService ProfileService;
         private readonly IShoppingCartService cartService;
         private readonly ICompanyProfileService companyProfileService;
+
+        private bool CheckHasInventoryModule()
+        {
+            // check license
+            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            var splitLicenseKey = licenseKey.Split('|');
+            string[] modules = splitLicenseKey[4].Split(';');
+            if (modules.Contains("IS") || modules.Contains("Inventory System") || modules.Contains("نظام المخزون"))
+            {
+                return true;
+            }
+            return false;
+        }
         #endregion
 
         #region Constructor
@@ -146,11 +161,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             long employeeId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"]) : 0;
             if (from == "Client")
             {
-                QuotationCreateViewModel model = new QuotationCreateViewModel
-                {
-                    CustomerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0
-                };
-                QuotationResponse response = QuotationService.GetQuotationResponseForRfq(model.CustomerId, (long)rfqId);
+                QuotationCreateViewModel model = new QuotationCreateViewModel();
+                QuotationResponse response = QuotationService.GetRfqForQuotationResponse((long)rfqId);
                 
                 if (response.Rfq != null)
                 {
@@ -167,15 +179,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         };
                         model.QuotationItemDetails.Add(item);
                     }
+                    model.CustomerId = response.Rfq.CustomerId ?? 0;
+                    model.RFQId = response.Rfq.RFQId;
                     model.QuotationDiscount = response.Rfq.Discount;
                     ViewBag.Customers = response.Customers.Any() ?
-                        response.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
-                    ViewBag.Orders = new List<Order>();
+                        response.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
+                    ViewBag.Rfqs = response.Rfqs.Any() ?
+                        response.Rfqs.Select(x=>x.CreateForDropDown()) : new List<RfqDropDown>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
-                    model.CreatedByEmployee = employeeId;
-                    model.PageTitle = Quotation.CreateNew;
-                    model.BtnText = Quotation.CreateQoute;
                     ViewBag.FromClient = true;
                 }
                 return View(model);
@@ -189,16 +201,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (id == null)
             {
                 viewModel.CreatedByName = createdByName;
-                viewModel.CreatedByEmployee = employeeId;
-                viewModel.PageTitle = Quotation.CreateNew;
-                viewModel.BtnText = Quotation.CreateQoute;
                 return View(viewModel);
             }
             viewModel = quotResponse.Quotation.CreateFromServerToClient();
             viewModel.CreatedByName = createdByName;
-            viewModel.CreatedByEmployee = employeeId;
-            viewModel.PageTitle = Quotation.UpdateQuotation;
-            viewModel.BtnText = Quotation.UpdateQuotation;
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
             ViewBag.Orders = quotResponse.Orders.Any() ?
                         quotResponse.Orders.Select(x => x.CreateFromServerToClient()) : new List<Order>();
@@ -213,8 +219,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             // Update case
             if (viewModel.QuotationId > 0)
             {
-                viewModel.RecUpdatedBy = User.Identity.GetUserId();
-                viewModel.RecUpdatedDt = DateTime.Now;
+                viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecLastUpdatedDate = DateTime.Now;
                 var quotationToUpdate = viewModel.CreateFromClientToServer();
                 if (QuotationService.UpdateQuotation(quotationToUpdate))
                 {
@@ -226,8 +232,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         {
                             // Update item details
                             itemDetail.QuotationId = viewModel.QuotationId;
-                            itemDetail.RecUpdatedBy = User.Identity.GetUserId();
-                            itemDetail.RecUpdatedDt = DateTime.Now;
+                            itemDetail.RecLastUpdatedBy = User.Identity.GetUserId();
+                            itemDetail.RecLastUpdatedDate = DateTime.Now;
                             var itemDetailToUpdate = itemDetail.CreateFromClientToServer();
                             isUpdated.Add(QuotationItemService.UpdateQuotationItem(itemDetailToUpdate));
                         }
@@ -239,7 +245,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                                 // Add item details
                                 itemDetail.QuotationId = viewModel.QuotationId;
                                 itemDetail.RecCreatedBy = User.Identity.GetUserId();
-                                itemDetail.RecCreatedDt = DateTime.Now;
+                                itemDetail.RecCreatedDate = DateTime.Now;
                                 var itemDetailToAdd = itemDetail.CreateFromClientToServer();
                                 isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
                             }
@@ -282,9 +288,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
             // Add case
             // Save Quotation
             viewModel.RecCreatedBy = User.Identity.GetUserId();
-            viewModel.RecCreatedDt = DateTime.Now;
-            viewModel.RecUpdatedBy = User.Identity.GetUserId();
-            viewModel.RecUpdatedDt = DateTime.Now;
+            viewModel.RecCreatedDate = DateTime.Now;
+            viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
+            viewModel.RecLastUpdatedDate = DateTime.Now;
+            foreach (var detail in viewModel.QuotationItemDetails)
+            {
+                detail.RecCreatedBy = User.Identity.GetUserId();
+                detail.RecCreatedDate = DateTime.Now;
+                detail.RecLastUpdatedBy = User.Identity.GetUserId();
+                detail.RecLastUpdatedDate = DateTime.Now;
+            }
             var quotationToAdd = viewModel.CreateFromClientToServer();
             var quotaionId = QuotationService.AddQuotation(quotationToAdd);
             //bool addStatus = false;
@@ -336,6 +349,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             var direction = WebModels.Resources.Shared.Common.TextDirection;
             long customerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
+            ViewBag.HasInventoryModule = CheckHasInventoryModule();
             RFQCreateViewModel model = new RFQCreateViewModel();
             if (from == "Client")
             {
@@ -391,7 +405,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         rfqItem.RecLastUpdatedBy = User.Identity.GetUserId();
                         rfqItem.RecLastUpdatedDate = DateTime.Now;
                     }
-                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    model.Rfq.Status = (int)RFQStatus.Pending;
                     var rfqToUpdate = model.Rfq.CreateFromClientToServer();
                     if (rfqToUpdate.CustomerId == 0)
                     {
@@ -420,7 +434,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         rfqItem.RecLastUpdatedBy = User.Identity.GetUserId();
                         rfqItem.RecLastUpdatedDate = DateTime.Now;
                     }
-                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    model.Rfq.Status = (int)RFQStatus.Pending;
                     var rfqToAdd = model.Rfq.CreateFromClientToServer();
                     if (rfqToAdd.CustomerId == 0)
                     {
@@ -503,7 +517,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     model.Rfq = rfqResponse.Rfq.CreateFromServerToClient();
                 }
-                model.Profile = rfqResponse.Profile.CreateFromServerToClientForQuotation();
+                model.Profile = rfqResponse.Profile != null ? rfqResponse.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
                 model.Rfq.CustomerId = customerId;
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 return View(model);
@@ -540,10 +554,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Get Customer Orders
 
         [HttpGet]
-        public JsonResult GetCustomerOrders(long customerId)
+        public JsonResult GetCustomerRfqs(long customerId)
         {
-            var orders = OrdersService.GetOrdersByCustomerId(customerId).Select(x => x.CreateFromServerToClient());
-            return Json(orders, JsonRequestBehavior.AllowGet);
+            var rfqs = rfqService.GetPendingRfqsByCustomerId(customerId).ToList();
+            RfqRfqItemsForQuotation response = new RfqRfqItemsForQuotation
+            {
+                Rfqs = rfqs.Select(x=>x.CreateForDropDown()).ToList(),
+                RfqItems = rfqs.SelectMany(x=>x.RFQItems.Select(y=>y.CreateFromServerToClient())).ToList()
+            };
+            return Json(response, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
@@ -559,11 +578,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
                 viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
                 // Get Order from Order Number
-                if (viewModel.Quotation.OrderId>0)
-                {
-                    viewModel.Order =
-                    OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
-                }
+                //if (viewModel.Quotation.OrderId>0)
+                //{
+                //    viewModel.Order =
+                //    OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
+                //}
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }

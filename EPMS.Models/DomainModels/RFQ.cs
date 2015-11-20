@@ -15,8 +15,10 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+        public string SerialNumber { get; set; }
 
         public virtual Customer Customer { get; set; }
         public virtual ICollection<RFQItem> RFQItems { get; set; }
+        public virtual ICollection<Quotation> Quotations { get; set; }
     }
 }

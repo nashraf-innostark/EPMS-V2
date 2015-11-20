@@ -79,7 +79,7 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Quotation.
+        ///   Looks up a localized string similar to Update Request for Quotation.
         /// </summary>
         public static string BtnUpdate {
             get {
@@ -102,6 +102,15 @@ namespace EPMS.WebModels.Resources.CMS {
         public static string CreateQuotation {
             get {
                 return ResourceManager.GetString("CreateQuotation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Request for Quotation.
+        /// </summary>
+        public static string CreateRfq {
+            get {
+                return ResourceManager.GetString("CreateRfq", resourceCulture);
             }
         }
         
@@ -205,6 +214,15 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Request for Quotation #.
+        /// </summary>
+        public static string RfqNo {
+            get {
+                return ResourceManager.GetString("RfqNo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Status.
         /// </summary>
         public static string Status {
@@ -223,7 +241,7 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Update Quotation.
+        ///   Looks up a localized string similar to Update Request for Quotation.
         /// </summary>
         public static string UpdateQuotation {
             get {

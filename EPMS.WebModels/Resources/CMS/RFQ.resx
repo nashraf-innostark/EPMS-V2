@@ -124,13 +124,16 @@
     <value>Create And Send Request</value>
   </data>
   <data name="BtnUpdate" xml:space="preserve">
-    <value>Update Quotation</value>
+    <value>Update Request for Quotation</value>
   </data>
   <data name="ClientName" xml:space="preserve">
     <value>Client Name</value>
   </data>
   <data name="CreateQuotation" xml:space="preserve">
     <value>Create Quotation</value>
+  </data>
+  <data name="CreateRfq" xml:space="preserve">
+    <value>Create New Request for Quotation</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>Date</value>
@@ -165,6 +168,9 @@
   <data name="Requests" xml:space="preserve">
     <value>Requests</value>
   </data>
+  <data name="RfqNo" xml:space="preserve">
+    <value>Request for Quotation #</value>
+  </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
   </data>
@@ -172,6 +178,6 @@
     <value>Request for Quotation has been successfully Updated</value>
   </data>
   <data name="UpdateQuotation" xml:space="preserve">
-    <value>Update Quotation</value>
+    <value>Update Request for Quotation</value>
   </data>
 </root>

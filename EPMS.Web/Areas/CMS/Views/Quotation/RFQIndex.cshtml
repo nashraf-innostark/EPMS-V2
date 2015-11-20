@@ -1,10 +1,11 @@
-﻿@model EPMS.WebModels.ViewModels.RFQ.RFQListViewModel
+﻿@using EPMS.Models.Common
+@model EPMS.WebModels.ViewModels.RFQ.RFQListViewModel
 
 @{
     ViewBag.Title = EPMS.WebModels.Resources.CMS.RFQ.PageTitleIndex;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
-    var userRole = (string)Session["RoleName"];
+    var userRoleKey = (int)Session["RoleKey"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
@@ -27,7 +28,7 @@
     <h2><small>@ViewBag.Title</small></h2>
     @if (userPermissionsSet.Contains("RFQCreate"))
     {
-        <h3> <small><a href="~/CMS/Quotation/RFQ">@EPMS.WebModels.Resources.CMS.Quotation.CreateNew</a></small></h3>
+        <h3> <small><a href="~/CMS/Quotation/RFQ">@EPMS.WebModels.Resources.CMS.RFQ.CreateRfq</a></small></h3>
     }
 </header>
 
@@ -40,8 +41,37 @@
     <div class="container-fluid">
         <div class="row-fluid">
             <div class="span12">
-                <table id="QuotationTable" class="table table-striped table-responsive">
-                    @if (userRole == "Admin")
+                <table id="RfqTable" class="table table-striped table-responsive">
+                    @if (userRoleKey == 4)
+                    {
+                        int count = 1;
+                        <thead>
+                            <tr>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Header</th>
+                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var rfq in Model.Rfqs)
+                            {
+                                <tr>
+                                    <td>@count</td>
+                                    @if (rfq.RFQItems.Any())
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId?from=Client">@rfq.SerialNumber</a></td>
+                                    }
+                                    else
+                                    {
+                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">@rfq.SerialNumber</a></td>
+                                    }
+                                    <td>@((RFQStatus)rfq.Status)</td>
+                                </tr>
+                                    count++;
+                            }
+                        </tbody>
+                    }
+                    else
                     {
                         int count = 1;
                         <thead>
@@ -59,67 +89,16 @@
                                     <td>@count</td>
                                     @if (rfq.RFQItems.Any())
                                     {
-                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId?from=Client">Quotation @count</a></td>
+                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId?from=Client">@rfq.SerialNumber</a></td>
                                     }
                                     else
                                     {
-                                        <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">Quotation @count</a></td>
+                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">@rfq.SerialNumber</a></td>
                                     }
                                     <td>@(direction == "ltr" ? rfq.CustomerNameEn : rfq.CustomerNameAr)</td>
-                                    @switch (rfq.Status)
-                                    {
-                                        case 1:
-                                            <td>Qoutation Created</td>
-                                            break;
-                                        case 2:
-                                            <td>Qoutation Pending</td>
-                                            break;
-                                        case 3:
-                                            <td>Qoutation Approved</td>
-                                            break;
-                                    }
+                                    <td>@((RFQStatus)rfq.Status)</td>
                                 </tr>
-                                count++;
-                            }
-                        </tbody>
-                    }
-                    else
-                    {
-                        int count = 1;
-                        <thead>
-                            <tr>
-                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
-                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Header</th>
-                                <th>@EPMS.WebModels.Resources.CMS.RFQ.Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var rfq in Model.Rfqs)
-                            {
-                                <tr>
-                                    <td>@count</td>
-                                    @if (rfq.RFQItems.Any())
-                                    {
-                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId?from=Client">@EPMS.WebModels.Resources.CMS.RFQ.Quotation @count</a></td>
-                                    }
-                                    else
-                                    {
-                                        <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">Quotation @count</a></td>
-                                    }
-                                    @switch (rfq.Status)
-                                    {
-                                        case 1:
-                                            <td>Qoutation Created</td>
-                                            break;
-                                        case 2:
-                                            <td>Qoutation Pending</td>
-                                            break;
-                                        case 3:
-                                            <td>Qoutation Approved</td>
-                                            break;
-                                    }
-                                </tr>
-                                count++;
+                                    count++;
                             }
                         </tbody>
                     }
@@ -129,3 +108,50 @@
         </div>
     </div>
 </form>
+
+<script>
+    $(document).ready(function () {
+        if ('@userRoleKey' == 4) {
+            $('#RfqTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "aoColumns": [
+                    { "bVisible": true, "bSortable": false },
+                      null,
+                      null
+                ],
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                },
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+            });
+        } else {
+            $('#RfqTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "aoColumns": [
+                    { "bVisible": true, "bSortable": false },
+                      null,
+                      null,
+                      null
+                ],
+                "fnInitComplete": function () {
+                    $(".dataTables_wrapper select").select2({
+                        dropdownCssClass: 'noSearch'
+                    });
+                },
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+            });
+        }
+    });
+</script>

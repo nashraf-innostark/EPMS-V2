@@ -45,7 +45,7 @@ namespace EPMS.Repository.Repositories
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
                         { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
-                        { OrdersByColumn.Quotation,  c => c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId) != null ? c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId).QuotationDiscount : 0 },
+                        //{ OrdersByColumn.Quotation,  c => c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId) != null ? c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId).QuotationDiscount : 0 },
                         //{ OrdersByColumn.Invoice,  c => c.},
                         //{ OrdersByColumn.Reciepts,  c => c.},
                         { OrdersByColumn.Status,  c => c.OrderStatus},
@@ -86,7 +86,7 @@ namespace EPMS.Repository.Repositories
                         RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
                         Complaints = s.Customer.Complaints,
                         Orders = s.Customer.Orders,
-                        Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
+                        //Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
                     }
 
                 }).ToList()
@@ -111,7 +111,7 @@ namespace EPMS.Repository.Repositories
                                                    RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
                                                    Complaints = s.Customer.Complaints,
                                                    Orders = s.Customer.Orders,
-                                                   Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
+                                                   //Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
                                                }
 
                                            }).ToList();

@@ -61,5 +61,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<VendorItem> VendorItems { get; set; }
         public virtual ICollection<PhysicalCountItem> PhysicalCountItems { get; set; }
         public virtual ICollection<Product> Products { get; set; }
+        public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
     }
 }

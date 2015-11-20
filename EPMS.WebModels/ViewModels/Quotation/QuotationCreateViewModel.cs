@@ -11,10 +11,7 @@ namespace EPMS.WebModels.ViewModels.Quotation
             QuotationItemDetails = new List<WebsiteModels.QuotationItemDetail>();
         }
         public long QuotationId { get; set; }
-        public string ClientName { get; set; }
-        [Required(ErrorMessage = "Order Number is required.")]
-        public long OrderId { get; set; }
-        public long CreatedByEmployee { get; set; }
+        public long? RFQId { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }
         [Range(0, 100, ErrorMessage = "The total % of discount should not exceed 100")]
@@ -29,17 +26,15 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public short? FourthInsDueAtCompletion { get; set; }
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
-        public DateTime? RecCreatedDt { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime? RecUpdatedDt { get; set; }
-        public string RecUpdatedBy { get; set; }
+        public DateTime RecLastUpdatedDate { get; set; }
+        public string RecLastUpdatedBy { get; set; }
         [Required(ErrorMessage = "Client Name is required.")]
         public long CustomerId { get; set; }
-        public string CreatedByName { get; set; }
         public int OldItemDetailsCount { get; set; }
+        public string CreatedByName { get; set; }
 
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
-        public string BtnText { get; set; }
-        public string PageTitle { get; set; }
     }
 }

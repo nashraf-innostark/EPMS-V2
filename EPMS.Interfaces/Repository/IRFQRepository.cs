@@ -1,9 +1,12 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.Interfaces.Repository
 {
     public interface IRFQRepository :IBaseRepository<RFQ, long>
     {
-        RFQ FindByCustomerAndRfqId(long customerId, long rfqId);
+        RFQ FindByRfqId(long rfqId);
+        IEnumerable<RFQ> GetAllPendingRfqs();
+        IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId);
     }
 }
