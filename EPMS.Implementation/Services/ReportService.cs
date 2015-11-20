@@ -291,10 +291,13 @@ namespace EPMS.Implementation.Services
                     }
                     else if (request.ProjectId > 0 && request.TaskId == 0)
                     {
+                        taskReportToCreate.ProjectId = request.ProjectId;
                         taskReportToCreate.ReportCategoryId = (int)ReportCategory.ProjectAllTasks;
                     }
                     else if (request.ProjectId > 0 && request.TaskId > 0)
                     {
+                        taskReportToCreate.ProjectId = request.ProjectId;
+                        taskReportToCreate.TaskId = request.TaskId;
                         taskReportToCreate.ReportCategoryId = (int)ReportCategory.ProjectTask;
                     }
                     request.ReportCreatedDate = taskReportToCreate.ReportCreatedDate;

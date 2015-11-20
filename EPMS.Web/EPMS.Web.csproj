@@ -335,6 +335,7 @@
     <Compile Include="Areas\Report\Controllers\CustomerController.cs" />
     <Compile Include="Areas\Report\Controllers\CustomerServiceController.cs" />
     <Compile Include="Areas\Report\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Report\Controllers\ItemController.cs" />
     <Compile Include="Areas\Report\Controllers\RFQOrderController.cs" />
     <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
@@ -1579,6 +1580,8 @@
     <Content Include="Areas\Report\Views\Task\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Item\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Item\Details.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

@@ -53,4 +53,5 @@ namespace EPMS.WebModels.ViewModels.Reports
         public long TimeStamp { get; set; }
         public decimal Value { get; set; }
     }
+
 }
