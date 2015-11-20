@@ -19,6 +19,7 @@ namespace EPMS.Interfaces.IServices
         QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request);
         WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request);
         IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request);
+        IEnumerable<ReportProject> SaveAndGetInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request);
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
         TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request);
         IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request);

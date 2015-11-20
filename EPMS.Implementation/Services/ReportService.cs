@@ -47,7 +47,6 @@ namespace EPMS.Implementation.Services
         {
             return reportRepository.GetVendorsReports(searchRequest);
         }
-
         public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
         {
             return reportRepository.GetTasksReports(taskReportSearchRequest);
@@ -131,14 +130,60 @@ namespace EPMS.Implementation.Services
 
         #endregion
         #region Create Reports and Details Views
-
+        public IEnumerable<ReportProject> SaveAndGetInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request)
+        {
+            throw new NotImplementedException();
+        }
         public bool AddReport(Report report)
         {
             reportRepository.Add(report);
             reportRepository.SaveChanges();
             return true;
         }
+        public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var newReport = new Report
+                {
 
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.WarehouseId > 0)
+                {
+                    newReport.WarehouseId = request.WarehouseId;
+                    newReport.ReportCategoryId = (int)ReportCategory.Warehouse;
+                }
+                else
+                {
+                    newReport.ReportCategoryId = (int)ReportCategory.AllWarehouse;
+                }
+
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+                request.ReportId = newReport.ReportId;
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                if (report.WarehouseId != null)
+                {
+                    request.ReportCreatedDate = report.ReportCreatedDate;
+                    request.WarehouseId = (long)report.WarehouseId;
+                }
+
+            }
+            var warehouses = warehouseRepository.GetWarehouseReportDetails(request);
+
+            return new WarehouseReportDetailsResponse
+            {
+                ReportId = request.ReportId,
+                Warehouses = warehouses
+            };
+        }
         public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
         {
                 ProjectReportDetailsResponse reportResponse=new ProjectReportDetailsResponse();
@@ -192,51 +237,8 @@ namespace EPMS.Implementation.Services
                 reportResponse.ReportId = request.ReportId;
                 return reportResponse;
         }
-        public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
-        {
-            if (request.IsCreate)
-            {
-                var newReport = new Report
-                {
 
-                    ReportCreatedBy = request.RequesterId,
-                    ReportCreatedDate = DateTime.Now,
-                    ReportFromDate = DateTime.Now,
-                    ReportToDate = DateTime.Now
-                };
-                if (request.WarehouseId > 0)
-                {
-                    newReport.WarehouseId = request.WarehouseId;
-                    newReport.ReportCategoryId = (int)ReportCategory.Warehouse;
-                }
-                else
-                {
-                    newReport.ReportCategoryId = (int)ReportCategory.AllWarehouse;
-                }
-
-                reportRepository.Add(newReport);
-                reportRepository.SaveChanges();
-                request.ReportId = newReport.ReportId;
-            }
-            else
-            {
-                var report = reportRepository.Find(request.ReportId);
-                if (report.WarehouseId != null)
-                {
-                    request.ReportCreatedDate = report.ReportCreatedDate;
-                    request.WarehouseId = (long)report.WarehouseId;
-                }
-
-            }
-            var warehouses = warehouseRepository.GetWarehouseReportDetails(request);
-
-            return new WarehouseReportDetailsResponse
-            {
-                ReportId = request.ReportId,
-                Warehouses = warehouses
-            };
-        }
-            public IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
+        public IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
         {
             var createdBefore = DateTime.Now;
                 var resultResponse = new List<ReportProject>();

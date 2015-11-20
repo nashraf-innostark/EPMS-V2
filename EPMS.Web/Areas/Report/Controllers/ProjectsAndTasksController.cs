@@ -13,7 +13,6 @@ namespace EPMS.Web.Areas.Report.Controllers
     public class ProjectsAndTasksController : BaseController
     {
         private readonly IReportService reportService;
-
         public ProjectsAndTasksController(IReportService reportService)
         {
             this.reportService = reportService;
