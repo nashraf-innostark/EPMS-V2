@@ -40,6 +40,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.Status == (int) RFQStatus.Pending);
         }
 
+        public IEnumerable<RFQ> GetRfqsByCustomerId(long customerId)
+        {
+            return DbSet.Where(x => x.CustomerId == customerId);
+        }
+
         public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)
         {
             return DbSet.Where(x => x.CustomerId == customerId && x.Status == (int) RFQStatus.Pending);

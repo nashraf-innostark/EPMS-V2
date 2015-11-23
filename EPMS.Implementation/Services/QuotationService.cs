@@ -59,7 +59,7 @@ namespace EPMS.Implementation.Services
                 response.Quotation = Repository.Find(quotationId);
                 if (response.Quotation != null)
                 {
-                    response.Rfqs = rfqRepository.GetPendingRfqsByCustomerId(response.Quotation.CustomerId).ToList();
+                    response.Rfqs = rfqRepository.GetRfqsByCustomerId(response.Quotation.CustomerId).ToList();
                 }
             }
             return response;

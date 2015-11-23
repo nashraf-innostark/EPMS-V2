@@ -7,6 +7,7 @@ namespace EPMS.Interfaces.Repository
     {
         RFQ FindByRfqId(long rfqId);
         IEnumerable<RFQ> GetAllPendingRfqs();
+        IEnumerable<RFQ> GetRfqsByCustomerId(long customerId);
         IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId);
     }
 }
