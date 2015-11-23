@@ -40,6 +40,22 @@ namespace EPMS.Web.Areas.Report.Controllers
             return Json(projectsListViewModel, JsonRequestBehavior.AllowGet);
         }
         [HttpPost]
+        public ActionResult InventoryItemsIndex(WarehouseReportSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            var response = reportService.GetInventoryItemsReports(searchRequest);
+            var data =
+                response.Reports.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
+            WarehouseReportsListViewModel projectsListViewModel = new WarehouseReportsListViewModel
+            {
+                aaData = data,
+                iTotalRecords = Convert.ToInt32(response.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(response.FilteredCount),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(projectsListViewModel, JsonRequestBehavior.AllowGet);
+        }
+        [HttpPost]
         public ActionResult VendorIndex(VendorReportSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];

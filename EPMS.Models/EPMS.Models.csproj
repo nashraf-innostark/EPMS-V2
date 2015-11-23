@@ -170,6 +170,7 @@
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
     <Compile Include="DomainModels\Report.cs" />
+    <Compile Include="DomainModels\ReportInventoryItem.cs" />
     <Compile Include="DomainModels\ReportProject.cs" />
     <Compile Include="DomainModels\ReportProjectTask.cs" />
     <Compile Include="DomainModels\ReportTaskEmployee.cs" />

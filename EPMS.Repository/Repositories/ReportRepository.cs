@@ -213,6 +213,44 @@ namespace EPMS.Repository.Repositories
             };
         }
 
+        public ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            long reportId = 0;
+            if (!string.IsNullOrEmpty(searchRequest.SearchString))
+                Int64.TryParse(searchRequest.SearchString, out reportId);
+            int reportCategory = (int)ReportCategory.Item;
+            int allReportCategory = (int)ReportCategory.AllItems;
+            Expression<Func<Report, bool>> query =
+                s => (s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory)) &&
+                    ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
+                    (s.ReportId.Equals(reportId)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.ReportInventoryItems.Any(x => x.NameA.Contains(searchRequest.SearchString))) ||
+                     (s.ReportInventoryItems.Any(x => x.NameE.Contains(searchRequest.SearchString)))
+                    );
+
+            IEnumerable<Report> queryData = searchRequest.sSortDir_0 == "asc" ?
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderBy(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList() :
+
+                DbSet.Include(x => x.AspNetUser.Employee).Include(x => x.Project)
+                .Where(query).OrderByDescending(warehouseReportClause[searchRequest.RequestByColumn]).Skip(fromRow).Take(toRow).ToList();
+
+            return new ReportsListRequestResponse
+            {
+                Reports = queryData.ToList(),
+                FilteredCount = DbSet.Count(query),
+                TotalCount = DbSet.Count(s => s.ReportCategoryId.Equals(reportCategory) || s.ReportCategoryId.Equals(allReportCategory))
+            };
+        }
+
         public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;

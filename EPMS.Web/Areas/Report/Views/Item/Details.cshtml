@@ -1,11 +1,12 @@
 ﻿@using System.Configuration
 @using EPMS.WebModels.WebsiteModels.Common
-@model IEnumerable<EPMS.WebModels.WebsiteModels.Project>
+@model IEnumerable<EPMS.Models.DomainModels.ReportInventoryItem>
 @{
     ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
     long reportId = (long) ViewBag.ReportId;
     int serial = 1;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -16,13 +17,13 @@
             </a>
         </li>
         <li>
-            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
-                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Inventory/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.InventorySystemReportList
             </a>
 
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
+            @EPMS.WebModels.Resources.Reports.Reports.ViewItemReport
         </li>
     </ul>
 </div>
@@ -30,7 +31,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ViewItemReport</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -64,42 +65,40 @@
                         <thead class="cf sorthead">
                             <tr>
                                 <th>Serial</th>
-                                <th>Project Name</th>
-                                <th>Price</th>
+                                <th>Item Name</th>
                                 <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Customer Name</th>
-                                <th>Status</th>
+                                <th>Price</th>
+                                <th>Sold Number</th>
+                                <th>Defective Number</th>
+                                <th>Best Price Vendor</th>
+                                <th>Most Bought Vendor</th>
                             </tr>
                         </thead>
                         <tbody>
 
-                            @foreach (var project in Model)
+                            @foreach (var item in Model)
                             {
                                 <tr class="gradeX">
-
                                     <td>@(serial++)</td>
-                                    <td>@project.NameE</td>
+                                    <td>@item.NameE</td>
                                     <td>
-                                        @project.Price
+                                        @item.Cost
                                     </td>
                                     <td>
-                                        @project.OtherCost
+                                        @item.Price
                                     </td>
                                     <td>
-                                        @project.StartDate
+                                        @item.SoldQty
                                     </td>
                                     <td>
-                                        @project.EndDate
+                                        @item.DefectiveQty
                                     </td>
                                     <td>
-                                        @project.CustomerNameE
+                                        @(direction == "ltr" ? item.BestPriceVendorNameE : item.BestPriceVendorNameA)
                                     </td>
                                     <td>
-                                        @((ProjectStatus)project.Status)
+                                        @(direction == "ltr" ? item.MostBoughtVendorNameE : item.MostBoughtVendorNameA)
                                     </td>
-
                                 </tr>
                             }
                         </tbody>
@@ -111,7 +110,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn" href="~/Report/Project/GeneratePdfAll?ReportId=@reportId">Generate Report As PDF</a>
+                <a class="btn" href="~/Report/Item/GeneratePdfAll?ReportId=@reportId">Generate Report As PDF</a>
             </div>
 
         </div>

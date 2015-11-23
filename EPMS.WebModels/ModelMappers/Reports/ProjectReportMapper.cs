@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Linq;
+using EPMS.Models.Common;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers.Reports
 {
@@ -31,6 +33,10 @@ namespace EPMS.WebModels.ModelMappers.Reports
             {
                 report.WarehouseId = source.WarehouseId;
                 report.ReportCategoryItemTitle = source.Warehouse.WarehouseNumber;
+            }
+            else if (source.InventoryItemId!=null)
+            {
+                report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? source.InventoryItem.ItemNameEn : source.InventoryItem.ItemNameAr;
             }
             else
             {

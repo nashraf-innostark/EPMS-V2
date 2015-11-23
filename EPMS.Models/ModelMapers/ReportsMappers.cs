@@ -95,5 +95,19 @@ namespace EPMS.Models.ModelMapers
 
             return projectTask;
         }
+
+        public static ReportInventoryItem MapInventoryItemToReportInventoryItem(this InventoryItem source)
+        {
+            var reportInventoryItem = new ReportInventoryItem
+            {
+                InventoryItemId = source.ItemId,
+                NameA = source.ItemNameAr,
+                NameE = source.ItemNameEn,
+                Price = (double) source.ItemVariations.Sum(x=>x.UnitPrice),
+                Cost = (double) source.ItemVariations.Sum(x=>x.UnitCost),
+            };
+
+            return reportInventoryItem;
+        }
     }
 }

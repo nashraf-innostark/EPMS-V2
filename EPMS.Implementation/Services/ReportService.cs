@@ -14,6 +14,8 @@ namespace EPMS.Implementation.Services
     public class ReportService : IReportService
     {
         #region Private
+
+        private readonly IInventoryItemRepository inventoryItemRepository;
         private readonly IReportRepository reportRepository;
         private readonly IProjectRepository projectRepository;
         private readonly ICustomerRepository customerRepository;
@@ -23,8 +25,9 @@ namespace EPMS.Implementation.Services
 
         #endregion
         #region Constructor
-        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
+        public ReportService(IInventoryItemRepository inventoryItemRepository,IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
         {
+            this.inventoryItemRepository = inventoryItemRepository;
             this.reportRepository = reportRepository;
             this.projectRepository = projectRepository;
             this.customerRepository = customerRepository;
@@ -43,10 +46,17 @@ namespace EPMS.Implementation.Services
         {
             return reportRepository.GetWarehousesReports(searchRequest);
         }
+
+        public ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest)
+        {
+            return reportRepository.GetInventoryItemsReports(searchRequest);
+        }
+
         public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
         {
             return reportRepository.GetVendorsReports(searchRequest);
         }
+
         public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest)
         {
             return reportRepository.GetTasksReports(taskReportSearchRequest);
@@ -130,10 +140,6 @@ namespace EPMS.Implementation.Services
 
         #endregion
         #region Create Reports and Details Views
-        public IEnumerable<ReportProject> SaveAndGetInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request)
-        {
-            throw new NotImplementedException();
-        }
         public bool AddReport(Report report)
         {
             reportRepository.Add(report);
@@ -272,6 +278,40 @@ namespace EPMS.Implementation.Services
 
                 return resultResponse;
         }
+
+        public long SaveInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request)
+        {
+                var newReport = new Report
+                {
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.ItemId > 0)
+                {
+                    newReport.ReportCategoryId = (int)ReportCategory.Item;
+                }
+                else
+                {
+                    newReport.ReportCategoryId = (int)ReportCategory.AllItems;
+                }
+
+                //Fetch Report data
+                var response = inventoryItemRepository.GetInventoryItemReportDetails(request).ToList();
+                newReport.ReportInventoryItems = response.Select(x => x.MapInventoryItemToReportInventoryItem()).ToList();
+
+                //Save Report and its data
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+
+                return newReport.ReportId;
+        }
+        public IEnumerable<ReportInventoryItem> GetInventoryItemsReport(long reportId)
+        {
+            return reportRepository.Find(reportId).ReportInventoryItems;
+        }
+
         public TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
         {
                 TaskReportDetailsResponse detailResponse = new TaskReportDetailsResponse();

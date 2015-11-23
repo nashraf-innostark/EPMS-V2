@@ -14,4 +14,9 @@ namespace EPMS.Models.ResponseModels.ReportsResponseModels
         public long ReportId { get; set; }
         public IEnumerable<WarehouseReportDetails> Warehouses { get; set; }
     }
+    public class InventoryItemReportDetailsResponse
+    {
+        public long ReportId { get; set; }
+        public IEnumerable<ReportInventoryItem> InventoryItems { get; set; }
+    }
 }

@@ -47,5 +47,6 @@ namespace EPMS.Models.DomainModels
             }
         }
         public virtual InventoryDepartment InventoryDepartment { get; set; }
+        public virtual ICollection<Report> Reports { get; set; }
     }
 }

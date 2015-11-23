@@ -13,13 +13,15 @@ namespace EPMS.Interfaces.IServices
         bool AddReport(Report report);
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
         ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
         CustomerReportResponse SaveAndGetCustomerList(CustomerReportDetailRequest request);
         QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request);
         WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request);
         IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request);
-        IEnumerable<ReportProject> SaveAndGetInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request);
+        long SaveInventoryItemsReport(InventoryItemReportCreateOrDetailsRequest request);
+        IEnumerable<ReportInventoryItem> GetInventoryItemsReport(long reportId);
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
         TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request);
         IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request);
