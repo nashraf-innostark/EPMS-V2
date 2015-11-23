@@ -55,7 +55,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         public ActionResult GeneratePdfAll(long? ReportId)
         {
             //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
-            return new ActionAsPdf("ReportAsPdf", new { ReportId = ReportId }) { FileName = "InventoryReport_Report.pdf" };
+            return new ActionAsPdf("ReportAsPdf", new { ReportId = ReportId }) { FileName = "InventoryItem_Report.pdf" };
         }
         [AllowAnonymous]
         public ActionResult ReportAsPdf(long? ReportId)
