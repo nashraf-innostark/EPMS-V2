@@ -148,13 +148,13 @@
                                     <td style='display:none'><input name='QuotationItemDetails.Index' type='hidden' value='@i' /></td>
                                     @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId, new { @class = "itemDetailId" })
                                     <td>
-                                        @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize" })
+                                        @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize readonly-from-rfq" })
                                     </td>
                                     <td class="quantity">
-                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].ItemQuantity, new { @id = "", @class = "n1" })
+                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].ItemQuantity, new { @id = "", @class = "n1 readonly-from-rfq" })
                                     </td>
                                     <td class="unitPrice">
-                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].UnitPrice, new { @id = "", @class = "n2" })
+                                        @Html.TextBoxFor(model => model.QuotationItemDetails[i].UnitPrice, new { @id = "", @class = "n2 readonly-from-rfq" })
                                     </td>
                                     <td class="total">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
@@ -213,7 +213,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = "" })
+                    @Html.TextBoxFor(model => model.QuotationDiscount, new { @id = "Discount", @class = "readonly-from-rfq" })
                 </div>
             </div>
         </div>
@@ -348,7 +348,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="setClientName(event)">
+                <button type="submit" class="btn" onclick="validateCustomer(event)">
                     @(Model.QuotationId > 0 ? EPMS.WebModels.Resources.CMS.Quotation.UpdateQuotation : EPMS.WebModels.Resources.CMS.Quotation.CreateQoute)
                 </button>
             </div>
@@ -361,121 +361,11 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    function setClientName(event) {
-        $("#ClientName").val($("#Client option:selected").text());
-        var inst1 = $("#Installment1").val();
-        var inst2 = $("#Installment2").val();
-        var inst3 = $("#Installment3").val();
-        var inst4 = $("#Installment4").val();
-        if (inst2 > 0) {
-            if (inst1 >= inst2) {
-                event.preventDefault();
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
-                });
-                $("#Installment2").focus();
-                return false;
-            }
-        }
-        if (inst3 > 0) {
-            if (inst2 >= inst3) {
-                event.preventDefault();
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
-                });
-                $("#Installment3").focus();
-                return false;
-            }
-        }
-        if (inst4 > 0) {
-            if (inst3 >= inst4) {
-                event.preventDefault();
-                $.pnotify({
-                    title: 'Sorry',
-                    type: 'info',
-                    text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
-                });
-                $("#Installment4").focus();
-                return false;
-            }
-        }
-        var counter = 0;
-        var customerId = $("#Client").val();
-        //var orderId = $("#OrderId").val();
-        var error = "";
-        if (customerId == null || customerId == "" || customerId == undefined) {
-            $("#customerValidation").text("Please Select Customer");
-            $("#customerValidation").addClass("Error");
-            counter++;
-            error = "customer";
-        } else {
-            $("#customerValidation").text("");
-            $("#customerValidation").removeClass("Error");
-        }
-        //if (orderId == null || orderId == "" || orderId == undefined) {
-        //    $("#orderValidation").text("Please Select Order");
-        //    $("#orderValidation").addClass("Error");
-        //    counter++;
-        //    error = "Order";
-        //} else {
-        //    $("#orderValidation").text("");
-        //    $("#orderValidation").removeClass("Error");
-        //}
-        if (counter > 0) {
-            //implementing focus back to error
-            if ($(".Error").length > 0) {
-                var divId = $(".Error")[0].id;
-                if ($("#" + divId).length > 0)
-                    if (error = "customer") {
-                        $('html,body').animate({
-                            scrollTop: $(".customerDDL").offset().top
-                        },
-        'slow');
-                    }
-                    else if (error = "Order") {
-                        $('html,body').animate({
-                            scrollTop: $(".OrderDDL").offset().top
-                        },
-        'slow');
-                    }
-                event.preventDefault();
-                return false;
-            }
-        }
-        return true;
-    }
-    function checkIfPrevItemExist() {
-        var listSimple = $('.toBeRequired');
-        var counter = 0;
-        for (var i = 0; i < (listSimple.length) ; i++) {
-            var control = listSimple[i];
-            var fieldvalue = $(control).val();
-            if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
-                counter++;
-                $(control).css("background-color", "pink");
-            } else {
-                $(control).css("background-color", "white");
-            }
-        }
-        if (counter > 0) {
-            $.pnotify({
-                title: 'Sorry',
-                type: 'info',
-                text: 'Please Complete Previous Item Details.'
-            });
-            event.preventDefault();
-            return false;
-        }
-        return true;
-    }
     var itemsDetailCount;
     var iExcelData = false;
     var isUpdate = false;
     var elementToDelete;
+    var rfqs;
     var rfqItems;
     var siteUrl;
     $(document).ready(function () {
@@ -488,27 +378,22 @@
 
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
-            $("#Installment1").val(0);
-            $("#Installment2").val(0);
-            $("#Installment3").val(0);
-            $("#Installment4").val(0);
-            $("#DueAt1").val(0);
-            $("#DueAt2").val(0);
-            $("#DueAt3").val(0);
-            $("#DueAt4").val(0);
+            $(".installer").val(0);
+            $(".dap").val(0);
             itemsDetailCount = 0;
         } else {
             itemsDetailCount = parseInt('@Model.QuotationItemDetails.Count');
             isUpdate = true;
-            $("#ClientName").val($("#Client option:selected").text());
         }
         if (isNaN(parseInt($("#Discount").val()))) {
             $("#Discount").val(0);
         }
+
         var discount = parseInt('@Model.QuotationDiscount');
         if (discount == 0 || isNaN(discount)) {
             $("#Discount").val(0);
         }
+        // in update case set total and sub total price
         var n2Val = $(this).parent().parent().find(".n2").val();
         $(this).parent().parent().find(".n3").val($(this).val() * n2Val);
         var x = 0;
@@ -517,6 +402,14 @@
         });
         $('#subtotal').val(x);
         calDiscount();
+
+        // set item details and discount readonly if quotation is from RFQ
+        var rfqId = parseInt('@Model.RFQId');
+        if (rfqId > 0) {
+            $('.readonly-from-rfq:input').attr('readonly', true);
+            $(".add-item-row").hide();
+        }
+
         if ('@ViewBag.ShowExcelImport' == 'True') {
             $("#importEx").on("click", function () {
                 var excel = $("#WYSIWYG_Editor_-_Minimum_Options iframe").contents().find("body table");
@@ -595,6 +488,7 @@
                     },
                     success: function (data) {
                         populateRfqDropDown(data.Rfqs);
+                        rfqs = data.Rfqs;
                         rfqItems = data.RfqItems;
                     },
                     error: function (e) {
@@ -611,8 +505,15 @@
             var count = 0;
             var rfqId = parseInt($(this).val());
             if (rfqId > 0) {
+                // set discount
+                $.each(rfqs, function (key, value) {
+                    if (value.RFQId == rfqId) {
+                        $(".discount-readonly:input").attr("readonly", true);
+                        $("#Discount").val(value.Discount);
+                    }
+                });
                 $(".add-item-row").hide();
-                $.each(rfqItems, function(key, value) {
+                $.each(rfqItems, function (key, value) {
                     if (value.RFQId == rfqId) {
                         if (count == 0) {
                             $('.qouteAdd').html("");
@@ -727,8 +628,7 @@
                 if ($('#inWord').hasClass("activatedBt")) {
                     $('#inWord').val("");
                     $('#inWord').removeClass("activatedBt");
-                }
-                else {
+                } else {
                     $('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "ar" }));
                     $('#inWord').addClass("activatedBt");
                 }
@@ -743,6 +643,7 @@
                 $(this).val(0);
                 return;
             }
+
             function discount() {
                 $.pnotify({
                     title: 'Sorry',
@@ -753,30 +654,27 @@
             }
         });
         $('.installer').on("blur", function () {
-            b = 0;
-            b = parseInt($('#Installment1').val());
-            if (b > 100 || isNaN(b)) {
+            var install = 0;
+            install = parseInt($('#Installment1').val());
+            if (install > 100 || isNaN(install)) {
                 noteIt();
                 $(this).val(0);
                 return;
-            }
-            else {
-                b = b + parseInt($('#Installment2').val());
-                if (b > 100 || isNaN(b)) {
+            } else {
+                install = install + parseInt($('#Installment2').val());
+                if (install > 100 || isNaN(install)) {
                     noteIt();
                     $(this).val(0);
                     return;
-                }
-                else {
-                    b = b + parseInt($('#Installment3').val());
-                    if (b > 100 || isNaN(b)) {
+                } else {
+                    install = install + parseInt($('#Installment3').val());
+                    if (install > 100 || isNaN(install)) {
                         noteIt();
                         $(this).val(0);
                         return;
-                    }
-                    else {
-                        b = b + parseInt($('#Installment4').val());
-                        if (b > 100 || isNaN(b)) {
+                    } else {
+                        install = install + parseInt($('#Installment4').val());
+                        if (install > 100 || isNaN(install)) {
                             noteIt();
                             $(this).val(0);
                             return;
@@ -784,6 +682,7 @@
                     }
                 }
             }
+
             function noteIt() {
                 $.pnotify({
                     title: 'Sorry',
@@ -792,29 +691,30 @@
                 });
                 $(this).val(0);
             }
+
         });
         $('.dap').on("blur", function () {
-            var bb;
-            bb = parseInt($('#DueAt1').val());
-            if (bb > 100 || isNaN(bb)) {
+            var dueAt;
+            dueAt = parseInt($('#DueAt1').val());
+            if (dueAt > 100 || isNaN(dueAt)) {
                 noteItb();
                 $(this).val(0);
                 return;
             } else {
-                bb = bb + parseInt($('#DueAt2').val());
-                if (bb > 100 || isNaN(bb)) {
+                dueAt = dueAt + parseInt($('#DueAt2').val());
+                if (dueAt > 100 || isNaN(dueAt)) {
                     noteItb();
                     $(this).val(0);
                     return;
                 } else {
-                    bb = bb + parseInt($('#DueAt3').val());
-                    if (bb > 100 || isNaN(bb)) {
+                    dueAt = dueAt + parseInt($('#DueAt3').val());
+                    if (dueAt > 100 || isNaN(dueAt)) {
                         noteItb();
                         $(this).val(0);
                         return;
                     } else {
-                        bb = bb + parseInt($('#DueAt4').val());
-                        if (bb > 100 || isNaN(bb)) {
+                        dueAt = dueAt + parseInt($('#DueAt4').val());
+                        if (dueAt > 100 || isNaN(dueAt)) {
                             noteItb();
                             $(this).val(0);
                             return;
@@ -832,14 +732,17 @@
 
                 $(this).val(0);
             }
+
+            LastDueAtProgressGreater();
         });
     });
+
     function populateRfqDropDown(data) {
         $("#RFQId").empty();
         if (data.length > 0) {
             $("#RFQId").append(
-                    $('<option></option>').val("").html("--Select--")
-                );
+                $('<option></option>').val("").html("--Select--")
+            );
             for (var i = 0; i < data.length; i++) {
                 $("#RFQId").append(
                     $('<option></option>').val(data[i].RFQId).html(data[i].SerialNumber)
@@ -847,8 +750,8 @@
             }
         } else {
             $("#RFQId").append(
-                    $('<option></option>').val("").html("No Request for Quotation")
-                );
+                $('<option></option>').val("").html("No Request for Quotation")
+            );
         }
         $(".select2me").select2("destroy");
         $('.select2me').select2({
@@ -856,16 +759,17 @@
         });
         $.unblockUI();
     }
+
     function addQuotationItem(value) {
         var index = $("#QuotationItemsTableBody").children("tr").length;
-        var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details are required.">' + value.ItemDetails + '</textarea> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
-                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="' + value.ItemQuantity + '" name="QuotationItemDetails[' + index + '].ItemQuantity" data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
-                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="' + value.UnitPrice + '" name="QuotationItemDetails[' + index + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
-                    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + index + '].TotalPrice"> </td> ' +
-                    '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+        var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" readonly name="QuotationItemDetails[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details are required.">' + value.ItemDetails + '</textarea> ' +
+            '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+            '<td class="quantity"> <input class="n1 toBeRequired" readonly type="text" value="' + value.ItemQuantity + '" name="QuotationItemDetails[' + index + '].ItemQuantity" data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+            '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
+            '<td class="unitPrice"> <input class="n2 toBeRequired" readonly type="text" value="' + value.UnitPrice + '" name="QuotationItemDetails[' + index + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+            '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
+            ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + index + '].TotalPrice"> </td> ' +
+            '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
         $('.qouteAdd').append(html);
         //remove validation
         $("form").removeData("validator").removeData("unobtrusiveValidation");
@@ -874,6 +778,45 @@
         reActivateDelete();
         reactivateCount();
     }
+
+    function LastDueAtProgressGreater() {
+        var dueAt1 = parseInt($("#DueAt1").val());
+        var dueAt2 = parseInt($("#DueAt2").val());
+        var dueAt3 = parseInt($("#DueAt3").val());
+        var dueAt4 = parseInt($("#DueAt4").val());
+        if (dueAt2 > 0) {
+            if (dueAt1 >= dueAt2) {
+                notifyInstall();
+                $("#DueAt2").val(0);
+                $("#DueAt2").focus();
+                return false;
+            }
+        }
+        if (dueAt3 > 0) {
+            if (dueAt2 >= dueAt3) {
+                notifyInstall();
+                $("#DueAt3").val(0);
+                $("#DueAt3").focus();
+                return false;
+            }
+        }
+        if (dueAt4 > 0) {
+            if (dueAt3 >= dueAt4) {
+                notifyInstall();
+                $("#DueAt4").val(0);
+                $("#DueAt4").focus();
+                return false;
+            }
+        }
+        function notifyInstall() {
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: 'The percentage specified in the Last installment should be greater than the percentage in the previous one.'
+            });
+        }
+    }
+
     function reActivateDelete() {
         $('.deleteRow').on("click", function () {
             $.blockUI({
@@ -956,11 +899,58 @@
             $('#subtotal').val(x);
             calDiscount();
         });
+        $('.quantity .n1').trigger("blur");
+        $('.unitPrice .n2').trigger("blur");
     }
     function calDiscount() {
         var subtotal = parseInt($('#subtotal').val());
         var discount = parseInt($('#Discount').val());
         var grand = subtotal - (subtotal * (discount / 100));
         $('#GrandTotal').val(grand);
+    }
+    function validateCustomer(event) {
+        var counter = 0;
+        var customerId = $("#Client").val();
+        if (customerId == null || customerId == "" || customerId == undefined) {
+            $("#customerValidation").text("Please Select Customer");
+            $("#customerValidation").addClass("Error");
+            counter++;
+        } else {
+            $("#customerValidation").text("");
+            $("#customerValidation").removeClass("Error");
+        }
+        if (counter > 0) {
+            // scroll to customer drop down
+            $('html,body').animate({
+                scrollTop: $(".customerDDL").offset().top
+            }, 'slow');
+            event.preventDefault();
+            return false;
+        }
+        return true;
+    }
+    function checkIfPrevItemExist() {
+        var listSimple = $('.toBeRequired');
+        var counter = 0;
+        for (var i = 0; i < (listSimple.length) ; i++) {
+            var control = listSimple[i];
+            var fieldvalue = $(control).val();
+            if (fieldvalue == null || fieldvalue == "" || fieldvalue == 0) {
+                counter++;
+                $(control).css("background-color", "pink");
+            } else {
+                $(control).css("background-color", "white");
+            }
+        }
+        if (counter > 0) {
+            $.pnotify({
+                title: 'Sorry',
+                type: 'info',
+                text: 'Please Complete Previous Item Details.'
+            });
+            event.preventDefault();
+            return false;
+        }
+        return true;
     }
 </script>

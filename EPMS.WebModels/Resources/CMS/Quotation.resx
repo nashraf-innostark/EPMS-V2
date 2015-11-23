@@ -258,4 +258,13 @@
   <data name="Back" xml:space="preserve">
     <value>Back</value>
   </data>
+  <data name="FirstInstallmentAmountError" xml:space="preserve">
+    <value>Please enter value for First installment</value>
+  </data>
+  <data name="FirstInsDueAtCompletionError" xml:space="preserve">
+    <value>Please provide completion of project for first intallment</value>
+  </data>
+  <data name="DiscountRangeError" xml:space="preserve">
+    <value>The total % of discount should not exceed 100</value>
+  </data>
 </root>

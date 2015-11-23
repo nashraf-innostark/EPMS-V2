@@ -52,7 +52,8 @@ namespace EPMS.WebModels.ModelMappers
             return new WebsiteModels.RfqDropDown
             {
                 RFQId = source.RFQId,
-                SerialNumber = source.SerialNumber
+                SerialNumber = source.SerialNumber,
+                Discount = source.Discount
             };
         }
     }

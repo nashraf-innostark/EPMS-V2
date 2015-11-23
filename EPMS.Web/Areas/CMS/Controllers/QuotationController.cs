@@ -195,7 +195,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
             QuotationResponse quotResponse = QuotationService.GetQuotationResponse(quotationId, 0, from);
             ViewBag.Customers = quotResponse.Customers.Any() ?
-                        quotResponse.Customers.Select(x => x.CreateFromServerToClient()) : new List<Customer>();
+                        quotResponse.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
             ViewBag.ShowExcelImport = CheckInventoryModule() != true;
             ViewBag.FromClient = false;
             if (id == null)
@@ -206,8 +206,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             viewModel = quotResponse.Quotation.CreateFromServerToClient();
             viewModel.CreatedByName = createdByName;
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
-            ViewBag.Orders = quotResponse.Orders.Any() ?
-                        quotResponse.Orders.Select(x => x.CreateFromServerToClient()) : new List<Order>();
+            ViewBag.Rfqs = quotResponse.Rfqs.Any() ?
+                        quotResponse.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
             return View(viewModel);
         }
 
@@ -551,7 +551,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
-        #region Get Customer Orders
+        #region Get Customer RFQs
 
         [HttpGet]
         public JsonResult GetCustomerRfqs(long customerId)
@@ -695,7 +695,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
-        #region functions
+        #region Functions
 
         public string GetCreatedBy(string direction)
         {

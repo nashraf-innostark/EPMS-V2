@@ -1230,6 +1230,7 @@
             <PropertyRef Name="QuotationId" />
           </Key>
           <Property Name="QuotationId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="SerialNumber" Type="nvarchar" MaxLength="50" />
           <Property Name="RFQId" Type="bigint" />
           <Property Name="GreetingsEn" Type="nvarchar(max)" />
           <Property Name="GreetingsAr" Type="nvarchar(max)" />
@@ -9151,6 +9152,7 @@
           <NavigationProperty Name="Projects" Relationship="EPMSInventoryModel.FK_Project_Quotation" FromRole="Quotation" ToRole="Project" />
           <NavigationProperty Name="RFQ" Relationship="EPMSInventoryModel.FK_Quotation_RFQ" FromRole="Quotation" ToRole="RFQ" />
           <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
+          <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -11129,6 +11131,7 @@
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Quotation">
               <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />

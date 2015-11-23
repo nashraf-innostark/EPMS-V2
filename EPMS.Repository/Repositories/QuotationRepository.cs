@@ -43,6 +43,7 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<QuotationByColumn, Func<Quotation, object>>
                     {
+                        { QuotationByColumn.SerialNumber,  c => c.SerialNumber},
                         { QuotationByColumn.ClientName,  c => c.Customer.CustomerNameE},
                         //{ QuotationByColumn.OrderId, c => c.OrderId}
                     };

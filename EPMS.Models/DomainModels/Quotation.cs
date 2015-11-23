@@ -25,6 +25,7 @@ namespace EPMS.Models.DomainModels
         public DateTime RecLastUpdatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public long CustomerId { get; set; }
+        public string SerialNumber { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Customer Customer { get; set; }

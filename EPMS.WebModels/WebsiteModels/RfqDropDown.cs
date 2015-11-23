@@ -4,5 +4,6 @@
     {
         public long RFQId { get; set; }
         public string SerialNumber { get; set; }
+        public short? Discount { get; set; }
     }
 }

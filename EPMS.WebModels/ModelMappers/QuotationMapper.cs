@@ -13,6 +13,7 @@ namespace EPMS.WebModels.ModelMappers
                 QuotationId = source.QuotationId,
                 CustomerId = source.CustomerId,
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
@@ -46,6 +47,7 @@ namespace EPMS.WebModels.ModelMappers
                 QuotationId = source.QuotationId,
                 CustomerId = source.CustomerId,
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
@@ -86,6 +88,7 @@ namespace EPMS.WebModels.ModelMappers
                 QuotationId = source.QuotationId,
                 CustomerId = source.CustomerId,
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 Customers = source.Customer.CreateFromServerToClient(),
                 RecCreatedDate = source.RecCreatedDate,
                 GreetingsEn = source.GreetingsEn,
@@ -102,6 +105,8 @@ namespace EPMS.WebModels.ModelMappers
                 NotesAr = source.NotesAr,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()),
                 QuotationDiscount = source.QuotationDiscount,
+                ClientNameEn = source.Customer != null ? source.Customer.CustomerNameE : "",
+                ClientNameAr = source.Customer != null ? source.Customer.CustomerNameA : "",
             };
         }
         public static WebsiteModels.Quotation CreateFromServerToClientForProject(this Quotation source)
@@ -113,6 +118,7 @@ namespace EPMS.WebModels.ModelMappers
                 ClientNameAr = source.Customer.CustomerNameA,
                 CustomerId = source.CustomerId,
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
             };

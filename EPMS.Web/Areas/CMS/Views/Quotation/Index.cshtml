@@ -64,7 +64,7 @@
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
-            "sAjaxSource": siteUrl + "/Quotation/Index",
+            "sAjaxSource": siteUrl + "/CMS/Quotation/Index",
             "sServerMethod": "POST",
             "aoColumns": [
                 {
@@ -78,16 +78,16 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var element = "";
-                        var val = full["QuotationId"];
+                        var val = full["SerialNumber"];
                         var quoId = full["QuotationId"];
                         if ('@userRole' == "Admin") {
-                            element = '<a href="Create/' + quoId + '">' + "Quotation " + val + '</a>';
+                            element = '<a href="Create/' + quoId + '">' + val + '</a>';
                         }
                         if ('@userRole' == "Customer") {
-                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
+                            element = '<a href="Detail/' + quoId + '">' + val + '</a>';
                         }
                         if ('@userRole' == "Employee") {
-                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
+                            element = '<a href="Detail/' + quoId + '">' + val + '</a>';
                         }
                         return element;
                     },
@@ -97,7 +97,11 @@
                     "aTargets": [2],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        return full["ClientName"];
+                        if ('@direction' == "ltr") {
+                            return full["ClientNameEn"];
+                        } else {
+                            return full["ClientNameAr"];
+                        }
                     },
                     "bSortable": true
                 }

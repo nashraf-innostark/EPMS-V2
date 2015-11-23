@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -51,25 +52,14 @@ namespace EPMS.Implementation.Services
         {
             QuotationResponse response = new QuotationResponse
             {
-                Customers = customerService.GetAll()
+                Customers = customerService.GetAll().ToList()
             };
-            if (from == "Client")
+            if (quotationId != 0)
             {
-                response.Orders = ordersService.GetOrdersByCustomerId(customerId);
-            }
-            else
-            {
-                if (quotationId == 0)
+                response.Quotation = Repository.Find(quotationId);
+                if (response.Quotation != null)
                 {
-                    response.Orders = ordersService.GetAll();
-                }
-                else
-                {
-                    response.Quotation = Repository.Find(quotationId);
-                    if (response.Quotation != null)
-                    {
-                        response.Orders = ordersService.GetOrdersByCustomerId(response.Quotation.CustomerId);
-                    }
+                    response.Rfqs = rfqRepository.GetPendingRfqsByCustomerId(response.Quotation.CustomerId).ToList();
                 }
             }
             return response;
@@ -98,10 +88,61 @@ namespace EPMS.Implementation.Services
 
         public long AddQuotation(Quotation quotation)
         {
-            Repository.Add(quotation);
-            Repository.SaveChanges();
+            if (quotation.QuotationId == 0)
+            {
+                quotation.SerialNumber = GetQuotationSerialNumber();
+                Repository.Add(quotation);
+                Repository.SaveChanges();
+                if (quotation.RFQId != null)
+                {
+                    // update RFQ status
+                    var rfq = rfqRepository.Find((long)quotation.RFQId);
+                    if (rfq != null)
+                    {
+                        rfq.Status = (int) RFQStatus.QoutationCreated;
+                        rfqRepository.Update(rfq);
+                        rfqRepository.SaveChanges();
+                    }
+                }
+            }
             SendNotification(quotation);
             return quotation.QuotationId;
+        }
+        public string GetQuotationSerialNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            var result = Repository.GetAll().OrderByDescending(x => x.RecCreatedDate);
+            if (result.FirstOrDefault() != null)
+            {
+                var rfq = result.FirstOrDefault();
+                string oId = rfq.SerialNumber.Substring(rfq.SerialNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
 
         public bool UpdateQuotation(Quotation quotation)
