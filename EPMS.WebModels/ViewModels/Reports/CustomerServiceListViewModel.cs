@@ -8,9 +8,9 @@ namespace EPMS.WebModels.ViewModels.Reports
     {
         public CustomerServiceListViewModel()
         {
-            Reports = new List<Report>();
+            aaData = new List<Report>();
         }
-        public IEnumerable<Report> Reports { get; set; }
+        public IEnumerable<Report> aaData { get; set; }
         public CustomerServiceReportsSearchRequest SearchRequest { get; set; }
 
         /// <summary>

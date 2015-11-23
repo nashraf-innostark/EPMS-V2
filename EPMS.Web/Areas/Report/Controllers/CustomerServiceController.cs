@@ -44,14 +44,30 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         [HttpPost]
 
-        public ActionResult Index(CustomerServiceReportsSearchRequest searchRequest)
+        public ActionResult QIIndex(CustomerServiceReportsSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];
-            var reports = reportService.GetCustomerServiceReports(searchRequest);
+            var reports = reportService.GetQuotationInvoiceReports(searchRequest);
 
             CustomerServiceListViewModel viewModel = new CustomerServiceListViewModel
             {
-                Reports = reports.Reports.Select(x=>x.CreateProjectReportFromServerToClient()),
+                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()),
+                recordsTotal = reports.TotalCount,
+                recordsFiltered = reports.FilteredCount,
+                sEcho = searchRequest.sEcho
+            };
+
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult AllCustomerIndex(CustomerServiceReportsSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            var reports = reportService.GetAllCustoemrReport(searchRequest);
+
+            CustomerServiceListViewModel viewModel = new CustomerServiceListViewModel
+            {
+                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()),
                 recordsTotal = reports.TotalCount,
                 recordsFiltered = reports.FilteredCount,
                 sEcho = searchRequest.sEcho

@@ -33,6 +33,7 @@ namespace EPMS.Models.DomainModels
         public string Email { get; set; }
         public string EmployeeDetailsA { get; set; }
         public bool? IsActivated { get; set; }
+        public int QoutationCount { get; set; }
 
         public virtual ICollection<Allowance> Allowances { get; set; }
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }

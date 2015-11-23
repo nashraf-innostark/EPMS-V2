@@ -112,6 +112,7 @@
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
+    <Compile Include="ModelMappers\Reports\CustomerReportMapper.cs" />
     <Compile Include="ModelMappers\Reports\ProjectReportMapper.cs" />
     <Compile Include="ModelMappers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemHistoryMapper.cs" />
@@ -464,6 +465,11 @@
       <DependentUpon>Task.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Reports\CustomerServiceList.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CustomerServiceList.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Reports\QuotationInvoice.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -822,6 +828,7 @@
     <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\ListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\QuotationInvoiceDetailViewModel.cs" />
     <Compile Include="ViewModels\Reports\RfqOrderCreateViewModel.cs" />
     <Compile Include="ViewModels\Reports\QuotationInvoiceViewModel.cs" />
     <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
@@ -1267,6 +1274,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\CustomerServiceList.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>CustomerServiceList.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Reports\QuotationInvoice.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

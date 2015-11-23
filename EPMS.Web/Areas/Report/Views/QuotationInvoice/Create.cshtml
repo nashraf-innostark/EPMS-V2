@@ -83,10 +83,26 @@
         
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn" id="Generate">@EPMS.WebModels.Resources.Reports.QuotationInvoice.Generate</button>
+                <button class="btn" id="Generate">@EPMS.WebModels.Resources.Reports.QuotationInvoice.Generate</button>
             </div>
 
         </div>
 
     </div>
 }
+
+<script>
+    
+    $('#Generate').click(function (e) {
+        debugger;
+        var empId = $('#EmployeeId').val();
+        if (empId == null || empId == "") {
+            $("form").attr("action", '@Url.Action("AllDetail", "QuotationInvoice")');
+            $("form").submit();
+        } else {
+            $("form").attr("action", '@Url.Action("Detail", "QuotationInvoice")');
+            $("form").submit();
+        }
+    });
+
+</script>
