@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.WebModels.WebsiteModels
 {
     public class Invoice
     {
@@ -13,7 +13,5 @@ namespace EPMS.Models.DomainModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-
-        public virtual Quotation Quotation { get; set; }
     }
 }

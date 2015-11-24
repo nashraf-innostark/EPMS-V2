@@ -18,6 +18,10 @@ namespace EPMS.Models.DomainModels
         public short? ThirdInsDueAtCompletion { get; set; }
         public decimal? FourthInstallment { get; set; }
         public short? FourthInsDueAtCompletion { get; set; }
+        public bool FirstInstallmentStatus { get; set; }
+        public bool SecondInstallmentStatus { get; set; }
+        public bool ThirdInstallmentStatus { get; set; }
+        public bool FourthInstallmentStatus { get; set; }
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
         public DateTime RecCreatedDate { get; set; }

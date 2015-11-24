@@ -1,0 +1,31 @@
+﻿@model EPMS.WebModels.ViewModels.Invoice.InvoiceListViewModel
+
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Invoice.List;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.MessageVM = TempData["message"];
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="">
+                @EPMS.WebModels.Resources.CMS.Invoice.List
+            </a>
+        </li>
+    </ul>
+</div>
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
