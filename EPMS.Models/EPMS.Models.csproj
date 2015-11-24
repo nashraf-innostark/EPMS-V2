@@ -149,6 +149,7 @@
     <Compile Include="DomainModels\DIFItem.cs" />
     <Compile Include="DomainModels\DIFItemHistory.cs" />
     <Compile Include="DomainModels\ImageSlider.cs" />
+    <Compile Include="DomainModels\Invoice.cs" />
     <Compile Include="DomainModels\ItemBarcode.cs" />
     <Compile Include="DomainModels\ItemManufacturer.cs" />
     <Compile Include="DomainModels\ItemRelease.cs" />

@@ -32,5 +32,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<Project> Projects { get; set; }
         public virtual RFQ RFQ { get; set; }
         public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }
