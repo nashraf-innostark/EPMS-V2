@@ -1575,6 +1575,7 @@
     <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Invoice\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Invoice\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

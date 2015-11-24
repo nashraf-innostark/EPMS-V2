@@ -32,6 +32,15 @@ namespace EPMS.WebModels.WebsiteModels
         public string SerialNumber { get; set; }
         public string ClientNameEn { get; set; }
         public string ClientNameAr { get; set; }
+        public string CustomerAddress { get; set; }
+        public string CustomerPhone { get; set; }
+        public string CustomerEmail { get; set; }
+        public decimal SubTotal { get; set; }
+        public decimal GrandTotal { get; set; }
+        public string FirstInstallmentStatus { get; set; }
+        public string SecondInstallmentStatus { get; set; }
+        public string ThirdInstallmentStatus { get; set; }
+        public string FourthInstallmentStatus { get; set; }
 
         public IEnumerable<QuotationItemDetail> QuotationItemDetails { get; set; }
         public Customer Customers { get; set; }

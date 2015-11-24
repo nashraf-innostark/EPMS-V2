@@ -13,5 +13,8 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
+        public string ClientNameE { get; set; }
+        public string ClientNameA { get; set; }
+        public long CustomerId { get; set; }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.Interfaces.IServices
 {
@@ -10,5 +11,6 @@ namespace EPMS.Interfaces.IServices
         bool AddInvoice(Invoice invoice);
         bool UpdateInvoice(Invoice invoice);
         void DeleteInvoice(Invoice invoice);
+        InvoiceResponse GetInvoiceDetails(long id);
     }
 }

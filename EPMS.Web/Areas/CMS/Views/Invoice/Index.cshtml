@@ -1,4 +1,5 @@
-﻿@model EPMS.WebModels.ViewModels.Invoice.InvoiceListViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Invoice.InvoiceListViewModel
 
 @{
     ViewBag.Title = EPMS.WebModels.Resources.CMS.Invoice.List;
@@ -29,3 +30,61 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
+
+
+<form class="form-horizontal">
+    <div id="English" class="container-fluid">
+        <div class="row-fluid">
+            <div class="span12">
+
+                <table id="InvoiceTable" class="table table-striped table-responsive">
+                    <thead>
+                        <tr>
+                            <th>@EPMS.WebModels.Resources.CMS.Invoice.Invoices</th>
+                            <th>@EPMS.WebModels.Resources.CMS.Invoice.ClientName</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var invoice in Model.Invoices.ToList())
+                        {
+                            <tr>
+                                <td>@Html.ActionLink(@invoice.InvoiceNumber.ToString(), "Detail", new { id = invoice.InvoiceId }) </td>
+                                <td>
+                                    @if (direction == "ltr")
+                                    {
+                                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/CMS/Customer/Details/@invoice.CustomerId">@invoice.ClientNameE</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@(ConfigurationManager.AppSettings["SiteURL"])/CMS/Customer/Details/@invoice.CustomerId">@invoice.ClientNameA</a>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $('#InvoiceTable').dataTable({
+            "sPaginationType": "bootstrap",
+            "aoColumns": [
+                  null,
+                  null
+            ],
+            "fnInitComplete": function () {
+                $(".dataTables_wrapper select").select2({
+                    dropdownCssClass: 'noSearch'
+                });
+            },
+        });
+        $("#simpleSelectBox").select2({
+            dropdownCssClass: 'noSearch'
+        });
+    });
+</script>

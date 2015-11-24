@@ -1,12 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Invoice;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -42,9 +45,20 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Create
 
-        public ActionResult Create()
+        public ActionResult Detail(long id)
         {
-            return null;
+            InvoiceViewModel viewModel = new InvoiceViewModel();
+            InvoiceResponse response = invoiceService.GetInvoiceDetails(id);
+
+            viewModel.Invoice = response.Invoice.CreateFromServerToClient();
+            viewModel.Quotation = response.Quotation.CreateForInvoice();
+            viewModel.Customer = response.Customer.CreateFromServerToClient();
+            if (response.CompanyProfile != null)
+            viewModel.CompanyProfile = response.CompanyProfile.CreateFromServerToClientForQuotation();
+
+            ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.CompanyProfile.CompanyLogoPath;
+            ViewBag.EmployeeName = User.Identity.Name;
+            return View(viewModel);
         }
 
         #endregion
