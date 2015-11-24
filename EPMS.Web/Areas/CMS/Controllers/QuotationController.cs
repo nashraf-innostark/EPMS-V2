@@ -29,8 +29,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
     public class QuotationController : BaseController
     {
         #region Private
-        private readonly ICustomerService CustomerService;
-        private readonly IAspNetUserService AspNetUserService;
+
         private readonly IOrdersService OrdersService;
         private readonly IQuotationService QuotationService;
         private readonly IRFQService rfqService;
@@ -56,10 +55,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Constructor
 
-        public QuotationController(ICustomerService customerService, IAspNetUserService aspNetUserService, IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService, IRFQService rfqService, ICompanyProfileService companyProfileService)
+        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService, IRFQService rfqService, ICompanyProfileService companyProfileService)
         {
-            CustomerService = customerService;
-            AspNetUserService = aspNetUserService;
             OrdersService = ordersService;
             QuotationService = quotationService;
             QuotationItemService = quotationItemService;
@@ -81,8 +78,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             QuotationListViewModel viewModel = new QuotationListViewModel
             {
-                SearchRequest = new QuotationSearchRequest(),
+                SearchRequest = new QuotationSearchRequest
+                {
+                    RoleName = (string)Session["RoleName"]
+                },
             };
+            ViewBag.RoleName = viewModel.SearchRequest.RoleName;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
@@ -92,21 +93,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
             searchRequest.RoleName = (string)Session["RoleName"];
-            string roleName = (string)Session["RoleName"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
-            //switch (searchRequest.RoleName)
-            //{
-            //    case "Customer":
-            //        searchRequest.CustomerId = (long) Session["CustomerID"];
-            //        break;
-            //    case "Employee":
-            //        searchRequest.EmployeeId = Session["UserID"].ToString();
-            //        break;
-            //    default:
-            //        searchRequest.CustomerId = 0;
-            //        break;
-            //}
-
             if (searchRequest.RoleName == "Customer")
             {
                 searchRequest.AllowedAll = false;
@@ -124,6 +111,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     searchRequest.UserId = Session["UserID"].ToString();
                 }
             }
+            
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x => x.QuotationId);
             viewModel.iTotalRecords = quotationList.TotalCount;
@@ -190,6 +178,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     model.CreatedByName = createdByName;
                     ViewBag.FromClient = true;
                 }
+                model.ItemVariationDropDownList = response.ItemVariationDropDownList;
                 return View(model);
             }
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
@@ -221,7 +210,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             QuotationResponse response = new QuotationResponse();
             // Update case
-            if (viewModel.QuotationId > 0 && (viewModel.RFQId == null || viewModel.RFQId == 0))
+            if (viewModel.QuotationId > 0)
             {
                 viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
                 viewModel.RecLastUpdatedDate = DateTime.Now;
@@ -487,7 +476,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         };
                         model.Rfq.RFQItems.Add(item);
                     }
-                    model.Profile = companyProfileService.GetDetail().CreateFromServerToClientForQuotation();
+                    var cp = companyProfileService.GetDetail();
+                    model.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
                     model.Rfq.CustomerId = customerId;
                     ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 }
@@ -518,17 +508,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "QuotationDetail")]
         public ActionResult Detail(long? id)
         {
+            var direction = WebModels.Resources.Shared.Common.TextDirection;
             QuotationDetailViewModel viewModel = new QuotationDetailViewModel();
             if (id != null)
             {
-                viewModel.Profile = ProfileService.GetDetail().CreateFromServerToClientForQuotation();
-                viewModel.Quotation = QuotationService.FindQuotationById((long)id).CreateFromServerToClientLv();
-                // Get Order from Order Number
-                //if (viewModel.Quotation.OrderId>0)
-                //{
-                //    viewModel.Order =
-                //    OrdersService.GetOrderByOrderId(viewModel.Quotation.OrderId).CreateFromServerToClient();
-                //}
+                var cp = ProfileService.GetDetail();
+                viewModel.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
+                var quotation = QuotationService.FindQuotationById((long) id);
+                viewModel.Quotation = quotation.CreateFromServerToClientLv();
+                viewModel.EmployeeName = GetCreatedBy(direction, quotation);
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
                 return View(viewModel);
             }
@@ -540,7 +528,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Detail(QuotationDetailViewModel viewModel)
         {
             // Update Case
-            Order order = OrdersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
+            Order order = new Order
+            {
+                CustomerId = viewModel.Quotation.CustomerId
+            };
+            if (Request.Form["PlaceOrder"] != null)
+            {
+            }
+            if (Request.Form["CancelOrder"] != null)
+            {
+            }
+            //Order order = OrdersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
             order.OrderStatus = viewModel.Order.OrderStatus;
             order.RecLastUpdatedBy = User.Identity.GetUserId();
             order.RecLastUpdatedDt = DateTime.Now;

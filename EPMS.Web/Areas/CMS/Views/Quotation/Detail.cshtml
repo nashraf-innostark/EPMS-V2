@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var discount = Model.Quotation.QuotationDiscount;
-    string date = Model.Quotation.RecCreatedDt.ToString();
+    string date = Model.Quotation.RecCreatedDate.ToString();
     string[] str = date.Split(' ');
     date = str[0];
 }
@@ -41,8 +41,8 @@
 @using (Html.BeginForm("Detail", "Quotation", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.HiddenFor(model => model.Order.OrderId)
-        @Html.HiddenFor(model => model.Order.OrderStatus)
+        @Html.HiddenFor(model => model.Quotation.QuotationId)
+        @Html.HiddenFor(model => model.Quotation.CustomerId)
         <div class="control-group row-fluid">
 
             <div class="form-legend centTitle">
@@ -74,6 +74,8 @@
                     <div class="span3">
                         <div class="invoice-from">
                             <span>@EPMS.WebModels.Resources.CMS.Quotation.EmpName</span>
+                            @Model.EmployeeName
+                            <span>@EPMS.WebModels.Resources.CP.Profile.Name</span>
                             <strong>@Model.Profile.CompanyNameE</strong>
                             <address>
                                 @EPMS.WebModels.Resources.CMS.Quotation.StreetAddress
@@ -107,7 +109,7 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.CMS.Quotation.QuotationNo:</th>
-                                        <td>@Model.Quotation.QuotationId</td>
+                                        <td>@Model.Quotation.SerialNumber</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -294,7 +296,7 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.Quotation.NotesEn, new { @id = "ExtraInformationEn", @class = "", @readonly = true })
+                                @Html.TextBoxFor(model => model.Quotation.NotesEn, new { @id = "NotesEn", @class = "", @readonly = true })
                             </div>
                         </div>
                     </div>
@@ -304,23 +306,23 @@
                         </div>
                         <div class="span9">
                             <div class="controls">
-                                @Html.TextBoxFor(model => model.Quotation.NotesAr, new { @id = "ExtraInformationaAr", @class = "", @readonly = true })
+                                @Html.TextBoxFor(model => model.Quotation.NotesAr, new { @id = "NotesAr", @class = "", @readonly = true })
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        @if (Model.Quotation.OrderId > 0)
+        @if (Model.Quotation.QuotationId > 0)
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="placeOrder()">@EPMS.WebModels.Resources.CMS.Quotation.BtnPlaceOrder</button>
+                <button type="submit" class="btn" name="PlaceOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnPlaceOrder</button>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="cancelOrder()">@EPMS.WebModels.Resources.CMS.Quotation.BtnCancelOrder</button>
+                <button type="submit" class="btn" name="CancelOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnCancelOrder</button>
                 </div>
             </div>
         }
@@ -355,13 +357,13 @@
             $('#GrandTotal').text(grand);
             $('#inWord').val($.nToWord({ number: grand, language: "en" }));
         }
+        var descpE = $("#NotesEn").val();
+        var regex = /(<([^>]+)>)/ig;
+        var result = descpE.replace(regex, "");
+        $("#NotesEn").val(result);
+        var descpA = $("#NotesAr").val();
+        regex = /(<([^>]+)>)/ig;
+        result = descpA.replace(regex, "");
+        $("#NotesAr").val(result);
     });
-    function placeOrder() {
-        $("#Order_OrderStatus").val(4);
-        return true;
-    }
-    function cancelOrder() {
-        $("#Order_OrderStatus").val(3);
-        return true;
-    }
 </script>

@@ -429,6 +429,7 @@
         } else {
             itemsDetailCount = parseInt('@Model.QuotationItemDetails.Count');
             isUpdate = true;
+            $('#Client').select2('disable');
             $('#RFQId').select2('disable');
         }
         if (isNaN(parseInt($("#Discount").val()))) {

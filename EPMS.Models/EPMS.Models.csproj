@@ -99,6 +99,7 @@
   <ItemGroup>
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
+    <Compile Include="Common\OrderStatus.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
