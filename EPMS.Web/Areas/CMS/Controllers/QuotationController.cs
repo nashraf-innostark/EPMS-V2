@@ -91,8 +91,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Index(QuotationSearchRequest searchRequest)
         {
             QuotationListViewModel viewModel = new QuotationListViewModel();
-            searchRequest.RoleName = (string) Session["RoleName"];
-            string roleName = (string) Session["RoleName"];
+            searchRequest.RoleName = (string)Session["RoleName"];
+            string roleName = (string)Session["RoleName"];
             string[] userPermissionsSet = (string[])Session["UserPermissionSet"];
             //switch (searchRequest.RoleName)
             //{
@@ -106,7 +106,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             //        searchRequest.CustomerId = 0;
             //        break;
             //}
-            
+
             if (searchRequest.RoleName == "Customer")
             {
                 searchRequest.AllowedAll = false;
@@ -125,7 +125,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
             }
             var quotationList = QuotationService.GetAllQuotation(searchRequest);
-            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x=>x.QuotationId);
+            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x => x.QuotationId);
             viewModel.iTotalRecords = quotationList.TotalCount;
             viewModel.iTotalDisplayRecords = quotationList.TotalCount;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
@@ -157,17 +157,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 quotationId = (long)id;
             }
-            string createdByName = GetCreatedBy(direction);
+            string createdByName = GetCreatedBy(direction, null);
             long employeeId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"]) : 0;
             if (from == "Client")
             {
                 QuotationCreateViewModel model = new QuotationCreateViewModel();
                 QuotationResponse response = QuotationService.GetRfqForQuotationResponse((long)rfqId);
-                
+
                 if (response.Rfq != null)
                 {
                     model.QuotationItemDetails = new List<QuotationItemDetail>();
-                    var rfqItems = response.Rfq.RFQItems.Select(x=>x.CreateFromServerToClient());
+                    var rfqItems = response.Rfq.RFQItems.Select(x => x.CreateFromServerToClient());
                     foreach (var rfqItem in rfqItems)
                     {
                         QuotationItemDetail item = new QuotationItemDetail
@@ -185,7 +185,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     ViewBag.Customers = response.Customers.Any() ?
                         response.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
                     ViewBag.Rfqs = response.Rfqs.Any() ?
-                        response.Rfqs.Select(x=>x.CreateForDropDown()) : new List<RfqDropDown>();
+                        response.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
                     ViewBag.FromClient = true;
@@ -196,15 +196,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationResponse quotResponse = QuotationService.GetQuotationResponse(quotationId, 0, from);
             ViewBag.Customers = quotResponse.Customers.Any() ?
                         quotResponse.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
+            ViewBag.IsIncludeNewJsTree = true;
             ViewBag.ShowExcelImport = CheckInventoryModule() != true;
             ViewBag.FromClient = false;
             if (id == null)
             {
+                viewModel.ItemVariationDropDownList = quotResponse.ItemVariationDropDownList;
                 viewModel.CreatedByName = createdByName;
                 return View(viewModel);
             }
             viewModel = quotResponse.Quotation.CreateFromServerToClient();
-            viewModel.CreatedByName = createdByName;
+            viewModel.ItemVariationDropDownList = quotResponse.ItemVariationDropDownList;
+            viewModel.CreatedByName = GetCreatedBy(direction, quotResponse.Quotation);
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
             ViewBag.Rfqs = quotResponse.Rfqs.Any() ?
                         quotResponse.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
@@ -216,123 +219,66 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "QuotationsCreate")]
         public ActionResult Create(QuotationCreateViewModel viewModel)
         {
+            QuotationResponse response = new QuotationResponse();
             // Update case
-            if (viewModel.QuotationId > 0)
+            if (viewModel.QuotationId > 0 && (viewModel.RFQId == null || viewModel.RFQId == 0))
             {
                 viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
                 viewModel.RecLastUpdatedDate = DateTime.Now;
-                var quotationToUpdate = viewModel.CreateFromClientToServer();
-                if (QuotationService.UpdateQuotation(quotationToUpdate))
+                foreach (var detail in viewModel.QuotationItemDetails)
                 {
-                    List<bool> isUpdated = new List<bool>();
-                    List<bool> isAdded = new List<bool>();
-                    foreach (var itemDetail in viewModel.QuotationItemDetails)
+                    if (detail.ItemId == 0)
                     {
-                        if (itemDetail.ItemId > 0)
-                        {
-                            // Update item details
-                            itemDetail.QuotationId = viewModel.QuotationId;
-                            itemDetail.RecLastUpdatedBy = User.Identity.GetUserId();
-                            itemDetail.RecLastUpdatedDate = DateTime.Now;
-                            var itemDetailToUpdate = itemDetail.CreateFromClientToServer();
-                            isUpdated.Add(QuotationItemService.UpdateQuotationItem(itemDetailToUpdate));
-                        }
-                        else
-                        {
-                            if (!string.IsNullOrEmpty(itemDetail.ItemDetails) && itemDetail.ItemQuantity != 0 &&
-                                itemDetail.UnitPrice != 0)
-                            {
-                                // Add item details
-                                itemDetail.QuotationId = viewModel.QuotationId;
-                                itemDetail.RecCreatedBy = User.Identity.GetUserId();
-                                itemDetail.RecCreatedDate = DateTime.Now;
-                                var itemDetailToAdd = itemDetail.CreateFromClientToServer();
-                                isAdded.Add(QuotationItemService.AddQuotationItem(itemDetailToAdd));
-                            }
-                            else if (string.IsNullOrEmpty(itemDetail.ItemDetails) && itemDetail.ItemQuantity == 0 &&
-                                     itemDetail.UnitPrice == 0)
-                            {
-                                isAdded.Add(true);
-                            }
-                        }
+                        detail.QuotationId = viewModel.QuotationId;
+                        detail.RecCreatedBy = User.Identity.GetUserId();
+                        detail.RecCreatedDate = DateTime.Now;
                     }
-                    if (!isUpdated.Contains(false) && !isAdded.Contains(false))
-                    {
-                        if (isUpdated.Count + isAdded.Count == viewModel.QuotationItemDetails.Count)
-                        {
-                            TempData["message"] = new MessageViewModel
-                            {
-                                Message = Quotation.UpdateMessage,
-                                IsUpdated = true
-                            };
-                            return RedirectToAction("Index");
-                        }
-                    }
+                    detail.RecLastUpdatedBy = User.Identity.GetUserId();
+                    detail.RecLastUpdatedDate = DateTime.Now;
                 }
-                else
+                var quotationToUpdate = viewModel.CreateFromClientToServer();
+                response = QuotationService.UpdateQuotation(quotationToUpdate);
+                if (response.Status)
                 {
-                    var customers = CustomerService.GetAll();
-                    ViewBag.Customers = customers.Select(x => x.CreateFromServerToClient());
-                    ViewBag.Orders =
-                        OrdersService.GetOrdersByCustomerId(viewModel.CustomerId)
-                            .Select(x => x.CreateFromServerToClient());
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = Quotation.ErrorMessage,
+                        Message = Quotation.UpdateMessage,
                         IsUpdated = true
                     };
-                    ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-                    return View(viewModel);
+                    return RedirectToAction("Index");
                 }
             }
-            // Add case
-            // Save Quotation
-            viewModel.RecCreatedBy = User.Identity.GetUserId();
-            viewModel.RecCreatedDate = DateTime.Now;
-            viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
-            viewModel.RecLastUpdatedDate = DateTime.Now;
-            foreach (var detail in viewModel.QuotationItemDetails)
+            else
             {
-                detail.RecCreatedBy = User.Identity.GetUserId();
-                detail.RecCreatedDate = DateTime.Now;
-                detail.RecLastUpdatedBy = User.Identity.GetUserId();
-                detail.RecLastUpdatedDate = DateTime.Now;
-            }
-            var quotationToAdd = viewModel.CreateFromClientToServer();
-            var quotaionId = QuotationService.AddQuotation(quotationToAdd);
-            //bool addStatus = false;
-            //if (quotaionId > 0)
-            //{
-            //    //Save Item Details
-            //    foreach (var itemDetail in viewModel.QuotationItemDetails)
-            //    {
-            //        bool isItemEDetailEmpty = !string.IsNullOrEmpty(itemDetail.ItemDetails) ||
-            //                                  itemDetail.ItemQuantity == 0 || itemDetail.UnitPrice == 0;
-            //        if (!isItemEDetailEmpty)
-            //        {
-            //            itemDetail.QuotationId = quotaionId;
-            //            itemDetail.RecCreatedBy = User.Identity.GetUserId();
-            //            itemDetail.RecCreatedDt = DateTime.Now;
-            //            var itemDetailToAdd = itemDetail.CreateFromClientToServer();
-            //            addStatus = QuotationItemService.AddQuotationItem(itemDetailToAdd);
-            //        }
-            //        if (viewModel.QuotationItemDetails.Count > 0 && isItemEDetailEmpty)
-            //        {
-            //            addStatus = true;
-            //        }
-            //    }
-            //}
-            //if (addStatus && quotaionId > 0)
-            if (quotaionId > 0)
-            {
-                TempData["message"] = new MessageViewModel
+                // Add case
+                // Save Quotation
+                viewModel.RecCreatedBy = User.Identity.GetUserId();
+                viewModel.RecCreatedDate = DateTime.Now;
+                viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.RecLastUpdatedDate = DateTime.Now;
+                foreach (var detail in viewModel.QuotationItemDetails)
                 {
-                    Message = Quotation.AddMessage,
-                    IsSaved = true
-                };
-                return RedirectToAction("Index");
+                    detail.RecCreatedBy = User.Identity.GetUserId();
+                    detail.RecCreatedDate = DateTime.Now;
+                    detail.RecLastUpdatedBy = User.Identity.GetUserId();
+                    detail.RecLastUpdatedDate = DateTime.Now;
+                }
+                var quotationToAdd = viewModel.CreateFromClientToServer();
+                response = QuotationService.AddQuotation(quotationToAdd);
+                if (response.Status)
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = Quotation.AddMessage,
+                        IsSaved = true
+                    };
+                    return RedirectToAction("Index");
+                }
             }
+
             // Error occur
+            ViewBag.Customers = response.Customers.Any() ?
+                        response.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
             TempData["message"] = new MessageViewModel
             {
                 Message = Quotation.ErrorMessage,
@@ -559,8 +505,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var rfqs = rfqService.GetPendingRfqsByCustomerId(customerId).ToList();
             RfqRfqItemsForQuotation response = new RfqRfqItemsForQuotation
             {
-                Rfqs = rfqs.Select(x=>x.CreateForDropDown()).ToList(),
-                RfqItems = rfqs.SelectMany(x=>x.RFQItems.Select(y=>y.CreateFromServerToClient())).ToList()
+                Rfqs = rfqs.Select(x => x.CreateForDropDown()).ToList(),
+                RfqItems = rfqs.SelectMany(x => x.RFQItems.Select(y => y.CreateFromServerToClient())).ToList()
             };
             return Json(response, JsonRequestBehavior.AllowGet);
         }
@@ -697,16 +643,38 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Functions
 
-        public string GetCreatedBy(string direction)
+        public string GetCreatedBy(string direction, EPMS.Models.DomainModels.Quotation quotation)
         {
             string createdBy = "";
-            if (direction == "ltr" && Session["UserFullName"] != null)
+            if (quotation != null)
             {
-                createdBy = Session["UserFullName"].ToString();
+                var emp = quotation.AspNetUser.Employee;
+                if (emp != null)
+                {
+                    if (direction == "ltr" && Session["UserFullName"] != null)
+                    {
+                        createdBy = emp.EmployeeFirstNameE + " " + emp.EmployeeMiddleNameE + " " + emp.EmployeeLastNameE;
+                    }
+                    else if (direction == "rtl" && Session["UserFullNameA"] != null)
+                    {
+                        createdBy = emp.EmployeeFirstNameA + " " + emp.EmployeeMiddleNameA + " " + emp.EmployeeLastNameA;
+                    }
+                }
+                else
+                {
+                    createdBy = "Admin";
+                }
             }
-            if (direction == "rtl" && Session["UserFullNameA"] != null)
+            else
             {
-                createdBy = Session["UserFullNameA"].ToString();
+                if (direction == "ltr" && Session["UserFullName"] != null)
+                {
+                    createdBy = Session["UserFullName"].ToString();
+                }
+                else if (direction == "rtl" && Session["UserFullNameA"] != null)
+                {
+                    createdBy = Session["UserFullNameA"].ToString();
+                }
             }
             return createdBy;
         }

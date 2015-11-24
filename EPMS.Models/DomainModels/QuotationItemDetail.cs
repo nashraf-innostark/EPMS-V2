@@ -15,6 +15,8 @@ namespace EPMS.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsItemDescription { get; set; }
+        public bool IsItemSKU { get; set; }
 
         public virtual ItemVariation ItemVariation { get; set; }
         public virtual Quotation Quotation { get; set; }

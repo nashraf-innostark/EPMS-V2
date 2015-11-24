@@ -142,42 +142,74 @@
                         <tr class="ItemDetailError Error center"></tr>
                         @if (Model.QuotationItemDetails.Any())
                         {
-                            for (int i = 0; i < Model.QuotationItemDetails.Count(); i++)
+                            for (int i = 0; i < Model.QuotationItemDetails.Count; i++)
                             {
                                 <tr data-id="@i">
                                     <td style='display:none'><input name='QuotationItemDetails.Index' type='hidden' value='@i' /></td>
                                     @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemId, new { @class = "itemDetailId" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].QuotationId, new { @class = "itemDetailId" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].RecCreatedBy, new { @class = "" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].RecCreatedDate, new { @class = "" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].ItemVariationId, new { @class = "" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].IsItemDescription, new { @class = "" })
+                                    @Html.HiddenFor(model => model.QuotationItemDetails[i].IsItemSKU, new { @class = "" })
                                     <td>
                                         @Html.TextAreaFor(model => model.QuotationItemDetails[i].ItemDetails, new { @class = "auto-resize readonly-from-rfq" })
+                                        @if (!ViewBag.ShowExcelImport && (Model.RFQId == 0 || Model.RFQId == null))
+                                        {
+                                            <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                        }
+                                        @Html.ValidationMessageFor(m => m.QuotationItemDetails[i].ItemDetails, string.Empty, new { @class = "required" })
                                     </td>
                                     <td class="quantity">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].ItemQuantity, new { @id = "", @class = "n1 readonly-from-rfq" })
+                                        @Html.ValidationMessageFor(m => m.QuotationItemDetails[i].ItemQuantity, string.Empty, new { @class = "required" })
                                     </td>
                                     <td class="unitPrice">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].UnitPrice, new { @id = "", @class = "n2 readonly-from-rfq" })
+                                        @Html.ValidationMessageFor(m => m.QuotationItemDetails[i].UnitPrice, string.Empty, new { @class = "required" })
                                     </td>
                                     <td class="total">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
                                     </td>
-                                    <td class="delete">
-                                        <i class="icon-photon minus deleteRow"></i>
-                                    </td>
+                                    @if (Model.RFQId > 0)
+                                    {
+                                        <td class="delete">
+                                            <i class="icon-photon minus"></i>
+                                        </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="delete">
+                                            <i class="icon-photon minus deleteRow"></i>
+                                        </td>
+                                    }
                                 </tr>
                             }
                         }
                         else
                         {
-                            <tr>
+                            <tr data-id="0">
+                                <td style='display:none'>
+                                    <input name='QuotationItemDetails.Index' type='hidden' value='0' />
+                                    <input name='QuotationItemDetails[0].IsItemDescription' id='QuotationItemDetails_0__IsItemDescription' type='hidden' />
+                                    <input name='QuotationItemDetails[0].IsItemSKU' id='QuotationItemDetails_0__IsItemSKU' type='hidden' />
+                                    <input name='QuotationItemDetails[0].ItemVariationId' id='QuotationItemDetails_0__ItemVariationId' type='hidden' />
+                                </td>
                                 <td>
-                                    <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails" data-val="true" data-val-required="The Item Details are required."></textarea>
+                                    <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[0].ItemDetails" id='QuotationItemDetails_0__ItemDetails' data-val="true" data-val-required="The Item Details are required."></textarea>
+                                    @if (!ViewBag.ShowExcelImport)
+                                    {
+                                        <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
+                                    }
                                     <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemDetails" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="quantity">
-                                    <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1">
+                                    <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].ItemQuantity" id='QuotationItemDetails_0__ItemQuantity' data-val="true" data-val-required="The field Item Qty field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1">
                                     <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].ItemQuantity" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="unitPrice">
-                                    <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice" data-val="true" data-val-required="The Item Details field is required." data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1">
+                                    <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[0].UnitPrice" id='QuotationItemDetails_0__UnitPrice' data-val="true" data-val-required="The field Unit Price field is required." data-val-number="The field Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1">
                                     <span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[0].UnitPrice" data-valmsg-replace="true"></span>
                                 </td>
                                 <td class="total">
@@ -253,6 +285,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.FirstInstallement, new { @id = "Installment1", @class = "installer" })
+                    @Html.ValidationMessageFor(model => model.FirstInstallement, string.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -263,6 +296,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.FirstInsDueAtCompletion, new { @id = "DueAt1", @class = "dap" })
+                    @Html.ValidationMessageFor(model => model.FirstInsDueAtCompletion, string.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -355,11 +389,18 @@
         </div>
     </div>
 }
+
+@section popups
+{
+    @Html.Partial("_ItemsPopUp")
+}
+
 <script type="text/javascript" src="~/Scripts/plugins/elrte.min.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/elrte.en.js"></script>
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script src="~/RichTextEditor/ckeditor.js"></script>
+<link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var itemsDetailCount;
     var iExcelData = false;
@@ -368,22 +409,27 @@
     var rfqs;
     var rfqItems;
     var siteUrl;
+    var dir;
     $(document).ready(function () {
+        dir = '@direction';
         CKEDITOR.replace('ExtraInformationEn', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html'
         });
         CKEDITOR.replace('ExtraInformationAr', {
-            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html'
         });
 
         var quotationId = parseInt('@Model.QuotationId');
         if (quotationId == 0) {
             $(".installer").val(0);
             $(".dap").val(0);
+            $("#Installment1").val();
+            $("#DueAt1").val();
             itemsDetailCount = 0;
         } else {
             itemsDetailCount = parseInt('@Model.QuotationItemDetails.Count');
             isUpdate = true;
+            $('#RFQId').select2('disable');
         }
         if (isNaN(parseInt($("#Discount").val()))) {
             $("#Discount").val(0);
@@ -406,8 +452,11 @@
         // set item details and discount readonly if quotation is from RFQ
         var rfqId = parseInt('@Model.RFQId');
         if (rfqId > 0) {
+            // textboxes readonly
             $('.readonly-from-rfq:input').attr('readonly', true);
+            // hide Add new item button
             $(".add-item-row").hide();
+            
         }
 
         if ('@ViewBag.ShowExcelImport' == 'True') {
@@ -474,7 +523,7 @@
         $("#Client").on("change", function () {
             var customerId = parseInt($(this).val());
             if (customerId > 0) {
-                //$("#ClientName").val($("#Client option:selected").text());
+                $('#RFQId').select2('enable');
                 $.blockUI({
                     message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
                     css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
@@ -496,10 +545,7 @@
                         alert('Error=' + e.toString());
                     }
                 });
-            } else {
-
             }
-
         });
         $("#RFQId").on("change", function () {
             var count = 0;
@@ -578,21 +624,33 @@
         });
         $('.trAdder').on("click", function () {
             if (checkIfPrevItemExist()) {
+                var index = $("#QuotationItemsTableBody").children("tr").length - 1;
+                var indexCell = "<td style='display:none'>" +
+                    "<input name='QuotationItemDetails.Index' type='hidden' value='" + index + "' />" +
+                    "<input name='QuotationItemDetails[" + index + "].IsItemDescription' id='QuotationItemDetails_" + index + "__IsItemDescription' type='hidden' />" +
+                    "<input name='QuotationItemDetails[" + index + "].IsItemSKU' id='QuotationItemDetails_" + index + "__IsItemSKU' type='hidden' />" +
+                    "<input name='QuotationItemDetails[" + index + "].ItemVariationId' id='QuotationItemDetails_" + index + "__ItemVariationId' type='hidden' />" +
+                    "</td>";
                 if (!iExcelData && !isUpdate) {
                     itemsDetailCount = itemsDetailCount + 1;
+                }
+                var itemAdderBtn = "";
+                if ('@ViewBag.ShowExcelImport' == 'False') {
+                    itemAdderBtn = '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>';
                 }
                 //var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails"></textarea> </td> ' +
                 //    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity"> </td> ' +
                 //    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value=0 name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice"> </td>' +
                 //    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
                 //    '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
-                var html = ' <tr> <td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails" data-val="true" data-val-required="The Item Details are required."></textarea> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
-                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity" data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
-                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
-                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + itemsDetailCount + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
-                    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + itemsDetailCount + '].TotalPrice"> </td> ' +
+                var html = '<tr data-id=' + index + '>' + indexCell + '<td > <textarea rows="2" class="auto-resize toBeRequired" name="QuotationItemDetails[' + index + '].ItemDetails" id=QuotationItemDetails_' + index + '__ItemDetails' + ' data-val="true" data-val-required="The Item Details are required."></textarea> ' +
+                    itemAdderBtn +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemDetails" data-valmsg-replace="true"></span> </td>' +
+                    '<td class="quantity"> <input class="n1 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + index + '].ItemQuantity" id=QuotationItemDetails_' + index + '__ItemQuantity' + ' data-val="true" data-val-required="The Item Quantity is required." data-val-number="The Item Quantity must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].ItemQuantity" data-valmsg-replace="true"></span> </td> ' +
+                    '<td class="unitPrice"> <input class="n2 toBeRequired" type="text" value="0" name="QuotationItemDetails[' + index + '].UnitPrice" id=QuotationItemDetails_' + index + '__UnitPrice' + ' data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
+                    '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
+                    ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + index + '].TotalPrice"> </td> ' +
                     '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
                 $('.qouteAdd').append(html);
                 //remove validation
@@ -608,9 +666,9 @@
         reActivateDelete();
         reactivateCount();
 
-        $('#Discount').on("blur", function () {
-            calDiscount();
-        });
+        //$('#Discount').on("blur", function () {
+        //    calDiscount();
+        //});
 
         //$.nToWord({number:n,language:"ar"});
         $('#actDe').on("click", function () {
@@ -641,9 +699,10 @@
             if (b > 100 || isNaN(b)) {
                 discount();
                 $(this).val(0);
+                calDiscount();
                 return;
             }
-
+            calDiscount();
             function discount() {
                 $.pnotify({
                     title: 'Sorry',
@@ -735,6 +794,194 @@
 
             LastDueAtProgressGreater();
         });
+        var $radios = $('input:radio[name=ItemFrom]');
+        $radios.filter('[value=dropdown]').prop('checked', true);
+        $("#Simple_Select_Box_with_Filter_Search").show();
+        $("#treeControl").hide();
+        $("input[name=ItemFrom]:radio").change(function () {
+            if ($(this).val() == "dropdown") {
+                $("#Simple_Select_Box_with_Filter_Search").show();
+                $("#treeControl").hide();
+            }
+            if ($(this).val() == "tree") {
+                $("#Simple_Select_Box_with_Filter_Search").hide();
+                $("#treeControl").show();
+            }
+        });
+        $("#btnTreeSelector").click(function (event) {
+            $('#itemTreeSelector').modal('show');
+            event.preventDefault();
+            $.fn.modal.Constructor.prototype.enforceFocus = function () { };
+        });
+        $('#itemSearcher').on('show', function () {
+            //clear DDL required value label
+            $("#ItemVariationDropDownListValidation").text("");
+            $("#ItemVariationDropDownListValidation").removeClass("Error");
+
+            //get the id from tr that is selected for the item popup
+            var index = $(event.target).closest('tr').data('id');
+            $("#ItemModalIndex").val(index);
+            //get item's values
+            var isItemDescription = $("#QuotationItemDetails_" + index + "__IsItemDescription").val();
+            var isItemSKU = $("#QuotationItemDetails_" + index + "__IsItemSKU").val();
+            var itemVariationId = $("#QuotationItemDetails_" + index + "__ItemVariationId").val();
+
+            //set modal fields according to modal values
+            $("#ItemVariationDropDownList").select2("val", itemVariationId); //set the value
+
+            if (isItemDescription == "false" || isItemDescription == "False" || isItemDescription == "") {
+                $('#ItemDescriptionModalChk').attr('checked', false);
+            } else {
+                $('#ItemDescriptionModalChk').attr('checked', true);
+            }
+
+            if (isItemSKU == "false" || isItemSKU == "False" || isItemSKU == "") {
+                $('#ItemSKUModalChk').attr('checked', false);
+            } else {
+                $('#ItemSKUModalChk').attr('checked', true);
+            }
+            var itemTreeUrl = siteUrl + "/Api/Tree/GetTreeData/";
+            populateTreeJsonWTCkb(itemTreeUrl, "jstree", dir);
+        });
+        $("#selectDepartment").on("click", function () {
+            var selectedItem = $(".jstree-clicked").text();
+            // validation
+            if (selectedItem == "" || selectedItem == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $("#ItemVariationTree").val("");
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
+                    $("#ItemVariationTree").val(value.ItemVariationId);
+                }
+            });
+            var item = $("#ItemVariationTree").val();
+            if (item == "" || item == 0 || item == null) {
+                $("#selectedItemTreeValidation").text(errorMessageTree);
+                $("#selectedItemTreeValidation").addClass("Error");
+                return;
+            } else {
+                $("#selectedItemTreeValidation").text("");
+                $("#selectedItemTreeValidation").removeClass("Error");
+            }
+            $('#itemTreeSelector').modal('toggle');
+            return true;
+        });
+        $("#SaveChanges").on("click", function () {
+            var createFrom = $("input[name=ItemFrom]:checked").val();
+            if (createFrom == "dropdown") {
+                if (validateSelect2Ddl("#ItemVariationDropDownList", '@EPMS.WebModels.Resources.Shared.Common.RequiredDdlField')) {
+                    getModalControlsValues();
+                }
+            } else {
+                getModalControlsValuesForTree();
+            }
+        });
+        function getModalControlsValuesForTree() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationTree").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#QuotationItemDetails_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#QuotationItemDetails_" + index + "__IsItemSKU").val(isItemSku);
+            $("#QuotationItemDetails_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#QuotationItemDetails_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
+                        } else {
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
+                        }
+                    }
+                    $("#QuotationItemDetails_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+            $('#itemSearcher').modal('toggle');
+        }
+        function getModalControlsValues() {
+            //get item's values
+            var isItemDescription = $('#ItemDescriptionModalChk').is(':checked');
+            var isItemSku = $('#ItemSKUModalChk').is(':checked');
+            var itemVariationId = $("#ItemVariationDropDownList").val();
+
+            //set item's values
+            var index = $("#ItemModalIndex").val();
+            $("#QuotationItemDetails_" + index + "__IsItemDescription").val(isItemDescription);
+            $("#QuotationItemDetails_" + index + "__IsItemSKU").val(isItemSku);
+            $("#QuotationItemDetails_" + index + "__ItemVariationId").val(itemVariationId);
+
+            //set item sku and description in details text area
+            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+            var parsedRfiItems = JSON.parse(rfiItems);
+
+            $.each(parsedRfiItems, function (key, value) {
+                if (value.ItemVariationId == itemVariationId) {
+                    $("#QuotationItemDetails_" + index + "__ItemDetails").val("");
+                    var textToAppend = "";
+                    if ('@direction' == "ltr") {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                    } else {
+                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                    }
+                    if (isItemSku) {
+                        textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+                    }
+                    if (isItemDescription) {
+                        if ('@direction' == "ltr") {
+                            if (value.ItemVariationDescriptionE == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            }
+
+                        } else {
+                            if (value.ItemVariationDescriptionA == null) {
+                                textToAppend = textToAppend + "\nDescription:";
+                            } else {
+                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            }
+                        }
+                    }
+                    $("#QuotationItemDetails_" + index + "__ItemDetails").val(textToAppend);
+                }
+            });
+            $('#itemSearcher').modal('toggle');
+        }
     });
 
     function populateRfqDropDown(data) {
@@ -769,7 +1016,7 @@
             '<td class="unitPrice"> <input class="n2 toBeRequired" readonly type="text" value="' + value.UnitPrice + '" name="QuotationItemDetails[' + index + '].UnitPrice" data-val="true" data-val-required="The Unit Price is required." data-val-number="The Unit Price must be a number." data-val-range="Please enter valid price" data-val-range-max="2147483647" data-val-range-min="1"> ' +
             '<span class="field-validation-valid required" data-valmsg-for="QuotationItemDetails[' + index + '].UnitPrice" data-valmsg-replace="true"></span> </td>' +
             ' <td class="total"> <input class="n3" type="text" readonly value=0 name="QuotationItemDetails[' + index + '].TotalPrice"> </td> ' +
-            '<td class="delete"> <i class="icon-photon minus deleteRow"></i> </td></tr>';
+            '<td class="delete"> <i class="icon-photon minus "></i> </td></tr>';
         $('.qouteAdd').append(html);
         //remove validation
         $("form").removeData("validator").removeData("unobtrusiveValidation");
@@ -866,14 +1113,17 @@
                     }
                 });
             } else {
-                itemsDetailCount = itemsDetailCount - 1;
-                elementToDelete.remove();
-                var x = 0;
-                $('.qouteAdd tr .n3').each(function () {
-                    x = x + parseInt($(this).val());
-                });
-                $('#subtotal').val(x);
-                calDiscount();
+                var count = $('.qouteAdd tr').length;
+                if (count > 2) {
+                    itemsDetailCount = itemsDetailCount - 1;
+                    elementToDelete.remove();
+                    var x = 0;
+                    $('.qouteAdd tr .n3').each(function () {
+                        x = x + parseInt($(this).val());
+                    });
+                    $('#subtotal').val(x);
+                    calDiscount();
+                }
                 $.unblockUI();
             }
         });
