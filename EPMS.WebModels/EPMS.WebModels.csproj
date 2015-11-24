@@ -77,6 +77,7 @@
     <Compile Include="ModelMappers\Inventory\DIF\DIFMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
+    <Compile Include="ModelMappers\InvoiceMapper.cs" />
     <Compile Include="ModelMappers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMappers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\IRQMapper.cs" />
@@ -414,6 +415,11 @@
       <DependentUpon>Vendor.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CMS\Invoice.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Invoice.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Meeting\Meeting.ar.Designer.cs">
       <DependentUpon>Meeting.ar.resx</DependentUpon>
@@ -770,6 +776,8 @@
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseCreateViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseListViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\InvoiceListViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\IRF\IrfHistoryViewModel.cs" />
     <Compile Include="ViewModels\IRF\ItemReleaseCreateViewModel.cs" />
     <Compile Include="ViewModels\IRF\ItemReleaseDetailViewModel.cs" />
@@ -878,6 +886,7 @@
     <Compile Include="WebsiteModels\InventoryItem.cs" />
     <Compile Include="WebsiteModels\InventoryItemForVariation.cs" />
     <Compile Include="WebsiteModels\InventorySections.cs" />
+    <Compile Include="WebsiteModels\Invoice.cs" />
     <Compile Include="WebsiteModels\ItemImage.cs" />
     <Compile Include="WebsiteModels\ItemManufacturer.cs" />
     <Compile Include="WebsiteModels\ItemRelease.cs" />
@@ -1215,6 +1224,10 @@
     <EmbeddedResource Include="Resources\Inventory\Vendor.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Vendor.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Invoice.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Invoice.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Meeting\Meeting.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

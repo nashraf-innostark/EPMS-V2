@@ -296,6 +296,7 @@
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
     <Compile Include="Areas\Api\Controllers\TreeController.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
+    <Compile Include="Areas\CMS\Controllers\InvoiceController.cs" />
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
@@ -1573,6 +1574,7 @@
     <Content Include="Areas\Report\Views\Task\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
+    <Content Include="Areas\CMS\Views\Invoice\Index.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

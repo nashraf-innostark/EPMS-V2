@@ -18,6 +18,10 @@ namespace EPMS.Models.DomainModels
         public short? ThirdInsDueAtCompletion { get; set; }
         public decimal? FourthInstallment { get; set; }
         public short? FourthInsDueAtCompletion { get; set; }
+        public bool FirstInstallmentStatus { get; set; }
+        public bool SecondInstallmentStatus { get; set; }
+        public bool ThirdInstallmentStatus { get; set; }
+        public bool FourthInstallmentStatus { get; set; }
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
         public DateTime RecCreatedDate { get; set; }
@@ -32,5 +36,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<Project> Projects { get; set; }
         public virtual RFQ RFQ { get; set; }
         public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
     }
 }

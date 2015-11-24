@@ -539,6 +539,20 @@
           <Property Name="DepartmentPath" Type="nvarchar(max)" />
           <Property Name="QuantityInPackage" Type="float" />
         </EntityType>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="InvoiceNumber" Type="bigint" Nullable="false" />
+          <Property Name="QuotationId" Type="bigint" Nullable="false" />
+          <Property Name="Notes" Type="nvarchar" MaxLength="500" />
+          <Property Name="NotesA" Type="nvarchar" MaxLength="500" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ItemColor">
           <Key>
             <PropertyRef Name="ColorId" />
@@ -1237,12 +1251,16 @@
           <Property Name="QuotationDiscount" Type="smallint" />
           <Property Name="FirstInstallement" Type="decimal" Precision="10" Scale="2" Nullable="false" />
           <Property Name="FirstInsDueAtCompletion" Type="smallint" Nullable="false" />
+          <Property Name="FirstInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="SecondInstallment" Type="decimal" Precision="10" Scale="2" />
           <Property Name="SecondInsDueAtCompletion" Type="smallint" />
+          <Property Name="SecondInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="ThirdInstallment" Type="decimal" Precision="10" Scale="2" />
           <Property Name="ThirdInsDueAtCompletion" Type="smallint" />
+          <Property Name="ThirdInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="FourthInstallment" Type="decimal" Precision="10" Scale="2" />
           <Property Name="FourthInsDueAtCompletion" Type="smallint" />
+          <Property Name="FourthInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="NotesEn" Type="nvarchar(max)" />
           <Property Name="NotesAr" Type="nvarchar(max)" />
           <Property Name="RecCreatedDate" Type="datetime" Nullable="false" />
@@ -1266,6 +1284,8 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecLastUpdatedDate" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="IsItemDescription" Type="bit" Nullable="false" />
+          <Property Name="IsItemSKU" Type="bit" Nullable="false" />
         </EntityType>
         <EntityType Name="ReportProject">
           <Key>
@@ -2218,6 +2238,18 @@
             </Principal>
             <Dependent Role="InventoryDepartment1">
               <PropertyRef Name="ParentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Invoice_Quotation">
+          <End Role="Quotation" Type="Self.Quotation" Multiplicity="1" />
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="Invoice">
+              <PropertyRef Name="QuotationId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -3815,6 +3847,7 @@
           <EntitySet Name="ImageSlider" EntityType="Self.ImageSlider" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryDepartment" EntityType="Self.InventoryDepartment" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="InventoryItems" EntityType="Self.InventoryItems" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Invoice" EntityType="Self.Invoice" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemColor" EntityType="Self.ItemColor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemImage" EntityType="Self.ItemImage" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ItemManufacturer" EntityType="Self.ItemManufacturer" Schema="dbo" store:Type="Tables" />
@@ -4020,6 +4053,10 @@
           <AssociationSet Name="FK_InventoryDepartment_InventoryDepartment" Association="Self.FK_InventoryDepartment_InventoryDepartment">
             <End Role="InventoryDepartment" EntitySet="InventoryDepartment" />
             <End Role="InventoryDepartment1" EntitySet="InventoryDepartment" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Invoice_Quotation" Association="Self.FK_Invoice_Quotation">
+            <End Role="Quotation" EntitySet="Quotation" />
+            <End Role="Invoice" EntitySet="Invoice" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemColor_Color" Association="Self.FK_ItemColor_Color">
             <End Role="Color" EntitySet="Color" />
@@ -6771,6 +6808,11 @@
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetails" />
           </AssociationSet>
+          <EntitySet Name="Invoices" EntityType="EPMSInventoryModel.Invoice" />
+          <AssociationSet Name="FK_Invoice_Quotation" Association="EPMSInventoryModel.FK_Invoice_Quotation">
+            <End Role="Quotation" EntitySet="Quotations" />
+            <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -9153,6 +9195,11 @@
           <NavigationProperty Name="RFQ" Relationship="EPMSInventoryModel.FK_Quotation_RFQ" FromRole="Quotation" ToRole="RFQ" />
           <NavigationProperty Name="QuotationItemDetails" Relationship="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" FromRole="Quotation" ToRole="QuotationItemDetail" />
           <Property Name="SerialNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="FirstInstallmentStatus" Type="Boolean" Nullable="false" />
+          <Property Name="SecondInstallmentStatus" Type="Boolean" Nullable="false" />
+          <Property Name="ThirdInstallmentStatus" Type="Boolean" Nullable="false" />
+          <Property Name="FourthInstallmentStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Invoices" Relationship="EPMSInventoryModel.FK_Invoice_Quotation" FromRole="Quotation" ToRole="Invoice" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -9171,6 +9218,8 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="128" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_QuotationItemDetail_ItemVariation" FromRole="QuotationItemDetail" ToRole="ItemVariation" />
           <NavigationProperty Name="Quotation" Relationship="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" FromRole="QuotationItemDetail" ToRole="Quotation" />
+          <Property Name="IsItemDescription" Type="Boolean" Nullable="false" />
+          <Property Name="IsItemSKU" Type="Boolean" Nullable="false" />
         </EntityType>
         <Association Name="FK_Quotation_AspNetUsers">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -9240,6 +9289,33 @@
               <PropertyRef Name="QuotationId" />
             </Principal>
             <Dependent Role="QuotationItemDetail">
+              <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Invoice">
+          <Key>
+            <PropertyRef Name="InvoiceId" />
+          </Key>
+          <Property Name="InvoiceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceNumber" Type="Int64" Nullable="false" />
+          <Property Name="QuotationId" Type="Int64" Nullable="false" />
+          <Property Name="Notes" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="NotesA" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Quotation" Relationship="EPMSInventoryModel.FK_Invoice_Quotation" FromRole="Invoice" ToRole="Quotation" />
+        </EntityType>
+        <Association Name="FK_Invoice_Quotation">
+          <End Type="EPMSInventoryModel.Quotation" Role="Quotation" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.Invoice" Role="Invoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Quotation">
+              <PropertyRef Name="QuotationId" />
+            </Principal>
+            <Dependent Role="Invoice">
               <PropertyRef Name="QuotationId" />
             </Dependent>
           </ReferentialConstraint>
@@ -11131,6 +11207,10 @@
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Quotation">
               <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="FourthInstallmentStatus" ColumnName="FourthInstallmentStatus" />
+                <ScalarProperty Name="ThirdInstallmentStatus" ColumnName="ThirdInstallmentStatus" />
+                <ScalarProperty Name="SecondInstallmentStatus" ColumnName="SecondInstallmentStatus" />
+                <ScalarProperty Name="FirstInstallmentStatus" ColumnName="FirstInstallmentStatus" />
                 <ScalarProperty Name="SerialNumber" ColumnName="SerialNumber" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
@@ -11158,6 +11238,8 @@
           <EntitySetMapping Name="QuotationItemDetails">
             <EntityTypeMapping TypeName="EPMSInventoryModel.QuotationItemDetail">
               <MappingFragment StoreEntitySet="QuotationItemDetail">
+                <ScalarProperty Name="IsItemSKU" ColumnName="IsItemSKU" />
+                <ScalarProperty Name="IsItemDescription" ColumnName="IsItemDescription" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecLastUpdatedDate" ColumnName="RecLastUpdatedDate" />
                 <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
@@ -11169,6 +11251,21 @@
                 <ScalarProperty Name="ItemVariationId" ColumnName="ItemVariationId" />
                 <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
                 <ScalarProperty Name="ItemId" ColumnName="ItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Invoices">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Invoice">
+              <MappingFragment StoreEntitySet="Invoice">
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="NotesA" ColumnName="NotesA" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="QuotationId" ColumnName="QuotationId" />
+                <ScalarProperty Name="InvoiceNumber" ColumnName="InvoiceNumber" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11455,6 +11552,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_Project_Quotation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Quotation_RFQ" />
         <AssociationConnector Association="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Invoice" Width="1.5" PointX="11.125" PointY="57.625" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Invoice_Quotation" />
         </Diagram>
     </Diagrams>
   </Designer>
