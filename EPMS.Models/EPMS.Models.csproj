@@ -217,6 +217,7 @@
     <Compile Include="ModelMapers\PoItemHistoryMapper.cs" />
     <Compile Include="ModelMapers\ProjectMapper.cs" />
     <Compile Include="ModelMapers\ProjectTaskMapper.cs" />
+    <Compile Include="ModelMapers\QuotationMapper.cs" />
     <Compile Include="ModelMapers\ReportsMappers.cs" />
     <Compile Include="ModelMapers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMapers\RFIItemHistoryMapper.cs" />

@@ -15,8 +15,8 @@ namespace EPMS.Interfaces.IServices
         Quotation FindQuotationById(long id);
         IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id);
         Quotation FindQuotationByOrderId(long orderId);
-        long AddQuotation(Quotation quotation);
-        bool UpdateQuotation(Quotation quotation);
+        QuotationResponse AddQuotation(Quotation quotation);
+        QuotationResponse UpdateQuotation(Quotation quotation);
         void DeleteQuotation(Quotation quotation);
     }
 }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EPMS.Models.ResponseModels;
 
 namespace EPMS.WebModels.ViewModels.Quotation
 {
@@ -38,5 +39,7 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public string CreatedByName { get; set; }
 
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
+        // items for inventory pop up
+        public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
     }
 }

@@ -19,5 +19,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string RecCreatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsItemDescription { get; set; }
+        public bool IsItemSKU { get; set; }
     }
 }

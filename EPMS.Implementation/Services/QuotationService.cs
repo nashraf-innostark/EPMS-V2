@@ -7,6 +7,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
@@ -19,23 +20,25 @@ namespace EPMS.Implementation.Services
         private readonly INotificationRepository notificationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IQuotationRepository Repository;
+        private readonly IQuotationItemRepository itemRepository;
         private readonly INotificationService notificationService;
         private readonly ICustomerService customerService;
-        private readonly IOrdersService ordersService;
+        private readonly IItemVariationRepository variationRepository;
         private readonly IRFQRepository rfqRepository;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService, ICustomerService customerService, IOrdersService ordersService, IRFQRepository rfqRepository)
+        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             Repository = repository;
             this.notificationService = notificationService;
             this.customerService = customerService;
-            this.ordersService = ordersService;
             this.rfqRepository = rfqRepository;
+            this.variationRepository = variationRepository;
+            this.itemRepository = itemRepository;
         }
 
         public IEnumerable<Quotation> GetAll()
@@ -52,7 +55,8 @@ namespace EPMS.Implementation.Services
         {
             QuotationResponse response = new QuotationResponse
             {
-                Customers = customerService.GetAll().ToList()
+                Customers = customerService.GetAll().ToList(),
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList(),
             };
             if (quotationId != 0)
             {
@@ -86,27 +90,34 @@ namespace EPMS.Implementation.Services
             return Repository.FindQuotationByIdForProjectDetail(id);
         }
 
-        public long AddQuotation(Quotation quotation)
+        public QuotationResponse AddQuotation(Quotation quotation)
         {
-            if (quotation.QuotationId == 0)
+            try
             {
-                quotation.SerialNumber = GetQuotationSerialNumber();
-                Repository.Add(quotation);
-                Repository.SaveChanges();
-                if (quotation.RFQId != null)
+                if (quotation.QuotationId == 0)
                 {
-                    // update RFQ status
-                    var rfq = rfqRepository.Find((long)quotation.RFQId);
-                    if (rfq != null)
+                    quotation.SerialNumber = GetQuotationSerialNumber();
+                    Repository.Add(quotation);
+                    Repository.SaveChanges();
+                    if (quotation.RFQId != null)
                     {
-                        rfq.Status = (int) RFQStatus.QoutationCreated;
-                        rfqRepository.Update(rfq);
-                        rfqRepository.SaveChanges();
+                        // update RFQ status
+                        var rfq = rfqRepository.Find((long)quotation.RFQId);
+                        if (rfq != null)
+                        {
+                            rfq.Status = (int)RFQStatus.QoutationCreated;
+                            rfqRepository.Update(rfq);
+                            rfqRepository.SaveChanges();
+                        }
                     }
                 }
+                SendNotification(quotation);
+                return new QuotationResponse { Status = true };
             }
-            SendNotification(quotation);
-            return quotation.QuotationId;
+            catch (Exception)
+            {
+                return new QuotationResponse { Status = false, Customers = customerService.GetAll() };
+            }
         }
         public string GetQuotationSerialNumber()
         {
@@ -145,24 +156,52 @@ namespace EPMS.Implementation.Services
             return year + month + day + "00001";
         }
 
-        public bool UpdateQuotation(Quotation quotation)
+        public QuotationResponse UpdateQuotation(Quotation quotation)
         {
             try
             {
-                Repository.Update(quotation);
-                Repository.SaveChanges();
-                SendNotification(quotation);
-                return true;
+                Quotation dbData = Repository.Find(quotation.QuotationId);
+                if (dbData != null)
+                {
+                    var dataToUpdate = dbData.UpdateDbDataFromClient(quotation);
+                    Repository.Update(dataToUpdate);
+                    Repository.SaveChanges();
+
+                    // update items detail
+                    var itemsInDb = dbData.QuotationItemDetails.ToList();
+                    foreach (var detail in quotation.QuotationItemDetails)
+                    {
+                        if (detail.ItemId > 0)
+                        {
+                            var itemInDb = itemsInDb.FirstOrDefault(x => x.ItemId == detail.ItemId);
+                            if (itemInDb != null)
+                            {
+                                var itemToUpdate = itemInDb.UpdateDbDataFromClient(detail);
+                                itemRepository.Update(itemToUpdate);
+                                itemRepository.SaveChanges();
+                                itemsInDb.RemoveAll(x => x.ItemId == detail.ItemId);
+                            }
+                        }
+                        else
+                        {
+                            itemRepository.Add(detail);
+                            itemRepository.SaveChanges();
+                        }
+                    }
+                    
+                    SendNotification(quotation);
+                    return new QuotationResponse{ Status = true};
+                }
             }
             catch (Exception)
             {
-                return false;
             }
+            return new QuotationResponse{ Status = false, Customers = customerService.GetAll() };
         }
 
         public void DeleteQuotation(Quotation quotation)
         {
-            
+
         }
 
         public QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest)
