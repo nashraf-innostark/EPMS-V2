@@ -66,6 +66,10 @@ namespace EPMS.Web.Areas.Report.Controllers
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
             SetGraphData(detailViewModel);
+            if ((viewModel.ProjectId == 0 && viewModel.TaskId == 0))
+            {
+                return RedirectToAction("All", new {ReportId = detailViewModel.ReportId});
+            }
             ViewBag.QueryString = "?ReportId=" + detailViewModel.ReportId;
             return View(detailViewModel);
         }
@@ -107,8 +111,8 @@ namespace EPMS.Web.Areas.Report.Controllers
             if (ReportId != null)
             {
                 request.ReportId = (long)ReportId;
-                var tasks = reportService.GetAllProjectTasks(request).ToList();
-                tasksList = tasks.Any() ? tasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
+                var response = reportService.SaveAndGetTaskReportDetails(request);
+                tasksList = response.ProjectTasks.Any() ? response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
             }
             return View(tasksList);
         }
@@ -214,8 +218,8 @@ namespace EPMS.Web.Areas.Report.Controllers
                 request.ReportId = (long)ReportId;
                 request.RequesterId = Session["UserID"].ToString();
                 request.RoleId = Session["RoleId"].ToString();
-                var tasks = reportService.GetAllProjectTasks(request).ToList();
-                tasksList = tasks.Any() ? tasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
+                var response = reportService.SaveAndGetTaskReportDetails(request);
+                tasksList = response.ProjectTasks.Any() ? response.ProjectTasks.Select(x => x.CreateFromServerToClientLv()) : new List<ProjectTask>();
             }
             ViewBag.ReportId = ReportId;
             return View(tasksList);

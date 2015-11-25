@@ -24,6 +24,7 @@ namespace EPMS.Implementation.Services
         private readonly IWarehouseRepository warehouseRepository;
 
         #endregion
+
         #region Constructor
         public ReportService(IInventoryItemRepository inventoryItemRepository,IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
         {
@@ -37,6 +38,7 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
         #region Reports List Views
         public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
         {
@@ -139,6 +141,7 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
         #region Create Reports and Details Views
         public bool AddReport(Report report)
         {

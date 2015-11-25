@@ -59,5 +59,6 @@ namespace EPMS.WebModels.WebsiteModels
         public List<ProjectTask> SubTasks { get; set; }
         public List<SubTaskWeight> SubTasksWeight { get; set; }
         public string EmployeesAssigned { get; set; }
+        public int NoOfSubTasks { get; set; }
     }
 }

@@ -187,6 +187,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 }
                 projectTask.EmployeesAssigned = projectTask.EmployeesAssigned.Substring(0, projectTask.EmployeesAssigned.Length - 3);
             }
+            projectTask.NoOfSubTasks = source.NoOfSubTasks;
             //projectTask.SubTasks = source.SubTasks.Any() ? source.SubTasks.Select(t => t.CreateFromServerToClientLv()).ToList() : new List<WebsiteModels.ProjectTask>();
             return projectTask;
         }
