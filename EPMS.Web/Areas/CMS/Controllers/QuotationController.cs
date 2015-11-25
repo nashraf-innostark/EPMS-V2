@@ -17,7 +17,6 @@ using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ViewModels.RFQ;
 using EPMS.WebModels.WebsiteModels;
-using EPMS.WebModels.WebsiteModels.Common;
 using Microsoft.AspNet.Identity;
 using Order = EPMS.WebModels.WebsiteModels.Order;
 using Quotation = EPMS.WebModels.Resources.CMS.Quotation;
@@ -30,11 +29,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
     {
         #region Private
 
-        private readonly IOrdersService OrdersService;
-        private readonly IQuotationService QuotationService;
+        private readonly IOrdersService ordersService;
+        private readonly IQuotationService quotationService;
         private readonly IRFQService rfqService;
-        private readonly IQuotationItemService QuotationItemService;
-        private readonly ICompanyProfileService ProfileService;
+        private readonly IQuotationItemService quotationItemService;
         private readonly IShoppingCartService cartService;
         private readonly ICompanyProfileService companyProfileService;
 
@@ -55,14 +53,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Constructor
 
-        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IQuotationItemService quotationItemService, ICompanyProfileService profileService, IShoppingCartService cartService, IRFQService rfqService, ICompanyProfileService companyProfileService)
+        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService)
         {
-            OrdersService = ordersService;
-            QuotationService = quotationService;
-            QuotationItemService = quotationItemService;
-            ProfileService = profileService;
-            this.cartService = cartService;
+            this.ordersService = ordersService;
+            this.quotationService = quotationService;
             this.rfqService = rfqService;
+            this.quotationItemService = quotationItemService;
+            this.cartService = cartService;
             this.companyProfileService = companyProfileService;
         }
 
@@ -112,7 +109,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
             }
             
-            var quotationList = QuotationService.GetAllQuotation(searchRequest);
+            var quotationList = quotationService.GetAllQuotation(searchRequest);
             viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x => x.QuotationId);
             viewModel.iTotalRecords = quotationList.TotalCount;
             viewModel.iTotalDisplayRecords = quotationList.TotalCount;
@@ -149,7 +146,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (from == "Client")
             {
                 QuotationCreateViewModel model = new QuotationCreateViewModel();
-                QuotationResponse response = QuotationService.GetRfqForQuotationResponse((long)rfqId);
+                QuotationResponse response = quotationService.GetRfqForQuotationResponse((long)rfqId);
 
                 if (response.Rfq != null)
                 {
@@ -181,7 +178,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 return View(model);
             }
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
-            QuotationResponse quotResponse = QuotationService.GetQuotationResponse(quotationId, 0, from);
+            QuotationResponse quotResponse = quotationService.GetQuotationResponse(quotationId, 0, from);
             ViewBag.Customers = quotResponse.Customers.Any() ?
                         quotResponse.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
             ViewBag.IsIncludeNewJsTree = true;
@@ -225,7 +222,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     detail.RecLastUpdatedDate = DateTime.Now;
                 }
                 var quotationToUpdate = viewModel.CreateFromClientToServer();
-                response = QuotationService.UpdateQuotation(quotationToUpdate);
+                response = quotationService.UpdateQuotation(quotationToUpdate);
                 if (response.Status)
                 {
                     TempData["message"] = new MessageViewModel
@@ -252,7 +249,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     detail.RecLastUpdatedDate = DateTime.Now;
                 }
                 var quotationToAdd = viewModel.CreateFromClientToServer();
-                response = QuotationService.AddQuotation(quotationToAdd);
+                response = quotationService.AddQuotation(quotationToAdd);
                 if (response.Status)
                 {
                     TempData["message"] = new MessageViewModel
@@ -442,10 +439,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var direction = WebModels.Resources.Shared.Common.TextDirection;
             long customerId = Session["CustomerID"] != null ? Convert.ToInt64(Session["CustomerID"]) : 0;
             RFQDetailViewModel model = new RFQDetailViewModel();
-            long quotationId = 0;
             if (id != null)
             {
-                quotationId = (long)id;
+                var quotationId = (long)id;
                 RFQResponse rfqResponse = rfqService.GetRfqResponse(quotationId, customerId, from);
                 if (rfqResponse.Rfq != null)
                 {
@@ -511,9 +507,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
             QuotationDetailViewModel viewModel = new QuotationDetailViewModel();
             if (id != null)
             {
-                var cp = ProfileService.GetDetail();
+                var cp = companyProfileService.GetDetail();
                 viewModel.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
-                var quotation = QuotationService.FindQuotationById((long) id);
+                var quotation = quotationService.FindQuotationById((long) id);
                 viewModel.Quotation = quotation.CreateFromServerToClientLv();
                 viewModel.EmployeeName = GetCreatedBy(direction, quotation);
                 ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
@@ -531,7 +527,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 CustomerId = viewModel.Quotation.CustomerId
             };
-            var orders = OrdersService.GetAll().OrderBy(x => x.RecCreatedDt).ToList();
+            var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDt).ToList();
             if (Request.Form["PlaceOrder"] != null)
             {
                 order.OrderNo = Utility.GetOrderNumber(orders);
@@ -539,12 +535,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (Request.Form["CancelOrder"] != null)
             {
             }
-            //Order order = OrdersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
+            //Order order = ordersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
             order.OrderStatus = viewModel.Order.OrderStatus;
             order.RecLastUpdatedBy = User.Identity.GetUserId();
             order.RecLastUpdatedDt = DateTime.Now;
             var orderToUpdate = order.CreateFromClientToServer();
-            if (OrdersService.UpdateOrder(orderToUpdate))
+            if (ordersService.UpdateOrder(orderToUpdate))
             {
                 if (viewModel.Order.OrderStatus == 3)
                 {
@@ -574,10 +570,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "QuotationsDelete")]
         public ActionResult Delete(int itemDetailId)
         {
-            var itemDetailToBeDeleted = QuotationItemService.FindQuotationById(itemDetailId);
+            var itemDetailToBeDeleted = quotationItemService.FindQuotationById(itemDetailId);
             try
             {
-                QuotationItemService.DeleteQuotationItem(itemDetailToBeDeleted);
+                quotationItemService.DeleteQuotationItem(itemDetailToBeDeleted);
                 return Json(new
                 {
                     Status = "Success"
