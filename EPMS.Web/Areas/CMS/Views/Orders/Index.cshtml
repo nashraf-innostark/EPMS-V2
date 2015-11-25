@@ -128,7 +128,7 @@
                         var val = full["InvoiceNumber"];
                         var invoiceId = full["InvoiceId"];
                         if (invoiceId != 0) {
-                            element = '<a href="' + siteUrl + 'CMS/Invoice/Detail/' + invoiceId + '">' + val + '</a>';
+                            element = '<a href="' + siteUrl + '/CMS/Invoice/Detail/' + invoiceId + '">' + val + '</a>';
                         }
                         return element;
                     },
@@ -138,7 +138,16 @@
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var receipts = full["Receipts"];
+                        var element = "No Data";
+                        if (receipts != null) {
+                            if (receipts.length > 0) {
+                                for (var i = 0; i < receipts.length; i++) {
+                                    element = receipts[i].ReceiptId + "/";
+                                }
+                            }
+                        }
+                        return element;
                     },
                     "bSortable": false
                 },

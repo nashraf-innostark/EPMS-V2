@@ -58,6 +58,10 @@ namespace EPMS.WebModels.ModelMappers
                 {
                     order.InvoiceId = invoice.InvoiceId;
                     order.InvoiceNumber = invoice.InvoiceNumber;
+                    if (invoice.Receipts.Any())
+                    {
+                        order.Receipts = invoice.Receipts.Select(x => x.CreateFromServerToClient()).ToList();
+                    }
                 }
             }
             return order;
