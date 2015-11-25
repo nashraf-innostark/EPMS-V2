@@ -9,91 +9,60 @@ namespace EPMS.WebModels.ModelMappers
     {
         public static Order CreateFromClientToServer(this WebsiteModels.Order source)
         {
-            string decspE = "";
-            string decspA = "";
+            string decsp = "";
+            string notes = "";
             if (!String.IsNullOrEmpty(source.OrderDescription))
             {
-                decspE = source.OrderDescription.Replace("\n", "");
-                decspE = decspE.Replace("\r", "");
+                decsp = source.OrderDescription.Replace("\n", "");
+                decsp = decsp.Replace("\r", "");
             }
             if (!String.IsNullOrEmpty(source.OrderNotes))
             {
-                decspA = source.OrderNotes.Replace("\n", "");
-                decspA = decspA.Replace("\r", "");
+                notes = source.OrderNotes.Replace("\n", "");
+                notes = notes.Replace("\r", "");
             }
             var caseType = new Order
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDescription = decspE,
-                OrderNotes = decspA,
+                OrderDescription = decsp,
+                OrderNotes = notes,
                 CustomerId = source.CustomerId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 OrderStatus = source.OrderStatus,
+                QuotationId = source.QuotationId
             };
             return caseType;
         }
 
         public static WebsiteModels.Order CreateFromServerToClientLv(this Order source)
         {
-            string decspE = "";
-            string decspA = "";
-            if (!String.IsNullOrEmpty(source.OrderDescription))
+            var order = new WebsiteModels.Order
             {
-                decspE = source.OrderDescription.Replace("\n", "");
-                decspE = decspE.Replace("\r", "");
-            }
-            if (!String.IsNullOrEmpty(source.OrderNotes))
+                OrderId = source.OrderId,
+                OrderNo = source.OrderNo,
+                OrderStatus = source.OrderStatus,
+                CustomerId = source.CustomerId,
+                CustomerNameE = source.Customer.CustomerNameE,
+                CustomerNameA = source.Customer.CustomerNameA,
+                QuotationId = source.QuotationId
+            };
+            order.QuotationNumber = source.Quotation != null ? source.Quotation.SerialNumber : "";
+            if (source.Quotation.Invoices.Any())
             {
-                decspA = source.OrderNotes.Replace("\n", "");
-                decspA = decspA.Replace("\r", "");
-            }
-            WebsiteModels.Order order;
-            //if (source.Customer.Quotations.Any(x => x.OrderId == source.OrderId))
-            //{
-            //    order = new WebsiteModels.Order
-            //    {
-            //        OrderId = source.OrderId,
-            //        OrderNo = source.OrderNo,
-            //        OrderDescription = decspE,
-            //        OrderNotes = decspA,
-            //        OrderDate = source.OrderDate,
-            //        Attachment = source.Attachment,
-            //        CustomerId = source.CustomerId,
-            //        RecCreatedBy = source.RecCreatedBy,
-            //        RecCreatedDt = source.RecCreatedDt,
-            //        RecLastUpdatedBy = source.RecLastUpdatedBy,
-            //        RecLastUpdatedDt = source.RecLastUpdatedDt,
-            //        OrderStatus = source.OrderStatus,
-            //        CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
-            //        CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
-            //        QuotationId = source.Customer.Quotations.FirstOrDefault(x => x.OrderId == source.OrderId).CreateFromServerToClient().QuotationId,
-            //    };
-            //    //order.Link = "<a href='CMS/Quotation/Create/" + order.QuotationId + "'>" + "Quotation " + order.QuotationId + "</a>";
-            //}
-            //else
-            //{
-                order = new WebsiteModels.Order
+                var invoice = source.Quotation.Invoices.FirstOrDefault();
+                if (invoice != null)
                 {
-                    OrderId = source.OrderId,
-                    OrderNo = source.OrderNo,
-                    OrderDescription = decspE,
-                    OrderNotes = decspA,
-                    CustomerId = source.CustomerId,
-                    RecCreatedBy = source.RecCreatedBy,
-                    RecCreatedDate = source.RecCreatedDate,
-                    RecLastUpdatedBy = source.RecLastUpdatedBy,
-                    RecLastUpdatedDate = source.RecLastUpdatedDate,
-                    OrderStatus = source.OrderStatus,
-                    CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
-                    CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
-                };
-            //}
+                    order.InvoiceId = invoice.InvoiceId;
+                    order.InvoiceNumber = invoice.InvoiceNumber;
+                }
+            }
             return order;
         }
+
         public static WebsiteModels.Order CreateFromServerToClient(this Order source)
         {
             string decspE = "";

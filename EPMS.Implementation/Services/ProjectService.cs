@@ -66,7 +66,7 @@ namespace EPMS.Implementation.Services
         {
             var order = ordersRepository.Find(Convert.ToInt32(project.OrderId));
             if (order == null) return;
-            order.OrderStatus = (short) project.Status;
+            order.OrderStatus = (short) OrderStatus.OnGoing;
             ordersRepository.Update(order);
             ordersRepository.SaveChanges();
         }

@@ -505,16 +505,19 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             var direction = WebModels.Resources.Shared.Common.TextDirection;
             QuotationDetailViewModel viewModel = new QuotationDetailViewModel();
+            long quotatioId = 0;
             if (id != null)
             {
-                var cp = companyProfileService.GetDetail();
-                viewModel.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
-                var quotation = quotationService.FindQuotationById((long) id);
-                viewModel.Quotation = quotation.CreateFromServerToClientLv();
-                viewModel.EmployeeName = GetCreatedBy(direction, quotation);
-                ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
-                return View(viewModel);
+                quotatioId = (long) id;
             }
+            QuotationDetailResponse response = quotationService.GetQuotationDetail(quotatioId);
+            viewModel.Profile = response.Profile != null ? response.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
+            if (id != null)
+            {
+                viewModel.Quotation = response.Quotation != null ? response.Quotation.CreateFromServerToClientLv() : new WebModels.WebsiteModels.Quotation();
+                viewModel.EmployeeName = GetCreatedBy(direction, response.Quotation);
+            }
+            ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
             return View(viewModel);
         }
 
@@ -522,45 +525,57 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [ValidateInput(false)]
         public ActionResult Detail(QuotationDetailViewModel viewModel)
         {
-            // Update Case
-            Order order = new Order
-            {
-                CustomerId = viewModel.Quotation.CustomerId
-            };
-            var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDate).ToList();
+            // Create Order
             if (Request.Form["PlaceOrder"] != null)
             {
+                Order order = new Order
+                {
+                    CustomerId = viewModel.Quotation.CustomerId,
+                    QuotationId = viewModel.Quotation.QuotationId
+                };
+                var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDate).ToList();
                 order.OrderNo = Utility.GetOrderNumber(orders);
+                order.OrderStatus = (short) OrderStatus.Pending;
+                order.RecCreatedBy = User.Identity.GetUserId();
+                order.RecCreatedDate = DateTime.Now;
+                order.RecLastUpdatedBy = User.Identity.GetUserId();
+                order.RecLastUpdatedDate = DateTime.Now;
+                var orderToAdd = order.CreateFromClientToServer();
+                QuotationStatusRequest request = new QuotationStatusRequest
+                {
+                    QuotationId = viewModel.Quotation.QuotationId,
+                    Status = (short)QuotationStatus.OrderCreated,
+                    Order = orderToAdd
+                };
+                if (quotationService.UpdateStatus(request))
+                {
+                    TempData["message"] = new MessageViewModel
+                    {
+                        Message = WebModels.Resources.CMS.Order.Added,
+                        IsSaved = true
+                    };
+                    return RedirectToAction("Index", "Orders");
+                }
             }
+            // Cancel Quotation
             if (Request.Form["CancelOrder"] != null)
             {
-            }
-            //Order order = ordersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
-            order.OrderStatus = viewModel.Order.OrderStatus;
-            order.RecLastUpdatedBy = User.Identity.GetUserId();
-            order.RecLastUpdatedDate = DateTime.Now;
-            var orderToUpdate = order.CreateFromClientToServer();
-            if (ordersService.UpdateOrder(orderToUpdate))
-            {
-                if (viewModel.Order.OrderStatus == 3)
+                QuotationStatusRequest request = new QuotationStatusRequest
+                {
+                    QuotationId = viewModel.Quotation.QuotationId,
+                    Status = (short)QuotationStatus.QuotationCancelled
+                };
+                if (quotationService.UpdateStatus(request))
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = WebModels.Resources.CMS.Order.Canceled,
-                        IsSaved = true
+                        Message = Quotation.QuotationCancelled,
+                        IsUpdated = true
                     };
+                    return RedirectToAction("Index");
                 }
-                if (viewModel.Order.OrderStatus == 4)
-                {
-                    TempData["message"] = new MessageViewModel
-                    {
-                        Message = WebModels.Resources.CMS.Order.Updated,
-                        IsSaved = true
-                    };
-                }
-                return RedirectToAction("Index", "Orders");
             }
-            return null;
+            return View(viewModel);
         }
 
         #endregion

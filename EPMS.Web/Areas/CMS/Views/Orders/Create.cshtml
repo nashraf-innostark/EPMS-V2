@@ -50,10 +50,9 @@
     @Html.HiddenFor(model => model.Orders.OrderId)
     @Html.HiddenFor(model => model.Orders.CustomerId)
     @Html.HiddenFor(model => model.Orders.OrderStatus)
-    @Html.HiddenFor(model => model.Orders.OrderDate)
     @Html.HiddenFor(model => model.Orders.RecCreatedBy)
-    @Html.HiddenFor(model => model.Orders.RecCreatedDt)
-    <div class="container-fluid">
+    @Html.HiddenFor(model => model.Orders.RecCreatedDate)
+    <div class="container-fluid descriptionArea">
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="createdBy">@EPMS.WebModels.Resources.CMS.Order.OrderNo</label>
@@ -65,7 +64,7 @@
             </div>
         </div>
         <div id="Descp">
-            <div class="control-group row-fluid descriptionArea">
+            <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="descp">@EPMS.WebModels.Resources.CMS.Order.Description</label>
                 </div>
@@ -87,7 +86,7 @@
             </div>
         </div>
         <div id="CKEditorDescp">
-            <div class="control-group row-fluid descriptionArea">
+            <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="OrderDescription">@EPMS.WebModels.Resources.CMS.Order.Description</label>
                 </div>
@@ -113,11 +112,11 @@
         {
             //if (!isDetailView)
             //{
-                <div class="control-group row-fluid">
-                    <div class="span3 span-inset">
-                        <button type="submit" class="btn" onclick=" validateForm(event) ">@Model.BtnText</button>
-                    </div>
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick=" validateForm(event) ">@Model.BtnText</button>
                 </div>
+            </div>
             //}
         }
         @if (userPermissionsSet.Contains("OrderDetails"))

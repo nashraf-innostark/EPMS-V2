@@ -267,4 +267,7 @@
   <data name="DiscountRangeError" xml:space="preserve">
     <value>The total % of discount should not exceed 100</value>
   </data>
+  <data name="QuotationCancelled" xml:space="preserve">
+    <value>Quotation has been Cancelled.</value>
+  </data>
 </root>

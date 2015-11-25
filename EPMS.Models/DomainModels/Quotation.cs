@@ -30,6 +30,7 @@ namespace EPMS.Models.DomainModels
         public string RecLastUpdatedBy { get; set; }
         public long CustomerId { get; set; }
         public string SerialNumber { get; set; }
+        public short Status { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Customer Customer { get; set; }

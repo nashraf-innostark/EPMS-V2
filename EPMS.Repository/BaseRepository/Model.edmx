@@ -1267,6 +1267,7 @@
           <Property Name="SecondInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="ThirdInstallmentStatus" Type="bit" Nullable="false" />
           <Property Name="FourthInstallmentStatus" Type="bit" Nullable="false" />
+          <Property Name="Status" Type="smallint" Nullable="false" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -9161,6 +9162,7 @@
           <Property Name="FourthInstallmentStatus" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Invoices" Relationship="EPMSInventoryModel.FK_Invoice_Quotation" FromRole="Quotation" ToRole="Invoice" />
           <NavigationProperty Name="Orders" Relationship="EPMSInventoryModel.FK_Orders_Quotation" FromRole="Quotation" ToRole="Order" />
+          <Property Name="Status" Type="Int16" Nullable="false" />
         </EntityType>
         <EntityType Name="QuotationItemDetail">
           <Key>
@@ -11285,6 +11287,7 @@
           <EntitySetMapping Name="Quotations">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Quotation">
               <MappingFragment StoreEntitySet="Quotation">
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="FourthInstallmentStatus" ColumnName="FourthInstallmentStatus" />
                 <ScalarProperty Name="ThirdInstallmentStatus" ColumnName="ThirdInstallmentStatus" />
                 <ScalarProperty Name="SecondInstallmentStatus" ColumnName="SecondInstallmentStatus" />

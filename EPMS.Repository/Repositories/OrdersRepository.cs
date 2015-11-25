@@ -72,23 +72,14 @@ namespace EPMS.Repository.Repositories
                     OrderId = s.OrderId,
                     OrderNo = s.OrderNo,
                     OrderStatus = s.OrderStatus,
-                    CustomerId = s.CustomerId,
-                    Customer = new Customer
+                    QuotationId = s.QuotationId,
+                    Quotation = new Quotation
                     {
-                        CustomerId = s.Customer.CustomerId,
-                        CustomerNameE = s.Customer.CustomerNameE,
-                        CustomerNameA = s.Customer.CustomerNameA,
-                        CustomerAddress = s.Customer.CustomerAddress,
-                        CustomerMobile = s.Customer.CustomerMobile,
-                        RecCreatedBy = s.Customer.RecCreatedBy,
-                        RecCreatedDt = s.Customer.RecCreatedDt,
-                        RecLastUpdatedBy = s.Customer.RecLastUpdatedBy,
-                        RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
-                        Complaints = s.Customer.Complaints,
-                        Orders = s.Customer.Orders,
-                        //Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
-                    }
-
+                        SerialNumber = s.Quotation != null ? s.Quotation.SerialNumber : "",
+                        Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x=>x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
+                    },
+                    CustomerId = s.CustomerId,
+                    Customer = s.Customer
                 }).ToList()
                                            :
                                            DbSet
@@ -97,23 +88,14 @@ namespace EPMS.Repository.Repositories
                                                OrderId = s.OrderId,
                                                OrderNo = s.OrderNo,
                                                OrderStatus = s.OrderStatus,
-                                               CustomerId = s.CustomerId,
-                                               Customer = new Customer
+                                               QuotationId = s.QuotationId,
+                                               Quotation = new Quotation
                                                {
-                                                   CustomerId = s.Customer.CustomerId,
-                                                   CustomerNameE = s.Customer.CustomerNameE,
-                                                   CustomerNameA = s.Customer.CustomerNameA,
-                                                   CustomerAddress = s.Customer.CustomerAddress,
-                                                   CustomerMobile = s.Customer.CustomerMobile,
-                                                   RecCreatedBy = s.Customer.RecCreatedBy,
-                                                   RecCreatedDt = s.Customer.RecCreatedDt,
-                                                   RecLastUpdatedBy = s.Customer.RecLastUpdatedBy,
-                                                   RecLastUpdatedDt = s.Customer.RecLastUpdatedDt,
-                                                   Complaints = s.Customer.Complaints,
-                                                   Orders = s.Customer.Orders,
-                                                   //Quotations = s.Customer.Quotations.Where(x => x.OrderId == s.OrderId).ToList()
-                                               }
-
+                                                   SerialNumber = s.Quotation.SerialNumber,
+                                                   Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x => x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
+                                               },
+                                               CustomerId = s.CustomerId,
+                                               Customer = s.Customer
                                            }).ToList();
             return new OrdersResponse { Orders = orders, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }
@@ -156,7 +138,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Order> GetAllAvailableOrdersDDL(long customerId)
         {
-            return DbSet.Where(x => x.Projects.Count==0 && x.CustomerId==customerId);
+            return DbSet.Where(x => x.OrderStatus == (short) OrderStatus.Pending && x.CustomerId == customerId);
         }
 
         #endregion

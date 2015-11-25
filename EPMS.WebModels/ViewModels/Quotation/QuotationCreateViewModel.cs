@@ -37,6 +37,11 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public string SerialNumber { get; set; }
         public int OldItemDetailsCount { get; set; }
         public string CreatedByName { get; set; }
+        public short Status { get; set; }
+        public bool FirstInstallmentStatus { get; set; }
+        public bool SecondInstallmentStatus { get; set; }
+        public bool ThirdInstallmentStatus { get; set; }
+        public bool FourthInstallmentStatus { get; set; }
 
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
         // items for inventory pop up

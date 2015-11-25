@@ -45,6 +45,7 @@ namespace EPMS.WebModels.WebsiteModels
         public bool IsSecondInstallmentStatus { get; set; }
         public bool IsThirdInstallmentStatus { get; set; }
         public bool IsFourthInstallmentStatus { get; set; }
+        public short Status { get; set; }
 
         public IEnumerable<QuotationItemDetail> QuotationItemDetails { get; set; }
         public Customer Customers { get; set; }
