@@ -141,7 +141,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 // Update Case
                 viewModel.Orders.RecLastUpdatedBy = User.Identity.GetUserId();
-                viewModel.Orders.RecLastUpdatedDt = DateTime.Now;
+                viewModel.Orders.RecLastUpdatedDate = DateTime.Now;
                 var orderToUpdate = viewModel.Orders.CreateFromClientToServer();
                 if (ordersService.UpdateOrder(orderToUpdate))
                 {
@@ -156,13 +156,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
             else
             {
                 // Add Case
-
-                // Get Customer Id from AspNetUser
-                viewModel.Orders.OrderDate = DateTime.Now;
                 viewModel.Orders.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 viewModel.Orders.OrderStatus = 2;
                 viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
-                viewModel.Orders.RecCreatedDt = DateTime.Now;
+                viewModel.Orders.RecCreatedDate = DateTime.Now;
+                viewModel.Orders.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.Orders.RecLastUpdatedDate = DateTime.Now;
                 var orderToSave = viewModel.Orders.CreateFromClientToServer();
                 if (ordersService.AddOrder(orderToSave))
                 {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -26,13 +27,11 @@ namespace EPMS.WebModels.ModelMappers
                 OrderNo = source.OrderNo,
                 OrderDescription = decspE,
                 OrderNotes = decspA,
-                OrderDate = source.OrderDate,
-                Attachment = source.Attachment,
                 CustomerId = source.CustomerId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
                 OrderStatus = source.OrderStatus,
             };
             return caseType;
@@ -83,13 +82,11 @@ namespace EPMS.WebModels.ModelMappers
                     OrderNo = source.OrderNo,
                     OrderDescription = decspE,
                     OrderNotes = decspA,
-                    OrderDate = source.OrderDate,
-                    Attachment = source.Attachment,
                     CustomerId = source.CustomerId,
                     RecCreatedBy = source.RecCreatedBy,
-                    RecCreatedDt = source.RecCreatedDt,
+                    RecCreatedDate = source.RecCreatedDate,
                     RecLastUpdatedBy = source.RecLastUpdatedBy,
-                    RecLastUpdatedDt = source.RecLastUpdatedDt,
+                    RecLastUpdatedDate = source.RecLastUpdatedDate,
                     OrderStatus = source.OrderStatus,
                     CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
                     CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
@@ -117,13 +114,11 @@ namespace EPMS.WebModels.ModelMappers
                 OrderNo = source.OrderNo,
                 OrderDescription = decspE,
                 OrderNotes = decspA,
-                OrderDate = source.OrderDate,
-                Attachment = source.Attachment,
                 CustomerId = source.CustomerId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
                 OrderStatus = source.OrderStatus,
                 CustomerNameE = source.Customer.CreateFromServerToClient().CustomerNameE,
                 CustomerNameA = source.Customer.CreateFromServerToClient().CustomerNameA,
@@ -137,7 +132,7 @@ namespace EPMS.WebModels.ModelMappers
             {
                 OrderId = source.OrderId,
                 OrderNo = source.OrderNo,
-                OrderDate = source.OrderDate != null ? Convert.ToDateTime(source.OrderDate.ToString()).ToShortDateString() : string.Empty,
+                OrderDate = Convert.ToDateTime(source.RecCreatedDate.ToString(CultureInfo.CurrentCulture)).ToShortDateString(),
                 OrderStatus = source.OrderStatus,
                 CustomerId = source.CustomerId
             };

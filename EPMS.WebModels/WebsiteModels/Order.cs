@@ -8,17 +8,15 @@ namespace EPMS.WebModels.WebsiteModels
         public string OrderNo { get; set; }
         public string OrderDescription { get; set; }
         public string OrderNotes { get; set; }
-        public DateTime? OrderDate { get; set; }
-        public string Attachment { get; set; }
         public long CustomerId { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime? RecCreatedDt { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
-        public DateTime? RecLastUpdatedDt { get; set; }
-        public int? OrderStatus { get; set; }
+        public DateTime RecLastUpdatedDate { get; set; }
+        public short? OrderStatus { get; set; }
+        public long? QuotationId { get; set; }
         public string CustomerNameE{ get; set; }
         public string CustomerNameA{ get; set; }
         public string Link { get; set; }
-        public long QuotationId { get; set; }
     }
 }

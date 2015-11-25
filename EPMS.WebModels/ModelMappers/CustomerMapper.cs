@@ -31,7 +31,7 @@ namespace EPMS.WebModels.ModelMappers
                 LatestOrder =
                     (source.Orders != null && source.Orders.Any(c => c.CustomerId == source.CustomerId))
                         ? source.Orders.Where(c => c.CustomerId == source.CustomerId)
-                            .OrderBy(c => c.OrderDate)
+                            .OrderBy(c => c.RecCreatedDate)
                             .FirstOrDefault()
                             .OrderNo
                         : string.Empty,

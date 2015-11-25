@@ -37,5 +37,6 @@ namespace EPMS.Models.DomainModels
         public virtual RFQ RFQ { get; set; }
         public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
         public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

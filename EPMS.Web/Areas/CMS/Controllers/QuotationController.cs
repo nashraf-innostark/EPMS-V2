@@ -527,7 +527,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 CustomerId = viewModel.Quotation.CustomerId
             };
-            var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDt).ToList();
+            var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDate).ToList();
             if (Request.Form["PlaceOrder"] != null)
             {
                 order.OrderNo = Utility.GetOrderNumber(orders);
@@ -538,7 +538,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             //Order order = ordersService.GetOrderByOrderId(viewModel.Order.OrderId).CreateFromServerToClient();
             order.OrderStatus = viewModel.Order.OrderStatus;
             order.RecLastUpdatedBy = User.Identity.GetUserId();
-            order.RecLastUpdatedDt = DateTime.Now;
+            order.RecLastUpdatedDate = DateTime.Now;
             var orderToUpdate = order.CreateFromClientToServer();
             if (ordersService.UpdateOrder(orderToUpdate))
             {

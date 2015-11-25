@@ -77,7 +77,7 @@ namespace EPMS.Implementation.Services
         {
             OrdersResponse response = new OrdersResponse
             {
-                Orders = ordersRepository.GetAll().OrderBy(x=>x.RecCreatedDt).ToList()
+                Orders = ordersRepository.GetAll().OrderBy(x=>x.RecCreatedDate).ToList()
             };
             if (orderId > 0)
             {
