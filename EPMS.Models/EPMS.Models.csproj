@@ -171,6 +171,7 @@
     <Compile Include="DomainModels\PurchaseOrderHistory.cs" />
     <Compile Include="DomainModels\PurchaseOrderItem.cs" />
     <Compile Include="DomainModels\PurchaseOrderItemHistory.cs" />
+    <Compile Include="DomainModels\Receipt.cs" />
     <Compile Include="DomainModels\Report.cs" />
     <Compile Include="DomainModels\ReportProject.cs" />
     <Compile Include="DomainModels\ReportProjectTask.cs" />
@@ -373,6 +374,8 @@
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
+    <Compile Include="ResponseModels\InvoiceResponse.cs" />
+    <Compile Include="ResponseModels\ReceiptResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ProjectReportDetailsResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\ReportsListRequestResponse.cs" />
     <Compile Include="ResponseModels\EmployeeRequestResponse.cs" />

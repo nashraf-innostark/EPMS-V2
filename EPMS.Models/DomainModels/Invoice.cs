@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
@@ -15,5 +16,6 @@ namespace EPMS.Models.DomainModels
         public DateTime RecLastUpdatedDt { get; set; }
 
         public virtual Quotation Quotation { get; set; }
+        public virtual ICollection<Receipt> Receipts { get; set; }
     }
 }

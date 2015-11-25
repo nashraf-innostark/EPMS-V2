@@ -14,7 +14,10 @@
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ClientNameE = source.Quotation.Customer.CustomerNameE,
+                ClientNameA = source.Quotation.Customer.CustomerNameA,
+                CustomerId = source.Quotation.CustomerId
             };
         }
 

@@ -112,6 +112,7 @@
     <Compile Include="ModelMappers\PurchaseOrderMapper.cs" />
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
+    <Compile Include="ModelMappers\ReceiptMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
     <Compile Include="ModelMappers\Reports\ProjectReportMapper.cs" />
     <Compile Include="ModelMappers\RFIHistoryMapper.cs" />
@@ -185,6 +186,11 @@
       <DependentUpon>Quotation.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CMS\Receipt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Receipt.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CMS\RFQ.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -815,6 +821,8 @@
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
     <Compile Include="ViewModels\Quotation\RfqRfqItemsForQuotation.cs" />
+    <Compile Include="ViewModels\Receipt\ReceiptListViewModel.cs" />
+    <Compile Include="ViewModels\Receipt\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
     <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
     <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
@@ -933,6 +941,7 @@
     <Compile Include="WebsiteModels\QuickLaunchUserItems.cs" />
     <Compile Include="WebsiteModels\Quotation.cs" />
     <Compile Include="WebsiteModels\QuotationItemDetail.cs" />
+    <Compile Include="WebsiteModels\Receipt.cs" />
     <Compile Include="WebsiteModels\Report.cs" />
     <Compile Include="WebsiteModels\Request.cs" />
     <Compile Include="WebsiteModels\RequestDetail.cs" />
@@ -1008,6 +1017,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Receipt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Receipt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\RFQ.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

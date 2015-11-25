@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.WebModels.ViewModels.Quotation;
 
@@ -164,5 +165,55 @@ namespace EPMS.WebModels.ModelMappers
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
         }
+
+        public static WebsiteModels.Quotation CreateForInvoice(this Quotation source)
+        {
+            decimal discountpercentage = (decimal) (source.QuotationDiscount / Convert.ToDecimal(100));
+            decimal discountAmount = discountpercentage * source.QuotationItemDetails.Sum(x => x.TotalPrice);
+            decimal discount = source.QuotationItemDetails.Sum(x => x.TotalPrice) - discountAmount;
+            return new WebsiteModels.Quotation
+            {
+                QuotationId = source.QuotationId,
+                CustomerId = source.CustomerId,
+                RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
+                GreetingsEn = source.GreetingsEn,
+                GreetingsAr = source.GreetingsAr,
+                QuotationDiscount = source.QuotationDiscount,
+                FirstInstallement = source.FirstInstallement,
+                FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
+                SecondInstallment = source.SecondInstallment,
+                SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
+                ThirdInstallment = source.ThirdInstallment,
+                ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
+                FourthInstallment = source.FourthInstallment,
+                FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
+                NotesEn = source.NotesEn,
+                NotesAr = source.NotesAr,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDate = source.RecCreatedDate,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDate = source.RecLastUpdatedDate,
+                QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
+                ClientNameEn = source.Customer.CustomerNameE,
+                ClientNameAr = source.Customer.CustomerNameA,
+                CustomerAddress = source.Customer.CustomerAddress,
+                CustomerPhone = source.Customer.CustomerMobile,
+                CustomerEmail = source.Customer.AspNetUsers.First().Email,
+                SubTotal = source.QuotationItemDetails.Sum(x=>x.TotalPrice),
+                GrandTotal = discount,
+
+                FirstInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
+                SecondInstallmentStatus = source.SecondInstallmentStatus ? "Paid" : "Unpaid",
+                ThirdInstallmentStatus = source.ThirdInstallmentStatus ? "Paid" : "Unpaid",
+                FourthInstallmentStatus = source.FourthInstallmentStatus ? "Paid" : "Unpaid",
+
+                IsFirstInstallmentStatus = source.FirstInstallmentStatus,
+                IsSecondInstallmentStatus = source.SecondInstallmentStatus,
+                IsThirdInstallmentStatus = source.ThirdInstallmentStatus,
+                IsFourthInstallmentStatus = source.FourthInstallmentStatus
+            };
+        }
+
     }
 }

@@ -301,6 +301,7 @@
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
     <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
+    <Compile Include="Areas\CMS\Controllers\ReceiptController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
     <Compile Include="Areas\Common\Controllers\FileUploadCkControllerController.cs" />
     <Compile Include="Areas\CP\Controllers\CompanyProfileController.cs" />
@@ -1575,6 +1576,9 @@
     <Content Include="Areas\Report\Views\Project\ReportAsPdfAll.cshtml" />
     <Content Include="Areas\Report\Views\RFQOrder\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Invoice\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Invoice\Detail.cshtml" />
+    <Content Include="Areas\CMS\Views\Receipt\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Receipt\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
