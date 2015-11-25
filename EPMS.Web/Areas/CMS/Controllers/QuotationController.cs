@@ -531,8 +531,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 CustomerId = viewModel.Quotation.CustomerId
             };
+            var orders = OrdersService.GetAll().OrderBy(x => x.RecCreatedDt).ToList();
             if (Request.Form["PlaceOrder"] != null)
             {
+                order.OrderNo = Utility.GetOrderNumber(orders);
             }
             if (Request.Form["CancelOrder"] != null)
             {
