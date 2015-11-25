@@ -196,6 +196,24 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string Pending {
+            get {
+                return ResourceManager.GetString("Pending", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Qoutation Created.
+        /// </summary>
+        public static string QoutationCreated {
+            get {
+                return ResourceManager.GetString("QoutationCreated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotation.
         /// </summary>
         public static string Quotation {

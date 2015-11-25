@@ -146,7 +146,6 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 quotationId = (long)id;
             }
             string createdByName = GetCreatedBy(direction, null);
-            long employeeId = Session["EmployeeID"] != null ? Convert.ToInt64(Session["EmployeeID"]) : 0;
             if (from == "Client")
             {
                 QuotationCreateViewModel model = new QuotationCreateViewModel();
