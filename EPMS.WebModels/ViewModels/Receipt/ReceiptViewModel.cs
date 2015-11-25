@@ -4,6 +4,7 @@
     {
         public ReceiptViewModel()
         {
+            Receipt = new WebsiteModels.Receipt();
             Invoice = new WebsiteModels.Invoice();
             Quotation = new WebsiteModels.Quotation();
             CompanyProfile = new WebsiteModels.CompanyProfile();
