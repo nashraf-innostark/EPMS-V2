@@ -12,8 +12,6 @@ namespace EPMS.Models.ModelMapers
         public static Quotation UpdateDbDataFromClient(this Quotation destination, Quotation source)
         {
             destination.QuotationId = source.QuotationId;
-            destination.CustomerId = source.CustomerId;
-            destination.RFQId = source.RFQId;
             destination.GreetingsEn = source.GreetingsEn;
             destination.GreetingsAr = source.GreetingsAr;
             destination.QuotationDiscount = source.QuotationDiscount;

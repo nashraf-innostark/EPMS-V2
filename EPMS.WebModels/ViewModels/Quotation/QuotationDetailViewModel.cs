@@ -6,5 +6,6 @@
         public WebsiteModels.Customer Customer { get; set; }
         public WebsiteModels.Quotation Quotation { get; set; }
         public WebsiteModels.Order Order { get; set; }
+        public string EmployeeName { get; set; }
     }
 }

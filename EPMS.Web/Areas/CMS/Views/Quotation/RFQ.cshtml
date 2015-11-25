@@ -162,13 +162,19 @@
                 </div>
             </div>
         </div>
+
         @if (!Model.FromClient)
         {
             if (Model.Rfq.RFQId > 0)
             {
+                @*<div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                        </div>
+                    </div>*@
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                        <a class="btn" href="~/CMS/Quotation/RFQIndex">@EPMS.WebModels.Resources.CMS.RFQ.Back</a>
                     </div>
                 </div>
             }
@@ -185,9 +191,14 @@
         {
             if (Model.Rfq.RFQId > 0 && Model.Rfq.RFQItems.Any())
             {
+                @*<div class="control-group row-fluid">
+                        <div class="span3 span-inset">
+                            <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                        </div>
+                    </div>*@
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" onclick="">@EPMS.WebModels.Resources.CMS.RFQ.BtnUpdate</button>
+                        <a class="btn" href="~/CMS/Quotation/RFQIndex">@EPMS.WebModels.Resources.CMS.RFQ.Back</a>
                     </div>
                 </div>
             }

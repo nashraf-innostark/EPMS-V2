@@ -75,7 +75,8 @@ namespace EPMS.Implementation.Services
             {
                 Rfq = rfqRepository.FindByRfqId(rfqId),
                 Customers = customerService.GetAll().ToList(),
-                Rfqs = rfqRepository.GetAllPendingRfqs().ToList()
+                Rfqs = rfqRepository.GetAllPendingRfqs().ToList(),
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList()
             };
             return response;
         }
@@ -116,7 +117,7 @@ namespace EPMS.Implementation.Services
             }
             catch (Exception)
             {
-                return new QuotationResponse { Status = false, Customers = customerService.GetAll() };
+                return new QuotationResponse { Status = false, Customers = customerService.GetAll().ToList() };
             }
         }
         public string GetQuotationSerialNumber()
@@ -196,7 +197,7 @@ namespace EPMS.Implementation.Services
             catch (Exception)
             {
             }
-            return new QuotationResponse{ Status = false, Customers = customerService.GetAll() };
+            return new QuotationResponse{ Status = false, Customers = customerService.GetAll().ToList() };
         }
 
         public void DeleteQuotation(Quotation quotation)
