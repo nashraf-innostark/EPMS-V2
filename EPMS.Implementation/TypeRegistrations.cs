@@ -95,6 +95,7 @@ namespace EPMS.Implementation
             unityContainer.RegisterType<IWebsiteSearchService, WebsiteSearchService>();
             unityContainer.RegisterType<IReportService, ReportService>();
             unityContainer.RegisterType<IInvoiceService, InvoiceService>();
+            unityContainer.RegisterType<IReceiptService, ReceiptService>();
         }
     }
 }

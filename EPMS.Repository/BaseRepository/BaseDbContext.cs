@@ -168,5 +168,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<RFQItem> RfqItems { get; set; }
         public DbSet<Report> Report { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
+        public DbSet<Receipt> Receipts { get; set; }
     }
 }

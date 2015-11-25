@@ -104,6 +104,7 @@ namespace EPMS.Repository
             unityContainer.RegisterType<IRFQItemRepository, RFQItemRepository>();
             unityContainer.RegisterType<IReportRepository, ReportRepository>();
             unityContainer.RegisterType<IInvoiceRepository, InvoiceRepository>();
+            unityContainer.RegisterType<IReceiptRepository, ReceiptRepository>();
         }
     }
 }

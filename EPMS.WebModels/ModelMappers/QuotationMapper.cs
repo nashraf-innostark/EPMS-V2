@@ -202,10 +202,16 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerEmail = source.Customer.AspNetUsers.First().Email,
                 SubTotal = source.QuotationItemDetails.Sum(x=>x.TotalPrice),
                 GrandTotal = discount,
+
                 FirstInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
-                SecondInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
-                ThirdInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
-                FourthInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
+                SecondInstallmentStatus = source.SecondInstallmentStatus ? "Paid" : "Unpaid",
+                ThirdInstallmentStatus = source.ThirdInstallmentStatus ? "Paid" : "Unpaid",
+                FourthInstallmentStatus = source.FourthInstallmentStatus ? "Paid" : "Unpaid",
+
+                IsFirstInstallmentStatus = source.FirstInstallmentStatus,
+                IsSecondInstallmentStatus = source.SecondInstallmentStatus,
+                IsThirdInstallmentStatus = source.ThirdInstallmentStatus,
+                IsFourthInstallmentStatus = source.FourthInstallmentStatus
             };
         }
 

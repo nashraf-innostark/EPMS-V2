@@ -1287,6 +1287,20 @@
           <Property Name="IsItemDescription" Type="bit" Nullable="false" />
           <Property Name="IsItemSKU" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="ReceiptId" />
+          </Key>
+          <Property Name="ReceiptId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReceiptNumber" Type="bigint" Nullable="false" />
+          <Property Name="InvoiceId" Type="bigint" Nullable="false" />
+          <Property Name="AmountPaid" Type="decimal" Precision="10" Scale="2" Nullable="false" />
+          <Property Name="InstallmentNumber" Type="int" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
+          <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
+          <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReportProject">
           <Key>
             <PropertyRef Name="ProjectId" />
@@ -3117,6 +3131,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Receipt_Invoice">
+          <End Role="Invoice" Type="Self.Invoice" Multiplicity="1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="InvoiceId" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportProject_Reports">
           <End Role="Reports" Type="Self.Reports" Multiplicity="0..1" />
           <End Role="ReportProject" Type="Self.ReportProject" Multiplicity="*" />
@@ -3892,6 +3918,7 @@
           <EntitySet Name="QuickLaunchItems" EntityType="Self.QuickLaunchItems" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Quotation" EntityType="Self.Quotation" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="QuotationItemDetail" EntityType="Self.QuotationItemDetail" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Receipt" EntityType="Self.Receipt" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportProject" EntityType="Self.ReportProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportProjectTask" EntityType="Self.ReportProjectTask" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
@@ -4345,6 +4372,10 @@
           <AssociationSet Name="FK_QuotationItemDetail_Quotation" Association="Self.FK_QuotationItemDetail_Quotation">
             <End Role="Quotation" EntitySet="Quotation" />
             <End Role="QuotationItemDetail" EntitySet="QuotationItemDetail" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Invoice" Association="Self.FK_Receipt_Invoice">
+            <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="Receipt" EntitySet="Receipt" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportProject_Reports" Association="Self.FK_ReportProject_Reports">
             <End Role="Reports" EntitySet="Reports" />
@@ -6812,6 +6843,11 @@
           <AssociationSet Name="FK_Invoice_Quotation" Association="EPMSInventoryModel.FK_Invoice_Quotation">
             <End Role="Quotation" EntitySet="Quotations" />
             <End Role="Invoice" EntitySet="Invoices" />
+          </AssociationSet>
+          <EntitySet Name="Receipts" EntityType="EPMSInventoryModel.Receipt" />
+          <AssociationSet Name="FK_Receipt_Invoice" Association="EPMSInventoryModel.FK_Receipt_Invoice">
+            <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="Receipt" EntitySet="Receipts" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
@@ -9307,6 +9343,7 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Quotation" Relationship="EPMSInventoryModel.FK_Invoice_Quotation" FromRole="Invoice" ToRole="Quotation" />
+          <NavigationProperty Name="Receipts" Relationship="EPMSInventoryModel.FK_Receipt_Invoice" FromRole="Invoice" ToRole="Receipt" />
         </EntityType>
         <Association Name="FK_Invoice_Quotation">
           <End Type="EPMSInventoryModel.Quotation" Role="Quotation" Multiplicity="1" />
@@ -9317,6 +9354,33 @@
             </Principal>
             <Dependent Role="Invoice">
               <PropertyRef Name="QuotationId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Receipt">
+          <Key>
+            <PropertyRef Name="ReceiptId" />
+          </Key>
+          <Property Name="ReceiptId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="InvoiceId" Type="Int64" Nullable="false" />
+          <Property Name="AmountPaid" Type="Decimal" Nullable="false" Precision="10" Scale="2" />
+          <Property Name="InstallmentNumber" Type="Int32" Nullable="false" />
+          <Property Name="RecCreatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecCreatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Invoice" Relationship="EPMSInventoryModel.FK_Receipt_Invoice" FromRole="Receipt" ToRole="Invoice" />
+          <Property Name="ReceiptNumber" Type="Int64" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Receipt_Invoice">
+          <End Type="EPMSInventoryModel.Invoice" Role="Invoice" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Invoice">
+              <PropertyRef Name="InvoiceId" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="InvoiceId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11269,6 +11333,21 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="Receipts">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Receipt">
+              <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
+                <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
+                <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
+                <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
+                <ScalarProperty Name="RecCreatedBy" ColumnName="RecCreatedBy" />
+                <ScalarProperty Name="InstallmentNumber" ColumnName="InstallmentNumber" />
+                <ScalarProperty Name="AmountPaid" ColumnName="AmountPaid" />
+                <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
+                <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -11554,6 +11633,8 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_QuotationItemDetail_Quotation" />
         <EntityTypeShape EntityType="EPMSInventoryModel.Invoice" Width="1.5" PointX="11.125" PointY="57.625" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Invoice_Quotation" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Receipt" Width="1.5" PointX="13.375" PointY="62.875" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Receipt_Invoice" />
         </Diagram>
     </Diagrams>
   </Designer>

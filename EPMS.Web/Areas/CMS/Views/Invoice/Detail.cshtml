@@ -1,5 +1,4 @@
-﻿@using System.Configuration
-@model EPMS.WebModels.ViewModels.Invoice.InvoiceViewModel
+﻿@model EPMS.WebModels.ViewModels.Invoice.InvoiceViewModel
 @{
     ViewBag.Title = EPMS.WebModels.Resources.CMS.Invoice.InvoiceTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -38,7 +37,7 @@
 @Html.Partial("_Alert")
 <!--Notifications end-->
 <!-- Page heading ends -->
-@using (Html.BeginForm("Detail", "Invoice", FormMethod.Post, new { @class = "form-horizontal", @id = "AddUpdateQuotationForm", role = "form", enctype = "multipart/form-data" }))
+@using (Html.BeginForm("Detail", "Invoice", FormMethod.Post, new { @class = "form-horizontal", @id = "invoiceForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.Invoice.InvoiceId)
@@ -229,6 +228,12 @@
                         <div class="span3">
                             <label class="control-label"><a href="#">@Model.Quotation.FirstInstallmentStatus</a></label>
                         </div>
+                        @if (!@Model.Quotation.IsFirstInstallmentStatus)
+                        {
+                            <div class="span2">
+                                <label class="control-label"><button id="firstButton">Generate Receipt</button></label>
+                            </div>
+                        }
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
@@ -252,6 +257,12 @@
                         <div class="span3">
                             <label class="control-label"><a href="#">@Model.Quotation.SecondInstallmentStatus</a></label>
                         </div>
+                        @if (!@Model.Quotation.IsSecondInstallmentStatus)
+                        {
+                            <div class="span2">
+                                <label class="control-label"><button id="secondButton">Generate Receipt</button></label>
+                            </div>
+                        }
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
@@ -275,6 +286,9 @@
                         <div class="span3">
                             <label class="control-label"><a href="#">@Model.Quotation.ThirdInstallmentStatus</a></label>
                         </div>
+                        <div class="span2">
+                            <label class="control-label"><button id="thirdButton">Generate Receipt</button></label>
+                        </div>
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
@@ -297,6 +311,9 @@
                         </div>
                         <div class="span3">
                             <label class="control-label"><a href="#">@Model.Quotation.FourthInstallmentStatus</a></label>
+                        </div>
+                        <div class="span2">
+                            <label class="control-label"><button id="thirdButton">Generate Receipt</button></label>
                         </div>
                     </div>
                     <div class="control-group row-fluid">
