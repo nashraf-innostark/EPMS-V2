@@ -4,5 +4,6 @@ namespace EPMS.Interfaces.Repository
 {
     public interface IReceiptRepository : IBaseRepository<Receipt, long>
     {
+        long GetLastReceiptNumber();
     }
 }

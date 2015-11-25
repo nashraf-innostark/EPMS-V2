@@ -7,6 +7,7 @@
     string date = Model.Quotation.RecCreatedDate.ToString();
     string[] str = date.Split(' ');
     date = str[0];
+    var Role = Session["RoleName"].ToString();
 }
 
 <!-- Navigation Bar -->
@@ -40,7 +41,7 @@
 @using (Html.BeginForm("Detail", "Invoice", FormMethod.Post, new { @class = "form-horizontal", @id = "invoiceForm", role = "form", enctype = "multipart/form-data" }))
 {
     <div class="container-fluid">
-        @Html.HiddenFor(model => model.Invoice.InvoiceId)
+        @Html.HiddenFor(model => model.Invoice.InvoiceId, new { @id = "invoiceId" })
         @Html.HiddenFor(model => model.Invoice.QuotationId)
 
         <div class="control-group row-fluid">
@@ -226,12 +227,19 @@
                             </div>
                         </div>
                         <div class="span3">
-                            <label class="control-label"><a href="#">@Model.Quotation.FirstInstallmentStatus</a></label>
+                            <label class="control-label"><a href="#" id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a></label>
                         </div>
                         @if (!@Model.Quotation.IsFirstInstallmentStatus)
                         {
                             <div class="span2">
-                                <label class="control-label"><button id="firstButton" onclick="CreateReceipt(1)">Generate Receipt</button></label>
+                                @if (Role == "Customer")
+                                {
+                                    <label class="control-label"><button id="generateReceipt1">Pay</button></label>
+                                }
+                                else
+                                {
+                                    <label class="control-label"><button id="generateReceipt1" onclick="CreateReceipt(1)">Generate Receipt</button></label>
+                                }
                             </div>
                         }
                     </div>
@@ -255,12 +263,19 @@
                             </div>
                         </div>
                         <div class="span3">
-                            <label class="control-label"><a href="#">@Model.Quotation.SecondInstallmentStatus</a></label>
+                            <label class="control-label"><a href="#" id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a></label>
                         </div>
                         @if (!@Model.Quotation.IsSecondInstallmentStatus)
                         {
                             <div class="span2">
-                                <label class="control-label"><button id="secondButton" onclick="CreateReceipt(2)">Generate Receipt</button></label>
+                                @if (Role == "Customer")
+                                {
+                                    <label class="control-label"><button id="PayInstallment2">Pay</button></label>
+                                }
+                                else
+                                {
+                                    <label class="control-label"><button id="generateReceipt2" onclick="CreateReceipt(2)">Generate Receipt</button></label>
+                                }
                             </div>
                         }
                     </div>
@@ -284,11 +299,21 @@
                             </div>
                         </div>
                         <div class="span3">
-                            <label class="control-label"><a href="#">@Model.Quotation.ThirdInstallmentStatus</a></label>
+                            <label class="control-label"><a href="#" id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a></label>
                         </div>
-                        <div class="span2">
-                            <label class="control-label"><button id="thirdButton" onclick="CreateReceipt(3)">Generate Receipt</button></label>
-                        </div>
+                        @if (!@Model.Quotation.IsThirdInstallmentStatus)
+                        {
+                            <div class="span2">
+                                @if (Role == "Customer")
+                                {
+                                    <label class="control-label"><button id="PayInstallment3">Pay</button></label>
+                                }
+                                else
+                                {
+                                    <label class="control-label"><button id="generateReceipt3" onclick="CreateReceipt(3)">Generate Receipt</button></label>
+                                }
+                            </div>
+                        }
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
@@ -310,11 +335,21 @@
                             </div>
                         </div>
                         <div class="span3">
-                            <label class="control-label"><a href="#">@Model.Quotation.FourthInstallmentStatus</a></label>
+                            <label class="control-label"><a href="#" id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a></label>
                         </div>
-                        <div class="span2">
-                            <label class="control-label"><button id="fourthdButton" onclick="CreateReceipt(4)">Generate Receipt</button></label>
-                        </div>
+                        @if (!@Model.Quotation.IsFourthInstallmentStatus)
+                        {
+                            <div class="span2">
+                                @if (Role == "Customer")
+                                {
+                                    <label class="control-label"><button id="PayInstallment4">Pay</button></label>
+                                }
+                                else
+                                {
+                                    <label class="control-label"><button id="generateReceipt4" onclick="CreateReceipt(4)">Generate Receipt</button></label>
+                                }
+                            </div>
+                        }
                     </div>
                     <div class="control-group row-fluid">
                         <div class="span3">
@@ -342,8 +377,8 @@
 
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script>
-
-    $(document).ready(function() {
+    siteUrl = $('#siteURL').val();
+    $(document).ready(function () {
         if ('@direction' == "ltr") {
             jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "en" }));
         } else {
@@ -352,8 +387,32 @@
     });
 
     function CreateReceipt(id, e) {
+        debugger;
         event.preventDefault();
+        var installmentId = id;
+        var invoiceId = $('#invoiceId').val();
+        var amountPaid = $('#Installment' + id).val();
 
+        var dataToPost = {
+            installmentId: installmentId,
+            invoiceId: invoiceId,
+            amountPaid: amountPaid,
+        };
+        var url = "/CMS/Invoice/CreateReceipt";
+        $.ajax({
+            url: url,
+            type: 'POST',
+            dataType: "json",
+            data: dataToPost,
+            success: function (data) {
+                $('#installmentLabel' + id).text("Paid");
+                $('#generateReceipt' + id).hide();
+                $('#installmentLabel' + id).attr("href", "/CMS/Receipt/Detail/" + data);
+            },
+            error: function (e) {
+                alert('Error=' + e.toString());
+            }
+        });
     }
 
 </script>
