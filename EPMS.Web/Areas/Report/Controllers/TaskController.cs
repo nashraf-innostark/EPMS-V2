@@ -66,7 +66,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 SubTasks = response.SubTasks.Select(x => x.CreateFromServerToClientLv()).ToList()
             };
             SetGraphData(detailViewModel);
-            if ((viewModel.ProjectId == 0 && viewModel.TaskId == 0))
+            if ((viewModel.ProjectId == 0 && viewModel.TaskId == 0 && viewModel.ReportId == 0))
             {
                 return RedirectToAction("All", new {ReportId = detailViewModel.ReportId});
             }
