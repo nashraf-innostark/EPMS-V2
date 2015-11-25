@@ -64,6 +64,19 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
+        #region Create
+
+        public ActionResult Create(int installmentId, long invoiceId)
+        {
+            ReceiptViewModel viewModel = new ReceiptViewModel();
+            viewModel.Receipt.InstallmentNumber = installmentId;
+            viewModel.Invoice.InvoiceId = invoiceId;
+
+            return View(viewModel);
+        }
+
+        #endregion
+
         #endregion
     }
 }

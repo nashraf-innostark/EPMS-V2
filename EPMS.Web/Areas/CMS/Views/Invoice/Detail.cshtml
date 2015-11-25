@@ -231,7 +231,7 @@
                         @if (!@Model.Quotation.IsFirstInstallmentStatus)
                         {
                             <div class="span2">
-                                <label class="control-label"><button id="firstButton">Generate Receipt</button></label>
+                                <label class="control-label"><button id="firstButton" onclick="CreateReceipt(1)">Generate Receipt</button></label>
                             </div>
                         }
                     </div>
@@ -260,7 +260,7 @@
                         @if (!@Model.Quotation.IsSecondInstallmentStatus)
                         {
                             <div class="span2">
-                                <label class="control-label"><button id="secondButton">Generate Receipt</button></label>
+                                <label class="control-label"><button id="secondButton" onclick="CreateReceipt(2)">Generate Receipt</button></label>
                             </div>
                         }
                     </div>
@@ -287,7 +287,7 @@
                             <label class="control-label"><a href="#">@Model.Quotation.ThirdInstallmentStatus</a></label>
                         </div>
                         <div class="span2">
-                            <label class="control-label"><button id="thirdButton">Generate Receipt</button></label>
+                            <label class="control-label"><button id="thirdButton" onclick="CreateReceipt(3)">Generate Receipt</button></label>
                         </div>
                     </div>
                     <div class="control-group row-fluid">
@@ -313,7 +313,7 @@
                             <label class="control-label"><a href="#">@Model.Quotation.FourthInstallmentStatus</a></label>
                         </div>
                         <div class="span2">
-                            <label class="control-label"><button id="thirdButton">Generate Receipt</button></label>
+                            <label class="control-label"><button id="fourthdButton" onclick="CreateReceipt(4)">Generate Receipt</button></label>
                         </div>
                     </div>
                     <div class="control-group row-fluid">
@@ -343,11 +343,17 @@
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script>
 
-    $(document).ready(function () {
+    $(document).ready(function() {
         if ('@direction' == "ltr") {
             jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "en" }));
         } else {
             jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "ar" }));
         }
     });
+
+    function CreateReceipt(id, e) {
+        event.preventDefault();
+
+    }
+
 </script>

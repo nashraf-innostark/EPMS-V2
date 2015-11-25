@@ -43,7 +43,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
-        #region Create
+        #region Detail
 
         public ActionResult Detail(long id)
         {
