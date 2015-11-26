@@ -1582,6 +1582,8 @@
     <Content Include="Areas\CMS\Views\Receipt\Detail.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\PostTotPaypal.cshtml" />
+    <Content Include="Areas\CMS\Views\Payment\NotifyFromPaypal.cshtml" />
+    <Content Include="Areas\CMS\Views\Payment\CancelFromPaypal.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
