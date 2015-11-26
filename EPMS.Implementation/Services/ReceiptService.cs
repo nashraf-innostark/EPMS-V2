@@ -46,41 +46,33 @@ namespace EPMS.Implementation.Services
             return receiptRepository.GetAll();
         }
 
+        public IEnumerable<Receipt> GetAll(string userId)
+        {
+            return receiptRepository.GetAll().Where(x => x.Invoice.Quotation.Customer.AspNetUsers.FirstOrDefault().Id == userId);
+        }
+
         public long AddReceipt(Receipt receipt)
         {
             Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
             Quotation quotation = quotationRepository.Find(invoice.QuotationId);
-
-            var totalAmount = quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
-            decimal discountpercentage = (decimal)(quotation.QuotationDiscount / Convert.ToDecimal(100));
-            decimal discountAmount = totalAmount*discountpercentage;
-            decimal grantTotal = totalAmount - discountAmount;
 
             var lastReceiptNumber = receiptRepository.GetLastReceiptNumber();
 
             if (receipt.InstallmentNumber == 1)
             {
                 quotation.FirstInstallmentStatus = true;
-                var firstInstallment = discountAmount;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
             if (receipt.InstallmentNumber == 2)
             {
                 quotation.SecondInstallmentStatus = true;
-                var secondInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
             if (receipt.InstallmentNumber == 3)
             {
                 quotation.ThirdInstallmentStatus = true;
-                var thirdInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
-            if (receipt.InstallmentNumber == 1)
+            if (receipt.InstallmentNumber == 4)
             {
                 quotation.FourthInstallmentStatus = true;
-                var fourthInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
 
             receipt.ReceiptNumber = lastReceiptNumber + 1;

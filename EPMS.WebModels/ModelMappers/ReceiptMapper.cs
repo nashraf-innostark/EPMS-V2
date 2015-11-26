@@ -6,6 +6,9 @@ namespace EPMS.WebModels.ModelMappers
     {
         public static WebsiteModels.Receipt CreateFromServerToClient(this Models.DomainModels.Receipt source)
         {
+            var totalAmount = source.Invoice.Quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
+            var amountPaidTillNow =
+                source.Invoice.Receipts.Where(x => x.InvoiceId == source.InvoiceId).Sum(x => x.AmountPaid);
             return new WebsiteModels.Receipt
             {
                 ReceiptId = source.ReceiptId,
@@ -21,6 +24,8 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerNameE = source.Invoice.Quotation.Customer.CustomerNameE,
                 CustomerNameA = source.Invoice.Quotation.Customer.CustomerNameA,
                 CustomerId = source.Invoice.Quotation.CustomerId,
+                AmountPaidTillNow = amountPaidTillNow,
+                AmountLeft = totalAmount - amountPaidTillNow,
             };
         }
 

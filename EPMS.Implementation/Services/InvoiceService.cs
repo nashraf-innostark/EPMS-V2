@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -19,6 +16,7 @@ namespace EPMS.Implementation.Services
         private readonly IQuotationItemRepository quotationItemRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly ICompanyProfileRepository companyProfileRepository;
+        private readonly IReceiptRepository receiptRepository;
 
         #endregion
 
@@ -26,13 +24,14 @@ namespace EPMS.Implementation.Services
 
         public InvoiceService(IInvoiceRepository invoiceRepository, IQuotationRepository quotationRepository,
             IQuotationItemRepository quotationItemRepository, ICustomerRepository customerRepository,
-            ICompanyProfileRepository companyProfileRepository)
+            ICompanyProfileRepository companyProfileRepository, IReceiptRepository receiptRepository)
         {
             this.invoiceRepository = invoiceRepository;
             this.quotationRepository = quotationRepository;
             this.quotationItemRepository = quotationItemRepository;
             this.customerRepository = customerRepository;
             this.companyProfileRepository = companyProfileRepository;
+            this.receiptRepository = receiptRepository;
         }
 
         #endregion
@@ -42,6 +41,11 @@ namespace EPMS.Implementation.Services
         public IEnumerable<Invoice> GetAll()
         {
             return invoiceRepository.GetAll();
+        }
+
+        public IEnumerable<Invoice> GetAll(string userId)
+        {
+            return invoiceRepository.GetAll().Where(x =>x.Quotation.Customer.AspNetUsers.FirstOrDefault().Id == userId);
         }
 
         public Invoice FindInvoiceById(long id)
@@ -78,6 +82,25 @@ namespace EPMS.Implementation.Services
             response.Quotation = quotationRepository.Find(response.Invoice.QuotationId);
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
             response.Customer = customerRepository.Find(response.Quotation.CustomerId);
+
+            IEnumerable<Receipt> receipts = receiptRepository.GetReceiptsByInvoiceId(id);
+
+            if (receipts != null)
+            {
+                response.FirstReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 1) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 1).ReceiptId
+                    : 0;
+                response.SecondReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 2) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 2).ReceiptId
+                    : 0;
+                response.ThirdReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 3) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 3).ReceiptId
+                    : 0;
+                response.FourthReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 4) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 4).ReceiptId
+                    : 0;
+            }
+
             return response;
         }
 

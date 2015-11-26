@@ -39,10 +39,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         public ActionResult Index()
         {
-            return View(new InvoiceListViewModel
+            var role = Session["RoleName"].ToString().ToLower();
+            var userId = User.Identity.GetUserId();
+
+            InvoiceListViewModel viewModel = new InvoiceListViewModel
             {
-                Invoices = invoiceService.GetAll().Select(x => x.CreateFromServerToClient())
-            });
+                Invoices = role == "customer"
+                    ? invoiceService.GetAll(userId).Select(x => x.CreateFromServerToClient())
+                    : invoiceService.GetAll().Select(x => x.CreateFromServerToClient())
+            };
+
+            return View(viewModel);
         }
 
         #endregion
@@ -60,6 +67,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (response.CompanyProfile != null)
                 viewModel.CompanyProfile = response.CompanyProfile.CreateFromServerToClientForQuotation();
 
+            viewModel.FirstReceiptId = response.FirstReceiptId;
+            viewModel.SecondReceiptId = response.SecondReceiptId;
+            viewModel.ThirdReceiptId = response.ThirdReceiptId;
+            viewModel.FourthReceiptId = response.FourthReceiptId;
+
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] +
                                viewModel.CompanyProfile.CompanyLogoPath;
             ViewBag.EmployeeName = User.Identity.Name;
@@ -74,7 +86,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             ReceiptViewModel viewModel = new ReceiptViewModel
             {
-                Receipt = {InstallmentNumber = installmentId, InvoiceId = invoiceId, AmountPaid = amountPaid}
+                Receipt =
+                {
+                    InstallmentNumber = installmentId,
+                    InvoiceId = invoiceId,
+                    AmountPaid = amountPaid
+                }
             };
 
             long receiptId = receiptService.AddReceipt(viewModel.Receipt.CreateFromClientToServer());

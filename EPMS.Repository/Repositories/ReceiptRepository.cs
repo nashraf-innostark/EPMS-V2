@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -24,6 +25,11 @@ namespace EPMS.Repository.Repositories
             if (receipt != null)
                 return receipt.ReceiptNumber;
             return 100000;
+        }
+
+        public IEnumerable<Receipt> GetReceiptsByInvoiceId(long invoiceId)
+        {
+            return DbSet.Where(x => x.InvoiceId == invoiceId);
         }
     }
 }
