@@ -300,6 +300,7 @@
     <Compile Include="Areas\CMS\Controllers\OrdersController.cs" />
     <Compile Include="Areas\CMS\Controllers\ComplaintController.cs" />
     <Compile Include="Areas\CMS\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\CMS\Controllers\PaymentController.cs" />
     <Compile Include="Areas\CMS\Controllers\QuotationController.cs" />
     <Compile Include="Areas\CMS\Controllers\ReceiptController.cs" />
     <Compile Include="Areas\Common\CommonAreaRegistration.cs" />
@@ -1579,6 +1580,8 @@
     <Content Include="Areas\CMS\Views\Invoice\Detail.cshtml" />
     <Content Include="Areas\CMS\Views\Receipt\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Receipt\Detail.cshtml" />
+    <Content Include="Areas\CMS\Views\Payment\Index.cshtml" />
+    <Content Include="Areas\CMS\Views\Payment\PostTotPaypal.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

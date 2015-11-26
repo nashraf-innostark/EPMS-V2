@@ -1,4 +1,6 @@
-﻿namespace EPMS.WebModels.ModelMappers
+﻿using System.Linq;
+
+namespace EPMS.WebModels.ModelMappers
 {
     public static class InvoiceMapper
     {
@@ -18,6 +20,21 @@
                 ClientNameE = source.Quotation.Customer.CustomerNameE,
                 ClientNameA = source.Quotation.Customer.CustomerNameA,
                 CustomerId = source.Quotation.CustomerId
+            };
+        }
+
+        public static WebsiteModels.Invoice CreateForPayment(this Models.DomainModels.Invoice source, string ins)
+        {
+            return new WebsiteModels.Invoice
+            {
+                InvoiceId = source.InvoiceId,
+                InvoiceNumber = source.InvoiceNumber,
+                QuotationId = source.QuotationId,
+                Quotation = source.Quotation.CreateForPayment(ins),
+                CustomerId = source.Quotation.CustomerId,
+                ClientNameE = source.Quotation.Customer.CustomerNameE,
+                ClientNameA = source.Quotation.Customer.CustomerNameA,
+                
             };
         }
 

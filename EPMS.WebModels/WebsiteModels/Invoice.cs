@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -16,5 +17,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string ClientNameE { get; set; }
         public string ClientNameA { get; set; }
         public long CustomerId { get; set; }
+
+        public Quotation Quotation { get; set; }
     }
 }

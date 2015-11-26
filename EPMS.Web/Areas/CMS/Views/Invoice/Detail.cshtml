@@ -234,7 +234,7 @@
                             <div class="span2">
                                 @if (Role == "Customer")
                                 {
-                                    <label class="control-label"><button id="generateReceipt1">Pay</button></label>
+                                    <label class="control-label"><a class="btn" id="generateReceipt1" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=1">Pay</a></label>
                                 }
                                 else
                                 {
@@ -270,7 +270,7 @@
                             <div class="span2">
                                 @if (Role == "Customer")
                                 {
-                                    <label class="control-label"><button id="PayInstallment2">Pay</button></label>
+                                    <label class="control-label"><a class="btn" id="PayInstallment2" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=2">Pay</a></label>
                                 }
                                 else
                                 {

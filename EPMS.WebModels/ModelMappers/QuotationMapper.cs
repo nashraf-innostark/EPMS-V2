@@ -181,6 +181,51 @@ namespace EPMS.WebModels.ModelMappers
             };
         }
 
+        public static WebsiteModels.QuotationItemDetail CreateForPayment(this QuotationItemDetail source)
+        {
+            var direction = Resources.Shared.Common.TextDirection;
+            return new WebsiteModels.QuotationItemDetail
+            {
+                ItemQuantity = source.ItemQuantity,
+                UnitPrice = source.UnitPrice,
+                TotalPrice = source.TotalPrice,
+                ItemDetails = source.ItemVariationId != null
+                    ? direction == "ltr"
+                        ? source.ItemVariation.InventoryItem.ItemNameEn
+                        : source.ItemVariation.InventoryItem.ItemNameAr
+                    : source.ItemDetails
+            };
+        }
+
+        public static WebsiteModels.Quotation CreateForPayment(this Quotation source, string ins)
+        {
+            var quot = new WebsiteModels.Quotation
+            {
+                QuotationId = source.QuotationId,
+                GrandTotal = source.QuotationItemDetails.Sum(x=>x.TotalPrice),
+                //QuotationItemDetails = source.QuotationItemDetails.Select(x=>x.CreateForPayment()),
+            };
+            double amount = Convert.ToDouble(quot.GrandTotal);
+            double disc = (Convert.ToDouble(source.QuotationDiscount)/100)*amount;
+            quot.GrandTotal = Convert.ToDecimal(amount - disc);
+            switch (ins)
+            {
+                case "1":
+                    quot.GrandTotal = (source.FirstInstallement/100) * quot.GrandTotal;
+                    break;
+                case "2":
+                    quot.GrandTotal = source.SecondInstallment != 0 ? (Convert.ToDecimal(source.SecondInstallment) / 100) * quot.GrandTotal : 0;
+                    break;
+                case "3":
+                    quot.GrandTotal = source.ThirdInstallment != 0 ? (Convert.ToDecimal(source.ThirdInstallment) / 100) * quot.GrandTotal : 0;
+                    break;
+                case "4":
+                    quot.GrandTotal = source.FourthInstallment != 0 ? (Convert.ToDecimal(source.FourthInstallment) / 100) * quot.GrandTotal : 0;
+                    break;
+            }
+            return quot;
+        }
+
         public static WebsiteModels.Quotation CreateForInvoice(this Quotation source)
         {
             decimal discountpercentage = (decimal) (source.QuotationDiscount / Convert.ToDecimal(100));

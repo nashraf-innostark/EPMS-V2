@@ -37,6 +37,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string CustomerEmail { get; set; }
         public decimal SubTotal { get; set; }
         public decimal GrandTotal { get; set; }
+        public double GrandAmount { get; set; }
         public string FirstInstallmentStatus { get; set; }
         public string SecondInstallmentStatus { get; set; }
         public string ThirdInstallmentStatus { get; set; }

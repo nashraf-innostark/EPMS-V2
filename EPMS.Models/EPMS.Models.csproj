@@ -100,6 +100,7 @@
     <Compile Include="Common\DepartmentByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\OrderStatus.cs" />
+    <Compile Include="Common\PaymentType.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
@@ -163,6 +164,7 @@
     <Compile Include="DomainModels\ItemWarehouse.cs" />
     <Compile Include="DomainModels\NewsAndArticle.cs" />
     <Compile Include="DomainModels\Partner.cs" />
+    <Compile Include="DomainModels\Paypal.cs" />
     <Compile Include="DomainModels\ProductImage.cs" />
     <Compile Include="DomainModels\PhysicalCount.cs" />
     <Compile Include="DomainModels\PhysicalCountItem.cs" />

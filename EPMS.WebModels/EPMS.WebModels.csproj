@@ -801,6 +801,7 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
+    <Compile Include="ViewModels\Payment\PaypalViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountListViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
@@ -1422,6 +1423,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Paypal\Paypal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Paypal.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
