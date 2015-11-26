@@ -403,6 +403,15 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quotation has been Cancelled..
+        /// </summary>
+        public static string QuotationCancelled {
+            get {
+                return ResourceManager.GetString("QuotationCancelled", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quotation #.
         /// </summary>
         public static string QuotationNo {

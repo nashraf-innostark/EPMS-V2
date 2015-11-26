@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.IServices
     public interface IQuotationService
     {
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
+        QuotationDetailResponse GetQuotationDetail(long quotationId);
         IEnumerable<Quotation> GetAll();
         IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId);
         QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from);
@@ -17,6 +18,7 @@ namespace EPMS.Interfaces.IServices
         Quotation FindQuotationByOrderId(long orderId);
         QuotationResponse AddQuotation(Quotation quotation);
         QuotationResponse UpdateQuotation(Quotation quotation);
+        bool UpdateStatus(QuotationStatusRequest request);
         void DeleteQuotation(Quotation quotation);
     }
 }

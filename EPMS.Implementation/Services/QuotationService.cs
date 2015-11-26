@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
@@ -11,6 +12,7 @@ using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
+using Microsoft.AspNet.Identity;
 using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
@@ -25,11 +27,14 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerService customerService;
         private readonly IItemVariationRepository variationRepository;
         private readonly IRFQRepository rfqRepository;
+        private readonly ICompanyProfileRepository cpRepository;
+        private readonly IOrdersService ordersService;
+        private readonly IInvoiceService invoiceService;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository)
+        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -39,6 +44,22 @@ namespace EPMS.Implementation.Services
             this.rfqRepository = rfqRepository;
             this.variationRepository = variationRepository;
             this.itemRepository = itemRepository;
+            this.cpRepository = cpRepository;
+            this.ordersService = ordersService;
+            this.invoiceService = invoiceService;
+        }
+
+        public QuotationDetailResponse GetQuotationDetail(long quotationId)
+        {
+            QuotationDetailResponse response = new QuotationDetailResponse
+            {
+                Profile = cpRepository.GetCompanyProfile()
+            };
+            if (quotationId > 0)
+            {
+                response.Quotation = Repository.Find(quotationId);
+            }
+            return response;
         }
 
         public IEnumerable<Quotation> GetAll()
@@ -95,21 +116,19 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                if (quotation.QuotationId == 0)
+                quotation.SerialNumber = GetQuotationSerialNumber();
+                quotation.Status = (short) QuotationStatus.QuotationCreated;
+                Repository.Add(quotation);
+                Repository.SaveChanges();
+                if (quotation.RFQId != null)
                 {
-                    quotation.SerialNumber = GetQuotationSerialNumber();
-                    Repository.Add(quotation);
-                    Repository.SaveChanges();
-                    if (quotation.RFQId != null)
+                    // update RFQ status
+                    var rfq = rfqRepository.Find((long)quotation.RFQId);
+                    if (rfq != null)
                     {
-                        // update RFQ status
-                        var rfq = rfqRepository.Find((long)quotation.RFQId);
-                        if (rfq != null)
-                        {
-                            rfq.Status = (int)RFQStatus.QoutationCreated;
-                            rfqRepository.Update(rfq);
-                            rfqRepository.SaveChanges();
-                        }
+                        rfq.Status = (int)RFQStatus.QoutationCreated;
+                        rfqRepository.Update(rfq);
+                        rfqRepository.SaveChanges();
                     }
                 }
                 SendNotification(quotation);
@@ -189,15 +208,48 @@ namespace EPMS.Implementation.Services
                             itemRepository.SaveChanges();
                         }
                     }
-                    
+
                     SendNotification(quotation);
-                    return new QuotationResponse{ Status = true};
+                    return new QuotationResponse { Status = true };
                 }
             }
             catch (Exception)
             {
             }
-            return new QuotationResponse{ Status = false, Customers = customerService.GetAll().ToList() };
+            return new QuotationResponse { Status = false, Customers = customerService.GetAll().ToList() };
+        }
+
+        public bool UpdateStatus(QuotationStatusRequest request)
+        {
+            try
+            {
+                Quotation quotation = Repository.Find(request.QuotationId);
+                if (quotation != null)
+                {
+                    quotation.Status = request.Status;
+                    Repository.Update(quotation);
+                    Repository.SaveChanges();
+                }
+                if (request.Status == (short)QuotationStatus.OrderCreated)
+                {
+                    ordersService.AddOrder(request.Order);
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceNumber = 1001,
+                        QuotationId = (long)request.Order.QuotationId,
+                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecCreatedDt = DateTime.Now,
+                        RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecLastUpdatedDt = DateTime.Now
+                    };
+                    invoiceService.AddInvoice(invoice);
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+            }
+            return false;
         }
 
         public void DeleteQuotation(Quotation quotation)

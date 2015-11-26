@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.IServices
     public interface IOrdersService
     {
         OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest);
+        OrdersResponse GetOrderResponse(int orderId);
         IEnumerable<Order> GetRecentOrders(string requester, int status);
         IEnumerable<Order> GetOrdersByCustomerId(long customerId);
         IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId);

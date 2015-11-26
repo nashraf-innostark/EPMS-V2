@@ -8,9 +8,11 @@ namespace EPMS.Models.ResponseModels
         public OrdersResponse()
         {
             Orders = new List<Order>();
+            Order = new Order();
         }
 
         public IEnumerable<Order> Orders { get; set; }
+        public Order Order { get; set; }
 
         /// <summary>
         /// Total Records

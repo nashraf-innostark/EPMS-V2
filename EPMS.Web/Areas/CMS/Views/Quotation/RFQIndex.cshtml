@@ -65,9 +65,21 @@
                                     {
                                         <td><a href="~/CMS/Quotation/RFQ/@rfq.RFQId">@rfq.SerialNumber</a></td>
                                     }
-                                    <td>@((RFQStatus)rfq.Status)</td>
+                                    <td>
+                                        @{
+                                            switch (rfq.Status)
+                                            {
+                                                case 1:
+                                                    @:Qoutation Created
+                                                                break;
+                                                case 2:
+                                                @:Pending
+                                                                break;
+                                            }
+                                        }
+                                    </td>
                                 </tr>
-                                    count++;
+                                count++;
                             }
                         </tbody>
                     }
@@ -96,9 +108,21 @@
                                         <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">@rfq.SerialNumber</a></td>
                                     }
                                     <td>@(direction == "ltr" ? rfq.CustomerNameEn : rfq.CustomerNameAr)</td>
-                                    <td>@((RFQStatus)rfq.Status)</td>
+                                    <td>
+                                        @{
+                                            switch ((RFQStatus)rfq.Status)
+                                            {
+                                                case RFQStatus.QoutationCreated:
+                                                    @EPMS.WebModels.Resources.CMS.RFQ.QoutationCreated
+                                                    break;
+                                                case RFQStatus.Pending:
+                                                    @EPMS.WebModels.Resources.CMS.RFQ.Pending
+                                                    break;
+                                            }
+                                        }
+                                    </td>
                                 </tr>
-                                    count++;
+                                count++;
                             }
                         </tbody>
                     }
