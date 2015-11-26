@@ -9,6 +9,7 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Receipt;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -35,9 +36,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         public ActionResult Index()
         {
+            var role = Session["RoleName"].ToString().ToLower();
+            var userId = User.Identity.GetUserId();
+
             return View(new ReceiptListViewModel
             {
-                Receipts = receiptService.GetAll().Select(x => x.CreateFromServerToClient())
+                Receipts = role == "customer"
+                    ? receiptService.GetAll(userId).Select(x => x.CreateFromServerToClient())
+                    : receiptService.GetAll().Select(x => x.CreateFromServerToClient())
             });
         }
 

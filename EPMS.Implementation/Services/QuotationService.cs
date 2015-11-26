@@ -30,11 +30,12 @@ namespace EPMS.Implementation.Services
         private readonly ICompanyProfileRepository cpRepository;
         private readonly IOrdersService ordersService;
         private readonly IInvoiceService invoiceService;
+        private readonly IInvoiceRepository invoiceRepository;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService)
+        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService, IInvoiceRepository invoiceRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -47,6 +48,7 @@ namespace EPMS.Implementation.Services
             this.cpRepository = cpRepository;
             this.ordersService = ordersService;
             this.invoiceService = invoiceService;
+            this.invoiceRepository = invoiceRepository;
         }
 
         public QuotationDetailResponse GetQuotationDetail(long quotationId)
@@ -235,7 +237,7 @@ namespace EPMS.Implementation.Services
                     ordersService.AddOrder(request.Order);
                     Invoice invoice = new Invoice
                     {
-                        InvoiceNumber = 1001,
+                        InvoiceNumber = GetInvoiceNumber(),
                         QuotationId = (long)request.Order.QuotationId,
                         RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
                         RecCreatedDt = DateTime.Now,
@@ -346,6 +348,44 @@ namespace EPMS.Implementation.Services
                     aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
                 notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
             }
+        }
+
+        public string GetInvoiceNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+
+            var invoice = invoiceRepository.GetLastInvoice();
+
+            if (invoice != null)
+            {
+                string oId = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
     }
 }

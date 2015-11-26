@@ -14,5 +14,9 @@
         public WebsiteModels.QuotationItemDetail QuotationItemDetail { get; set; }
         public WebsiteModels.CompanyProfile CompanyProfile { get; set; }
         public WebsiteModels.Customer Customer { get; set; }
+        public long FirstReceiptId { get; set; }
+        public long SecondReceiptId { get; set; }
+        public long ThirdReceiptId { get; set; }
+        public long FourthReceiptId { get; set; }
     }
 }

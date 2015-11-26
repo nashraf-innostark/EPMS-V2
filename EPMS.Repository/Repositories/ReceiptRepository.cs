@@ -1,4 +1,5 @@
-﻿using System.Data.Entity;
+﻿using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -18,12 +19,17 @@ namespace EPMS.Repository.Repositories
             get { return db.Receipts; }
         }
 
-        public long GetLastReceiptNumber()
+        public Receipt GetLastReceipt()
         {
-            Receipt receipt = DbSet.OrderByDescending(x => x.ReceiptNumber).FirstOrDefault();
+            Receipt receipt = DbSet.OrderByDescending(x => x.RecCreatedDt).FirstOrDefault();
             if (receipt != null)
-                return receipt.ReceiptNumber;
-            return 100000;
+                return receipt;
+            return null;
+        }
+
+        public IEnumerable<Receipt> GetReceiptsByInvoiceId(long invoiceId)
+        {
+            return DbSet.Where(x => x.InvoiceId == invoiceId);
         }
     }
 }

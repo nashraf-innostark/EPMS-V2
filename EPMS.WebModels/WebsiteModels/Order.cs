@@ -20,7 +20,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string CustomerNameA{ get; set; }
         public string QuotationNumber { get; set; }
         public long InvoiceId { get; set; }
-        public long InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public IList<Receipt> Receipts { get; set; }
     }
 }

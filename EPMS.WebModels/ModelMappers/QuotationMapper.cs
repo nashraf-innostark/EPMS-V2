@@ -228,6 +228,7 @@ namespace EPMS.WebModels.ModelMappers
 
         public static WebsiteModels.Quotation CreateForInvoice(this Quotation source)
         {
+            decimal totalAmount = source.QuotationItemDetails.Sum(x => x.TotalPrice);
             decimal discountpercentage = (decimal) (source.QuotationDiscount / Convert.ToDecimal(100));
             decimal discountAmount = discountpercentage * source.QuotationItemDetails.Sum(x => x.TotalPrice);
             decimal discount = source.QuotationItemDetails.Sum(x => x.TotalPrice) - discountAmount;
@@ -240,13 +241,13 @@ namespace EPMS.WebModels.ModelMappers
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
-                FirstInstallement = source.FirstInstallement,
+                FirstInstallement = totalAmount * (source.FirstInstallement / Convert.ToDecimal(100)),
                 FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
-                SecondInstallment = source.SecondInstallment,
+                SecondInstallment = totalAmount * (source.SecondInstallment / Convert.ToDecimal(100)),
                 SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
-                ThirdInstallment = source.ThirdInstallment,
+                ThirdInstallment = totalAmount * (source.ThirdInstallment / Convert.ToDecimal(100)),
                 ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
-                FourthInstallment = source.FourthInstallment,
+                FourthInstallment = totalAmount * (source.FourthInstallment / Convert.ToDecimal(100)),
                 FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
                 NotesEn = source.NotesEn,
                 NotesAr = source.NotesAr,

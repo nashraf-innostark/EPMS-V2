@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -46,44 +47,34 @@ namespace EPMS.Implementation.Services
             return receiptRepository.GetAll();
         }
 
+        public IEnumerable<Receipt> GetAll(string userId)
+        {
+            return receiptRepository.GetAll().Where(x => x.Invoice.Quotation.Customer.AspNetUsers.FirstOrDefault().Id == userId);
+        }
+
         public long AddReceipt(Receipt receipt)
         {
             Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
             Quotation quotation = quotationRepository.Find(invoice.QuotationId);
 
-            var totalAmount = quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
-            decimal discountpercentage = (decimal)(quotation.QuotationDiscount / Convert.ToDecimal(100));
-            decimal discountAmount = totalAmount*discountpercentage;
-            decimal grantTotal = totalAmount - discountAmount;
-
-            var lastReceiptNumber = receiptRepository.GetLastReceiptNumber();
-
             if (receipt.InstallmentNumber == 1)
             {
                 quotation.FirstInstallmentStatus = true;
-                var firstInstallment = discountAmount;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
             if (receipt.InstallmentNumber == 2)
             {
                 quotation.SecondInstallmentStatus = true;
-                var secondInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
             if (receipt.InstallmentNumber == 3)
             {
                 quotation.ThirdInstallmentStatus = true;
-                var thirdInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
-            if (receipt.InstallmentNumber == 1)
+            if (receipt.InstallmentNumber == 4)
             {
                 quotation.FourthInstallmentStatus = true;
-                var fourthInstallment = quotation.FirstInstallement;
-                receipt.AmountPaid = grantTotal * (receipt.AmountPaid / 100);
             }
 
-            receipt.ReceiptNumber = lastReceiptNumber + 1;
+            receipt.ReceiptNumber = GetReceiptNumber();
             receipt.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecCreatedDt = DateTime.Now;
             receipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -113,6 +104,44 @@ namespace EPMS.Implementation.Services
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
 
             return response;
+        }
+
+        public string GetReceiptNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+
+            var receipt = receiptRepository.GetLastReceipt();
+
+            if (receipt != null)
+            {
+                string oId = receipt.ReceiptNumber.Substring(receipt.ReceiptNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
 
         #endregion
