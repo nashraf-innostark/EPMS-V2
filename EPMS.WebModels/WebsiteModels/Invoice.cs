@@ -5,7 +5,7 @@ namespace EPMS.WebModels.WebsiteModels
     public class Invoice
     {
         public long InvoiceId { get; set; }
-        public long InvoiceNumber { get; set; }
+        public string InvoiceNumber { get; set; }
         public long QuotationId { get; set; }
         public string Notes { get; set; }
         public string NotesA { get; set; }

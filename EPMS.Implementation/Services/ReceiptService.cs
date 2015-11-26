@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -56,8 +57,6 @@ namespace EPMS.Implementation.Services
             Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
             Quotation quotation = quotationRepository.Find(invoice.QuotationId);
 
-            var lastReceiptNumber = receiptRepository.GetLastReceiptNumber();
-
             if (receipt.InstallmentNumber == 1)
             {
                 quotation.FirstInstallmentStatus = true;
@@ -75,7 +74,7 @@ namespace EPMS.Implementation.Services
                 quotation.FourthInstallmentStatus = true;
             }
 
-            receipt.ReceiptNumber = lastReceiptNumber + 1;
+            receipt.ReceiptNumber = GetReceiptNumber();
             receipt.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecCreatedDt = DateTime.Now;
             receipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -105,6 +104,44 @@ namespace EPMS.Implementation.Services
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
 
             return response;
+        }
+
+        public string GetReceiptNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+
+            var receipt = receiptRepository.GetLastReceipt();
+
+            if (receipt != null)
+            {
+                string oId = receipt.ReceiptNumber.Substring(receipt.ReceiptNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
 
         #endregion

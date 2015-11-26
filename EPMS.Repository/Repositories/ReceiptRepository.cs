@@ -19,12 +19,12 @@ namespace EPMS.Repository.Repositories
             get { return db.Receipts; }
         }
 
-        public long GetLastReceiptNumber()
+        public Receipt GetLastReceipt()
         {
-            Receipt receipt = DbSet.OrderByDescending(x => x.ReceiptNumber).FirstOrDefault();
+            Receipt receipt = DbSet.OrderByDescending(x => x.RecCreatedDt).FirstOrDefault();
             if (receipt != null)
-                return receipt.ReceiptNumber;
-            return 100000;
+                return receipt;
+            return null;
         }
 
         public IEnumerable<Receipt> GetReceiptsByInvoiceId(long invoiceId)

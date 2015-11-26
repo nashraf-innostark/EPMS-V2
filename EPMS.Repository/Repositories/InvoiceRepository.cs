@@ -1,4 +1,5 @@
 ﻿using System.Data.Entity;
+using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -15,6 +16,14 @@ namespace EPMS.Repository.Repositories
         protected override IDbSet<Invoice> DbSet
         {
             get { return db.Invoices; }
+        }
+
+        public Invoice GetLastInvoice()
+        {
+            Invoice invoice = DbSet.OrderByDescending(x => x.RecCreatedDt).FirstOrDefault();
+            if (invoice != null)
+                return invoice;
+            return null;
         }
     }
 }
