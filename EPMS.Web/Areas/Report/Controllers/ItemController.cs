@@ -1,12 +1,9 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.WebModels.ModelMappers;
-using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Reports;
-using EPMS.WebModels.WebsiteModels;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers

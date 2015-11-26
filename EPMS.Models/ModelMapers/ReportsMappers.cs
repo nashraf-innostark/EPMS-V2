@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -104,9 +105,82 @@ namespace EPMS.Models.ModelMapers
                 InventoryItemId = source.ItemId,
                 NameA = source.ItemNameAr,
                 NameE = source.ItemNameEn,
-                Price = (double) source.ItemVariations.Sum(x=>x.UnitPrice),
-                Cost = (double) source.ItemVariations.Sum(x=>x.UnitCost),
+               
             };
+            var sum = source.ItemVariations.Where(x => x.PriceCalculation).Sum(y => y.UnitPrice / source.ItemVariations.Count(z => z.PriceCalculation));
+            if (sum != null)
+                reportInventoryItem.Price = Math.Round((double)sum, 2);
+
+
+            //reportInventoryItem.Price = (double) source.ItemVariations.Sum(x => x.UnitPrice);
+
+
+            reportInventoryItem.Cost =
+                Math.Round(
+                    (double)
+                        (source.ItemVariations.Where(x => x.CostCalculation)
+                            .Sum(y => y.UnitCost/source.ItemVariations.Count(z => z.CostCalculation))), 2);
+
+
+            reportInventoryItem.SoldQty =
+                (int) source.ItemVariations.Sum(x => Convert.ToInt64(x.ItemReleaseQuantities.Sum(y => y.Quantity)));
+
+            reportInventoryItem.DefectiveQty = (int)source.ItemVariations.Sum(x => x.DIFItems.Sum(y => y.ItemQty));
+
+            ItemManufacturer bestManufacturer = source.ItemVariations.SelectMany(x => x.ItemManufacturers).OrderBy(x => Convert.ToDouble(x.Price)).FirstOrDefault();
+            if (bestManufacturer != null)
+            {
+                reportInventoryItem.BestPriceVendorNameA = bestManufacturer.Manufacturer.ManufacturerNameAr;
+                reportInventoryItem.BestPriceVendorNameE = bestManufacturer.Manufacturer.ManufacturerNameEn;
+            }
+
+            var mostBoughtManufacturer = source.ItemVariations.SelectMany(x => x.ItemManufacturers).OrderByDescending(x => x.Quantity).FirstOrDefault();
+            if (mostBoughtManufacturer != null)
+            {
+                reportInventoryItem.MostBoughtVendorNameA = mostBoughtManufacturer.Manufacturer.ManufacturerNameAr;
+                reportInventoryItem.MostBoughtVendorNameE = mostBoughtManufacturer.Manufacturer.ManufacturerNameEn;
+            }
+
+            return reportInventoryItem;
+        }
+
+        public static ReportInventoryItem MapInventoryItemVariationToReportInventoryItem(this ItemVariation source)
+        {
+            var reportInventoryItem = new ReportInventoryItem
+            {
+                InventoryItemId = source.InventoryItemId,
+                NameA = source.SKUCode,
+                NameE = source.SKUCode,
+
+            };
+            var sum = source.UnitPrice;
+            if (sum != null)
+                reportInventoryItem.Price = Math.Round((double)sum, 2);
+
+            reportInventoryItem.Cost =
+                Math.Round(
+                    (double)
+                        (source.ItemManufacturers.Sum(x => Convert.ToDouble(x.Price)) / source.ItemManufacturers.Count()), 2);
+
+
+            reportInventoryItem.SoldQty =
+                Convert.ToInt32(source.ItemReleaseQuantities.Sum(y => y.Quantity));
+
+            reportInventoryItem.DefectiveQty = (int)source.DIFItems.Sum(x=>x.ItemQty);
+
+            ItemManufacturer bestManufacturer = source.ItemManufacturers.OrderBy(x => Convert.ToDouble(x.Price)).FirstOrDefault();
+            if (bestManufacturer != null)
+            {
+                reportInventoryItem.BestPriceVendorNameA = bestManufacturer.Manufacturer.ManufacturerNameAr;
+                reportInventoryItem.BestPriceVendorNameE = bestManufacturer.Manufacturer.ManufacturerNameEn;
+            }
+
+            var mostBoughtManufacturer = source.ItemManufacturers.OrderByDescending(x => x.Quantity).FirstOrDefault();
+            if (mostBoughtManufacturer != null)
+            {
+                reportInventoryItem.MostBoughtVendorNameA = mostBoughtManufacturer.Manufacturer.ManufacturerNameAr;
+                reportInventoryItem.MostBoughtVendorNameE = mostBoughtManufacturer.Manufacturer.ManufacturerNameEn;
+            }
 
             return reportInventoryItem;
         }
