@@ -341,7 +341,7 @@
                             <div class="span2">
                                 @if (Role == "Customer")
                                 {
-                                    <label class="control-label"><button id="PayInstallment3">Pay</button></label>
+                                    <label class="control-label"><a class="btn" id="PayInstallment3" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=3">Pay</a></label>
                                 }
                                 else
                                 {
@@ -389,7 +389,7 @@
                             <div class="span2">
                                 @if (Role == "Customer")
                                 {
-                                    <label class="control-label"><button id="PayInstallment4">Pay</button></label>
+                                    <label class="control-label"><a class="btn" id="PayInstallment4" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=4">Pay</a></label>
                                 }
                                 else
                                 {
@@ -407,11 +407,11 @@
                             <div class="controls">
                                 @if (direction == "ltr")
                                 {
-                                    @Html.TextBoxFor(model => model.Quotation.NotesEn, new { @id = "ExtraInformationEn", @class = "", @readonly = true })
+                                    @Html.TextBoxFor(model => model.Quotation.NotesEn, new { @id = "NotesEn", @class = "", @readonly = true })
                                 }
                                 else
                                 {
-                                    @Html.TextBoxFor(model => model.Quotation.NotesAr, new { @id = "ExtraInformationaAr", @class = "", @readonly = true })
+                                    @Html.TextBoxFor(model => model.Quotation.NotesAr, new { @id = "NotesAr", @class = "", @readonly = true })
                                 }
                             </div>
                         </div>
@@ -431,6 +431,17 @@
             jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "en" }));
         } else {
             jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "ar" }));
+        }
+        if (direction == 'ltr') {
+            var descpE = $("#NotesEn");
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpE.replace(regex, "");
+            $("#NotesEn").val(result);
+        } else {
+            var descpA = $("#NotesAr");
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpA.replace(regex, "");
+            $("#NotesAr").val(result);
         }
     });
 

@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
 using FaceSharp.Api.Objects;
@@ -73,18 +74,23 @@ namespace EPMS.Implementation.Services
             {
                 quotation.FourthInstallmentStatus = true;
             }
-
+            if (receipt.PaymentType == (short)PaymentType.OffLine || receipt.PaymentType == (short)PaymentType.OnDelivery)
+            {
+                receipt.AmountPaid = GetAmountPaid(quotation, receipt.InstallmentNumber);
+            }
+            
             receipt.ReceiptNumber = GetReceiptNumber();
             receipt.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecCreatedDt = DateTime.Now;
             receipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecLastUpdatedDt = DateTime.Now;
 
-
             receiptRepository.Add(receipt);
-            quotationRepository.Update(quotation);
-
             receiptRepository.SaveChanges();
+            
+            quotationRepository.Update(quotation);
+            quotationRepository.SaveChanges();
+            
             return receipt.ReceiptId;
         }
 
@@ -142,6 +148,30 @@ namespace EPMS.Implementation.Services
                 return orderId;
             }
             return year + month + day + "00001";
+        }
+
+        public decimal GetAmountPaid(Quotation quotation, int ins)
+        {
+            var grandTotal = quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
+            double amount = Convert.ToDouble(grandTotal);
+            double disc = (Convert.ToDouble(quotation.QuotationDiscount) / 100) * amount;
+            grandTotal = Convert.ToDecimal(amount - disc);
+            switch (ins.ToString())
+            {
+                case "1":
+                    grandTotal = (quotation.FirstInstallement / 100) * grandTotal;
+                    break;
+                case "2":
+                    grandTotal = quotation.SecondInstallment != 0 ? (Convert.ToDecimal(quotation.SecondInstallment) / 100) * grandTotal : 0;
+                    break;
+                case "3":
+                    grandTotal = quotation.ThirdInstallment != 0 ? (Convert.ToDecimal(quotation.ThirdInstallment) / 100) * grandTotal : 0;
+                    break;
+                case "4":
+                    grandTotal = quotation.FourthInstallment != 0 ? (Convert.ToDecimal(quotation.FourthInstallment) / 100) * grandTotal : 0;
+                    break;
+            }
+            return grandTotal;
         }
 
         #endregion

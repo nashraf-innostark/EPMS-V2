@@ -116,7 +116,15 @@ namespace EPMS.Web.Areas.PMS.Controllers
                         // 
                         // now there is no OrderId in Quotation
                         //
-                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        Quotation quotation = new Quotation();
+                        if (project.QuotationId != null)
+                        {
+                            quotation = quotationService.FindQuotationById((long) project.QuotationId);
+                        }
+                        else if (project.OrderId != null)
+                        {
+                            quotation = quotationService.FindQuotationByOrderId((long) project.Order.QuotationId);
+                        }
                         if (quotation != null)
                             projectViewModel.Installment = quotation.CreateFromServerToClientLv();
                     }

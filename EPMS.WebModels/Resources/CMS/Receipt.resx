@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Receipt has been successfully added.</value>
+  </data>
   <data name="AmountLeft" xml:space="preserve">
     <value>Total Amount Left</value>
   </data>
@@ -137,6 +140,9 @@
   </data>
   <data name="Detail" xml:space="preserve">
     <value>Receipt Detail</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Error in saving Receipt.</value>
   </data>
   <data name="InstallmentNo" xml:space="preserve">
     <value>Installment Number</value>
@@ -164,5 +170,8 @@
   </data>
   <data name="Title" xml:space="preserve">
     <value>Receipt</value>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Receipt has been successfully updated.</value>
   </data>
 </root>

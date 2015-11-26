@@ -4,11 +4,14 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Payment;
 using EPMS.WebModels.ViewModels.WebsiteClient;
 using EPMS.WebModels.WebsiteModels;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
@@ -17,14 +20,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Private
 
         private readonly IInvoiceService invoiceService;
+        private readonly IReceiptService receiptService;
 
         #endregion
 
         #region Constructor
 
-        public PaymentController(IInvoiceService invoiceService)
+        public PaymentController(IInvoiceService invoiceService, IReceiptService receiptService)
         {
             this.invoiceService = invoiceService;
+            this.receiptService = receiptService;
         }
 
         #endregion
@@ -72,31 +77,40 @@ namespace EPMS.Web.Areas.CMS.Controllers
             var response = Request.QueryString;
             string transactionId = response["tx"];
             string status = response["st"];
-            string amount = response["amt"];
+            decimal amount = Convert.ToDecimal(response["amt"]);
             string currencyCode = response["cc"];
             string data = response["cm"];
             long invoiceId = Convert.ToInt64(data.Split('-')[0]);
             int installmentNo = Convert.ToInt32(data.Split('-')[1]);
-            EPMS.Models.DomainModels.Receipt receipt = new EPMS.Models.DomainModels.Receipt
+            EPMS.Models.DomainModels.Receipt receiptToAdd = new EPMS.Models.DomainModels.Receipt
             { 
-                
+                InvoiceId = invoiceId,
+                AmountPaid = amount,
+                InstallmentNumber = installmentNo,
+                PaymentType = (short)PaymentType.Paypal,
+                IsPaid = status == "Completed",
+                Paypal = new EPMS.Models.DomainModels.Paypal
+                {
+                    TransactionId = transactionId,
+                    CurrencyCode = currencyCode
+                }
             };
-            ////string itemNumber = response["item_number"];
-            //var cart = cartService.FindByUserCartId(User.Identity.GetUserId());
-            //if (cart != null)
-            //{
-            //    cart.TransactionId = transactionId;
-            //    cart.Status = status == "Completed" ? (int)PurchaseStatus.Completed : (int)PurchaseStatus.Error;
-            //    cart.AmountPaid = Convert.ToDecimal(amount);
-            //    cart.CurrencyCode = currencyCode;
-            //    cartService.UpdateShoppingCart(cart);
-            //}
-            //TempData["message"] = new MessageViewModel
-            //{
-            //    Message = "\nYour order has been successfully placed. You will be contacted soon by our Team",
-            //    IsSaved = true
-            //};
-            return RedirectToAction("Detail", "Receipt", new { id = 1 });
+            long receiptId = receiptService.AddReceipt(receiptToAdd);
+            if (receiptId > 0)
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.CMS.Receipt.AddMessage,
+                    IsSaved = true
+                };
+                return RedirectToAction("Detail", "Receipt", new { id = receiptId, area = "CMS" });
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = WebModels.Resources.CMS.Receipt.ErrorMessage,
+                IsError = true
+            };
+            return RedirectToAction("Index", "Receipt" , new { area = "CMS" });
         }
         public ActionResult NotifyFromPaypal()
         {
@@ -105,6 +119,41 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult CancelFromPaypal()
         {
             return View();
+        }
+
+        public ActionResult Manual(long id, string ins, string type)
+        {
+            EPMS.Models.DomainModels.Receipt receiptToAdd = new EPMS.Models.DomainModels.Receipt
+            {
+                InvoiceId = Convert.ToInt64(id),
+                InstallmentNumber = Convert.ToInt32(ins),
+                //PaymentType = (short)PaymentType.OffLine,
+                IsPaid = true
+            };
+            if (type == "1")
+            {
+                receiptToAdd.PaymentType = (short) PaymentType.OffLine;
+            }
+            else if (type == "2")
+            {
+                receiptToAdd.PaymentType = (short) PaymentType.OnDelivery;
+            }
+            long receiptId = receiptService.AddReceipt(receiptToAdd);
+            if (receiptId > 0)
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.CMS.Receipt.AddMessage,
+                    IsSaved = true
+                };
+                return RedirectToAction("Detail", "Receipt", new { id = receiptId, area = "CMS" });
+            }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = WebModels.Resources.CMS.Receipt.ErrorMessage,
+                IsError = true
+            };
+            return RedirectToAction("Index", "Receipt", new { area = "CMS" });
         }
 
         #endregion

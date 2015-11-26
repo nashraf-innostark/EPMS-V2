@@ -1011,6 +1011,14 @@
           <Property Name="RecUpdatedBy" Type="nvarchar" MaxLength="128" Nullable="false" />
           <Property Name="RecUpdatedDate" Type="datetime" Nullable="false" />
         </EntityType>
+        <EntityType Name="Paypal">
+          <Key>
+            <PropertyRef Name="PaypalId" />
+          </Key>
+          <Property Name="PaypalId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TransactionId" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="CurrencyCode" Type="nvarchar" MaxLength="10" Nullable="false" />
+        </EntityType>
         <EntityType Name="PhysicalCount">
           <Key>
             <PropertyRef Name="PCId" />
@@ -1300,6 +1308,9 @@
           <Property Name="RecCreatedDt" Type="datetime" Nullable="false" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="RecLastUpdatedDt" Type="datetime" Nullable="false" />
+          <Property Name="PaymentType" Type="smallint" Nullable="false" />
+          <Property Name="IsPaid" Type="bit" Nullable="false" />
+          <Property Name="PaypalId" Type="bigint" />
         </EntityType>
         <EntityType Name="ReportProject">
           <Key>
@@ -3155,6 +3166,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Receipt_Paypal">
+          <End Role="Paypal" Type="Self.Paypal" Multiplicity="0..1" />
+          <End Role="Receipt" Type="Self.Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paypal">
+              <PropertyRef Name="PaypalId" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="PaypalId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportProject_Reports">
           <End Role="Reports" Type="Self.Reports" Multiplicity="0..1" />
           <End Role="ReportProject" Type="Self.ReportProject" Multiplicity="*" />
@@ -3914,6 +3937,7 @@
           <EntitySet Name="NotificationRecipient" EntityType="Self.NotificationRecipient" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Orders" EntityType="Self.Orders" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Partner" EntityType="Self.Partner" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Paypal" EntityType="Self.Paypal" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicalCount" EntityType="Self.PhysicalCount" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PhysicalCountItem" EntityType="Self.PhysicalCountItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="PreRequisitTask" EntityType="Self.PreRequisitTask" Schema="dbo" store:Type="Tables" />
@@ -4391,6 +4415,10 @@
           </AssociationSet>
           <AssociationSet Name="FK_Receipt_Invoice" Association="Self.FK_Receipt_Invoice">
             <End Role="Invoice" EntitySet="Invoice" />
+            <End Role="Receipt" EntitySet="Receipt" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Receipt_Paypal" Association="Self.FK_Receipt_Paypal">
+            <End Role="Paypal" EntitySet="Paypal" />
             <End Role="Receipt" EntitySet="Receipt" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportProject_Reports" Association="Self.FK_ReportProject_Reports">
@@ -6820,6 +6848,11 @@
           </AssociationSet>
           <AssociationSet Name="FK_Receipt_Invoice" Association="EPMSInventoryModel.FK_Receipt_Invoice">
             <End Role="Invoice" EntitySet="Invoices" />
+            <End Role="Receipt" EntitySet="Receipts" />
+          </AssociationSet>
+          <EntitySet Name="Paypals" EntityType="EPMSInventoryModel.Paypal" />
+          <AssociationSet Name="FK_Receipt_Paypal" Association="EPMSInventoryModel.FK_Receipt_Paypal">
+            <End Role="Paypal" EntitySet="Paypals" />
             <End Role="Receipt" EntitySet="Receipts" />
           </AssociationSet>
           </EntityContainer>
@@ -9393,6 +9426,10 @@
           <Property Name="RecLastUpdatedBy" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="RecLastUpdatedDt" Type="DateTime" Nullable="false" Precision="3" />
           <NavigationProperty Name="Invoice" Relationship="EPMSInventoryModel.FK_Receipt_Invoice" FromRole="Receipt" ToRole="Invoice" />
+          <Property Name="PaymentType" Type="Int16" Nullable="false" />
+          <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+          <Property Name="PaypalId" Type="Int64" />
+          <NavigationProperty Name="Paypal" Relationship="EPMSInventoryModel.FK_Receipt_Paypal" FromRole="Receipt" ToRole="Paypal" />
         </EntityType>
         <Association Name="FK_Invoice_Quotation">
           <End Type="EPMSInventoryModel.Quotation" Role="Quotation" Multiplicity="1" />
@@ -9415,6 +9452,27 @@
             </Principal>
             <Dependent Role="Receipt">
               <PropertyRef Name="InvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Paypal">
+          <Key>
+            <PropertyRef Name="PaypalId" />
+          </Key>
+          <Property Name="PaypalId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TransactionId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="CurrencyCode" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Receipts" Relationship="EPMSInventoryModel.FK_Receipt_Paypal" FromRole="Paypal" ToRole="Receipt" />
+        </EntityType>
+        <Association Name="FK_Receipt_Paypal">
+          <End Type="EPMSInventoryModel.Paypal" Role="Paypal" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Receipt" Role="Receipt" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Paypal">
+              <PropertyRef Name="PaypalId" />
+            </Principal>
+            <Dependent Role="Receipt">
+              <PropertyRef Name="PaypalId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -11370,6 +11428,9 @@
           <EntitySetMapping Name="Receipts">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Receipt">
               <MappingFragment StoreEntitySet="Receipt">
+                <ScalarProperty Name="PaypalId" ColumnName="PaypalId" />
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="PaymentType" ColumnName="PaymentType" />
                 <ScalarProperty Name="RecLastUpdatedDt" ColumnName="RecLastUpdatedDt" />
                 <ScalarProperty Name="RecLastUpdatedBy" ColumnName="RecLastUpdatedBy" />
                 <ScalarProperty Name="RecCreatedDt" ColumnName="RecCreatedDt" />
@@ -11379,6 +11440,15 @@
                 <ScalarProperty Name="InvoiceId" ColumnName="InvoiceId" />
                 <ScalarProperty Name="ReceiptNumber" ColumnName="ReceiptNumber" />
                 <ScalarProperty Name="ReceiptId" ColumnName="ReceiptId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Paypals">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.Paypal">
+              <MappingFragment StoreEntitySet="Paypal">
+                <ScalarProperty Name="CurrencyCode" ColumnName="CurrencyCode" />
+                <ScalarProperty Name="TransactionId" ColumnName="TransactionId" />
+                <ScalarProperty Name="PaypalId" ColumnName="PaypalId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -11670,6 +11740,8 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.Receipt" Width="1.5" PointX="13.375" PointY="62.875" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Invoice_Quotation" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Receipt_Invoice" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.Paypal" Width="1.5" PointX="10.375" PointY="1.125" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Receipt_Paypal" />
         </Diagram>
     </Diagrams>
   </Designer>

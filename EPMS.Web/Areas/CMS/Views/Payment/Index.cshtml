@@ -54,7 +54,7 @@
                     </label>
                     <br />
                     <div id="OfflineDiv" class="hide">
-                        <a href="~/CMS/Payment/PostTotPaypal/@invoiceId" class="btn">@Cart.PayOffline</a>
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=1" class="btn">@Cart.PayOffline</a>
                     </div>
                     <label>
                         <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
@@ -62,7 +62,7 @@
                     </label>
                     <br />
                     <div id="ManualDeliveryDiv" class="hide">
-                        <a href="~/CMS/Payment/PostTotPaypal/@invoiceId" class="btn">@Cart.ManualOnDelivery</a>
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=2" class="btn">@Cart.ManualOnDelivery</a>
                     </div>
                     <br/>
                 </div>

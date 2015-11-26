@@ -8,6 +8,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Receipt;
 using Microsoft.AspNet.Identity;
 
@@ -38,6 +39,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             var role = Session["RoleName"].ToString().ToLower();
             var userId = User.Identity.GetUserId();
+            ViewBag.MessageVM = (MessageViewModel)TempData["message"];
 
             return View(new ReceiptListViewModel
             {
@@ -65,6 +67,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.CompanyProfile.CompanyLogoPath;
             ViewBag.EmployeeName = User.Identity.Name;
 
+            ViewBag.MessageVM = (MessageViewModel) TempData["message"];
             return View(viewModel);
         }
 
