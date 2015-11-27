@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -6,6 +7,9 @@ namespace EPMS.WebModels.ModelMappers
     {
         public static WebsiteModels.Receipt CreateFromServerToClient(this Models.DomainModels.Receipt source)
         {
+            decimal discountpercentage = (decimal)(source.Invoice.Quotation.QuotationDiscount / Convert.ToDecimal(100));
+            decimal discountAmount = discountpercentage * source.Invoice.Quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
+            decimal grandTotal = source.Invoice.Quotation.QuotationItemDetails.Sum(x => x.TotalPrice) - discountAmount;
             var totalAmount = source.Invoice.Quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
             var amountPaidTillNow =
                 source.Invoice.Receipts.Where(x => x.InvoiceId == source.InvoiceId).Sum(x => x.AmountPaid);
@@ -25,7 +29,7 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerNameA = source.Invoice.Quotation.Customer.CustomerNameA,
                 CustomerId = source.Invoice.Quotation.CustomerId,
                 AmountPaidTillNow = amountPaidTillNow,
-                AmountLeft = totalAmount - amountPaidTillNow,
+                AmountLeft = Math.Round((grandTotal - amountPaidTillNow), 2, MidpointRounding.AwayFromZero),
             };
         }
 

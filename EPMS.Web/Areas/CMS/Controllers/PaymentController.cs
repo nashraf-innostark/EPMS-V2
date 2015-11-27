@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Configuration;
-using System.Globalization;
-using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
@@ -9,9 +7,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Payment;
-using EPMS.WebModels.ViewModels.WebsiteClient;
 using EPMS.WebModels.WebsiteModels;
-using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {

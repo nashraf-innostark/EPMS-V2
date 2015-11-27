@@ -1,5 +1,4 @@
-﻿@using EPMS.WebModels.Resources.WebsiteClient.ShoppingCart
-@{
+﻿@{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
     long invoiceId = 0;
@@ -9,10 +8,6 @@
     }
     string header = "Payment methods";
 }
-
-<style>
-
-</style>
 
 <div class="breadcrumb-container">
     <ul class="xbreadcrumbs">
@@ -40,7 +35,7 @@
                 <div class="controls align-center">
                     <label>
                         <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
-                        @Cart.PayWithPaypal
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayWithPaypal
                     </label>
                     <br />
                     <div id="PaypalDiv" class="hide">
@@ -50,19 +45,19 @@
                     </div>
                     <label>
                         <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
-                        @Cart.PayOffline
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline
                     </label>
                     <br />
                     <div id="OfflineDiv" class="hide">
-                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=1" class="btn">@Cart.PayOffline</a>
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=1" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline</a>
                     </div>
                     <label>
                         <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
-                        @Cart.ManualOnDelivery
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery
                     </label>
                     <br />
                     <div id="ManualDeliveryDiv" class="hide">
-                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=2" class="btn">@Cart.ManualOnDelivery</a>
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=2" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery</a>
                     </div>
                     <br/>
                 </div>

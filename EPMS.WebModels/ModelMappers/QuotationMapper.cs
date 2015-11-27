@@ -231,8 +231,8 @@ namespace EPMS.WebModels.ModelMappers
             decimal totalAmount = source.QuotationItemDetails.Sum(x => x.TotalPrice);
             decimal discountpercentage = (decimal) (source.QuotationDiscount / Convert.ToDecimal(100));
             decimal discountAmount = discountpercentage * source.QuotationItemDetails.Sum(x => x.TotalPrice);
-            decimal discount = source.QuotationItemDetails.Sum(x => x.TotalPrice) - discountAmount;
-            return new WebsiteModels.Quotation
+            decimal grandTotal = source.QuotationItemDetails.Sum(x => x.TotalPrice) - discountAmount;
+            var quot = new WebsiteModels.Quotation
             {
                 QuotationId = source.QuotationId,
                 CustomerId = source.CustomerId,
@@ -241,13 +241,13 @@ namespace EPMS.WebModels.ModelMappers
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 QuotationDiscount = source.QuotationDiscount,
-                FirstInstallement = totalAmount * (source.FirstInstallement / Convert.ToDecimal(100)),
+                FirstInstallement = grandTotal * (source.FirstInstallement / Convert.ToDecimal(100)),
                 FirstInsDueAtCompletion = source.FirstInsDueAtCompletion,
-                SecondInstallment = totalAmount * (source.SecondInstallment / Convert.ToDecimal(100)),
+                SecondInstallment = grandTotal * (source.SecondInstallment / Convert.ToDecimal(100)),
                 SecondInsDueAtCompletion = source.SecondInsDueAtCompletion,
-                ThirdInstallment = totalAmount * (source.ThirdInstallment / Convert.ToDecimal(100)),
+                ThirdInstallment = grandTotal * (source.ThirdInstallment / Convert.ToDecimal(100)),
                 ThirdInsDueAtCompletion = source.ThirdInsDueAtCompletion,
-                FourthInstallment = totalAmount * (source.FourthInstallment / Convert.ToDecimal(100)),
+                FourthInstallment = grandTotal * (source.FourthInstallment / Convert.ToDecimal(100)),
                 FourthInsDueAtCompletion = source.FourthInsDueAtCompletion,
                 NotesEn = source.NotesEn,
                 NotesAr = source.NotesAr,
@@ -262,7 +262,7 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerPhone = source.Customer.CustomerMobile,
                 CustomerEmail = source.Customer.AspNetUsers.First().Email,
                 SubTotal = source.QuotationItemDetails.Sum(x=>x.TotalPrice),
-                GrandTotal = discount,
+                GrandTotal = grandTotal,
 
                 FirstInstallmentStatus = source.FirstInstallmentStatus ? "Paid" : "Unpaid",
                 SecondInstallmentStatus = source.SecondInstallmentStatus ? "Paid" : "Unpaid",
@@ -274,6 +274,11 @@ namespace EPMS.WebModels.ModelMappers
                 IsThirdInstallmentStatus = source.ThirdInstallmentStatus,
                 IsFourthInstallmentStatus = source.FourthInstallmentStatus
             };
+            quot.FirstInstallement = Math.Round(quot.FirstInstallement, 2, MidpointRounding.AwayFromZero);
+            quot.SecondInstallment = Math.Round((decimal) quot.SecondInstallment, 2, MidpointRounding.AwayFromZero);
+            quot.ThirdInstallment = Math.Round((decimal)quot.ThirdInstallment, 2, MidpointRounding.AwayFromZero);
+            quot.FourthInstallment = Math.Round((decimal)quot.FourthInstallment, 2, MidpointRounding.AwayFromZero);
+            return quot;
         }
 
     }
