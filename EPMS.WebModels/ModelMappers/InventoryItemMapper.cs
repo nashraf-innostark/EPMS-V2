@@ -82,6 +82,7 @@ namespace EPMS.WebModels.ModelMappers
             inventoryItem.AverageCost = 0;
             inventoryItem.AverageCost = Math.Round((double) (source.ItemVariations.Where(x => x.CostCalculation).Sum(y => y.UnitCost/ source.ItemVariations.Count(z => z.CostCalculation))), 2);
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
+            //inventoryItem.QuantityInHand = source.QuantityInHand;
             inventoryItem.QuantityInHand = source.QuantityInHand;
             //inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
             inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.ItemReleaseQuantities.Sum(y=>y.Quantity)));
