@@ -14,6 +14,6 @@ namespace EPMS.Interfaces.Repository
         CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
         CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
-        #endregion
+        
     }
 }
