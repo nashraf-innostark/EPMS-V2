@@ -26,4 +26,15 @@ namespace EPMS.WebModels.ViewModels.Reports
         public long ReportId { get; set; }
         public List<WarehousDDL> Warehouses { get; set; }
     }
+    public class ItemReportCreateViewModel
+    {
+        public ItemReportCreateViewModel()
+        {
+            InventoryItems = new List<InventoryItemDDL>();
+        }
+
+        public long ItemId { get; set; }
+        public long ReportId { get; set; }
+        public List<InventoryItemDDL> InventoryItems { get; set; }
+    }
 }

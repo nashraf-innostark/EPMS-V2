@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using EPMS.Models.DashboardModels;
 using EPMS.Models.RequestModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -88,7 +89,17 @@ namespace EPMS.WebModels.ModelMappers
             inventoryItem.QuantityInPackage = source.ItemVariations.Sum(x=>x.QuantityInPackage);
             return inventoryItem;
         }
+        public static InventoryItemDDL CreateFromServerToClientDDL(this Models.DomainModels.InventoryItem source)
+        {
+            InventoryItemDDL inventoryItem = new InventoryItemDDL
+            {
+                ItemId = source.ItemId,
+                ItemNameE = source.ItemNameEn,
+                ItemNameA = source.ItemNameAr
+            };
 
+            return inventoryItem;
+        }
         public static InventoryItemRequest CreateFromClientToServer(this WebsiteModels.InventoryItem source)
         {
             var item = new Models.DomainModels.InventoryItem

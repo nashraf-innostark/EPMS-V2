@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace EPMS.Models.DomainModels
 {
@@ -22,9 +23,12 @@ namespace EPMS.Models.DomainModels
         public virtual Warehouse Warehouse { get; set; }
         public virtual RfqOrder RfqOrder { get; set; }
         public virtual Employee Employee { get; set; }
-
+        public virtual InventoryItem InventoryItem { get; set; }
+        public long? InventoryItemId { get; set; }
         public virtual ICollection<ReportProject> ReportProjects { get; set; }
         public virtual ICollection<ReportProjectTask> ReportProjectTasks { get; set; }
         public virtual ICollection<ReportTaskEmployee> ReportTaskEmployees { get; set; }
+
+        public virtual ICollection<ReportInventoryItem> ReportInventoryItems { get; set; }
     }
 }
