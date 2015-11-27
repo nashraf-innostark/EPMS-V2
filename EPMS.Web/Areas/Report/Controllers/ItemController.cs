@@ -3,6 +3,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Reports;
 using Rotativa;
@@ -21,6 +22,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
 
         // GET: Report/Item
+        [SiteAuthorize(PermissionKey = "CreateItemReport")]
         public ActionResult Create()
         {
             ItemReportCreateViewModel createViewModel=new ItemReportCreateViewModel();
@@ -40,7 +42,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             var reportId = reportService.SaveInventoryItemsReport(request);
             return RedirectToAction("Details", new { ReportId = reportId });
         }
-
+           [SiteAuthorize(PermissionKey = "ViewItemReport")]
         public ActionResult Details(long? ReportId)
         {
             if (ReportId==null||ReportId <= 0) return View("Create");
