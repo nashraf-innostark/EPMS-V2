@@ -30,6 +30,8 @@ namespace EPMS.WebModels.ViewModels.Reports
         //Grpah related Data
         public long GrpahStartTimeStamp { get; set; }
         public long GrpahEndTimeStamp { get; set; }
-        public List<GraphItem> GraphItems { get; set; } 
+        public List<GraphItem> GraphItems { get; set; }
+        public string ImageSrc { get; set; }
+        public GraphLabelDataValues[] DataSet { get; set; }
     }
 }

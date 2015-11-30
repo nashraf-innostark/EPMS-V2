@@ -1,4 +1,5 @@
-﻿@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
+﻿@using Newtonsoft.Json
+@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
 @{
     ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -137,10 +138,19 @@
         var parsed = JSON.parse(graphItems);
         var datasets = [];
 
+        var dataSetArray = '@Html.Raw(Json.Encode(Model.DataSet))';
+        var dataSetArrayParsed = JSON.parse(dataSetArray);
+        var timeStamp = [];
+        $.each(dataSetArrayParsed, function(index, val) {
+            var abc = [val.TimeStamp, val.Value];
+            timeStamp.push(abc);
+        });
+        
+
         $.each(parsed, function (index, val) {
             var dataset = {
                 label: val.ItemLabel,
-                data: [[val.ItemValue[0].data[0].dataValue[0].TimeStamp, val.ItemValue[0].data[0].dataValue[0].Value], [val.ItemValue[0].data[0].dataValue[1].TimeStamp, val.ItemValue[0].data[0].dataValue[1].Value]]
+                data: timeStamp
             };
             datasets.push(dataset);
         });
