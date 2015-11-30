@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
@@ -18,7 +19,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             this.reportService = reportService;
         }
 
-        //[SiteAuthorize(PermissionKey = "InventoryReports")]
+        [SiteAuthorize(PermissionKey = "InventoryReports")]
         public ActionResult Index()
         {
             return View();
