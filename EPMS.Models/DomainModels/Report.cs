@@ -19,7 +19,7 @@ namespace EPMS.Models.DomainModels
         public long? CustomerId { get; set; }
 
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<ReportQuotationInvoice> ReportQuotationInvoices { get; set; }
+        public virtual ICollection<ReportQuotationOrder> ReportQuotationOrders { get; set; }
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Project Project { get; set; }
         public virtual ProjectTask ProjectTask { get; set; }

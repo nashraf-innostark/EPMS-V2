@@ -97,6 +97,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer Name.
+        /// </summary>
+        public static string CustomerName {
+            get {
+                return ResourceManager.GetString("CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Date.
         /// </summary>
         public static string Date {
@@ -246,6 +255,42 @@ namespace EPMS.WebModels.Resources.Reports {
         public static string ProjectsReport {
             get {
                 return ResourceManager.GetString("ProjectsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Creat Customer RFQ/Orders Placed Report.
+        /// </summary>
+        public static string QOCreateReport {
+            get {
+                return ResourceManager.GetString("QOCreateReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer RFQ/Orders Placed.
+        /// </summary>
+        public static string QOReportTab {
+            get {
+                return ResourceManager.GetString("QOReportTab", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View Customer Request for Quotation/Order Report.
+        /// </summary>
+        public static string QOReportView {
+            get {
+                return ResourceManager.GetString("QOReportView", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to View All Customer Request for Quotation/Orders Report.
+        /// </summary>
+        public static string QOReportViewAll {
+            get {
+                return ResourceManager.GetString("QOReportViewAll", resourceCulture);
             }
         }
         

@@ -7,6 +7,7 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
 using Microsoft.Practices.Unity;
 using EPMS.Repository.BaseRepository;
@@ -122,6 +123,11 @@ namespace EPMS.Repository.Repositories
         {
             var orders = DbSet.Where(order => order.CustomerId == customerId);
             return orders;
+        }
+
+        public IEnumerable<Order> GetOrdersByCustomerId(QOReportCreateOrDetailsRequest request)
+        {
+            return DbSet.Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDt.Value >= request.From && quot.RecCreatedDt.Value <= request.To);
         }
 
         public IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId)

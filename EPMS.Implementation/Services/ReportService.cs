@@ -19,29 +19,34 @@ namespace EPMS.Implementation.Services
 
         private readonly IInventoryItemRepository inventoryItemRepository;
         private readonly IReportRepository reportRepository;
+        private readonly IRFQRepository rfqRepository;
         private readonly IProjectRepository projectRepository;
+        private readonly ICustomerService customerService;
         private readonly ICustomerRepository customerRepository;
         private readonly IQuotationRepository quotationRepository;
         private readonly IProjectTaskRepository taskRepository;
         private readonly IWarehouseRepository warehouseRepository;
         private readonly IEmployeeRepository employeeRepository;
+        private readonly IOrdersRepository ordersRepository;
 
         #endregion
 
         #region Constructor
 
-        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository,
+        public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
-            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository)
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository)
         {
-            this.inventoryItemRepository = inventoryItemRepository;
             this.reportRepository = reportRepository;
+            this.rfqRepository = rfqRepository;
             this.projectRepository = projectRepository;
+            this.customerService = customerService;
             this.customerRepository = customerRepository;
             this.quotationRepository = quotationRepository;
             this.taskRepository = taskRepository;
             this.warehouseRepository = warehouseRepository;
             this.employeeRepository = employeeRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         #endregion
@@ -167,10 +172,83 @@ namespace EPMS.Implementation.Services
             return reportRepository.GetQuotationInvoiceReports(request);
         }
 
+       
         #endregion
 
 
         #region Create Reports and Details Views
+        public long SaveQOReport(QOReportCreateOrDetailsRequest request)
+        {
+            var newReport = new Report
+            {
+                ReportCreatedBy = request.RequesterId,
+                ReportCreatedDate = DateTime.Now,
+                ReportFromDate = DateTime.Now,
+                ReportToDate = DateTime.Now
+            };
+            if (request.CustomerId > 0)
+            {
+                newReport.ReportCategoryId = (int)ReportCategory.CustomerQO;
+                newReport.CustomerId = request.CustomerId;
+            }
+            else
+            {
+                newReport.ReportCategoryId = (int)ReportCategory.AllCustomersQO;
+            }
+
+            //Fetch Report data
+            var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request);
+            var customerOrders = ordersRepository.GetOrdersByCustomerId(request);
+            var customer = customerService.FindCustomerById(request.CustomerId);
+            newReport.ReportQuotationOrders = new List<ReportQuotationOrder>();
+
+            //Parent Report
+            var parentReport = new ReportQuotationOrder
+            {
+                CustomerId = request.CustomerId,
+                CustomerNameA = customer.CustomerNameA,
+                CustomerNameE = customer.CustomerNameE,
+                NoOfOrders = customerOrders.Count(),
+                NoOfRFQ = customerQuotations.Count(),
+                IsParent = true
+            };
+
+            //Items of Quotations for parentReport
+            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate).ToList();
+            foreach (var quot in itemsOfQuot)
+            {
+                parentReport.ReportQuotationItems.Add(new ReportQuotationOrder
+                {
+                    IsQuotationsReport = true,
+                    Value = quot.Sum(x=>x.RFQItems.Sum(y=>y.TotalPrice)).ToString(),
+                    TimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
+                });
+            }
+
+            //Items of Orders for parentReport
+            //var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDt).GroupBy(x => x.RecCreatedDt).ToList();
+            //foreach (var order in itemsOfOrders)
+            //{
+            //    parentReport.ReportQuotationItems.Add(new ReportQuotationOrder
+            //    {
+            //        IsQuotationsReport = true,
+            //        Value = order.Sum(x => x.RFQItems.Sum(y => y.TotalPrice)).ToString(),
+            //        TimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
+            //    });
+            //}
+
+            //Save Report and its data
+            reportRepository.Add(newReport);
+            reportRepository.SaveChanges();
+
+            return newReport.ReportId;
+        }
+
+        public IEnumerable<ReportQuotationOrder> GetQOReport(long reportId)
+        {
+            throw new NotImplementedException();
+        }
+
         public bool AddReport(Report report)
         {
             reportRepository.Add(report);
@@ -446,5 +524,11 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+        private static long GetJavascriptTimestamp(DateTime input)
+        {
+            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
+            DateTime time = input.Subtract(span);
+            return (time.Ticks / 10000);
+        }
     }
 }

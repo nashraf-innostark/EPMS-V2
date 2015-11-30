@@ -19,5 +19,7 @@
         AllCustomer = 15,
         Item = 16,
         AllItems = 17,
+        CustomerQO = 18,
+        AllCustomersQO = 19,
     }
 }

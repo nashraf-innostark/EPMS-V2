@@ -27,5 +27,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request);
         CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
         CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);
+        long SaveQOReport(QOReportCreateOrDetailsRequest request);
+        IEnumerable<ReportQuotationOrder> GetQOReport(long reportId);
     }
 }
