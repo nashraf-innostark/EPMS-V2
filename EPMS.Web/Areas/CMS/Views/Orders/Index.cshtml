@@ -80,9 +80,10 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
+                        var element = "";
                         var val = full["OrderNo"];
-                        var orderId = full["OrderId"];
-                        var element = '<a href="Create/' + orderId + '">' + val + '</a>';
+                        var quotationId = full["QuotationId"];
+                        element = '<a href="Create/' + quotationId + '">' + val + '</a>';
                         return element;
                     },
                     "bSortable": true

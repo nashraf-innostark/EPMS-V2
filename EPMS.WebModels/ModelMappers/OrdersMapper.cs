@@ -48,7 +48,8 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerId = source.CustomerId,
                 CustomerNameE = source.Customer.CustomerNameE,
                 CustomerNameA = source.Customer.CustomerNameA,
-                QuotationId = source.QuotationId
+                QuotationId = source.QuotationId,
+                FromOrder = source.Quotation.FromOrder
             };
             order.QuotationNumber = source.Quotation != null ? source.Quotation.SerialNumber : "";
             if (source.Quotation.Invoices.Any())

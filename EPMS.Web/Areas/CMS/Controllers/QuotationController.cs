@@ -178,7 +178,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 return View(model);
             }
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
-            QuotationResponse quotResponse = quotationService.GetQuotationResponse(quotationId, 0, from);
+            QuotationResponse quotResponse = quotationService.GetQuotationResponse(quotationId);
             ViewBag.Customers = quotResponse.Customers.Any() ?
                         quotResponse.Customers.Select(x => x.CreateForDropDown()) : new List<CustomerDropDown>();
             ViewBag.IsIncludeNewJsTree = true;

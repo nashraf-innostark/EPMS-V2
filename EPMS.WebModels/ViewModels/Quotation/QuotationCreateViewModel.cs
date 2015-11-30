@@ -18,6 +18,7 @@ namespace EPMS.WebModels.ViewModels.Quotation
         [Range(0, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "DiscountRangeError")]
         public short? QuotationDiscount { get; set; }
         [Required(ErrorMessageResourceType = typeof (Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInstallmentAmountError")]
+        [Range(1, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "InstallmentRangeError")]
         public decimal FirstInstallement { get; set; }
         [Required(ErrorMessageResourceType = typeof (Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInsDueAtCompletionError")]
         public short FirstInsDueAtCompletion { get; set; }
@@ -42,6 +43,7 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public bool SecondInstallmentStatus { get; set; }
         public bool ThirdInstallmentStatus { get; set; }
         public bool FourthInstallmentStatus { get; set; }
+        public bool FromOrder { get; set; }
 
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
         // items for inventory pop up

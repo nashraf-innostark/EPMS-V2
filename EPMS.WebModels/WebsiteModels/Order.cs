@@ -21,6 +21,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string QuotationNumber { get; set; }
         public long InvoiceId { get; set; }
         public string InvoiceNumber { get; set; }
+        public bool FromOrder{ get; set; }
         public IList<Receipt> Receipts { get; set; }
     }
 }

@@ -74,7 +74,7 @@ namespace EPMS.Implementation.Services
             return Repository.GetAllQuotationByCustomerId(customerId);
         }
 
-        public QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from)
+        public QuotationResponse GetQuotationResponse(long quotationId)
         {
             QuotationResponse response = new QuotationResponse
             {
@@ -118,7 +118,7 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                quotation.SerialNumber = GetQuotationSerialNumber();
+                quotation.SerialNumber = !quotation.FromOrder ? GetQuotationSerialNumber() : "";
                 quotation.Status = (short) QuotationStatus.QuotationCreated;
                 Repository.Add(quotation);
                 Repository.SaveChanges();
@@ -133,6 +133,33 @@ namespace EPMS.Implementation.Services
                         rfqRepository.SaveChanges();
                     }
                 }
+                if (quotation.FromOrder)
+                {
+                    // Add Order
+                    Order orderToAdd = new Order
+                    {
+                        OrderNo = GetOrderSerialNumber(),
+                        QuotationId = quotation.QuotationId,
+                        CustomerId = quotation.CustomerId,
+                        OrderNotes = quotation.NotesEn,
+                        OrderStatus = (short)OrderStatus.Pending,
+                        RecCreatedBy = quotation.RecCreatedBy,
+                        RecCreatedDate = quotation.RecCreatedDate,
+                        RecLastUpdatedBy = quotation.RecLastUpdatedBy,
+                        RecLastUpdatedDate = quotation.RecLastUpdatedDate
+                    };
+                    ordersService.AddOrder(orderToAdd);
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceNumber = GetInvoiceNumber(),
+                        QuotationId = quotation.QuotationId,
+                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecCreatedDt = DateTime.Now,
+                        RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecLastUpdatedDt = DateTime.Now
+                    };
+                    invoiceService.AddInvoice(invoice);
+                }
                 SendNotification(quotation);
                 return new QuotationResponse { Status = true };
             }
@@ -146,11 +173,47 @@ namespace EPMS.Implementation.Services
             string year = DateTime.Now.ToString("yyyy");
             string month = DateTime.Now.ToString("MM");
             string day = DateTime.Now.ToString("dd");
-            var result = Repository.GetAll().OrderByDescending(x => x.RecCreatedDate);
+            var result = Repository.GetAll().Where(x => !x.FromOrder).OrderByDescending(x => x.RecCreatedDate);
             if (result.FirstOrDefault() != null)
             {
                 var rfq = result.FirstOrDefault();
                 string oId = rfq.SerialNumber.Substring(rfq.SerialNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
+        }
+        public string GetOrderSerialNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            var result = ordersService.GetAll().OrderByDescending(x => x.RecCreatedDate);
+            if (result.FirstOrDefault() != null)
+            {
+                var order = result.FirstOrDefault();
+                string oId = order.OrderNo.Substring(order.OrderNo.Length - 5, 5);
                 int id = Convert.ToInt32(oId) + 1;
                 int len = id.ToString(CultureInfo.InvariantCulture).Length;
                 string zeros = "";

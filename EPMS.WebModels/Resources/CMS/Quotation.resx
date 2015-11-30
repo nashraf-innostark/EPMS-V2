@@ -270,4 +270,7 @@
   <data name="QuotationCancelled" xml:space="preserve">
     <value>Quotation has been Cancelled.</value>
   </data>
+  <data name="InstallmentRangeError" xml:space="preserve">
+    <value>Please enter a number from 1 to 100.</value>
+  </data>
 </root>

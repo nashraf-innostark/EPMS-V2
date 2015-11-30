@@ -31,6 +31,7 @@ namespace EPMS.Models.DomainModels
         public long CustomerId { get; set; }
         public string SerialNumber { get; set; }
         public short Status { get; set; }
+        public bool FromOrder { get; set; }
 
         public virtual AspNetUser AspNetUser { get; set; }
         public virtual Customer Customer { get; set; }

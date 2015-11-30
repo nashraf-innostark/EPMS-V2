@@ -313,6 +313,15 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please enter a number from 1 to 100..
+        /// </summary>
+        public static string InstallmentRangeError {
+            get {
+                return ResourceManager.GetString("InstallmentRangeError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to In Words.
         /// </summary>
         public static string InWords {

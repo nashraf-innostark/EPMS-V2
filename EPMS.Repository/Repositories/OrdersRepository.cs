@@ -76,6 +76,7 @@ namespace EPMS.Repository.Repositories
                     Quotation = new Quotation
                     {
                         SerialNumber = s.Quotation != null ? s.Quotation.SerialNumber : "",
+                        FromOrder = s.Quotation != null && s.Quotation.FromOrder,
                         Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x=>x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
                     },
                     CustomerId = s.CustomerId,

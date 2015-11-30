@@ -64,14 +64,14 @@ namespace EPMS.Repository.Repositories
                 {
                     query =
                     s =>
-                        s.CustomerId == searchRequest.CustomerId && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        s.CustomerId == searchRequest.CustomerId && !s.FromOrder && (string.IsNullOrEmpty(searchRequest.SearchString) ||
                         (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
                 }
                 else
                 {
                     query =
                     s =>
-                        s.RecCreatedBy.Equals(searchRequest.UserId) && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        s.RecCreatedBy.Equals(searchRequest.UserId) && !s.FromOrder && (string.IsNullOrEmpty(searchRequest.SearchString) ||
                         (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
                 }
 
@@ -80,8 +80,8 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                     s =>
-                        string.IsNullOrEmpty(searchRequest.SearchString) ||
-                        (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString));
+                        !s.FromOrder && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
             }
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
