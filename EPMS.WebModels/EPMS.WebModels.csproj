@@ -77,6 +77,7 @@
     <Compile Include="ModelMappers\Inventory\DIF\DIFMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RFI\RFIMapper.cs" />
     <Compile Include="ModelMappers\Inventory\RIF\RIFMapper.cs" />
+    <Compile Include="ModelMappers\InvoiceMapper.cs" />
     <Compile Include="ModelMappers\IRFHistoryMapper.cs" />
     <Compile Include="ModelMappers\IRFItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\IRQMapper.cs" />
@@ -111,7 +112,9 @@
     <Compile Include="ModelMappers\PurchaseOrderMapper.cs" />
     <Compile Include="ModelMappers\QuickLaunchMapper.cs" />
     <Compile Include="ModelMappers\QuotationMapper.cs" />
+    <Compile Include="ModelMappers\ReceiptMapper.cs" />
     <Compile Include="ModelMappers\RecruitmentMapper.cs" />
+    <Compile Include="ModelMappers\Reports\ProjectReportMapper.cs" />
     <Compile Include="ModelMappers\RFIHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemHistoryMapper.cs" />
     <Compile Include="ModelMappers\RFIItemMapper.cs" />
@@ -183,6 +186,11 @@
       <DependentUpon>Quotation.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\CMS\Receipt.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Receipt.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CMS\RFQ.ar.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -414,6 +422,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Compile Include="Resources\CMS\Invoice.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Invoice.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Meeting\Meeting.ar.Designer.cs">
       <DependentUpon>Meeting.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -463,6 +476,16 @@
       <DependentUpon>Task.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Resources\Reports\Reports.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reports.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Reports\RfqOrder.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>RfqOrder.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
       <DependentUpon>RFI.ar.resx</DependentUpon>
@@ -759,6 +782,8 @@
     <Compile Include="ViewModels\InventorySection\InventorySectionViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseCreateViewModel.cs" />
     <Compile Include="ViewModels\InventoryWarehouse\InventoryWarehouseListViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\InvoiceListViewModel.cs" />
+    <Compile Include="ViewModels\Invoice\InvoiceViewModel.cs" />
     <Compile Include="ViewModels\IRF\IrfHistoryViewModel.cs" />
     <Compile Include="ViewModels\IRF\ItemReleaseCreateViewModel.cs" />
     <Compile Include="ViewModels\IRF\ItemReleaseDetailViewModel.cs" />
@@ -776,6 +801,7 @@
     <Compile Include="ViewModels\Orders\OrdersCreateViewModel.cs" />
     <Compile Include="ViewModels\Orders\OrdersListViewModel.cs" />
     <Compile Include="ViewModels\Partner\PartnerViewModel.cs" />
+    <Compile Include="ViewModels\Payment\PaypalViewModel.cs" />
     <Compile Include="ViewModels\Payroll\PayrollViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountListViewModel.cs" />
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
@@ -795,7 +821,17 @@
     <Compile Include="ViewModels\Quotation\QuotationCreateViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationDetailViewModel.cs" />
     <Compile Include="ViewModels\Quotation\QuotationListViewModel.cs" />
+    <Compile Include="ViewModels\Quotation\RfqRfqItemsForQuotation.cs" />
+    <Compile Include="ViewModels\Receipt\ReceiptListViewModel.cs" />
+    <Compile Include="ViewModels\Receipt\ReceiptViewModel.cs" />
     <Compile Include="ViewModels\Recruitment\RecruitmentViewModel.cs" />
+    <Compile Include="ViewModels\Reports\DetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\CreateViewModel.cs" />
+    <Compile Include="ViewModels\Reports\ListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\RfqOrderCreateViewModel.cs" />
+    <Compile Include="ViewModels\Reports\TaskReportDetailVeiwModel.cs" />
+    <Compile Include="ViewModels\Reports\TasksReportListViewModel.cs" />
+    <Compile Include="ViewModels\Reports\TaskReportsCreateViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestListViewModel.cs" />
     <Compile Include="ViewModels\Request\RequestViewModel.cs" />
     <Compile Include="ViewModels\RFI\RFIHistoryViewModel.cs" />
@@ -836,7 +872,7 @@
     <Compile Include="WebsiteModels\Color.cs" />
     <Compile Include="WebsiteModels\Common\JsTree.cs" />
     <Compile Include="WebsiteModels\Common\JsTreeJson.cs" />
-    <Compile Include="WebsiteModels\Common\RFQStatus.cs" />
+    <Compile Include="WebsiteModels\Common\ProjectStatus.cs" />
     <Compile Include="WebsiteModels\CompanyBankDetail.cs" />
     <Compile Include="WebsiteModels\CompanyDocumentDetail.cs" />
     <Compile Include="WebsiteModels\CompanyLicenseInformation.cs" />
@@ -846,6 +882,7 @@
     <Compile Include="WebsiteModels\ContactList.cs" />
     <Compile Include="WebsiteModels\ContactUs.cs" />
     <Compile Include="WebsiteModels\Customer.cs" />
+    <Compile Include="WebsiteModels\CustomerDropDown.cs" />
     <Compile Include="WebsiteModels\DashboardWidgetPreferences.cs" />
     <Compile Include="WebsiteModels\Department.cs" />
     <Compile Include="WebsiteModels\DIF.cs" />
@@ -858,6 +895,7 @@
     <Compile Include="WebsiteModels\InventoryItem.cs" />
     <Compile Include="WebsiteModels\InventoryItemForVariation.cs" />
     <Compile Include="WebsiteModels\InventorySections.cs" />
+    <Compile Include="WebsiteModels\Invoice.cs" />
     <Compile Include="WebsiteModels\ItemImage.cs" />
     <Compile Include="WebsiteModels\ItemManufacturer.cs" />
     <Compile Include="WebsiteModels\ItemRelease.cs" />
@@ -896,6 +934,7 @@
     <Compile Include="WebsiteModels\Project.cs" />
     <Compile Include="WebsiteModels\ProjectsForDDL.cs" />
     <Compile Include="WebsiteModels\ProjectTask.cs" />
+    <Compile Include="WebsiteModels\ProjectTaskDropDown.cs" />
     <Compile Include="WebsiteModels\PurchaseOrder.cs" />
     <Compile Include="WebsiteModels\PurchaseOrderItem.cs" />
     <Compile Include="WebsiteModels\QuickLaunchItems.cs" />
@@ -903,11 +942,14 @@
     <Compile Include="WebsiteModels\QuickLaunchUserItems.cs" />
     <Compile Include="WebsiteModels\Quotation.cs" />
     <Compile Include="WebsiteModels\QuotationItemDetail.cs" />
+    <Compile Include="WebsiteModels\Receipt.cs" />
+    <Compile Include="WebsiteModels\Report.cs" />
     <Compile Include="WebsiteModels\Request.cs" />
     <Compile Include="WebsiteModels\RequestDetail.cs" />
     <Compile Include="WebsiteModels\RFI.cs" />
     <Compile Include="WebsiteModels\RFIItem.cs" />
     <Compile Include="WebsiteModels\RFQ.cs" />
+    <Compile Include="WebsiteModels\RfqDropDown.cs" />
     <Compile Include="WebsiteModels\RFQItem.cs" />
     <Compile Include="WebsiteModels\RIF.cs" />
     <Compile Include="WebsiteModels\RIFItem.cs" />
@@ -976,6 +1018,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Quotation.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Receipt.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Receipt.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\RFQ.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1193,6 +1239,10 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Vendor.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Invoice.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Invoice.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Meeting\Meeting.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.ar.Designer.cs</LastGenOutput>
@@ -1233,6 +1283,14 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Reports.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Reports.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\RfqOrder.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>RfqOrder.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1365,6 +1423,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Paypal\Paypal.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Paypal.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Product\Product.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

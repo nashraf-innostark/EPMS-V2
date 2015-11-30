@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -12,6 +13,7 @@ namespace EPMS.WebModels.ModelMappers
             return new RFQ
             {
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 CustomerId = source.CustomerId,
                 Notes = source.Notes,
                 Discount = source.Discount,
@@ -29,6 +31,7 @@ namespace EPMS.WebModels.ModelMappers
             return new WebsiteModels.RFQ
             {
                 RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
                 CustomerId = source.CustomerId,
                 Notes = source.Notes,
                 Discount = source.Discount,
@@ -41,6 +44,16 @@ namespace EPMS.WebModels.ModelMappers
                 RFQItems = source.RFQItems.Select(x=>x.CreateFromServerToClient()).ToList(),
                 CustomerNameEn = source.Customer != null ? source.Customer.CustomerNameE : "",
                 CustomerNameAr = source.Customer != null ? source.Customer.CustomerNameA : "",
+            };
+        }
+
+        public static WebsiteModels.RfqDropDown CreateForDropDown(this RFQ source)
+        {
+            return new WebsiteModels.RfqDropDown
+            {
+                RFQId = source.RFQId,
+                SerialNumber = source.SerialNumber,
+                Discount = source.Discount
             };
         }
     }

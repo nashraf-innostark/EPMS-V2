@@ -19,6 +19,7 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
+        public string SerialNumber { get; set; }
         public string CustomerNameEn { get; set; }
         public string CustomerNameAr { get; set; }
 

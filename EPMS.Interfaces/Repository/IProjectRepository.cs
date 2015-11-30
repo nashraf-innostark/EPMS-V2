@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels.Reports;
 
 namespace EPMS.Interfaces.Repository
 {
@@ -14,6 +16,8 @@ namespace EPMS.Interfaces.Repository
         Project GetProjectForDashboard(string requester, long projectId);
         IEnumerable<Project> FindProjectByCustomerId(long id);
         IEnumerable<Project> GetAllProjects(string requester, int status);
+        IEnumerable<Project> GetAllProjects(DateTime createdBefore);
         IEnumerable<Project> GetAllProjectsByEmployeeId(long employeeId);
+        IEnumerable<Project> GetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
     }
 }

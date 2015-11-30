@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using EPMS.WebModels.ViewModels.Customer;
+using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -30,7 +31,7 @@ namespace EPMS.WebModels.ModelMappers
                 LatestOrder =
                     (source.Orders != null && source.Orders.Any(c => c.CustomerId == source.CustomerId))
                         ? source.Orders.Where(c => c.CustomerId == source.CustomerId)
-                            .OrderBy(c => c.OrderDate)
+                            .OrderBy(c => c.RecCreatedDate)
                             .FirstOrDefault()
                             .OrderNo
                         : string.Empty,
@@ -90,6 +91,16 @@ namespace EPMS.WebModels.ModelMappers
             if (firstOrDefault != null)
                 contactList.Email = firstOrDefault.Email;
             return contactList;
+        }
+
+        public static CustomerDropDown CreateForDropDown(this Models.DomainModels.Customer source)
+        {
+            return new CustomerDropDown
+            {
+                CustomerId = source.CustomerId,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA
+            };
         }
     }
 }

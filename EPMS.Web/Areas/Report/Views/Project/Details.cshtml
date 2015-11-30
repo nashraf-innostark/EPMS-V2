@@ -1,5 +1,10 @@
-﻿@{
+﻿@using System.Configuration
+@using EPMS.WebModels.WebsiteModels.Common
+@model EPMS.WebModels.ViewModels.Reports.DetailVeiwModel
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int taskSerial = 1;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -9,8 +14,14 @@
                 <i class="icon-photon home"></i>
             </a>
         </li>
+        <li>
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/ProjectsAndTasks/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
+            </a>
+
+        </li>
         <li class="current">
-            @EPMS.WebModels.Resources.PMS.Project.ProjectsList
+            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
         </li>
     </ul>
 </div>
@@ -18,15 +29,12 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.PMS.Project.ListPageHeading</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
 </header>
 <!-- Page Heading End-->
-<!--Notifications begin-->
-@Html.Partial("_Alert")
-<!--Notifications end-->
 
 <form class="form-horizontal" id="validation_form">
-    <div class="container-fluid">
+    <div class="container-fluid" id="container">
         <div class="control-group row-fluid">
             <!--Simple Chart begin-->
             <div class="control-group row-fluid">
@@ -38,51 +46,55 @@
             <!--Simple Chart end-->
         </div>
         <script>
-    $(".auto-resize").keyup(function () {
-        autoGrowField($(this).get(0));
-    });
-        </script>
+            var img;
+            var theCanvas;
+            $(".auto-resize").keyup(function () {
+                autoGrowField($(this).get(0));
+            });
 
-
-        <script type="text/javascript">
-            $(window).load(function () {
-
-
-
+            $(document).ready(function () {
+                $(".disableBtn").attr("disabled", true);
+                $('#tableSortableResMed,#tableSortableResMed2').dataTable({
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function () {
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+                DrawGraph();
+                // html to canvas
+                // here I am converting the html of graph to canvas
+                html2canvas($("#chart_01"), {
+                    onrendered: function (canvas) {
+                        // save canvas
+                        theCanvas = canvas;
+                        var imgId = "report_" + '@Model.ReportId';
+                        SaveCanvasAsImage(theCanvas, imgId);
+                        UploadImage(imgId);
+                    }
+                });
+            });
+            function DrawGraph() {
                 var markings = [
 
-        { color: "Red", lineWidth: 1, xaxis: { from: 1299301600000, to: 1299301600000 } }
+                    { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
                 ];
-                var datasets = {
-                    "Price": {
-                        label: "Price",
-                        data: [[1249301600000, 483994], [1349301600000, 483994]]
 
-                    },
-                    "Cost": {
-                        label: "Cost",
-                        data: [[1249301600000, 200000], [1349301600000, 200000]]
+                var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
 
-                    },
-                    "Task1": {
-                        label: "Task1",
-                        data: [[1249301600000, 500000], [1249901600000, 500000]]
-
-                    },
-                    "Task2": {
-                        label: "Task2",
-                        data: [[1249901600000, 500000], [1259901600000, 500000]]
-
-                    },
-                    "Task3": {
-                        label: "Task3",
-                        data: [[1259901600000, 500000], [1299901600000, 500000]]
-
-                    }
+                var parsed = JSON.parse(graphItems);
 
 
-                };
+                var datasets = [];
 
+                $.each(parsed, function (index, val) {
+                    var dataset = {
+                        label: val.ItemLabel,
+                        data: [[val.ItemValue[0].data[0].dataValue[0].TimeStamp, val.ItemValue[0].data[0].dataValue[0].Value], [val.ItemValue[0].data[0].dataValue[1].TimeStamp, val.ItemValue[0].data[0].dataValue[1].Value]]
+                    };
+                    datasets.push(dataset);
+                });
                 var i = 0;
                 $.each(datasets, function (key, val) {
                     val.color = i;
@@ -137,7 +149,6 @@
                             if (ymin > d2) {
                                 ymin = d2;
                             }
-
                         }
 
                         if (xmaxl < xmax) {
@@ -186,7 +197,6 @@
                             pan: {
                                 interactive: true
                             }
-
                         });
                     }
                 }
@@ -225,36 +235,21 @@
                 $("#chart_01").bind("plotpan", function (event, plot) {
                     var axes = plot.getAxes();
                     $(".message").html("Panning to x: " + axes.xaxis.min.toFixed(2)
-                    + " &ndash; " + axes.xaxis.max.toFixed(2)
-                    + " and y: " + axes.yaxis.min.toFixed(2)
-                    + " &ndash; " + axes.yaxis.max.toFixed(2));
+                        + " &ndash; " + axes.xaxis.max.toFixed(2)
+                        + " and y: " + axes.yaxis.min.toFixed(2)
+                        + " &ndash; " + axes.yaxis.max.toFixed(2));
                 });
 
                 $("#chart_01").bind("plotzoom", function (event, plot) {
                     var axes = plot.getAxes();
                     $(".message").html("Zooming to x: " + axes.xaxis.min.toFixed(2)
-                    + " &ndash; " + axes.xaxis.max.toFixed(2)
-                    + " and y: " + axes.yaxis.min.toFixed(2)
-                    + " &ndash; " + axes.yaxis.max.toFixed(2));
+                        + " &ndash; " + axes.xaxis.max.toFixed(2)
+                        + " and y: " + axes.yaxis.min.toFixed(2)
+                        + " &ndash; " + axes.yaxis.max.toFixed(2));
                 });
 
                 // drawGraphs();
-            });
-        </script>
-        <script>
-                       $(document).ready(function() {
-                           $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
-                               "sPaginationType": "bootstrap",
-                               "fnInitComplete": function(){
-                                   $(".dataTables_wrapper select").select2({
-                                       dropdownCssClass: 'noSearch'
-                                   });
-                               }
-                           });
-                           //                            $("#simpleSelectBox").select2({
-                           //                                dropdownCssClass: 'noSearch'
-                           //                            });
-                       });
+            }
         </script>
 
 
@@ -274,40 +269,37 @@
                                 <th>Delivery Date</th>
                                 <th>Total Number of Tasks</th>
                                 <th>Status</th>
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
 
-                                <td>1</td>
-                                <td>  Website development and designing</td>
-                                <td>
-                                    20
+                            @foreach (var project in Model.Projects)
+                            {
+                                <tr class="gradeX">
 
-                                </td>
-                                <td>
-                                    10
+                                    <td>1</td>
+                                    <td>@project.NameE</td>
+                                    <td>
+                                        @project.Price
+                                    </td>
+                                    <td>
+                                        @project.OtherCost
+                                    </td>
+                                    <td>
+                                        @project.StartDate
+                                    </td>
+                                    <td>
+                                        @project.EndDate
+                                    </td>
+                                    <td>
+                                        @project.TotalTasks
+                                    </td>
+                                    <td>
+                                        @((ProjectStatus)project.Status)
+                                    </td>
 
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    10
-                                </td>
-                                <td>
-                                    finished
-                                </td>
-
-                            </tr>
-
+                                </tr>
+                            }
                         </tbody>
                     </table>
 
@@ -327,33 +319,30 @@
                                 <th>Start Date</th>
                                 <th>Delivery Date</th>
                                 <th>Status</th>
-
-
-
-
                             </tr>
                         </thead>
                         <tbody>
-                            <tr class="gradeX">
+                            @foreach (var task in Model.ProjectTasks)
+                            {
+                                <tr class="gradeX">
 
-                                <td>1</td>
-                                <td> Requirement Gathering </td>
+                                    <td>@(taskSerial++)</td>
+                                    <td>@task.TaskNameE</td>
+                                    <td>
+                                        @task.TotalCost
+                                    </td>
+                                    <td>
+                                        @task.StartDate
+                                    </td>
+                                    <td>
+                                        @task.EndDate
+                                    </td>
+                                    <td>
+                                        @(task.TaskProgressText)
+                                    </td>
 
-                                <td>
-                                    1000
-
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    5/1/2015
-                                </td>
-                                <td>
-                                    finished
-                                </td>
-
-                            </tr>
+                                </tr>
+                            }
 
 
                         </tbody>
@@ -373,9 +362,52 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="button" class="btn">Generate Report As PDF</button>
+                <a class="btn disableBtn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                @*<button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>*@
             </div>
 
         </div>
     </div><!-- end form -->
 </form>
+<div id="GraphImage" style="display: none">
+    <img id="report_@Model.ReportId" />
+</div>
+<script src="~/Scripts/jsPDF/jsPDF.js"></script>
+<script src="~/Scripts/html2canvas.js"></script>
+<script>
+
+    (function () {
+        var
+            form = $('#container'),
+            cache_width = form.width(),
+            a4 = [595.28, 841.89];  // for a4 size paper width and height
+
+        $('#generatePDF').on('click', function () {
+            $('body').scrollTop(0);
+            createPDF();
+        });
+        //create pdf
+        function createPDF() {
+            getCanvas().then(function (canvas) {
+                var
+                    img = canvas.toDataURL("image/png"),
+                    doc = new jsPDF({
+                        unit: 'px',
+                        format: 'a4'
+                    });
+                doc.addImage(img, 'JPEG', 20, 20);
+                doc.save('Project-Report.pdf');
+                form.width(cache_width);
+            });
+        }
+
+        // create canvas object
+        function getCanvas() {
+            form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+            return html2canvas(form, {
+                imageTimeout: 2000,
+                removeContainer: true
+            });
+        }
+    }());
+</script>

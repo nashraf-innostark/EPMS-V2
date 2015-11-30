@@ -1,13 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
+using System.Linq;
+using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
+using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.Models.ResponseModels.NotificationResponseModel;
+using Microsoft.AspNet.Identity;
 using Project = EPMS.Models.DomainModels.Project;
 
 namespace EPMS.Implementation.Services
@@ -17,23 +22,46 @@ namespace EPMS.Implementation.Services
         private readonly INotificationRepository notificationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IQuotationRepository Repository;
+        private readonly IQuotationItemRepository itemRepository;
         private readonly INotificationService notificationService;
         private readonly ICustomerService customerService;
-        private readonly IOrdersService ordersService;
+        private readonly IItemVariationRepository variationRepository;
         private readonly IRFQRepository rfqRepository;
+        private readonly ICompanyProfileRepository cpRepository;
+        private readonly IOrdersService ordersService;
+        private readonly IInvoiceService invoiceService;
+        private readonly IInvoiceRepository invoiceRepository;
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,IQuotationRepository repository,INotificationService notificationService, ICustomerService customerService, IOrdersService ordersService, IRFQRepository rfqRepository)
+        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService, IInvoiceRepository invoiceRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
             Repository = repository;
             this.notificationService = notificationService;
             this.customerService = customerService;
-            this.ordersService = ordersService;
             this.rfqRepository = rfqRepository;
+            this.variationRepository = variationRepository;
+            this.itemRepository = itemRepository;
+            this.cpRepository = cpRepository;
+            this.ordersService = ordersService;
+            this.invoiceService = invoiceService;
+            this.invoiceRepository = invoiceRepository;
+        }
+
+        public QuotationDetailResponse GetQuotationDetail(long quotationId)
+        {
+            QuotationDetailResponse response = new QuotationDetailResponse
+            {
+                Profile = cpRepository.GetCompanyProfile()
+            };
+            if (quotationId > 0)
+            {
+                response.Quotation = Repository.Find(quotationId);
+            }
+            return response;
         }
 
         public IEnumerable<Quotation> GetAll()
@@ -50,36 +78,28 @@ namespace EPMS.Implementation.Services
         {
             QuotationResponse response = new QuotationResponse
             {
-                Customers = customerService.GetAll()
+                Customers = customerService.GetAll().ToList(),
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList(),
             };
-            if (from == "Client")
+            if (quotationId != 0)
             {
-                response.Orders = ordersService.GetOrdersByCustomerId(customerId);
-            }
-            else
-            {
-                if (quotationId == 0)
+                response.Quotation = Repository.Find(quotationId);
+                if (response.Quotation != null)
                 {
-                    response.Orders = ordersService.GetAll();
-                }
-                else
-                {
-                    response.Quotation = Repository.Find(quotationId);
-                    if (response.Quotation != null)
-                    {
-                        response.Orders = ordersService.GetOrdersByCustomerId(response.Quotation.CustomerId);
-                    }
+                    response.Rfqs = rfqRepository.GetRfqsByCustomerId(response.Quotation.CustomerId).ToList();
                 }
             }
             return response;
         }
 
-        public QuotationResponse GetQuotationResponseForRfq(long customerId, long rfqId)
+        public QuotationResponse GetRfqForQuotationResponse(long rfqId)
         {
             QuotationResponse response = new QuotationResponse
             {
-                Rfq = rfqRepository.FindByCustomerAndRfqId(customerId, rfqId),
-                Customers = customerService.GetAll()
+                Rfq = rfqRepository.FindByRfqId(rfqId),
+                Customers = customerService.GetAll().ToList(),
+                Rfqs = rfqRepository.GetAllPendingRfqs().ToList(),
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList()
             };
             return response;
         }
@@ -94,32 +114,149 @@ namespace EPMS.Implementation.Services
             return Repository.FindQuotationByIdForProjectDetail(id);
         }
 
-        public long AddQuotation(Quotation quotation)
-        {
-            Repository.Add(quotation);
-            Repository.SaveChanges();
-            SendNotification(quotation);
-            return quotation.QuotationId;
-        }
-
-        public bool UpdateQuotation(Quotation quotation)
+        public QuotationResponse AddQuotation(Quotation quotation)
         {
             try
             {
-                Repository.Update(quotation);
+                quotation.SerialNumber = GetQuotationSerialNumber();
+                quotation.Status = (short) QuotationStatus.QuotationCreated;
+                Repository.Add(quotation);
                 Repository.SaveChanges();
+                if (quotation.RFQId != null)
+                {
+                    // update RFQ status
+                    var rfq = rfqRepository.Find((long)quotation.RFQId);
+                    if (rfq != null)
+                    {
+                        rfq.Status = (int)RFQStatus.QoutationCreated;
+                        rfqRepository.Update(rfq);
+                        rfqRepository.SaveChanges();
+                    }
+                }
                 SendNotification(quotation);
+                return new QuotationResponse { Status = true };
+            }
+            catch (Exception)
+            {
+                return new QuotationResponse { Status = false, Customers = customerService.GetAll().ToList() };
+            }
+        }
+        public string GetQuotationSerialNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            var result = Repository.GetAll().OrderByDescending(x => x.RecCreatedDate);
+            if (result.FirstOrDefault() != null)
+            {
+                var rfq = result.FirstOrDefault();
+                string oId = rfq.SerialNumber.Substring(rfq.SerialNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
+        }
+
+        public QuotationResponse UpdateQuotation(Quotation quotation)
+        {
+            try
+            {
+                Quotation dbData = Repository.Find(quotation.QuotationId);
+                if (dbData != null)
+                {
+                    var dataToUpdate = dbData.UpdateDbDataFromClient(quotation);
+                    Repository.Update(dataToUpdate);
+                    Repository.SaveChanges();
+
+                    // update items detail
+                    var itemsInDb = dbData.QuotationItemDetails.ToList();
+                    foreach (var detail in quotation.QuotationItemDetails)
+                    {
+                        if (detail.ItemId > 0)
+                        {
+                            var itemInDb = itemsInDb.FirstOrDefault(x => x.ItemId == detail.ItemId);
+                            if (itemInDb != null)
+                            {
+                                var itemToUpdate = itemInDb.UpdateDbDataFromClient(detail);
+                                itemRepository.Update(itemToUpdate);
+                                itemRepository.SaveChanges();
+                                itemsInDb.RemoveAll(x => x.ItemId == detail.ItemId);
+                            }
+                        }
+                        else
+                        {
+                            itemRepository.Add(detail);
+                            itemRepository.SaveChanges();
+                        }
+                    }
+
+                    SendNotification(quotation);
+                    return new QuotationResponse { Status = true };
+                }
+            }
+            catch (Exception)
+            {
+            }
+            return new QuotationResponse { Status = false, Customers = customerService.GetAll().ToList() };
+        }
+
+        public bool UpdateStatus(QuotationStatusRequest request)
+        {
+            try
+            {
+                Quotation quotation = Repository.Find(request.QuotationId);
+                if (quotation != null)
+                {
+                    quotation.Status = request.Status;
+                    Repository.Update(quotation);
+                    Repository.SaveChanges();
+                }
+                if (request.Status == (short)QuotationStatus.OrderCreated)
+                {
+                    ordersService.AddOrder(request.Order);
+                    Invoice invoice = new Invoice
+                    {
+                        InvoiceNumber = GetInvoiceNumber(),
+                        QuotationId = (long)request.Order.QuotationId,
+                        RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecCreatedDt = DateTime.Now,
+                        RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
+                        RecLastUpdatedDt = DateTime.Now
+                    };
+                    invoiceService.AddInvoice(invoice);
+                }
                 return true;
             }
             catch (Exception)
             {
-                return false;
             }
+            return false;
         }
 
         public void DeleteQuotation(Quotation quotation)
         {
-            
+
         }
 
         public QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest)
@@ -211,6 +348,44 @@ namespace EPMS.Implementation.Services
                     aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
                 notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
             }
+        }
+
+        public string GetInvoiceNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+
+            var invoice = invoiceRepository.GetLastInvoice();
+
+            if (invoice != null)
+            {
+                string oId = invoice.InvoiceNumber.Substring(invoice.InvoiceNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
     }
 }

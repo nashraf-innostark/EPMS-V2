@@ -43,8 +43,9 @@ namespace EPMS.Repository.Repositories
 
             new Dictionary<QuotationByColumn, Func<Quotation, object>>
                     {
-                        { QuotationByColumn.ClientName,  c => c.ClientName},
-                        { QuotationByColumn.OrderId, c => c.OrderId}
+                        { QuotationByColumn.SerialNumber,  c => c.SerialNumber},
+                        { QuotationByColumn.ClientName,  c => c.Customer.CustomerNameE},
+                        //{ QuotationByColumn.OrderId, c => c.OrderId}
                     };
         #endregion
 
@@ -54,7 +55,7 @@ namespace EPMS.Repository.Repositories
             int fromRow = searchRequest.iDisplayStart;
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
 
-            long orderId = Convert.ToInt64(searchRequest.SearchString);
+            long rfqNo = Convert.ToInt64(searchRequest.SearchString);
 
             Expression<Func<Quotation, bool>> query;
             if (!searchRequest.AllowedAll)
@@ -63,15 +64,15 @@ namespace EPMS.Repository.Repositories
                 {
                     query =
                     s =>
-                        ((s.CustomerId == searchRequest.CustomerId) && (string.IsNullOrEmpty(searchRequest.SearchString) || 
-                        (s.ClientName.Contains(searchRequest.SearchString) || s.OrderId == orderId)));
+                        s.CustomerId == searchRequest.CustomerId && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
                 }
                 else
                 {
                     query =
                     s =>
-                        ((s.RecCreatedBy.Equals(searchRequest.UserId)) && (string.IsNullOrEmpty(searchRequest.SearchString) ||
-                          (s.ClientName.Contains(searchRequest.SearchString) || s.OrderId == orderId)));
+                        s.RecCreatedBy.Equals(searchRequest.UserId) && (string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString)));
                 }
 
             }
@@ -79,9 +80,8 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                     s =>
-                        (string.IsNullOrEmpty(searchRequest.SearchString) ||
-                        ((s.ClientName.Contains(searchRequest.SearchString)) ||
-                        s.OrderId == orderId));
+                        string.IsNullOrEmpty(searchRequest.SearchString) ||
+                        (s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString));
             }
 
             IEnumerable<Quotation> quotations = searchRequest.sSortDir_0 == "asc" ?
@@ -95,7 +95,8 @@ namespace EPMS.Repository.Repositories
 
         public Quotation FindQuotationByOrderId(long orderId)
         {
-            return DbSet.FirstOrDefault(x => x.OrderId == orderId);
+            //return DbSet.FirstOrDefault(x => x.OrderId == orderId);
+            return null;
         }
 
         public IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId)

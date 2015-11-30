@@ -42,13 +42,26 @@
         <div class="row-fluid">
             <div class="span12">
                 <table id="QuotationTable" class="table table-striped table-responsive">
-                    <thead>
-                        <tr>
-                            <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
-                            <th>@EPMS.WebModels.Resources.CMS.Quotation.Quot</th>
-                            <th>@EPMS.WebModels.Resources.CMS.Quotation.ClientName</th>
-                        </tr>
-                    </thead>
+
+                    @if (ViewBag.RoleName == "Customer")
+                    {
+                        <thead>
+                            <tr>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.Quot</th>
+                            </tr>
+                        </thead>
+                    }
+                    else
+                    {
+                        <thead>
+                            <tr>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.Quot</th>
+                                <th>@EPMS.WebModels.Resources.CMS.Quotation.ClientName</th>
+                            </tr>
+                        </thead>
+                    }                    
                     <tbody></tbody>
                 </table>
             </div>
@@ -57,66 +70,124 @@
 </form>
 
 <script type="text/javascript">
+    var oTable;
     $(document).ready(function () {
         var url = "/CMS/Quotation/Index";
         var siteUrl = $('#siteURL').val();
-        var oTable = $('#QuotationTable').dataTable({
-            "sPaginationType": "bootstrap",
-            "bProcessing": true,
-            "bServerSide": true,
-            "sAjaxSource": siteUrl + "/Quotation/Index",
-            "sServerMethod": "POST",
-            "aoColumns": [
-                {
-                    "aTargets": [0],
-                    "sDefaultContent": "",
-                    "bVisible": true,
-                    "bSortable": false
-                },
-                {
-                    "aTargets": [1],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var element = "";
-                        var val = full["QuotationId"];
-                        var quoId = full["QuotationId"];
-                        if ('@userRole' == "Admin") {
-                            element = '<a href="Create/' + quoId + '">' + "Quotation " + val + '</a>';
-                        }
-                        if ('@userRole' == "Customer") {
-                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
-                        }
-                        if ('@userRole' == "Employee") {
-                            element = '<a href="Detail/' + quoId + '">' + "Quotation " + val + '</a>';
-                        }
-                        return element;
+        if ('@ViewBag.RoleName' == 'Customer') {
+            oTable = $('#QuotationTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": siteUrl + "/CMS/Quotation/Index",
+                "sServerMethod": "POST",
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "",
+                        "bVisible": true,
+                        "bSortable": false
                     },
-                    "bSortable": true
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var element = "";
+                            var val = full["SerialNumber"];
+                            var quoId = full["QuotationId"];
+                            if ('@userRole' == "Admin") {
+                                element = '<a href="Create/' + quoId + '">' + val + '</a>';
+                            }
+                            if ('@userRole' == "Customer") {
+                                element = '<a href="Detail/' + quoId + '">' + val + '</a>';
+                            }
+                            if ('@userRole' == "Employee") {
+                                element = '<a href="Detail/' + quoId + '">' + val + '</a>';
+                            }
+                            return element;
+                        },
+                        "bSortable": true
+                    }
+                ],
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
                 },
-                {
-                    "aTargets": [2],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ClientName"];
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    var oSettings = oTable.fnSettings();
+                    $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                    return nRow;
+                },
+            });
+        } else {
+            oTable = $('#QuotationTable').dataTable({
+                "sPaginationType": "bootstrap",
+                "bProcessing": true,
+                "bServerSide": true,
+                "sAjaxSource": siteUrl + "/CMS/Quotation/Index",
+                "sServerMethod": "POST",
+                "aoColumns": [
+                    {
+                        "aTargets": [0],
+                        "sDefaultContent": "",
+                        "bVisible": true,
+                        "bSortable": false
                     },
-                    "bSortable": true
-                }
-            ],
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "search", "value": $('input').val() });
-            },
-            "oLanguage": {
-                "sProcessing": "Fetching record(s)",
-                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
-                "sInfoEmpty": "No matching record(s) found",
-                "sEmptyTable": "No record(s) found",
-            },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                var oSettings = oTable.fnSettings();
-                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
-                return nRow;
-            },
-        });
+                    {
+                        "aTargets": [1],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            var element = "";
+                            var val = full["SerialNumber"];
+                            var quoId = full["QuotationId"];
+                            if ('@userRole' == "Admin") {
+                                element = '<a href="Create/' + quoId + '">' + val + '</a>';
+                            }
+                            if ('@userRole' == "Customer") {
+                                element = '<a href="Detail/' + quoId + '">' + val + '</a>';
+                            }
+                            if ('@userRole' == "Employee") {
+                                element = '<a href="Detail/' + quoId + '">' + val + '</a>';
+                            }
+                            return element;
+                        },
+                        "bSortable": true
+                    },
+                    {
+                        "aTargets": [2],
+                        "sDefaultContent": "No Data",
+                        "mRender": function (data, type, full) {
+                            if ('@direction' == "ltr") {
+                                return full["ClientNameEn"];
+                            } else {
+                                return full["ClientNameAr"];
+                            }
+                        },
+                        "bSortable": true
+                    }
+                ],
+                "fnServerParams": function (aoData) {
+                    aoData.push({ "name": "search", "value": $('input').val() });
+                },
+                "oLanguage": {
+                    "sProcessing": "Fetching record(s)",
+                    //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                    "sInfoEmpty": "No matching record(s) found",
+                    "sEmptyTable": "No record(s) found",
+                },
+                "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                    var oSettings = oTable.fnSettings();
+                    $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                    return nRow;
+                },
+            });
+        }
+
         $(".dataTables_length select").select2({
             dropdownCssClass: 'noSearch'
         });

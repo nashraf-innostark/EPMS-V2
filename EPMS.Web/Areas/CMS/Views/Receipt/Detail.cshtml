@@ -1,0 +1,173 @@
+﻿@model EPMS.WebModels.ViewModels.Receipt.ReceiptViewModel
+
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Receipt.Detail;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string date = Model.Receipt.RecCreatedDt.ToString();
+    string[] str = date.Split(' ');
+    date = str[0];
+}
+
+<!-- Navigation Bar -->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="~/CMS/Receipt/Index">
+                @EPMS.WebModels.Resources.CMS.Receipt.List
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+<!-- Page heading -->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+<!-- Page heading ends -->
+@using (Html.BeginForm("Detail", "Receipt", FormMethod.Post, new { @class = "form-horizontal", @id = "receiptForm", role = "form", enctype = "multipart/form-data" }))
+{
+    <div class="container-fluid">
+        @Html.HiddenFor(model => model.Invoice.InvoiceId)
+        @Html.HiddenFor(model => model.Invoice.QuotationId)
+
+        <div class="control-group row-fluid">
+
+            <div class="form-legend centTitle">
+                @EPMS.WebModels.Resources.CMS.Receipt.Title
+            </div>
+            <div class="invoice-info">
+                <div class="invoice-name">
+                    @(direction == "ltr" ? Model.CompanyProfile.CompanyNameE : Model.CompanyProfile.CompanyNameA)
+                </div>
+                <div class="controls">
+                    <a href="javascript:print()" rel="tooltip" title="" data-original-title="Print statistics" class="print"><i class="icon-print"></i> @EPMS.WebModels.Resources.CMS.Invoice.Print</a>
+                </div>
+                @if (!(string.IsNullOrEmpty(ViewBag.LogoPath)))
+                {
+                    <img class="employeeImg" src='@Url.Content(ViewBag.LogoPath)' alt="user" />
+                }
+                else
+                {
+                    <img class="employeeImg" alt="Logo" />
+                }
+                
+                <div class="control-group row-fluid">
+
+                    <div class="span3">
+                        <div class="invoice-from">
+                            <span>@ViewBag.EmployeeName</span>
+                            <strong>
+                                @(direction == "ltr" ? Model.CompanyProfile.CompanyNameE : Model.CompanyProfile.CompanyNameA)
+                            </strong>
+                            <address>
+                                @Model.CompanyProfile.CompanyAddressE <br />
+                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Invoice.Phone:</abbr> @Model.CompanyProfile.CompanyNumber <br>
+                                <abbr title="Website">@EPMS.WebModels.Resources.CMS.Invoice.Website:</abbr> @Model.CompanyProfile.CompanyWebsite <br>
+                                <abbr title="invoiceMail">@EPMS.WebModels.Resources.CMS.Invoice.Email:</abbr> @Model.CompanyProfile.CompanyEmail <br>
+                            </address>
+                        </div>
+                    </div>
+                    <div class="span3">
+                        <div class="invoice-to">
+                            <span>@EPMS.WebModels.Resources.CMS.Quotation.ClientName</span>
+                            <strong>@(direction == "ltr" ? Model.Quotation.ClientNameEn : Model.Quotation.ClientNameAr)</strong>
+                            <address>
+                                @EPMS.WebModels.Resources.CMS.Quotation.StreetAddress
+                                @Model.Quotation.CustomerAddress <br>
+                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Quotation.Phone:</abbr> @Model.Quotation.CustomerPhone <br>
+                                <abbr title="Fax">@EPMS.WebModels.Resources.CMS.Quotation.Email:</abbr> @Model.Quotation.CustomerEmail
+                            </address>
+                        </div>
+                    </div>
+                    <div class="span6">
+                        <div class="invoice-infos">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <th>@EPMS.WebModels.Resources.CMS.Invoice.Date:</th>
+                                        <td>@date</td>
+                                    </tr>
+                                    <tr>
+                                        <th>@EPMS.WebModels.Resources.CMS.Invoice.QuotationNumber:</th>
+                                        <td>@Model.Quotation.QuotationId</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Receipt.AmountPaid</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Receipt.AmountPaid, new { @id = "AmountPaid", @class = "installer", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Receipt.InstallmentNo</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Receipt.InstallmentNumber, new { @id = "InstallmentNumber", @class = "installer", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Receipt.OrderNo</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Receipt.OrderNumber, new { @id = "InstallmentNumber", @class = "installer", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Receipt.AmountPaidTillNow</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Receipt.AmountPaidTillNow, new { @id = "InstallmentNumber", @class = "installer", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="Installment1">@EPMS.WebModels.Resources.CMS.Receipt.AmountLeft</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            @Html.TextBoxFor(model => model.Receipt.AmountLeft, new { @id = "InstallmentNumber", @class = "installer", @readonly = true })
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

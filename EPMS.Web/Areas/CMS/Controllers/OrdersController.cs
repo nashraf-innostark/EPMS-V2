@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -21,14 +20,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
     public class OrdersController : BaseController
     {
         #region Private
-        private readonly IOrdersService OrdersService;
+        private readonly IOrdersService ordersService;
         #endregion
 
         #region Constructor
         public OrdersController(IOrdersService ordersService)
         {
-            OrdersService = ordersService;
+            this.ordersService = ordersService;
         }
+
         #endregion
 
         #region Public
@@ -60,13 +60,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             if (!userPermissionsSet.Contains("OrderCreate"))
             {
                 searchRequest.CustomerId = 0;
-                ordersList = OrdersService.GetAllOrders(searchRequest);
+                ordersList = ordersService.GetAllOrders(searchRequest);
                 orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
             }
             if (userPermissionsSet.Contains("OrderCreate"))
             {
                 searchRequest.CustomerId = Convert.ToInt64(Session["CustomerID"]);
-                ordersList = OrdersService.GetAllOrders(searchRequest);
+                ordersList = ordersService.GetAllOrders(searchRequest);
                 orders = ordersList.Orders.Select(o => o.CreateFromServerToClientLv());
             }
             if (ordersList == null) return View(new OrdersListViewModel());
@@ -101,23 +101,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 ViewBag.backUrl = "";
             }
+            int orderId = 0;
+            if (id != null)
+            {
+                orderId = (int) id;
+            }
+            OrdersResponse response = ordersService.GetOrderResponse(orderId);
             if (id != null )
             {
-                viewModel.Orders = OrdersService.GetOrderByOrderId((long)id).CreateFromServerToClient();
+                viewModel.Orders = response.Order.CreateFromServerToClient();
                 if (Session["RoleName"].ToString() == "Customer")
                 {
-                    viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateUpdate;
+                    viewModel.PageTitle = WebModels.Resources.CMS.Order.PTCreateUpdate;
                 }
                 else if (Session["RoleName"].ToString() == "Admin")
                 {
-                    viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.OrderDetail;
+                    viewModel.PageTitle = WebModels.Resources.CMS.Order.OrderDetail;
                 }
-                viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnUpdate;
+                viewModel.BtnText = WebModels.Resources.CMS.Order.BtnUpdate;
                 return View(viewModel);
             }
-            viewModel.Orders.OrderNo = GetOrderNumber();
-            viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateSave;
-            viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnSave;
+            viewModel.Orders.OrderNo = Utility.GetOrderNumber(response.Orders.ToList());
+            viewModel.PageTitle = WebModels.Resources.CMS.Order.PTCreateSave;
+            viewModel.BtnText = WebModels.Resources.CMS.Order.BtnSave;
             return View(viewModel);
         }
 
@@ -131,18 +137,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "OrderCreate")]
         public ActionResult Create(OrdersCreateViewModel viewModel)
         {
-            var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
             if (viewModel.Orders.OrderId > 0)
             {
                 // Update Case
                 viewModel.Orders.RecLastUpdatedBy = User.Identity.GetUserId();
-                viewModel.Orders.RecLastUpdatedDt = DateTime.Now;
+                viewModel.Orders.RecLastUpdatedDate = DateTime.Now;
                 var orderToUpdate = viewModel.Orders.CreateFromClientToServer();
-                if (OrdersService.UpdateOrder(orderToUpdate))
+                if (ordersService.UpdateOrder(orderToUpdate))
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.CMS.Order.Updated,
+                        Message = WebModels.Resources.CMS.Order.Updated,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -151,19 +156,18 @@ namespace EPMS.Web.Areas.CMS.Controllers
             else
             {
                 // Add Case
-
-                // Get Customer Id from AspNetUser
-                viewModel.Orders.OrderDate = DateTime.Now;
                 viewModel.Orders.CustomerId = Convert.ToInt64(Session["CustomerID"]);
                 viewModel.Orders.OrderStatus = 2;
                 viewModel.Orders.RecCreatedBy = User.Identity.GetUserId();
-                viewModel.Orders.RecCreatedDt = DateTime.Now;
+                viewModel.Orders.RecCreatedDate = DateTime.Now;
+                viewModel.Orders.RecLastUpdatedBy = User.Identity.GetUserId();
+                viewModel.Orders.RecLastUpdatedDate = DateTime.Now;
                 var orderToSave = viewModel.Orders.CreateFromClientToServer();
-                if (OrdersService.AddOrder(orderToSave))
+                if (ordersService.AddOrder(orderToSave))
                 {
                     TempData["message"] = new MessageViewModel
                     {
-                        Message = EPMS.WebModels.Resources.CMS.Order.Added,
+                        Message = WebModels.Resources.CMS.Order.Added,
                         IsSaved = true
                     };
                     return RedirectToAction("Index");
@@ -171,65 +175,21 @@ namespace EPMS.Web.Areas.CMS.Controllers
             }
             if (Session["RoleName"].ToString() == "Admin")
             {
-                viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateUpdate;
+                viewModel.PageTitle = WebModels.Resources.CMS.Order.PTCreateUpdate;
             }
             if (Session["RoleName"].ToString() == "Customer")
             {
-                viewModel.PageTitle = EPMS.WebModels.Resources.CMS.Order.PTCreateSave;
+                viewModel.PageTitle = WebModels.Resources.CMS.Order.PTCreateSave;
             }
-            viewModel.BtnText = EPMS.WebModels.Resources.CMS.Order.BtnSave;
+            viewModel.BtnText = WebModels.Resources.CMS.Order.BtnSave;
             TempData["message"] = new MessageViewModel
             {
-                Message = EPMS.WebModels.Resources.CMS.Order.Error,
+                Message = WebModels.Resources.CMS.Order.Error,
                 IsError = true
             };
             return View(viewModel);
         }
 
-        #endregion
-
-
-        #region Get Order Number
-        /// <summary>
-        /// Get Autogenerated Order number
-        /// </summary>
-        /// <returns></returns>
-        string GetOrderNumber()
-        {
-            string year = DateTime.Now.Year.ToString(CultureInfo.InvariantCulture);
-            string month = DateTime.Now.Month.ToString(CultureInfo.InvariantCulture);
-            string day = DateTime.Now.Day.ToString(CultureInfo.InvariantCulture);
-            var result = OrdersService.GetAll();
-            var order = result.LastOrDefault();
-            if (order != null)
-            {
-                string oId = order.OrderNo.Substring(order.OrderNo.Length - 5, 5);
-                int id = Convert.ToInt32(oId) + 1;
-                int len = id.ToString(CultureInfo.InvariantCulture).Length;
-                string zeros = "";
-                switch (len)
-                {
-                    case 1:
-                        zeros = "0000";
-                        break;
-                    case 2:
-                        zeros = "000";
-                        break;
-                    case 3:
-                        zeros = "00";
-                        break;
-                    case 4:
-                        zeros = "0";
-                        break;
-                    case 5:
-                        zeros = "";
-                        break;
-                }
-                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
-                return orderId;
-            }
-            return year + month + day + "00001";
-        }
         #endregion
 
         #endregion

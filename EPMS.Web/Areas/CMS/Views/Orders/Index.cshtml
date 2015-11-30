@@ -80,12 +80,9 @@
                     "aTargets": [1],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-                        var element;
-                        var val;
-                        var orderId;
-                        val = full["OrderNo"];
-                        orderId = full["OrderId"];
-                        element = '<a href="Create/' + orderId + '">' + val + '</a>';
+                        var val = full["OrderNo"];
+                        var orderId = full["OrderId"];
+                        var element = '<a href="Create/' + orderId + '">' + val + '</a>';
                         return element;
                     },
                     "bSortable": true
@@ -109,7 +106,7 @@
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var element = "No Data";
-                        var val = full["OrderNo"];
+                        var val = full["QuotationNumber"];
                         var quotationId = full["QuotationId"];
                         if (quotationId != 0) {
                             if ('@userRole' == "Admin" && val != 0) {
@@ -127,7 +124,13 @@
                     "aTargets": [4],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var element = "No Data";
+                        var val = full["InvoiceNumber"];
+                        var invoiceId = full["InvoiceId"];
+                        if (invoiceId != 0) {
+                            element = '<a href="' + siteUrl + '/CMS/Invoice/Detail/' + invoiceId + '">' + val + '</a>';
+                        }
+                        return element;
                     },
                     "bSortable": false
                 },
@@ -135,7 +138,19 @@
                     "aTargets": [5],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
-
+                        var receipts = full["Receipts"];
+                        var element = "No Data";
+                        if (receipts != null) {
+                            if (receipts.length > 0) {
+                                element = "";
+                                for (var i = 0; i < receipts.length; i++) {
+                                    if (i != 0)
+                                        element += " / ";
+                                    element += '<a href="' + siteUrl + '/CMS/Receipt/Detail/' + receipts[i].ReceiptId + '">' + (i+1) + '</a>';
+                                }
+                            }
+                        }
+                        return element;
                     },
                     "bSortable": false
                 },
@@ -145,16 +160,13 @@
                     "mRender": function (data, type, full) {
                         var value = "";
                         if (full["OrderStatus"] == 1) {
-                            value = '@EPMS.WebModels.Resources.CMS.Order.OnGoing';
-                        } else if (full["OrderStatus"] == 2) {
                             value = '@EPMS.WebModels.Resources.CMS.Order.Pending';
+                        } else if (full["OrderStatus"] == 2) {
+                            value = '@EPMS.WebModels.Resources.CMS.Order.OnGoing';
                         } else if (full["OrderStatus"] == 3) {
                             value = '@EPMS.WebModels.Resources.CMS.Order.Canceled';
                         }
                         else if (full["OrderStatus"] == 4) {
-                            value = '@EPMS.WebModels.Resources.CMS.Order.Finished';
-                        }
-                        else if (full["OrderStatus"] == 5) {
                             value = '@EPMS.WebModels.Resources.CMS.Order.Completed';
                         }
                         return value;

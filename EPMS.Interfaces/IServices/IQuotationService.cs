@@ -8,15 +8,17 @@ namespace EPMS.Interfaces.IServices
     public interface IQuotationService
     {
         QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest);
+        QuotationDetailResponse GetQuotationDetail(long quotationId);
         IEnumerable<Quotation> GetAll();
         IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId);
         QuotationResponse GetQuotationResponse(long quotationId, long customerId, string from);
-        QuotationResponse GetQuotationResponseForRfq(long customerId, long rfqId);
+        QuotationResponse GetRfqForQuotationResponse(long rfqId);
         Quotation FindQuotationById(long id);
         IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id);
         Quotation FindQuotationByOrderId(long orderId);
-        long AddQuotation(Quotation quotation);
-        bool UpdateQuotation(Quotation quotation);
+        QuotationResponse AddQuotation(Quotation quotation);
+        QuotationResponse UpdateQuotation(Quotation quotation);
+        bool UpdateStatus(QuotationStatusRequest request);
         void DeleteQuotation(Quotation quotation);
     }
 }

@@ -34,6 +34,24 @@ namespace EPMS.WebModels.ModelMappers
                 WarehouseDetails = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebsiteModels.WarehouseDetail>()
             };
         }
+        public static WebsiteModels.Warehouse CreateForReport(this Warehouse source)
+        {
+            return new WebsiteModels.Warehouse
+            {
+                WarehouseId = source.WarehouseId,
+                WarehouseNumber = source.WarehouseNumber,
+                WarehouseSize = source.WarehouseSize,
+                IsFull = source.IsFull,
+               
+                NoOfAisles = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 1) : 0,
+                NoOfSections = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 2) : 0,
+                NoOfShalves = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 3) : 0,
+                NoOfSectoinsInShalves = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 4) : 0,
+                NoOfSpaces = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 5) : 0,
+                
+                WarehouseDetails = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebsiteModels.WarehouseDetail>()
+            };
+        }
         public static WebsiteModels.Warehouse CreateFromItemVariationDropDown(this Warehouse source)
         {
             return new WebsiteModels.Warehouse

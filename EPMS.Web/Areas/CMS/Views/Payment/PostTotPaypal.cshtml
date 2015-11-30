@@ -1,0 +1,62 @@
+﻿@using EPMS.WebModels.WebsiteModels
+@model EPMS.WebModels.ViewModels.Payment.PaypalViewModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.PaypalPayment;
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            @ViewBag.Title
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@ViewBag.Title</small></h2>
+</header>
+
+<form class="form-horizontal">
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            <p style="text-align: center; height: 40%; width: 33%; margin-left: 33%">
+                <h4>@EPMS.WebModels.Resources.WebsiteClient.Paypal.Paypal.Connecting ...</h4>
+            </p>
+        </div>
+    </div>
+</form>
+
+<form id="paypal-form" action="@ViewBag.actionURL">
+    <input type="hidden" name="cmd" value="@Model.Paypal.cmd">
+    <input type="hidden" name="upload" value="@Model.Paypal.upload">
+    <input type="hidden" name="business" value="@Model.Paypal.business">
+    <input type="hidden" name="return" value="@Model.Paypal.return_url">
+    <input type="hidden" name="cancel_return" value="@Model.Paypal.cancel_return">
+    <input type="hidden" name="notify_url" value="@Model.Paypal.notify_url">
+    <input type="hidden" name="currency_code" value="@Model.Paypal.currency_code">
+    @*@for (int i = 0; i < items.Count; i++)
+    {
+        <input type="hidden" name="item_name_@(i+1)" value="@items[i].ItemDetails">
+        <input type="hidden" name="amount_@(i+1)" value="@items[i].UnitPrice">
+        <input type="hidden" name="quantity_@(i+1)" value="@items[i].ItemQuantity">
+    }*@
+    <input type="hidden" name="item_name_1" value="@Model.Name">
+    <input type="hidden" name="amount_1" value="@Model.Amount">
+    <input type="hidden" name="quantity_1" value="1">
+    <input type="hidden" name="custom" value="@Model.InvoiceId-@Model.InstallmentNo">
+</form>
+
+<script>
+    $(document).ready(function () {
+        var form = $("#paypal-form");
+        form.submit();
+    });
+</script>

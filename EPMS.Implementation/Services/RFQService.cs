@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
@@ -26,6 +28,11 @@ namespace EPMS.Implementation.Services
         public IEnumerable<RFQ> GetAllRfqs()
         {
             return rfqRepository.GetAll();
+        }
+
+        public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)
+        {
+            return rfqRepository.GetPendingRfqsByCustomerId(customerId);
         }
 
         public RFQ FindRfqById(long id)
@@ -63,6 +70,7 @@ namespace EPMS.Implementation.Services
         {
             try
             {
+                rfq.SerialNumber = GetRfqSerialNumber();
                 rfqRepository.Add(rfq);
                 rfqRepository.SaveChanges();
                 // Update Shopping Cart status to InProgress
@@ -113,6 +121,44 @@ namespace EPMS.Implementation.Services
                 rfqItemRepository.Delete(toDelete);
                 rfqItemRepository.SaveChanges();
             }
+        }
+
+        // Get Serial Number
+        public string GetRfqSerialNumber()
+        {
+            string year = DateTime.Now.ToString("yyyy");
+            string month = DateTime.Now.ToString("MM");
+            string day = DateTime.Now.ToString("dd");
+            var result = rfqRepository.GetAll().OrderByDescending(x=>x.RecCreatedDate);
+            if (result.FirstOrDefault() != null)
+            {
+                var rfq = result.FirstOrDefault();
+                string oId = rfq.SerialNumber.Substring(rfq.SerialNumber.Length - 5, 5);
+                int id = Convert.ToInt32(oId) + 1;
+                int len = id.ToString(CultureInfo.InvariantCulture).Length;
+                string zeros = "";
+                switch (len)
+                {
+                    case 1:
+                        zeros = "0000";
+                        break;
+                    case 2:
+                        zeros = "000";
+                        break;
+                    case 3:
+                        zeros = "00";
+                        break;
+                    case 4:
+                        zeros = "0";
+                        break;
+                    case 5:
+                        zeros = "";
+                        break;
+                }
+                string orderId = year + month + day + zeros + id.ToString(CultureInfo.InvariantCulture);
+                return orderId;
+            }
+            return year + month + day + "00001";
         }
     }
 }

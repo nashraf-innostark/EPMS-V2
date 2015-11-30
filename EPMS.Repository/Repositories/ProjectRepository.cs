@@ -4,6 +4,7 @@ using System.Data.Entity;
 using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
@@ -59,7 +60,35 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.Status == 4 && x.RecCreatedBy.Equals(id));//1 for Ongoing, 2 for On hold, 3 for Canceled, 4 for Finished
         }
+        public IEnumerable<Project> GetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
+        {
+            var project=new Project();
 
+            long customerid = 0;
+            if (request.RequesterRole == "Customer")
+                Int64.TryParse(request.RequesterId, out customerid);
+
+            var response = request.RequesterRole != "Customer" ?
+                DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId)).ToList().Select(x=> new
+                {
+                    project=x,
+                    ProjectTasks = x.ProjectTasks.Where(y=>y.RecCreatedDt<=request.ReportCreatedDate).ToList()
+                }).Select(x=>x) :
+                DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.CustomerId.Equals(customerid)).ToList().Select(x => new
+                {
+                    project = x,
+                    ProjectTasks = x.ProjectTasks.Where(y => y.RecCreatedDt <= request.ReportCreatedDate).ToList()
+                }).Select(x => x);
+
+            List<Project> projects=new List<Project>();
+            foreach (var projectInResponse in response)
+            {
+                var singleProject = projectInResponse.project;
+                singleProject.ProjectTasks = projectInResponse.ProjectTasks;
+                projects.Add(singleProject);
+            }
+            return projects;
+        }
         public Project GetProjectForDashboard(string requester, long projectId)
         {
             if (requester == "Admin")
@@ -93,6 +122,10 @@ namespace EPMS.Repository.Repositories
                 return DbSet.Where(x => x.CustomerId==customerId && x.Status == status);
         }
 
+        public IEnumerable<Project> GetAllProjects(DateTime createdBefore)
+        {
+            return DbSet.Where(x => x.RecCreatedDate<=createdBefore).Include(x=>x.Customer);
+        }
         public IEnumerable<Project> GetAllProjectsByEmployeeId(long employeeId)
         {
             return DbSet.Where(x => x.ProjectTasks.Any(y => y.TaskEmployees.Any(z => z.EmployeeId == employeeId)));

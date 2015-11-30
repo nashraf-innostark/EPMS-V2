@@ -113,7 +113,18 @@ namespace EPMS.Web.Areas.PMS.Controllers
                     //Map Installments
                     if (project.OrderId > 0)
                     {
-                        var quotation = quotationService.FindQuotationByOrderId(Convert.ToInt64(project.OrderId));
+                        // 
+                        // now there is no OrderId in Quotation
+                        //
+                        Quotation quotation = new Quotation();
+                        if (project.QuotationId != null)
+                        {
+                            quotation = quotationService.FindQuotationById((long) project.QuotationId);
+                        }
+                        else if (project.OrderId != null)
+                        {
+                            quotation = quotationService.FindQuotationByOrderId((long) project.Order.QuotationId);
+                        }
                         if (quotation != null)
                             projectViewModel.Installment = quotation.CreateFromServerToClientLv();
                     }
@@ -299,7 +310,6 @@ namespace EPMS.Web.Areas.PMS.Controllers
         [SiteAuthorize(PermissionKey = "ProjectDetails")]
         public ActionResult Details(long? id)
         {
-            
             if (id != null)
             {
                 var project = projectService.FindProjectById((long)id);

@@ -20,7 +20,6 @@ namespace EPMS.Implementation.Services
         /// Constructor
         /// </summary>
         /// <param name="repository"></param>
-        /// <param name="customerRepository"></param>
         public OrdersService(IOrdersRepository repository)
         {
             ordersRepository = repository;
@@ -72,6 +71,19 @@ namespace EPMS.Implementation.Services
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
             return ordersRepository.GetAllOrders(searchRequest);
+        }
+
+        public OrdersResponse GetOrderResponse(int orderId)
+        {
+            OrdersResponse response = new OrdersResponse
+            {
+                Orders = ordersRepository.GetAll().OrderBy(x=>x.RecCreatedDate).ToList()
+            };
+            if (orderId > 0)
+            {
+                response.Order = ordersRepository.Find(orderId);
+            }
+            return response;
         }
 
         public IEnumerable<Order> GetRecentOrders(string requester, int status)

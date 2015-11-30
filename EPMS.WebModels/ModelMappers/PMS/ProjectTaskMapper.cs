@@ -2,12 +2,34 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using EPMS.Models.DomainModels;
+using EPMS.WebModels.WebsiteModels;
+using ProjectTask = EPMS.Models.DomainModels.ProjectTask;
+using EPMS.WebModels.WebsiteModels.Common;
 
 namespace EPMS.WebModels.ModelMappers.PMS
 {
     public static class ProjectTaskMapper
     {
+        public static WebsiteModels.ProjectTask CreateForReport(this ProjectTask source)
+        {
+            WebsiteModels.ProjectTask projectTask = new WebsiteModels.ProjectTask();
+            projectTask.TaskId = source.TaskId;
+            projectTask.TaskNameE = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? source.TaskNameE
+                    : source.TaskNameA;
+            projectTask.StartDate = Convert.ToDateTime(source.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.EndDate = Convert.ToDateTime(source.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
+            projectTask.TotalCost = source.TotalCost;
+            projectTask.TotalWeight = String.Format("{0:###.##}", source.TotalWeight);
+
+            projectTask.TaskProgressText = source.TaskProgress < 100 ? ProjectStatus.OnGoing.ToString() : ProjectStatus.Finished.ToString();
+
+            var progress = (source.TaskProgress != 0 || source.TotalWeight != 0) ? (source.TaskProgress / source.TotalWeight) * 100 : 0;
+            projectTask.TaskProgress = progress != 0 ? String.Format("{0:###.##}", progress) : "0";
+            
+            
+            return projectTask;
+        }
         public static WebsiteModels.ProjectTask CreateFromServerToClientLv(this ProjectTask source)
         {
             WebsiteModels.ProjectTask projectTask = new WebsiteModels.ProjectTask();
@@ -432,6 +454,17 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 projectTask.SubTasksWeight.Add(model);
             }
             return projectTask;
+        }
+
+        public static ProjectTaskDropDown CreateFoDropDown(this ProjectTask source)
+        {
+            return new ProjectTaskDropDown
+            {
+                TaskId = source.TaskId,
+                TaskNameE = source.TaskNameE,
+                TaskNameA = source.TaskNameA,
+                ProjectId = source.ProjectId
+            };
         }
     }
 }

@@ -1,0 +1,143 @@
+﻿@using System.Configuration
+@model IEnumerable<EPMS.Models.ResponseModels.ReportsResponseModels.WarehouseReportDetails>
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewWarehouseReport;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    int serial = 1;
+}
+<!-- Navigation Bar Start-->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            <a href="@ConfigurationManager.AppSettings["SiteURL"]/Report/Inventory/Index">
+                @EPMS.WebModels.Resources.Reports.Reports.InventorySystemReportList
+            </a>
+
+        </li>
+        <li class="current">
+            @EPMS.WebModels.Resources.Reports.Reports.ViewWarehouseReport
+        </li>
+    </ul>
+</div>
+<!-- Navigation Bar End-->
+<!-- Page Heading Start-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.WarehouseReport</small></h2>
+</header>
+<!-- Page Heading End-->
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+<form class="form-horizontal" id="validation_form">
+    <div class="container-fluid" id="container">
+
+        <script>
+            $(document).ready(function() {
+                $('#tableSortableResMed,#tableSortableResMed2').dataTable( {
+                    "sPaginationType": "bootstrap",
+                    "fnInitComplete": function(){
+                        $(".dataTables_wrapper select").select2({
+                            dropdownCssClass: 'noSearch'
+                        });
+                    }
+                });
+            });
+        </script>
+
+
+        <!--Input Field begin-->
+        <div class="control-group row-fluid">
+            <!--Sortable Responsive Media Table begin-->
+            <div class="row-fluid">
+                <div class="span12">
+                    <table class="table table-striped table-responsive" id="tableSortableResMed">
+                        <thead class="cf sorthead">
+                            <tr>
+                                <th>Serial</th>
+                                <th>Warehouse Name</th>
+                                <th>Number of items Available</th>
+                                <th>Number of defective items Availabe</th>
+                                <th>Warehouses Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @foreach (var project in Model)
+                            {
+                                <tr class="gradeX">
+
+                                    <td>@(serial++)</td>
+                                    <td>@project.WarehouseName</td>
+                                    <td>
+                                        @project.AvailabelItems
+                                    </td>
+                                    <td>
+                                        @project.DefectiveItems
+                                    </td>
+                                    <td>
+                                        @(project.IsFull?@EPMS.WebModels.Resources.Reports.Reports.Full:@EPMS.WebModels.Resources.Reports.Reports.NotFull)
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+                </div>
+            </div>
+        </div>
+        <!--Input Field end-->
+
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button type="button" class="btn" id="generatePDF" onclick="demoFromHTML();">Generate Report As PDF</button>
+            </div>
+        </div>
+    </div><!-- end form -->
+</form>
+<script src="~/Scripts/jsPDF/jsPDF.js"></script>
+<script src="~/Scripts/html2canvas.js"></script>
+<script>
+
+    (function () {
+        var
+         form = $('#container'),
+         cache_width = form.width(),
+         a4 = [595.28, 841.89];  // for a4 size paper width and height
+
+        $('#generatePDF').on('click', function () {
+            $('body').scrollTop(0);
+            createPDF();
+        });
+        //create pdf
+        function createPDF() {
+            getCanvas().then(function (canvas) {
+                var
+                img = canvas.toDataURL("image/png"),
+                doc = new jsPDF({
+                    unit: 'px',
+                    format: 'a4'
+                });
+                doc.addImage(img, 'JPEG', 20, 20);
+                doc.save('Project-Report.pdf');
+                form.width(cache_width);
+            });
+        }
+
+        // create canvas object
+        function getCanvas() {
+            form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+            return html2canvas(form, {
+                imageTimeout: 2000,
+                removeContainer: true
+            });
+        }
+    }());
+</script>
+

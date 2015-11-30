@@ -407,8 +407,9 @@
 <script>
     var projAllTasksList;
     $(document).ready(function () {
-        // this is tak weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
+        // this is task weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
         var taskWeight = parseFloat('@Model.ProjectTask.TotalWeight');
+
         if ('@userPermissionsSet.Contains("TaskCost")' == 'True') {
             $('.' + 'disableOnLoad' + ':input').attr('disabled', false);
         } else {

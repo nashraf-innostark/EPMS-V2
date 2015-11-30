@@ -1,0 +1,89 @@
+﻿@{
+    ViewBag.Title = "Payment";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    long invoiceId = 0;
+    if (ViewBag.InvoiceId != null)
+    {
+        invoiceId = (long)ViewBag.InvoiceId;
+    }
+    string header = "Payment methods";
+}
+
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li>
+            @header
+        </li>
+    </ul>
+</div>
+
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@header</small></h2>
+</header>
+
+<form class="form-horizontal">
+    <div class="container-fluid">
+        <div class="control-group row-fluid">
+            @if (invoiceId > 0)
+            {
+                <div class="controls align-center">
+                    <label>
+                        <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayWithPaypal
+                    </label>
+                    <br />
+                    <div id="PaypalDiv" class="hide">
+                        <a href="~/CMS/Payment/PostTotPaypal/@invoiceId?ins=@ViewBag.Ins">
+                            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" />
+                        </a>
+                    </div>
+                    <label>
+                        <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline
+                    </label>
+                    <br />
+                    <div id="OfflineDiv" class="hide">
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=1" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline</a>
+                    </div>
+                    <label>
+                        <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
+                        @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery
+                    </label>
+                    <br />
+                    <div id="ManualDeliveryDiv" class="hide">
+                        <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=2" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery</a>
+                    </div>
+                    <br/>
+                </div>
+            }
+        </div>
+    </div>
+</form>
+
+<script>
+    $(document).ready(function () {
+        $("input[name=PaymentMethod]:radio").change(function () {
+            if ($(this).val() == "Paypal") {
+                $("#PaypalDiv").show();
+                $("#OfflineDiv").hide();
+                $("#ManualDeliveryDiv").hide();
+            }
+            if ($(this).val() == "Offline") {
+                $("#OfflineDiv").show();
+                $("#PaypalDiv").hide();
+                $("#ManualDeliveryDiv").hide();
+            }
+            if ($(this).val() == "ManualDelivery") {
+                $("#ManualDeliveryDiv").show();
+                $("#PaypalDiv").hide();
+                $("#OfflineDiv").hide();
+            }
+        });
+    });
+</script>

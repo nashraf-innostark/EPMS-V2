@@ -7,6 +7,7 @@ namespace EPMS.Interfaces.IServices
     public interface IRFQService
     {
         IEnumerable<RFQ> GetAllRfqs() ;
+        IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId);
         RFQ FindRfqById(long id);
         RFQResponse GetRfqResponse(long quotationId, long customerId, string from);
         RFQDetailResponse GetRfqDetailResponse(long rfqId);

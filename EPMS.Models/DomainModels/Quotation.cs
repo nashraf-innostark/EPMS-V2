@@ -6,9 +6,7 @@ namespace EPMS.Models.DomainModels
     public class Quotation
     {
         public long QuotationId { get; set; }
-        public string ClientName { get; set; }
-        public long? OrderId { get; set; }
-        public long CreatedByEmployee { get; set; }
+        public long? RFQId { get; set; }
         public string GreetingsEn { get; set; }
         public string GreetingsAr { get; set; }
         public short? QuotationDiscount { get; set; }
@@ -20,16 +18,26 @@ namespace EPMS.Models.DomainModels
         public short? ThirdInsDueAtCompletion { get; set; }
         public decimal? FourthInstallment { get; set; }
         public short? FourthInsDueAtCompletion { get; set; }
+        public bool FirstInstallmentStatus { get; set; }
+        public bool SecondInstallmentStatus { get; set; }
+        public bool ThirdInstallmentStatus { get; set; }
+        public bool FourthInstallmentStatus { get; set; }
         public string NotesEn { get; set; }
         public string NotesAr { get; set; }
-        public DateTime? RecCreatedDt { get; set; }
+        public DateTime RecCreatedDate { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime? RecUpdatedDt { get; set; }
-        public string RecUpdatedBy { get; set; }
+        public DateTime RecLastUpdatedDate { get; set; }
+        public string RecLastUpdatedBy { get; set; }
         public long CustomerId { get; set; }
+        public string SerialNumber { get; set; }
+        public short Status { get; set; }
 
+        public virtual AspNetUser AspNetUser { get; set; }
         public virtual Customer Customer { get; set; }
-        public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
         public virtual ICollection<Project> Projects { get; set; }
+        public virtual RFQ RFQ { get; set; }
+        public virtual ICollection<QuotationItemDetail> QuotationItemDetails { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

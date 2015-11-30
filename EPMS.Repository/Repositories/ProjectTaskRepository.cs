@@ -8,6 +8,7 @@ using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
@@ -33,6 +34,7 @@ namespace EPMS.Repository.Repositories
             get { return db.ProjectTasks; }
         }
         #endregion
+
         #region Private
 
         /// <summary>
@@ -53,33 +55,34 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<ProjectTask> GetTasksByProjectId(long projectId)
         {
-            return DbSet.Where(x => x.ProjectId == projectId);
+            return DbSet.Where(x => x.ProjectId == projectId && x.IsDeleted==false);
         }
 
         public IEnumerable<ProjectTask> GetAllParentTasksOfProject(long projectId)
         {
-            return DbSet.Where(pt => pt.IsParent && pt.ProjectId == projectId);
+            return DbSet.Where(pt => pt.IsParent && pt.ProjectId == projectId && pt.IsDeleted == false);
         }
 
         public IEnumerable<ProjectTask> FindParentTasksByProjectId(long projectid)
         {
-            return DbSet.Where(t => t.ProjectId == projectid && t.IsParent);
+            return DbSet.Where(t => t.ProjectId == projectid && t.IsParent && t.IsDeleted == false);
         }
 
         public IEnumerable<ProjectTask> FindProjectTaskByProjectId(long projectid, long taskId)
         {
-            return DbSet.Where(x => x.ProjectId == projectid && x.TaskId != taskId);
+            return DbSet.Where(x => x.ProjectId == projectid && x.TaskId != taskId && x.IsDeleted == false);
         }
+
         public ProjectTask FindTaskWithPreRequisites(long id)
         {
-            return DbSet.Include(x => x.PreRequisitTask).SingleOrDefault(x => x.TaskId == id);
+            return DbSet.Include(x => x.PreRequisitTask).SingleOrDefault(x => x.TaskId == id && x.IsDeleted == false);
         }
 
         public IEnumerable<ProjectTask> GetProjectTasksByEmployeeId(long employeeId, long projectId)
         {
             if(projectId>0)
-                return DbSet.Where(x => x.ProjectId==projectId && x.TaskEmployees.Any(y => y.EmployeeId == employeeId));
-            return DbSet.Where(x => x.TaskEmployees.Any(y => y.EmployeeId == employeeId));
+                return DbSet.Where(x => x.ProjectId == projectId && x.TaskEmployees.Any(y => y.EmployeeId == employeeId) && x.IsDeleted == false);
+            return DbSet.Where(x => x.TaskEmployees.Any(y => y.EmployeeId == employeeId) && x.IsDeleted == false);
         }
 
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
@@ -97,14 +100,14 @@ namespace EPMS.Repository.Repositories
                 query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString))));
+                    (s.Project.NameA.Contains(searchRequest.SearchString)))) && s.IsDeleted == false;
             }
             else
             {
                 query =
                 s => (s.RecCreatedBy.Equals(searchRequest.UserId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString)))));
+                    (s.Project.NameA.Contains(searchRequest.SearchString))))) && s.IsDeleted == false;
             }
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
@@ -128,7 +131,7 @@ namespace EPMS.Repository.Repositories
             Expression<Func<ProjectTask, bool>> query =
                 s => (s.TaskEmployees.Any(y => y.EmployeeId == employeeId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString)))));
+                    (s.Project.NameA.Contains(searchRequest.SearchString))))) && s.IsDeleted == false;
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -150,7 +153,7 @@ namespace EPMS.Repository.Repositories
             Expression<Func<ProjectTask, bool>> query =
                 s => (s.CustomerId == customerId && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString)))));
+                    (s.Project.NameA.Contains(searchRequest.SearchString))))) && s.IsDeleted == false;
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -159,6 +162,34 @@ namespace EPMS.Repository.Repositories
                                            DbSet
                                            .Where(query).OrderByDescending(taskClause[searchRequest.TaskByColumn]).Skip(fromRow).Take(toRow).ToList();
             return new TaskResponse { ProjectTasks = tasks, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
+        }
+
+        public IEnumerable<ProjectTask> GetAllNonSubTasks()
+        {
+            return DbSet.Where(x => x.ParentTask == null && x.IsDeleted == false);
+        }
+
+        public IEnumerable<ProjectTask> GetTaskReportDetails(TaskReportCreateOrDetailsRequest request)
+        {
+            IList<ProjectTask> response = new List<ProjectTask>();
+            if (request.TaskId == 0 && request.ProjectId == 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
+            }
+            else if (request.ProjectId > 0 && request.TaskId == 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
+            }
+            else if (request.ProjectId > 0 && request.TaskId > 0)
+            {
+                response = DbSet.Include(x => x.ProjectTasks).Where(x => x.ProjectId.Equals(request.ProjectId) && x.TaskId.Equals(request.TaskId) && x.RecCreatedDt <= request.ReportCreatedDate && (!x.IsDeleted || x.DeletedDate >= request.ReportCreatedDate)).ToList();
+            }
+            return response;
+        }
+
+        public IEnumerable<ProjectTask> GetAllTasks(DateTime createdBefore)
+        {
+            return DbSet.Where(x => x.RecCreatedDt <= createdBefore && (!x.IsDeleted || x.DeletedDate >= createdBefore));
         }
     }
 }

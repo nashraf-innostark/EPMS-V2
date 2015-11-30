@@ -50,6 +50,7 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<DIF> DIFManager { get; set; }
         public virtual ICollection<DIFHistory> DIFHistories { get; set; }
         public virtual ICollection<DIFHistory> DIFHistoriesManager { get; set; }
-
+        public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<Quotation> Quotations { get; set; }
     }
 }
