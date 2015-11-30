@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using EPMS.Models.DashboardModels;
 using EPMS.Models.RequestModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -81,6 +82,7 @@ namespace EPMS.WebModels.ModelMappers
             inventoryItem.AverageCost = 0;
             inventoryItem.AverageCost = Math.Round((double) (source.ItemVariations.Where(x => x.CostCalculation).Sum(y => y.UnitCost/ source.ItemVariations.Count(z => z.CostCalculation))), 2);
             inventoryItem.AveragePackagePrice = source.ItemVariations.Sum(y => y.PackagePrice / source.ItemVariations.Count());
+            //inventoryItem.QuantityInHand = source.QuantityInHand;
             inventoryItem.QuantityInHand = source.QuantityInHand;
             //inventoryItem.QuantityInHand = source.ItemVariations.Sum(x => Convert.ToInt64(x.QuantityInHand));
             inventoryItem.QuantitySold = source.ItemVariations.Sum(x => Convert.ToInt64(x.ItemReleaseQuantities.Sum(y=>y.Quantity)));
@@ -88,7 +90,17 @@ namespace EPMS.WebModels.ModelMappers
             inventoryItem.QuantityInPackage = source.ItemVariations.Sum(x=>x.QuantityInPackage);
             return inventoryItem;
         }
+        public static InventoryItemDDL CreateFromServerToClientDDL(this Models.DomainModels.InventoryItem source)
+        {
+            InventoryItemDDL inventoryItem = new InventoryItemDDL
+            {
+                ItemId = source.ItemId,
+                ItemNameE = source.ItemNameEn,
+                ItemNameA = source.ItemNameAr
+            };
 
+            return inventoryItem;
+        }
         public static InventoryItemRequest CreateFromClientToServer(this WebsiteModels.InventoryItem source)
         {
             var item = new Models.DomainModels.InventoryItem

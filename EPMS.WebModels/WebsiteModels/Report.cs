@@ -12,6 +12,7 @@
         public long? TaskId { get; set; }
         public long? WarehouseId { get; set; }
         public long? RfqOrderId { get; set; }
+        public long? EmployeeId { get; set; }
 
 
         public string ReportCreatedDateString { get; set; }

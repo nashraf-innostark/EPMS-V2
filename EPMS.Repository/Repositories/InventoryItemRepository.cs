@@ -1,5 +1,11 @@
-﻿using System.Data.Entity;
+﻿using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Security.Policy;
+using System.Web.Razor.Generator;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Repository.BaseRepository;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -30,6 +36,15 @@ namespace EPMS.Repository.Repositories
             return DbSet.Any(
                 it =>
                 it.ItemNameEn == item.ItemNameEn || it.ItemNameAr == item.ItemNameAr);
+        }
+
+        public IEnumerable<InventoryItem> GetInventoryItemReportDetails(InventoryItemReportCreateOrDetailsRequest request)
+        {
+            return DbSet.Include(x => x.ItemVariations)
+                .Include("ItemVariations.ItemManufacturers")
+                .Include("ItemVariations.ItemReleaseQuantities")
+                .Include("ItemVariations.DIFItems")
+                .Where(x => (request.ItemId == 0 || x.ItemId == request.ItemId));
         }
     }
 }

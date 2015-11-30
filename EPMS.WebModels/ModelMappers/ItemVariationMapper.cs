@@ -40,7 +40,7 @@ namespace EPMS.WebModels.ModelMappers
             model.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
-            model.QuantityInHand = source.QuantityInHand;
+            model.QuantityInHand = (source.ItemWarehouses.Sum(x=>x.Quantity) - source.ItemReleaseDetails.Sum(x=>x.ItemQty) + source.DIFItems.Sum(x=>x.ItemQty)).ToString();
             var qtySold = source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId).Sum(x => x.Quantity);
             model.QuantitySold = qtySold;
             model.ReorderPoint = source.ReorderPoint;

@@ -335,13 +335,18 @@
     <Compile Include="Areas\PMS\Controllers\ProjectController.cs" />
     <Compile Include="Areas\PMS\Controllers\TaskController.cs" />
     <Compile Include="Areas\PMS\PMSAreaRegistration.cs" />
+    <Compile Include="Areas\Report\Controllers\CustomerController.cs" />
+    <Compile Include="Areas\Report\Controllers\CustomerServiceController.cs" />
     <Compile Include="Areas\Report\Controllers\ImageController.cs" />
+    <Compile Include="Areas\Report\Controllers\ItemController.cs" />
+    <Compile Include="Areas\Report\Controllers\QuotationOrderController.cs" />
     <Compile Include="Areas\Report\Controllers\RFQOrderController.cs" />
     <Compile Include="Areas\Report\Controllers\WarehouseController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectController.cs" />
     <Compile Include="Areas\Report\Controllers\InventoryController.cs" />
     <Compile Include="Areas\Report\Controllers\ProjectsAndTasksController.cs" />
     <Compile Include="Areas\Report\Controllers\TaskController.cs" />
+    <Compile Include="Areas\Report\Controllers\QuotationInvoiceController.cs" />
     <Compile Include="Areas\Report\ReportAreaRegistration.cs" />
     <Compile Include="Areas\Website\Controllers\AboutUsController.cs" />
     <Compile Include="Areas\Website\Controllers\ContactUsController.cs" />
@@ -1562,6 +1567,9 @@
     <Content Include="Areas\Website\Views\Test\Tree.cshtml" />
     <Content Include="Areas\Report\Views\Project\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Customer\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Customer\Detail.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\Create.cshtml" />
     <Content Include="Areas\Report\Views\Task\Create.cshtml" />
     <Content Include="Areas\Report\Views\Project\All.cshtml" />
     <Content Include="Areas\Report\Views\Task\Details.cshtml" />
@@ -1582,6 +1590,13 @@
     <Content Include="Areas\CMS\Views\Payment\Index.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\PostTotPaypal.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\NotifyFromPaypal.cshtml" />
+    <Content Include="Areas\Report\Views\CustomerService\Index.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\AllDetail.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\Detail.cshtml" />
+    <Content Include="Areas\Report\Views\Item\Create.cshtml" />
+    <Content Include="Areas\Report\Views\Item\Details.cshtml" />
+    <Content Include="Areas\Report\Views\Item\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationOrder\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\CancelFromPaypal.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
@@ -3795,7 +3810,6 @@
     <Folder Include="Areas\Report\Views\Shared\" />
     <Folder Include="Areas\Website\Models\" />
     <Folder Include="Areas\Website\Views\Shared\" />
-    <Folder Include="DashboardModels\" />
     <Folder Include="Files\ApplicantCvs\" />
     <Folder Include="Files\MeetingDocuments\" />
     <Folder Include="Files\ProjectDocuments\" />
@@ -3803,9 +3817,6 @@
     <Folder Include="Images\ItemImage\" />
     <Folder Include="Images\NewsOrArticle\" />
     <Folder Include="Images\ProductImage\" />
-    <Folder Include="Migrations\" />
-    <Folder Include="ModelMappers\" />
-    <Folder Include="Reports\" />
     <Folder Include="Resources\Shared\" />
     <Folder Include="Views\Admin\" />
     <Folder Include="Views\Base\" />

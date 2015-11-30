@@ -1,0 +1,107 @@
+﻿@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Title;
+}
+<!-- Navigation Bar Start-->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            @EPMS.WebModels.Resources.Reports.QuotationInvoice.Title;
+        </li>
+    </ul>
+</div>
+<!-- Navigation Bar End-->
+<!-- Page Heading Start-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Title</small></h2>
+</header>
+<!-- Page Heading End-->
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+@using (Html.BeginForm("Detail", "QuotationInvoice", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    <div class="container-fluid">
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.WebModels.Resources.Reports.QuotationInvoice.StartDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.StartDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "StartDate", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.WebModels.Resources.Reports.QuotationInvoice.EndDate<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="(dd/mm/yyyy)"><i class="icon-photon info-circle"></i></a>
+                </label>
+            </div>
+            <div class="span9">
+                <div class="controls span4">
+                    @Html.TextBoxFor(model => model.EndDate, new { @class = "col-lg-2 datepickerGregorian form-control cursorHand toBeDiable", @id = "EndDate", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3">
+                <label class="control-label">
+                    @EPMS.WebModels.Resources.Reports.QuotationInvoice.Employee
+                </label>
+            </div>
+            <div class="span8">
+                <div class="controls span4">
+                    @if (direction == "ltr")
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(x => x.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullNameE"), @EPMS.WebModels.Resources.Reports.QuotationInvoice.All, new { @class = "select2me", id = "EmployeeId" })
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="controls">
+                            @Html.DropDownListFor(x => x.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeFullNameA"), @EPMS.WebModels.Resources.Reports.QuotationInvoice.All, new { @class = "select2me", id = "EmployeeId" })
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+        
+        <div class="control-group row-fluid">
+            <div class="span3 span-inset">
+                <button class="btn" id="Generate">@EPMS.WebModels.Resources.Reports.QuotationInvoice.Generate</button>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+<script>
+    
+    $('#Generate').click(function (e) {
+        var empId = $('#EmployeeId').val();
+        if (empId == null || empId == "") {
+            $("form").attr("action", '@Url.Action("AllDetail", "QuotationInvoice")');
+            $("form").submit();
+        } else {
+            $("form").attr("action", '@Url.Action("Detail", "QuotationInvoice")');
+            $("form").submit();
+        }
+    });
+
+</script>

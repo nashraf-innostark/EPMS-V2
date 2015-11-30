@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.RequestModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels;
 using EPMS.Repository.BaseRepository;
 using EPMS.Models.DomainModels;
@@ -102,6 +103,11 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<Quotation> GetAllQuotationByCustomerId(long customerId)
         {
             return DbSet.Where(quot => quot.CustomerId == customerId && quot.Projects.Count == 0).ToList();
+        }
+
+        public long GetAllQuotationsCountByCustomerId(QOReportCreateOrDetailsRequest request)
+        {
+            return DbSet.Count(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
         }
 
         public IEnumerable<Quotation> FindQuotationByIdForProjectDetail(long id)

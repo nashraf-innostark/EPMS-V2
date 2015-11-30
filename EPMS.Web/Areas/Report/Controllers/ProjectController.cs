@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
@@ -12,8 +13,8 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
 using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.ViewModels.Reports;
-using EPMS.WebModels.WebsiteModels;
 using Rotativa;
+using Project = EPMS.WebModels.WebsiteModels.Project;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -39,14 +40,15 @@ namespace EPMS.Web.Areas.Report.Controllers
                 request.ReportId = (long)ReportId;
                 request.RequesterRole = "Admin";
                 request.RequesterId = Session["UserID"].ToString();
-                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList();
+                ViewBag.ReportId = ReportId;
             }
             
-            var projects = TempData["Projects"] as IEnumerable<Project>;
+            var projects = TempData["Projects"] as IEnumerable<ReportProject>;
             if (projects == null)
                 return RedirectToAction("Index", "ProjectsAndTasks");
-            ViewBag.ReportId = ReportId;
-            return View(TempData["Projects"] as IEnumerable<Project>);
+            ViewBag.ReportId = projects.FirstOrDefault().ReportId;
+            return View(projects.Select(x => x.CreateForReport()));
         }
         [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()
@@ -91,6 +93,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 detailVeiwModel.ReportId = response.ReportId;
             }
             SetGraphData(detailVeiwModel);
+            ViewBag.ReportId = detailVeiwModel.ReportId;
             return View(detailVeiwModel);
         }
 

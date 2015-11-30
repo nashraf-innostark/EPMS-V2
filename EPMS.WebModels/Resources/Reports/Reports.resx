@@ -210,4 +210,37 @@
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
   </data>
+  <data name="ItemCreateReport" xml:space="preserve">
+    <value>Creat Item Report</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>Item Name</value>
+  </data>
+  <data name="ItemReport" xml:space="preserve">
+    <value>Item Report</value>
+  </data>
+  <data name="ItemReportTab" xml:space="preserve">
+    <value>Items Report</value>
+  </data>
+  <data name="ViewItemReport" xml:space="preserve">
+    <value>View Item Report</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>Generate Report</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer Name</value>
+  </data>
+  <data name="QOCreateReport" xml:space="preserve">
+    <value>Creat Customer RFQ/Orders Placed Report</value>
+  </data>
+  <data name="QOReportTab" xml:space="preserve">
+    <value>Customer RFQ/Orders Placed</value>
+  </data>
+  <data name="QOReportView" xml:space="preserve">
+    <value>View Customer Request for Quotation/Order Report</value>
+  </data>
+  <data name="QOReportViewAll" xml:space="preserve">
+    <value>View All Customer Request for Quotation/Orders Report</value>
+  </data>
 </root>

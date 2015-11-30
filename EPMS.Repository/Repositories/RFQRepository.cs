@@ -4,6 +4,7 @@ using System.Linq;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
+using EPMS.Models.RequestModels.Reports;
 using EPMS.Repository.BaseRepository;
 using Microsoft.Practices.Unity;
 
@@ -48,6 +49,11 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)
         {
             return DbSet.Where(x => x.CustomerId == customerId && x.Status == (int) RFQStatus.Pending);
+        }
+
+        public IEnumerable<RFQ> GetAllRFQsByCustomerId(QOReportCreateOrDetailsRequest request)
+        {
+            return DbSet.Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
         }
     }
 }

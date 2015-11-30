@@ -21,6 +21,8 @@ namespace EPMS.WebModels.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 OrdersCount = source.Orders.Count,
+                ComplaintsCount = source.Complaints.Count,
+                Email = source.AspNetUsers != null ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
                 LatestComplaint =
                     (source.Complaints != null && source.Complaints.Any(c => c.CustomerId == source.CustomerId))
                         ? source.Complaints.Where(c => c.CustomerId == source.CustomerId)
