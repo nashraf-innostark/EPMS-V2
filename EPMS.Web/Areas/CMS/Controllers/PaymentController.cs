@@ -37,6 +37,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 ViewBag.InvoiceId = (long) id;
                 ViewBag.Ins = ins;
+                PaypalViewModel model = new PaypalViewModel
+                {
+                    InvoiceId = (long) id,
+                    Name = "Installment " + ins,
+                    InstallmentNo = Convert.ToInt32(ins),
+                    Paypal = new Paypal
+                    {
+                        cmd = "_cart",
+                        business = ConfigurationManager.AppSettings["BusinessAccountKey"],
+                        upload = "1"
+                    }
+                };
+                bool useSandbox = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSandbox"]);
+                ViewBag.actionURL = useSandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr";
+                model.Paypal.cancel_return = ConfigurationManager.AppSettings["CancelURL"];
+                model.Paypal.return_url = ConfigurationManager.AppSettings["ReturnURL"];
+                model.Paypal.notify_url = ConfigurationManager.AppSettings["NotifyURL"];
+                model.Paypal.currency_code = ConfigurationManager.AppSettings["CurrencyCode"];
+
+                Invoice invoice = invoiceService.FindInvoiceById((long)id).CreateForPayment(ins);
+                //ViewBag.Items = invoice.Quotation.QuotationItemDetails.ToList();
+                model.Amount = Math.Round(invoice.Quotation.GrandTotal, 2, MidpointRounding.AwayFromZero);
+                return View(model);
             }
             return View();
         }
@@ -47,13 +70,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             {
                 InvoiceId = id,
                 Name = "Installment " + ins,
-                InstallmentNo = Convert.ToInt32(ins)
-            };
-            model.Paypal = new Paypal
-            {
-                cmd = "_cart",
-                business = ConfigurationManager.AppSettings["BusinessAccountKey"],
-                upload = "1"
+                InstallmentNo = Convert.ToInt32(ins),
+                Paypal = new Paypal
+                {
+                    cmd = "_cart",
+                    business = ConfigurationManager.AppSettings["BusinessAccountKey"],
+                    upload = "1"
+                }
             };
             bool useSandbox = Convert.ToBoolean(ConfigurationManager.AppSettings["UseSandbox"]);
             ViewBag.actionURL = useSandbox ? "https://www.sandbox.paypal.com/cgi-bin/webscr" : "https://www.paypal.com/cgi-bin/webscr";

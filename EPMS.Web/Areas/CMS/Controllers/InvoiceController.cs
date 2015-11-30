@@ -10,6 +10,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Invoice;
 using EPMS.WebModels.ViewModels.Receipt;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
@@ -65,7 +66,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             viewModel.Quotation = response.Quotation.CreateForInvoice();
             viewModel.Customer = response.Customer.CreateFromServerToClient();
             if (response.CompanyProfile != null)
-                viewModel.CompanyProfile = response.CompanyProfile.CreateFromServerToClientForQuotation();
+                viewModel.CompanyProfile = response.CompanyProfile != null ? response.CompanyProfile.CreateFromServerToClientForQuotation() : new CompanyProfile();
 
             viewModel.FirstReceiptId = response.FirstReceiptId;
             viewModel.SecondReceiptId = response.SecondReceiptId;

@@ -1,4 +1,6 @@
-﻿@{
+﻿@model EPMS.WebModels.ViewModels.Payment.PaypalViewModel
+
+@{
     ViewBag.Title = "Payment";
     Layout = "~/Views/Shared/_Layout.cshtml";
     long invoiceId = 0;
@@ -37,17 +39,17 @@
                         <input id="Paypal" type="radio" name="PaymentMethod" value="Paypal" class="no-margin-top">
                         @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayWithPaypal
                     </label>
-                    <br />
+                    <br/>
                     <div id="PaypalDiv" class="hide">
-                        <a href="~/CMS/Payment/PostTotPaypal/@invoiceId?ins=@ViewBag.Ins">
-                            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" />
+                        <a href="#" onclick="PostToPaypal()">
+                            <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif"/>
                         </a>
                     </div>
                     <label>
                         <input id="Offline" type="radio" name="PaymentMethod" value="Offline" class="no-margin-top">
                         @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline
                     </label>
-                    <br />
+                    <br/>
                     <div id="OfflineDiv" class="hide">
                         <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=1" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.PayOffline</a>
                     </div>
@@ -55,7 +57,7 @@
                         <input id="ManualDelivery" type="radio" name="PaymentMethod" value="ManualDelivery" class="no-margin-top">
                         @EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery
                     </label>
-                    <br />
+                    <br/>
                     <div id="ManualDeliveryDiv" class="hide">
                         <a href="~/CMS/Payment/Manual/@invoiceId?ins=@ViewBag.Ins&type=2" class="btn">@EPMS.WebModels.Resources.WebsiteClient.ShoppingCart.Cart.ManualOnDelivery</a>
                     </div>
@@ -64,6 +66,26 @@
             }
         </div>
     </div>
+</form>
+
+<form id="paypal-form" action="@ViewBag.actionURL">
+    <input type="hidden" name="cmd" value="@Model.Paypal.cmd">
+    <input type="hidden" name="upload" value="@Model.Paypal.upload">
+    <input type="hidden" name="business" value="@Model.Paypal.business">
+    <input type="hidden" name="return" value="@Model.Paypal.return_url">
+    <input type="hidden" name="cancel_return" value="@Model.Paypal.cancel_return">
+    <input type="hidden" name="notify_url" value="@Model.Paypal.notify_url">
+    <input type="hidden" name="currency_code" value="@Model.Paypal.currency_code">
+    @*@for (int i = 0; i < items.Count; i++)
+        {
+            <input type="hidden" name="item_name_@(i+1)" value="@items[i].ItemDetails">
+            <input type="hidden" name="amount_@(i+1)" value="@items[i].UnitPrice">
+            <input type="hidden" name="quantity_@(i+1)" value="@items[i].ItemQuantity">
+        }*@
+    <input type="hidden" name="item_name_1" value="@Model.Name">
+    <input type="hidden" name="amount_1" value="@Model.Amount">
+    <input type="hidden" name="quantity_1" value="1">
+    <input type="hidden" name="custom" value="@Model.InvoiceId-@Model.InstallmentNo">
 </form>
 
 <script>
@@ -86,4 +108,7 @@
             }
         });
     });
+    function PostToPaypal() {
+        $("#paypal-form").submit();
+    }
 </script>

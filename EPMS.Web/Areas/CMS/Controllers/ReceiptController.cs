@@ -10,6 +10,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Receipt;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
@@ -62,7 +63,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             viewModel.Invoice = response.Invoice.CreateFromServerToClient();
             viewModel.Quotation = response.Quotation.CreateForInvoice();
             viewModel.Customer = response.Customer.CreateFromServerToClient();
-            viewModel.CompanyProfile = response.CompanyProfile.CreateFromServerToClientForQuotation();
+            viewModel.CompanyProfile = response.CompanyProfile != null ? response.CompanyProfile.CreateFromServerToClientForQuotation() : new CompanyProfile();
 
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.CompanyProfile.CompanyLogoPath;
             ViewBag.EmployeeName = User.Identity.Name;
