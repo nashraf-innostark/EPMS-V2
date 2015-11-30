@@ -143,8 +143,8 @@ namespace EPMS.Implementation.Services
 
             var employee = employeeRepository.Find(request.EmployeeId);
             var empId = employee.AspNetUsers.FirstOrDefault().Id;
-            IEnumerable<Quotation> quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
-            
+            var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+
             return new QuotationInvoiceReportResponse
             {
                 Quotations = quotations,

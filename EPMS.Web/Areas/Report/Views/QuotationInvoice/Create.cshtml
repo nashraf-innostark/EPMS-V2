@@ -94,7 +94,6 @@
 <script>
     
     $('#Generate').click(function (e) {
-        debugger;
         var empId = $('#EmployeeId').val();
         if (empId == null || empId == "") {
             $("form").attr("action", '@Url.Action("AllDetail", "QuotationInvoice")');
