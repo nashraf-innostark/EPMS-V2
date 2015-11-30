@@ -1,0 +1,329 @@
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Reports.CustomerServiceListViewModel
+
+@{
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.CustomerServiceList.Title;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+}
+
+<!-- Navigation Bar Start-->
+<div class="breadcrumb-container">
+    <ul class="xbreadcrumbs">
+        <li>
+            <a href="~/Dashboard/Index">
+                <i class="icon-photon home"></i>
+            </a>
+        </li>
+        <li class="current">
+            @EPMS.WebModels.Resources.Reports.CustomerServiceList.Title
+        </li>
+    </ul>
+</div>
+<!-- Navigation Bar End-->
+<!-- Page Heading Start-->
+<header>
+    <i class="icon-big-notepad"></i>
+    <h2><small>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Title</small></h2>
+</header>
+<!-- Page Heading End-->
+<!--Notifications begin-->
+@Html.Partial("_Alert")
+<!--Notifications end-->
+
+<form class="form-horizontal" id="validation_form">
+    <div class="container-fluid">
+
+        <div class="control-group row-fluid span-inset">
+
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a data-toggle="tab" href="#tab-example1">@EPMS.WebModels.Resources.Reports.CustomerServiceList.EmployeeQI</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-example2">@EPMS.WebModels.Resources.Reports.CustomerServiceList.CustomerRO</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-example3">@EPMS.WebModels.Resources.Reports.CustomerServiceList.CustomerList</a></li>
+            </ul>
+
+            <div class="tab-content">
+
+                <div id="tab-example1" class="tab-pane fade active in">
+                    <h3>
+                        <small>
+                            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/QuotationInvoice/Create">@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreateQI</a>
+                        </small>
+                    </h3>
+                    <div class="container-fluid">
+                        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table id="qitable" class="table table-striped table-responsive" style="width: 100% !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Serial</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Report</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreatedBy</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Type</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.ReportDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-example2" class="tab-pane fade">
+                    <h3>
+                        <small>
+                            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Project/Create">@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreateQI</a>
+                        </small>
+                    </h3>
+                    <div class="container-fluid">
+                        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table id="rotable" class="table table-striped table-responsive" style="width: 100% !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Serial</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Report</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreatedBy</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Type</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.ReportDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="tab-example3" class="tab-pane fade">
+                    <h3>
+                        <small>
+                            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Customer/Create">@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreateQI</a>
+                        </small>
+                    </h3>
+                    <div class="container-fluid">
+                        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
+                        <div class="row-fluid">
+                            <div class="span12">
+                                <table id="customerlist" class="table table-striped table-responsive" style="width: 100% !important;">
+                                    <thead>
+                                        <tr>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Serial</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Report</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.CreatedBy</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.Date</th>
+                                            <th>@EPMS.WebModels.Resources.Reports.CustomerServiceList.ReportDate</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+</form>
+
+
+<script>
+    var qITable;
+    var rOTable;
+    var customerTable;
+
+    $(document).ready(function () {
+        debugger;
+        var siteUrl = $('#siteURL').val();
+        var dir = '@direction';
+        qITable = $('#qitable').dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "",
+                    "bVisible": true,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var EmployeeId = full["EmployeeId"];
+                        var val = full["ReportId"];
+                        if (parseInt(EmployeeId) > 0) {
+                            return '<a href="' + siteUrl + '/Report/QuotationInvoice/Detail?ReportId=' + val + '">' + val + '</a>';
+                        }
+                        else {
+                            return '<a href="' + siteUrl + '/Report/QuotationInvoice/All?ReportId=' + val + '">' + val + '</a>';
+                        }
+                    }
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportCreatedByName"];
+                    }
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportCategoryItemTitle"];
+                    }
+                },
+                {
+                    "aTargets": [5],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportCreatedDateString"];
+                    }
+                }
+            ],
+
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+
+            "sAjaxSource": siteUrl + "/Report/CustomerService/QIIndex",
+            "sServerMethod": "POST",
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = qITable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
+        });
+        qITable.on('order.dt search.dt', function () {
+            t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).fnDraw();
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 1 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    qITable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    qITable.fnDraw();
+                }
+                return;
+            });
+
+        customerTable = $('#customerlist').dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "",
+                    "bVisible": true,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        var EmployeeId = full["EmployeeId"];
+                        var val = full["ReportId"];
+                        return '<a href="' + siteUrl + '/Report/Customer/Detail?ReportId=' + val + '">' + val + '</a>';
+                        
+                    }
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportCreatedByName"];
+                    }
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
+                    }
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "No Data",
+                    "mRender": function (data, type, full) {
+                        return full["ReportCreatedDateString"];
+                    }
+                }
+            ],
+
+            "fnServerParams": function (aoData) {
+                aoData.push({ "name": "search", "value": $('input').val() });
+            },
+
+            "sAjaxSource": siteUrl + "/Report/CustomerService/AllCustomerIndex",
+            "sServerMethod": "POST",
+            "oLanguage": {
+                "sProcessing": "Fetching record(s)",
+                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+                "sInfoEmpty": "No matching record(s) found",
+                "sEmptyTable": "No record(s) found",
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                var oSettings = customerTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+                return nRow;
+            },
+        });
+        customerTable.on('order.dt search.dt', function () {
+            t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+                cell.innerHTML = i + 1;
+            });
+        }).fnDraw();
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 1 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    customerTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    customerTable.fnDraw();
+                }
+                return;
+            });
+
+    });
+</script>

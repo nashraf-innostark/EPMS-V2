@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Transactions;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
@@ -22,11 +24,15 @@ namespace EPMS.Implementation.Services
         private readonly IQuotationRepository quotationRepository;
         private readonly IProjectTaskRepository taskRepository;
         private readonly IWarehouseRepository warehouseRepository;
+        private readonly IEmployeeRepository employeeRepository;
 
         #endregion
 
         #region Constructor
-        public ReportService(IInventoryItemRepository inventoryItemRepository,IReportRepository reportRepository, IProjectRepository projectRepository, ICustomerRepository customerRepository, IQuotationRepository quotationRepository, IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository)
+
+        public ReportService(IReportRepository reportRepository, IProjectRepository projectRepository,
+            ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository)
         {
             this.inventoryItemRepository = inventoryItemRepository;
             this.reportRepository = reportRepository;
@@ -35,15 +41,18 @@ namespace EPMS.Implementation.Services
             this.quotationRepository = quotationRepository;
             this.taskRepository = taskRepository;
             this.warehouseRepository = warehouseRepository;
+            this.employeeRepository = employeeRepository;
         }
 
         #endregion
 
         #region Reports List Views
+
         public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest)
         {
             return reportRepository.GetProjectsReports(projectReportSearchRequest);
         }
+
         public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
         {
             return reportRepository.GetWarehousesReports(searchRequest);
@@ -82,7 +91,7 @@ namespace EPMS.Implementation.Services
             {
                 var customerReport = new Report
                 {
-                    ReportCategoryId = (int)ReportCategory.AllCustomer,
+                    ReportCategoryId = (int) ReportCategory.AllCustomer,
                     ReportCreatedBy = request.RequesterId,
                     ReportCreatedDate = DateTime.Now,
                     ReportFromDate = DateTime.Now,
@@ -111,11 +120,12 @@ namespace EPMS.Implementation.Services
             {
                 var quotationInvoiceReport = new Report
                 {
-                    ReportCategoryId = (int)ReportCategory.AllQuotationInvoice,
+                    ReportCategoryId = (int) ReportCategory.AllQuotationInvoice,
+                    EmployeeId = request.EmployeeId,
                     ReportCreatedBy = request.RequesterId,
                     ReportCreatedDate = DateTime.Now,
-                    ReportFromDate = DateTime.Now,
-                    ReportToDate = DateTime.Now
+                    ReportFromDate = request.StartDate,
+                    ReportToDate = request.EndDate
                 };
                 reportRepository.Add(quotationInvoiceReport);
                 reportRepository.SaveChanges();
@@ -125,22 +135,40 @@ namespace EPMS.Implementation.Services
                 var report = reportRepository.Find(request.ReportId);
                 request.StartDate = report.ReportFromDate;
                 request.EndDate = report.ReportToDate;
+                request.EmployeeId = Convert.ToInt64(report.EmployeeId);
             }
-            var quotationCount = quotationRepository.GetAll().Count();
 
+            //Invoice Module under development
+            var invoicesCount = 0;
+
+            var employee = employeeRepository.Find(request.EmployeeId);
+            var empId = employee.AspNetUsers.FirstOrDefault().Id;
+            IEnumerable<Quotation> quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+            
             return new QuotationInvoiceReportResponse
             {
-                InvoicesCount = 0,
-                QuotationsCount = quotationCount,
+                Quotations = quotations,
+                EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
+                InvoicesCount = invoicesCount,
+                QuotationsCount = quotations.Count(),
+                StartDate = request.StartDate.ToShortDateString(),
+                EndDate = request.EndDate.ToShortDateString()
             };
         }
 
-        public CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request)
+        public CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request)
         {
-            return reportRepository.GetCustomerServiceReports(request);
+            return reportRepository.GetQuotationInvoiceReports(request);
+        }
+
+        public CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request)
+        {
+            return reportRepository.GetQuotationInvoiceReports(request);
         }
 
         #endregion
+
 
         #region Create Reports and Details Views
         public bool AddReport(Report report)
@@ -149,6 +177,53 @@ namespace EPMS.Implementation.Services
             reportRepository.SaveChanges();
             return true;
         }
+        public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
+        {
+            if (request.IsCreate)
+            {
+                var projectNewReport = new Report
+                {
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
+                if (request.ProjectId > 0)
+                {
+                    projectNewReport.ProjectId = request.ProjectId;
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
+                }
+                else
+                {
+                    projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
+                }
+
+                request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
+
+                var response = projectRepository.GetProjectReportDetails(request).ToList();
+                projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
+                reportRepository.Add(projectNewReport);
+                reportRepository.SaveChanges();
+                request.ReportId = projectNewReport.ReportId;
+            }
+            else
+            {
+                var report = reportRepository.Find(request.ReportId);
+                if (report.ProjectId != null)
+                {
+                    request.ProjectId = (long)report.ProjectId;
+                    request.ReportCreatedDate = report.ReportCreatedDate;
+                }
+            }
+
+            return new ProjectReportDetailsResponse
+            {
+                ReportId = request.ReportId,
+                //Projects = response,
+                //ProjectTasks = response.FirstOrDefault().ProjectTasks
+            };
+        }
+
         public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
         {
             if (request.IsCreate)
@@ -193,59 +268,6 @@ namespace EPMS.Implementation.Services
                 Warehouses = warehouses
             };
         }
-        public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
-        {
-                ProjectReportDetailsResponse reportResponse=new ProjectReportDetailsResponse();
-            if (request.IsCreate)
-            {
-                var projectNewReport = new Report
-                {
-                    ReportCreatedBy = request.RequesterId,
-                    ReportCreatedDate = DateTime.Now,
-                    ReportFromDate = DateTime.Now,
-                    ReportToDate = DateTime.Now
-                };
-                if (request.ProjectId > 0)
-                {
-                    projectNewReport.ProjectId = request.ProjectId;
-                    projectNewReport.ReportCategoryId = (int)ReportCategory.Project;
-                }
-                else
-                {
-                    projectNewReport.ReportCategoryId = (int)ReportCategory.AllProjects;
-                }
-
-                request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
-
-                    //Fetch Report data
-                var response = projectRepository.GetProjectReportDetails(request).ToList();
-                projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
-
-                    //Save Report and its data
-                reportRepository.Add(projectNewReport);
-                reportRepository.SaveChanges();
-
-
-                    //Result Data to be Returned
-                request.ReportId = projectNewReport.ReportId;
-                    reportResponse.Projects = projectNewReport.ReportProjects;
-                    reportResponse.ProjectTasks = projectNewReport.ReportProjectTasks;
-            }
-            else
-            {
-                var report = reportRepository.Find(request.ReportId);
-                if (report.ProjectId != null)
-                {
-                    request.ProjectId = (long)report.ProjectId;
-                    request.ReportCreatedDate = report.ReportCreatedDate;
-
-                        reportResponse.Projects = report.ReportProjects;
-                        reportResponse.ProjectTasks = report.ReportProjectTasks;
-                }
-            }
-                reportResponse.ReportId = request.ReportId;
-                return reportResponse;
-        }
 
         public IEnumerable<ReportProject> SaveAndGetAllProjectsReport(ProjectReportCreateOrDetailsRequest request)
         {
@@ -255,7 +277,7 @@ namespace EPMS.Implementation.Services
             {
                 var projectNewReport = new Report
                 {
-                    ReportCategoryId = (int)ReportCategory.AllProjects,
+                    ReportCategoryId = (int) ReportCategory.AllProjects,
                     ReportCreatedBy = request.RequesterId,
                     ReportCreatedDate = DateTime.Now,
                     ReportFromDate = DateTime.Now,
@@ -373,54 +395,56 @@ namespace EPMS.Implementation.Services
             detailResponse.ReportId = request.ReportId;
             return detailResponse;
         }
+
         private void CreateTaskReport(TaskReportCreateOrDetailsRequest request)
         {
                 Report taskReportToCreate = new Report();
             if (request.ProjectId == 0 && request.TaskId == 0)
             {
                 taskReportToCreate = new Report
-                    {
-                        ReportCategoryId = (int)ReportCategory.AllProjectsAllTasks,
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
+                {
+                    ReportCategoryId = (int) ReportCategory.AllProjectsAllTasks,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
                 reportRepository.Add(taskReportToCreate);
                 reportRepository.SaveChanges();
             }
             else if (request.ProjectId > 0 && request.TaskId == 0)
             {
                 taskReportToCreate = new Report
-                    {
-                        ProjectId = request.ProjectId,
-                        ReportCategoryId = (int)ReportCategory.ProjectAllTasks,
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
+                {
+                    ProjectId = request.ProjectId,
+                    ReportCategoryId = (int) ReportCategory.ProjectAllTasks,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
                 reportRepository.Add(taskReportToCreate);
                 reportRepository.SaveChanges();
             }
             else if (request.ProjectId > 0 && request.TaskId > 0)
             {
                 taskReportToCreate = new Report
-                    {
-                        ProjectId = request.ProjectId,
-                        TaskId = request.TaskId,
-                        ReportCategoryId = (int)ReportCategory.ProjectTask,
-                        ReportCreatedBy = request.RequesterId,
-                        ReportCreatedDate = DateTime.Now,
-                        ReportFromDate = DateTime.Now,
-                        ReportToDate = DateTime.Now
-                    };
+                {
+                    ProjectId = request.ProjectId,
+                    TaskId = request.TaskId,
+                    ReportCategoryId = (int) ReportCategory.ProjectTask,
+                    ReportCreatedBy = request.RequesterId,
+                    ReportCreatedDate = DateTime.Now,
+                    ReportFromDate = DateTime.Now,
+                    ReportToDate = DateTime.Now
+                };
                 reportRepository.Add(taskReportToCreate);
                 reportRepository.SaveChanges();
             }
             request.ReportId = taskReportToCreate.ReportId;
             request.ReportCreatedDate = taskReportToCreate.ReportCreatedDate;
         }
+
         #endregion
     }
 }

@@ -1,4 +1,5 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels.ReportsResponseModels;
 
@@ -10,9 +11,9 @@ namespace EPMS.Interfaces.Repository
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
-        CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request);
-        #region Projects Report
+        CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
+        CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
-        #endregion
+        
     }
 }

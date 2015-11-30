@@ -38,14 +38,12 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         public ActionResult Detail(CustomerCreateViewModel customerCreateViewModel)
         {
-            CustomerReportDetailRequest request = new CustomerReportDetailRequest
-            {
-                ReportId = customerCreateViewModel.ReportId,
-                RequesterRole = "Admin",
-                RequesterId = Session["UserID"].ToString(),
-                StartDate = DateTime.ParseExact(customerCreateViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")),
-                EndDate = DateTime.ParseExact(customerCreateViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")),
-            };
+            CustomerReportDetailRequest request = new CustomerReportDetailRequest();
+            request.ReportId = customerCreateViewModel.ReportId;
+            request.RequesterRole = "Admin";
+            request.RequesterId = Session["UserID"].ToString();
+            request.StartDate = customerCreateViewModel.StartDate != null ? DateTime.ParseExact(customerCreateViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime();
+            request.EndDate = customerCreateViewModel.EndDate != null ? DateTime.ParseExact(customerCreateViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime();
 
             var refrel = Request.UrlReferrer;
             if (refrel != null && refrel.ToString().Contains("Report/Customer/Create"))

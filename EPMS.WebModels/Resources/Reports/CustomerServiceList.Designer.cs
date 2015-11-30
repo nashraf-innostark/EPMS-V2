@@ -22,14 +22,14 @@ namespace EPMS.WebModels.Resources.Reports {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class QuotationInvoice {
+    public class CustomerServiceList {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal QuotationInvoice() {
+        internal CustomerServiceList() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace EPMS.WebModels.Resources.Reports {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.Reports.QuotationInvoice", typeof(QuotationInvoice).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("EPMS.WebModels.Resources.Reports.CustomerServiceList", typeof(CustomerServiceList).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -61,92 +61,74 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to All.
+        ///   Looks up a localized string similar to Created By.
         /// </summary>
-        public static string All {
+        public static string CreatedBy {
             get {
-                return ResourceManager.GetString("All", resourceCulture);
+                return ResourceManager.GetString("CreatedBy", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Create Quotation/Invoice Report.
+        ///   Looks up a localized string similar to Create Employee Quotatoin/Invoice Report.
         /// </summary>
-        public static string CreateTitle {
+        public static string CreateQI {
             get {
-                return ResourceManager.GetString("CreateTitle", resourceCulture);
+                return ResourceManager.GetString("CreateQI", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Quotation/Invoice Detail.
+        ///   Looks up a localized string similar to Customer List.
         /// </summary>
-        public static string Detail {
+        public static string CustomerList {
             get {
-                return ResourceManager.GetString("Detail", resourceCulture);
+                return ResourceManager.GetString("CustomerList", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Employee Name.
+        ///   Looks up a localized string similar to Customer RFQ/Orders Placed.
         /// </summary>
-        public static string Employee {
+        public static string CustomerRO {
             get {
-                return ResourceManager.GetString("Employee", resourceCulture);
+                return ResourceManager.GetString("CustomerRO", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to End Date.
+        ///   Looks up a localized string similar to Date.
         /// </summary>
-        public static string EndDate {
+        public static string Date {
             get {
-                return ResourceManager.GetString("EndDate", resourceCulture);
+                return ResourceManager.GetString("Date", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to From - To.
+        ///   Looks up a localized string similar to Employee Quotations/Invoices.
         /// </summary>
-        public static string FromTo {
+        public static string EmployeeQI {
             get {
-                return ResourceManager.GetString("FromTo", resourceCulture);
+                return ResourceManager.GetString("EmployeeQI", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate Report.
+        ///   Looks up a localized string similar to Report.
         /// </summary>
-        public static string Generate {
+        public static string Report {
             get {
-                return ResourceManager.GetString("Generate", resourceCulture);
+                return ResourceManager.GetString("Report", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Generate Report as PDF.
+        ///   Looks up a localized string similar to Report Date.
         /// </summary>
-        public static string GenerateAsPDF {
+        public static string ReportDate {
             get {
-                return ResourceManager.GetString("GenerateAsPDF", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of Invoices.
-        /// </summary>
-        public static string Invoices {
-            get {
-                return ResourceManager.GetString("Invoices", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Number of Quotations.
-        /// </summary>
-        public static string Quotations {
-            get {
-                return ResourceManager.GetString("Quotations", resourceCulture);
+                return ResourceManager.GetString("ReportDate", resourceCulture);
             }
         }
         
@@ -160,20 +142,20 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Start Date.
-        /// </summary>
-        public static string StartDate {
-            get {
-                return ResourceManager.GetString("StartDate", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Create Quotation/Invoice Report.
+        ///   Looks up a localized string similar to Customer Service Reports.
         /// </summary>
         public static string Title {
             get {
                 return ResourceManager.GetString("Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type.
+        /// </summary>
+        public static string Type {
+            get {
+                return ResourceManager.GetString("Type", resourceCulture);
             }
         }
     }

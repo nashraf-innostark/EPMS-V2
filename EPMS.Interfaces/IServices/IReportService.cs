@@ -25,6 +25,7 @@ namespace EPMS.Interfaces.IServices
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
         TaskReportDetailsResponse SaveAndGetTaskReportDetails(TaskReportCreateOrDetailsRequest request);
         IEnumerable<ProjectTask> GetAllProjectTasks(TaskReportCreateOrDetailsRequest request);
-        CustomerReportListResponse GetCustomerServiceReports(CustomerServiceReportsSearchRequest request);
+        CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
+        CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);
     }
 }

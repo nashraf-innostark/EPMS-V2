@@ -117,43 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="All" xml:space="preserve">
-    <value>All</value>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>Created By</value>
   </data>
-  <data name="CreateTitle" xml:space="preserve">
-    <value>Create Quotation/Invoice Report</value>
+  <data name="CreateQI" xml:space="preserve">
+    <value>Create Employee Quotatoin/Invoice Report</value>
   </data>
-  <data name="Detail" xml:space="preserve">
-    <value>Quotation/Invoice Detail</value>
+  <data name="CustomerList" xml:space="preserve">
+    <value>Customer List</value>
   </data>
-  <data name="Employee" xml:space="preserve">
-    <value>Employee Name</value>
+  <data name="CustomerRO" xml:space="preserve">
+    <value>Customer RFQ/Orders Placed</value>
   </data>
-  <data name="EndDate" xml:space="preserve">
-    <value>End Date</value>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
   </data>
-  <data name="FromTo" xml:space="preserve">
-    <value>From - To</value>
+  <data name="EmployeeQI" xml:space="preserve">
+    <value>Employee Quotations/Invoices</value>
   </data>
-  <data name="Generate" xml:space="preserve">
-    <value>Generate Report</value>
+  <data name="Report" xml:space="preserve">
+    <value>Report</value>
   </data>
-  <data name="GenerateAsPDF" xml:space="preserve">
-    <value>Generate Report as PDF</value>
-  </data>
-  <data name="Invoices" xml:space="preserve">
-    <value>Number of Invoices</value>
-  </data>
-  <data name="Quotations" xml:space="preserve">
-    <value>Number of Quotations</value>
+  <data name="ReportDate" xml:space="preserve">
+    <value>Report Date</value>
   </data>
   <data name="Serial" xml:space="preserve">
     <value>Serial</value>
   </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>Start Date</value>
-  </data>
   <data name="Title" xml:space="preserve">
-    <value>Create Quotation/Invoice Report</value>
+    <value>Customer Service Reports</value>
+  </data>
+  <data name="Type" xml:space="preserve">
+    <value>Type</value>
   </data>
 </root>
