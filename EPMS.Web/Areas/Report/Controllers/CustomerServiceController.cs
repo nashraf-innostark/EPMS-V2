@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
@@ -31,7 +32,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #region Public
 
         #region Index
-
+        //[SiteAuthorize(PermissionKey = "CustomerServiceReport")]
         public ActionResult Index()
         {
             CustomerServiceReportsSearchRequest searchRequest = new CustomerServiceReportsSearchRequest();

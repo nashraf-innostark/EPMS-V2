@@ -173,6 +173,7 @@
     <Compile Include="DomainModels\ReportInventoryItem.cs" />
     <Compile Include="DomainModels\ReportProject.cs" />
     <Compile Include="DomainModels\ReportProjectTask.cs" />
+    <Compile Include="DomainModels\ReportQuotationInvoice.cs" />
     <Compile Include="DomainModels\ReportTaskEmployee.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
