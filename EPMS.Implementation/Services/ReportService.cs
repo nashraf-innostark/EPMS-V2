@@ -150,6 +150,12 @@ namespace EPMS.Implementation.Services
             var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
             var invoices = invoiceRepository.GetAll().Where(x => x.RecCreatedBy == empId);
 
+            //Save Report
+            var QuotationInvoiceReport = new ReportQuotationInvoice
+            {
+                
+            };
+
             return new QuotationInvoiceReportResponse
             {
                 Quotations = quotations,
