@@ -13,7 +13,7 @@ using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
-    public class NotificationService:INotificationService
+    public class NotificationService : INotificationService
     {
         private readonly IMeetingRepository meetingRepository;
         private readonly IJobApplicantRepository jobApplicantRepository;
@@ -27,7 +27,7 @@ namespace EPMS.Implementation.Services
         private readonly INotificationRepository notificationRepository;
         private readonly IEmployeeRepository employeeRepository;
 
-        public NotificationService(IMeetingRepository meetingRepository,IJobApplicantRepository jobApplicantRepository,IJobOfferedRepository jobOfferedRepository,IProjectTaskRepository projectTaskRepository,IProjectRepository projectRepository,IEmployeeRequestRepository requestRepository,IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
+        public NotificationService(IMeetingRepository meetingRepository, IJobApplicantRepository jobApplicantRepository, IJobOfferedRepository jobOfferedRepository, IProjectTaskRepository projectTaskRepository, IProjectRepository projectRepository, IEmployeeRequestRepository requestRepository, IMenuRepository menuRepository, IAspNetUserRepository aspNetUserRepository, INotificationRecipientRepository notificationRecipientRepository, INotificationRepository notificationRepository, IEmployeeRepository employeeRepository)
         {
             this.meetingRepository = meetingRepository;
             this.jobApplicantRepository = jobApplicantRepository;
@@ -45,16 +45,16 @@ namespace EPMS.Implementation.Services
 
         public NotificationViewModel LoadNotificationAndBaseData(long? notificationId)
         {
-            NotificationViewModel notificationViewModel=new NotificationViewModel();
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
             IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
             if (employees.Any())
-            {                
+            {
                 notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL()).ToList();
             }
             if (notificationId != null && notificationId > 0)
             {
-                Notification notification = notificationRepository.Find((long) notificationId);
-                if(notification!=null)
+                Notification notification = notificationRepository.Find((long)notificationId);
+                if (notification != null)
                     notificationViewModel.NotificationResponse = notification.CreateFromServerToClient();
             }
             return notificationViewModel;
@@ -64,7 +64,7 @@ namespace EPMS.Implementation.Services
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel();
             IEnumerable<Employee> employees = employeeRepository.GetAll().ToList();
-            
+
             if (employees.Any())
             {
                 notificationViewModel.EmployeeDDL = employees.Select(x => x.CreateForEmployeeDDL()).ToList();
@@ -78,36 +78,36 @@ namespace EPMS.Implementation.Services
                     var recipient = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId);
 
                     //check if this notification has for 'employeeId' recipient, if yes, mark it NOTIFIED (IsRead=true)
-                        if (notification.NotificationRecipients.Any(x => x.UserId == userId || x.EmployeeId == employeeId))
+                    if (notification.NotificationRecipients.Any(x => x.UserId == userId || x.EmployeeId == employeeId))
+                    {
+                        if (recipient != null && !recipient.IsRead)
                         {
-                            if (recipient != null && !recipient.IsRead)
-                            {
-                                recipient.IsRead = true;
-                                notificationRecipientRepository.Update(recipient);
-                                notificationRecipientRepository.SaveChanges();
-                            }
-                        }
-                        else
-                        {
-                            //seems notification was not for a specific Employee
-                            NotificationRecipient newRecipient = new NotificationRecipient
-                            {
-                                UserId = userId,//we are not setting employee id here, details are in below comment
-                                NotificationId = notification.NotificationId,
-                                IsRead = true
-                            };
-
-                            //Check if there already a recipient exist, 
-                            //if yes then pick his EmpId to display the Employee's details
-                            //if no, it means this notification was not created for a specific Employee, so we will not display any Employee's detail, just set UserId, to have a record which user has read the notification
-                            if (notification.NotificationRecipients.FirstOrDefault() != null)
-                                newRecipient.EmployeeId = notification.NotificationRecipients.FirstOrDefault().EmployeeId;
-                     
-
-                            notificationRecipientRepository.Add(newRecipient);
+                            recipient.IsRead = true;
+                            notificationRecipientRepository.Update(recipient);
                             notificationRecipientRepository.SaveChanges();
-                            recipient = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId);
                         }
+                    }
+                    else
+                    {
+                        //seems notification was not for a specific Employee
+                        NotificationRecipient newRecipient = new NotificationRecipient
+                        {
+                            UserId = userId,//we are not setting employee id here, details are in below comment
+                            NotificationId = notification.NotificationId,
+                            IsRead = true
+                        };
+
+                        //Check if there already a recipient exist, 
+                        //if yes then pick his EmpId to display the Employee's details
+                        //if no, it means this notification was not created for a specific Employee, so we will not display any Employee's detail, just set UserId, to have a record which user has read the notification
+                        if (notification.NotificationRecipients.FirstOrDefault() != null)
+                            newRecipient.EmployeeId = notification.NotificationRecipients.FirstOrDefault().EmployeeId;
+
+
+                        notificationRecipientRepository.Add(newRecipient);
+                        notificationRecipientRepository.SaveChanges();
+                        recipient = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId);
+                    }
                     notificationViewModel.NotificationResponse = notification.CreateDetailsFromServerToClient(recipient);
                 }
             }
@@ -126,13 +126,13 @@ namespace EPMS.Implementation.Services
                 //Update notification
                 notificationResponse.NotificationId = UpdateNotification(notificationResponse);
                 //Delete Notification recipient
-                if(notificationRecipientRepository.DeleteRecipient(notificationResponse.NotificationId))
+                if (notificationRecipientRepository.DeleteRecipient(notificationResponse.NotificationId))
                     notificationRepository.SaveChanges();
             }
             else
             {
                 //Save Notification
-                notificationResponse.NotificationId=AddNotification(notificationResponse);
+                notificationResponse.NotificationId = AddNotification(notificationResponse);
             }
             //Save Notification recipient, if there is no recipient, it means notification is for administrations
             if (!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId == 0))
@@ -168,13 +168,38 @@ namespace EPMS.Implementation.Services
             return true;
         }
 
+        public bool AddUpdateInvoiceNotification(NotificationViewModel notificationViewModel, long customerId)
+        {
+            if (notificationViewModel.NotificationResponse.NotificationId > 0)
+            {
+                //Update notification
+                notificationViewModel.NotificationResponse.NotificationId = UpdateNotification(notificationViewModel.NotificationResponse);
+                //Delete Notification recipient
+                if (notificationRecipientRepository.DeleteRecipient(notificationViewModel.NotificationResponse.NotificationId))
+                    notificationRepository.SaveChanges();
+            }
+            else
+            {
+                //Save Notification
+                notificationViewModel.NotificationResponse.NotificationId = AddNotification(notificationViewModel.NotificationResponse);
+            }
+            NotificationRecipient newNotificationRecipient = new NotificationRecipient();
+            newNotificationRecipient.UserId = aspNetUserRepository.GetUserIdByCustomerId(customerId);
+            if (string.IsNullOrEmpty(newNotificationRecipient.UserId))
+                newNotificationRecipient.UserId = null;
+            newNotificationRecipient.EmployeeId = null;
+            newNotificationRecipient.NotificationId = notificationViewModel.NotificationResponse.NotificationId;
+            AddNotificationRecipient(newNotificationRecipient);
+            return true;
+        }
+
         public long AddNotification(NotificationResponse notification)
         {
-            
+
             var _notification = notification.CreateFromClientToServer();
             notificationRepository.Add(_notification);
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
-            
+
             notificationRepository.SaveChanges();
 
             return _notification.NotificationId;
@@ -292,7 +317,7 @@ namespace EPMS.Implementation.Services
                 var adminEmployees = aspNetUserRepository.GetAdminUsers(permisssionMenuId).ToList();
                 List<string> emailRecipients = new List<string>();
                 List<string> smsRecipients = new List<string>();
-               foreach (var notification in notifications)
+                foreach (var notification in notifications)
                 {
                     notificationResponse = notification.CreateFromServerToClient();
                     notificationResponse.NotificationCode = notificationResponse.CategoryId == 6 ? notificationResponse.CategoryId.ToString() : notificationResponse.CategoryId.ToString() + notificationResponse.SubCategoryId.ToString();
@@ -310,7 +335,7 @@ namespace EPMS.Implementation.Services
                                 foreach (var admin in adminEmployeesList)
                                 {
                                     emailRecipients.Add(admin.Email);
-                                    if (admin.Employee!=null)
+                                    if (admin.Employee != null)
                                         smsRecipients.Add(admin.Employee.EmployeeMobileNum);
                                 }
                                 if (emailRecipients.Any())
@@ -353,7 +378,7 @@ namespace EPMS.Implementation.Services
                                 }
                                 else
                                 {
-                                    if (adminEmployees.Count(x => x.Id == recipient.UserId)==0)
+                                    if (adminEmployees.Count(x => x.Id == recipient.UserId) == 0)
                                     {
                                         emailRecipients.Add(recipient.AspNetUser.Email);
                                         if (recipient.AspNetUser.Customer != null)
@@ -384,7 +409,7 @@ namespace EPMS.Implementation.Services
                             SentNotificationEmail(notificationResponse);
                         }
                     }
-                   
+
                     //Update notification
                     notification.IsSMSsent = true;
                     notification.IsEmailSent = true;
@@ -404,12 +429,12 @@ namespace EPMS.Implementation.Services
         {
             if (!string.IsNullOrEmpty(notificationResponse.Email))
             {
-                Utility.SendEmail(notificationResponse.Email,notificationResponse.TitleE + "/" + notificationResponse.TitleA, notificationResponse.EmailText);
+                Utility.SendEmail(notificationResponse.Email, notificationResponse.TitleE + "/" + notificationResponse.TitleA, notificationResponse.EmailText);
             }
         }
         public void GenerateNotificationDescription(NotificationResponse notificationResponse)
         {
-            
+
             string smsText = string.Empty;
             string emailText = string.Empty;
 
@@ -583,7 +608,7 @@ namespace EPMS.Implementation.Services
 
                     fileText = fileText.Replace("[RequestTopic]", request.RequestTopic);
                 }
-                
+
             }
 
             else if (notificationResponse.NotificationCode == "52" || notificationResponse.NotificationCode == "58" ||
@@ -596,7 +621,7 @@ namespace EPMS.Implementation.Services
                     fileText = fileText.Replace("[ProjectNameEng]", project.NameE);
                     fileText = fileText.Replace("[ProjectNameAr]", project.NameA);
                 }
-                
+
             }
             else if (notificationResponse.NotificationCode == "511" || notificationResponse.NotificationCode == "512" ||
                 notificationResponse.NotificationCode == "513" || notificationResponse.NotificationCode == "514")

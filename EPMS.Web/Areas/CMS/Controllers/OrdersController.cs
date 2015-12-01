@@ -96,7 +96,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [SiteAuthorize(PermissionKey = "OrderCreate,OrderDetails")]
+        [SiteAuthorize(PermissionKey = "OrderCreate")]
         public ActionResult Create(long? id)
         {
             var direction = WebModels.Resources.Shared.Common.TextDirection;
@@ -185,6 +185,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Detail
 
+        [SiteAuthorize(PermissionKey = "OrderDetails")]
         public ActionResult Detail(long? id)
         {
             var direction = WebModels.Resources.Shared.Common.TextDirection;

@@ -6,7 +6,6 @@
         ClientName = 2,
         Quotation = 3,
         Invoice = 4,
-        Reciepts = 5,
-        Status = 6,
+        Status = 5,
     }
 }

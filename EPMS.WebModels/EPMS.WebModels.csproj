@@ -438,25 +438,15 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\Notification1.ar.Designer.cs">
-      <DependentUpon>Notification1.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Resources\Notification1.Designer.cs">
-      <DependentUpon>Notification1.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\Notification\Notification.ar.Designer.cs">
-      <DependentUpon>Notification.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.ar.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Notification\Notification.Designer.cs">
-      <DependentUpon>Notification.resx</DependentUpon>
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Notification.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\PMS\Project.ar.Designer.cs">
       <DependentUpon>Project.ar.resx</DependentUpon>
@@ -1271,14 +1261,6 @@
     <EmbeddedResource Include="Resources\Meeting\Meeting.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Meeting.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Notification1.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Notification1.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Notification1.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Notification1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Notification\Notification.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

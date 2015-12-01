@@ -46,9 +46,8 @@ namespace EPMS.Repository.Repositories
                     {
                         { OrdersByColumn.OrderNumber,  c => c.OrderNo},
                         { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
-                        //{ OrdersByColumn.Quotation,  c => c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId) != null ? c.Customer.Quotations.FirstOrDefault(x => x.OrderId == c.OrderId).QuotationDiscount : 0 },
-                        //{ OrdersByColumn.Invoice,  c => c.},
-                        //{ OrdersByColumn.Reciepts,  c => c.},
+                        { OrdersByColumn.Quotation,  c => c.Quotation.SerialNumber },
+                        { OrdersByColumn.Invoice,  c => c.Quotation.Invoices.FirstOrDefault(x=>x.QuotationId == c.QuotationId).InvoiceNumber},
                         { OrdersByColumn.Status,  c => c.OrderStatus},
                     };
         #endregion
@@ -61,9 +60,10 @@ namespace EPMS.Repository.Repositories
             int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
             
             Expression<Func<Order, bool>> query =
-                s => ((searchRequest.CustomerId == 0 || (s.Customer.CustomerId == searchRequest.CustomerId)) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || 
-                    (s.OrderNo.Contains(searchRequest.SearchString)) || (s.Customer.CustomerNameE.Contains(searchRequest.SearchString)) ||
-                    (s.Customer.CustomerNameA.Contains(searchRequest.SearchString))));
+                s => (searchRequest.CustomerId == 0 || s.Customer.CustomerId == searchRequest.CustomerId) && 
+                    (string.IsNullOrEmpty(searchRequest.SearchString) || 
+                    (s.OrderNo.Contains(searchRequest.SearchString) || s.Customer.CustomerNameE.Contains(searchRequest.SearchString) || s.Customer.CustomerNameA.Contains(searchRequest.SearchString) 
+                    || s.Quotation.SerialNumber.Equals(searchRequest.SearchString) || s.Quotation.Invoices.FirstOrDefault(x=>x.QuotationId == s.QuotationId).InvoiceNumber.Equals(searchRequest.SearchString) ) );
             
             IEnumerable<Order> orders = searchRequest.sSortDir_0 == "asc" ?
                 DbSet
@@ -94,6 +94,7 @@ namespace EPMS.Repository.Repositories
                                                Quotation = new Quotation
                                                {
                                                    SerialNumber = s.Quotation.SerialNumber,
+                                                   FromOrder = s.Quotation != null && s.Quotation.FromOrder,
                                                    Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x => x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
                                                },
                                                CustomerId = s.CustomerId,

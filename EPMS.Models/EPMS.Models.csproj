@@ -478,6 +478,7 @@
     <EmbeddedResource Include="Resources\General.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>General.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Notification.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -486,6 +487,7 @@
     <EmbeddedResource Include="Resources\Notification.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Notification.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />

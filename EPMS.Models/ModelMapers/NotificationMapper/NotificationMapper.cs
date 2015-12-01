@@ -216,7 +216,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                     notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;
                 }
                 if (notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId)!=null)
-                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId).IsRead ? Resources.Notification.Yes : Resources.Notification.No;
+                    notificationListResponse.Notified = notification.NotificationRecipients.FirstOrDefault(x => x.UserId == userId || x.EmployeeId == employeeId).IsRead ? "Yes" : "No";
                 else
                     notificationListResponse.Notified = Resources.Notification.No;
             }
