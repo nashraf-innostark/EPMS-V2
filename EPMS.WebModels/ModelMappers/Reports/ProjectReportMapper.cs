@@ -36,7 +36,13 @@ namespace EPMS.WebModels.ModelMappers.Reports
             }
             else if (source.InventoryItemId!=null)
             {
+                report.InventoryItemId = source.InventoryItemId;
                 report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? source.InventoryItem.ItemNameEn : source.InventoryItem.ItemNameAr;
+            }
+            else if (source.CustomerId != null)
+            {
+                report.CustomerId = source.CustomerId;
+                report.ReportCategoryItemTitle = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? source.Customer.CustomerNameE : source.Customer.CustomerNameA;
             }
             else
             {

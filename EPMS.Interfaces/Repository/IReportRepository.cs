@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.Repository
         TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest taskReportSearchRequest);
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetRFQOrdersReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
         CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
         CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);

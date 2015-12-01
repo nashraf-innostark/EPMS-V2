@@ -1,9 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.ResponseModels;
+using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
@@ -17,6 +22,8 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerRepository customerRepository;
         private readonly ICompanyProfileRepository companyProfileRepository;
         private readonly IReceiptRepository receiptRepository;
+        private readonly INotificationService notificationService;
+        private readonly INotificationRepository notificationRepository;
 
         #endregion
 
@@ -24,7 +31,7 @@ namespace EPMS.Implementation.Services
 
         public InvoiceService(IInvoiceRepository invoiceRepository, IQuotationRepository quotationRepository,
             IQuotationItemRepository quotationItemRepository, ICustomerRepository customerRepository,
-            ICompanyProfileRepository companyProfileRepository, IReceiptRepository receiptRepository)
+            ICompanyProfileRepository companyProfileRepository, IReceiptRepository receiptRepository, INotificationRepository notificationRepository, INotificationService notificationService)
         {
             this.invoiceRepository = invoiceRepository;
             this.quotationRepository = quotationRepository;
@@ -32,6 +39,8 @@ namespace EPMS.Implementation.Services
             this.customerRepository = customerRepository;
             this.companyProfileRepository = companyProfileRepository;
             this.receiptRepository = receiptRepository;
+            this.notificationRepository = notificationRepository;
+            this.notificationService = notificationService;
         }
 
         #endregion
@@ -57,6 +66,8 @@ namespace EPMS.Implementation.Services
         {
             invoiceRepository.Add(invoice);
             invoiceRepository.SaveChanges();
+            // Send Notification
+            SendNotification(invoice);
             return true;
         }
 
@@ -71,6 +82,50 @@ namespace EPMS.Implementation.Services
         {
             invoiceRepository.Delete(invoice);
             invoiceRepository.SaveChanges();
+        }
+
+        private void SendNotification(Invoice invoice)
+        {
+            NotificationViewModel notificationViewModel = new NotificationViewModel();
+            
+            #region Send notification to admin
+            notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 20, invoice.InvoiceId);
+
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["InvoiceE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["InvoiceA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["InvoiceAlertBefore"]); //Days
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = true;
+            notificationViewModel.NotificationResponse.ForRole = UserRole.Admin;
+
+            notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+            notificationViewModel.NotificationResponse.SubCategoryId = 20; //Invoice Pending
+            notificationViewModel.NotificationResponse.ItemId = invoice.InvoiceId; //Invoice
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+
+            notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+            #endregion
+
+            #region Send notification to assigned employees
+            notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 20, invoice.InvoiceId);
+
+            notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["InvoiceE"];
+            notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["InvoiceA"];
+            notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["InvoiceAlertBefore"]); //Days
+            notificationViewModel.NotificationResponse.SystemGenerated = true;
+            notificationViewModel.NotificationResponse.ForAdmin = false;
+
+            notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+            notificationViewModel.NotificationResponse.SubCategoryId = 20; //Invoice Pending
+            notificationViewModel.NotificationResponse.ItemId = invoice.InvoiceId; //Invoice
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+
+            notificationService.AddUpdateInvoiceNotification(notificationViewModel, invoice.Quotation.CustomerId);
+            #endregion
         }
 
         public InvoiceResponse GetInvoiceDetails(long id)

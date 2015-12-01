@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -10,6 +9,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
+using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -55,13 +55,13 @@ namespace EPMS.Web.Areas.Report.Controllers
                 To = Convert.ToDateTime(createViewModel.EndDate),
             };
             var reportId = reportService.SaveQOReport(request);
-            return RedirectToAction("Details", new { ReportId = reportId });
+            return RedirectToAction(createViewModel.CustomerId > 0 ? "Details" : "DetailsAll", new { ReportId = reportId });
         }
         #endregion
 
         #region Detail
 
-        public ActionResult Detail(long? ReportId)
+        public ActionResult Details(long? ReportId)
         {
             if (ReportId == null || ReportId <= 0) return View("Create");
 
@@ -70,9 +70,12 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel=new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
-            SetGraphData(detailViewModel);
-            ViewBag.QueryString = "?ReportId=" + ReportId;
+            if(detailViewModel.QuotationOrderReports.SelectMany(x=>x.ReportQuotationOrderItems.Where(y=>y.IsQuotationReport)).Any())
+                SetRFQsGraphData(detailViewModel);
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsOrderReport)).Any())
+                SetOrdersGraphData(detailViewModel);
 
+            detailViewModel.ReportId = (long)ReportId;
 
             return View(detailViewModel);
         }
@@ -89,7 +92,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
-            ViewBag.QueryString = "?ReportId=" + ReportId;
+            detailViewModel.ReportId = (long)ReportId;
 
             return View(detailViewModel);
         }
@@ -97,12 +100,11 @@ namespace EPMS.Web.Areas.Report.Controllers
         #endregion
 
 
-        #region Graph
-
-        private QuotationOrderDetailViewModel SetGraphData(QuotationOrderDetailViewModel detailVeiwModel)
+        #region Graphs
+        private static void SetRFQsGraphData(QuotationOrderDetailViewModel detailVeiwModel)
         {
             var quotationGroups =
-                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems).ToArray();
+                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y=>y.IsQuotationReport)).ToArray();
 
             var firstQuotation = quotationGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
             var lastQuotation = quotationGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
@@ -142,10 +144,53 @@ namespace EPMS.Web.Areas.Report.Controllers
                 }
             }
             var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
-            detailVeiwModel.DataSet = data;
-            return detailVeiwModel;
+            detailVeiwModel.RFQsDataSet = data;
         }
+        private static void SetOrdersGraphData(QuotationOrderDetailViewModel detailVeiwModel)
+        {
+            var ordersGroups =
+                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y=>y.IsOrderReport)).ToArray();
 
+            var firstQuotation = ordersGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
+            var lastQuotation = ordersGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
+
+
+
+            if (firstQuotation != null)
+            {
+                detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
+                detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
+
+                detailVeiwModel.GraphItems.Add(new GraphItem
+                {
+                    ItemLabel = "Orders",
+                    ItemValue = new List<GraphLabel>
+                    {
+                        new GraphLabel
+                        {
+                            label = "Orders",
+                            data = new List<GraphLabelData>
+                            {
+                                new GraphLabelData
+                                {
+                                    dataValue=new List<GraphLabelDataValues>()
+                                }
+                            }
+                        }
+                    }
+                });
+                for (int i = 0; i < ordersGroups.Count(); i++)
+                {
+                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = Convert.ToInt64(ordersGroups[i].MonthTimeStamp),
+                        Value = Convert.ToDecimal(ordersGroups[i].TotalPrice)
+                    });
+                }
+            }
+            var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+            detailVeiwModel.OrdersDataSet = data;
+        }
         private string SetGraphImage(long reportId)
         {
             string curFile = Server.MapPath(ConfigurationManager.AppSettings["ReportImage"]) + "report_" + reportId + ".png";
@@ -155,14 +200,51 @@ namespace EPMS.Web.Areas.Report.Controllers
             }
             return null;
         }
-
-        private static long GetJavascriptTimestamp(DateTime input)
+        [AllowAnonymous]
+        public ActionResult GeneratePdf(long? ReportId)
         {
-            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
-            DateTime time = input.Subtract(span);
-            return (time.Ticks / 10000);
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("DetailsAsPDF", new { ReportId = ReportId }) { FileName = "RFQs & Orders Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAsPDF(long? ReportId)
+        {
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQOReport((long)ReportId);
+
+            QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsQuotationReport)).Any())
+                SetRFQsGraphData(detailViewModel);
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsOrderReport)).Any())
+                SetOrdersGraphData(detailViewModel);
+
+            ViewBag.QueryString = "?ReportId=" + ReportId;
+            var status = SetGraphImage((long)ReportId);
+            detailViewModel.ImageSrc = SetGraphImage((long)ReportId) != null ? status : "";
+            return View(detailViewModel);
         }
 
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long? ReportId)
+        {
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("DetailsAllAsPDF", new { ReportId = ReportId }) { FileName = "RFQs & Orders Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAllAsPDF(long? ReportId)
+        {
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQOReport((long)ReportId);
+
+            QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+         
+            return View(detailViewModel);
+        }
         #endregion
 
         #endregion

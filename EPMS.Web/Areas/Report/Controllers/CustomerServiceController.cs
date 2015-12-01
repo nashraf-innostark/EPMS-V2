@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
-using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
@@ -60,7 +57,21 @@ namespace EPMS.Web.Areas.Report.Controllers
 
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
-
+        public ActionResult RFQsOrdersIndex(WarehouseReportSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            var response = reportService.GetRFQOrdersReports(searchRequest);
+            var data =
+                response.Reports.Select(x => x.CreateProjectReportFromServerToClient()).ToList();
+            WarehouseReportsListViewModel projectsListViewModel = new WarehouseReportsListViewModel
+            {
+                aaData = data,
+                iTotalRecords = Convert.ToInt32(response.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(response.FilteredCount),
+                sEcho = searchRequest.sEcho
+            };
+            return Json(projectsListViewModel, JsonRequestBehavior.AllowGet);
+        }
         public ActionResult AllCustomerIndex(CustomerServiceReportsSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];

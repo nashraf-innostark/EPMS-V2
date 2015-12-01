@@ -44,11 +44,15 @@ namespace EPMS.Web.Areas.Report.Controllers
                 ViewBag.ReportId = ReportId;
             }
             
-            var projects = TempData["Projects"] as IEnumerable<ReportProject>;
+            var projects = TempData["Projects"] as List<ReportProject>;
             if (projects == null)
                 return RedirectToAction("Index", "ProjectsAndTasks");
-            ViewBag.ReportId = projects.FirstOrDefault().ReportId;
-            return View(projects.Select(x => x.CreateForReport()));
+            if (projects.Any())
+            {
+                ViewBag.ReportId = projects.FirstOrDefault().ReportId;
+                return View(projects.Select(x => x.CreateForReport()));
+            }
+            return View(new List<Project>());
         }
         [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()

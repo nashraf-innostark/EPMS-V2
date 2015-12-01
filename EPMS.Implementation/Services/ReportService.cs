@@ -11,6 +11,7 @@ using EPMS.Models.DomainModels;
 using EPMS.Models.ModelMapers;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Models.ResponseModels.ReportsResponseModels;
+using Customer = EPMS.Models.DashboardModels.Customer;
 
 namespace EPMS.Implementation.Services
 {
@@ -71,6 +72,11 @@ namespace EPMS.Implementation.Services
         public ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest)
         {
             return reportRepository.GetInventoryItemsReports(searchRequest);
+        }
+
+        public ReportsListRequestResponse GetRFQOrdersReports(WarehouseReportSearchRequest searchRequest)
+        {
+            return reportRepository.GetRFQOrdersReports(searchRequest);
         }
 
         public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
@@ -246,59 +252,83 @@ namespace EPMS.Implementation.Services
             {
                 newReport.ReportCategoryId = (int)ReportCategory.CustomerQO;
                 newReport.CustomerId = request.CustomerId;
+
+                //Fetch data for Report 
+                var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
+                var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
+                var customer = customerService.FindCustomerById(request.CustomerId);
+                //reportQuotationOrder Report
+
+                var reportQuotationOrder = new ReportQuotationOrder
+                {
+                    CustomerId = request.CustomerId,
+                    NoOfOrders = customerOrders.Count(),
+                    NoOfRFQ = customerQuotations.Count(),
+                    CustomerNameE = customer.CustomerNameE,
+                    CustomerNameA = customer.CustomerNameA,
+                    ReportQuotationOrderItems = new List<ReportQuotationOrderItem>()
+                };
+
+                //Items of Quotations for reportQuotationOrder
+                var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
+                foreach (var quot in itemsOfQuot)
+                {
+                    reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
+                    {
+                        IsQuotationReport = true,
+                        TotalPrice = quot.Sum(x => x.RFQItems.Sum(y => y.TotalPrice)).ToString(),
+                        MonthTimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
+                    });
+                }
+
+                //Items of Orders for reportQuotationOrder
+                var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
+                foreach (var order in itemsOfOrders)
+                {
+                    reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
+                    {
+                        IsOrderReport = true,
+                        TotalPrice = order.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                        MonthTimeStamp = GetJavascriptTimestamp(order.FirstOrDefault().RecCreatedDate).ToString()
+                    });
+                }
+                newReport.ReportQuotationOrders.Add(reportQuotationOrder);
+                //Save Report and its data
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
             }
             else
             {
                 newReport.ReportCategoryId = (int)ReportCategory.AllCustomersQO;
-            }
+                //Fetch data for Report 
+                var customers = customerService.GetAll().ToList();
+                foreach (var customer in customers)
+                {
+                    request.CustomerId = customer.CustomerId;
 
-            //Fetch data for Report 
-            var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
-            var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
-            var customer = customerService.FindCustomerById(request.CustomerId);
+                    var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
+                    var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
+
+                    //reportQuotationOrder Report
+
+                    var reportQuotationOrder = new ReportQuotationOrder
+                    {
+                        CustomerId = request.CustomerId,
+                        NoOfOrders = customerOrders.Count(),
+                        NoOfRFQ = customerQuotations.Count(),
+                        CustomerNameE = customer.CustomerNameE,
+                        CustomerNameA = customer.CustomerNameA,
+                    };
+
+                    newReport.ReportQuotationOrders.Add(reportQuotationOrder);
+                }
+                
+                //Save Report and its data
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+            }
 
             
-
-            //reportQuotationOrder Report
-
-            var reportQuotationOrder = new ReportQuotationOrder
-            {
-                CustomerId = request.CustomerId,
-                CustomerNameA = customer.CustomerNameA,
-                CustomerNameE = customer.CustomerNameE,
-                NoOfOrders = customerOrders.Count(),
-                NoOfRFQ = customerQuotations.Count(),
-                ReportQuotationOrderItems = new List<ReportQuotationOrderItem>()
-            };
-
-            
-            //Items of Quotations for reportQuotationOrder
-            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
-            foreach (var quot in itemsOfQuot)
-            {
-                reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
-                {
-                    IsQuotationReport = true,
-                    TotalPrice = quot.Sum(x=>x.RFQItems.Sum(y=>y.TotalPrice)).ToString(),
-                    MonthTimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
-                });
-            }
-
-            //Items of Orders for reportQuotationOrder
-            var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
-            foreach (var order in itemsOfOrders)
-            {
-                reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
-                {
-                    IsOrderReport = true,
-                    TotalPrice = order.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
-                    MonthTimeStamp = GetJavascriptTimestamp(order.FirstOrDefault().RecCreatedDate).ToString()
-                });
-            }
-            newReport.ReportQuotationOrders.Add(reportQuotationOrder);
-            //Save Report and its data
-            reportRepository.Add(newReport);
-            reportRepository.SaveChanges();
 
             return newReport.ReportId;
         }

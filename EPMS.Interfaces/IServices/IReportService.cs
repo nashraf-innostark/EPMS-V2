@@ -14,6 +14,7 @@ namespace EPMS.Interfaces.IServices
         ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest projectReportSearchRequest);
         ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest);
+        ReportsListRequestResponse GetRFQOrdersReports(WarehouseReportSearchRequest searchRequest);
         ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest);
         ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request);
         CustomerReportResponse SaveAndGetCustomerList(CustomerReportDetailRequest request);

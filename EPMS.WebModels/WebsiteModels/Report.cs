@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
 using EPMS.Models.DomainModels;
+using System;
+
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -7,15 +9,17 @@ namespace EPMS.WebModels.WebsiteModels
     {
         public long ReportId { get; set; }
         public int ReportCategoryId { get; set; }
-        public System.DateTime ReportFromDate { get; set; }
-        public System.DateTime ReportToDate { get; set; }
+        public DateTime ReportFromDate { get; set; }
+        public DateTime ReportToDate { get; set; }
         public string ReportCreatedBy { get; set; }
-        public System.DateTime ReportCreatedDate { get; set; }
+        public DateTime ReportCreatedDate { get; set; }
         public long? ProjectId { get; set; }
         public long? TaskId { get; set; }
         public long? WarehouseId { get; set; }
         public long? RfqOrderId { get; set; }
         public long? EmployeeId { get; set; }
+        public long? InventoryItemId { get; set; }
+        public long? CustomerId { get; set; }
 
 
         public string ReportCreatedDateString { get; set; }
