@@ -311,13 +311,19 @@ namespace EPMS.WebModels.ModelMappers
 
         public static EmployeeForDropDownList CreateForDropDownList(this Employee source)
         {
-            return new EmployeeForDropDownList
+            string nameEn = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE;
+            string nameAr = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA;
+            if (nameEn != "Mr  Admin")
             {
-                EmployeeId = source.EmployeeId,
-                EmployeeNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE,
-                EmployeeNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA,
-                Email = source.Email,
-            };
+                return new EmployeeForDropDownList
+                {
+                    EmployeeId = source.EmployeeId,
+                    EmployeeNameE = nameEn,
+                    EmployeeNameA = nameAr,
+                    Email = source.Email,
+                };
+            }
+            return null;
         }
     }
 }

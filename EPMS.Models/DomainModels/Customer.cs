@@ -14,6 +14,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
+        public long? EmployeeId { get; set; }
 
         public virtual ICollection<AspNetUser> AspNetUsers { get; set; }
         public virtual ICollection<Complaint> Complaints { get; set; }
@@ -23,5 +24,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<Quotation> Quotations { get; set; }
         public virtual ICollection<RFQ> RFQs { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

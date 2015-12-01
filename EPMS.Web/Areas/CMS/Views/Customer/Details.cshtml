@@ -12,6 +12,7 @@
     {
         ReturnUrl = "/CMS/Customer/Index";
     }
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 
 <div class="breadcrumb-container">
@@ -55,15 +56,15 @@
                 <div class="span3">
                     <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.Employee</label>
                 </div>
-                <div class="span9">
+                <div class="span2">
                     <div class="controls">
                         @if (direction == "ltr")
                         {
-                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Manager" })
+                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Employee" })
                         }
                         else
                         {
-                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Manager" })
+                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Employee" })
                         }
                     </div>
                 </div>
