@@ -125,7 +125,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
             RFQListViewModel viewModel = new RFQListViewModel
             {
-                Rfqs = rfqService.GetAllRfqs().Where(x=>x.CustomerId == cus).Select(x => x.CreateFromServerToClient()),
+                Rfqs = rfqService.GetAllRfqs().Select(x => x.CreateFromServerToClient()),
             };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);

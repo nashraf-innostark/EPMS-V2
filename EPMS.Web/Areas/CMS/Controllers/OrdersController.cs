@@ -183,6 +183,29 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
+        #region Detail
+
+        public ActionResult Detail(long? id)
+        {
+            var direction = WebModels.Resources.Shared.Common.TextDirection;
+            QuotationDetailViewModel viewModel = new QuotationDetailViewModel();
+            long quotatioId = 0;
+            if (id != null)
+            {
+                quotatioId = (long)id;
+            }
+            QuotationDetailResponse response = quotationService.GetQuotationDetail(quotatioId);
+            viewModel.Profile = response.Profile != null ? response.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
+            if (id != null)
+            {
+                viewModel.Quotation = response.Quotation != null ? response.Quotation.CreateFromServerToClientLv() : new WebModels.WebsiteModels.Quotation();
+                viewModel.EmployeeName = GetCreatedBy(direction, response.Quotation);
+            }
+            ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.Profile.CompanyLogoPath;
+            return View(viewModel);
+        }
+        #endregion
+
         #region CheckInventoryModule
 
         bool CheckInventoryModule()

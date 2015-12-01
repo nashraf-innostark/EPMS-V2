@@ -122,6 +122,7 @@ namespace EPMS.WebModels.ModelMappers
                 NotesAr = source.NotesAr,
                 Status = source.Status,
                 FromOrder = source.FromOrder,
+                OrderNo = source.Orders.Any() ? source.Orders.FirstOrDefault().OrderNo : "",
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()),
                 QuotationDiscount = source.QuotationDiscount,
                 ClientNameEn = source.Customer != null ? source.Customer.CustomerNameE : "",

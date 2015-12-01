@@ -1075,7 +1075,7 @@
             var id = parseInt($(this).closest('tr').children(".itemDetailId").val());
             elementToDelete = $(this).parent().parent();
             var quotationId = parseInt('@Model.QuotationId');
-            if (quotationId > 0) {
+            if (quotationId > 0 && !isNaN(id)) {
 
                 url = siteUrl + "/CMS/Quotation/Delete";
                 //var isErrorInDeleting = true;
