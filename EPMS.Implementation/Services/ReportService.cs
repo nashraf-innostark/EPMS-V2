@@ -28,6 +28,7 @@ namespace EPMS.Implementation.Services
         private readonly IWarehouseRepository warehouseRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IOrdersRepository ordersRepository;
+        private readonly IInvoiceRepository invoiceRepository;
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace EPMS.Implementation.Services
 
         public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
-            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository)
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository)
         {
             this.reportRepository = reportRepository;
             this.rfqRepository = rfqRepository;
@@ -47,6 +48,7 @@ namespace EPMS.Implementation.Services
             this.warehouseRepository = warehouseRepository;
             this.employeeRepository = employeeRepository;
             this.ordersRepository = ordersRepository;
+            this.invoiceRepository = invoiceRepository;
         }
 
         #endregion
@@ -143,19 +145,18 @@ namespace EPMS.Implementation.Services
                 request.EmployeeId = Convert.ToInt64(report.EmployeeId);
             }
 
-            //Invoice Module under development
-            var invoicesCount = 0;
-
             var employee = employeeRepository.Find(request.EmployeeId);
             var empId = employee.AspNetUsers.FirstOrDefault().Id;
             var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+            var invoices = invoiceRepository.GetAll().Where(x => x.RecCreatedBy == empId);
 
             return new QuotationInvoiceReportResponse
             {
                 Quotations = quotations,
+                Invoices = invoices,
                 EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
                 EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
-                InvoicesCount = invoicesCount,
+                InvoicesCount = invoices.Count(),
                 QuotationsCount = quotations.Count(),
                 StartDate = request.StartDate.ToShortDateString(),
                 EndDate = request.EndDate.ToShortDateString()

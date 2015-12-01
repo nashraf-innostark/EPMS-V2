@@ -136,24 +136,38 @@
 
         var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
         var parsed = JSON.parse(graphItems);
-        var datasets = [];
+        //var datasets = [];
 
-        var dataSetArray = '@Html.Raw(Json.Encode(Model.DataSet))';
-        var dataSetArrayParsed = JSON.parse(dataSetArray);
-        var timeStamp = [];
-        $.each(dataSetArrayParsed, function(index, val) {
-            var abc = [val.TimeStamp, val.Value];
-            timeStamp.push(abc);
+        //Parsing Quotation DataSet and making Array of Values
+        var quotationDataSet = '@Html.Raw(Json.Encode(Model.QuotationDataSet))';
+        var quotationDataSetParsed = JSON.parse(quotationDataSet);
+        var quotationtimeStamp = [];
+        $.each(quotationDataSetParsed, function (index, val) {
+            var values = [val.TimeStamp, val.Value];
+            quotationtimeStamp.push(values);
+        });
+
+        //Parsing Invoice DataSet and making Array of Values
+        var invoiceDataSet = '@Html.Raw(Json.Encode(Model.InvoiceDataSet))';
+        var invoiceDataSetParsed = JSON.parse(invoiceDataSet);
+        var invoiceTimeStamp = [];
+        $.each(invoiceDataSetParsed, function (index, val) {
+            var values = [val.TimeStamp, val.Value];
+            invoiceTimeStamp.push(values);
         });
         
 
-        $.each(parsed, function (index, val) {
-            var dataset = {
-                label: val.ItemLabel,
-                data: timeStamp
-            };
-            datasets.push(dataset);
-        });
+        var datasets = {
+            "quotation": {
+                label: "Quotation",
+                data: quotationtimeStamp
+            },
+            "invoice": {
+                label: "Invoice",
+                data: invoiceTimeStamp
+            }
+
+        };
 
         var i = 0;
         $.each(datasets, function (key, val) {
