@@ -197,31 +197,31 @@ namespace EPMS.Implementation.Services
             }
 
             //Fetch Report data
-            var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request);
-            var customerOrders = ordersRepository.GetOrdersByCustomerId(request);
+            var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
+            var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
             var customer = customerService.FindCustomerById(request.CustomerId);
+
             newReport.ReportQuotationOrders = new List<ReportQuotationOrder>();
 
             //Parent Report
-            var parentReport = new ReportQuotationOrder
+            var reportQuotationOrder = new ReportQuotationOrder
             {
                 CustomerId = request.CustomerId,
                 CustomerNameA = customer.CustomerNameA,
                 CustomerNameE = customer.CustomerNameE,
                 NoOfOrders = customerOrders.Count(),
-                NoOfRFQ = customerQuotations.Count(),
-                IsParent = true
+                NoOfRFQ = customerQuotations.Count()
             };
-
+            reportQuotationOrder.ReportQuotationOrderItems=new List<ReportQuotationOrderItem>();
             //Items of Quotations for parentReport
             var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate).ToList();
             foreach (var quot in itemsOfQuot)
             {
-                parentReport.ReportQuotationItems.Add(new ReportQuotationOrder
+                reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
                 {
-                    IsQuotationsReport = true,
-                    Value = quot.Sum(x=>x.RFQItems.Sum(y=>y.TotalPrice)).ToString(),
-                    TimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
+                    IsQuotationReport = true,
+                    TotalPrice = quot.Sum(x=>x.RFQItems.Sum(y=>y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
                 });
             }
 
