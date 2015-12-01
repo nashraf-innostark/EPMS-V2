@@ -3,16 +3,13 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
-using EPMS.Models.ResponseModels.ReportsResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
-using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
-using EPMS.WebModels.WebsiteModels;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -75,14 +72,22 @@ namespace EPMS.Web.Areas.Report.Controllers
             if (refrel != null && refrel.ToString().Contains("Report/QuotationInvoice/Create"))
                 request.IsCreate = true;
             var response = reportService.SaveAndGetQuotationInvoiceReport(request);
-            quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
-            quotationInvoiceViewModel.Invoices = response.Invoices.Select(x => x.CreateFromServerToClient());
-            quotationInvoiceViewModel.EmployeeNameE = response.EmployeeNameE;
-            quotationInvoiceViewModel.EmployeeNameA = response.EmployeeNameA;
-            quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
-            quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
-            quotationInvoiceViewModel.StartDate = response.StartDate;
-            quotationInvoiceViewModel.EndDate = response.EndDate;
+            if (request.IsCreate)
+            {
+                quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
+                quotationInvoiceViewModel.Invoices = response.Invoices.Select(x => x.CreateFromServerToClient());
+                quotationInvoiceViewModel.EmployeeNameE = response.EmployeeNameE;
+                quotationInvoiceViewModel.EmployeeNameA = response.EmployeeNameA;
+                quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
+                quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
+                quotationInvoiceViewModel.StartDate = response.StartDate;
+                quotationInvoiceViewModel.EndDate = response.EndDate;
+                quotationInvoiceViewModel.ReportId = response.ReportId;
+            }
+            else
+            {
+                quotationInvoiceViewModel.Report = response.Report.CreateReportFromServerToClient();
+            }
 
             SetGraphData(quotationInvoiceViewModel);
             ViewBag.QueryString = "?ReportId=" + quotationInvoiceViewModel.ReportId;
@@ -247,7 +252,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #region Generate PDF
 
         [AllowAnonymous]
-        public ActionResult GeneratePdf(TaskReportsCreateViewModel viewModel)
+        public ActionResult GeneratePdf(QuotationInvoiceViewModel viewModel)
         {
             return new ActionAsPdf("ReportAsPdf", new {ReportId = viewModel.ReportId})
             {
@@ -255,7 +260,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             };
         }
 
-
+        [AllowAnonymous]
         public ActionResult ReportAsPdf(QuotationInvoiceViewModel viewModel)
         {
             var response = Detail(viewModel);

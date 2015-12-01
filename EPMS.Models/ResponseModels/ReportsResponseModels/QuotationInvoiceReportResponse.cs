@@ -20,5 +20,6 @@ namespace EPMS.Models.ResponseModels.ReportsResponseModels
         public IEnumerable<Invoice> Invoices { get; set; }
         public string EndDate { get; set; }
         public string StartDate { get; set; }
+        public Report Report { get; set; }
     }
 }

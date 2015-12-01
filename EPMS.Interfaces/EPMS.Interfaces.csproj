@@ -136,6 +136,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\IInvoiceRepository.cs" />
     <Compile Include="Repository\IReceiptRepository.cs" />
+    <Compile Include="Repository\IReportQuotaionInvoiceRepository.cs" />
     <Compile Include="Repository\IReportRepository.cs" />
     <Compile Include="Repository\IAboutUsRepository.cs" />
     <Compile Include="Repository\IAllowanceRepository.cs" />

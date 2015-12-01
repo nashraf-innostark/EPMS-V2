@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.WebModels.WebsiteModels;
 using Report = EPMS.Models.DomainModels.Report;
@@ -45,6 +46,7 @@ namespace EPMS.WebModels.ModelMappers.Reports
             {
                 report.ReportCreatedByName = "Admin";
             }
+            report.ReportQuotationInvoices = source.ReportQuotationInvoices;
             return report;
         }
 

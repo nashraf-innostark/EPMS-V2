@@ -30,6 +30,7 @@ namespace EPMS.Implementation.Services
         private readonly IEmployeeRepository employeeRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IInvoiceRepository invoiceRepository;
+        private readonly IReportQuotaionInvoiceRepository qIRepository;
 
         #endregion
 
@@ -37,7 +38,7 @@ namespace EPMS.Implementation.Services
 
         public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
-            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository)
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository, IReportQuotaionInvoiceRepository qIRepository)
         {
             this.reportRepository = reportRepository;
             this.rfqRepository = rfqRepository;
@@ -50,6 +51,7 @@ namespace EPMS.Implementation.Services
             this.employeeRepository = employeeRepository;
             this.ordersRepository = ordersRepository;
             this.invoiceRepository = invoiceRepository;
+            this.qIRepository = qIRepository;
         }
 
         #endregion
@@ -124,27 +126,32 @@ namespace EPMS.Implementation.Services
 
         public QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request)
         {
-            var quotationInvoiceReport = new Report();
+            QuotationInvoiceReportResponse qIResponse;
+            Report newReport;
             if (request.IsCreate)
             {
-                quotationInvoiceReport = new Report
+                newReport = new Report
                 {
                     ReportCategoryId = (int) ReportCategory.AllQuotationInvoice,
                     EmployeeId = request.EmployeeId,
                     ReportCreatedBy = request.RequesterId,
                     ReportCreatedDate = DateTime.Now,
                     ReportFromDate = request.StartDate,
-                    ReportToDate = request.EndDate
+                    ReportToDate = request.EndDate,
+                    ReportQuotationInvoices = new List<ReportQuotationInvoice>()
                 };
-                reportRepository.Add(quotationInvoiceReport);
-                reportRepository.SaveChanges();
             }
             else
             {
-                quotationInvoiceReport = reportRepository.Find(request.ReportId);
-                request.StartDate = quotationInvoiceReport.ReportFromDate;
-                request.EndDate = quotationInvoiceReport.ReportToDate;
-                request.EmployeeId = Convert.ToInt64(quotationInvoiceReport.EmployeeId);
+                newReport = reportRepository.Find(request.ReportId);
+
+                request.StartDate = newReport.ReportFromDate;
+                request.EndDate = newReport.ReportToDate;
+                request.EmployeeId = Convert.ToInt64(newReport.EmployeeId);
+                return new QuotationInvoiceReportResponse
+                {
+                    Report = newReport
+                };
             }
 
             var employee = employeeRepository.Find(request.EmployeeId);
@@ -155,12 +162,11 @@ namespace EPMS.Implementation.Services
             //Save Report
             var QuotationInvoiceReport = new ReportQuotationInvoice
             {
-                EmployeeId = Convert.ToInt64(empId),
+                EmployeeId = employee.EmployeeId,
                 EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
                 EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
                 NoOfInvoices = invoices.Count(),
                 NoOfQuotations = quotations.Count(),
-                ReportId = quotationInvoiceReport.ReportId,
                 ReportQuotationInvoiceItems = new Collection<ReportQuotationInvoiceItem>()
             };
 
@@ -186,15 +192,14 @@ namespace EPMS.Implementation.Services
             {
                 QuotationInvoiceReport.ReportQuotationInvoiceItems.Add(new ReportQuotationInvoiceItem
                 {
-                    IsQuotationItem = true,
+                    IsInvoiceItem = true,
                     TotalPrice = invoiceGroup.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
                     MonthTimeStamp = GetJavascriptTimestamp(invoiceGroup.FirstOrDefault().RecCreatedDt).ToString()
                 });
             }
 
-            quotationInvoiceReport.ReportQuotationInvoices.Add(QuotationInvoiceReport);
-
-            reportRepository.Add(quotationInvoiceReport);
+            newReport.ReportQuotationInvoices.Add(QuotationInvoiceReport);
+            reportRepository.Add(newReport);
             reportRepository.SaveChanges();
 
 
@@ -207,7 +212,8 @@ namespace EPMS.Implementation.Services
                 InvoicesCount = invoices.Count(),
                 QuotationsCount = quotations.Count(),
                 StartDate = request.StartDate.ToShortDateString(),
-                EndDate = request.EndDate.ToShortDateString()
+                EndDate = request.EndDate.ToShortDateString(),
+                ReportId = newReport.ReportId
             };
         }
 

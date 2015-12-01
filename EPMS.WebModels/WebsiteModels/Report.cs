@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.WebsiteModels
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
+
+namespace EPMS.WebModels.WebsiteModels
 {
     public class Report
     {
@@ -20,5 +23,6 @@
         public string ReportToDateString { get; set; }
         public string ReportCategoryItemTitle { get; set; }
         public string ReportCreatedByName { get; set; }
+        public virtual ICollection<ReportQuotationInvoice> ReportQuotationInvoices { get; set; }
     }
 }
