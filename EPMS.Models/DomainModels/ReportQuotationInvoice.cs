@@ -17,5 +17,6 @@ namespace EPMS.Models.DomainModels
         public int NoOfInvoices { get; set; }
 
         public virtual ICollection<ReportQuotationInvoiceItem> ReportQuotationInvoiceItems { get; set; }
+        public virtual Report Report { get; set; }
     }
 }

@@ -3319,6 +3319,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportQuotationInvoice_Reports1">
+          <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reports">
+              <PropertyRef Name="ReportId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoice">
+              <PropertyRef Name="ReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportQuotationInvoiceItem_ReportQuotationInvoice">
           <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="1" />
           <End Role="ReportQuotationInvoiceItem" Type="Self.ReportQuotationInvoiceItem" Multiplicity="*" />
@@ -4602,6 +4614,10 @@
           <AssociationSet Name="FK_ReportQuotationInvoice_Reports" Association="Self.FK_ReportQuotationInvoice_Reports">
             <End Role="Reports" EntitySet="Reports" />
             <End Role="ReportQuotationOrder" EntitySet="ReportQuotationOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportQuotationInvoice_Reports1" Association="Self.FK_ReportQuotationInvoice_Reports1">
+            <End Role="Reports" EntitySet="Reports" />
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" Association="Self.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice">
             <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
@@ -7083,6 +7099,10 @@
             <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoices" />
             <End Role="ReportQuotationInvoiceItem" EntitySet="ReportQuotationInvoiceItems" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReportQuotationInvoice_Reports1" Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1">
+            <End Role="Report" EntitySet="Reports" />
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoices" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
           <Key>
@@ -9168,6 +9188,7 @@
           <NavigationProperty Name="Customer" Relationship="EPMSInventoryModel.FK_Reports_Customer" FromRole="Report" ToRole="Customer" />
           <NavigationProperty Name="ReportInventoryItems" Relationship="EPMSInventoryModel.FK_ReportInventoryItem_Reports" FromRole="Report" ToRole="ReportInventoryItem" />
           <NavigationProperty Name="ReportQuotationOrders" Relationship="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports" FromRole="Report" ToRole="ReportQuotationOrder" />
+          <NavigationProperty Name="ReportQuotationInvoices" Relationship="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1" FromRole="Report" ToRole="ReportQuotationInvoice" />
         </EntityType>
         <Association Name="FK_Reports_ReportCreatedByUser">
           <End Type="EPMSInventoryModel.AspNetUser" Role="AspNetUser" Multiplicity="1" />
@@ -9855,6 +9876,7 @@
           <NavigationProperty Name="ReportQuotationInvoiceItems" Relationship="EPMSInventoryModel.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" FromRole="ReportQuotationInvoice" ToRole="ReportQuotationInvoiceItem" />
           <Property Name="EmployeeNameA" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
           <Property Name="EmployeeNameE" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <NavigationProperty Name="Report" Relationship="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1" FromRole="ReportQuotationInvoice" ToRole="Report" />
         </EntityType>
         <EntityType Name="ReportQuotationInvoiceItem">
           <Key>
@@ -9877,6 +9899,18 @@
             </Principal>
             <Dependent Role="ReportQuotationInvoiceItem">
               <PropertyRef Name="ReportQuotationInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReportQuotationInvoice_Reports1">
+          <End Type="EPMSInventoryModel.Report" Role="Report" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ReportQuotationInvoice" Role="ReportQuotationInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Report">
+              <PropertyRef Name="ReportId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoice">
+              <PropertyRef Name="ReportId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -12233,6 +12267,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ReportQuotationInvoice" Width="1.5" PointX="28.375" PointY="6" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ReportQuotationInvoiceItem" Width="1.5" PointX="30.625" PointY="6" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1" />
         </Diagram>
     </Diagrams>
   </Designer>

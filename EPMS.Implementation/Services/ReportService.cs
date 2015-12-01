@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Transactions;
 using EPMS.Interfaces.IServices;
@@ -123,9 +124,10 @@ namespace EPMS.Implementation.Services
 
         public QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request)
         {
+            var quotationInvoiceReport = new Report();
             if (request.IsCreate)
             {
-                var quotationInvoiceReport = new Report
+                quotationInvoiceReport = new Report
                 {
                     ReportCategoryId = (int) ReportCategory.AllQuotationInvoice,
                     EmployeeId = request.EmployeeId,
@@ -139,10 +141,10 @@ namespace EPMS.Implementation.Services
             }
             else
             {
-                var report = reportRepository.Find(request.ReportId);
-                request.StartDate = report.ReportFromDate;
-                request.EndDate = report.ReportToDate;
-                request.EmployeeId = Convert.ToInt64(report.EmployeeId);
+                quotationInvoiceReport = reportRepository.Find(request.ReportId);
+                request.StartDate = quotationInvoiceReport.ReportFromDate;
+                request.EndDate = quotationInvoiceReport.ReportToDate;
+                request.EmployeeId = Convert.ToInt64(quotationInvoiceReport.EmployeeId);
             }
 
             var employee = employeeRepository.Find(request.EmployeeId);
@@ -153,8 +155,48 @@ namespace EPMS.Implementation.Services
             //Save Report
             var QuotationInvoiceReport = new ReportQuotationInvoice
             {
-                
+                EmployeeId = Convert.ToInt64(empId),
+                EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
+                NoOfInvoices = invoices.Count(),
+                NoOfQuotations = quotations.Count(),
+                ReportId = quotationInvoiceReport.ReportId,
+                ReportQuotationInvoiceItems = new Collection<ReportQuotationInvoiceItem>()
             };
+
+            //Save Report Items from Quotations
+            var quotationGroups = quotations.Where(i => i.RecCreatedDate != null)
+                    .OrderBy(i => i.RecCreatedDate.Month)
+                    .GroupBy(i => i.RecCreatedDate.Month).ToArray();
+            foreach (var quotationGroup in quotationGroups)
+            {
+                QuotationInvoiceReport.ReportQuotationInvoiceItems .Add(new ReportQuotationInvoiceItem
+                {
+                    IsQuotationItem = true,
+                    TotalPrice = quotationGroup.Sum(x => x.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(quotationGroup.FirstOrDefault().RecCreatedDate).ToString()
+                });
+            }
+
+            //Save Report Items from Invoices
+            var invoiceGroups = invoices.Where(i => i.RecCreatedDt != null)
+                    .OrderBy(i => i.RecCreatedDt.Month)
+                    .GroupBy(i => i.RecCreatedDt.Month).ToArray();
+            foreach (var invoiceGroup in invoiceGroups)
+            {
+                QuotationInvoiceReport.ReportQuotationInvoiceItems.Add(new ReportQuotationInvoiceItem
+                {
+                    IsQuotationItem = true,
+                    TotalPrice = invoiceGroup.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(invoiceGroup.FirstOrDefault().RecCreatedDt).ToString()
+                });
+            }
+
+            quotationInvoiceReport.ReportQuotationInvoices.Add(QuotationInvoiceReport);
+
+            reportRepository.Add(quotationInvoiceReport);
+            reportRepository.SaveChanges();
+
 
             return new QuotationInvoiceReportResponse
             {
