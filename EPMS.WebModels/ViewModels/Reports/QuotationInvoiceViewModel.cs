@@ -19,6 +19,7 @@ namespace EPMS.WebModels.ViewModels.Reports
 
         public IEnumerable<WebsiteModels.Employee> Employees { get; set; }
         public IEnumerable<WebsiteModels.Quotation> Quotations { get; set; }
+        public IEnumerable<WebsiteModels.Invoice> Invoices { get; set; }
         public long EmployeeId { get; set; }
         public int QuotationsCount { get; set; }
         public int InvoicesCount { get; set; }
@@ -32,6 +33,7 @@ namespace EPMS.WebModels.ViewModels.Reports
         public long GrpahEndTimeStamp { get; set; }
         public List<GraphItem> GraphItems { get; set; }
         public string ImageSrc { get; set; }
-        public GraphLabelDataValues[] DataSet { get; set; }
+        public GraphLabelDataValues[] QuotationDataSet { get; set; }
+        public GraphLabelDataValues[] InvoiceDataSet { get; set; }
     }
 }
