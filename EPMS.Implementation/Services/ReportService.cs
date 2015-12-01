@@ -191,7 +191,8 @@ namespace EPMS.Implementation.Services
                 ReportCreatedBy = request.RequesterId,
                 ReportCreatedDate = DateTime.Now,
                 ReportFromDate = DateTime.Now,
-                ReportToDate = DateTime.Now
+                ReportToDate = DateTime.Now,
+                ReportQuotationOrders = new List<ReportQuotationOrder>()
             };
             if (request.CustomerId > 0)
             {
@@ -203,25 +204,28 @@ namespace EPMS.Implementation.Services
                 newReport.ReportCategoryId = (int)ReportCategory.AllCustomersQO;
             }
 
-            //Fetch Report data
+            //Fetch data for Report 
             var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
             var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
             var customer = customerService.FindCustomerById(request.CustomerId);
 
-            newReport.ReportQuotationOrders = new List<ReportQuotationOrder>();
+            
 
-            //Parent Report
+            //reportQuotationOrder Report
+
             var reportQuotationOrder = new ReportQuotationOrder
             {
                 CustomerId = request.CustomerId,
                 CustomerNameA = customer.CustomerNameA,
                 CustomerNameE = customer.CustomerNameE,
                 NoOfOrders = customerOrders.Count(),
-                NoOfRFQ = customerQuotations.Count()
+                NoOfRFQ = customerQuotations.Count(),
+                ReportQuotationOrderItems = new List<ReportQuotationOrderItem>()
             };
-            reportQuotationOrder.ReportQuotationOrderItems=new List<ReportQuotationOrderItem>();
-            //Items of Quotations for parentReport
-            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate).ToList();
+
+            
+            //Items of Quotations for reportQuotationOrder
+            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
             foreach (var quot in itemsOfQuot)
             {
                 reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
@@ -232,18 +236,18 @@ namespace EPMS.Implementation.Services
                 });
             }
 
-            //Items of Orders for parentReport
-            //var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDt).GroupBy(x => x.RecCreatedDt).ToList();
-            //foreach (var order in itemsOfOrders)
-            //{
-            //    parentReport.ReportQuotationItems.Add(new ReportQuotationOrder
-            //    {
-            //        IsQuotationsReport = true,
-            //        Value = order.Sum(x => x.RFQItems.Sum(y => y.TotalPrice)).ToString(),
-            //        TimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
-            //    });
-            //}
-
+            //Items of Orders for reportQuotationOrder
+            var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
+            foreach (var order in itemsOfOrders)
+            {
+                reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
+                {
+                    IsOrderReport = true,
+                    TotalPrice = order.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(order.FirstOrDefault().RecCreatedDate).ToString()
+                });
+            }
+            newReport.ReportQuotationOrders.Add(reportQuotationOrder);
             //Save Report and its data
             reportRepository.Add(newReport);
             reportRepository.SaveChanges();
@@ -253,7 +257,7 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<ReportQuotationOrder> GetQOReport(long reportId)
         {
-            throw new NotImplementedException();
+            return reportRepository.Find(reportId).ReportQuotationOrders.ToList();
         }
 
         public bool AddReport(Report report)

@@ -268,6 +268,33 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to From - To.
+        /// </summary>
+        public static string QOFromTo {
+            get {
+                return ResourceManager.GetString("QOFromTo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of Orders.
+        /// </summary>
+        public static string QONoOfOrders {
+            get {
+                return ResourceManager.GetString("QONoOfOrders", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Number of RFQs.
+        /// </summary>
+        public static string QONoOfRFQs {
+            get {
+                return ResourceManager.GetString("QONoOfRFQs", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customer RFQ/Orders Placed.
         /// </summary>
         public static string QOReportTab {

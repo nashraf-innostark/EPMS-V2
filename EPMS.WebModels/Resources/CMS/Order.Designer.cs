@@ -115,6 +115,15 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string CentTitle {
+            get {
+                return ResourceManager.GetString("CentTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Client Name.
         /// </summary>
         public static string ClientName {

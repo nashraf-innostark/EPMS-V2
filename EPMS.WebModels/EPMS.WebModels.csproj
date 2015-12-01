@@ -962,6 +962,7 @@
     <Compile Include="WebsiteModels\QuickLaunchUserItems.cs" />
     <Compile Include="WebsiteModels\Quotation.cs" />
     <Compile Include="WebsiteModels\QuotationItemDetail.cs" />
+    <Compile Include="WebsiteModels\QuotationOrderReport.cs" />
     <Compile Include="WebsiteModels\Receipt.cs" />
     <Compile Include="WebsiteModels\Report.cs" />
     <Compile Include="WebsiteModels\Request.cs" />

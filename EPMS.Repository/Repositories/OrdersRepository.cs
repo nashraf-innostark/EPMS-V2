@@ -110,7 +110,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Order> GetOrdersByCustomerId(QOReportCreateOrDetailsRequest request)
         {
-            return DbSet.Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
+            return DbSet.Include("Quotation").Include("Quotation.QuotationItemDetails").Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
         }
 
         public IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId)

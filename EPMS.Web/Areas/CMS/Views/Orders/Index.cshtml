@@ -83,7 +83,12 @@
                         var element = "";
                         var val = full["OrderNo"];
                         var quotationId = full["QuotationId"];
-                        element = '<a href="Create/' + quotationId + '">' + val + '</a>';
+                        if ('@userRole' == "Admin") {
+                            element = '<a href="' + siteUrl + '/CMS/Orders/Detail/' + quotationId + '">' + val + '</a>';
+                        }
+                        if ('@userRole' == "Customer") {
+                            element = '<a href="' + siteUrl + '/CMS/Orders/Create/' + quotationId + '">' + val + '</a>';
+                        }
                         return element;
                     },
                     "bSortable": true

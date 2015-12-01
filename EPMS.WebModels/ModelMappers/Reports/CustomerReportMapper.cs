@@ -1,4 +1,8 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Globalization;
+using EPMS.Models.DomainModels;
+using EPMS.WebModels.WebsiteModels;
+using Report = EPMS.Models.DomainModels.Report;
 
 namespace EPMS.WebModels.ModelMappers.Reports
 {
@@ -42,6 +46,24 @@ namespace EPMS.WebModels.ModelMappers.Reports
                 report.ReportCreatedByName = "Admin";
             }
             return report;
+        }
+
+        public static QuotationOrderReport CreateReportFromServerToClient(this ReportQuotationOrder source)
+        {
+            return new QuotationOrderReport
+            {
+                CustomerNameA = source.CustomerNameA,
+                CustomerNameE = source.CustomerNameE,
+                NoOfOrders = source.NoOfOrders,
+                NoOfRFQ = source.NoOfRFQ,
+                ReportFromDateString = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? Convert.ToDateTime(source.Report.ReportFromDate).ToString("dd/MM/yyyy", new CultureInfo("en"))
+                    : DateTime.ParseExact(source.Report.ReportFromDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToString(),
+                ReportToDateString = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                ? Convert.ToDateTime(source.Report.ReportToDate).ToString("dd/MM/yyyy", new CultureInfo("en"))
+                : DateTime.ParseExact(source.Report.ReportToDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToString(),
+                ReportQuotationOrderItems = source.ReportQuotationOrderItems
+            };
         }
     }
 }
