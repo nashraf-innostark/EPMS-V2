@@ -61,7 +61,7 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         #region Detail
 
-        public ActionResult Detail(long? ReportId)
+        public ActionResult Details(long? ReportId)
         {
             if (ReportId == null || ReportId <= 0) return View("Create");
 
@@ -70,7 +70,8 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel=new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
-            SetGraphData(detailViewModel);
+            SetRFQsGraphData(detailViewModel);
+            SetOrdersGraphData(detailViewModel);
             ViewBag.QueryString = "?ReportId=" + ReportId;
 
 
@@ -97,12 +98,11 @@ namespace EPMS.Web.Areas.Report.Controllers
         #endregion
 
 
-        #region Graph
-
-        private QuotationOrderDetailViewModel SetGraphData(QuotationOrderDetailViewModel detailVeiwModel)
+        #region Graphs
+        private static void SetRFQsGraphData(QuotationOrderDetailViewModel detailVeiwModel)
         {
             var quotationGroups =
-                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems).ToArray();
+                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y=>y.IsQuotationReport)).ToArray();
 
             var firstQuotation = quotationGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
             var lastQuotation = quotationGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
@@ -142,10 +142,53 @@ namespace EPMS.Web.Areas.Report.Controllers
                 }
             }
             var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
-            detailVeiwModel.DataSet = data;
-            return detailVeiwModel;
+            detailVeiwModel.RFQsDataSet = data;
         }
+        private static void SetOrdersGraphData(QuotationOrderDetailViewModel detailVeiwModel)
+        {
+            var ordersGroups =
+                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y=>y.IsOrderReport)).ToArray();
 
+            var firstQuotation = ordersGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
+            var lastQuotation = ordersGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
+
+
+
+            if (firstQuotation != null)
+            {
+                detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
+                detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
+
+                detailVeiwModel.GraphItems.Add(new GraphItem
+                {
+                    ItemLabel = "Orders",
+                    ItemValue = new List<GraphLabel>
+                    {
+                        new GraphLabel
+                        {
+                            label = "Orders",
+                            data = new List<GraphLabelData>
+                            {
+                                new GraphLabelData
+                                {
+                                    dataValue=new List<GraphLabelDataValues>()
+                                }
+                            }
+                        }
+                    }
+                });
+                for (int i = 0; i < ordersGroups.Count(); i++)
+                {
+                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = Convert.ToInt64(ordersGroups[i].MonthTimeStamp),
+                        Value = Convert.ToDecimal(ordersGroups[i].TotalPrice)
+                    });
+                }
+            }
+            var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+            detailVeiwModel.OrdersDataSet = data;
+        }
         private string SetGraphImage(long reportId)
         {
             string curFile = Server.MapPath(ConfigurationManager.AppSettings["ReportImage"]) + "report_" + reportId + ".png";
