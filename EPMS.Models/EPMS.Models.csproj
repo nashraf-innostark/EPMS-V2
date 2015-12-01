@@ -381,6 +381,7 @@
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
     <Compile Include="ResponseModels\CreateTaskReportsResponse.cs" />
+    <Compile Include="ResponseModels\CustomerResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />

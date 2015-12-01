@@ -20,6 +20,7 @@ namespace EPMS.WebModels.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                EmployeeId = source.EmployeeId,
                 OrdersCount = source.Orders.Count,
                 ComplaintsCount = source.Complaints.Count,
                 Email = source.AspNetUsers != null ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
@@ -76,7 +77,8 @@ namespace EPMS.WebModels.ModelMappers
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                EmployeeId = source.EmployeeId
             };
 
         }

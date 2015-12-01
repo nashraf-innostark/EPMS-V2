@@ -327,6 +327,7 @@
           <Property Name="RecCreatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
+          <Property Name="EmployeeId" Type="bigint" />
         </EntityType>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -2036,6 +2037,18 @@
             </Principal>
             <Dependent Role="Complaint">
               <PropertyRef Name="DepartmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Customer_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="0..1" />
+          <End Role="Customer" Type="Self.Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="EmployeeId" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -4137,6 +4150,10 @@
             <End Role="Department" EntitySet="Department" />
             <End Role="Complaint" EntitySet="Complaint" />
           </AssociationSet>
+          <AssociationSet Name="FK_Customer_Employee" Association="Self.FK_Customer_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="Customer" EntitySet="Customer" />
+          </AssociationSet>
           <AssociationSet Name="FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId" Association="Self.FK_dbo_AspNetUserClaims_dbo_AspNetUsers_UserId">
             <End Role="AspNetUsers" EntitySet="AspNetUsers" />
             <End Role="AspNetUserClaims" EntitySet="AspNetUserClaims" />
@@ -5110,6 +5127,8 @@
           <NavigationProperty Name="Quotations" Relationship="EPMSInventoryModel.FK_Quotation_Customer" FromRole="Customer" ToRole="Quotation" />
           <NavigationProperty Name="Orders" Relationship="EPMSInventoryModel.FK_Orders_Orders" FromRole="Customer" ToRole="Order" />
           <NavigationProperty Name="Reports" Relationship="EPMSInventoryModel.FK_Reports_Customer" FromRole="Customer" ToRole="Report" />
+          <Property Name="EmployeeId" Type="Int64" />
+          <NavigationProperty Name="Employee" Relationship="EPMSInventoryModel.FK_Customer_Employee" FromRole="Customer" ToRole="Employee" />
         </EntityType>
         <EntityType Name="DashboardWidgetPreference">
           <Key>
@@ -5178,6 +5197,7 @@
           <NavigationProperty Name="TaskEmployees" Relationship="Self.FK_TaskEmployee_Employee" FromRole="Employee" ToRole="TaskEmployee" />
           <NavigationProperty Name="Warehouses" Relationship="EPMSInventoryModel.FK_Warehouse_Employee" FromRole="Employee" ToRole="Warehouse" />
           <NavigationProperty Name="Reports" Relationship="EPMSInventoryModel.FK_Reports_Employee" FromRole="Employee" ToRole="Report" />
+          <NavigationProperty Name="Customers" Relationship="EPMSInventoryModel.FK_Customer_Employee" FromRole="Employee" ToRole="Customer" />
         </EntityType>
         <EntityType Name="EmployeeJobHistory">
           <Key>
@@ -7011,6 +7031,10 @@
           <AssociationSet Name="FK_ReportQuotationOrderItem_ReportQuotationOrder" Association="EPMSInventoryModel.FK_ReportQuotationOrderItem_ReportQuotationOrder">
             <End Role="ReportQuotationOrder" EntitySet="ReportQuotationOrders" />
             <End Role="ReportQuotationOrderItem" EntitySet="ReportQuotationOrderItems" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Customer_Employee" Association="EPMSInventoryModel.FK_Customer_Employee">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="Customer" EntitySet="Customers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
@@ -9760,6 +9784,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Customer_Employee">
+          <End Type="EPMSInventoryModel.Employee" Role="Employee" Multiplicity="0..1" />
+          <End Type="EPMSInventoryModel.Customer" Role="Customer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="EmployeeId" />
+            </Principal>
+            <Dependent Role="Customer">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -10038,6 +10074,7 @@
           <EntitySetMapping Name="Customers">
             <EntityTypeMapping TypeName="EPMSInventoryModel.Customer">
               <MappingFragment StoreEntitySet="Customer">
+                <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
                 <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
                 <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
                 <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
@@ -12083,6 +12120,7 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportInventoryItem_Reports" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationOrderItem_ReportQuotationOrder" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Customer_Employee" />
         </Diagram>
     </Diagrams>
   </Designer>

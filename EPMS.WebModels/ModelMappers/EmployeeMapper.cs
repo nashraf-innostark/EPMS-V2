@@ -308,5 +308,22 @@ namespace EPMS.WebModels.ModelMappers
                 TotalSalaryReceived = source.TotalSalaryReceived
             };
         }
+
+        public static EmployeeForDropDownList CreateForDropDownList(this Employee source)
+        {
+            string nameEn = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE;
+            string nameAr = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA;
+            if (nameEn != "Mr  Admin")
+            {
+                return new EmployeeForDropDownList
+                {
+                    EmployeeId = source.EmployeeId,
+                    EmployeeNameE = nameEn,
+                    EmployeeNameA = nameAr,
+                    Email = source.Email,
+                };
+            }
+            return null;
+        }
     }
 }
