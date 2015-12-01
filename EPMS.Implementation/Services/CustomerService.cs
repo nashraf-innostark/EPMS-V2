@@ -57,5 +57,14 @@ namespace EPMS.Implementation.Services
             customerRepository.SaveChanges();
             return true;
         }
+
+        public CustomerResponse GetCustomerResponse(long customerId)
+        {
+            return new CustomerResponse
+            {
+                Customer = customerId != 0 ? customerRepository.Find(customerId) : new Customer(),
+                Employees = employeeService.GetAll()
+            };
+        }
     }
 }
