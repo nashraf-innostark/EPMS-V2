@@ -16,6 +16,10 @@ namespace EPMS.WebModels.ViewModels.Reports
 
     public class QuotationOrderDetailViewModel
     {
+        public QuotationOrderDetailViewModel()
+        {
+            GraphItems=new List<GraphItem>();
+        }
         public long ReportId { get; set; }
         public IList<WebsiteModels.QuotationOrderReport> QuotationOrderReports { get; set; }
 
@@ -23,6 +27,7 @@ namespace EPMS.WebModels.ViewModels.Reports
         public string GraphStartTimeStamp { get; set; }
         public string GraphEndTimeStamp { get; set; }
         public List<GraphItem> GraphItems { get; set; }
-        public GraphLabelDataValues[] DataSet { get; set; }
+        public GraphLabelDataValues[] RFQsDataSet { get; set; }
+        public GraphLabelDataValues[] OrdersDataSet { get; set; }
     }
 }
