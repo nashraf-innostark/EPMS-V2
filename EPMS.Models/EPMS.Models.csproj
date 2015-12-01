@@ -180,6 +180,8 @@
     <Compile Include="DomainModels\ReportInventoryItem.cs" />
     <Compile Include="DomainModels\ReportProject.cs" />
     <Compile Include="DomainModels\ReportProjectTask.cs" />
+    <Compile Include="DomainModels\ReportQuotationInvoice.cs" />
+    <Compile Include="DomainModels\ReportQuotationInvoiceItem.cs" />
     <Compile Include="DomainModels\ReportQuotationOrder.cs" />
     <Compile Include="DomainModels\ReportQuotationOrderItem.cs" />
     <Compile Include="DomainModels\ReportTaskEmployee.cs" />
