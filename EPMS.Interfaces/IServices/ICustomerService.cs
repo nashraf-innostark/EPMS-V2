@@ -30,6 +30,12 @@ namespace EPMS.Interfaces.IServices
         /// Update Customer
         /// </summary>
         bool UpdateCustomer(Customer customer);
+        /// <summary>
+        /// Get Customer and Employees' list
+        /// </summary>
+        /// <param name="customerId"></param>
+        /// <returns></returns>
+        CustomerResponse GetCustomerResponse(long customerId);
 
     }
 }

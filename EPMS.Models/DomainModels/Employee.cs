@@ -45,5 +45,6 @@ namespace EPMS.Models.DomainModels
         public virtual ICollection<TaskEmployee> TaskEmployees { get; set; }
         public virtual ICollection<Warehouse> Warehouses { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
+        public virtual ICollection<Customer> Customers { get; set; }
     }
 }

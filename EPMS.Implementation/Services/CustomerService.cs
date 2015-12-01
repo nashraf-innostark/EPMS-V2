@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
@@ -56,6 +57,15 @@ namespace EPMS.Implementation.Services
             customerRepository.Update(customer);
             customerRepository.SaveChanges();
             return true;
+        }
+
+        public CustomerResponse GetCustomerResponse(long customerId)
+        {
+            return new CustomerResponse
+            {
+                Customer = customerId != 0 ? customerRepository.Find(customerId) : new Customer(),
+                Employees = employeeService.GetAll()
+            };
         }
     }
 }

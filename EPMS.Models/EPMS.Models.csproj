@@ -181,6 +181,7 @@
     <Compile Include="DomainModels\ReportProject.cs" />
     <Compile Include="DomainModels\ReportProjectTask.cs" />
     <Compile Include="DomainModels\ReportQuotationOrder.cs" />
+    <Compile Include="DomainModels\ReportQuotationOrderItem.cs" />
     <Compile Include="DomainModels\ReportTaskEmployee.cs" />
     <Compile Include="DomainModels\RFIHistory.cs" />
     <Compile Include="DomainModels\RFIItemHistory.cs" />
@@ -380,6 +381,7 @@
     <Compile Include="ResponseModels\ContactList.cs" />
     <Compile Include="ResponseModels\ContactListResponse.cs" />
     <Compile Include="ResponseModels\CreateTaskReportsResponse.cs" />
+    <Compile Include="ResponseModels\CustomerResponse.cs" />
     <Compile Include="ResponseModels\DepartmentResponse.cs" />
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
