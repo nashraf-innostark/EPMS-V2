@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
-using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -10,6 +9,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
+using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -55,7 +55,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 To = Convert.ToDateTime(createViewModel.EndDate),
             };
             var reportId = reportService.SaveQOReport(request);
-            return RedirectToAction("Details", new { ReportId = reportId });
+            return RedirectToAction(createViewModel.CustomerId > 0 ? "Details" : "DetailsAll", new { ReportId = reportId });
         }
         #endregion
 
@@ -70,10 +70,12 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel=new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
-            SetRFQsGraphData(detailViewModel);
-            SetOrdersGraphData(detailViewModel);
-            ViewBag.QueryString = "?ReportId=" + ReportId;
+            if(detailViewModel.QuotationOrderReports.SelectMany(x=>x.ReportQuotationOrderItems.Where(y=>y.IsQuotationReport)).Any())
+                SetRFQsGraphData(detailViewModel);
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsOrderReport)).Any())
+                SetOrdersGraphData(detailViewModel);
 
+            detailViewModel.ReportId = (long)ReportId;
 
             return View(detailViewModel);
         }
@@ -90,7 +92,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
-            ViewBag.QueryString = "?ReportId=" + ReportId;
+            detailViewModel.ReportId = (long)ReportId;
 
             return View(detailViewModel);
         }
@@ -198,14 +200,51 @@ namespace EPMS.Web.Areas.Report.Controllers
             }
             return null;
         }
-
-        private static long GetJavascriptTimestamp(DateTime input)
+        [AllowAnonymous]
+        public ActionResult GeneratePdf(long? ReportId)
         {
-            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
-            DateTime time = input.Subtract(span);
-            return (time.Ticks / 10000);
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("DetailsAsPDF", new { ReportId = ReportId }) { FileName = "RFQs & Orders Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAsPDF(long? ReportId)
+        {
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQOReport((long)ReportId);
+
+            QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsQuotationReport)).Any())
+                SetRFQsGraphData(detailViewModel);
+            if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsOrderReport)).Any())
+                SetOrdersGraphData(detailViewModel);
+
+            ViewBag.QueryString = "?ReportId=" + ReportId;
+            var status = SetGraphImage((long)ReportId);
+            detailViewModel.ImageSrc = SetGraphImage((long)ReportId) != null ? status : "";
+            return View(detailViewModel);
         }
 
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long? ReportId)
+        {
+            //Dictionary<string, string> cookies = (Dictionary<string, string>)Session["Cookies"];
+            return new ActionAsPdf("DetailsAllAsPDF", new { ReportId = ReportId }) { FileName = "RFQs & Orders Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAllAsPDF(long? ReportId)
+        {
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQOReport((long)ReportId);
+
+            QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+         
+            return View(detailViewModel);
+        }
         #endregion
 
         #endregion
