@@ -243,4 +243,13 @@
   <data name="QOReportViewAll" xml:space="preserve">
     <value>View All Customer Request for Quotation/Orders Report</value>
   </data>
+  <data name="QOFromTo" xml:space="preserve">
+    <value>From - To</value>
+  </data>
+  <data name="QONoOfOrders" xml:space="preserve">
+    <value>Number of Orders</value>
+  </data>
+  <data name="QONoOfRFQs" xml:space="preserve">
+    <value>Number of RFQs</value>
+  </data>
 </root>
