@@ -53,7 +53,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<RFQ> GetAllRFQsByCustomerId(QOReportCreateOrDetailsRequest request)
         {
-            return DbSet.Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
+            return DbSet.Include("RFQItems").Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);
         }
     }
 }

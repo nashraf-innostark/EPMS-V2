@@ -17,6 +17,7 @@ namespace EPMS.Models.ResponseModels.ReportsResponseModels
         public string EmployeeNameE { get; set; }
         public string EmployeeNameA { get; set; }
         public IEnumerable<Quotation> Quotations { get; set; }
+        public IEnumerable<Invoice> Invoices { get; set; }
         public string EndDate { get; set; }
         public string StartDate { get; set; }
     }

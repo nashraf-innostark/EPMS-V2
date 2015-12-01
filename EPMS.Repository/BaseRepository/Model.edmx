@@ -1388,6 +1388,29 @@
           <Property Name="IsDeleted" Type="bit" Nullable="false" />
           <Property Name="NoOfSubTasks" Type="int" Nullable="false" />
         </EntityType>
+        <EntityType Name="ReportQuotationInvoice">
+          <Key>
+            <PropertyRef Name="ReportQuotationInvoiceId" />
+          </Key>
+          <Property Name="ReportQuotationInvoiceId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportId" Type="bigint" Nullable="false" />
+          <Property Name="CustomerId" Type="bigint" Nullable="false" />
+          <Property Name="CustomerNameA" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="CustomerNameE" Type="nchar" MaxLength="50" Nullable="false" />
+          <Property Name="NoOfQuotations" Type="int" Nullable="false" />
+          <Property Name="NoOfInvoices" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ReportQuotationInvoiceItem">
+          <Key>
+            <PropertyRef Name="ReportQuotationInvoiceItemId" />
+          </Key>
+          <Property Name="ReportQuotationInvoiceItemId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ReportQuotationInvoiceId" Type="bigint" Nullable="false" />
+          <Property Name="MonthTimeStamp" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="TotalPrice" Type="nchar" MaxLength="10" Nullable="false" />
+          <Property Name="IsInvoiceItem" Type="bit" Nullable="false" />
+          <Property Name="IsQuotationItem" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="ReportQuotationOrder">
           <Key>
             <PropertyRef Name="ReportQuotOrderId" />
@@ -3744,6 +3767,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Table_1_ReportQuotationInvoice">
+          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="1" />
+          <End Role="ReportQuotationInvoiceItem" Type="Self.ReportQuotationInvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportQuotationInvoice">
+              <PropertyRef Name="ReportQuotationInvoiceId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoiceItem">
+              <PropertyRef Name="ReportQuotationInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_TaskEmployee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="TaskEmployee" Type="Self.TaskEmployee" Multiplicity="*" />
@@ -4076,6 +4111,8 @@
           <EntitySet Name="ReportInventoryItem" EntityType="Self.ReportInventoryItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportProject" EntityType="Self.ReportProject" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportProjectTask" EntityType="Self.ReportProjectTask" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportQuotationInvoice" EntityType="Self.ReportQuotationInvoice" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ReportQuotationInvoiceItem" EntityType="Self.ReportQuotationInvoiceItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportQuotationOrder" EntityType="Self.ReportQuotationOrder" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ReportQuotationOrderItem" EntityType="Self.ReportQuotationOrderItem" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Reports" EntityType="Self.Reports" Schema="dbo" store:Type="Tables" />
@@ -4713,6 +4750,10 @@
           <AssociationSet Name="FK_ShoppingCartItem_Size" Association="Self.FK_ShoppingCartItem_Size">
             <End Role="Size" EntitySet="Size" />
             <End Role="ShoppingCartItem" EntitySet="ShoppingCartItem" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Table_1_ReportQuotationInvoice" Association="Self.FK_Table_1_ReportQuotationInvoice">
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
+            <End Role="ReportQuotationInvoiceItem" EntitySet="ReportQuotationInvoiceItem" />
           </AssociationSet>
           <AssociationSet Name="FK_TaskEmployee_Employee" Association="Self.FK_TaskEmployee_Employee">
             <End Role="Employee" EntitySet="Employee" />
@@ -7035,6 +7076,12 @@
           <AssociationSet Name="FK_Customer_Employee" Association="EPMSInventoryModel.FK_Customer_Employee">
             <End Role="Employee" EntitySet="Employees" />
             <End Role="Customer" EntitySet="Customers" />
+          </AssociationSet>
+          <EntitySet Name="ReportQuotationInvoices" EntityType="EPMSInventoryModel.ReportQuotationInvoice" />
+          <EntitySet Name="ReportQuotationInvoiceItems" EntityType="EPMSInventoryModel.ReportQuotationInvoiceItem" />
+          <AssociationSet Name="FK_Table_1_ReportQuotationInvoice" Association="EPMSInventoryModel.FK_Table_1_ReportQuotationInvoice">
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoices" />
+            <End Role="ReportQuotationInvoiceItem" EntitySet="ReportQuotationInvoiceItems" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
@@ -9796,6 +9843,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ReportQuotationInvoice">
+          <Key>
+            <PropertyRef Name="ReportQuotationInvoiceId" />
+          </Key>
+          <Property Name="ReportQuotationInvoiceId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportId" Type="Int64" Nullable="false" />
+          <Property Name="CustomerId" Type="Int64" Nullable="false" />
+          <Property Name="CustomerNameA" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="CustomerNameE" Type="String" Nullable="false" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="NoOfQuotations" Type="Int32" Nullable="false" />
+          <Property Name="NoOfInvoices" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ReportQuotationInvoiceItems" Relationship="EPMSInventoryModel.FK_Table_1_ReportQuotationInvoice" FromRole="ReportQuotationInvoice" ToRole="ReportQuotationInvoiceItem" />
+        </EntityType>
+        <EntityType Name="ReportQuotationInvoiceItem">
+          <Key>
+            <PropertyRef Name="ReportQuotationInvoiceItemId" />
+          </Key>
+          <Property Name="ReportQuotationInvoiceItemId" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReportQuotationInvoiceId" Type="Int64" Nullable="false" />
+          <Property Name="MonthTimeStamp" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="TotalPrice" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="IsInvoiceItem" Type="Boolean" Nullable="false" />
+          <Property Name="IsQuotationItem" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ReportQuotationInvoice" Relationship="EPMSInventoryModel.FK_Table_1_ReportQuotationInvoice" FromRole="ReportQuotationInvoiceItem" ToRole="ReportQuotationInvoice" />
+        </EntityType>
+        <Association Name="FK_Table_1_ReportQuotationInvoice">
+          <End Type="EPMSInventoryModel.ReportQuotationInvoice" Role="ReportQuotationInvoice" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ReportQuotationInvoiceItem" Role="ReportQuotationInvoiceItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ReportQuotationInvoice">
+              <PropertyRef Name="ReportQuotationInvoiceId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoiceItem">
+              <PropertyRef Name="ReportQuotationInvoiceId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -11821,6 +11905,31 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <EntitySetMapping Name="ReportQuotationInvoices">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ReportQuotationInvoice">
+              <MappingFragment StoreEntitySet="ReportQuotationInvoice">
+                <ScalarProperty Name="NoOfInvoices" ColumnName="NoOfInvoices" />
+                <ScalarProperty Name="NoOfQuotations" ColumnName="NoOfQuotations" />
+                <ScalarProperty Name="CustomerNameE" ColumnName="CustomerNameE" />
+                <ScalarProperty Name="CustomerNameA" ColumnName="CustomerNameA" />
+                <ScalarProperty Name="CustomerId" ColumnName="CustomerId" />
+                <ScalarProperty Name="ReportId" ColumnName="ReportId" />
+                <ScalarProperty Name="ReportQuotationInvoiceId" ColumnName="ReportQuotationInvoiceId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ReportQuotationInvoiceItems">
+            <EntityTypeMapping TypeName="EPMSInventoryModel.ReportQuotationInvoiceItem">
+              <MappingFragment StoreEntitySet="ReportQuotationInvoiceItem">
+                <ScalarProperty Name="IsQuotationItem" ColumnName="IsQuotationItem" />
+                <ScalarProperty Name="IsInvoiceItem" ColumnName="IsInvoiceItem" />
+                <ScalarProperty Name="TotalPrice" ColumnName="TotalPrice" />
+                <ScalarProperty Name="MonthTimeStamp" ColumnName="MonthTimeStamp" />
+                <ScalarProperty Name="ReportQuotationInvoiceId" ColumnName="ReportQuotationInvoiceId" />
+                <ScalarProperty Name="ReportQuotationInvoiceItemId" ColumnName="ReportQuotationInvoiceItemId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -12121,6 +12230,9 @@
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationOrderItem_ReportQuotationOrder" />
         <AssociationConnector Association="EPMSInventoryModel.FK_Customer_Employee" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ReportQuotationInvoice" Width="1.5" PointX="28.375" PointY="6" />
+        <EntityTypeShape EntityType="EPMSInventoryModel.ReportQuotationInvoiceItem" Width="1.5" PointX="30.625" PointY="6" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_Table_1_ReportQuotationInvoice" />
         </Diagram>
     </Diagrams>
   </Designer>

@@ -19,7 +19,8 @@ namespace EPMS.WebModels.ModelMappers
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ClientNameE = source.Quotation.Customer.CustomerNameE,
                 ClientNameA = source.Quotation.Customer.CustomerNameA,
-                CustomerId = source.Quotation.CustomerId
+                CustomerId = source.Quotation.CustomerId,
+                Quotation = source.Quotation.CreateFromServerToClientLv()
             };
         }
 

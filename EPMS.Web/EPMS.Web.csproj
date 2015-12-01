@@ -1599,6 +1599,7 @@
     <Content Include="Areas\Report\Views\QuotationOrder\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\CancelFromPaypal.cshtml" />
     <Content Include="Areas\CMS\Views\Orders\Detail.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationOrder\Detail.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

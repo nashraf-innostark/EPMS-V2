@@ -76,6 +76,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                 request.IsCreate = true;
             var response = reportService.SaveAndGetQuotationInvoiceReport(request);
             quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
+            quotationInvoiceViewModel.Invoices = response.Invoices.Select(x => x.CreateFromServerToClient());
             quotationInvoiceViewModel.EmployeeNameE = response.EmployeeNameE;
             quotationInvoiceViewModel.EmployeeNameA = response.EmployeeNameA;
             quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
@@ -134,18 +135,22 @@ namespace EPMS.Web.Areas.Report.Controllers
                 detailVeiwModel.Quotations.Where(i => i.RecCreatedDate != null)
                     .OrderBy(i => i.RecCreatedDate.Month)
                     .GroupBy(i => i.RecCreatedDate.Month).ToArray();
+            var invoiceGroups = detailVeiwModel.Invoices.Where(i => i.RecCreatedDt != null)
+                    .OrderBy(i => i.RecCreatedDt.Month)
+                    .GroupBy(i => i.RecCreatedDt.Month).ToArray();
+
 
             var firstQuotation = detailVeiwModel.Quotations.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
-            var fTotalCost = firstQuotation != null ? firstQuotation.QuotationItemDetails.Sum(x => x.TotalPrice) : 0;
             var lastQuotation = detailVeiwModel.Quotations.OrderBy(x => x.RecCreatedDate).FirstOrDefault();
-            var lTotalCost = lastQuotation != null ? lastQuotation.QuotationItemDetails.Sum(x => x.TotalPrice) : 0;
+            var firstInvoice = detailVeiwModel.Invoices.OrderByDescending(x => x.RecCreatedDt).FirstOrDefault();
+            var lastInvoice = detailVeiwModel.Invoices.OrderBy(x => x.RecCreatedDt).FirstOrDefault();
 
 
 
             if (firstQuotation != null)
             {
-                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp((DateTime)firstQuotation.RecCreatedDate);
-                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp((DateTime)lastQuotation.RecCreatedDate);
+                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(firstQuotation.RecCreatedDate);
+                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(lastQuotation.RecCreatedDate);
 
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
@@ -159,20 +164,6 @@ namespace EPMS.Web.Areas.Report.Controllers
                             {
                                 new GraphLabelData
                                 {
-                                    //dataValue = new List<GraphLabelDataValues>()
-
-                                    //{
-                                    //    new GraphLabelDataValues
-                                    //    {
-                                    //        TimeStamp = detailVeiwModel.GrpahStartTimeStamp,
-                                    //        Value = fTotalCost
-                                    //    },
-                                    //    new GraphLabelDataValues
-                                    //    {
-                                    //        TimeStamp = detailVeiwModel.GrpahEndTimeStamp,
-                                    //        Value = lTotalCost
-                                    //    }
-                                    //}
                                     dataValue=new List<GraphLabelDataValues>()
 
                                 }
@@ -189,8 +180,47 @@ namespace EPMS.Web.Areas.Report.Controllers
                     });
                 }
             }
-            var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
-            detailVeiwModel.DataSet = data;
+
+            if (firstInvoice != null)
+            {
+                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(firstInvoice.RecCreatedDt);
+                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(lastInvoice.RecCreatedDt);
+
+                detailVeiwModel.GraphItems.Add(new GraphItem
+                {
+                    ItemLabel = "Invoice",
+                    ItemValue = new List<GraphLabel>
+                    {
+                        new GraphLabel
+                        {
+                            label = "Invoice",
+                            data = new List<GraphLabelData>
+                            {
+                                new GraphLabelData
+                                {
+                                    dataValue=new List<GraphLabelDataValues>()
+
+                                }
+                            }
+                        }
+                    }
+                });
+                for (int i = 0; i < invoiceGroups.Count(); i++)
+                {
+                    detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = GetJavascriptTimestamp(Convert.ToDateTime(invoiceGroups[i].OrderByDescending(x => x.RecCreatedDt).FirstOrDefault().RecCreatedDt)),
+                        Value = invoiceGroups[i].Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice))
+                    });
+                }
+            }
+
+            var quotationDataSet = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+            detailVeiwModel.QuotationDataSet = quotationDataSet;
+
+            var invoiceDataSet = detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.ToArray();
+            detailVeiwModel.InvoiceDataSet = invoiceDataSet;
+
             return detailVeiwModel;
         }
 

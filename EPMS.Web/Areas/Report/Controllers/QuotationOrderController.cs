@@ -8,6 +8,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -60,60 +61,37 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         #region Detail
 
-        public ActionResult Detail(QuotationInvoiceViewModel quotationInvoiceViewModel)
+        public ActionResult Detail(long? ReportId)
         {
-            QuotationInvoiceDetailRequest request = new QuotationInvoiceDetailRequest
-            {
-                EmployeeId = quotationInvoiceViewModel.EmployeeId,
-                ReportId = quotationInvoiceViewModel.ReportId,
-                RequesterRole = "Admin",
-                RequesterId = Session["UserID"].ToString(),
-                StartDate = quotationInvoiceViewModel.StartDate != null ? DateTime.ParseExact(quotationInvoiceViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime(),
-                EndDate = quotationInvoiceViewModel.EndDate != null ? DateTime.ParseExact(quotationInvoiceViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime(),
-            };
+            if (ReportId == null || ReportId <= 0) return View("Create");
 
-            var refrel = Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("Report/QuotationInvoice/Create"))
-                request.IsCreate = true;
-            var response = reportService.SaveAndGetQuotationInvoiceReport(request);
-            quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
-            quotationInvoiceViewModel.EmployeeNameE = response.EmployeeNameE;
-            quotationInvoiceViewModel.EmployeeNameA = response.EmployeeNameA;
-            quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
-            quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
-            quotationInvoiceViewModel.StartDate = response.StartDate;
-            quotationInvoiceViewModel.EndDate = response.EndDate;
+            var response = reportService.GetQOReport((long)ReportId);
 
-            SetGraphData(quotationInvoiceViewModel);
-            ViewBag.QueryString = "?ReportId=" + quotationInvoiceViewModel.ReportId;
+            QuotationOrderDetailViewModel detailViewModel=new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+
+            SetGraphData(detailViewModel);
+            ViewBag.QueryString = "?ReportId=" + ReportId;
 
 
-            return View(quotationInvoiceViewModel);
+            return View(detailViewModel);
         }
 
         #endregion
 
         #region AllDetail
-        public ActionResult AllDetail(QuotationInvoiceViewModel quotationInvoiceViewModel)
+        public ActionResult DetailsAll(long? ReportId)
         {
-            QuotationInvoiceDetailRequest request = new QuotationInvoiceDetailRequest
-            {
-                EmployeeId = quotationInvoiceViewModel.EmployeeId,
-                ReportId = quotationInvoiceViewModel.ReportId,
-                RequesterRole = "Admin",
-                RequesterId = Session["UserID"].ToString(),
-                StartDate = quotationInvoiceViewModel.StartDate != null ? DateTime.ParseExact(quotationInvoiceViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime(),
-                EndDate = quotationInvoiceViewModel.EndDate != null ? DateTime.ParseExact(quotationInvoiceViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en")) : new DateTime(),
-            };
+            if (ReportId == null || ReportId <= 0) return View("Create");
 
-            var refrel = Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("Report/QuotationInvoice/Create"))
-                request.IsCreate = true;
-            var response = reportService.SaveAndGetQuotationInvoiceReport(request);
-            quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
-            quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
+            var response = reportService.GetQOReport((long)ReportId);
 
-            return View(quotationInvoiceViewModel);
+            QuotationOrderDetailViewModel detailViewModel = new QuotationOrderDetailViewModel();
+            detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+
+            ViewBag.QueryString = "?ReportId=" + ReportId;
+
+            return View(detailViewModel);
         }
 
         #endregion
@@ -121,49 +99,50 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         #region Graph
 
-        private QuotationInvoiceViewModel SetGraphData(QuotationInvoiceViewModel detailVeiwModel)
+        private QuotationOrderDetailViewModel SetGraphData(QuotationOrderDetailViewModel detailVeiwModel)
         {
-            var firstQuotation = detailVeiwModel.Quotations.OrderByDescending(x=>x.RecCreatedDate).FirstOrDefault();
-            var fTotalCost = firstQuotation != null ? firstQuotation.QuotationItemDetails.Sum(x => x.TotalPrice) : 0;
-            var lastQuotation = detailVeiwModel.Quotations.OrderBy(x => x.RecCreatedDate).FirstOrDefault();
-            var lTotalCost = lastQuotation != null ? lastQuotation.QuotationItemDetails.Sum(x => x.TotalPrice) : 0;
+            var quotationGroups =
+                detailVeiwModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems).ToArray();
+
+            var firstQuotation = quotationGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
+            var lastQuotation = quotationGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
+
+
 
             if (firstQuotation != null)
             {
-                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp((DateTime) firstQuotation.RecCreatedDate);
-                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp((DateTime) lastQuotation.RecCreatedDate);
+                detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
+                detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
 
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
-                    ItemLabel = "Quotation",
+                    ItemLabel = "Orders",
                     ItemValue = new List<GraphLabel>
                     {
                         new GraphLabel
                         {
-                            label = "Quotation",
+                            label = "Orders",
                             data = new List<GraphLabelData>
                             {
                                 new GraphLabelData
                                 {
-                                    dataValue = new List<GraphLabelDataValues>
-                                    {
-                                        new GraphLabelDataValues
-                                        {
-                                            TimeStamp = detailVeiwModel.GrpahStartTimeStamp,
-                                            Value = fTotalCost
-                                        },
-                                        new GraphLabelDataValues
-                                        {
-                                            TimeStamp = detailVeiwModel.GrpahEndTimeStamp,
-                                            Value = lTotalCost
-                                        }
-                                    }
+                                    dataValue=new List<GraphLabelDataValues>()
                                 }
                             }
                         }
                     }
                 });
+                for (int i = 0; i < quotationGroups.Count(); i++)
+                {
+                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = Convert.ToInt64(quotationGroups[i].MonthTimeStamp),
+                        Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
+                    });
+                }
             }
+            var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+            detailVeiwModel.DataSet = data;
             return detailVeiwModel;
         }
 

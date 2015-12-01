@@ -1,7 +1,7 @@
 ﻿@using Newtonsoft.Json
-@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
+@model EPMS.WebModels.ViewModels.Reports.QuotationOrderDetailViewModel
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.QOReportView;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
@@ -14,12 +14,12 @@
             </a>
         </li>
         <li>
-            <a href="~/Report/QuotationInvoice/Create">
-                @EPMS.WebModels.Resources.Reports.QuotationInvoice.CreateTitle
+            <a href="~/Report/CustomerService/Index">
+                @EPMS.WebModels.Resources.Reports.CustomerServiceList.CustomerServiceReportList
             </a>
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail
+            @EPMS.WebModels.Resources.Reports.Reports.QOReportView
         </li>
     </ul>
 </div>
@@ -27,7 +27,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.QOReportView</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -50,27 +50,29 @@
 
         <div class="control-group row-fluid">
             <div class="span12">
-
                 <table id="detailTable" class="table table-striped table-responsive">
                     <thead>
                         <tr>
-                            <th>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Serial</th>
-                            <th>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Employee</th>
-                            <th>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Quotations</th>
-                            <th>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Invoices</th>
-                            <th>@EPMS.WebModels.Resources.Reports.QuotationInvoice.FromTo</th>
+                            <th>@EPMS.WebModels.Resources.Reports.Reports.Serial</th>
+                            <th>@EPMS.WebModels.Resources.Reports.Reports.CustomerName</th>
+                            <th>@EPMS.WebModels.Resources.Reports.Reports.QONoOfRFQs</th>
+                            <th>@EPMS.WebModels.Resources.Reports.Reports.QONoOfOrders</th>
+                            <th>@EPMS.WebModels.Resources.Reports.Reports.QOFromTo</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                @(direction == "ltr" ? Model.EmployeeNameE : Model.EmployeeNameA)
-                            </td>
-                            <td>@Model.QuotationsCount</td>
-                            <td>@Model.InvoicesCount</td>
-                            <td>@Model.StartDate - @Model.EndDate</td>
-                        </tr>
+                        @foreach (var qo in Model.QuotationOrderReports)
+                        {
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    @(direction == "ltr" ? qo.CustomerNameE : qo.CustomerNameA)
+                                </td>
+                                <td>@qo.NoOfRFQ</td>
+                                <td>@qo.NoOfOrders</td>
+                                <td>@qo.ReportFromDateString - @qo.ReportToDateString</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -129,45 +131,30 @@
     });
 
     function DrawGraph() {
-        debugger;
         var markings = [
-            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
+            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GraphStartTimeStamp', to: '@Model.GraphEndTimeStamp' } }
         ];
 
         var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
         var parsed = JSON.parse(graphItems);
-        //var datasets = [];
+        var datasets = [];
 
-        //Parsing Quotation DataSet and making Array of Values
-        var quotationDataSet = '@Html.Raw(Json.Encode(Model.QuotationDataSet))';
-        var quotationDataSetParsed = JSON.parse(quotationDataSet);
-        var quotationtimeStamp = [];
-        $.each(quotationDataSetParsed, function (index, val) {
-            var values = [val.TimeStamp, val.Value];
-            quotationtimeStamp.push(values);
-        });
-
-        //Parsing Invoice DataSet and making Array of Values
-        var invoiceDataSet = '@Html.Raw(Json.Encode(Model.InvoiceDataSet))';
-        var invoiceDataSetParsed = JSON.parse(invoiceDataSet);
-        var invoiceTimeStamp = [];
-        $.each(invoiceDataSetParsed, function (index, val) {
-            var values = [val.TimeStamp, val.Value];
-            invoiceTimeStamp.push(values);
+        var dataSetArray = '@Html.Raw(Json.Encode(Model.DataSet))';
+        var dataSetArrayParsed = JSON.parse(dataSetArray);
+        var timeStamp = [];
+        $.each(dataSetArrayParsed, function(index, val) {
+            var abc = [val.TimeStamp, val.Value];
+            timeStamp.push(abc);
         });
         
 
-        var datasets = {
-            "quotation": {
-                label: "Quotation",
-                data: quotationtimeStamp
-            },
-            "invoice": {
-                label: "Invoice",
-                data: invoiceTimeStamp
-            }
-
-        };
+        $.each(parsed, function (index, val) {
+            var dataset = {
+                label: val.ItemLabel,
+                data: timeStamp
+            };
+            datasets.push(dataset);
+        });
 
         var i = 0;
         $.each(datasets, function (key, val) {

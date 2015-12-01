@@ -28,6 +28,7 @@ namespace EPMS.Implementation.Services
         private readonly IWarehouseRepository warehouseRepository;
         private readonly IEmployeeRepository employeeRepository;
         private readonly IOrdersRepository ordersRepository;
+        private readonly IInvoiceRepository invoiceRepository;
 
         #endregion
 
@@ -35,7 +36,7 @@ namespace EPMS.Implementation.Services
 
         public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
-            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository)
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository)
         {
             this.reportRepository = reportRepository;
             this.rfqRepository = rfqRepository;
@@ -47,6 +48,7 @@ namespace EPMS.Implementation.Services
             this.warehouseRepository = warehouseRepository;
             this.employeeRepository = employeeRepository;
             this.ordersRepository = ordersRepository;
+            this.invoiceRepository = invoiceRepository;
         }
 
         #endregion
@@ -143,19 +145,18 @@ namespace EPMS.Implementation.Services
                 request.EmployeeId = Convert.ToInt64(report.EmployeeId);
             }
 
-            //Invoice Module under development
-            var invoicesCount = 0;
-
             var employee = employeeRepository.Find(request.EmployeeId);
             var empId = employee.AspNetUsers.FirstOrDefault().Id;
             var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+            var invoices = invoiceRepository.GetAll().Where(x => x.RecCreatedBy == empId);
 
             return new QuotationInvoiceReportResponse
             {
                 Quotations = quotations,
+                Invoices = invoices,
                 EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
                 EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
-                InvoicesCount = invoicesCount,
+                InvoicesCount = invoices.Count(),
                 QuotationsCount = quotations.Count(),
                 StartDate = request.StartDate.ToShortDateString(),
                 EndDate = request.EndDate.ToShortDateString()
@@ -184,7 +185,8 @@ namespace EPMS.Implementation.Services
                 ReportCreatedBy = request.RequesterId,
                 ReportCreatedDate = DateTime.Now,
                 ReportFromDate = DateTime.Now,
-                ReportToDate = DateTime.Now
+                ReportToDate = DateTime.Now,
+                ReportQuotationOrders = new List<ReportQuotationOrder>()
             };
             if (request.CustomerId > 0)
             {
@@ -196,25 +198,28 @@ namespace EPMS.Implementation.Services
                 newReport.ReportCategoryId = (int)ReportCategory.AllCustomersQO;
             }
 
-            //Fetch Report data
+            //Fetch data for Report 
             var customerQuotations = rfqRepository.GetAllRFQsByCustomerId(request).ToList();
             var customerOrders = ordersRepository.GetOrdersByCustomerId(request).ToList();
             var customer = customerService.FindCustomerById(request.CustomerId);
 
-            newReport.ReportQuotationOrders = new List<ReportQuotationOrder>();
+            
 
-            //Parent Report
+            //reportQuotationOrder Report
+
             var reportQuotationOrder = new ReportQuotationOrder
             {
                 CustomerId = request.CustomerId,
                 CustomerNameA = customer.CustomerNameA,
                 CustomerNameE = customer.CustomerNameE,
                 NoOfOrders = customerOrders.Count(),
-                NoOfRFQ = customerQuotations.Count()
+                NoOfRFQ = customerQuotations.Count(),
+                ReportQuotationOrderItems = new List<ReportQuotationOrderItem>()
             };
-            reportQuotationOrder.ReportQuotationOrderItems=new List<ReportQuotationOrderItem>();
-            //Items of Quotations for parentReport
-            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate).ToList();
+
+            
+            //Items of Quotations for reportQuotationOrder
+            var itemsOfQuot = customerQuotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
             foreach (var quot in itemsOfQuot)
             {
                 reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
@@ -225,18 +230,18 @@ namespace EPMS.Implementation.Services
                 });
             }
 
-            //Items of Orders for parentReport
-            //var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDt).GroupBy(x => x.RecCreatedDt).ToList();
-            //foreach (var order in itemsOfOrders)
-            //{
-            //    parentReport.ReportQuotationItems.Add(new ReportQuotationOrder
-            //    {
-            //        IsQuotationsReport = true,
-            //        Value = order.Sum(x => x.RFQItems.Sum(y => y.TotalPrice)).ToString(),
-            //        TimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
-            //    });
-            //}
-
+            //Items of Orders for reportQuotationOrder
+            var itemsOfOrders = customerOrders.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
+            foreach (var order in itemsOfOrders)
+            {
+                reportQuotationOrder.ReportQuotationOrderItems.Add(new ReportQuotationOrderItem
+                {
+                    IsOrderReport = true,
+                    TotalPrice = order.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(order.FirstOrDefault().RecCreatedDate).ToString()
+                });
+            }
+            newReport.ReportQuotationOrders.Add(reportQuotationOrder);
             //Save Report and its data
             reportRepository.Add(newReport);
             reportRepository.SaveChanges();
@@ -246,7 +251,7 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<ReportQuotationOrder> GetQOReport(long reportId)
         {
-            throw new NotImplementedException();
+            return reportRepository.Find(reportId).ReportQuotationOrders.ToList();
         }
 
         public bool AddReport(Report report)
