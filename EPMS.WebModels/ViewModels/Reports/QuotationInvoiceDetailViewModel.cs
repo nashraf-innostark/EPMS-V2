@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using EPMS.WebModels.WebsiteModels;
+﻿using System.Collections.Generic;
 
 namespace EPMS.WebModels.ViewModels.Reports
 {
@@ -17,5 +12,17 @@ namespace EPMS.WebModels.ViewModels.Reports
         public long GrpahStartTimeStamp { get; set; }
         public long GrpahEndTimeStamp { get; set; }
         public List<GraphItem> GraphItems { get; set; } 
+    }
+
+    public class QuotationOrderDetailViewModel
+    {
+        public long ReportId { get; set; }
+        public IList<WebsiteModels.QuotationOrderReport> QuotationOrderReports { get; set; }
+
+        //Graph related Data
+        public string GraphStartTimeStamp { get; set; }
+        public string GraphEndTimeStamp { get; set; }
+        public List<GraphItem> GraphItems { get; set; }
+        public GraphLabelDataValues[] DataSet { get; set; }
     }
 }
