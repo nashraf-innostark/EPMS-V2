@@ -152,6 +152,15 @@ namespace EPMS.Web.Areas.Report.Controllers
                             Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
                         });
                     }
+                    if (quotationGroups.Count() == 1)
+                    {
+                        //Ending Points on graph
+                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                            Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                        });
+                    }
                 }
 
                 var quotationDataSet = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
@@ -200,6 +209,15 @@ namespace EPMS.Web.Areas.Report.Controllers
                         {
                             TimeStamp = Convert.ToInt64(invoiceGroups[i].MonthTimeStamp),
                             Value = Convert.ToDecimal(invoiceGroups[i].TotalPrice)
+                        });
+                    }
+                    if (invoiceGroups.Count() == 1)
+                    {
+                        //Ending Points on graph
+                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(lastInvoice.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                            Value = Convert.ToDecimal(lastInvoice.TotalPrice)
                         });
                     }
                 }
