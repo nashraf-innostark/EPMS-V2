@@ -11,6 +11,7 @@ using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Project;
 using EPMS.WebModels.ViewModels.Reports;
 using Rotativa;
@@ -44,11 +45,19 @@ namespace EPMS.Web.Areas.Report.Controllers
                 ViewBag.ReportId = ReportId;
             }
             
-            var projects = TempData["Projects"] as IEnumerable<ReportProject>;
-            if (projects == null)
-                return RedirectToAction("Index", "ProjectsAndTasks");
-            ViewBag.ReportId = projects.FirstOrDefault().ReportId;
-            return View(projects.Select(x => x.CreateForReport()));
+            var projects = TempData["Projects"] as List<ReportProject>;
+           
+            if (projects == null && projects.Any())
+            {
+                ViewBag.ReportId = projects.FirstOrDefault().ReportId;
+                return View(projects.Select(x => x.CreateForReport()));
+            }
+            ViewBag.MessageVM = new MessageViewModel
+                {
+                    Message = "There are no projects to display in this report.",
+                    IsInfo = true
+                };
+            return View(new List<Project>());
         }
         [SiteAuthorize(PermissionKey = "GenerateProjectsReport")]
         public ActionResult Create()

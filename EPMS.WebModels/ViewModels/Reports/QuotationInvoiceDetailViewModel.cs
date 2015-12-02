@@ -22,7 +22,7 @@ namespace EPMS.WebModels.ViewModels.Reports
         }
         public long ReportId { get; set; }
         public IList<WebsiteModels.QuotationOrderReport> QuotationOrderReports { get; set; }
-
+        public string ImageSrc { get; set; }
         //Graph related Data
         public string GraphStartTimeStamp { get; set; }
         public string GraphEndTimeStamp { get; set; }

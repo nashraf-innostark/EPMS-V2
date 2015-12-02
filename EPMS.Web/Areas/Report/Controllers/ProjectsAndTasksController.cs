@@ -6,6 +6,7 @@ using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
+using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -23,6 +24,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         {
             var projectsReports = new ListViewModel();
 
+            ViewBag.MessageVM = TempData["MessageVm"] as MessageViewModel;
             return View(projectsReports);
         }
         [HttpPost]
