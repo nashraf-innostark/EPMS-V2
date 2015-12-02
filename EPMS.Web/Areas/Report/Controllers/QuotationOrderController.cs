@@ -70,10 +70,15 @@ namespace EPMS.Web.Areas.Report.Controllers
             QuotationOrderDetailViewModel detailViewModel=new QuotationOrderDetailViewModel();
             detailViewModel.QuotationOrderReports = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
+
+            //call GraphData Setter in the following order
             if(detailViewModel.QuotationOrderReports.SelectMany(x=>x.ReportQuotationOrderItems.Where(y=>y.IsQuotationReport)).Any())
                 SetRFQsGraphData(detailViewModel);
             if (detailViewModel.QuotationOrderReports.SelectMany(x => x.ReportQuotationOrderItems.Where(y => y.IsOrderReport)).Any())
                 SetOrdersGraphData(detailViewModel);
+            //Set graph timeline marking points
+            detailViewModel.GraphStartTimeStamp = GetJavascriptTimestamp(response.FirstOrDefault().Report.ReportFromDate).ToString();
+            detailViewModel.GraphEndTimeStamp = GetJavascriptTimestamp(response.FirstOrDefault().Report.ReportToDate).ToString();
 
             detailViewModel.ReportId = (long)ReportId;
 
@@ -109,21 +114,17 @@ namespace EPMS.Web.Areas.Report.Controllers
             var firstQuotation = quotationGroups.OrderBy(x => x.ReportQuotOrderItemId).FirstOrDefault();
             var lastQuotation = quotationGroups.OrderByDescending(x => x.ReportQuotOrderItemId).FirstOrDefault();
 
-
-
             if (firstQuotation != null)
             {
-                detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
-                detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
-
+                //detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
-                    ItemLabel = "Orders",
+                    ItemLabel = "RFQs",
                     ItemValue = new List<GraphLabel>
                     {
                         new GraphLabel
                         {
-                            label = "Orders",
+                            label = "RFQs",
                             data = new List<GraphLabelData>
                             {
                                 new GraphLabelData
@@ -142,6 +143,16 @@ namespace EPMS.Web.Areas.Report.Controllers
                         Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
                     });
                 }
+                if (quotationGroups.Count() == 1)
+                {
+                    //Ending Points on graph
+                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                        Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                    });
+                }
+                
             }
             var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
             detailVeiwModel.RFQsDataSet = data;
@@ -158,9 +169,8 @@ namespace EPMS.Web.Areas.Report.Controllers
 
             if (firstQuotation != null)
             {
-                detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
-                detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
 
+                //detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
                     ItemLabel = "Orders",
@@ -181,14 +191,24 @@ namespace EPMS.Web.Areas.Report.Controllers
                 });
                 for (int i = 0; i < ordersGroups.Count(); i++)
                 {
-                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                     {
                         TimeStamp = Convert.ToInt64(ordersGroups[i].MonthTimeStamp),
                         Value = Convert.ToDecimal(ordersGroups[i].TotalPrice)
                     });
                 }
+                //Ending Points on graph
+                if (ordersGroups.Count() == 1)
+                {
+                    detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                    {
+                        TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                        Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                    });
+                }
+                
             }
-            var data = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+            var data = detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.ToArray();
             detailVeiwModel.OrdersDataSet = data;
         }
         private string SetGraphImage(long reportId)
@@ -199,6 +219,12 @@ namespace EPMS.Web.Areas.Report.Controllers
                 return "../.." + ConfigurationManager.AppSettings["ReportImage"] + "report_" + reportId + ".png";
             }
             return null;
+        }
+        private static long GetJavascriptTimestamp(DateTime input)
+        {
+            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
+            DateTime time = input.Subtract(span);
+            return (time.Ticks / 10000);
         }
         [AllowAnonymous]
         public ActionResult GeneratePdf(long? ReportId)
