@@ -29,6 +29,8 @@ namespace EPMS.Interfaces.IServices
         CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request);
         CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request);
         long SaveQOReport(QOReportCreateOrDetailsRequest request);
+        long SaveQIReport(QuotationInvoiceDetailRequest request);
         IEnumerable<ReportQuotationOrder> GetQOReport(long reportId);
+        IEnumerable<ReportQuotationInvoice> GetQIReport(long reportId);
     }
 }

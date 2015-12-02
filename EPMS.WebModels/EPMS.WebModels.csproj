@@ -955,6 +955,7 @@
     <Compile Include="WebsiteModels\QuotationOrderReport.cs" />
     <Compile Include="WebsiteModels\Receipt.cs" />
     <Compile Include="WebsiteModels\Report.cs" />
+    <Compile Include="WebsiteModels\ReportQuotationInvoice.cs" />
     <Compile Include="WebsiteModels\Request.cs" />
     <Compile Include="WebsiteModels\RequestDetail.cs" />
     <Compile Include="WebsiteModels\RFI.cs" />

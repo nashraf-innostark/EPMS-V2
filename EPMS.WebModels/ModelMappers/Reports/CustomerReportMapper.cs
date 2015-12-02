@@ -46,7 +46,6 @@ namespace EPMS.WebModels.ModelMappers.Reports
             {
                 report.ReportCreatedByName = "Admin";
             }
-            report.ReportQuotationInvoices = source.ReportQuotationInvoices;
             return report;
         }
 
@@ -65,6 +64,24 @@ namespace EPMS.WebModels.ModelMappers.Reports
                 ? Convert.ToDateTime(source.Report.ReportToDate).ToString("dd/MM/yyyy", new CultureInfo("en"))
                 : DateTime.ParseExact(source.Report.ReportToDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToString(),
                 ReportQuotationOrderItems = source.ReportQuotationOrderItems
+            };
+        }
+
+        public static WebsiteModels.ReportQuotationInvoice CreateReportFromServerToClient(this Models.DomainModels.ReportQuotationInvoice source)
+        {
+            return new WebsiteModels.ReportQuotationInvoice
+            {
+                EmployeeNameE = source.EmployeeNameE,
+                EmployeeNameA = source.EmployeeNameA,
+                NoOfQuotations = source.NoOfQuotations,
+                NoOfInvoices = source.NoOfInvoices,
+                ReportFromDateString = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                    ? Convert.ToDateTime(source.Report.ReportFromDate).ToString("dd/MM/yyyy", new CultureInfo("en"))
+                    : DateTime.ParseExact(source.Report.ReportFromDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToString(),
+                ReportToDateString = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en"
+                ? Convert.ToDateTime(source.Report.ReportToDate).ToString("dd/MM/yyyy", new CultureInfo("en"))
+                : DateTime.ParseExact(source.Report.ReportToDate.ToShortDateString(), "dd/MM/yyyy", new CultureInfo("ar")).ToString(),
+                ReportQuotationInvoiceItems = source.ReportQuotationInvoiceItems
             };
         }
     }
