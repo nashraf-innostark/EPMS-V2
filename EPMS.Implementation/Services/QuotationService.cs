@@ -284,10 +284,11 @@ namespace EPMS.Implementation.Services
             return new QuotationResponse { Status = false, Customers = customerService.GetAll().ToList() };
         }
 
-        public bool UpdateStatus(QuotationStatusRequest request)
+        public string UpdateStatus(QuotationStatusRequest request)
         {
             try
             {
+                string message = "";
                 Quotation quotation = Repository.Find(request.QuotationId);
                 if (quotation != null)
                 {
@@ -307,14 +308,14 @@ namespace EPMS.Implementation.Services
                         RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId(),
                         RecLastUpdatedDt = DateTime.Now
                     };
-                    invoiceService.AddInvoice(invoice);
+                    message = invoiceService.AddInvoice(invoice);
                 }
-                return true;
+                return message;
             }
             catch (Exception)
             {
             }
-            return false;
+            return "false";
         }
 
         public void DeleteQuotation(Quotation quotation)

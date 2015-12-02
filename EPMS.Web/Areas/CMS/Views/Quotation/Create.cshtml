@@ -172,7 +172,7 @@
                                     <td class="total">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
                                     </td>
-                                    @if (Model.RFQId > 0)
+                                    @if (!Model.IsRFQManual)
                                     {
                                         <td class="delete">
                                             <i class="icon-photon minus"></i>
@@ -453,12 +453,11 @@
 
         // set item details and discount readonly if quotation is from RFQ
         var rfqId = parseInt('@Model.RFQId');
-        if (rfqId > 0) {
+        if (rfqId > 0 && '@Model.IsRFQManual' == 'False') {
             // textboxes readonly
             $('.readonly-from-rfq:input').attr('readonly', true);
             // hide Add new item button
             $(".add-item-row").hide();
-            
         }
 
         if ('@ViewBag.ShowExcelImport' == 'True') {

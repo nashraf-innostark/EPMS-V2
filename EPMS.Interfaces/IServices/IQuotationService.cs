@@ -18,7 +18,7 @@ namespace EPMS.Interfaces.IServices
         Quotation FindQuotationByOrderId(long orderId);
         QuotationResponse AddQuotation(Quotation quotation);
         QuotationResponse UpdateQuotation(Quotation quotation);
-        bool UpdateStatus(QuotationStatusRequest request);
+        string UpdateStatus(QuotationStatusRequest request);
         void DeleteQuotation(Quotation quotation);
     }
 }

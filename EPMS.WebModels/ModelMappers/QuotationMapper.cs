@@ -79,6 +79,7 @@ namespace EPMS.WebModels.ModelMappers
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
+                IsRFQManual = source.RFQ != null && !source.RFQ.RFQItems.Any()
             };
         }
 

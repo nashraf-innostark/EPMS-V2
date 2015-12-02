@@ -44,6 +44,7 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public bool ThirdInstallmentStatus { get; set; }
         public bool FourthInstallmentStatus { get; set; }
         public bool FromOrder { get; set; }
+        public bool IsRFQManual { get; set; }
 
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
         // items for inventory pop up

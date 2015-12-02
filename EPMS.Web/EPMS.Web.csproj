@@ -1600,6 +1600,9 @@
     <Content Include="Areas\CMS\Views\Payment\CancelFromPaypal.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\Details.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAll.cshtml" />
+    <Content Include="Areas\CMS\Views\Orders\Detail.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -3496,11 +3499,7 @@
     <Content Include="Images\iconic_stroke.ttf" />
     <Content Include="Images\icons\default\Thumbs.db" />
     <Content Include="Images\icons\hover\Thumbs.db" />
-    <Content Include="Images\icons\Thumbs.db" />
-    <Content Include="Images\jQueryUI\Thumbs.db" />
     <Content Include="Images\logo_watermark.psd" />
-    <Content Include="Images\preloader\Thumbs.db" />
-    <Content Include="Images\sprites\Thumbs.db" />
     <Content Include="Images\user_icon.psd" />
     <Content Include="Images\w_arrow_red%402x.psd" />
     <Content Include="Images\photon\logo_watermark.psd" />
