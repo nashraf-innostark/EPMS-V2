@@ -196,8 +196,8 @@ namespace EPMS.Implementation.Services
             {
                 ReportCreatedBy = request.RequesterId,
                 ReportCreatedDate = DateTime.Now,
-                ReportFromDate = DateTime.Now,
-                ReportToDate = DateTime.Now,
+                ReportFromDate = request.From,
+                ReportToDate = request.To,
                 ReportQuotationOrders = new List<ReportQuotationOrder>()
             };
             if (request.CustomerId > 0)
