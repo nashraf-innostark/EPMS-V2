@@ -35,6 +35,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IQuotationItemService quotationItemService;
         private readonly IShoppingCartService cartService;
         private readonly ICompanyProfileService companyProfileService;
+        private readonly ICustomerService customerService;
 
         private bool CheckHasInventoryModule()
         {
@@ -53,7 +54,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Constructor
 
-        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService)
+        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService, ICustomerService customerService)
         {
             this.ordersService = ordersService;
             this.quotationService = quotationService;
@@ -61,6 +62,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             this.quotationItemService = quotationItemService;
             this.cartService = cartService;
             this.companyProfileService = companyProfileService;
+            this.customerService = customerService;
         }
 
         #endregion
@@ -448,6 +450,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 if (rfqResponse.Rfq != null)
                 {
                     model.Rfq = rfqResponse.Rfq.CreateFromServerToClient();
+                    model.Customer = rfqResponse.Rfq.Customer.CreateForRfq();
                 }
                 model.Profile = rfqResponse.Profile != null ? rfqResponse.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
                 model.Rfq.CustomerId = customerId;
@@ -476,6 +479,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     var cp = companyProfileService.GetDetail();
                     model.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
                     model.Rfq.CustomerId = customerId;
+                    model.Customer = customerService.FindCustomerById(customerId).CreateForRfq();
                     ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 }
             }

@@ -6,9 +6,9 @@ namespace EPMS.WebModels.ModelMappers
 {
     public static class CustomerMapper
     {
-        public static WebsiteModels.Customer CreateFromServerToClient(this Models.DomainModels.Customer source)
+        public static Customer CreateFromServerToClient(this Models.DomainModels.Customer source)
         {
-            return new WebsiteModels.Customer
+            return new Customer
             {
 
                 CustomerId = source.CustomerId,
@@ -65,7 +65,7 @@ namespace EPMS.WebModels.ModelMappers
             };
 
         }
-        public static Models.DomainModels.Customer CreateFrom(this WebsiteModels.Customer source)
+        public static Models.DomainModels.Customer CreateFrom(this Customer source)
         {
             return new Models.DomainModels.Customer
             {
@@ -83,9 +83,9 @@ namespace EPMS.WebModels.ModelMappers
 
         }
 
-        public static WebsiteModels.ContactList CreateForContactList(this Models.DomainModels.Customer source)
+        public static ContactList CreateForContactList(this Models.DomainModels.Customer source)
         {
-            WebsiteModels.ContactList contactList = new WebsiteModels.ContactList();
+            ContactList contactList = new ContactList();
             contactList.NameE = source.CustomerNameE ?? "";
             contactList.NameA = source.CustomerNameA ?? "";
             contactList.Link = "CMS/Customer/Details/" + source.CustomerId;
@@ -104,6 +104,20 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerId = source.CustomerId,
                 CustomerNameE = source.CustomerNameE,
                 CustomerNameA = source.CustomerNameA
+            };
+        }
+
+        public static Customer CreateForRfq(this Models.DomainModels.Customer source)
+        {
+            return new Customer
+            {
+                CustomerId = source.CustomerId,
+                CustomerNameE = source.CustomerNameE,
+                CustomerNameA = source.CustomerNameA,
+                CustomerAddress = source.CustomerAddress,
+                CustomerMobile = source.CustomerMobile,
+                EmployeeId = source.EmployeeId,
+                Email = source.AspNetUsers != null ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
             };
         }
     }
