@@ -1605,6 +1605,8 @@
     <Content Include="Areas\Report\Views\QuotationOrder\Details.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAsPDF.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAllAsPDF.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\ReportAsPdf.cshtml" />
+    <Content Include="Areas\Report\Views\QuotationInvoice\DetailsAllAsPDF.cshtml" />
     <None Include="Views\Shared\_LoginLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>

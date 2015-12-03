@@ -23,6 +23,7 @@ namespace EPMS.Implementation.Services
         private readonly IQuotationRepository quotationRepository;
         private readonly ICompanyProfileRepository companyProfileRepository;
         private readonly ICustomerRepository customerRepository;
+        private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IOrdersRepository ordersRepository;
 
         #endregion
@@ -31,13 +32,14 @@ namespace EPMS.Implementation.Services
 
         public ReceiptService(IReceiptRepository receiptRepository, IInvoiceRepository invoiceRepository,
             IQuotationRepository quotationRepository, ICompanyProfileRepository companyProfileRepository,
-            ICustomerRepository customerRepository, IOrdersRepository ordersRepository)
+            ICustomerRepository customerRepository, IAspNetUserRepository aspNetUserRepository, IOrdersRepository ordersRepository)
         {
             this.receiptRepository = receiptRepository;
             this.invoiceRepository = invoiceRepository;
             this.quotationRepository = quotationRepository;
             this.companyProfileRepository = companyProfileRepository;
             this.customerRepository = customerRepository;
+            this.aspNetUserRepository = aspNetUserRepository;
             this.ordersRepository = ordersRepository;
         }
 
@@ -122,6 +124,11 @@ namespace EPMS.Implementation.Services
             response.Quotation = quotationRepository.Find(response.Invoice.QuotationId);
             response.Customer = customerRepository.Find(response.Quotation.CustomerId);
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
+
+            var employee = aspNetUserRepository.Find(response.Receipt.RecCreatedBy).Employee;
+            response.EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+            response.EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+
 
             return response;
         }

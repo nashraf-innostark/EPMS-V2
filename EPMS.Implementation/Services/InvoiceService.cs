@@ -23,6 +23,7 @@ namespace EPMS.Implementation.Services
         private readonly ICompanyProfileRepository companyProfileRepository;
         private readonly IReceiptRepository receiptRepository;
         private readonly INotificationService notificationService;
+        private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly INotificationRepository notificationRepository;
 
         #endregion
@@ -31,7 +32,7 @@ namespace EPMS.Implementation.Services
 
         public InvoiceService(IInvoiceRepository invoiceRepository, IQuotationRepository quotationRepository,
             IQuotationItemRepository quotationItemRepository, ICustomerRepository customerRepository,
-            ICompanyProfileRepository companyProfileRepository, IReceiptRepository receiptRepository, INotificationRepository notificationRepository, INotificationService notificationService)
+            ICompanyProfileRepository companyProfileRepository, IReceiptRepository receiptRepository, INotificationRepository notificationRepository, INotificationService notificationService, IAspNetUserRepository aspNetUserRepository)
         {
             this.invoiceRepository = invoiceRepository;
             this.quotationRepository = quotationRepository;
@@ -41,6 +42,7 @@ namespace EPMS.Implementation.Services
             this.receiptRepository = receiptRepository;
             this.notificationRepository = notificationRepository;
             this.notificationService = notificationService;
+            this.aspNetUserRepository = aspNetUserRepository;
         }
 
         #endregion
@@ -144,6 +146,10 @@ namespace EPMS.Implementation.Services
             response.Quotation = quotationRepository.Find(response.Invoice.QuotationId);
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
             response.Customer = customerRepository.Find(response.Quotation.CustomerId);
+
+            var employee = aspNetUserRepository.Find(response.Invoice.RecCreatedBy).Employee;
+            response.EmployeeNameE = employee.EmployeeFirstNameE + " "+ employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+            response.EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
 
             IEnumerable<Receipt> receipts = receiptRepository.GetReceiptsByInvoiceId(id);
 

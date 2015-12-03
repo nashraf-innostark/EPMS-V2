@@ -1,5 +1,5 @@
 ﻿@using Newtonsoft.Json
-@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
+@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceDetailViewModel
 @{
     ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -62,15 +62,18 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>
-                                @(direction == "ltr" ? Model.EmployeeNameE : Model.EmployeeNameA)
-                            </td>
-                            <td>@Model.QuotationsCount</td>
-                            <td>@Model.InvoicesCount</td>
-                            <td>@Model.StartDate - @Model.EndDate</td>
-                        </tr>
+                        @foreach (var qo in Model.ReportQuotationInvoices)
+                        {
+                            <tr>
+                                <td>1</td>
+                                <td>
+                                    @(direction == "ltr" ? qo.EmployeeNameE : qo.EmployeeNameA)
+                                </td>
+                                <td>@qo.NoOfQuotations</td>
+                                <td>@qo.NoOfInvoices</td>
+                                <td>@qo.ReportFromDateString - @qo.ReportToDateString</td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -78,13 +81,16 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.WebModels.Resources.Reports.CustomerReport.GenerateAsPDF</button>
+                <a class="btn disableBtn" href="~/Report/QuotationInvoice/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
             </div>
 
         </div>
 
     </div>
 </form>
+<div id="GraphImage" style="display: none">
+    <img id="report_@Model.ReportId" />
+</div>
 
 
 <script src="~/Scripts/html2canvas/html2canvas.js"></script>
@@ -129,6 +135,7 @@
     });
 
     function DrawGraph() {
+        debugger;
         var markings = [
             { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
         ];

@@ -69,7 +69,7 @@
 
                     <div class="span3">
                         <div class="invoice-from">
-                            <span>@ViewBag.EmployeeName</span>
+                            <span>@(direction == "ltr" ? ViewBag.EmployeeNameE : ViewBag.EmployeeNameA)</span>
                             <strong>
                                 @(direction == "ltr" ? Model.CompanyProfile.CompanyNameE : Model.CompanyProfile.CompanyNameA)
                             </strong>
@@ -103,7 +103,7 @@
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.CMS.Invoice.QuotationNumber:</th>
-                                        <td>@Model.Quotation.QuotationId</td>
+                                        <td>@Model.Quotation.SerialNumber</td>
                                     </tr>
                                 </tbody>
                             </table>

@@ -1,6 +1,6 @@
-﻿@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceViewModel
+﻿@model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceDetailViewModel
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Title;
+    ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var serial = 0;
@@ -27,7 +27,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Title</small></h2>
+    <h2><small>@EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
@@ -50,29 +50,16 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var employee in @Model.Employees.ToList())
+                        @foreach (var qo in Model.ReportQuotationInvoices)
                         {
-                            serial = serial + 1;
                             <tr>
-                                <td>@serial</td>
+                                <td>1</td>
                                 <td>
-                                    @if (direction == "ltr")
-                                    {
-                                        @employee.EmployeeFullNameA
-                                    }
-                                    else
-                                    {
-                                        @employee.EmployeeFullNameE
-                                    }
+                                    @(direction == "ltr" ? qo.EmployeeNameE : qo.EmployeeNameA)
                                 </td>
-                                <td></td>
-                                <td>@employee.Email</td>
-                                <td>
-                                    @if (employee.RecCreatedDt != null)
-                                    {
-                                        @employee.RecCreatedDt.Value.ToString("dd/mm/yyyy")
-                                    }
-                                </td>
+                                <td>@qo.NoOfQuotations</td>
+                                <td>@qo.NoOfInvoices</td>
+                                <td>@qo.ReportFromDateString - @qo.ReportToDateString</td>
                             </tr>
                         }
                     </tbody>
@@ -82,7 +69,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button type="submit" class="btn">@EPMS.WebModels.Resources.Reports.CustomerReport.GenerateAsPDF</button>
+                <a class="btn" href="~/Report/QuotationInvoice/GeneratePdfAll?ReportId=@Model.ReportId">@EPMS.WebModels.Resources.Reports.CustomerReport.GenerateAsPDF</a>
             </div>
 
         </div>

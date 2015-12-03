@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Transactions;
 using EPMS.Interfaces.IServices;
@@ -30,6 +31,7 @@ namespace EPMS.Implementation.Services
         private readonly IEmployeeRepository employeeRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IInvoiceRepository invoiceRepository;
+        private readonly IReportQuotaionInvoiceRepository qIRepository;
 
         #endregion
 
@@ -37,7 +39,7 @@ namespace EPMS.Implementation.Services
 
         public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository,IInventoryItemRepository inventoryItemRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
-            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository)
+            IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository, IReportQuotaionInvoiceRepository qIRepository)
         {
             this.reportRepository = reportRepository;
             this.rfqRepository = rfqRepository;
@@ -51,6 +53,7 @@ namespace EPMS.Implementation.Services
             this.employeeRepository = employeeRepository;
             this.ordersRepository = ordersRepository;
             this.invoiceRepository = invoiceRepository;
+            this.qIRepository = qIRepository;
         }
 
         #endregion
@@ -130,26 +133,32 @@ namespace EPMS.Implementation.Services
 
         public QuotationInvoiceReportResponse SaveAndGetQuotationInvoiceReport(QuotationInvoiceDetailRequest request)
         {
+            QuotationInvoiceReportResponse qIResponse;
+            Report newReport;
             if (request.IsCreate)
             {
-                var quotationInvoiceReport = new Report
+                newReport = new Report
                 {
                     ReportCategoryId = (int) ReportCategory.AllQuotationInvoice,
                     EmployeeId = request.EmployeeId,
                     ReportCreatedBy = request.RequesterId,
                     ReportCreatedDate = DateTime.Now,
                     ReportFromDate = request.StartDate,
-                    ReportToDate = request.EndDate
+                    ReportToDate = request.EndDate,
+                    ReportQuotationInvoices = new List<ReportQuotationInvoice>()
                 };
-                reportRepository.Add(quotationInvoiceReport);
-                reportRepository.SaveChanges();
             }
             else
             {
-                var report = reportRepository.Find(request.ReportId);
-                request.StartDate = report.ReportFromDate;
-                request.EndDate = report.ReportToDate;
-                request.EmployeeId = Convert.ToInt64(report.EmployeeId);
+                newReport = reportRepository.Find(request.ReportId);
+
+                request.StartDate = newReport.ReportFromDate;
+                request.EndDate = newReport.ReportToDate;
+                request.EmployeeId = Convert.ToInt64(newReport.EmployeeId);
+                return new QuotationInvoiceReportResponse
+                {
+                    Report = newReport
+                };
             }
 
             var employee = employeeRepository.Find(request.EmployeeId);
@@ -160,8 +169,46 @@ namespace EPMS.Implementation.Services
             //Save Report
             var QuotationInvoiceReport = new ReportQuotationInvoice
             {
-                
+                EmployeeId = employee.EmployeeId,
+                EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
+                NoOfInvoices = invoices.Count(),
+                NoOfQuotations = quotations.Count(),
+                ReportQuotationInvoiceItems = new Collection<ReportQuotationInvoiceItem>()
             };
+
+            //Save Report Items from Quotations
+            var quotationGroups = quotations.Where(i => i.RecCreatedDate != null)
+                    .OrderBy(i => i.RecCreatedDate.Month)
+                    .GroupBy(i => i.RecCreatedDate.Month).ToArray();
+            foreach (var quotationGroup in quotationGroups)
+            {
+                QuotationInvoiceReport.ReportQuotationInvoiceItems .Add(new ReportQuotationInvoiceItem
+                {
+                    IsQuotationItem = true,
+                    TotalPrice = quotationGroup.Sum(x => x.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(quotationGroup.FirstOrDefault().RecCreatedDate).ToString()
+                });
+            }
+
+            //Save Report Items from Invoices
+            var invoiceGroups = invoices.Where(i => i.RecCreatedDt != null)
+                    .OrderBy(i => i.RecCreatedDt.Month)
+                    .GroupBy(i => i.RecCreatedDt.Month).ToArray();
+            foreach (var invoiceGroup in invoiceGroups)
+            {
+                QuotationInvoiceReport.ReportQuotationInvoiceItems.Add(new ReportQuotationInvoiceItem
+                {
+                    IsInvoiceItem = true,
+                    TotalPrice = invoiceGroup.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                    MonthTimeStamp = GetJavascriptTimestamp(invoiceGroup.FirstOrDefault().RecCreatedDt).ToString()
+                });
+            }
+
+            newReport.ReportQuotationInvoices.Add(QuotationInvoiceReport);
+            reportRepository.Add(newReport);
+            reportRepository.SaveChanges();
+
 
             return new QuotationInvoiceReportResponse
             {
@@ -172,7 +219,8 @@ namespace EPMS.Implementation.Services
                 InvoicesCount = invoices.Count(),
                 QuotationsCount = quotations.Count(),
                 StartDate = request.StartDate.ToShortDateString(),
-                EndDate = request.EndDate.ToShortDateString()
+                EndDate = request.EndDate.ToShortDateString(),
+                ReportId = newReport.ReportId
             };
         }
 
@@ -283,6 +331,98 @@ namespace EPMS.Implementation.Services
 
             
 
+            return newReport.ReportId;
+        }
+
+        public long SaveQIReport(QuotationInvoiceDetailRequest request)
+        {
+            var newReport = new Report
+            {
+                ReportCreatedBy = request.RequesterId,
+                ReportCreatedDate = DateTime.Now,
+                ReportFromDate = DateTime.Now,
+                ReportToDate = DateTime.Now,
+                ReportQuotationInvoices = new List<ReportQuotationInvoice>()
+            };
+            if (request.EmployeeId > 0)
+            {
+                newReport.ReportCategoryId = (int)ReportCategory.QuotationInvoice;
+                newReport.EmployeeId = request.EmployeeId;
+
+                var employee = employeeRepository.Find(request.EmployeeId);
+                var empId = employee.AspNetUsers.FirstOrDefault().Id;
+                var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+                var invoices = invoiceRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+
+                var reportQuotationInvoice = new ReportQuotationInvoice()
+                {
+                    EmployeeId = request.EmployeeId,
+                    NoOfQuotations = quotations.Count(),
+                    NoOfInvoices = invoices.Count(),
+                    EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                    EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
+                    ReportQuotationInvoiceItems = new List<ReportQuotationInvoiceItem>()
+                };
+
+                //Items of Quotations for reportQuotationOrder
+                var itemsOfQuot = quotations.OrderBy(x => x.RecCreatedDate).GroupBy(x => x.RecCreatedDate.Month).ToList();
+                foreach (var quot in itemsOfQuot)
+                {
+                    reportQuotationInvoice.ReportQuotationInvoiceItems.Add(new ReportQuotationInvoiceItem
+                    {
+                        IsQuotationItem = true,
+                        TotalPrice = quot.Sum(x => x.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                        MonthTimeStamp = GetJavascriptTimestamp(quot.FirstOrDefault().RecCreatedDate).ToString()
+                    });
+                }
+
+                //Items of Orders for reportQuotationOrder
+                var itemsOfOrders = invoices.OrderBy(x => x.RecCreatedDt).GroupBy(x => x.RecCreatedDt.Month).ToList();
+                foreach (var order in itemsOfOrders)
+                {
+                    reportQuotationInvoice.ReportQuotationInvoiceItems.Add(new ReportQuotationInvoiceItem
+                    {
+                        IsInvoiceItem = true,
+                        TotalPrice = order.Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice)).ToString(),
+                        MonthTimeStamp = GetJavascriptTimestamp(order.FirstOrDefault().RecCreatedDt).ToString()
+                    });
+                }
+                newReport.ReportQuotationInvoices.Add(reportQuotationInvoice);
+                //Save Report and its data
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+            }
+            else
+            {
+                newReport.ReportCategoryId = (int)ReportCategory.AllQuotationInvoice;
+                //Fetch data for Report 
+                var employees = employeeRepository.GetAll().ToList();
+                foreach (var employee in employees)
+                {
+                    request.EmployeeId = employee.EmployeeId;
+                    var empId = employee.AspNetUsers.FirstOrDefault().Id;
+
+                    var quotations = quotationRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+                    var invoices = invoiceRepository.GetAll().Where(x => x.RecCreatedBy == empId);
+
+                    //reportQuotationOrder Report
+
+                    var reportQuotationInvoice = new ReportQuotationInvoice
+                    {
+                        EmployeeId = request.EmployeeId,
+                        NoOfQuotations = quotations.Count(),
+                        NoOfInvoices = invoices.Count(),
+                        EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE,
+                        EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA,
+                    };
+
+                    newReport.ReportQuotationInvoices.Add(reportQuotationInvoice);
+                }
+
+                //Save Report and its data
+                reportRepository.Add(newReport);
+                reportRepository.SaveChanges();
+            }
             return newReport.ReportId;
         }
 
@@ -563,6 +703,11 @@ namespace EPMS.Implementation.Services
             }
             request.ReportId = taskReportToCreate.ReportId;
             request.ReportCreatedDate = taskReportToCreate.ReportCreatedDate;
+        }
+
+        public IEnumerable<ReportQuotationInvoice> GetQIReport(long reportId)
+        {
+            return reportRepository.Find(reportId).ReportQuotationInvoices.ToList();
         }
 
         #endregion

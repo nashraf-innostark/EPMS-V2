@@ -66,7 +66,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             viewModel.CompanyProfile = response.CompanyProfile != null ? response.CompanyProfile.CreateFromServerToClientForQuotation() : new CompanyProfile();
 
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + viewModel.CompanyProfile.CompanyLogoPath;
-            ViewBag.EmployeeName = User.Identity.Name;
+            ViewBag.EmployeeNameE = response.EmployeeNameE;
+            ViewBag.EmployeeNameA = response.EmployeeNameA;
 
             ViewBag.MessageVM = (MessageViewModel) TempData["message"];
             return View(viewModel);

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.WebModels.ViewModels.Reports
 {
@@ -10,6 +11,7 @@ namespace EPMS.WebModels.ViewModels.Reports
             Employees = new List<WebsiteModels.Employee>();
             Quotations = new List<WebsiteModels.Quotation>();
             GraphItems = new List<GraphItem>();
+            Report = new Report();
         }
 
         [Required(ErrorMessageResourceType = typeof(Resources.Reports.CustomerReport), ErrorMessageResourceName = "StartDateValidation")]
@@ -35,5 +37,7 @@ namespace EPMS.WebModels.ViewModels.Reports
         public string ImageSrc { get; set; }
         public GraphLabelDataValues[] QuotationDataSet { get; set; }
         public GraphLabelDataValues[] InvoiceDataSet { get; set; }
+        public Report Report { get; set; }
+        public bool IsPdf { get; set; }
     }
 }

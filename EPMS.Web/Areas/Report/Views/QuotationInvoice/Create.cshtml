@@ -27,7 +27,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-@using (Html.BeginForm("Detail", "QuotationInvoice", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+@using (Html.BeginForm("Create", "QuotationInvoice", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         
@@ -83,25 +83,10 @@
         
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <button class="btn" id="Generate">@EPMS.WebModels.Resources.Reports.QuotationInvoice.Generate</button>
+                <button class="btn" type="submit" id="Generate">@EPMS.WebModels.Resources.Reports.QuotationInvoice.Generate</button>
             </div>
 
         </div>
 
     </div>
 }
-
-<script>
-    
-    $('#Generate').click(function (e) {
-        var empId = $('#EmployeeId').val();
-        if (empId == null || empId == "") {
-            $("form").attr("action", '@Url.Action("AllDetail", "QuotationInvoice")');
-            $("form").submit();
-        } else {
-            $("form").attr("action", '@Url.Action("Detail", "QuotationInvoice")');
-            $("form").submit();
-        }
-    });
-
-</script>

@@ -169,5 +169,6 @@ namespace EPMS.Repository.BaseRepository
         public DbSet<Report> Report { get; set; }
         public DbSet<Invoice> Invoices { get; set; }
         public DbSet<Receipt> Receipts { get; set; }
+        public DbSet<ReportQuotationInvoice> ReportQuotationInvoices { get; set; }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using EPMS.Models.DomainModels;
 
-namespace EPMS.Models.DomainModels
+namespace EPMS.WebModels.WebsiteModels
 {
     public class ReportQuotationInvoice
     {
@@ -15,8 +12,9 @@ namespace EPMS.Models.DomainModels
         public string EmployeeNameE { get; set; }
         public int NoOfQuotations { get; set; }
         public int NoOfInvoices { get; set; }
+        public string ReportFromDateString { get; set; }
+        public string ReportToDateString { get; set; }
 
         public virtual ICollection<ReportQuotationInvoiceItem> ReportQuotationInvoiceItems { get; set; }
-        public virtual Report Report { get; set; }
     }
 }

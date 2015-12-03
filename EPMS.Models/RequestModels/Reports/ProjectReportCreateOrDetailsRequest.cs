@@ -38,4 +38,15 @@ namespace EPMS.Models.RequestModels.Reports
         public bool IsCreate { get; set; }
         public DateTime ReportCreatedDate { get; set; }
     }
+
+    public class QIReportCreateRequest
+    {
+        public long ReportId { get; set; }
+        public long CustomerId { get; set; }
+        public string RequesterRole { get; set; }
+        public string RequesterId { get; set; }
+        public bool IsCreate { get; set; }
+        public DateTime From { get; set; }
+        public DateTime To { get; set; }
+    }
 }

@@ -3,16 +3,14 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using System.Web.WebPages.Scope;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
-using EPMS.Models.ResponseModels.ReportsResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
-using EPMS.WebModels.ModelMappers.PMS;
+using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
-using EPMS.WebModels.WebsiteModels;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
@@ -49,79 +47,57 @@ namespace EPMS.Web.Areas.Report.Controllers
             return View(viewModel);
         }
 
+        [HttpPost]
+        public ActionResult Create(QuotationInvoiceViewModel createViewModel)
+        {
+            var request = new QuotationInvoiceDetailRequest
+            {
+                EmployeeId = createViewModel.EmployeeId,
+                RequesterRole = Session["RoleName"].ToString(),
+                RequesterId = Session["UserID"].ToString(),
+                StartDate = Convert.ToDateTime(createViewModel.StartDate),
+                EndDate = Convert.ToDateTime(createViewModel.EndDate),
+            };
+            var reportId = reportService.SaveQIReport(request);
+            return RedirectToAction(createViewModel.EmployeeId > 0 ? "Detail" : "AllDetail", new {ReportId = reportId});
+        }
+
         #endregion
 
         #region Detail
 
-        public ActionResult Detail(QuotationInvoiceViewModel quotationInvoiceViewModel)
+        public ActionResult Detail(long? ReportId)
         {
-            QuotationInvoiceDetailRequest request = new QuotationInvoiceDetailRequest
-            {
-                EmployeeId = quotationInvoiceViewModel.EmployeeId,
-                ReportId = quotationInvoiceViewModel.ReportId,
-                RequesterRole = "Admin",
-                RequesterId = Session["UserID"].ToString(),
-                StartDate =
-                    quotationInvoiceViewModel.StartDate != null
-                        ? DateTime.ParseExact(quotationInvoiceViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en"))
-                        : new DateTime(),
-                EndDate =
-                    quotationInvoiceViewModel.EndDate != null
-                        ? DateTime.ParseExact(quotationInvoiceViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en"))
-                        : new DateTime(),
-            };
+            if (ReportId == null || ReportId <= 0) return View("Create");
 
-            var refrel = Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("Report/QuotationInvoice/Create"))
-                request.IsCreate = true;
-            var response = reportService.SaveAndGetQuotationInvoiceReport(request);
-            quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
-            quotationInvoiceViewModel.Invoices = response.Invoices.Select(x => x.CreateFromServerToClient());
-            quotationInvoiceViewModel.EmployeeNameE = response.EmployeeNameE;
-            quotationInvoiceViewModel.EmployeeNameA = response.EmployeeNameA;
-            quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
-            quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
-            quotationInvoiceViewModel.StartDate = response.StartDate;
-            quotationInvoiceViewModel.EndDate = response.EndDate;
+            var response = reportService.GetQIReport((long) ReportId);
+            QuotationInvoiceDetailViewModel viewModel = new QuotationInvoiceDetailViewModel();
 
-            SetGraphData(quotationInvoiceViewModel);
-            ViewBag.QueryString = "?ReportId=" + quotationInvoiceViewModel.ReportId;
+            viewModel.ReportQuotationInvoices = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
+            SetGraphData(viewModel);
 
-            return View(quotationInvoiceViewModel);
+            viewModel.ReportId = (long) ReportId;
+
+            return View(viewModel);
         }
 
         #endregion
 
         #region AllDetail
 
-        public ActionResult AllDetail(QuotationInvoiceViewModel quotationInvoiceViewModel)
+        public ActionResult AllDetail(long? ReportId)
         {
-            QuotationInvoiceDetailRequest request = new QuotationInvoiceDetailRequest
-            {
-                EmployeeId = quotationInvoiceViewModel.EmployeeId,
-                ReportId = quotationInvoiceViewModel.ReportId,
-                RequesterRole = "Admin",
-                RequesterId = Session["UserID"].ToString(),
-                StartDate =
-                    quotationInvoiceViewModel.StartDate != null
-                        ? DateTime.ParseExact(quotationInvoiceViewModel.StartDate, "dd/MM/yyyy", new CultureInfo("en"))
-                        : new DateTime(),
-                EndDate =
-                    quotationInvoiceViewModel.EndDate != null
-                        ? DateTime.ParseExact(quotationInvoiceViewModel.EndDate, "dd/MM/yyyy", new CultureInfo("en"))
-                        : new DateTime(),
-            };
+            if (ReportId == null || ReportId <= 0) return View("Create");
 
-            var refrel = Request.UrlReferrer;
-            if (refrel != null && refrel.ToString().Contains("Report/QuotationInvoice/Create"))
-                request.IsCreate = true;
-            var response = reportService.SaveAndGetQuotationInvoiceReport(request);
-            quotationInvoiceViewModel.InvoicesCount = response.InvoicesCount;
-            quotationInvoiceViewModel.QuotationsCount = response.QuotationsCount;
-            quotationInvoiceViewModel.Quotations = response.Quotations.Select(x => x.CreateFromServerToClientLv());
+            var response = reportService.GetQIReport((long)ReportId);
 
-            return View(quotationInvoiceViewModel);
+            QuotationInvoiceDetailViewModel detailViewModel = new QuotationInvoiceDetailViewModel();
+            detailViewModel.ReportQuotationInvoices = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+
+            detailViewModel.ReportId = (long)ReportId;
+
+            return View(detailViewModel);
         }
 
         #endregion
@@ -129,99 +105,127 @@ namespace EPMS.Web.Areas.Report.Controllers
 
         #region Graph
 
-        private QuotationInvoiceViewModel SetGraphData(QuotationInvoiceViewModel detailVeiwModel)
+        private static void SetGraphData(QuotationInvoiceDetailViewModel detailVeiwModel)
         {
-            var quotationGroups =
-                detailVeiwModel.Quotations.Where(i => i.RecCreatedDate != null)
-                    .OrderBy(i => i.RecCreatedDate.Month)
-                    .GroupBy(i => i.RecCreatedDate.Month).ToArray();
-            var invoiceGroups = detailVeiwModel.Invoices.Where(i => i.RecCreatedDt != null)
-                    .OrderBy(i => i.RecCreatedDt.Month)
-                    .GroupBy(i => i.RecCreatedDt.Month).ToArray();
-
-
-            var firstQuotation = detailVeiwModel.Quotations.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
-            var lastQuotation = detailVeiwModel.Quotations.OrderBy(x => x.RecCreatedDate).FirstOrDefault();
-            var firstInvoice = detailVeiwModel.Invoices.OrderByDescending(x => x.RecCreatedDt).FirstOrDefault();
-            var lastInvoice = detailVeiwModel.Invoices.OrderBy(x => x.RecCreatedDt).FirstOrDefault();
-
-
-
-            if (firstQuotation != null)
+            if (
+                detailVeiwModel.ReportQuotationInvoices.SelectMany(
+                    x => x.ReportQuotationInvoiceItems.Where(y => y.IsQuotationItem)).Any())
             {
-                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(firstQuotation.RecCreatedDate);
-                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(lastQuotation.RecCreatedDate);
+                var quotationGroups =
+                    detailVeiwModel.ReportQuotationInvoices.SelectMany(
+                        x => x.ReportQuotationInvoiceItems.Where(y => y.IsQuotationItem)).ToArray();
 
-                detailVeiwModel.GraphItems.Add(new GraphItem
+
+                var firstQuotation = quotationGroups.OrderBy(x => x.ReportQuotationInvoiceId).FirstOrDefault();
+                var lastQuotation = quotationGroups.OrderByDescending(x => x.ReportQuotationInvoiceId).FirstOrDefault();
+
+
+                if (firstQuotation != null)
                 {
-                    ItemLabel = "Quotation",
-                    ItemValue = new List<GraphLabel>
-                    {
-                        new GraphLabel
-                        {
-                            label = "Quotation",
-                            data = new List<GraphLabelData>
-                            {
-                                new GraphLabelData
-                                {
-                                    dataValue=new List<GraphLabelDataValues>()
+                    detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
+                    detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
 
+                    detailVeiwModel.GraphItems.Add(new GraphItem
+                    {
+                        ItemLabel = "Quotation",
+                        ItemValue = new List<GraphLabel>
+                        {
+                            new GraphLabel
+                            {
+                                label = "Quotation",
+                                data = new List<GraphLabelData>
+                                {
+                                    new GraphLabelData
+                                    {
+                                        dataValue = new List<GraphLabelDataValues>()
+
+                                    }
                                 }
                             }
                         }
-                    }
-                });
-                for (int i = 0; i < quotationGroups.Count(); i++)
-                {
-                    detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
-                    {
-                        TimeStamp = GetJavascriptTimestamp(Convert.ToDateTime(quotationGroups[i].OrderByDescending(x => x.RecCreatedDate).FirstOrDefault().RecCreatedDate)),
-                        Value = quotationGroups[i].Sum(x => x.QuotationItemDetails.Sum(y=>y.TotalPrice))
                     });
+                    for (int i = 0; i < quotationGroups.Count(); i++)
+                    {
+                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(quotationGroups[i].MonthTimeStamp),
+                            Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
+                        });
+                    }
+                    if (quotationGroups.Count() == 1)
+                    {
+                        //Ending Points on graph
+                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                            Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                        });
+                    }
                 }
+
+                var quotationDataSet = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
+                detailVeiwModel.QuotationDataSet = quotationDataSet;
             }
 
-            if (firstInvoice != null)
+            if (
+                detailVeiwModel.ReportQuotationInvoices.SelectMany(
+                    x => x.ReportQuotationInvoiceItems.Where(y => y.IsInvoiceItem)).Any())
             {
-                detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(firstInvoice.RecCreatedDt);
-                detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(lastInvoice.RecCreatedDt);
+                var invoiceGroups =
+                    detailVeiwModel.ReportQuotationInvoices.SelectMany(
+                        x => x.ReportQuotationInvoiceItems.Where(y => y.IsInvoiceItem)).ToArray();
 
-                detailVeiwModel.GraphItems.Add(new GraphItem
+
+                var firstInvoice = invoiceGroups.OrderBy(x => x.ReportQuotationInvoiceId).FirstOrDefault();
+                var lastInvoice = invoiceGroups.OrderByDescending(x => x.ReportQuotationInvoiceId).FirstOrDefault();
+
+                if (firstInvoice != null)
                 {
-                    ItemLabel = "Invoice",
-                    ItemValue = new List<GraphLabel>
-                    {
-                        new GraphLabel
-                        {
-                            label = "Invoice",
-                            data = new List<GraphLabelData>
-                            {
-                                new GraphLabelData
-                                {
-                                    dataValue=new List<GraphLabelDataValues>()
+                    detailVeiwModel.GraphStartTimeStamp = firstInvoice.MonthTimeStamp;
+                    detailVeiwModel.GraphEndTimeStamp = lastInvoice.MonthTimeStamp;
 
+                    detailVeiwModel.GraphItems.Add(new GraphItem
+                    {
+                        ItemLabel = "Invoice",
+                        ItemValue = new List<GraphLabel>
+                        {
+                            new GraphLabel
+                            {
+                                label = "Invoice",
+                                data = new List<GraphLabelData>
+                                {
+                                    new GraphLabelData
+                                    {
+                                        dataValue = new List<GraphLabelDataValues>()
+
+                                    }
                                 }
                             }
                         }
-                    }
-                });
-                for (int i = 0; i < invoiceGroups.Count(); i++)
-                {
-                    detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
-                    {
-                        TimeStamp = GetJavascriptTimestamp(Convert.ToDateTime(invoiceGroups[i].OrderByDescending(x => x.RecCreatedDt).FirstOrDefault().RecCreatedDt)),
-                        Value = invoiceGroups[i].Sum(x => x.Quotation.QuotationItemDetails.Sum(y => y.TotalPrice))
                     });
+                    for (int i = 0; i < invoiceGroups.Count(); i++)
+                    {
+                        detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(invoiceGroups[i].MonthTimeStamp),
+                            Value = Convert.ToDecimal(invoiceGroups[i].TotalPrice)
+                        });
+                    }
+                    if (invoiceGroups.Count() == 1)
+                    {
+                        //Ending Points on graph
+                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        {
+                            TimeStamp = Convert.ToInt64(lastInvoice.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
+                            Value = Convert.ToDecimal(lastInvoice.TotalPrice)
+                        });
+                    }
                 }
+
+                var invoiceDataSet = detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.ToArray();
+                detailVeiwModel.InvoiceDataSet = invoiceDataSet;
             }
 
-            var quotationDataSet = detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.ToArray();
-            detailVeiwModel.QuotationDataSet = quotationDataSet;
-
-            var invoiceDataSet = detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.ToArray();
-            detailVeiwModel.InvoiceDataSet = invoiceDataSet;
-
-            return detailVeiwModel;
         }
 
         private string SetGraphImage(long reportId)
@@ -247,25 +251,44 @@ namespace EPMS.Web.Areas.Report.Controllers
         #region Generate PDF
 
         [AllowAnonymous]
-        public ActionResult GeneratePdf(TaskReportsCreateViewModel viewModel)
+        public ActionResult GeneratePdf(long? ReportId)
         {
-            return new ActionAsPdf("ReportAsPdf", new {ReportId = viewModel.ReportId})
-            {
-                FileName = "Quotation_Invoice_Report.pdf"
-            };
+            return new ActionAsPdf("ReportAsPDF", new { ReportId = ReportId }) { FileName = "Quotations & Invoices Report.pdf" };
         }
 
-
-        public ActionResult ReportAsPdf(QuotationInvoiceViewModel viewModel)
+        [AllowAnonymous]
+        public ActionResult ReportAsPdf(long? ReportId)
         {
-            var response = Detail(viewModel);
-            QuotationInvoiceViewModel detailViewModel = new QuotationInvoiceViewModel
-            {
-                ReportId = viewModel.ReportId,
-            };
-            SetGraphData(detailViewModel);
-            var status = SetGraphImage(detailViewModel.ReportId);
-            detailViewModel.ImageSrc = SetGraphImage(detailViewModel.ReportId) != null ? status : "";
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQIReport((long)ReportId);
+
+            QuotationInvoiceDetailViewModel detailViewModel = new QuotationInvoiceDetailViewModel();
+            detailViewModel.ReportQuotationInvoices = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+            
+                SetGraphData(detailViewModel);
+
+            ViewBag.QueryString = "?ReportId=" + ReportId;
+            var status = SetGraphImage((long)ReportId);
+            detailViewModel.ImageSrc = SetGraphImage((long)ReportId) != null ? status : "";
+            return View(detailViewModel);
+        }
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long? ReportId)
+        {
+            return new ActionAsPdf("DetailsAllAsPDF", new { ReportId = ReportId }) { FileName = "Quotations & Invoices Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAllAsPDF(long? ReportId)
+        {
+            if (ReportId == null || ReportId <= 0) return View("Create");
+
+            var response = reportService.GetQIReport((long)ReportId);
+
+            QuotationInvoiceDetailViewModel detailViewModel = new QuotationInvoiceDetailViewModel();
+            detailViewModel.ReportQuotationInvoices = response.Select(x => x.CreateReportFromServerToClient()).ToList();
+
             return View(detailViewModel);
         }
 
