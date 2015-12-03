@@ -117,7 +117,7 @@ namespace EPMS.Implementation.Services
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
             #endregion
 
-            #region Send notification to assigned employees
+            #region Send notification to Customer
             notificationViewModel.NotificationResponse.NotificationId =
                         notificationRepository.GetNotificationsIdByCategories(5, 20, invoice.InvoiceId);
 
