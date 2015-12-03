@@ -799,7 +799,7 @@ namespace EPMS.Implementation.Services
                     AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemVariationAlertBefore"]),
                     CategoryId = 7,//Inventory
                     ItemId = itemVariation.ItemVariationId,
-                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")),
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
