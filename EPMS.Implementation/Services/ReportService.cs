@@ -37,12 +37,13 @@ namespace EPMS.Implementation.Services
 
         #region Constructor
 
-        public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository, IProjectRepository projectRepository,ICustomerService customerService,
+        public ReportService(IReportRepository reportRepository,IRFQRepository rfqRepository,IInventoryItemRepository inventoryItemRepository, IProjectRepository projectRepository,ICustomerService customerService,
             ICustomerRepository customerRepository, IQuotationRepository quotationRepository,
             IProjectTaskRepository taskRepository, IWarehouseRepository warehouseRepository, IEmployeeRepository employeeRepository, IOrdersRepository ordersRepository, IInvoiceRepository invoiceRepository, IReportQuotaionInvoiceRepository qIRepository)
         {
             this.reportRepository = reportRepository;
             this.rfqRepository = rfqRepository;
+            this.inventoryItemRepository = inventoryItemRepository;
             this.projectRepository = projectRepository;
             this.customerService = customerService;
             this.customerRepository = customerRepository;

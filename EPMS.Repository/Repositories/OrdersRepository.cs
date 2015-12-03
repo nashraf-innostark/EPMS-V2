@@ -144,6 +144,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(order => order.OrderNo == orderNo);
         }
 
+        public Order GetOrderByQuotationId(long quotationId)
+        {
+            return DbSet.FirstOrDefault(x => x.QuotationId == quotationId);
+        }
+
         public IEnumerable<Order> GetAllAvailableOrdersDDL(long customerId)
         {
             return DbSet.Where(x => x.OrderStatus == (short) OrderStatus.Pending && x.CustomerId == customerId);

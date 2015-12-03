@@ -24,6 +24,7 @@ namespace EPMS.Implementation.Services
         private readonly ICompanyProfileRepository companyProfileRepository;
         private readonly ICustomerRepository customerRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
+        private readonly IOrdersRepository ordersRepository;
 
         #endregion
 
@@ -31,7 +32,7 @@ namespace EPMS.Implementation.Services
 
         public ReceiptService(IReceiptRepository receiptRepository, IInvoiceRepository invoiceRepository,
             IQuotationRepository quotationRepository, ICompanyProfileRepository companyProfileRepository,
-            ICustomerRepository customerRepository, IAspNetUserRepository aspNetUserRepository)
+            ICustomerRepository customerRepository, IAspNetUserRepository aspNetUserRepository, IOrdersRepository ordersRepository)
         {
             this.receiptRepository = receiptRepository;
             this.invoiceRepository = invoiceRepository;
@@ -39,6 +40,7 @@ namespace EPMS.Implementation.Services
             this.companyProfileRepository = companyProfileRepository;
             this.customerRepository = customerRepository;
             this.aspNetUserRepository = aspNetUserRepository;
+            this.ordersRepository = ordersRepository;
         }
 
         #endregion
@@ -80,19 +82,31 @@ namespace EPMS.Implementation.Services
             {
                 receipt.AmountPaid = GetAmountPaid(quotation, receipt.InstallmentNumber);
             }
-            
+
             receipt.ReceiptNumber = GetReceiptNumber();
             receipt.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecCreatedDt = DateTime.Now;
             receipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             receipt.RecLastUpdatedDt = DateTime.Now;
-
+            // Add Receipt
             receiptRepository.Add(receipt);
             receiptRepository.SaveChanges();
-            
+
+            // Update Quotation
             quotationRepository.Update(quotation);
             quotationRepository.SaveChanges();
-            
+
+            // Update Order
+            if (CheckIfNoPaymentDue(quotation))
+            {
+                Order order = ordersRepository.GetOrderByQuotationId(quotation.QuotationId);
+                if (order != null)
+                {
+                    order.OrderStatus = (short) OrderStatus.Completed;
+                    ordersRepository.Update(order);
+                    ordersRepository.SaveChanges();
+                }
+            }
             return receipt.ReceiptId;
         }
 
@@ -179,6 +193,40 @@ namespace EPMS.Implementation.Services
                     break;
             }
             return grandTotal;
+        }
+
+        private bool CheckIfNoPaymentDue(Quotation quotation)
+        {
+            if (quotation.FirstInstallement != 0 && quotation.FirstInstallmentStatus)
+            {
+                if (quotation.SecondInstallment != 0 && quotation.SecondInstallmentStatus)
+                {
+                    if (quotation.ThirdInstallment != 0 && quotation.ThirdInstallmentStatus)
+                    {
+                        if (quotation.FourthInstallment != 0 && quotation.FourthInstallmentStatus)
+                        {
+                            return true;
+                        }
+                        else if (quotation.FourthInstallment == 0)
+                        {
+                            return true;
+                        }
+                    }
+                    else if (quotation.ThirdInstallment == 0)
+                    {
+                        return true;
+                    }
+                }
+                else if (quotation.SecondInstallment == 0)
+                {
+                    return true;
+                }
+            }
+            else if(quotation.FirstInstallement == 0)
+            {
+                return true;
+            }
+            return false;
         }
 
         #endregion

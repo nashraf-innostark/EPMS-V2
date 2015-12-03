@@ -15,6 +15,7 @@ namespace EPMS.Interfaces.Repository
         IEnumerable<Order> GetOrdersByCustomerIdWithRfis(long customerId);
         Order GetOrderByOrderId(long orderId);
         Order GetOrderByOrderNumber(string orderNo);
+        Order GetOrderByQuotationId(long quotationId);
         IEnumerable<Order> GetAllAvailableOrdersDDL(long customerId);
     }
 }

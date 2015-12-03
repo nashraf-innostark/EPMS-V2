@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
@@ -35,6 +36,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #region Public
 
         #region Create
+        [SiteAuthorize(PermissionKey = "RFQOrderPlacedReportCreate")]
         public ActionResult Create()
         {
             QuotationOrderReportCreateViewModel viewModel = new QuotationOrderReportCreateViewModel
@@ -60,7 +62,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #endregion
 
         #region Detail
-
+        [SiteAuthorize(PermissionKey = "RFQOrderPlacedReportView")]
         public ActionResult Details(long? ReportId)
         {
             if (ReportId == null || ReportId <= 0) return View("Create");
@@ -88,6 +90,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #endregion
 
         #region AllDetail
+        [SiteAuthorize(PermissionKey = "RFQOrderPlacedReportView")]
         public ActionResult DetailsAll(long? ReportId)
         {
             if (ReportId == null || ReportId <= 0) return View("Create");

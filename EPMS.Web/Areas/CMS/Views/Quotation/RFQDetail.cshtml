@@ -77,9 +77,9 @@
                             <strong>@(direction == "ltr" ? Model.Rfq.CustomerNameEn : Model.Rfq.CustomerNameAr)</strong>
                             <address>
                                 @EPMS.WebModels.Resources.CMS.Quotation.StreetAddress:
-                                @Model.Profile.CompanyAddressE <br />
-                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Quotation.Phone:</abbr> @Model.Profile.CompanyNumber <br>
-                                <abbr title="invoiceMail">@EPMS.WebModels.Resources.CMS.Quotation.Email:</abbr> @Model.Profile.CompanyEmail <br>
+                                @Model.Customer.CustomerAddress <br />
+                                <abbr title="Phone">@EPMS.WebModels.Resources.CMS.Quotation.Phone:</abbr> @Model.Customer.CustomerMobile <br>
+                                <abbr title="invoiceMail">@EPMS.WebModels.Resources.CMS.Quotation.Email:</abbr> @Model.Customer.Email <br>
                             </address>
                         </div>
                     </div>

@@ -149,22 +149,25 @@
                                 </tr>
                             </thead>
                             <tbody class="qouteAdd">
-                                @foreach (var itemDetail in Model.Quotation.QuotationItemDetails)
+                                @if (Model.Quotation.QuotationItemDetails != null)
                                 {
-                                    <tr>
-                                        <td>
-                                            @itemDetail.ItemDetails
-                                        </td>
-                                        <td class="">
-                                            @itemDetail.ItemQuantity
-                                        </td>
-                                        <td class="">
-                                            @itemDetail.UnitPrice
-                                        </td>
-                                        <td class="total">
-                                            @itemDetail.TotalPrice
-                                        </td>
-                                    </tr>
+                                    foreach (var itemDetail in Model.Quotation.QuotationItemDetails)
+                                    {
+                                        <tr>
+                                            <td>
+                                                @itemDetail.ItemDetails
+                                            </td>
+                                            <td class="">
+                                                @itemDetail.ItemQuantity
+                                            </td>
+                                            <td class="">
+                                                @itemDetail.UnitPrice
+                                            </td>
+                                            <td class="total">
+                                                @itemDetail.TotalPrice
+                                            </td>
+                                        </tr>
+                                    }
                                 }
                                 <tr class="invoiceCal">
                                     <td colspan="2"></td>
@@ -318,24 +321,24 @@
         {
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                <button type="submit" class="btn" name="PlaceOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnPlaceOrder</button>
+                    <button type="submit" class="btn" name="PlaceOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnPlaceOrder</button>
                 </div>
             </div>
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                <button type="submit" class="btn" name="CancelOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnCancelOrder</button>
+                    <button type="submit" class="btn" name="CancelOrder">@EPMS.WebModels.Resources.CMS.Quotation.BtnCancelOrder</button>
                 </div>
             </div>
         }
         @*else
-        {
-            <div class="control-group row-fluid">
-                <div class="span3 span-inset">
-                    <button class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/CMS/Quotation/Index'" type="reset">@EPMS.WebModels.Resources.CMS.Quotation.Back</button>
+            {
+                <div class="control-group row-fluid">
+                    <div class="span3 span-inset">
+                        <button class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/CMS/Quotation/Index'" type="reset">@EPMS.WebModels.Resources.CMS.Quotation.Back</button>
+                    </div>
                 </div>
-            </div>
-        }*@
-        
+            }*@
+
     </div>
 }
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>

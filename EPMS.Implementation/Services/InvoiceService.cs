@@ -64,13 +64,20 @@ namespace EPMS.Implementation.Services
             return invoiceRepository.Find(id);
         }
 
-        public bool AddInvoice(Invoice invoice)
+        public string AddInvoice(Invoice invoice)
         {
-            invoiceRepository.Add(invoice);
-            invoiceRepository.SaveChanges();
-            // Send Notification
-            SendNotification(invoice);
-            return true;
+            try
+            {
+                invoiceRepository.Add(invoice);
+                invoiceRepository.SaveChanges();
+                // Send Notification
+                SendNotification(invoice);
+                return "true";
+            }
+            catch (Exception e)
+            {
+                return e.Message;
+            }
         }
 
         public bool UpdateInvoice(Invoice invoice)
@@ -104,7 +111,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.CategoryId = 5; //Other
             notificationViewModel.NotificationResponse.SubCategoryId = 20; //Invoice Pending
             notificationViewModel.NotificationResponse.ItemId = invoice.InvoiceId; //Invoice
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            notificationViewModel.NotificationResponse.AlertDate = invoice.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -123,7 +130,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.CategoryId = 5; //Other
             notificationViewModel.NotificationResponse.SubCategoryId = 20; //Invoice Pending
             notificationViewModel.NotificationResponse.ItemId = invoice.InvoiceId; //Invoice
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+            notificationViewModel.NotificationResponse.AlertDate = invoice.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
             notificationService.AddUpdateInvoiceNotification(notificationViewModel, invoice.Quotation.CustomerId);

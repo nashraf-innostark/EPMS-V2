@@ -1,4 +1,5 @@
-﻿@model EPMS.WebModels.ViewModels.Quotation.QuotationCreateViewModel
+﻿@using EPMS.Models.Common
+@model EPMS.WebModels.ViewModels.Quotation.QuotationCreateViewModel
 
 @{
     ViewBag.Title = Model.QuotationId > 0 ?
@@ -172,7 +173,7 @@
                                     <td class="total">
                                         @Html.TextBoxFor(model => model.QuotationItemDetails[i].TotalPrice, new { @id = "", @class = "n3", @readonly = true })
                                     </td>
-                                    @if (Model.RFQId > 0)
+                                    @if (!Model.IsRFQManual)
                                     {
                                         <td class="delete">
                                             <i class="icon-photon minus"></i>
@@ -380,13 +381,17 @@
                 </div>
             </div>
         </div>
-        <div class="control-group row-fluid">
-            <div class="span3 span-inset">
-                <button type="submit" class="btn" onclick="validateCustomer(event)">
-                    @(Model.QuotationId > 0 ? EPMS.WebModels.Resources.CMS.Quotation.UpdateQuotation : EPMS.WebModels.Resources.CMS.Quotation.CreateQoute)
-                </button>
+        @if (Model.Status != (short)QuotationStatus.QuotationCancelled && Model.Status != (short)QuotationStatus.OrderCreated)
+        {
+            <div class="control-group row-fluid">
+                <div class="span3 span-inset">
+                    <button type="submit" class="btn" onclick="validateCustomer(event)">
+                        @(Model.QuotationId > 0 ? EPMS.WebModels.Resources.CMS.Quotation.UpdateQuotation : EPMS.WebModels.Resources.CMS.Quotation.CreateQoute)
+                    </button>
+                </div>
             </div>
-        </div>
+        }
+
     </div>
 }
 
@@ -453,12 +458,11 @@
 
         // set item details and discount readonly if quotation is from RFQ
         var rfqId = parseInt('@Model.RFQId');
-        if (rfqId > 0) {
+        if (rfqId > 0 && '@Model.IsRFQManual' == 'False') {
             // textboxes readonly
             $('.readonly-from-rfq:input').attr('readonly', true);
             // hide Add new item button
             $(".add-item-row").hide();
-            
         }
 
         if ('@ViewBag.ShowExcelImport' == 'True') {

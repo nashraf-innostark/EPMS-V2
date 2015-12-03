@@ -35,6 +35,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IQuotationItemService quotationItemService;
         private readonly IShoppingCartService cartService;
         private readonly ICompanyProfileService companyProfileService;
+        private readonly ICustomerService customerService;
 
         private bool CheckHasInventoryModule()
         {
@@ -53,7 +54,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Constructor
 
-        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService)
+        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService, ICustomerService customerService)
         {
             this.ordersService = ordersService;
             this.quotationService = quotationService;
@@ -61,6 +62,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             this.quotationItemService = quotationItemService;
             this.cartService = cartService;
             this.companyProfileService = companyProfileService;
+            this.customerService = customerService;
         }
 
         #endregion
@@ -173,9 +175,10 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         response.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
-                    ViewBag.FromClient = true;
+                    ViewBag.FromClient = response.Rfq.RFQItems.Any();
                 }
                 model.ItemVariationDropDownList = response.ItemVariationDropDownList;
+                ViewBag.IsIncludeNewJsTree = true;
                 return View(model);
             }
             QuotationCreateViewModel viewModel = new QuotationCreateViewModel();
@@ -389,7 +392,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.Rfq.RecLastUpdatedDate = DateTime.Now;
-                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    model.Rfq.Status = (int)RFQStatus.Pending;
                     var rfqToUpdate = model.Rfq.CreateFromClientToServer();
                     if (rfqToUpdate.CustomerId == 0)
                     {
@@ -411,7 +414,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     model.Rfq.RecCreatedDate = DateTime.Now;
                     model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.Rfq.RecLastUpdatedDate = DateTime.Now;
-                    model.Rfq.Status = (int)RFQStatus.QoutationCreated;
+                    model.Rfq.Status = (int)RFQStatus.Pending;
                     var rfqToAdd = model.Rfq.CreateFromClientToServer();
                     if (rfqToAdd.CustomerId == 0)
                     {
@@ -447,6 +450,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 if (rfqResponse.Rfq != null)
                 {
                     model.Rfq = rfqResponse.Rfq.CreateFromServerToClient();
+                    model.Customer = rfqResponse.Rfq.Customer.CreateForRfq();
                 }
                 model.Profile = rfqResponse.Profile != null ? rfqResponse.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
                 model.Rfq.CustomerId = customerId;
@@ -475,6 +479,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     var cp = companyProfileService.GetDetail();
                     model.Profile = cp != null ? cp.CreateFromServerToClientForQuotation() : new CompanyProfile();
                     model.Rfq.CustomerId = customerId;
+                    model.Customer = customerService.FindCustomerById(customerId).CreateForRfq();
                     ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] + model.Profile.CompanyLogoPath;
                 }
             }
@@ -526,6 +531,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [ValidateInput(false)]
         public ActionResult Detail(QuotationDetailViewModel viewModel)
         {
+            string status = "";
             // Create Order
             if (Request.Form["PlaceOrder"] != null)
             {
@@ -548,7 +554,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     Status = (short)QuotationStatus.OrderCreated,
                     Order = orderToAdd
                 };
-                if (quotationService.UpdateStatus(request))
+                status = quotationService.UpdateStatus(request);
+                if (status == "true")
                 {
                     TempData["message"] = new MessageViewModel
                     {
@@ -566,7 +573,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     QuotationId = viewModel.Quotation.QuotationId,
                     Status = (short)QuotationStatus.QuotationCancelled
                 };
-                if (quotationService.UpdateStatus(request))
+                status = quotationService.UpdateStatus(request);
+                if (status == "true")
                 {
                     TempData["message"] = new MessageViewModel
                     {
@@ -576,6 +584,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            TempData["message"] = new MessageViewModel
+            {
+                Message = status,
+                IsError= true
+            };
+            viewModel.Profile = new CompanyProfile();
+            viewModel.Quotation = new WebModels.WebsiteModels.Quotation {Customers = new Customer()};
+            ViewBag.MessageVM = (MessageViewModel) TempData["message"];
             return View(viewModel);
         }
 

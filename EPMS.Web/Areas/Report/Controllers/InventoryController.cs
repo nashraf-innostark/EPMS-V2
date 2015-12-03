@@ -20,6 +20,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
 
         //[SiteAuthorize(PermissionKey = "InventoryReports")]
+        [SiteAuthorize(PermissionKey = "InventorySystemReports")]
         public ActionResult Index()
         {
             return View();

@@ -148,6 +148,7 @@
             $("#savebtn").hide();
             $("#edit").show();
             $("#cancel").hide();
+            $('#Employee').select2('disable');
         } else {
             $("#savebtn").hide();
             $("#edit").hide();
@@ -160,6 +161,7 @@
         $("#savebtn").show();
         $("#edit").hide();
         $("#cancel").hide();
+        $('#Employee').select2('enable');
         event.preventDefault();
     });
 </script>

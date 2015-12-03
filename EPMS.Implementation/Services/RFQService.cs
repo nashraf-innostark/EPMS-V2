@@ -16,13 +16,15 @@ namespace EPMS.Implementation.Services
         private readonly IRFQItemRepository rfqItemRepository;
         private readonly ICompanyProfileRepository companyProfileRepository;
         private readonly IShoppingCartRepository cartRepository;
+        private readonly ICustomerRepository customerRepository;
 
-        public RFQService(IRFQRepository rfqRepository, IRFQItemRepository rfqItemRepository, ICompanyProfileRepository companyProfileRepository, IShoppingCartRepository cartRepository)
+        public RFQService(IRFQRepository rfqRepository, IRFQItemRepository rfqItemRepository, ICompanyProfileRepository companyProfileRepository, IShoppingCartRepository cartRepository, ICustomerRepository customerRepository)
         {
             this.rfqRepository = rfqRepository;
             this.rfqItemRepository = rfqItemRepository;
             this.companyProfileRepository = companyProfileRepository;
             this.cartRepository = cartRepository;
+            this.customerRepository = customerRepository;
         }
 
         public IEnumerable<RFQ> GetAllRfqs()
@@ -52,6 +54,7 @@ namespace EPMS.Implementation.Services
                 }
             }
             response.Profile = companyProfileRepository.GetCompanyProfile();
+
             return response;
         }
 

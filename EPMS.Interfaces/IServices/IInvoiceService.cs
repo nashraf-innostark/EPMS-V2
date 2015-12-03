@@ -9,7 +9,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Invoice> GetAll();
         IEnumerable<Invoice> GetAll(string userId);
         Invoice FindInvoiceById(long id);
-        bool AddInvoice(Invoice invoice);
+        string AddInvoice(Invoice invoice);
         bool UpdateInvoice(Invoice invoice);
         void DeleteInvoice(Invoice invoice);
         InvoiceResponse GetInvoiceDetails(long id);

@@ -1599,6 +1599,9 @@
     <Content Include="Areas\Report\Views\QuotationOrder\Create.cshtml" />
     <Content Include="Areas\CMS\Views\Payment\CancelFromPaypal.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAll.cshtml" />
+    <Content Include="Areas\CMS\Views\Orders\Detail.cshtml">
+      <SubType>Code</SubType>
+    </Content>
     <Content Include="Areas\Report\Views\QuotationOrder\Details.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAsPDF.cshtml" />
     <Content Include="Areas\Report\Views\QuotationOrder\DetailsAllAsPDF.cshtml" />
@@ -3500,7 +3503,6 @@
     <Content Include="Images\iconic_stroke.ttf" />
     <Content Include="Images\icons\default\Thumbs.db" />
     <Content Include="Images\icons\hover\Thumbs.db" />
-    <Content Include="Images\jQueryUI\Thumbs.db" />
     <Content Include="Images\logo_watermark.psd" />
     <Content Include="Images\user_icon.psd" />
     <Content Include="Images\w_arrow_red%402x.psd" />
