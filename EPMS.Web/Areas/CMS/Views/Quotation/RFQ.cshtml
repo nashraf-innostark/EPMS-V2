@@ -137,7 +137,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.Rfq.Discount, new { @id = "Discount", @class = "" })
+                        @Html.TextBoxFor(model => model.Rfq.Discount, new { @id = "Discount", @class = "readonly-from-rfq" })
                     </div>
                 </div>
             </div>
@@ -223,6 +223,7 @@
         CKEDITOR.replace('Requests', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
+        $('.readonly-from-rfq:input').attr('readonly', true);
         if (parseInt('@Model.Rfq.RFQId') == 0) {
             $('#Discount').val(0);
         }

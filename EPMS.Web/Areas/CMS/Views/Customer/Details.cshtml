@@ -6,7 +6,7 @@
     string ReturnUrl = "";
     if (ViewBag.ReturnUrl != null)
     {
-        ReturnUrl = ViewBag.ReturnUrl.ToString();   
+        ReturnUrl = ViewBag.ReturnUrl.ToString();
     }
     if (string.IsNullOrEmpty(ReturnUrl))
     {
@@ -41,35 +41,32 @@
     <h2><small>@ViewBag.Title </small></h2>
 </header>
 <!-- Page heading end-->
-
 <!-- Form starts.  -->
-@using (Html.BeginForm("Details", "Customer", FormMethod.Post, new {@id = "customerForm", @class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("Details", "Customer", FormMethod.Post, new { @id = "customerForm", @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         @Html.HiddenFor(model => model.Customer.CustomerId, new { @class = "CustomerId" })
         @Html.HiddenFor(model => model.User.Id)
         <input type="hidden" id="UserRole" value="@ViewBag.UserRole" />
-        @Html.TextBoxFor(model => model.User.Id, new { style = "display: none;"})
-        @if (ViewBag.UserRole != null && ViewBag.UserRole.ToString() == "Admin")
-        {
-            <div class="control-group row-fluid">
-                <div class="span3">
-                    <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.Employee</label>
-                </div>
-                <div class="span2">
-                    <div class="controls">
-                        @if (direction == "ltr")
-                        {
-                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Employee" })
-                        }
-                        else
-                        {
-                            @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Employee" })
-                        }
-                    </div>
+        @Html.TextBoxFor(model => model.User.Id, new { style = "display: none;" })
+
+        <div class="control-group row-fluid employee-div" style="display: none">
+            <div class="span3">
+                <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.Employee</label>
+            </div>
+            <div class="span2">
+                <div class="controls">
+                    @if (direction == "ltr")
+                    {
+                        @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameE"), "--Select--", new { @class = "select2me", @id = "Employee" })
+                    }
+                    else
+                    {
+                        @Html.DropDownListFor(model => model.Customer.EmployeeId, new SelectList(Model.Employees, "EmployeeId", "EmployeeNameA"), "--Select--", new { @class = "select2me", @id = "Employee" })
+                    }
                 </div>
             </div>
-        }
+        </div>
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.CustomerName</label>
@@ -98,7 +95,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(model => model.User.Email, new { id = "CustomerEmail", @class = "", @ViewBag.Disabled })
+                    @Html.TextBoxFor(model => model.User.Email, new { id = "CustomerEmail", @class = "readonly" })
                     @Html.ValidationMessageFor(model => model.User.Email, "", new { @class = "required" })
                 </div>
             </div>
@@ -130,11 +127,11 @@
                 <div class="span3 span-inset">
                     <button id="edit" class="btn">Edit</button>
                     <button id="savebtn" class="btn" type="submit">Save</button>
-                    <a id="cancel" class="btn" href = "@ReturnUrl">Back</a>
+                    <a id="cancel" class="btn" href="@ReturnUrl">Back</a>
                 </div>
                 @*<div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href='/CMS/Customer/Index'" type="reset">Back</button>
-                </div>*@
+                        <button id="cancel" class="btn" onclick="window.location.href='/CMS/Customer/Index'" type="reset">Back</button>
+                    </div>*@
             </div>
         </div>
 
@@ -143,7 +140,11 @@
 
 <script>
     $(document).ready(function () {
-
+        // Disable Email
+        $('.readonly:input').attr('readonly', true);
+        if ('@ViewBag.UserRole' == 'Admin') {
+            $(".employee-div").show();
+        }
         if ($("#UserRole").val() == "Customer" || $("#UserRole").val() == "Admin") {
             $("#savebtn").hide();
             $("#edit").show();

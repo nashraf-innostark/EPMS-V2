@@ -50,12 +50,6 @@ namespace EPMS.Web.Areas.CMS.Controllers
         public ActionResult Details(long? id)
         {
             long customerId = 0;
-            if (id != null)
-            {
-                customerId = (long) id;
-            }
-            CustomerViewModel customerViewModel = new CustomerViewModel();
-            var response = customerService.GetCustomerResponse(customerId);
             if (id == null)
             {
                 if (Session["RoleName"].ToString() != "Customer")
@@ -64,9 +58,12 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 }
                 id = Convert.ToInt64(Session["CustomerID"].ToString());
             }
+            customerId = (long) id;
+            var response = customerService.GetCustomerResponse(customerId);
+            
             if (Session["RoleName"].ToString() == "Admin" || id == Convert.ToInt64(Session["CustomerID"].ToString()))
             {
-                customerViewModel = response.Customer.CreateFromServerToClientVM();
+                var customerViewModel = response.Customer.CreateFromServerToClientVM();
                 customerViewModel.Employees = response.Employees.Select(x => x.CreateForDropDownList());
                 ViewBag.UserRole = Session["RoleName"].ToString();
                 ViewBag.ReturnUrl = Request.UrlReferrer;
