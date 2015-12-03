@@ -302,7 +302,7 @@ namespace EPMS.Implementation.Services
             }
 
             notificationResponse.ItemId = itemId;
-            notificationResponse.AlertDate = Convert.ToDateTime(alertDate).ToString("dd/MM/yyyy");
+            notificationResponse.AlertDate = Convert.ToDateTime(alertDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
 
             notificationResponse.SystemGenerated = true;
             AddUpdateNotification(notificationResponse);

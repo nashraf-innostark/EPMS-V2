@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -269,7 +270,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.SubCategoryId = 7; //PO Accepted (WH Manager)
 
             notificationViewModel.NotificationResponse.ItemId = purchaseOrder.PurchaseOrderId;
-            notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(); //Actual event date
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")); //Actual event date
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
             notificationViewModel.NotificationResponse.ForAdmin = false;
