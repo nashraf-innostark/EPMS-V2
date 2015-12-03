@@ -9,5 +9,7 @@ namespace EPMS.Models.ResponseModels
         public Quotation Quotation { get; set; }
         public CompanyProfile CompanyProfile { get; set; }
         public Customer Customer { get; set; }
+        public string EmployeeNameE { get; set; }
+        public string EmployeeNameA { get; set; }
     }
 }

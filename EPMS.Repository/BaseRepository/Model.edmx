@@ -2407,12 +2407,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemManufacturer_Manufacturer">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+        <Association Name="FK_ItemManufacturer_Vendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Manufacturer">
-              <PropertyRef Name="ManufacturerId" />
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
             </Principal>
             <Dependent Role="ItemManufacturer">
               <PropertyRef Name="ManufacturerId" />
@@ -4311,8 +4311,8 @@
             <End Role="ItemVariation" EntitySet="ItemVariation" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemManufacturer_Manufacturer" Association="Self.FK_ItemManufacturer_Manufacturer">
-            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="Self.FK_ItemManufacturer_Vendor">
+            <End Role="Vendor" EntitySet="Vendor" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemRelease_Manager" Association="Self.FK_ItemRelease_Manager">
@@ -5325,6 +5325,7 @@
           <NavigationProperty Name="ItemVariation" Relationship="Self.FK_ItemManufacturer_ItemVariation" FromRole="ItemManufacturer" ToRole="ItemVariation" />
           <NavigationProperty Name="Manufacturer" Relationship="Self.FK_ItemManufacturer_Manufacturer" FromRole="ItemManufacturer" ToRole="Manufacturer" />
           <Property Name="Quantity" Type="Int64" />
+          <NavigationProperty Name="Vendor" Relationship="EPMSInventoryModel.FK_ItemManufacturer_Vendor" FromRole="ItemManufacturer" ToRole="Vendor" />
         </EntityType>
         <EntityType Name="ItemVariation">
           <Key>
@@ -5777,6 +5778,7 @@
           <NavigationProperty Name="PurchaseOrderItems" Relationship="EPMSInventoryModel.FK_PurchaseOrderItem_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItem" />
           <NavigationProperty Name="PurchaseOrderItemHistories" Relationship="EPMSInventoryModel.FK_PurchaseOrderItemHistory_Vendor" FromRole="Vendor" ToRole="PurchaseOrderItemHistory" />
           <NavigationProperty Name="VendorItems" Relationship="EPMSInventoryModel.FK_VendorItems_Vendor" FromRole="Vendor" ToRole="VendorItem" />
+          <NavigationProperty Name="ItemManufacturers" Relationship="EPMSInventoryModel.FK_ItemManufacturer_Vendor" FromRole="Vendor" ToRole="ItemManufacturer" />
         </EntityType>
         <EntityType Name="WarehouseDetail">
           <Key>
@@ -7102,6 +7104,10 @@
           <AssociationSet Name="FK_ReportQuotationInvoice_Reports1" Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1">
             <End Role="Report" EntitySet="Reports" />
             <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoices" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="EPMSInventoryModel.FK_ItemManufacturer_Vendor">
+            <End Role="Vendor" EntitySet="Vendors" />
+            <End Role="ItemManufacturer" EntitySet="ItemManufacturers" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="Warehouse">
@@ -9914,6 +9920,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ItemManufacturer_Vendor">
+          <End Type="EPMSInventoryModel.Vendor" Role="Vendor" Multiplicity="1" />
+          <End Type="EPMSInventoryModel.ItemManufacturer" Role="ItemManufacturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
+            </Principal>
+            <Dependent Role="ItemManufacturer">
+              <PropertyRef Name="ManufacturerId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -12268,6 +12286,7 @@
         <EntityTypeShape EntityType="EPMSInventoryModel.ReportQuotationInvoiceItem" Width="1.5" PointX="30.625" PointY="6" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" />
         <AssociationConnector Association="EPMSInventoryModel.FK_ReportQuotationInvoice_Reports1" />
+        <AssociationConnector Association="EPMSInventoryModel.FK_ItemManufacturer_Vendor" />
         </Diagram>
     </Diagrams>
   </Designer>

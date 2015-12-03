@@ -75,7 +75,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] +
                                viewModel.CompanyProfile.CompanyLogoPath;
-            ViewBag.EmployeeName = User.Identity.Name;
+            ViewBag.EmployeeNameE = response.EmployeeNameE;
+            ViewBag.EmployeeNameA = response.EmployeeNameA;
             return View(viewModel);
         }
 

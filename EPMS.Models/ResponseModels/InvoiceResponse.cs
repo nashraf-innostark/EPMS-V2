@@ -13,6 +13,8 @@ namespace EPMS.Models.ResponseModels
         public long SecondReceiptId { get; set; }
         public long ThirdReceiptId { get; set; }
         public long FourthReceiptId { get; set; }
+        public string EmployeeNameE { get; set; }
+        public string EmployeeNameA { get; set; }
 
 
     }
