@@ -8,7 +8,9 @@ using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ModelMappers;
+using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
+using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
@@ -56,5 +58,34 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
 
         #endregion
+
+        #region Generate PDF
+
+        [AllowAnonymous]
+        public ActionResult GeneratePdfAll(long reportId)
+        {
+            return new ActionAsPdf("DetailsAsPDF", new { ReportId = reportId }) { FileName = "Customer Report.pdf" };
+        }
+        [AllowAnonymous]
+        public ActionResult DetailsAsPDF(long reportId)
+        {
+            CustomerReportDetailRequest request = new CustomerReportDetailRequest();
+            request.ReportId = reportId;
+            request.RequesterRole = "Admin";
+            request.RequesterId = Session["UserID"].ToString();
+
+            var refrel = Request.UrlReferrer;
+            if (refrel != null && refrel.ToString().Contains("Report/Customer/Create"))
+                request.IsCreate = true;
+            var response = reportService.SaveAndGetCustomerList(request);
+            CustomerCreateViewModel viewModel = new CustomerCreateViewModel();
+            viewModel.Customers = response.Customers.Select(x => x.CreateFromServerToClient()).ToList();
+            viewModel.ReportId = response.ReportId;
+
+            return View(viewModel);
+        }
+
+        #endregion
+
     }
 }

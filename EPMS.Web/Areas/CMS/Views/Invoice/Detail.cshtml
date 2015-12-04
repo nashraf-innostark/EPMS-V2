@@ -426,14 +426,16 @@
 <script type="text/javascript" src="~/Scripts/plugins/jquery.nToWord.js"></script>
 <script>
     siteUrl = $('#siteURL').val();
+    var direction = '@direction';
     $(document).ready(function () {
-        if ('@direction' == "ltr") {
-            jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "en" }));
+        debugger;
+        if (direction == "ltr") {
+            jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').text()), language: "en" }));
         } else {
-            jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').val()), language: "ar" }));
+            jQuery('#inWord').val($.nToWord({ number: parseInt($('#GrandTotal').text()), language: "ar" }));
         }
         if (direction == 'ltr') {
-            var descpE = $("#NotesEn");
+            var descpE = $("#NotesEn").val();
             var regex = /(<([^>]+)>)/ig;
             var result = descpE.replace(regex, "");
             $("#NotesEn").val(result);
@@ -443,6 +445,14 @@
             var result = descpA.replace(regex, "");
             $("#NotesAr").val(result);
         }
+
+        //function discount() {
+        //    var subtotal = parseInt($('#subtotal').text());
+        //    var Discount = parseInt($('#Discount').text());
+        //    var grand = subtotal - (subtotal * (Discount / 100));
+        //    $('#GrandTotal').text(grand);
+        //    $('#inWord').val($.nToWord({ number: grand, language: "en" }));
+        //}
     });
 
     function CreateReceipt(id, e) {
