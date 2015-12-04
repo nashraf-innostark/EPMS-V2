@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
@@ -328,7 +329,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.SubCategoryId = 0;
             notificationViewModel.NotificationResponse.ItemId = meeting.MeetingId;
 
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.ForAdmin = false;
             notificationViewModel.NotificationResponse.SystemGenerated = true;

@@ -69,7 +69,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 0;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.CommercialRegisterExpiryDate).ToShortDateString();
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.CommercialRegisterExpiryDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
@@ -86,7 +86,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 1;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.InsuranceCertificateExpiryDate).ToShortDateString();
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.InsuranceCertificateExpiryDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     
                     
                     notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -105,7 +105,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 2;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.ChamberCertificateExpiryDate).ToShortDateString();
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.ChamberCertificateExpiryDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
                 #endregion
@@ -122,8 +122,8 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 3;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.IncomeAndZakaCertificateExpiryDate).ToShortDateString();
+
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.IncomeAndZakaCertificateExpiryDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
 
                     notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }
@@ -141,7 +141,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.CategoryId = 1;//Company
                     notificationViewModel.NotificationResponse.SubCategoryId = 4;
                     notificationViewModel.NotificationResponse.ItemId = document.CompanyId;
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.SaudilizationCertificateExpiryDate).ToShortDateString();
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(document.SaudilizationCertificateExpiryDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     
                     notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
                 }

@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.Repository
     public interface IWebsiteServicesRepository : IBaseRepository<WebsiteService, long>
     {
         IEnumerable<WebsiteService> SearchInWebsiteService(string search);
+        IEnumerable<WebsiteService> GetAllPublicServices();
         WebsiteSearchResponse SearchInWebsiteService(WebsiteServiceSearchRequest serviceSearchRequest, string search);
     }
 }

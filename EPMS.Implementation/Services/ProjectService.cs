@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -161,7 +162,7 @@ namespace EPMS.Implementation.Services
                 notificationViewModel.NotificationResponse.CategoryId = 5; //Other
                 notificationViewModel.NotificationResponse.SubCategoryId = 9; // Project Delivery
                 notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
-                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToString("dd/MM/yyyy");
+                notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                 notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
 
                 notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
@@ -187,7 +188,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.SubCategoryId = 2; //Ended
                     notificationViewModel.NotificationResponse.ItemId = project.ProjectId;
 
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToString("dd/MM/yyyy");
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.EndDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
                     notificationViewModel.NotificationResponse.UserId = aspNetUserRepository.GetUserIdByCustomerId(Convert.ToInt64(project.CustomerId));
 
@@ -211,7 +212,7 @@ namespace EPMS.Implementation.Services
                     notificationViewModel.NotificationResponse.SubCategoryId = 8; //Started
                     notificationViewModel.NotificationResponse.ItemId = project.ProjectId; //Ended
 
-                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.StartDate).ToString("dd/MM/yyyy");
+                    notificationViewModel.NotificationResponse.AlertDate = Convert.ToDateTime(project.StartDate).ToString("dd/MM/yyyy", new CultureInfo("en"));
                     notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
                     notificationViewModel.NotificationResponse.UserId = aspNetUserRepository.GetUserIdByCustomerId(Convert.ToInt64(project.CustomerId));
 

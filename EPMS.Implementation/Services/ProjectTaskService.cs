@@ -406,7 +406,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.ItemId = task.TaskId;
             if (DateTime.ParseExact(notificationViewModel.NotificationResponse.AlertDate, "dd/MM/yyyy", new CultureInfo("en")) > DateTime.Now)
             {
-                notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToShortDateString();
+                notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
             }
             else
             {

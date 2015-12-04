@@ -102,7 +102,7 @@ namespace EPMS.Implementation.Services
             notificationViewModel.NotificationResponse.ItemId = jobApplicant.ApplicantId;
             
             Thread.CurrentThread.CurrentCulture = new CultureInfo("en");
-            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy");
+            notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
             
             notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
             notificationViewModel.NotificationResponse.SystemGenerated = true;
