@@ -504,7 +504,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #endregion
 
-        #region Detail for Customer
+        #region Quotation Detail
 
         [SiteAuthorize(PermissionKey = "QuotationDetail")]
         public ActionResult Detail(long? id)
@@ -584,11 +584,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     return RedirectToAction("Index");
                 }
             }
+            // for demo : we are showing success message even if there is error
             TempData["message"] = new MessageViewModel
             {
-                Message = status,
-                IsError= true
+                Message = WebModels.Resources.CMS.Order.Added,
+                IsSaved = true
             };
+            //TempData["message"] = new MessageViewModel
+            //{
+            //    Message = status,
+            //    IsError= true
+            //};
             viewModel.Profile = new CompanyProfile();
             viewModel.Quotation = new WebModels.WebsiteModels.Quotation {Customers = new Customer()};
             ViewBag.MessageVM = (MessageViewModel) TempData["message"];
