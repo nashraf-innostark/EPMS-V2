@@ -115,21 +115,28 @@ namespace EPMS.Implementation.Services
 
         public ProductResponse SaveProduct(ProductRequest productToSave)
         {
-            //Update Product Case
-            if (productToSave.Product.ProductId > 0)
+            try
             {
-                Product productFromDatabase = productRepository.Find(productToSave.Product.ProductId);
-                UpdateProduct(productToSave.Product);
-                UpdateProductImages(productToSave, productFromDatabase);
+                //Update Product Case
+                if (productToSave.Product.ProductId > 0)
+                {
+                    Product productFromDatabase = productRepository.Find(productToSave.Product.ProductId);
+                    UpdateProduct(productToSave.Product);
+                    UpdateProductImages(productToSave, productFromDatabase);
+                }
+                //Add Product Case
+                else
+                {
+                    AddProduct(productToSave.Product);
+                    AddProductImages(productToSave);
+                }
+                productRepository.SaveChanges();
+                return new ProductResponse{ Status = true };
             }
-            //Add Product Case
-            else
+            catch (Exception)
             {
-                AddProduct(productToSave.Product);
-                AddProductImages(productToSave);
+                return new ProductResponse{ Status = false };
             }
-            productRepository.SaveChanges();
-            return new ProductResponse();
         }
 
         public bool SaveProducts(IList<Product> products)
@@ -238,7 +245,7 @@ namespace EPMS.Implementation.Services
             IEnumerable<ProductImage> dbList = productFromDatabase.ProductImages.ToList();
             IEnumerable<ProductImage> clientList = productToSave.ProductImages.ToList();
 
-            if (clientList != null && clientList.Any())
+            if (clientList.Any())
             {
                 //Add New Items
                 foreach (ProductImage productImage in clientList)
@@ -246,6 +253,7 @@ namespace EPMS.Implementation.Services
                     if (productImage.ImageId > 0)
                     {
                         productImageRepository.Update(productImage);
+                        productImageRepository.SaveChanges();
                     }
                     else
                     {
@@ -257,6 +265,7 @@ namespace EPMS.Implementation.Services
                             ShowImage = productImage.ShowImage
                         };
                         productImageRepository.Add(image);
+                        productImageRepository.SaveChanges();
                     }
                 }
                 //Delete Items that were removed from ClientList
@@ -265,6 +274,7 @@ namespace EPMS.Implementation.Services
                     if (clientList.All(x => x.ImageId != productImage.ImageId))
                     {
                         productImageRepository.Delete(productImage);
+                        productImageRepository.SaveChanges();
                         //var directory = ConfigurationManager.AppSettings["ProductImage"];
                         //var path = "~" + directory + productImage.ProductImagePath;
                         //Utility.DeleteFile(path);
@@ -277,9 +287,9 @@ namespace EPMS.Implementation.Services
                 foreach (ProductImage productImage in dbList)
                 {
                     productImageRepository.Delete(productImage);
+                    productImageRepository.SaveChanges();
                 }
             }
-            productImageRepository.SaveChanges();
         }
 
         public ProductsListResponse GetProductsList(ProductSearchRequest request)

@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -30,6 +32,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             retVal.SKUCode = source.SKUCode;
             retVal.RecCreatedBy = source.RecCreatedBy;
             retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecCreatedDate = Convert.ToDateTime(source.RecCreatedDt).ToString("dd/MM/yyyy", new CultureInfo("en"));
             retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
             retVal.ItemDesc = source.ItemVariation != null ? source.ItemVariation.DescriptionEn : "";
             retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
@@ -209,7 +212,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 RandomProduct = source.RandomProduct,
                 BestSeller = source.BestSeller,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };

@@ -42,6 +42,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string DeptColor { get; set; }
         public string ItemDesc { get; set; }
         public string PathTillParent { get; set; }
+        public string RecCreatedDate { get; set; }
         
         public List<ProductImage> ProductImages { get; set; }
         public IEnumerable<ItemImage> ItemImages { get; set; }

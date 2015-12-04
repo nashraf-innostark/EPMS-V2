@@ -83,25 +83,32 @@ namespace EPMS.Web.Areas.Website.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(ProductViewModel productViewModel)
         {
             if (productViewModel.Product.ProductId > 0)
             {
                 ProductRequest productToSave = productViewModel.Product.CreateFromClientToServer();
-                productService.SaveProduct(productToSave);
+                var response = productService.SaveProduct(productToSave);
+                if(response.Status)
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Updated", IsUpdated = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.Website.Product.ProductCreate.UpdateMessage, IsUpdated = true };
                     return RedirectToAction("Index");
                 }
+                TempData["message"] = new MessageViewModel { Message = WebModels.Resources.Website.Product.ProductCreate.UpdateErrorMessage, IsUpdated = true };
+                return View(productViewModel);
             }
             else
             {
                 ProductRequest productToSave = productViewModel.Product.CreateFromClientToServer();
-                productService.SaveProduct(productToSave);
+                var response = productService.SaveProduct(productToSave);
+                if(response.Status)
                 {
-                    TempData["message"] = new MessageViewModel { Message = "Saved", IsSaved = true };
+                    TempData["message"] = new MessageViewModel { Message = WebModels.Resources.Website.Product.ProductCreate.AddMessage, IsSaved = true };
                     return RedirectToAction("Index");
                 }
+                TempData["message"] = new MessageViewModel { Message = WebModels.Resources.Website.Product.ProductCreate.AddErrorMessage, IsUpdated = true };
+                return View(productViewModel);
             }
         }
 
