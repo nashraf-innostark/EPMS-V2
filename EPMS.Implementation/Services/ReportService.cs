@@ -104,9 +104,10 @@ namespace EPMS.Implementation.Services
 
         public CustomerReportResponse SaveAndGetCustomerList(CustomerReportDetailRequest request)
         {
+            Report customerReport =  new Report();
             if (request.IsCreate)
             {
-                var customerReport = new Report
+                customerReport = new Report
                 {
                     ReportCategoryId = (int) ReportCategory.AllCustomer,
                     ReportCreatedBy = request.RequesterId,
@@ -127,7 +128,8 @@ namespace EPMS.Implementation.Services
             var response = customerRepository.GetCustomerReportList(request);
             return new CustomerReportResponse
             {
-                Customers = response
+                Customers = response,
+                ReportId = customerReport.ReportId
             };
         }
 
