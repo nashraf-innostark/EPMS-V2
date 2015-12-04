@@ -8,19 +8,19 @@ namespace EPMS.Implementation.Services
     public sealed class WebsiteMenuService:IWebsiteMenuService
     {
         private readonly IProductSectionRepository productSectionRepository;
-        private readonly IWebsiteServicesService websiteService;
+        private readonly IWebsiteServicesRepository servicesRepository;
 
-        public WebsiteMenuService(IProductSectionRepository productSectionRepository, IWebsiteServicesService websiteService)
+        public WebsiteMenuService(IProductSectionRepository productSectionRepository, IWebsiteServicesRepository servicesRepository)
         {
             this.productSectionRepository = productSectionRepository;
-            this.websiteService = websiteService;
+            this.servicesRepository = servicesRepository;
         }
 
         public WebsiteMenuModel LoadWebsiteMenuItems()
         {
             WebsiteMenuModel websiteMenuModel=new WebsiteMenuModel();
             websiteMenuModel.ProductSections = productSectionRepository.GetAll().ToList();
-            websiteMenuModel.WebsiteServices = websiteService.GetAll().ToList();
+            websiteMenuModel.WebsiteServices = servicesRepository.GetAllPublicServices().ToList();
             return websiteMenuModel;
         }
     }

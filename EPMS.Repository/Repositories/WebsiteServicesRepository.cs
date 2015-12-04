@@ -40,6 +40,11 @@ namespace EPMS.Repository.Repositories
                 ));
         }
 
+        public IEnumerable<WebsiteService> GetAllPublicServices()
+        {
+            return DbSet.Where(x => x.ShowToPublic);
+        }
+
         public WebsiteSearchResponse SearchInWebsiteService(WebsiteServiceSearchRequest searchRequest, string search)
         {
 
