@@ -65,6 +65,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Create(NewsAndArticleViewModel newsAndArticleViewModel)
         {
             try
@@ -136,6 +137,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult ArticleCreate(NewsAndArticleViewModel newsAndArticleViewModel)
         {
             try

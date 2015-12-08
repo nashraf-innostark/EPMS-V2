@@ -10,6 +10,7 @@ using EPMS.WebModels.ViewModels.ProductSection;
 using EPMS.WebModels.WebsiteModels;
 using EPMS.WebModels.WebsiteModels.Common;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ViewModels.Common;
 using Microsoft.AspNet.Identity;
 
@@ -35,6 +36,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         #region Public
 
         #region Index
+        [SiteAuthorize(PermissionKey = "ProductSectionIndex")]
         public ActionResult Index()
         {
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;

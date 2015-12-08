@@ -48,6 +48,7 @@ namespace EPMS.Repository.Repositories
                         { OrdersByColumn.ClientName,  c => c.Customer.CustomerNameE},
                         { OrdersByColumn.Quotation,  c => c.Quotation.SerialNumber },
                         { OrdersByColumn.Invoice,  c => c.Quotation.Invoices.FirstOrDefault(x=>x.QuotationId == c.QuotationId).InvoiceNumber},
+                        { OrdersByColumn.RecCreatedDate,  c => c.RecCreatedDate},
                         { OrdersByColumn.Status,  c => c.OrderStatus},
                     };
         #endregion
@@ -81,7 +82,8 @@ namespace EPMS.Repository.Repositories
                         Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x=>x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
                     },
                     CustomerId = s.CustomerId,
-                    Customer = s.Customer
+                    Customer = s.Customer,
+                    RecCreatedDate = s.RecCreatedDate
                 }).ToList()
                                            :
                                            DbSet
@@ -98,7 +100,8 @@ namespace EPMS.Repository.Repositories
                                                    Invoices = s.Quotation != null ? s.Quotation.Invoices.Where(x => x.QuotationId == s.QuotationId).ToList() : new List<Invoice>()
                                                },
                                                CustomerId = s.CustomerId,
-                                               Customer = s.Customer
+                                               Customer = s.Customer,
+                                               RecCreatedDate = s.RecCreatedDate
                                            }).ToList();
             return new OrdersResponse { Orders = orders, TotalDisplayRecords = DbSet.Count(query), TotalRecords = DbSet.Count(query) };
         }

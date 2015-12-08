@@ -110,9 +110,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     searchRequest.UserId = Session["UserID"].ToString();
                 }
             }
-            
+
             var quotationList = quotationService.GetAllQuotation(searchRequest);
-            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv()).OrderBy(x => x.QuotationId);
+            viewModel.aaData = quotationList.Quotations.Select(x => x.CreateFromServerToClientLv());
             viewModel.iTotalRecords = quotationList.TotalCount;
             viewModel.iTotalDisplayRecords = quotationList.TotalCount;
             return Json(viewModel, JsonRequestBehavior.AllowGet);
@@ -175,8 +175,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
                         response.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
                     ViewBag.ShowExcelImport = CheckInventoryModule() != true;
                     model.CreatedByName = createdByName;
-                    ViewBag.FromClient = response.Rfq.RFQItems.Any();
+                    model.IsRFQManual = !response.Rfq.RFQItems.Any();
                 }
+                
                 model.ItemVariationDropDownList = response.ItemVariationDropDownList;
                 ViewBag.IsIncludeNewJsTree = true;
                 return View(model);

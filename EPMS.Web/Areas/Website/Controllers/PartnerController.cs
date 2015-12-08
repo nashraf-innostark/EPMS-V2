@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             try
             {
-                if (Request.Form["Update"] != null)
+                if (viewModel.Partner.PartnerId > 0)
                 {
                     viewModel.Partner.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Partner.RecUpdatedDate = DateTime.Now;
@@ -60,29 +60,9 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Partner Updated",
+                            Message = WebModels.Resources.Website.Partner.Partner.UpdateMessage,
                             IsUpdated = true
                         };
-                    }
-                }
-                else if (Request.Form["Delete"] != null)
-                {
-                    try
-                    {
-                        var directory = ConfigurationManager.AppSettings["PartnerImage"];
-                        var path = "~" + directory + viewModel.Partner.ImageName;
-                        var fullPath = Request.MapPath(path);
-                        Utility.DeleteFile(fullPath);
-                        partnerService.DeletePartner(viewModel.Partner.PartnerId);
-                        TempData["message"] = new MessageViewModel
-                        {
-                            Message = "Partner Deleted",
-                            IsUpdated = true
-                        };
-                    }
-                    catch (Exception)
-                    {
-                        return View(viewModel);
                     }
                 }
                 else
@@ -96,7 +76,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Partner Added",
+                            Message = WebModels.Resources.Website.Partner.Partner.AddMessage,
                             IsUpdated = true
                         };
                     }
@@ -106,6 +86,35 @@ namespace EPMS.Web.Areas.Website.Controllers
             catch (Exception)
             {
                 return View(viewModel);
+            }
+        }
+
+        [HttpGet]
+        [SiteAuthorize(PermissionKey = "DeletePartner")]
+        public ActionResult Delete(long partnerId, string imageName)
+        {
+            try
+            {
+                var directory = ConfigurationManager.AppSettings["PartnerImage"];
+                var path = "~" + directory + imageName;
+                var fullPath = Request.MapPath(path);
+                Utility.DeleteFile(fullPath);
+                partnerService.DeletePartner(partnerId);
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.Website.Partner.Partner.DeleteMessage,
+                    IsUpdated = true
+                };
+                return Json(new { status = "success" }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception)
+            {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.Website.Partner.Partner.DeleteErrorMessage,
+                    IsUpdated = true
+                };
+                return Json(new { status = "error" }, JsonRequestBehavior.AllowGet);
             }
         }
 

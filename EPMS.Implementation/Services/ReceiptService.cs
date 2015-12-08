@@ -125,9 +125,19 @@ namespace EPMS.Implementation.Services
             response.Customer = customerRepository.Find(response.Quotation.CustomerId);
             response.CompanyProfile = companyProfileRepository.GetCompanyProfile();
 
-            var employee = aspNetUserRepository.Find(response.Receipt.RecCreatedBy).Employee;
-            response.EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
-            response.EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+            var user = aspNetUserRepository.Find(response.Invoice.RecCreatedBy);
+            var employee = user.Employee;
+            var customer = user.Customer;
+            if (employee != null)
+            {
+                response.EmployeeNameE = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " + employee.EmployeeLastNameE;
+                response.EmployeeNameA = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " + employee.EmployeeLastNameA;
+            }
+            else if (customer != null)
+            {
+                response.EmployeeNameE = customer.CustomerNameE;
+                response.EmployeeNameA = customer.CustomerNameA;
+            }
 
 
             return response;

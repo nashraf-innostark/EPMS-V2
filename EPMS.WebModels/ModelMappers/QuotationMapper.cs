@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.WebModels.ViewModels.Quotation;
@@ -128,6 +129,7 @@ namespace EPMS.WebModels.ModelMappers
                 QuotationDiscount = source.QuotationDiscount,
                 ClientNameEn = source.Customer != null ? source.Customer.CustomerNameE : "",
                 ClientNameAr = source.Customer != null ? source.Customer.CustomerNameA : "",
+                RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")) + " - " + source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("ar"))
             };
         }
         public static WebsiteModels.Quotation CreateFromServerToClientForProject(this Quotation source)

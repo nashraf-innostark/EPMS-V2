@@ -14,7 +14,7 @@
             <a href="/Dashboard/Index">
                 <i class="icon-photon home"></i>
             </a>
-        </li>   
+        </li>
         <li>
             <a href="">
                 @ViewBag.Title
@@ -38,7 +38,7 @@
             <i class="icon-alert icon-alert-info"></i>
             <strong>@ViewBag.Title</strong>
             <a href="~/Website/Product/Create">@EPMS.WebModels.Resources.Website.Product.ProductIndex.AddNew</a>
-            <br/>
+            <br />
             <a href="#" id="TreeSelector">@EPMS.WebModels.Resources.Website.Product.ProductIndex.ImportFromInventory</a>
         </div>
 
@@ -65,7 +65,7 @@
                                 <td>
                                     @if (item.ItemVariationId != null)
                                     {
-                                        @(direction == "ltr" ? Html.ActionLink(item.ItemNameEn, "Create", new {id = item.ProductId}) : Html.ActionLink(item.ItemNameAr, "Create", new {id = item.ProductId}))
+                                        @(direction == "ltr" ? Html.ActionLink(item.ItemNameEn, "Create", new { id = item.ProductId }) : Html.ActionLink(item.ItemNameAr, "Create", new { id = item.ProductId }))
                                     }
                                     else
                                     {
@@ -74,19 +74,31 @@
                                 </td>
                                 <td>@item.ProductPrice</td>
                                 <td>@item.DiscountedPrice</td>
-                                <td class="@item.ProductId">@(direction == "ltr" ? item.ProductDescEn : item.ProductDescAr)</td>
-                                @*<script>
+                                <td class="descp_@item.ProductId"></td>
+                                <script>
                                     var descp;
                                     if ('@direction' == 'ltr') {
-                                        descp = '@item.ProductDescEn';
+                                        descp = '@Html.Raw(item.ProductDescEn)';
                                     } else {
-                                        descp = '@item.ProductDescAr';
+                                        descp = '@Html.Raw(item.ProductDescAr)';
                                     }
                                     regex = /(<([^>]+)>)/ig;
                                     result = descp.replace(regex, "");
-                                    $(".@item.ProductId").text(result);
-                                </script>*@
-                                <td>@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
+                                    $(".descp_@item.ProductId").text(result);
+                                </script>
+                                <td class="specify_@item.ProductId">@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
+                                <script>
+                                    var descp;
+                                    if ('@direction' == 'ltr') {
+                                        descp = '@Html.Raw(item.ProductSpecificationEn)';
+                                    } else {
+                                        descp = '@Html.Raw(item.ProductSpecificationAr)';
+                                    }
+                                    regex = /(<([^>]+)>)/ig;
+                                    result = descp.replace(regex, "");
+                                    $(".specify_@item.ProductId").text(result);
+                                </script>
+
                                 <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId, this)">Delete</a></td>
                             </tr>
                         }
@@ -124,7 +136,7 @@
                 null,
                 null
             ],
-            "fnInitComplete": function() {
+            "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
@@ -133,8 +145,8 @@
         $("#simpleSelectBox").select2({
             dropdownCssClass: 'noSearch'
         });
-        
-        
+
+
         $("#TreeSelector").click(function (event) {
             url = siteUrl + "/Website/Product/GetTreeData/";
             populateTreeJson(url, divId, dir);
@@ -161,10 +173,10 @@
                 var url = siteUrl + "/Website/Product/ImportProducts";
                 saveImportedProducts(url);
             }
-            
+
         });
     });
-    
+
     function deleteRow(productId, elem) {
         if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.DeleteConfirmation') == false) {
             return;
@@ -178,7 +190,7 @@
             data: {
                 productId: productId
             },
-            success: function(data) {
+            success: function (data) {
                 if (data.response == "OK") {
                     var row = $(elem).parent().parent().get(0);
                     var atable = $('#Product').dataTable();

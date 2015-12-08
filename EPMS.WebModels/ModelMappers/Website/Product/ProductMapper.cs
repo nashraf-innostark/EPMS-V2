@@ -17,12 +17,12 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             retVal.ProductNameEn = source.ProductNameEn;
             retVal.ProductNameAr = source.ProductNameAr;
             retVal.ItemVariationId = source.ItemVariationId;
-            retVal.ProductDescEn = source.ItemVariationId == null ? source.ProductDescEn : source.ItemDescriptionEn;
-            retVal.ProductDescAr = source.ItemVariationId == null ? source.ProductDescAr : source.ItemDescriptionAr;
+            retVal.ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn);
+            retVal.ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr);
             retVal.ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice;
             retVal.DiscountedPrice = source.DiscountedPrice;
-            retVal.ProductSpecificationEn = source.ProductSpecificationEn;
-            retVal.ProductSpecificationAr = source.ProductSpecificationAr;
+            retVal.ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn);
+            retVal.ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr);
             retVal.ProductSize = source.ProductSize;
             retVal.ProductSectionId = source.ProductSectionId;
             retVal.NewArrival = source.NewArrival;
@@ -243,5 +243,20 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                     source.ItemImages.FirstOrDefault().ItemImagePath : "",
             };
         }
+
+        #region Remove \r \n from CK editor values
+
+        private static string RemoveCkEditorValues(string value)
+        {
+            string retval = value;
+            if (!string.IsNullOrEmpty(retval))
+            {
+                retval = retval.Replace('\r', ' ');
+                retval = retval.Replace('\n', ' ');
+            }
+            return retval;
+        }
+
+        #endregion
     }
 }

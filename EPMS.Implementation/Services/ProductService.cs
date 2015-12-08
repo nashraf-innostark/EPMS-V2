@@ -184,6 +184,8 @@ namespace EPMS.Implementation.Services
             {
                 ProductSection sectionToAdd = new ProductSection
                 {
+                    SectionNameEn = productSection.DepartmentNameEn,
+                    SectionNameAr = productSection.DepartmentNameAr,
                     InventoyDepartmentId = productSection.DepartmentId,
                     ShowToPublic = true,
                     RecCreatedBy = userId,

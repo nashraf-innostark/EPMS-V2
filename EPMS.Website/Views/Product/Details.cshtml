@@ -129,27 +129,27 @@
                     }
                     <li>
                         @{
-                        if (ViewBag.From.ToString() == "Inventory")
-                        {
-                            @(direction == "ltr" ? Model.Product.ItemNameEn : Model.Product.ItemNameAr)
+                            if (ViewBag.From.ToString() == "Inventory")
+                            {
+                                @(direction == "ltr" ? Model.Product.ItemNameEn : Model.Product.ItemNameAr)
+                            }
+                            if (ViewBag.From.ToString() == "Sections")
+                            {
+                                @(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)
+                            }
                         }
-                        if (ViewBag.From.ToString() == "Sections")
-                        {
-                            @(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)
-                        }
-                    }
-                </li>
-            </ul>
-            <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
-        </div>
-        <div class="span6">
-            <div class="header-titles">
-                <h2>@Product.ProductsPage</h2>
+                    </li>
+                </ul>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@Product.ProductsPage</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="shadowUP"></div>
+    <div class="shadowUP"></div>
 </div>
 <section id="content">
     <div class="container">
@@ -275,13 +275,22 @@
                                     <p>
                                         @Product.YouWillSave:
                                         @{
-                                            @: <strong>
-                                                                         var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
-                                                                         var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
-                                                                        @: @(actualPrice - discountedPrice)
-                                                                        @:( @Math.Round((actualPrice / discountedPrice), 2) %)
-                                                                        @: </strong>
+                                            var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
+                                            var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
+                                            var deductedPrice = actualPrice - discountedPrice;
+                                            var savingInPercentage = Math.Round((actualPrice/discountedPrice), 2);
                                         }
+                                        <strong>
+                                            @deductedPrice
+                                            @savingInPercentage %
+                                        </strong>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="regular_price">@Product.Price: </p>
+                                    <p class="price">
+                                        <span>@Model.Product.ProductPrice</span><span>SR</span>
                                     </p>
                                 }
 

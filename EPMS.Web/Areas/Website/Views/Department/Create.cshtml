@@ -117,7 +117,17 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        <input type="text" id="descp" readonly="readonly" />
+                        <textarea id="descp" readonly="readonly"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="descpAr">@EPMS.WebModels.Resources.Website.Department.Department.DescriptionAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="descpAr" readonly="readonly"></textarea>
                     </div>
                 </div>
             </div>
@@ -129,7 +139,17 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextAreaFor(model => model.WebsiteDepartment.Description, new { @id = "Description", @class = "" })
+                        @Html.TextAreaFor(model => model.WebsiteDepartment.Description, new {@id = "Description", @class = ""})
+                    </div>
+                </div>
+            </div>
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label" for="DescriptionAr">Description arabic</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(model => model.WebsiteDepartment.DescriptionAr, new { @id = "DescriptionAr", @class = "" })
                     </div>
                 </div>
             </div>
@@ -179,6 +199,10 @@
             var regex = /(<([^>]+)>)/ig;
             var res = descpE.replace(regex, "");
             $("#descp").val(res);
+            var descpA = '@Html.Raw(Model.WebsiteDepartment.DescriptionAr)';
+            regex = /(<([^>]+)>)/ig;
+            res = descpA.replace(regex, "");
+            $("#descpAr").val(res);
             $("#Descp").show();
             $("#CKEditorDescp").hide();
             var val = '@userPermissionsSet.Contains("WebsiteDepartmentCreate")';
@@ -190,6 +214,9 @@
         } else {
             $("#Descp").hide();
             CKEDITOR.replace('Description', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('DescriptionAr', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
             $("#CKEditorDescp").show();
@@ -237,6 +264,9 @@
         $('.ShowToPublicDiv').removeClass('disableList');
         // CK Editor
         CKEDITOR.replace('Description', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DescriptionAr', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
         });
         $("#Descp").hide();

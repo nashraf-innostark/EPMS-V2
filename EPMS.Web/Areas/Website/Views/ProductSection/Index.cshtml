@@ -59,7 +59,7 @@
                             <tr>
                                 <td>@serial</td>
                                 <td>
-                                    @(direction == "ltr" ? item.SectionNameEn : item.SectionNameAr)
+                                    <a href="/Website/ProductSection/Create/@item.SectionId">@(direction == "ltr" ? item.SectionNameEn : item.SectionNameAr)</a>
                                 </td>
                                 <td>
                                     @(direction == "ltr" ? item.InventoryDepartmentNameEn : item.InventoryDepartmentNameAr)

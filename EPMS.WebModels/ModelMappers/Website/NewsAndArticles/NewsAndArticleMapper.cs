@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Website.NewsAndArticles
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Website.NewsAndArticles
 {
     public static class NewsAndArticleMapper
     {
@@ -25,6 +28,7 @@
                 MetaKeywordsAr = source.MetaKeywordsAr,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDate = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 DateTimeForIndex = source.RecCreatedDt.ToShortDateString()
@@ -51,7 +55,7 @@
                 MetaKeywords = source.MetaKeywords,
                 MetaKeywordsAr = source.MetaKeywordsAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = !string.IsNullOrEmpty(source.RecCreatedDate) ? DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

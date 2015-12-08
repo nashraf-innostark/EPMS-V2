@@ -2,7 +2,7 @@
 @model EPMS.WebModels.ViewModels.Product.ProductViewModel
 
 @{
-    ViewBag.Title = Model.Product.ProductId > 0 ? 
+    ViewBag.Title = Model.Product.ProductId > 0 ?
         EPMS.WebModels.Resources.Website.Product.ProductCreate.UpdatePageTitle : EPMS.WebModels.Resources.Website.Product.ProductCreate.AddPageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
@@ -73,26 +73,49 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescEn</label>
+        <div id="descp-area" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="descpEn" class="tbdisable">@Model.Product.ProductDescEn</textarea>
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductDescEn, new { @dir = "ltr", id = "ProductDescEn", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Product.ProductDescEn, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="descpAr" class="tbdisable">@Model.Product.ProductDescAr</textarea>
+                    </div>
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescAr</label>
+        <div id="descp-ck" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Product.ProductDescEn, new { @dir = "ltr", id = "ProductDescEn", @class = "toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.Product.ProductDescEn, "", new { @class = "required" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductDescAr, new { @dir = "ltr", id = "ProductDescAr", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Product.ProductDescAr, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductDescAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Product.ProductDescAr, new { @dir = "ltr", id = "ProductDescAr", @class = "toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.Product.ProductDescAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -120,7 +143,6 @@
                 </div>
             </div>
         </div>
-
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSize</label>
@@ -133,29 +155,55 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
+        <div id="specify-area" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="specifyEn" class="tbdisable">@Model.Product.ProductSpecificationEn</textarea>
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductSpecificationEn, new { @dir = "ltr", id = "ProductSpecificationEn", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Product.ProductSpecificationEn, "", new { @class = "required" })
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="specifyAr" class="tbdisable">@Model.Product.ProductSpecificationAr</textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="specify-ck" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Product.ProductSpecificationEn, new { @dir = "ltr", id = "ProductSpecificationEn", @class = "toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.Product.ProductSpecificationEn, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.Product.ProductSpecificationAr, new { @dir = "ltr", id = "ProductSpecificationAr", @class = "toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.Product.ProductSpecificationAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.Product.ProductCreate.ProductSpecificationAr</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductSpecificationAr, new { @dir = "ltr", id = "ProductSpecificationAr", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.Product.ProductSpecificationAr, "", new { @class = "required" })
-                </div>
-            </div>
-        </div>
 
         <div class="control-group row-fluid jobTitleDDL">
             <div class="span3">
@@ -358,9 +406,51 @@
     <!--Add Item Image Ends-->
 }
 
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var productId = $('#Product_ProductId').val();
     $(document).ready(function () {
+        CKEDITOR.replace('ProductSpecificationEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('ProductSpecificationAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('ProductDescEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('ProductDescAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        var descpEn = $("#descpEn").val();
+        var regex = /(<([^>]+)>)/ig;
+        var result = descpEn.replace(regex, "");
+        $("#descpEn").val(result);
+        var descpAr = $("#descpAr").val();
+        regex = /(<([^>]+)>)/ig;
+        result = descpAr.replace(regex, "");
+        $("#descpAr").val(result);
+
+        var specifyEn = $("#specifyEn").val();
+        regex = /(<([^>]+)>)/ig;
+        result = specifyEn.replace(regex, "");
+        $("#specifyEn").val(result);
+        var specifyAr = $("#specifyAr").val();
+        regex = /(<([^>]+)>)/ig;
+        result = specifyAr.replace(regex, "");
+        $("#specifyAr").val(result);
+        if (parseInt('@Model.Product.ProductId') == 0) {
+            $("#descp-ck").show();
+            $("#specify-ck").show();
+            $("#descp-area").hide();
+            $("#specify-area").hide();
+        } else {
+            $("#descp-area").show();
+            $("#specify-area").show();
+            $("#descp-ck").hide();
+            $("#specify-ck").hide();
+        }
+
         $('#tableSortableProductImg').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function () {
@@ -387,6 +477,10 @@
 
         $("#edit").click(function (event) {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $("#specify-area").hide();
+            $("#specify-ck").show();
+            $("#descp-area").hide();
+            $("#descp-ck").show();
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();

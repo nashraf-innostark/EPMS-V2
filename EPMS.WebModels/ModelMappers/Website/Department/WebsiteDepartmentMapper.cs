@@ -10,6 +10,12 @@
                 descp = descp.Replace("\n", "");
                 descp = descp.Replace("\r", "");
             }
+            string descpAr = source.DescriptionAr;
+            if (!string.IsNullOrEmpty(descpAr))
+            {
+                descpAr = descpAr.Replace("\n", "");
+                descpAr = descpAr.Replace("\r", "");
+            }
             return new EPMS.Models.DomainModels.WebsiteDepartment
             {
                 DepartmentId = source.DepartmentId,
@@ -19,6 +25,7 @@
                 ImageName = source.ImageName,
                 Link = source.Link,
                 Description = descp,
+                DescriptionAr = descpAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
@@ -38,11 +45,12 @@
                 ImageName = source.ImageName,
                 Link = source.Link,
                 Description = source.Description,
+                DescriptionAr = source.DescriptionAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
-                RecUpdatedDate = source.RecUpdatedDate
+                RecUpdatedDate = source.RecUpdatedDate,
             };
         }
     }

@@ -456,7 +456,10 @@
     });
 
     function CreateReceipt(id, e) {
-        debugger;
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.GenerateReceiptConfirmation') == false) {
+            event.preventDefault();
+            return;
+        }
         event.preventDefault();
         var installmentId = id;
         var invoiceId = $('#invoiceId').val();

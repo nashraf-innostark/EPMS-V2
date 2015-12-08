@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Website.ProductSection
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Website.ProductSection
 {
     public static class ProductSectionMapper
     {
@@ -41,7 +44,7 @@
                 InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
-                RecCreatedDate = source.RecCreatedDt.ToShortDateString(),
+                RecCreatedDate = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 InventoryDepartment = source.InventoryDepartment != null ? source.InventoryDepartment.CreateForProductSectionFromServerToClient() : new WebsiteModels.InventoryDepartment()
@@ -60,7 +63,7 @@
                 SectionContentAr = source.SectionContentAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = !string.IsNullOrEmpty(source.RecCreatedDate) ? DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };

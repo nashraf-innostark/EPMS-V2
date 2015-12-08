@@ -63,7 +63,14 @@
                 <ul id="partners_carousel" class="fixclear">
                     @foreach (var partner in Model.Partners)
                     {
-                        <li style="height: 103px"><a href="@partner.Link" target="_blank"><img src="@cpLink/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                        if (partner.Link.Contains("http://"))
+                        {
+                            <li style="height: 103px"><a href="@partner.Link" target="_blank"><img src="@cpLink/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                        }
+                        else
+                        {
+                            <li style="height: 103px"><a href="http://@partner.Link" target="_blank"><img src="@cpLink/Images/Partner/@Url.Content(partner.ImageName)" alt="" /></a></li>
+                        }
                     }
                 </ul>
             </div>

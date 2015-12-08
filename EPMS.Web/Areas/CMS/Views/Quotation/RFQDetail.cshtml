@@ -1,4 +1,5 @@
-﻿@model EPMS.WebModels.ViewModels.RFQ.RFQDetailViewModel
+﻿@using EPMS.Models.Common
+@model EPMS.WebModels.ViewModels.RFQ.RFQDetailViewModel
 
 @{
     ViewBag.Title = EPMS.WebModels.Resources.CMS.RFQ.Header;
@@ -177,7 +178,7 @@
                         </div>
                     </div>
                 </div>
-                @if (userPermissionsSet.Contains("QuotationsCreate"))
+                @if (userPermissionsSet.Contains("QuotationsCreate") && Model.Rfq.Status == (short) RFQStatus.Pending)
                 {
                     <div class="control-group row-fluid">
                         <div class="span3 span-inset">

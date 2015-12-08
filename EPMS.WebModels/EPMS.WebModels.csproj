@@ -1525,6 +1525,7 @@
     <EmbeddedResource Include="Resources\Website\Product\ProductCreate.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ProductCreate.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.ar.resx" />
     <EmbeddedResource Include="Resources\Website\Product\ProductIndex.resx">

@@ -46,6 +46,7 @@
         @Html.HiddenFor(m => m.NewsAndArticle.NewsArticleId)
         @Html.HiddenFor(m => m.NewsAndArticle.RecCreatedBy)
         @Html.HiddenFor(m => m.NewsAndArticle.RecCreatedDt)
+        @Html.HiddenFor(m => m.NewsAndArticle.RecCreatedDate)
         @Html.HiddenFor(model => model.NewsAndArticle.ImagePath, new { @id = "NewsAndArticleImage" })
         @Html.ValidationSummary(true, "", new { @class = "alert alert-danger" })
         
@@ -124,27 +125,50 @@
                 </div>
             </div>
         </div>
-        
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentEn</label>
+
+        <div id="content-area" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="contentE" class="tbdisable">@Model.NewsAndArticle.ContentEn</textarea>
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.NewsAndArticle.ContentEn, new { @dir = "ltr", id = "ContentEn", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.NewsAndArticle.ContentEn, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        <textarea id="contentA" class="tbdisable">@Model.NewsAndArticle.ContentAr</textarea>
+                    </div>
                 </div>
             </div>
         </div>
-        
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentAr</label>
+        <div id="content-ck" style="display: none">
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentEn</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.NewsAndArticle.ContentEn, new { @dir = "ltr", id = "ContentEn", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.NewsAndArticle.ContentEn, "", new { @class = "required" })
+                    </div>
+                </div>
             </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.NewsAndArticle.ContentAr, new { @dir = "ltr", id = "ContentAr", @class = "tbdisable toBeRequired" })
-                    @Html.ValidationMessageFor(m => m.NewsAndArticle.ContentAr, "", new { @class = "required" })
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ContentAr</label>
+                </div>
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextAreaFor(m => m.NewsAndArticle.ContentAr, new { @dir = "ltr", id = "ContentAr", @class = "tbdisable toBeRequired" })
+                        @Html.ValidationMessageFor(m => m.NewsAndArticle.ContentAr, "", new { @class = "required" })
+                    </div>
                 </div>
             </div>
         </div>
@@ -223,8 +247,8 @@
     </div>
 }
 
+<script src="~/RTE/ckeditor.js"></script>
 <script>
-
     $(document).ready(function() {
         var siteUrl = $("#siteURL").val();
         $("#JobTitleForm").validate({
@@ -257,17 +281,44 @@
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            CKEDITOR.replace('ContentEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('ContentAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#content-ck").show();
+            $("#content-area").hide();
+
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
+            var contentE = $("#contentE").val();
+            var regex = /(<([^>]+)>)/ig;
+            var res = contentE.replace(regex, "");
+            $("#contentE").val(res);
+            var contentA = $("#contentA").val();
+            regex = /(<([^>]+)>)/ig;
+            res = contentA.replace(regex, "");
+            $("#contentA").val(res);
+            $("#content-area").show();
+            $("#content-ck").hide();
         }
         $("#edit").click(function(event) {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
+            CKEDITOR.replace('ContentEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('ContentAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#content-ck").show();
+            $("#content-area").hide();
             event.preventDefault();
         });
     });
