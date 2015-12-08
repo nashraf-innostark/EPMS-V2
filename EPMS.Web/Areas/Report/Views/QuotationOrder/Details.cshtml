@@ -1,9 +1,10 @@
 ﻿@using Newtonsoft.Json
 @model EPMS.WebModels.ViewModels.Reports.QuotationOrderDetailViewModel
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.QOReportView;
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.QuotationOrderReports.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.QOReportView : (direction == "ltr" ? Model.QuotationOrderReports.FirstOrDefault().CustomerNameE : Model.QuotationOrderReports.FirstOrDefault().CustomerNameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
+    
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -19,7 +20,7 @@
             </a>
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.QOReportView
+            @ViewBag.Title
         </li>
     </ul>
 </div>
@@ -27,7 +28,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.QOReportView</small></h2>
+    <h2><small>@ViewBag.Title</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->
