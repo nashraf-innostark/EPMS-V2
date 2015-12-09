@@ -590,9 +590,8 @@ namespace EPMS.Implementation.Services
                 //Fetch Report data
                 var response = inventoryItemRepository.GetInventoryItemReportDetails(request).ToList();
                 newReport.ReportInventoryItems = request.ItemId > 0 ?
-                newReport.ReportInventoryItems = response.SelectMany(x => x.ItemVariations.Select(y=>y.MapInventoryItemVariationToReportInventoryItem())).ToList() :
-                newReport.ReportInventoryItems = response.Select(x => x.MapInventoryItemToReportInventoryItem()).ToList()
-                ;
+                response.SelectMany(x => x.ItemVariations.Select(y=>y.MapInventoryItemVariationToReportInventoryItem())).ToList() :
+                response.Select(x => x.MapInventoryItemToReportInventoryItem()).ToList();
 
                 //Save Report and its data
                 reportRepository.Add(newReport);

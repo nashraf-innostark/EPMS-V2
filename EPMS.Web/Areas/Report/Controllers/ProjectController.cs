@@ -259,7 +259,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             {
                 detailVeiwModel.GraphItems.Add(new GraphItem
                 {
-                    ItemLabel = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? "Task_" + projectTask.TaskNameE : projectTask.TaskNameA,
+                    ItemLabel = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? projectTask.TaskNameE : projectTask.TaskNameA,
                     ItemValue = new List<GraphLabel>
                     {
                         new GraphLabel

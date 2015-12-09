@@ -148,7 +148,7 @@ namespace EPMS.Models.ModelMapers
         {
             var reportInventoryItem = new ReportInventoryItem
             {
-                InventoryItemId = source.InventoryItemId,
+                InventoryItemId = source.ItemVariationId,
                 NameA = source.SKUCode,
                 NameE = source.SKUCode,
 
