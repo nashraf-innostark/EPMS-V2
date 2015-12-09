@@ -3,9 +3,10 @@
 @model EPMS.WebModels.ViewModels.Reports.DetailVeiwModel
 
 @{
-    ViewBag.Title = "ReportPdf";
-    Layout = null;
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.Projects.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport : (direction == "ltr" ? Model.Projects.FirstOrDefault().NameE : Model.Projects.FirstOrDefault().NameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
+    Layout = null;
+
     int serialX = 1;
     int serialY = 1;
 }
@@ -85,7 +86,7 @@
 
                 </li>
                 <li class="current">
-                    @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
+                    @ViewBag.Title
                 </li>
             </ul>
         </div>
@@ -93,7 +94,7 @@
         <!-- Page Heading Start-->
         <header>
             <i class="icon-big-notepad"></i>
-            <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
+            <h2><small>@ViewBag.Title</small></h2>
         </header>
         <form class="form-horizontal" id="validation_form">
             <div class="container-fluid" id="container">

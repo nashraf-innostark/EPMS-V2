@@ -3,7 +3,14 @@
 @model IEnumerable<EPMS.Models.DomainModels.ReportInventoryItem>
 @{
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = Model.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.ViewAllItemsReport : (direction == "ltr" ? Model.FirstOrDefault().Report.InventoryItem.ItemNameEn : Model.FirstOrDefault().Report.InventoryItem.ItemNameAr) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
+    if (Model.FirstOrDefault() != null)
+    {
+        ViewBag.Title = Model.FirstOrDefault().Report.InventoryItemId > 1 ?(direction == "ltr" ? Model.FirstOrDefault().Report.InventoryItem.ItemNameEn : Model.FirstOrDefault().Report.InventoryItem.ItemNameAr) + " " + EPMS.WebModels.Resources.Reports.Reports.Report: EPMS.WebModels.Resources.Reports.Reports.ViewAllItemsReport;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewItemReport;
+    }   
     Layout = "~/Views/Shared/_Layout.cshtml";
     long reportId = (long) ViewBag.ReportId;
     int serial = 1;

@@ -22,7 +22,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
 
         // GET: Report/Item
-        //[SiteAuthorize(PermissionKey = "CreateItemReport")]
+        [SiteAuthorize(PermissionKey = "CreateItemReport")]
         public ActionResult Create()
         {
             ItemReportCreateViewModel createViewModel=new ItemReportCreateViewModel();
@@ -42,7 +42,7 @@ namespace EPMS.Web.Areas.Report.Controllers
             var reportId = reportService.SaveInventoryItemsReport(request);
             return RedirectToAction("Details", new { ReportId = reportId });
         }
-           //[SiteAuthorize(PermissionKey = "ViewItemReport")]
+           [SiteAuthorize(PermissionKey = "ViewItemReport")]
         public ActionResult Details(long? ReportId)
         {
             if (ReportId==null||ReportId <= 0) return View("Create");

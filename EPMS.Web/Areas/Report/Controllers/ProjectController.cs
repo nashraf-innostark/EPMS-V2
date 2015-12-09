@@ -44,13 +44,13 @@ namespace EPMS.Web.Areas.Report.Controllers
                 TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList();
                 ViewBag.ReportId = ReportId;
             }
-            
+
             var projects = TempData["Projects"] as List<ReportProject>;
            
-            if (projects == null && projects.Any())
+            if (projects != null && projects.Any())
             {
                 ViewBag.ReportId = projects.FirstOrDefault().ReportId;
-                return View(projects.Select(x => x.CreateForReport()));
+                return View(projects.Select(x => x.CreateForReport()).ToList());
             }
             ViewBag.MessageVM = new MessageViewModel
                 {
@@ -87,7 +87,8 @@ namespace EPMS.Web.Areas.Report.Controllers
 
             if (projectsReportsCreateViewModel.ProjectId == 0 && projectsReportsCreateViewModel.ReportId == 0)
             {
-                TempData["Projects"] = reportService.SaveAndGetAllProjectsReport(request).ToList().Select(x => x.CreateForReport());
+                var allProjectsReport=reportService.SaveAndGetAllProjectsReport(request).ToList();
+                TempData["Projects"] = allProjectsReport;
 
                 return RedirectToAction("All");
             }
