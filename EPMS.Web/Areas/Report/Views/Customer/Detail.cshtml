@@ -1,4 +1,5 @@
-﻿@model EPMS.WebModels.ViewModels.Reports.CustomerCreateViewModel
+﻿@using System.Configuration
+@model EPMS.WebModels.ViewModels.Reports.CustomerCreateViewModel
 @{
     ViewBag.Title = EPMS.WebModels.Resources.Reports.CustomerReport.DetailTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -14,8 +15,8 @@
             </a>
         </li>
         <li>
-            <a href="~/Report/Customer/Create">
-                @EPMS.WebModels.Resources.Reports.CustomerReport.CreateTitle
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/CustomerService/Index">
+                @EPMS.WebModels.Resources.Reports.CustomerServiceList.Title
             </a>
         </li>
         <li class="current">

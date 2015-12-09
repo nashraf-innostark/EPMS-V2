@@ -76,7 +76,13 @@ namespace EPMS.Web.Areas.Report.Controllers
             viewModel.ReportQuotationInvoices = response.Select(x => x.CreateReportFromServerToClient()).ToList();
 
             SetGraphData(viewModel);
+            var firstQuot = viewModel.ReportQuotationInvoices.OrderBy(x => x.ReportId).FirstOrDefault();
+            var lastInvoice = viewModel.ReportQuotationInvoices.OrderByDescending(x => x.ReportId).FirstOrDefault();
 
+            if (firstQuot != null && firstQuot.ReportQuotationInvoiceItems.ToList().Any())
+                viewModel.GraphStartTimeStamp = firstQuot.ReportQuotationInvoiceItems.OrderBy(x=>x.MonthTimeStamp).FirstOrDefault().MonthTimeStamp;
+            if (lastInvoice != null && firstQuot.ReportQuotationInvoiceItems.ToList().Any())
+                viewModel.GraphEndTimeStamp = lastInvoice.ReportQuotationInvoiceItems.OrderBy(x => x.MonthTimeStamp).FirstOrDefault().MonthTimeStamp;
             viewModel.ReportId = (long) ReportId;
 
             return View(viewModel);
@@ -122,9 +128,6 @@ namespace EPMS.Web.Areas.Report.Controllers
 
                 if (firstQuotation != null)
                 {
-                    detailVeiwModel.GraphStartTimeStamp = firstQuotation.MonthTimeStamp;
-                    detailVeiwModel.GraphEndTimeStamp = lastQuotation.MonthTimeStamp;
-
                     detailVeiwModel.GraphItems.Add(new GraphItem
                     {
                         ItemLabel = "Quotation",
@@ -149,7 +152,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                         detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                         {
                             TimeStamp = Convert.ToInt64(quotationGroups[i].MonthTimeStamp),
-                            Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
+                            Value = Convert.ToDecimal(detailVeiwModel.ReportQuotationInvoices.FirstOrDefault().NoOfQuotations)
                         });
                     }
                     if (quotationGroups.Count() == 1)
@@ -158,7 +161,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                         detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                         {
                             TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
-                            Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                            Value = Convert.ToDecimal(detailVeiwModel.ReportQuotationInvoices.FirstOrDefault().NoOfQuotations)
                         });
                     }
                 }
@@ -181,9 +184,6 @@ namespace EPMS.Web.Areas.Report.Controllers
 
                 if (firstInvoice != null)
                 {
-                    detailVeiwModel.GraphStartTimeStamp = firstInvoice.MonthTimeStamp;
-                    detailVeiwModel.GraphEndTimeStamp = lastInvoice.MonthTimeStamp;
-
                     detailVeiwModel.GraphItems.Add(new GraphItem
                     {
                         ItemLabel = "Invoice",
@@ -208,16 +208,16 @@ namespace EPMS.Web.Areas.Report.Controllers
                         detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                         {
                             TimeStamp = Convert.ToInt64(invoiceGroups[i].MonthTimeStamp),
-                            Value = Convert.ToDecimal(invoiceGroups[i].TotalPrice)
+                            Value = Convert.ToDecimal(detailVeiwModel.ReportQuotationInvoices.FirstOrDefault().NoOfInvoices)
                         });
                     }
                     if (invoiceGroups.Count() == 1)
                     {
                         //Ending Points on graph
-                        detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
+                        detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                         {
                             TimeStamp = Convert.ToInt64(lastInvoice.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
-                            Value = Convert.ToDecimal(lastInvoice.TotalPrice)
+                            Value = Convert.ToDecimal(detailVeiwModel.ReportQuotationInvoices.FirstOrDefault().NoOfInvoices)
                         });
                     }
                 }

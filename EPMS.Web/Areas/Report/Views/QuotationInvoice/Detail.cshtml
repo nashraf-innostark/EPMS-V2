@@ -1,4 +1,5 @@
-﻿@using Newtonsoft.Json
+﻿@using System.Configuration
+@using Newtonsoft.Json
 @model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceDetailViewModel
 @{
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
@@ -14,8 +15,8 @@
             </a>
         </li>
         <li>
-            <a href="~/Report/QuotationInvoice/Create">
-                @EPMS.WebModels.Resources.Reports.QuotationInvoice.CreateTitle
+            <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/CustomerService/Index">
+                @EPMS.WebModels.Resources.Reports.CustomerServiceList.Title
             </a>
         </li>
         <li class="current">
@@ -135,9 +136,8 @@
     });
 
     function DrawGraph() {
-        debugger;
         var markings = [
-            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GrpahStartTimeStamp', to: '@Model.GrpahEndTimeStamp' } }
+            { color: "#F6F6F6", lineWidth: 1, xaxis: { from: '@Model.GraphStartTimeStamp', to: '@Model.GraphStartTimeStamp' } }
         ];
 
         var graphItems = '@Html.Raw(Json.Encode(Model.GraphItems))';
@@ -148,20 +148,23 @@
         var quotationDataSet = '@Html.Raw(Json.Encode(Model.QuotationDataSet))';
         var quotationDataSetParsed = JSON.parse(quotationDataSet);
         var quotationtimeStamp = [];
-        $.each(quotationDataSetParsed, function (index, val) {
-            var values = [val.TimeStamp, val.Value];
-            quotationtimeStamp.push(values);
-        });
+        if (quotationDataSetParsed != null) {
+            $.each(quotationDataSetParsed, function (index, val) {
+                var values = [val.TimeStamp, val.Value];
+                quotationtimeStamp.push(values);
+            });
+        }
 
         //Parsing Invoice DataSet and making Array of Values
         var invoiceDataSet = '@Html.Raw(Json.Encode(Model.InvoiceDataSet))';
         var invoiceDataSetParsed = JSON.parse(invoiceDataSet);
         var invoiceTimeStamp = [];
-        $.each(invoiceDataSetParsed, function (index, val) {
-            var values = [val.TimeStamp, val.Value];
-            invoiceTimeStamp.push(values);
-        });
-        
+        if (invoiceDataSetParsed != null) {
+            $.each(invoiceDataSetParsed, function (index, val) {
+                var values = [val.TimeStamp, val.Value];
+                invoiceTimeStamp.push(values);
+            });
+        }
 
         var datasets = {
             "quotation": {

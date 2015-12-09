@@ -117,6 +117,7 @@ namespace EPMS.Implementation.Services
                 };
                 reportRepository.Add(customerReport);
                 reportRepository.SaveChanges();
+                request.ReportId = customerReport.ReportId;
             }
             else
             {
@@ -128,8 +129,8 @@ namespace EPMS.Implementation.Services
             var response = customerRepository.GetCustomerReportList(request);
             return new CustomerReportResponse
             {
+                ReportId = request.ReportId,
                 Customers = response,
-                ReportId = customerReport.ReportId
             };
         }
 
