@@ -143,7 +143,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                     detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                     {
                         TimeStamp = Convert.ToInt64(quotationGroups[i].MonthTimeStamp),
-                        Value = Convert.ToDecimal(quotationGroups[i].TotalPrice)
+                        Value = Convert.ToDecimal(detailVeiwModel.QuotationOrderReports.FirstOrDefault().NoOfRFQ)
                     });
                 }
                 if (quotationGroups.Count() == 1)
@@ -152,7 +152,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                     detailVeiwModel.GraphItems[0].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                     {
                         TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
-                        Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                        Value = Convert.ToDecimal(detailVeiwModel.QuotationOrderReports.FirstOrDefault().NoOfRFQ)
                     });
                 }
                 
@@ -197,7 +197,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                     detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                     {
                         TimeStamp = Convert.ToInt64(ordersGroups[i].MonthTimeStamp),
-                        Value = Convert.ToDecimal(ordersGroups[i].TotalPrice)
+                        Value = Convert.ToDecimal(detailVeiwModel.QuotationOrderReports.FirstOrDefault().NoOfOrders)
                     });
                 }
                 //Ending Points on graph
@@ -206,7 +206,7 @@ namespace EPMS.Web.Areas.Report.Controllers
                     detailVeiwModel.GraphItems[1].ItemValue[0].data[0].dataValue.Add(new GraphLabelDataValues
                     {
                         TimeStamp = Convert.ToInt64(lastQuotation.MonthTimeStamp) + 100000,//Adding 1 minute and some seconds
-                        Value = Convert.ToDecimal(lastQuotation.TotalPrice)
+                        Value = Convert.ToDecimal(detailVeiwModel.QuotationOrderReports.FirstOrDefault().NoOfOrders)
                     });
                 }
                 

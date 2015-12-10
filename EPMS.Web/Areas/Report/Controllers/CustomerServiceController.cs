@@ -49,9 +49,9 @@ namespace EPMS.Web.Areas.Report.Controllers
 
             CustomerServiceListViewModel viewModel = new CustomerServiceListViewModel
             {
-                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()),
-                recordsTotal = reports.TotalCount,
-                recordsFiltered = reports.FilteredCount,
+                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()).ToList(),
+                iTotalRecords = reports.TotalCount,
+                iTotalDisplayRecords = reports.FilteredCount,
                 sEcho = searchRequest.sEcho
             };
 
@@ -79,9 +79,9 @@ namespace EPMS.Web.Areas.Report.Controllers
 
             CustomerServiceListViewModel viewModel = new CustomerServiceListViewModel
             {
-                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()),
-                recordsTotal = reports.TotalCount,
-                recordsFiltered = reports.FilteredCount,
+                aaData = reports.Reports.Select(x => x.CreateReportFromServerToClient()).ToList(),
+                iTotalRecords = reports.TotalCount,
+                iTotalDisplayRecords = reports.FilteredCount,
                 sEcho = searchRequest.sEcho
             };
 

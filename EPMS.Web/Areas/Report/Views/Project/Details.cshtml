@@ -2,7 +2,9 @@
 @using EPMS.WebModels.WebsiteModels.Common
 @model EPMS.WebModels.ViewModels.Reports.DetailVeiwModel
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.Projects.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport : (direction == "ltr" ? Model.Projects.FirstOrDefault().NameE : Model.Projects.FirstOrDefault().NameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
+    
     Layout = "~/Views/Shared/_Layout.cshtml";
     int taskSerial = 1;
 }
@@ -21,7 +23,7 @@
 
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport
+            @ViewBag.Title
         </li>
     </ul>
 </div>
@@ -29,7 +31,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ProjectReport</small></h2>
+    <h2><small>@ViewBag.Title</small></h2>
 </header>
 <!-- Page Heading End-->
 
@@ -183,7 +185,7 @@
 
                             xaxis: {
                                 mode: "time",
-                                timeformat: "%y,%m",
+                                timeformat: "%y,%m,%d",
                                 zoomRange: [xzoomMin, xZoomMax],
                                 panRange: [xPanMin, xPanMax]
                             },

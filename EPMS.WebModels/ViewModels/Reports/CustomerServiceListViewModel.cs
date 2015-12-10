@@ -16,12 +16,12 @@ namespace EPMS.WebModels.ViewModels.Reports
         /// <summary>
         /// Total Records in DB
         /// </summary>
-        public int recordsTotal;
+        public int iTotalRecords;
 
         /// <summary>
         /// Total Records Filtered
         /// </summary>
-        public int recordsFiltered;
+        public int iTotalDisplayRecords;
         public string sEcho;
     }
 }

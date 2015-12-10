@@ -2,8 +2,9 @@
 @model EPMS.WebModels.ViewModels.Reports.QuotationInvoiceDetailViewModel
 @{
     Layout = null;
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Title;
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.ReportQuotationInvoices.Count() > 1 ? EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail : (direction == "ltr" ? Model.ReportQuotationInvoices.FirstOrDefault().EmployeeNameE : Model.ReportQuotationInvoices.FirstOrDefault().EmployeeNameA) + " " + EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
+    
     int serialX = 1;
     int serialY = 1;
 }
@@ -75,7 +76,7 @@
         <!-- Page Heading Start-->
         <header>
             <i class="icon-big-notepad"></i>
-            <h2><small>@EPMS.WebModels.Resources.Reports.QuotationInvoice.All</small></h2>
+            <h2><small>@ViewBag.Title</small></h2>
         </header>
         <!-- Page Heading End-->
         <!--Notifications begin-->
@@ -152,19 +153,23 @@
             var quotationDataSet = '@Html.Raw(Json.Encode(Model.QuotationDataSet))';
             var quotationDataSetParsed = JSON.parse(quotationDataSet);
             var quotationtimeStamp = [];
-            $.each(quotationDataSetParsed, function (index, val) {
-                var values = [val.TimeStamp, val.Value];
-                quotationtimeStamp.push(values);
-            });
+            if (quotationDataSetParsed != null) {
+                $.each(quotationDataSetParsed, function (index, val) {
+                    var values = [val.TimeStamp, val.Value];
+                    quotationtimeStamp.push(values);
+                });
+            }
 
             //Parsing Invoice DataSet and making Array of Values
             var invoiceDataSet = '@Html.Raw(Json.Encode(Model.InvoiceDataSet))';
             var invoiceDataSetParsed = JSON.parse(invoiceDataSet);
             var invoiceTimeStamp = [];
-            $.each(invoiceDataSetParsed, function (index, val) {
-                var values = [val.TimeStamp, val.Value];
-                invoiceTimeStamp.push(values);
-            });
+            if (invoiceDataSetParsed != null) {
+                $.each(invoiceDataSetParsed, function (index, val) {
+                    var values = [val.TimeStamp, val.Value];
+                    invoiceTimeStamp.push(values);
+                });
+            }
 
 
             var datasets = {

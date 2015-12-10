@@ -148,20 +148,19 @@ namespace EPMS.Models.ModelMapers
         {
             var reportInventoryItem = new ReportInventoryItem
             {
-                InventoryItemId = source.InventoryItemId,
+                InventoryItemId = source.ItemVariationId,
                 NameA = source.SKUCode,
                 NameE = source.SKUCode,
 
             };
-            var sum = source.UnitPrice;
-            if (sum != null)
-                reportInventoryItem.Price = Math.Round((double)sum, 2);
+            
+            reportInventoryItem.Price = source.UnitPrice != null ? Math.Round((double)source.UnitPrice, 2) : 0;
 
             reportInventoryItem.Cost =
                 Math.Round(
                     (double)
                         (source.ItemManufacturers.Sum(x => Convert.ToDouble(x.Price)) / source.ItemManufacturers.Count()), 2);
-
+            reportInventoryItem.Cost = reportInventoryItem.Cost > 0 ? reportInventoryItem.Cost : 0;
 
             reportInventoryItem.SoldQty =
                 Convert.ToInt32(source.ItemReleaseQuantities.Sum(y => y.Quantity));
