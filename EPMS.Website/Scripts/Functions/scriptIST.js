@@ -3,8 +3,13 @@
     if (quantity == 0 || quantity == "" || quantity == undefined) {
         quantity = 1;
     }
-    var sizeId = jQuery('#Size').val();
-    if (sizeId == "" || sizeId == undefined) {
+    var sizeId;
+    $.each(productSize, function (key, value) {
+        if (value.ProductId == id) {
+            sizeId = value.SizeId;
+        }
+    });
+    if (sizeId == undefined || sizeId == "") {
         sizeId = 0;
     }
     var url = siteUrl + "/ShoppingCart/AddToCart";

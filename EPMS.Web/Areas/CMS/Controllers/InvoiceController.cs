@@ -93,7 +93,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 {
                     InstallmentNumber = installmentId,
                     InvoiceId = invoiceId,
-                    AmountPaid = amountPaid
+                    AmountPaid = amountPaid,
+                    IsPaid = false
                 }
             };
 

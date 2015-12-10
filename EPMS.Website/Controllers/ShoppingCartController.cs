@@ -169,7 +169,7 @@ namespace EPMS.Website.Controllers
                         Quantity = quantity,
                         ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                         ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
-                        UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
+                        UnitPrice = !string.IsNullOrEmpty(userProduct.ProductPrice) ? Convert.ToDecimal(userProduct.ProductPrice) : 0,
                         SkuCode = userProduct.SKUCode,
                         ImagePath = imagePath,
                     };
@@ -195,7 +195,7 @@ namespace EPMS.Website.Controllers
                     Quantity = quantity,
                     ItemNameEn = userProduct.ItemVariationId != null ? userProduct.ItemNameEn : userProduct.ProductNameEn,
                     ItemNameAr = userProduct.ItemVariationId != null ? userProduct.ItemNameAr : userProduct.ProductNameAr,
-                    UnitPrice = Convert.ToDecimal(userProduct.ProductPrice),
+                    UnitPrice = !string.IsNullOrEmpty(userProduct.ProductPrice) ? Convert.ToDecimal(userProduct.ProductPrice) : 0,
                     SkuCode = userProduct.SKUCode,
                     ImagePath = userProduct.ItemVariationId != null ? itemImageFolder + userProduct.ItemImage : itemImageFolder + userProduct.ProductImage,
                 };

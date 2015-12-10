@@ -43,7 +43,9 @@ namespace EPMS.Repository.Repositories
                 ItemVariationDescriptionA = x.DescriptionAr,
                 ItemVariationDescriptionE = x.DescriptionEn,
                 ItemNameA = x.InventoryItem.ItemNameAr,
-                ItemNameE = x.InventoryItem.ItemNameEn
+                ItemNameE = x.InventoryItem.ItemNameEn,
+                DescriptionForQuotationEn = x.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = x.DescriptionForQuotationAr
             });
         }
 

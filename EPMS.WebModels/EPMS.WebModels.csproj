@@ -1414,6 +1414,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Login\Login.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Login.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Menu\Menu.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

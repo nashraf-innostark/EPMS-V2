@@ -59,28 +59,46 @@ namespace EPMS.Implementation.Services
 
         public long AddReceipt(Receipt receipt)
         {
-            Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
-            Quotation quotation = quotationRepository.Find(invoice.QuotationId);
+            if (receipt.IsPaid)
+            {
+                Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
+                Quotation quotation = quotationRepository.Find(invoice.QuotationId);
 
-            if (receipt.InstallmentNumber == 1)
-            {
-                quotation.FirstInstallmentStatus = true;
-            }
-            if (receipt.InstallmentNumber == 2)
-            {
-                quotation.SecondInstallmentStatus = true;
-            }
-            if (receipt.InstallmentNumber == 3)
-            {
-                quotation.ThirdInstallmentStatus = true;
-            }
-            if (receipt.InstallmentNumber == 4)
-            {
-                quotation.FourthInstallmentStatus = true;
-            }
-            if (receipt.PaymentType == (short)PaymentType.OffLine || receipt.PaymentType == (short)PaymentType.OnDelivery)
-            {
-                receipt.AmountPaid = GetAmountPaid(quotation, receipt.InstallmentNumber);
+                if (receipt.InstallmentNumber == 1)
+                {
+                    quotation.FirstInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 2)
+                {
+                    quotation.SecondInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 3)
+                {
+                    quotation.ThirdInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 4)
+                {
+                    quotation.FourthInstallmentStatus = true;
+                }
+                if (receipt.PaymentType == (short)PaymentType.OffLine || receipt.PaymentType == (short)PaymentType.OnDelivery)
+                {
+                    receipt.AmountPaid = GetAmountPaid(quotation, receipt.InstallmentNumber);
+                }
+                // Update Quotation
+                quotationRepository.Update(quotation);
+                quotationRepository.SaveChanges();
+
+                // Update Order
+                if (CheckIfNoPaymentDue(quotation))
+                {
+                    Order order = ordersRepository.GetOrderByQuotationId(quotation.QuotationId);
+                    if (order != null)
+                    {
+                        order.OrderStatus = (short)OrderStatus.Completed;
+                        ordersRepository.Update(order);
+                        ordersRepository.SaveChanges();
+                    }
+                }
             }
 
             receipt.ReceiptNumber = GetReceiptNumber();
@@ -92,21 +110,6 @@ namespace EPMS.Implementation.Services
             receiptRepository.Add(receipt);
             receiptRepository.SaveChanges();
 
-            // Update Quotation
-            quotationRepository.Update(quotation);
-            quotationRepository.SaveChanges();
-
-            // Update Order
-            if (CheckIfNoPaymentDue(quotation))
-            {
-                Order order = ordersRepository.GetOrderByQuotationId(quotation.QuotationId);
-                if (order != null)
-                {
-                    order.OrderStatus = (short) OrderStatus.Completed;
-                    ordersRepository.Update(order);
-                    ordersRepository.SaveChanges();
-                }
-            }
             return receipt.ReceiptId;
         }
 

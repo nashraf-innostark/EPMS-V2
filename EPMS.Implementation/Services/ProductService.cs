@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
+using EPMS.Models.Common;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -299,8 +300,8 @@ namespace EPMS.Implementation.Services
             ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>(),
-                AllProducts = productRepository.GetAll().ToList(),
-                ProductSections = productSectionService.GetAll()
+                AllProducts = productRepository.GetAll().OrderByDescending(x=>x.RecCreatedDt).Take(100).ToList(),
+                ProductSections = productSectionService.GetAll().ToList()
             };
             switch (request.From)
             {
@@ -309,6 +310,7 @@ namespace EPMS.Implementation.Services
                     IEnumerable<InventoryDepartment> departmentsForProduct = AllChildDepartments(department);
                     IEnumerable<long> itemVariationIds = GetAllItemVariationIds(departmentsForProduct);
                     var invProducts = productRepository.GetByItemVariationId(itemVariationIds, request, 0);
+
                     response.Products = invProducts.Products;
                     response.TotalCount = invProducts.TotalCount;
                     break;
@@ -326,9 +328,23 @@ namespace EPMS.Implementation.Services
             ProductDetailResponse response = new ProductDetailResponse
             {
                 Product = new Product(),
+                ProductSizes = new List<ProductSize>(),
                 ProductSections = productSectionRepository.GetAll().ToList()
             };
             response.Product = productRepository.Find(id);
+            var products = productRepository.GetAll();
+            foreach (var product in products)
+            {
+                if (product.ItemVariation != null && product.ItemVariation.Sizes.FirstOrDefault() != null)
+                {
+                    response.ProductSizes.Add(new ProductSize
+                    {
+                        ProductId = product.ProductId,
+                        VariationId = (long)product.ItemVariationId,
+                        SizeId = product.ItemVariation.Sizes.FirstOrDefault().SizeId
+                    });
+                }
+            }
             return response;
         }
 

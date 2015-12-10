@@ -57,7 +57,10 @@ namespace EPMS.Repository.Repositories
             int toRow = request.iDisplayLength;
 
             bool searchSpecified = !string.IsNullOrEmpty(request.SearchString);
-            ProductResponse response = new ProductResponse();
+            ProductResponse response = new ProductResponse
+            {
+                Products = new List<Product>()
+            };
             switch (request.From)
             {
                 case "Inventory":
@@ -67,10 +70,16 @@ namespace EPMS.Repository.Repositories
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
                     || !searchSpecified);
 
-                    response.Products = request.SortDirection == "asc" ?
-                        DbSet.Where(query).OrderBy(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList() :
-                        DbSet.Where(query).OrderByDescending(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList();
-                    response.TotalCount = DbSet.Count(query);
+                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariation.InventoryItemId);
+                    foreach (var prod in products)
+                    {
+                        response.Products.Add(prod.FirstOrDefault());
+                    }
+                    response.Products = request.SortDirection == "asc" ? 
+                        response.Products.AsQueryable().OrderBy(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList() : 
+                        response.Products.AsQueryable().OrderByDescending(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList();
+                    response.TotalCount = products.Count();
+                    
                     break;
                 case "Sections":
                     Expression<Func<Product, bool>> queery =
@@ -111,12 +120,20 @@ namespace EPMS.Repository.Repositories
 
             ProductResponse response = new ProductResponse
             {
-                TotalCount = DbSet.Count(x => (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
-                                               x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
-                                               x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
+                TotalCount = DbSet.Count(x => (x.ItemVariationId != null && x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
+                        x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
+                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameEn.Contains(search)
+                        ) ||
+                        (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
+                        x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
+                        x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
                     )),
                     Products = DbSet.Where(
                     x =>
+                        (x.ItemVariationId != null && x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
+                        x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
+                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameEn.Contains(search)
+                        ) || 
                         (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
                          x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
                          x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)

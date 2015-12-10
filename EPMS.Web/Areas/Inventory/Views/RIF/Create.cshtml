@@ -390,9 +390,9 @@
                     $("#RifItem_" + index + "__ItemDetails").val("");
                     var textToAppend = "";
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                        textToAppend = textToAppend + value.ItemNameE;
                     } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                        textToAppend = textToAppend + value.ItemNameA;
                     }
                     if (isItemSku) {
                         textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
@@ -400,16 +400,16 @@
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
                             if (value.ItemVariationDescriptionE == null) {
-                                textToAppend = textToAppend + "\nDescription:";
+                                textToAppend = textToAppend + "\n";
                             } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
                             }
 
                         } else {
                             if (value.ItemVariationDescriptionA == null) {
-                                textToAppend = textToAppend + "\nDescription:";
+                                textToAppend = textToAppend + "\n";
                             } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                             }
                         }
                     }
@@ -440,26 +440,21 @@
                     $("#RifItem_" + index + "__ItemDetails").val("");
                     var textToAppend = "";
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                        textToAppend = textToAppend + value.ItemNameE;
                     } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                        textToAppend = textToAppend + value.ItemNameA;
                     }
                     if (isItemSku) {
                         textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            if (value.ItemVariationDescriptionE == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
                             }
-
                         } else {
-                            if (value.ItemVariationDescriptionA == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                             }
                         }
                     }
@@ -707,7 +702,7 @@
         } else {
             $("#irfValidationError").text("");
         }
-        
+
         var count = $('.qouteAdd tr').length;
         // Validate Returned Quantity <= Released Quantity
         //for (var x = 0; x < count; x++) {
@@ -734,8 +729,7 @@
         }
         return true;
     }
-    function appendWarehouseDD(varId)
-    {
+    function appendWarehouseDD(varId) {
         var index = $("#ItemModalIndex").val();
         $("#RifItem_" + index + "__WarehouseId").empty();
         $("#RifItem_" + index + "__WarehouseId").append(

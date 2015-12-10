@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
@@ -207,7 +208,7 @@ namespace EPMS.Implementation.Services
                     CategoryId = 7,
                     SubCategoryId = 4, //4.	Item Quantity
                     ItemId = itemRelease.ItemReleaseId,
-                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")),
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
@@ -359,7 +360,7 @@ namespace EPMS.Implementation.Services
                     CategoryId = 7,
                     SubCategoryId = 5, //For Warehouse Manager
                     ItemId = itemRelease.ItemReleaseId,
-                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")),
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
@@ -385,7 +386,7 @@ namespace EPMS.Implementation.Services
                     CategoryId = 7,
                     SubCategoryId = 6, //For requester
                     ItemId = itemRelease.ItemReleaseId,
-                    AlertDate = Convert.ToDateTime(DateTime.Now).ToShortDateString(),
+                    AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")),
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,

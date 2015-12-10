@@ -186,7 +186,7 @@
     var divId;
     var productToShow;
     $().ready(function () {
-        if ($("#SectionId").val() == 0) {
+        if (parseInt('@ViewBag.ProductId') == 0) {
             CKEDITOR.replace('SectionContentEn', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
             });
@@ -196,7 +196,8 @@
             $("#content-area").hide();
             $("#content").show();
         } else {
-            
+            $("#content-area").show();
+            $("#content").hide();
         }
         dir = '@direction';
         divId = "jstree";
@@ -222,7 +223,7 @@
             },
             "plugins": ["themes", "json_data", "ui"],
         });
-        setTimeout(function () {
+        @*setTimeout(function () {
             var temp = '@ViewBag.ProductId';
             if (temp != '') {
                 productToShow = '@ViewBag.ProductId';
@@ -233,9 +234,11 @@
             } else {
                 $("#content").show();
             }
-        }, 500);
+        }, 500);*@
     });
     function updateView(r) {
+        if (CKEDITOR.instances.SectionContentEn) CKEDITOR.instances.SectionContentEn.destroy();
+        if (CKEDITOR.instances.SectionContentAr) CKEDITOR.instances.SectionContentAr.destroy();
         var id = r;
         if (id == "parentNode") {
             setNullValues();
@@ -295,7 +298,8 @@
                         updateValues(value);
                     }
                 });
-                $("#content").show();
+                $("#content-area").show();
+                $("#content").hide();
                 $("#ShowToPublicDiv").show();
                 $("#Edit").show();
                 $("#UpdateNode").hide();
@@ -323,6 +327,14 @@
 
         }*@
         enableControls();
+        CKEDITOR.replace('SectionContentEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('SectionContentAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#content-area").hide();
+        $("#content").show();
         $("#UpdateNode").show();
         $("#Edit").hide();
         $("#SaveNewNode").hide();
@@ -365,8 +377,12 @@
         $("#InventoyDepartmentId").val("");
         $("#SectionNameEn").val("");
         $("#SectionNameAr").val("");
+        if (CKEDITOR.instances.SectionContentEn) CKEDITOR.instances.SectionContentEn.destroy();
+        if (CKEDITOR.instances.SectionContentAr) CKEDITOR.instances.SectionContentAr.destroy();
         $("#SectionContentEn").val("");
         $("#SectionContentAr").val("");
+        $("#ContentEn").val("");
+        $("#ContentAr").val("");
         //$("#ShowToPublic").val(value.ShowToPublic);
         //$('#ShowToPublic').bootstrapSwitch('state', value.ShowToPublic);
         $("#RecCreatedBy").val("");
@@ -399,6 +415,15 @@
                     $("#Edit").hide();
                     $("#UpdateNode").hide();
                     enableControls();
+                    CKEDITOR.replace('SectionContentEn', {
+                        filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                    });
+                    CKEDITOR.replace('SectionContentAr', {
+                        filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                    });
+                    $("#content-area").hide();
+                    $("#content").show();
+                    $("#ShowToPublicDiv").show();
                 }
 
             }

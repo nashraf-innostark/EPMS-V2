@@ -349,26 +349,21 @@
                     $("#PoItems_" + index + "__ItemDetails").val("");
                     var textToAppend = "";
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                        textToAppend = textToAppend + value.ItemNameE;
                     } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                        textToAppend = textToAppend + value.ItemNameA;
                     }
                     if (isItemSku) {
                         textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            if (value.ItemVariationDescriptionE == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
                             }
-
                         } else {
-                            if (value.ItemVariationDescriptionA == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                             }
                         }
                     }

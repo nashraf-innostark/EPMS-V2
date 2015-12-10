@@ -23,7 +23,7 @@ namespace EPMS.Website.Controllers
         private IWebsiteUserPreferenceService userPrefrencesService;
         private IShoppingCartService cartService;
         private IWebsiteHomePageService homePageService;
-
+        
         private void SetCultureInfo()
         {
             CultureInfo info;
@@ -108,8 +108,10 @@ namespace EPMS.Website.Controllers
         public void SetWebsiteLogo()
         {
             homePageService = UnityWebActivator.Container.Resolve<IWebsiteHomePageService>();
-            var logo = homePageService.GetHomePageLogo().WebsiteLogoPath;
+            var response = homePageService.GetHomePageResponse();
+            var logo = response.HomePage.WebsiteLogoPath;
             Session["WebsiteLogo"] = ConfigurationManager.AppSettings["WebsiteLogo"] + logo;
+            //ViewBag.MetaTags = response.MetaTagsResponse;
         }
         public ApplicationUserManager UserManager
         {

@@ -248,6 +248,7 @@
 
                         <div class="span5">
                             <div class="main-data">
+                                <input type="hidden" value="@Model.Product.ItemVariationId" id="Product_ItemVariationId" />
                                 <p class="name">
                                     @if (ViewBag.From != null)
                                     {
@@ -311,7 +312,7 @@
                                             @Html.DropDownListFor(m => m.Product.ProductSize, new[]
                                             {
                                                 new SelectListItem {Value = "0", Text = Model.Product.ProductSize}
-                                            }, new { @id = "Size" })
+                                            }, new {@id = "Size"})
                                         </div>
                                     }
                                     <div class="quantitiy">
@@ -453,3 +454,15 @@
         </div>
     </div><!-- end page_header -->
 </section>
+
+<script>
+    var sizes = '@Html.Raw(Json.Encode(Model.ProductSizes))';
+    var productSize = JSON.parse(sizes);
+    $(document).ready(function () {
+        $('#Size').val('@Model.Product.ProductId');
+        $("#Size").on("change", function () {
+            var productId = parseInt($(this).val());
+            window.location.href = window.location.origin + "/Product/Details/" + productId + window.location.search;
+        });
+    });
+</script>

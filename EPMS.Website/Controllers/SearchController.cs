@@ -38,7 +38,7 @@ namespace EPMS.Website.Controllers
 
             //Products Mapping
             searchResult.Products =
-                searchResultData.ProductResponse.Products.Select(x => x.CreateFromServerToClientFromInventory())
+                searchResultData.ProductResponse.Products.Select(x => x.CreateFromServerToClientForLv())
                     .ToList();
             searchResult.ProductSearchRequest.TotalCount = searchResultData.ProductResponse.TotalCount;
 

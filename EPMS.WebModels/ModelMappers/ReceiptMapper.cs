@@ -20,7 +20,7 @@ namespace EPMS.WebModels.ModelMappers
                 InvoiceId = source.InvoiceId,
                 AmountPaid = source.AmountPaid,
                 InstallmentNumber = source.InstallmentNumber,
-                //OrderNumber = source.Invoice.Quotation.Orders.FirstOrDefault().OrderNo,
+                OrderNumber = source.Invoice.Quotation.Orders.FirstOrDefault().OrderNo,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
@@ -31,6 +31,9 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerId = source.Invoice.Quotation.CustomerId,
                 AmountPaidTillNow = amountPaidTillNow,
                 AmountLeft = Math.Round((grandTotal - amountPaidTillNow), 2, MidpointRounding.AwayFromZero),
+                PaymentType = source.PaymentType,
+                IsPaid = source.IsPaid,
+                PaypalId = source.PaypalId
             };
         }
 
@@ -46,6 +49,9 @@ namespace EPMS.WebModels.ModelMappers
                 RecCreatedDt = source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
+                PaymentType = source.PaymentType,
+                IsPaid = source.IsPaid,
+                PaypalId = source.PaypalId
             };
         }
     }

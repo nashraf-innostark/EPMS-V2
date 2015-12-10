@@ -55,7 +55,8 @@ namespace EPMS.Web.Areas.Website.Controllers
         {
             ViewBag.IsIncludeNewJsTree = true;
             ProductListViewModel viewModel = new ProductListViewModel();
-            viewModel.Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
+            var product = productService.GetAll().ToList();
+            viewModel.Products = product.Select(x => x.CreateFromServerToClientForLv()).ToList();
             return View(viewModel);
         }
 

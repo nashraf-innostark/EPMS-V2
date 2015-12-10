@@ -55,7 +55,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductNameEn, new { @dir = "ltr", id = "ProductNameEn", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.Product.ProductNameEn, new { @dir = "ltr", id = "ProductNameEn", @class = "edit-able toBeRequired" })
                     @Html.ValidationMessageFor(m => m.Product.ProductNameEn, "", new { @class = "required" })
                 </div>
             </div>
@@ -67,7 +67,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.Product.ProductNameAr, new { @dir = "ltr", id = "ProductNameAr", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.Product.ProductNameAr, new { @dir = "ltr", id = "ProductNameAr", @class = "edit-able toBeRequired" })
                     @Html.ValidationMessageFor(m => m.Product.ProductNameAr, "", new { @class = "required" })
                 </div>
             </div>
@@ -462,11 +462,13 @@
 
         if (productId == 0 || productId == null) {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            $('.' + 'edit-able' + ':input').attr('disabled', false);
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();
         } else {
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
+            $('.' + 'edit-able' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
             $("#edit").show();
@@ -476,17 +478,24 @@
         }
 
         $("#edit").click(function (event) {
-            $('.' + 'tbdisable' + ':input').attr('disabled', false);
-            $("#specify-area").hide();
-            $("#specify-ck").show();
-            $("#descp-area").hide();
-            $("#descp-ck").show();
-            $("#savebtn").show();
-            $("#cancel").show();
-            $("#edit").hide();
-            $('#SectionId').select2('enable');
-            $('.addImageButton').show();
-            $(".deleteImage").show();
+            if (parseInt($("#Product_ItemVariationId").val()) > 0) {
+                $('.' + 'edit-able' + ':input').attr('disabled', false);
+                $("#savebtn").show();
+                $("#cancel").show();
+                $("#edit").hide();
+            } else {
+                $('.' + 'tbdisable' + ':input').attr('disabled', false);
+                $("#specify-area").hide();
+                $("#specify-ck").show();
+                $("#descp-area").hide();
+                $("#descp-ck").show();
+                $("#savebtn").show();
+                $("#cancel").show();
+                $("#edit").hide();
+                $('#SectionId').select2('enable');
+                $('.addImageButton').show();
+                $(".deleteImage").show();
+            }
             event.preventDefault();
         });
 
