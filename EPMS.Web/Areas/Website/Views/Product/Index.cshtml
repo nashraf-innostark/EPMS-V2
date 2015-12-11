@@ -109,6 +109,7 @@
     @Html.Partial("_InventoryDepartmentItems")
 }
 
+<script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var siteUrl;
@@ -118,8 +119,14 @@
     var divId = "jstree";
     var dir;
     $(function () {
-        dir = '@direction';
         siteUrl = $('#siteURL').val();
+        dir = '@direction';
+        $.blockUI({
+            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+        });
+        url = siteUrl + "/Website/Product/GetTreeData/";
+        populateTreeJson(url, divId, dir);
         $('#Product').dataTable({
             "sPaginationType": "bootstrap",
             "aoColumns": [
@@ -143,8 +150,6 @@
 
 
         $("#TreeSelector").click(function (event) {
-            url = siteUrl + "/Website/Product/GetTreeData/";
-            populateTreeJson(url, divId, dir);
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
@@ -152,6 +157,10 @@
         $("#import").click(function (event) {
             selectedChildNodes = new Array();
             selectedParentNodes = new Array();
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
             var selectedNodes = $("#jstree").jstree("get_checked", true, true);
             $.each(selectedNodes, function (key, value) {
                 if (value.children.length == 0) {
@@ -168,7 +177,7 @@
                 var url = siteUrl + "/Website/Product/ImportProducts";
                 saveImportedProducts(url);
             }
-
+            $.unblockUI();
         });
     });
 
@@ -232,6 +241,7 @@
                 sectionIds: selectedParentNodes
             },
             success: function (data) {
+                $.unblockUI();
                 if (data == "Success") {
                     window.location.href = siteUrl + "/Website/Product/Index";
                 }
@@ -239,6 +249,7 @@
             error: function (e) {
                 alert('Error=' + e.toString());
                 $(".tempLoader").click();
+                $.unblockUI();
             }
         });
     }

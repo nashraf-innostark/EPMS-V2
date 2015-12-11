@@ -115,7 +115,8 @@ namespace EPMS.Web.Areas.HR.Controllers
                 // get Employee
                 if (date == null)
                 {
-                    date = DateTime.Now;
+                    DateTime now = DateTime.Now;
+                    date = new DateTime(now.Year, now.Month, 1);
                 }
                 date = DateTime.Parse(date.ToString());
                 PayrollResponse response = EmployeeService.FindEmployeeForPayroll(id, (DateTime) date);

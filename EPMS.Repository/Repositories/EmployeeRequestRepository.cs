@@ -63,8 +63,12 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.EmployeeId == employeeId).OrderByDescending(x => x.RequestDate).Take(5);
         }
 
-        public IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentMonth, long id)
+        public IEnumerable<EmployeeRequest> GetAllMonetaryRequests(DateTime currentDate, long id)
         {
+            DateTime now = currentDate;
+            var startDate = new DateTime(now.Year, now.Month, 1);
+            var lastDayofMonth = DateTime.DaysInMonth(currentDate.Year, currentDate.Month);
+            var endDate = new DateTime(now.Year, now.Month, lastDayofMonth);
             var retVal = DbSet.Where(
                     request =>
                         (request.IsMonetary) && (request.EmployeeId == id)).Select(s => new
@@ -73,9 +77,9 @@ namespace EPMS.Repository.Repositories
                             s.EmployeeId,
                             s.IsMonetary,
                             s.RequestTopic,
-                            RequestDetails = s.RequestDetails.Where(detail => detail.LastInstallmentDate != null && detail.FirstInstallmentDate != null && 
-                                (detail.RowVersion == 1 && (detail.FirstInstallmentDate.Value.Month <= currentMonth.Month  && detail.FirstInstallmentDate.Value.Year <= currentMonth.Year 
-                                && detail.LastInstallmentDate.Value.Month >= currentMonth.Month && detail.LastInstallmentDate.Value.Year >= currentMonth.Year))).ToList(),
+                            RequestDetails = s.RequestDetails.Where(detail => detail.LastInstallmentDate != null && detail.FirstInstallmentDate != null && detail.RowVersion == 1 &&
+                                ((currentDate.Year == detail.FirstInstallmentDate.Value.Year) ? (currentDate.Month >= detail.FirstInstallmentDate.Value.Month && currentDate.Year == detail.FirstInstallmentDate.Value.Year && currentDate <= detail.LastInstallmentDate) :
+                                (currentDate.Month <= detail.LastInstallmentDate.Value.Month && currentDate.Year <= detail.LastInstallmentDate.Value.Year && currentDate >= detail.FirstInstallmentDate))).ToList(),
                         }).ToList().Select(s => new EmployeeRequest 
                         {
                             RequestId = s.RequestId,
@@ -83,7 +87,7 @@ namespace EPMS.Repository.Repositories
                             IsMonetary = s.IsMonetary,
                             RequestTopic = s.RequestTopic,
                             RequestDetails = s.RequestDetails.ToList(),
-                        }).ToList();
+                        }).OrderByDescending(x=>x.RecCreatedDt).Take(2).ToList();
             return retVal;
         }
 

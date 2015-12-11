@@ -90,10 +90,12 @@ function populateTreeJson(url, divId, dir) {
                 },
                 "plugins": ["themes", "json_data", "ui", "checkbox"],
             });
+            $.unblockUI();
             //$("#" + divId).jstree("refresh");
         },
         error: function (e) {
             alert('Error=' + e.toString());
+            $.unblockUI();
         }
     });
 }
