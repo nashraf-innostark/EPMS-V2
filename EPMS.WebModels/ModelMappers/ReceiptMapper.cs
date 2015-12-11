@@ -13,7 +13,7 @@ namespace EPMS.WebModels.ModelMappers
             var totalAmount = source.Invoice.Quotation.QuotationItemDetails.Sum(x => x.TotalPrice);
             var amountPaidTillNow =
                 source.Invoice.Receipts.Where(x => x.InvoiceId == source.InvoiceId).Sum(x => x.AmountPaid);
-            return new WebsiteModels.Receipt
+            var receipt =  new WebsiteModels.Receipt
             {
                 ReceiptId = source.ReceiptId,
                 ReceiptNumber = source.ReceiptNumber,
@@ -31,6 +31,20 @@ namespace EPMS.WebModels.ModelMappers
                 AmountPaidTillNow = amountPaidTillNow,
                 AmountLeft = Math.Round((grandTotal - amountPaidTillNow), 2, MidpointRounding.AwayFromZero),
             };
+            if (source.PaymentType == 2)
+            {
+                receipt.PaymentType = "Paypal";
+            }
+            else if (source.PaymentType == 3)
+            {
+                receipt.PaymentType = "Offline";
+            }
+            else if (source.PaymentType == 4)
+            {
+                receipt.PaymentType = "On Delivery";
+                
+            }
+            return receipt;
         }
 
         public static Models.DomainModels.Receipt CreateFromClientToServer(this WebsiteModels.Receipt source)

@@ -9,5 +9,7 @@
         public virtual ItemVariation ItemVariation { get; set; }
         public virtual Vendor Vendor { get; set; }
         public virtual Manufacturer Manufacturer { get; set; }
+        public int TotalQuantity { get; set; }
+        public bool ManuallyAdded { get; set; }
     }
 }

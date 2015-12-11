@@ -514,7 +514,7 @@
 
                         </tr>
                     </thead>
-                    <tbody class="manufacturerTable" id="warehouseDetails">
+                    <tbody class="warehouseTable" id="warehouseDetails">
                         @if (Model.ItemVariation.ItemWarehouses.Any())
                         {
 
@@ -552,7 +552,7 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Manufacturer</strong><a href="#manufacturModule" data-toggle="modal">Add Manufacturer</a>
+            <strong>Manufacturer</strong><a href="#manufacturModule" data-toggle="modal" id="addNewManufacturer">Add Manufacturer</a>
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -1778,11 +1778,11 @@
             var manufacturerId = $('#manuId').val();
             var price = $('#manufacturerPriceLable').val();
             var quantity = $('#manufacturerQuantityLable').val();
-            if (price == null || price == "" || quantity == null || quantity == "" || manufacturerId == "") {
+            if (price == null || price == "" || quantity == null || quantity == "" || manufacturerId == "" || isNaN(price) || isNaN(quantity)) {
                 $.pnotify({
                     title: 'error',
                     type: 'info',
-                    text: 'Please select Manufacturer, Price and Quantity'
+                    text: 'Please select Manufacturer and Enter Price and Quantity in Number'
                 });
             } else {
                 var index = $("#manufacturerDetails").children("tr").length;
@@ -1844,6 +1844,7 @@
                     event.preventDefault();
                     $('#manufacturModule').modal('hide');
                     $('.tableManufacturer').dataTable().fnDestroy();
+                    $("#addNewManufacturer").hide();
                     $('.tableManufacturer').dataTable({
                         "sPaginationType": "bootstrap",
                         "fnInitComplete": function () {
@@ -1864,6 +1865,9 @@
             var atable = $('#tableSortableVariationsManufacturer').dataTable();
             var pos = atable.fnGetPosition(row);
             atable.fnDeleteRow(pos);
+            if ($(".manufacturerTable").children("tr").children("td").html() == "No data available in table") {
+                $("#addNewManufacturer").show();
+            }
         });
 
         //Add Status from Dropdown to List
@@ -2055,11 +2059,11 @@
             var locationInWarehouse = $('#textTillParent').text();
             var quantity = $('#inputFieldQuantity').val();
             var warehouseId = $('#warehouseDropdown').val();
-            if (quantity == "" || warehouseId == "") {
+            if (quantity == "" || warehouseId == "" || isNaN(quantity)) {
                 $.pnotify({
                     title: 'error',
                     type: 'info',
-                    text: 'Please select Warehouse and Quantity'
+                    text: 'Please select Warehouse and Enter Quantityin Number'
                 });
             } else {
                 itemsCount = itemsCount + 1;
@@ -2133,7 +2137,9 @@
         if ($(".statusTable").children("tr").children("td").html() != "No data available in table") {
             $("#addNewStatus").hide();
         }
-
+        if ($(".manufacturerTable").children("tr").children("td").html() != "No data available in table") {
+            $("#addNewManufacturer").hide();
+        }
     });
 
     //For manipulating the Lists

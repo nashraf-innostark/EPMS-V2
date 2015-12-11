@@ -29,7 +29,7 @@ namespace EPMS.Repository.Repositories
             NewsAndArticleResponse response = new NewsAndArticleResponse
             {
                 TotalCount = DbSet.Count(x => x.Type == type),
-                NewsAndArticles = DbSet.Where(x => x.Type == type).OrderBy(x=>x.NewsArticleId).Skip(fromRow).Take(toRow).ToList()
+                NewsAndArticles = DbSet.Where(x => x.Type == type && x.ShowToPublic).OrderBy(x=>x.NewsArticleId).Skip(fromRow).Take(toRow).ToList()
             };
 
             return response;

@@ -10,5 +10,6 @@ namespace EPMS.Interfaces.IServices
         bool AddPoItem(PurchaseOrderItem item);
         bool UpdatePoItem(PurchaseOrderItem item);
         void DeletePoItem(PurchaseOrderItem item);
+        IEnumerable<PurchaseOrderItem> GetPoItemsByVarId(long id);
     }
 }
