@@ -15,7 +15,7 @@
             <a href="~/Home/Index">@Menu.Home</a>
         </li>
         <li>
-            <a href="javascript:;" class="sf-with-ul">@Menu.AboutUs</a>
+            <a href="javascript:;">@Menu.AboutUs</a>
             <ul>
                 <li>
                     <a href="@siteURL/AboutUs/Detail">@Menu.CompanyProfile</a>
@@ -23,7 +23,7 @@
             </ul>
         </li>
         <li>
-            <a href="javascript:;" class="sf-with-ul">@Menu.OurProducts</a>
+            <a href="javascript:;">@Menu.OurProducts</a>
             <ul>
                 @{
                     //All productSections, who have no parentId
@@ -153,7 +153,7 @@
         </li>
 
         <li>
-            <a href="javascript:;" class="sf-with-ul">@Menu.OurServices</a>
+            <a href="javascript:;">@Menu.OurServices</a>
             <ul>
                 @{
                     //All productSections, who have no parentId
@@ -202,7 +202,7 @@
             </ul>
         </li>
         <li>
-            <a href="javascript:;" class="sf-with-ul">@Menu.NewsArticles</a>
+            <a href="javascript:;">@Menu.NewsArticles</a>
             <ul>
                 <li>
                     <a href="@siteURL/NewsAndArticle/Index/0">@Menu.News</a>
@@ -213,6 +213,7 @@
             </ul>
         </li>
         <li><a href="@siteURL/ContactUs/Detail">@Menu.ContactUs</a></li>
+        <li><a href="@ConfigurationManager.AppSettings["Careers"]">@Menu.Careers</a></li>
     </ul>
 </nav>
 <!-- end main_menu -->

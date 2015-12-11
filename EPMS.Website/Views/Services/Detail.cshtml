@@ -19,7 +19,16 @@
             <div class="span6">
                 <ul class="breadcrumbs fixclear">
                     <li><a href="/Home/Index">@EPMS.WebModels.Resources.WebsiteClient.Common.Common.HomePage</a></li>
-                    <li><a href="/NewsAndArticle/Index/1">@ViewBag.Title</a></li>
+                    <li><a href="#">@ViewBag.Title</a></li>
+                    @if (Model.WebsiteService.ParentService != null && Model.WebsiteService.ParentService.ParentService != null)
+                    {
+                        <li><a href="/Services/Detail/@Model.WebsiteService.ParentService.ParentService.ServiceId">@Model.WebsiteService.ParentService.ParentService.ServiceNameEn</a></li>
+                    }
+                    @if (Model.WebsiteService.ParentService != null)
+                    {
+                        <li><a href="/Services/Detail/@Model.WebsiteService.ParentService.ServiceId">@Model.WebsiteService.ParentService.ServiceNameEn</a></li>
+                    }
+                    <li><a href="/Services/Detail/@Model.WebsiteService.ServiceId">@Model.WebsiteService.ServiceNameEn</a></li>
                 </ul>
                 <span id="current-date">@Date.ToString("dddd, dd MMMM yyyy")</span>
             </div>

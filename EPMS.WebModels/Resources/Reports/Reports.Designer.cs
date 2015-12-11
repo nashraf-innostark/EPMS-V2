@@ -394,6 +394,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to View All Items Report.
+        /// </summary>
+        public static string ViewAllItemsReport {
+            get {
+                return ResourceManager.GetString("ViewAllItemsReport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to View Item Report.
         /// </summary>
         public static string ViewItemReport {

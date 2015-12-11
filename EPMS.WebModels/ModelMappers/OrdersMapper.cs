@@ -65,6 +65,7 @@ namespace EPMS.WebModels.ModelMappers
                     }
                 }
             }
+            order.RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")) + " - " + source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("ar"));
             return order;
         }
 

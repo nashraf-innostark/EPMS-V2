@@ -1,4 +1,5 @@
-﻿@using EPMS.Models.Common
+﻿@using System.Globalization
+@using EPMS.Models.Common
 @model EPMS.WebModels.ViewModels.RFQ.RFQListViewModel
 
 @{
@@ -91,6 +92,7 @@
                                 <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
                                 <th>@EPMS.WebModels.Resources.CMS.RFQ.Header</th>
                                 <th>@EPMS.WebModels.Resources.CMS.RFQ.ClientName</th>
+                                <th>@EPMS.WebModels.Resources.Common.RecCreatedDate</th>
                                 <th>@EPMS.WebModels.Resources.CMS.RFQ.Status</th>
                             </tr>
                         </thead>
@@ -108,6 +110,7 @@
                                         <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">@rfq.SerialNumber</a></td>
                                     }
                                     <td>@(direction == "ltr" ? rfq.CustomerNameEn : rfq.CustomerNameAr)</td>
+                                    <td>@rfq.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")) - @rfq.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("ar"))</td>
                                     <td>
                                         @{
                                             switch ((RFQStatus)rfq.Status)

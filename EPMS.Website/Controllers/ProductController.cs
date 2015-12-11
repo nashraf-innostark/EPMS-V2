@@ -64,23 +64,30 @@ namespace EPMS.Website.Controllers
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             // New Arrivals
-            var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> arrivals = newArrivals as IList<EPMS.Models.DomainModels.Product> ?? newArrivals.ToList();
-            viewModel.NewArrivals = arrivals.Any() ? arrivals.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x=>x.InventoryItemId);
+            foreach (var newArrival in newArrivals)
+            {
+                viewModel.NewArrivals.Add(newArrival.FirstOrDefault());
+            }
             // Best Sell
-            var bestSell = productsList.AllProducts.Where(x => x.BestSeller).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> sell = bestSell as IList<EPMS.Models.DomainModels.Product> ?? bestSell.ToList();
-            viewModel.BestSell = sell.Any() ? sell.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var bestSells = productsList.AllProducts.Where(x => x.BestSeller).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var bestSell in bestSells)
+            {
+                viewModel.BestSell.Add(bestSell.FirstOrDefault());
+            }
             // Random Products
-            var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> products = randomProducts as IList<EPMS.Models.DomainModels.Product> ?? randomProducts.ToList();
-            viewModel.RandomProducts = products.Any() ? products.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var randomProduct in randomProducts)
+            {
+                viewModel.RandomProducts.Add(randomProduct.FirstOrDefault());
+            }
             // Featured Products
-            var featuredProducts = productsList.AllProducts.Where(x => x.Featured).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> enumerable = featuredProducts as IList<EPMS.Models.DomainModels.Product> ?? featuredProducts.ToList();
-            viewModel.FeaturedProducts = enumerable.Any() ? enumerable.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var featuredProducts = productsList.AllProducts.Where(x => x.Featured).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var featuredProduct in featuredProducts)
+            {
+                viewModel.FeaturedProducts.Add(featuredProduct.FirstOrDefault());
+            }
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            ViewBag.ShowSlider = false;
             ViewBag.From = from;
             return View(viewModel);
         }
@@ -101,22 +108,29 @@ namespace EPMS.Website.Controllers
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
             // New Arrivals
-            var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> arrivals = newArrivals as IList<EPMS.Models.DomainModels.Product> ?? newArrivals.ToList();
-            viewModel.NewArrivals = arrivals.Any() ? arrivals.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var newArrivals = productsList.AllProducts.Where(x => x.NewArrival).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var newArrival in newArrivals)
+            {
+                viewModel.NewArrivals.Add(newArrival.FirstOrDefault());
+            }
             // Best Sell
-            var bestSell = productsList.AllProducts.Where(x => x.BestSeller).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> sell = bestSell as IList<EPMS.Models.DomainModels.Product> ?? bestSell.ToList();
-            viewModel.BestSell = sell.Any() ? sell.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var bestSells = productsList.AllProducts.Where(x => x.BestSeller).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var bestSell in bestSells)
+            {
+                viewModel.BestSell.Add(bestSell.FirstOrDefault());
+            }
             // Random Products
-            var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> products = randomProducts as IList<EPMS.Models.DomainModels.Product> ?? randomProducts.ToList();
-            viewModel.RandomProducts = products.Any() ? products.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
+            var randomProducts = productsList.AllProducts.Where(x => x.RandomProduct).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var randomProduct in randomProducts)
+            {
+                viewModel.RandomProducts.Add(randomProduct.FirstOrDefault());
+            }
             // Featured Products
-            var featuredProducts = productsList.AllProducts.Where(x => x.Featured).Take(50);
-            IEnumerable<EPMS.Models.DomainModels.Product> enumerable = featuredProducts as IList<EPMS.Models.DomainModels.Product> ?? featuredProducts.ToList();
-            viewModel.FeaturedProducts = enumerable.Any() ? enumerable.Select(x => x.CreateFromServerToClientFromInventory()).ToList() : new List<Product>();
-            ViewBag.ShowSlider = false;
+            var featuredProducts = productsList.AllProducts.Where(x => x.Featured).OrderByDescending(x => x.RecCreatedDt).Select(x => x.CreateFromServerToClientFromInventory()).GroupBy(x => x.InventoryItemId);
+            foreach (var featuredProduct in featuredProducts)
+            {
+                viewModel.FeaturedProducts.Add(featuredProduct.FirstOrDefault());
+            }
             ViewBag.From = viewModel.SearchRequest.From;
             return View(viewModel);
         }
@@ -137,8 +151,8 @@ namespace EPMS.Website.Controllers
             }
             ProductDetailResponse productDetails = productService.GetProductDetails(productId, from);
             viewModel.ProductSections = productDetails.ProductSections;
-            viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();            
-            ViewBag.ShowSlider = false;
+            viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();
+            viewModel.ProductSizes = productDetails.ProductSizes;
             ViewBag.From = from;
             return View(viewModel);
         }

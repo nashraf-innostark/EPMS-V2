@@ -12,6 +12,7 @@ namespace EPMS.WebModels.WebsiteModels
         public bool ShowToPublic { get; set; }
         public string Link { get; set; }
         public string Description { get; set; }
+        public string DescriptionAr { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }

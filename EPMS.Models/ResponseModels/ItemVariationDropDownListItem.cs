@@ -13,5 +13,7 @@
         public string ItemVariationDescriptionA { get; set; }
         public string ItemNameE { get; set; }
         public string ItemNameA { get; set; }
+        public string DescriptionForQuotationEn { get; set; }
+        public string DescriptionForQuotationAr { get; set; }
     }
 }

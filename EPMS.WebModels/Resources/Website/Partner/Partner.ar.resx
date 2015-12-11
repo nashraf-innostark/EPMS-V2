@@ -120,8 +120,17 @@
   <data name="Add" xml:space="preserve">
     <value>اضافة شريك جديد</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Partner has been Added.</value>
+  </data>
   <data name="AddTitle" xml:space="preserve">
     <value>صفحة اضافة الشركاء</value>
+  </data>
+  <data name="DeleteErrorMessage" xml:space="preserve">
+    <value>Error in deleting Partner.</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Partner has been Deleted.</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تعديل الشركاء</value>
@@ -131,6 +140,9 @@
   </data>
   <data name="PartnerNameArabic" xml:space="preserve">
     <value>اسم الشريك بالعربي</value>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Partner has been Updated.</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
     <value>تحديث الشريك</value>

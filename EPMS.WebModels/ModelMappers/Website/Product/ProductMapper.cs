@@ -1,26 +1,46 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers.Website.ProductImage;
+using Size = EPMS.WebModels.WebsiteModels.Size;
 
 namespace EPMS.WebModels.ModelMappers.Website.Product
 {
     public static class ProductMapper
     {
+        public static WebsiteModels.Product CreateFromServerToClientForLv(this Models.DomainModels.Product source)
+        {
+            return new WebsiteModels.Product
+            {
+                ProductId = source.ProductId,
+                ProductNameEn = !string.IsNullOrEmpty(source.ProductNameEn) ? source.ProductNameEn : source.ItemVariation.SKUDescriptionEn,
+                ProductNameAr = !string.IsNullOrEmpty(source.ProductNameAr) ? source.ProductNameAr : source.ItemVariation.SKUDescriptionAr,
+                ItemVariationId = source.ItemVariationId,
+                SKUCode = source.SKUCode,
+                ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn),
+                ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr),
+                ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice,
+                DiscountedPrice = source.DiscountedPrice,
+                ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn),
+                ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr),
+            };
+        }
         public static WebsiteModels.Product CreateFromServerToClient(this Models.DomainModels.Product source)
         {
             WebsiteModels.Product retVal = new WebsiteModels.Product();
             retVal.ProductId = source.ProductId;
-            retVal.ProductNameEn = source.ProductNameEn;
-            retVal.ProductNameAr = source.ProductNameAr;
+            retVal.ProductNameEn = !string.IsNullOrEmpty(source.ProductNameEn) ? source.ProductNameEn : source.ItemVariation.SKUDescriptionEn;
+            retVal.ProductNameAr = !string.IsNullOrEmpty(source.ProductNameAr) ? source.ProductNameAr : source.ItemVariation.SKUDescriptionAr;
             retVal.ItemVariationId = source.ItemVariationId;
-            retVal.ProductDescEn = source.ItemVariationId == null ? source.ProductDescEn : source.ItemDescriptionEn;
-            retVal.ProductDescAr = source.ItemVariationId == null ? source.ProductDescAr : source.ItemDescriptionAr;
+            retVal.ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn);
+            retVal.ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr);
             retVal.ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice;
             retVal.DiscountedPrice = source.DiscountedPrice;
-            retVal.ProductSpecificationEn = source.ProductSpecificationEn;
-            retVal.ProductSpecificationAr = source.ProductSpecificationAr;
+            retVal.ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn);
+            retVal.ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr);
             retVal.ProductSize = source.ProductSize;
             retVal.ProductSectionId = source.ProductSectionId;
             retVal.NewArrival = source.NewArrival;
@@ -30,6 +50,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             retVal.SKUCode = source.SKUCode;
             retVal.RecCreatedBy = source.RecCreatedBy;
             retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecCreatedDate = Convert.ToDateTime(source.RecCreatedDt).ToString("dd/MM/yyyy", new CultureInfo("en"));
             retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
             retVal.ItemDesc = source.ItemVariation != null ? source.ItemVariation.DescriptionEn : "";
             retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
@@ -46,7 +67,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 source.ProductSection != null ? source.ProductSection.SectionNameEn : "";
             retVal.DepartmentNameAr = source.ItemVariationId != null ?
                 source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameAr :
-                source.ProductSection != null ? source.ProductSection.SectionNameAr: "";
+                source.ProductSection != null ? source.ProductSection.SectionNameAr : "";
             var direction = Resources.Shared.Common.TextDirection;
             if (source.ItemVariationId != null)
             {
@@ -60,7 +81,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 }
                 var path = retVal.PathTillParent.Split('>');
                 retVal.PathTillParent = "";
-                for (int i = path.Length - 2 ; i >= 0; i--)
+                for (int i = path.Length - 2; i >= 0; i--)
                 {
                     if (i != path.Length - 2)
                     {
@@ -101,15 +122,16 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             var retVal = new WebsiteModels.Product
             {
                 ProductId = source.ProductId,
+                InventoryItemId = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemId : 0,
                 ProductNameEn = source.ProductNameEn,
                 ProductNameAr = source.ProductNameAr,
                 ItemVariationId = source.ItemVariationId,
-                ProductDescEn = source.ItemVariationId == null ? source.ProductDescEn : source.ItemDescriptionEn,
-                ProductDescAr = source.ItemVariationId == null ? source.ProductDescAr : source.ItemDescriptionAr,
+                ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn),
+                ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr),
                 ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice,
                 DiscountedPrice = source.DiscountedPrice,
-                ProductSpecificationEn = source.ProductSpecificationEn,
-                ProductSpecificationAr = source.ProductSpecificationAr,
+                ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn),
+                ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr),
                 ProductSize = source.ProductSize,
                 ProductSectionId = source.ProductSectionId,
                 SKUCode = source.SKUCode,
@@ -126,11 +148,31 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
                     source.ProductImages.FirstOrDefault().ProductImagePath : "",
                 SizeId = source.ItemVariation != null && source.ItemVariation.Sizes.FirstOrDefault() != null ? source.ItemVariation.Sizes.FirstOrDefault().SizeId : 0,
-                ItemImages = source.ItemVariation != null && source.ItemVariation.ItemImages != null ? 
+                ItemImages = source.ItemVariation != null && source.ItemVariation.ItemImages != null ?
                             source.ItemVariation.ItemImages.Select(x => x.CreateFromServerToClient()) : new List<WebsiteModels.ItemImage>(),
-                Sizes = source.ItemVariation != null && source.ItemVariation.Sizes!= null ? source.ItemVariation.Sizes.Select(x => x.CreateFromServerToClient()) : 
-                        new List<WebsiteModels.Size>(),
             };
+            if (source.ItemVariation != null)
+            {
+                retVal.Sizes = new List<Size>();
+                foreach (var variation in source.ItemVariation.InventoryItem.ItemVariations)
+                {
+                    if (variation.Sizes != null && variation.Sizes.Any())
+                    {
+                        var variat = variation.Sizes.FirstOrDefault();
+                        if (variat != null)
+                        {
+                            var size = new Size
+                            {
+                                SizeId = variation.Products.FirstOrDefault().ProductId,
+                                SizeNameEn = variat.SizeNameEn,
+                                SizeNameAr = variat.SizeNameAr
+                            };
+                            retVal.Sizes.Add(size);
+                        }
+                    }
+                }
+            }
+            
             var direction = Resources.Shared.Common.TextDirection;
             if (source.ItemVariationId != null)
             {
@@ -187,7 +229,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 source.ProductSection != null ? source.ProductSection.SectionNameAr : "";
             return retVal;
         }
-
+        
         public static ProductRequest CreateFromClientToServer(this WebsiteModels.Product source)
         {
             var product = new Models.DomainModels.Product
@@ -209,7 +251,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 RandomProduct = source.RandomProduct,
                 BestSeller = source.BestSeller,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = !string.IsNullOrEmpty(source.RecCreatedDate) ? DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDt,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
@@ -230,15 +272,30 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ItemVariationId = source.ItemVariationId,
                 ProductNameEn = source.InventoryItem.ItemNameEn,
                 ProductNameAr = source.InventoryItem.ItemNameAr,
-                ProductDescEn = source.InventoryItem.ItemDescriptionEn,
-                ProductDescAr = source.InventoryItem.ItemDescriptionAr,
+                ProductDescEn = RemoveCkEditorValues(source.InventoryItem.ItemDescriptionEn),
+                ProductDescAr = RemoveCkEditorValues(source.InventoryItem.ItemDescriptionAr),
                 ProductPrice = source.UnitPrice.ToString(),
                 SKUCode = source.SKUCode,
                 ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()),
-                Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()),
+                Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 ItemImage = source.ItemImages != null && source.ItemImages.FirstOrDefault() != null ?
                     source.ItemImages.FirstOrDefault().ItemImagePath : "",
             };
         }
+
+        #region Remove \r \n from CK editor values
+
+        private static string RemoveCkEditorValues(string value)
+        {
+            string retval = value;
+            if (!string.IsNullOrEmpty(retval))
+            {
+                retval = retval.Replace('\r', ' ');
+                retval = retval.Replace('\n', ' ');
+            }
+            return retval;
+        }
+
+        #endregion
     }
 }

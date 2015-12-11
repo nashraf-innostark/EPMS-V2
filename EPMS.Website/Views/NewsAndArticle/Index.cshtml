@@ -61,7 +61,7 @@
                             if (direction == "ltr")
                             {
                                 <div class="itemView clearfix eBlog">
-                                    <h4>@newsOrArticle.TitleEn</h4>
+                                    <h4><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId">@newsOrArticle.TitleEn</a></h4>
                                     <div class="itemHeader">
                                         <div class="post_details">
                                             <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameEn</a></span>
@@ -93,7 +93,7 @@
                             else
                             {
                                 <div class="itemView clearfix eBlog">
-                                    <h4>@newsOrArticle.TitleAr</h4>
+                                    <h4><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId">@newsOrArticle.TitleAr</a></h4>
                                     <div class="itemHeader">
                                         <div class="post_details">
                                             <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>

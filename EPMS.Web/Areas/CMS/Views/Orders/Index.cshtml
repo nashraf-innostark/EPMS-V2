@@ -49,6 +49,7 @@
                             <th>@EPMS.WebModels.Resources.CMS.Order.Quotation</th>
                             <th>@EPMS.WebModels.Resources.CMS.Order.Invoice</th>
                             <th>@EPMS.WebModels.Resources.CMS.Order.Reciept</th>
+                            <th>@EPMS.WebModels.Resources.Common.RecCreatedDate</th>
                             <th>@EPMS.WebModels.Resources.CMS.Order.Status</th>
                         </tr>
 
@@ -166,6 +167,15 @@
                 },
                 {
                     "aTargets": [6],
+                    "sDefaultContent": "No Data",
+                    "mRender": function(data, type, full) {
+                        return full["RecCreatedDateStr"];
+                    },
+                    "bVisible": true,
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [7],
                     "sDefaultContent": "No Data",
                     "mRender": function (data, type, full) {
                         var value = "";

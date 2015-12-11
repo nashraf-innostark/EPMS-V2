@@ -13,7 +13,10 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
-        public long OrderNumber { get; set; }
+        public short PaymentType { get; set; }
+        public bool IsPaid { get; set; }
+        public long? PaypalId { get; set; }
+        public string OrderNumber { get; set; }
         public decimal AmountPaidTillNow { get; set; }
         public decimal AmountLeft { get; set; }
         public string InvoiceNumber { get; set; }

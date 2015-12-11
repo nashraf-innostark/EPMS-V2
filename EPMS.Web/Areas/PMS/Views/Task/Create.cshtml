@@ -416,6 +416,7 @@
             $('.' + 'disableOnLoad' + ':input').attr('disabled', true);
         }
 
+        
 
         // diable fields if permission not contain TaskCreate
         var isDetail;
@@ -530,10 +531,10 @@
 
             var employeeList = '@Html.Raw(Json.Encode(Model.ProjectTask.TaskEmployees))';
             parsed = JSON.parse(employeeList);
-            $("#dualMulti2 option").each(function (key, value) {
+            $("#dualMulti2 option").each(function(key, value) {
                 var id = parseInt($(this).val());
                 var element = $(this);
-                $.each(parsed, function (key, value) {
+                $.each(parsed, function(key, value) {
                     if (value.EmployeeId == id) {
                         $(element).attr("selected", "selected");
                     }
@@ -542,12 +543,27 @@
         }
         $("#dualMulti").pickList({
             sourceListLabel: "Tasks",
+            isRTL: true,
             targetListLabel: "Prerquisit Tasks",
         });
         $("#dualMulti2").pickList({
             sourceListLabel: "Employees - Number Of Tasks They Are Working On",
             targetListLabel: "Added",
+            isRTL: true
         });
+
+        // to change position of source and target list in arabic culture
+        @*if ('@direction' == "rtl") {
+            var source = $("#checked .pickList_sourceListContainer");
+            var target = $("#checked .pickList_targetListContainer");
+
+            $("#checked .pickList_sourceListContainer").remove();
+            $("#checked .pickList_targetListContainer").remove();
+
+            $(target).insertBefore("#checked .pickList_controlsContainer");
+            $(source).insertAfter("#checked .pickList_controlsContainer");
+        }*@
+
         if ($("#TotalCost").val() == 0) {
             $("#TotalCost").val("");
         }

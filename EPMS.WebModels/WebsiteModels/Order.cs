@@ -12,6 +12,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long CustomerId { get; set; }
         public string RecCreatedBy { get; set; }
         public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDateStr { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
         public short? OrderStatus { get; set; }

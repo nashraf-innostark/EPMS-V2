@@ -75,6 +75,7 @@
             @Html.HiddenFor(model => model.ProductSection.ParentSectionId, new { @id = "ParentSectionId" })
             @Html.HiddenFor(model => model.ProductSection.RecCreatedBy, new { @id = "RecCreatedBy" })
             @Html.HiddenFor(model => model.ProductSection.RecCreatedDt, new { @id = "RecCreatedDt" })
+            @Html.HiddenFor(model => model.ProductSection.RecCreatedDate, new { @id = "RecCreatedDate" })
 
             <div class="control-group row-fluid ">
                 <div class="span3">
@@ -92,7 +93,29 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(m => m.ProductSection.SectionNameAr, new { id = "SectionNameAr", @class = "toBeDisable" })
+                        @Html.TextBoxFor(m => m.ProductSection.SectionNameAr, new {id = "SectionNameAr", @class = "toBeDisable"})
+                    </div>
+                </div>
+            </div>
+            <div id="content-area">
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="SectionContentEn">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.Content</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <textarea id="ContentEn" class="toBeDisable">@Model.ProductSection.SectionContentEn</textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="control-group row-fluid">
+                    <div class="span3">
+                        <label class="control-label" for="SectionContentAr">@EPMS.WebModels.Resources.Website.ProductSection.ProductSectionsCreate.ContentArabic</label>
+                    </div>
+                    <div class="span9">
+                        <div class="controls">
+                            <textarea id="ContentAr" class="toBeDisable">@Model.ProductSection.SectionContentAr</textarea>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -103,7 +126,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.ProductSection.SectionContentEn, new { id = "SectionContentEn", @class = "toBeDisable" })
+                            @Html.TextAreaFor(m => m.ProductSection.SectionContentEn, new { id = "SectionContentEn", @class = "toBeDisable" })
                         </div>
                     </div>
                 </div>
@@ -113,7 +136,7 @@
                     </div>
                     <div class="span9">
                         <div class="controls">
-                            @Html.TextBoxFor(m => m.ProductSection.SectionContentAr, new { id = "SectionContentAr", @class = "toBeDisable" })
+                            @Html.TextAreaFor(m => m.ProductSection.SectionContentAr, new { id = "SectionContentAr", @class = "toBeDisable" })
                         </div>
                     </div>
                 </div>
@@ -154,6 +177,7 @@
 
 </div>
 
+<script src="~/RichTextEditor/ckeditor.js"></script>
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
     var warehouseId;
@@ -162,6 +186,19 @@
     var divId;
     var productToShow;
     $().ready(function () {
+        if (parseInt('@ViewBag.ProductId') == 0) {
+            CKEDITOR.replace('SectionContentEn', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            CKEDITOR.replace('SectionContentAr', {
+                filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+            });
+            $("#content-area").hide();
+            $("#content").show();
+        } else {
+            $("#content-area").show();
+            $("#content").hide();
+        }
         dir = '@direction';
         divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
@@ -186,7 +223,7 @@
             },
             "plugins": ["themes", "json_data", "ui"],
         });
-        setTimeout(function () {
+        @*setTimeout(function () {
             var temp = '@ViewBag.ProductId';
             if (temp != '') {
                 productToShow = '@ViewBag.ProductId';
@@ -197,9 +234,11 @@
             } else {
                 $("#content").show();
             }
-        }, 500);
+        }, 500);*@
     });
     function updateView(r) {
+        if (CKEDITOR.instances.SectionContentEn) CKEDITOR.instances.SectionContentEn.destroy();
+        if (CKEDITOR.instances.SectionContentAr) CKEDITOR.instances.SectionContentAr.destroy();
         var id = r;
         if (id == "parentNode") {
             setNullValues();
@@ -221,6 +260,7 @@
             if (id.indexOf("SubSub") >= 0) {
                 productId = id;
                 $("#content").hide();
+                $("#content-area").hide();
                 $("#ShowToPublicDiv").hide();
                 $.each(childs, function (key, value) {
                     if (value.id == productId) {
@@ -237,6 +277,7 @@
             } else if (id.indexOf("Sub") >= 0) {
                 productId = id;
                 $("#content").hide();
+                $("#content-area").hide();
                 $("#ShowToPublicDiv").hide();
                 $.each(childs, function (key, value) {
                     if (value.id == productId) {
@@ -257,7 +298,8 @@
                         updateValues(value);
                     }
                 });
-                $("#content").show();
+                $("#content-area").show();
+                $("#content").hide();
                 $("#ShowToPublicDiv").show();
                 $("#Edit").show();
                 $("#UpdateNode").hide();
@@ -285,6 +327,14 @@
 
         }*@
         enableControls();
+        CKEDITOR.replace('SectionContentEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('SectionContentAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        $("#content-area").hide();
+        $("#content").show();
         $("#UpdateNode").show();
         $("#Edit").hide();
         $("#SaveNewNode").hide();
@@ -305,6 +355,8 @@
         $("#SectionNameAr").val(value.SectionNameAr);
         $("#SectionContentEn").val(value.SectionContentEn);
         $("#SectionContentAr").val(value.SectionContentAr);
+        $("#ContentEn").val(value.SectionContentEn);
+        $("#ContentAr").val(value.SectionContentAr);
         if (value.ShowToPublic) {
             if (!$('#ShowToPublic').is(":checked")) {
                 $("#ShowToPublic").trigger("click");
@@ -315,7 +367,8 @@
             }
         }
         $("#RecCreatedBy").val(value.RecCreatedBy);
-        $("#RecCreatedDt").val(value.RecCreatedDate);
+        $("#RecCreatedDt").val(value.RecCreatedDt);
+        $("#RecCreatedDate").val(value.RecCreatedDate);
         return;
     }
     function setNullValues() {
@@ -324,12 +377,17 @@
         $("#InventoyDepartmentId").val("");
         $("#SectionNameEn").val("");
         $("#SectionNameAr").val("");
+        if (CKEDITOR.instances.SectionContentEn) CKEDITOR.instances.SectionContentEn.destroy();
+        if (CKEDITOR.instances.SectionContentAr) CKEDITOR.instances.SectionContentAr.destroy();
         $("#SectionContentEn").val("");
         $("#SectionContentAr").val("");
+        $("#ContentEn").val("");
+        $("#ContentAr").val("");
         //$("#ShowToPublic").val(value.ShowToPublic);
         //$('#ShowToPublic').bootstrapSwitch('state', value.ShowToPublic);
         $("#RecCreatedBy").val("");
         $("#RecCreatedDt").val("");
+        $("#RecCreatedDate").val("");
         return;
     }
     function AddNewNode() {
@@ -357,6 +415,15 @@
                     $("#Edit").hide();
                     $("#UpdateNode").hide();
                     enableControls();
+                    CKEDITOR.replace('SectionContentEn', {
+                        filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                    });
+                    CKEDITOR.replace('SectionContentAr', {
+                        filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+                    });
+                    $("#content-area").hide();
+                    $("#content").show();
+                    $("#ShowToPublicDiv").show();
                 }
 
             }

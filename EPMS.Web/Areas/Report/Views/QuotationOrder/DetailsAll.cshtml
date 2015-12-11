@@ -1,9 +1,10 @@
 ﻿@using Newtonsoft.Json
 @model EPMS.WebModels.ViewModels.Reports.QuotationOrderDetailViewModel
 @{
+    
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.QOReportViewAll;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">

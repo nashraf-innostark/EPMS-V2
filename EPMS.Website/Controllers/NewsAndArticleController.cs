@@ -33,7 +33,6 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Index(long id)
         {
-            ViewBag.ShowSlider = false;
             NewsAndArticleListViewModel viewModel = new NewsAndArticleListViewModel();
             viewModel.SearchRequest = new NewsAndArticleSearchRequest
             {
@@ -58,7 +57,6 @@ namespace EPMS.Website.Controllers
                 viewModel.NewsAndArticles = productsList.NewsAndArticles.Select(x => x.CreateFromServerToClient()).ToList();
                 viewModel.SearchRequest.TotalCount = productsList.TotalCount;
             }
-            ViewBag.ShowSlider = false;
             ViewBag.From = viewModel.SearchRequest.From;
             return View(viewModel);
         }
@@ -69,10 +67,19 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Detail(long id)
         {
-            ViewBag.ShowSlider = false;
             NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel
             {
                 NewsAndArticle = newsAndArticleService.FindNewsAndArticleById(id).CreateFromServerToClient()
+            };
+            ViewBag.MetaTagsEn = new MetaTagsResponse
+            {
+                Name = newsAndArticleViewModel.NewsAndArticle.MetaKeywords,
+                Description = newsAndArticleViewModel.NewsAndArticle.MetaDesc
+            };
+            ViewBag.MetaTagsAr = new MetaTagsResponse
+            {
+                Name = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr,
+                Description = newsAndArticleViewModel.NewsAndArticle.MetaDescAr
             };
             return View(newsAndArticleViewModel);
         }

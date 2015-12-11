@@ -117,6 +117,7 @@ namespace EPMS.Implementation.Services
                 };
                 reportRepository.Add(customerReport);
                 reportRepository.SaveChanges();
+                request.ReportId = customerReport.ReportId;
             }
             else
             {
@@ -128,8 +129,8 @@ namespace EPMS.Implementation.Services
             var response = customerRepository.GetCustomerReportList(request);
             return new CustomerReportResponse
             {
+                ReportId = request.ReportId,
                 Customers = response,
-                ReportId = customerReport.ReportId
             };
         }
 
@@ -441,6 +442,7 @@ namespace EPMS.Implementation.Services
         }
         public ProjectReportDetailsResponse SaveAndGetProjectReportDetails(ProjectReportCreateOrDetailsRequest request)
         {
+           ProjectReportDetailsResponse reportDetailsResponse=new ProjectReportDetailsResponse();
             if (request.IsCreate)
             {
                 var projectNewReport = new Report
@@ -462,28 +464,29 @@ namespace EPMS.Implementation.Services
 
                 request.ReportCreatedDate = projectNewReport.ReportCreatedDate;
 
-                var response = projectRepository.GetProjectReportDetails(request).ToList();
-                projectNewReport.ReportProjects = response.Select(x => x.MapProjectToReportProject()).ToList();
+                var responseResult = projectRepository.GetProjectReportDetails(request).ToList();
+                
+                projectNewReport.ReportProjects = responseResult.Select(x => x.MapProjectToReportProject()).ToList();
+
                 reportRepository.Add(projectNewReport);
                 reportRepository.SaveChanges();
-                request.ReportId = projectNewReport.ReportId;
+
+                reportDetailsResponse.ReportId = projectNewReport.ReportId;
+                reportDetailsResponse.Projects = projectNewReport.ReportProjects;
+                reportDetailsResponse.ProjectTasks = projectNewReport.ReportProjectTasks;
             }
             else
             {
                 var report = reportRepository.Find(request.ReportId);
                 if (report.ProjectId != null)
                 {
-                    request.ProjectId = (long)report.ProjectId;
-                    request.ReportCreatedDate = report.ReportCreatedDate;
+                    reportDetailsResponse.ReportId = report.ReportId;
+                    reportDetailsResponse.Projects = report.ReportProjects;
+                    reportDetailsResponse.ProjectTasks = report.ReportProjectTasks;
                 }
             }
 
-            return new ProjectReportDetailsResponse
-            {
-                ReportId = request.ReportId,
-                //Projects = response,
-                //ProjectTasks = response.FirstOrDefault().ProjectTasks
-            };
+            return reportDetailsResponse;
         }
 
         public WarehouseReportDetailsResponse SaveAndGetWarehouseReportDetails(WarehouseReportCreateOrDetailsRequest request)
@@ -588,9 +591,8 @@ namespace EPMS.Implementation.Services
                 //Fetch Report data
                 var response = inventoryItemRepository.GetInventoryItemReportDetails(request).ToList();
                 newReport.ReportInventoryItems = request.ItemId > 0 ?
-                newReport.ReportInventoryItems = response.SelectMany(x => x.ItemVariations.Select(y=>y.MapInventoryItemVariationToReportInventoryItem())).ToList() :
-                newReport.ReportInventoryItems = response.Select(x => x.MapInventoryItemToReportInventoryItem()).ToList()
-                ;
+                response.SelectMany(x => x.ItemVariations.Select(y=>y.MapInventoryItemVariationToReportInventoryItem())).ToList() :
+                response.Select(x => x.MapInventoryItemToReportInventoryItem()).ToList();
 
                 //Save Report and its data
                 reportRepository.Add(newReport);

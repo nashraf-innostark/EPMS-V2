@@ -2,11 +2,18 @@
 @using EPMS.WebModels.WebsiteModels.Common
 @model IEnumerable<EPMS.Models.DomainModels.ReportInventoryItem>
 @{
-    ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    if (Model.FirstOrDefault() != null)
+    {
+        ViewBag.Title = Model.FirstOrDefault().Report.InventoryItemId > 1 ?(direction == "ltr" ? Model.FirstOrDefault().Report.InventoryItem.ItemNameEn : Model.FirstOrDefault().Report.InventoryItem.ItemNameAr) + " " + EPMS.WebModels.Resources.Reports.Reports.Report: EPMS.WebModels.Resources.Reports.Reports.ViewAllItemsReport;
+    }
+    else
+    {
+        ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewItemReport;
+    }   
     Layout = "~/Views/Shared/_Layout.cshtml";
     long reportId = (long) ViewBag.ReportId;
     int serial = 1;
-    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -20,10 +27,9 @@
             <a href="@(ConfigurationManager.AppSettings["SiteURL"].ToString())/Report/Inventory/Index">
                 @EPMS.WebModels.Resources.Reports.Reports.InventorySystemReportList
             </a>
-
         </li>
         <li class="current">
-            @EPMS.WebModels.Resources.Reports.Reports.ViewItemReport
+            @ViewBag.Title
         </li>
     </ul>
 </div>
@@ -31,7 +37,7 @@
 <!-- Page Heading Start-->
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>@EPMS.WebModels.Resources.Reports.Reports.ViewItemReport</small></h2>
+    <h2><small>@ViewBag.Title</small></h2>
 </header>
 <!-- Page Heading End-->
 <!--Notifications begin-->

@@ -307,7 +307,7 @@
                         }
                         else
                         {
-                            <div class="row">
+                            <div class="row" style="text-align: center">
                                 <h4>No product available.</h4>
                             </div>
                         }
@@ -672,10 +672,10 @@
 {
     <script>
         var siteUrl;
-        $(document).ready(function () {
+        $(document).ready(function() {
             siteUrl = $("#siteURL").val();
             // latest & bestsellers carousels
-            $('.shop-latest-carousel > ul').each(function (index, element) {
+            $('.shop-latest-carousel > ul').each(function(index, element) {
                 $(this).carouFredSel({
                     responsive: true,
                     scroll: 1,
@@ -686,8 +686,12 @@
                     next: { button: $(this).parent().find('a.next'), key: "right" },
                 });
             });
+
+            //$(document).on('click', '.phy', function() {
+            //    alert(this);
+            //});
         });
-        $(document).on('change', '.filter', function () {
+        $(document).on('change', '.filter', function() {
             var sortBy = parseInt($("#SortBy").val());
             if (sortBy == 1 || sortBy == 3 || sortBy == 5) {
                 $("#SortDirection").val("asc");
@@ -696,17 +700,15 @@
             }
             if (sortBy == 1 || sortBy == 2) {
                 $("#sortCol").val("1");
-            }
-            else if (sortBy == 5 || sortBy == 6) {
+            } else if (sortBy == 5 || sortBy == 6) {
                 $("#sortCol").val("2");
-            }
-            else if (sortBy == 3 || sortBy == 4) {
+            } else if (sortBy == 3 || sortBy == 4) {
                 $("#sortCol").val("3");
             }
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.page-button', function () {
+        $(document).on('click', '.page-button', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var pageNo = parseInt(this.textContent);
@@ -716,14 +718,14 @@
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.first-page', function () {
+        $(document).on('click', '.first-page', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             $('#displayStart').val(0);
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.last-page', function () {
+        $(document).on('click', '.last-page', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var totalCount = parseInt('@Model.SearchRequest.TotalCount');
@@ -732,6 +734,7 @@
             // submit from
             $("#filter-products").submit();
         });
+
         function getLastPage(totalCount, length) {
             var totalPages = Math.ceil(totalCount / length);
             return ((totalPages - 1) * length);

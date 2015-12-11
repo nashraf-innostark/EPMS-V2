@@ -144,10 +144,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
         {
             EPMS.Models.DomainModels.Receipt receiptToAdd = new EPMS.Models.DomainModels.Receipt
             {
-                InvoiceId = Convert.ToInt64(id),
+                InvoiceId = id,
                 InstallmentNumber = Convert.ToInt32(ins),
-                //PaymentType = (short)PaymentType.OffLine,
-                IsPaid = true
+                IsPaid = false
             };
             if (type == "1")
             {
@@ -165,14 +164,14 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     Message = WebModels.Resources.CMS.Receipt.AddMessage,
                     IsSaved = true
                 };
-                return RedirectToAction("Detail", "Receipt", new { id = receiptId, area = "CMS" });
+                return RedirectToAction("Detail", "Invoice", new { area = "CMS", id= id });
             }
             TempData["message"] = new MessageViewModel
             {
                 Message = WebModels.Resources.CMS.Receipt.ErrorMessage,
                 IsError = true
             };
-            return RedirectToAction("Index", "Receipt", new { area = "CMS" });
+            return RedirectToAction("Detail", "Invoice", new { area = "CMS", id = id });
         }
 
         #endregion

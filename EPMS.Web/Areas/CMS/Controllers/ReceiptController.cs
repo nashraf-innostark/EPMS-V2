@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Receipt;
@@ -35,7 +36,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         #region Public
 
         #region Index
-
+        [SiteAuthorize(PermissionKey = "ReceiptIndex")]
         public ActionResult Index()
         {
             var role = Session["RoleName"].ToString().ToLower();

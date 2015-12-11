@@ -27,7 +27,6 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Detail()
         {
-            ViewBag.ShowSlider = false;
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();
             var contactUs = contactUsService.GetDetail();
             if (contactUs !=null)

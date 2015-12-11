@@ -1,9 +1,10 @@
 ﻿@model EPMS.WebModels.ViewModels.Reports.TaskReportDetailVeiwModel
 
 @{
-    ViewBag.Title = "View Task Report";
-    Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    ViewBag.Title = Model.ProjectTasks.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.QOReportView : (direction == "ltr" ? Model.ProjectTasks.FirstOrDefault().TaskNameE : Model.ProjectTasks.FirstOrDefault().TaskNameE) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
     int serialX = 1;
     int serialY = 1;
 }
@@ -21,13 +22,13 @@
             </a>
         </li>
         <li class="current">
-            <a href="javascript:;">View Task Report</a>
+            <a href="javascript:;">@ViewBag.Title</a>
         </li>
     </ul>
 </div>
 <header>
     <i class="icon-big-notepad"></i>
-    <h2><small>View Task Report</small></h2>
+    <h2><small>@ViewBag.Title</small></h2>
 </header>
 
 <form class="form-horizontal" id="validation_form">
@@ -246,7 +247,7 @@
 
                     xaxis: {
                         mode: "time",
-                        timeformat: "%y,%m",
+                        timeformat: "%y,%m,%d",
                         zoomRange: [xzoomMin, xZoomMax],
                         panRange: [xPanMin, xPanMax]
                     },

@@ -5,10 +5,11 @@ namespace EPMS.Interfaces.IServices
 {
     public interface IWebsiteHomePageService
     {
-        WebsiteHomePage GetHomePageLogo();
+        WebsiteHomePageResponse GetHomePageResponse();
         WebsiteHomeResponse WebsiteHomeResponse();
         bool SaveLogo(WebsiteHomePage homePage);
         bool AddWebsiteLogo(WebsiteHomePage homePage);
         bool UpdateWebsiteLogo(WebsiteHomePage homePage);
+        MetaTagsResponse GetMetaTags();
     }
 }

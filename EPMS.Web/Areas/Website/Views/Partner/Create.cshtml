@@ -45,6 +45,7 @@
         @Html.HiddenFor(model => model.Partner.PartnerId)
         @Html.HiddenFor(model => model.Partner.RecCreatedBy)
         @Html.HiddenFor(model => model.Partner.RecCreatedDate)
+        @Html.HiddenFor(model => model.Partner.RecCreatedDateStr)
         @Html.HiddenFor(model => model.Partner.ImageName, new { @id = "ImageName" })
         <div class="control-group row-fluid">
             <div class="span3">
@@ -150,7 +151,7 @@
             <div id="Delete" style="display: none">
                 <div class="control-group row-fluid">
                     <div class="span3 span-inset">
-                        <button type="submit" class="btn" name="Delete">@EPMS.WebModels.Resources.Website.Common.Common.Delete</button>
+                        <a class="btn" onclick="DeletePartner(@Model.Partner.PartnerId)">@EPMS.WebModels.Resources.Website.Common.Common.Delete</a>
                     </div>
                 </div>
             </div>
@@ -233,4 +234,34 @@
         $("#Update").show();
         $("#Delete").show();
     });
+    function DeletePartner(partnerId) {
+        var siteUrl = $('#siteURL').val();
+        var url = siteUrl + "/Website/Partner/Delete";
+        $.blockUI({
+            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+        });
+        $.ajax({
+            url: url,
+            type: 'Get',
+            dataType: "json",
+            data: {
+                partnerId: partnerId,
+                imageName: '@Model.Partner.ImageName'
+            },
+            success: function (data) {
+                if (data.status == "success") {
+                    window.location.href = "/Website/Home/Index";
+                }
+                if (data.status == "error") {
+                    window.location.reload();
+                }
+                $.unblockUI();
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
+    }
 </script>

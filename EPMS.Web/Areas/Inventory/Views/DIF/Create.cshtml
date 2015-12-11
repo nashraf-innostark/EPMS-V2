@@ -269,26 +269,21 @@
                     $("#DifItem_" + index + "__ItemDetails").val("");
                     var textToAppend = "";
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                        textToAppend = textToAppend + value.ItemNameE;
                     } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
+                        textToAppend = textToAppend + value.ItemNameA;
                     }
                     if (isItemSku) {
                         textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
                     }
                     if (isItemDescription) {
                         if ('@direction' == "ltr") {
-                            if (value.ItemVariationDescriptionE == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionE;
+                            if (value.ItemVariationDescriptionE != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
                             }
-
                         } else {
-                            if (value.ItemVariationDescriptionA == null) {
-                                textToAppend = textToAppend + "\nDescription:";
-                            } else {
-                                textToAppend = textToAppend + "\nDescription: " + value.ItemVariationDescriptionA;
+                            if (value.ItemVariationDescriptionA != null) {
+                                textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                             }
                         }
                     }
@@ -347,7 +342,7 @@
             });
 
             $('#itemSearcher').modal('toggle');
-        } 
+        }
 
         $("#btnTreeSelector").click(function (event) {
             $('#itemTreeSelector').modal('show');
@@ -505,7 +500,7 @@
                 $("#treeControl").show();
             }
         });
-        
+
         $("#Warehouse").on("change", function () {
             var warehouseId = parseInt($(this).val());
             if (isNaN(warehouseId)) {
@@ -565,15 +560,14 @@
         $.unblockUI();
         return true;
     }
-    function reDrawTree(data)
-    {
+    function reDrawTree(data) {
         var tree = JSON.parse(data);
         $("#" + divId).jstree({
             'core': {
                 'check_callback': true,
                 'data': tree
             },
-            "plugins": ["themes", "json_data", "ui" ],
+            "plugins": ["themes", "json_data", "ui"],
         });
     }
     function validateForm(event) {
@@ -582,8 +576,8 @@
             $("#warehousetValidation").text("Please Select Warehouse");
             $("#warehousetValidation").addClass("Error");
             $('html,body').animate({
-                    scrollTop: $(".warehouseDDL").offset().top
-                },
+                scrollTop: $(".warehouseDDL").offset().top
+            },
             'slow');
             event.preventDefault();
             return false;

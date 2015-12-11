@@ -47,7 +47,7 @@ namespace EPMS.Models.DomainModels
             {
                 if (ItemVariation != null)
                 {
-                    return ItemVariation.InventoryItem.ItemDescriptionEn;
+                    return ItemVariation.DescriptionEn;
                 }
                 return "";
             }
@@ -58,7 +58,7 @@ namespace EPMS.Models.DomainModels
             {
                 if (ItemVariation != null)
                 {
-                    return ItemVariation.InventoryItem.ItemDescriptionAr;
+                    return ItemVariation.DescriptionAr;
                 }
                 return "";
             }

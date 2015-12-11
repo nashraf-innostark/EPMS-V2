@@ -226,33 +226,33 @@
                                 <div class="bar" style="width:@Model.Quotation.FirstInsDueAtCompletion%">@Model.Quotation.FirstInsDueAtCompletion%</div>
                             </div>
                         </div>
-                        @if (@Model.Quotation.FirstInstallement != 0)
+                        @if (Model.Quotation.FirstInstallement != 0)
                         {
                             <div class="span3">
-                            <label class="control-label">
-                                @if (@Model.Quotation.FirstInstallmentStatus == "Paid")
-                                {
-                                    <a href="/CMS/Receipt/Detail/@Model.FirstReceiptId" id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a>
-                                }
-                                else
-                                {
-                                    <a id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a>
-                                }
-                            </label>
-                        </div>
-                        if (!@Model.Quotation.IsFirstInstallmentStatus)
-                        {
-                            <div class="span2">
-                                @if (Role == "Customer")
-                                {
-                                    <label class="control-label"><a class="btn" id="generateReceipt1" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=1">Pay</a></label>
-                                }
-                                else
-                                {
-                                    <label class="control-label"><button id="generateReceipt1" onclick="CreateReceipt(1)">Generate Receipt</button></label>
-                                }
+                                <label class="control-label">
+                                    @if (Model.Quotation.FirstInstallmentStatus == "Paid")
+                                    {
+                                        <a href="/CMS/Receipt/Detail/@Model.FirstReceiptId" id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a>
+                                    }
+                                    else
+                                    {
+                                        <a id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a>
+                                    }
+                                </label>
                             </div>
-                        }
+                            if (!Model.Quotation.IsFirstInstallmentStatus)
+                            {
+                                <div class="span2">
+                                    @if (Role == "Customer")
+                                    {
+                                        <label class="control-label"><a class="btn" id="generateReceipt1" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=1">Pay</a></label>
+                                    }
+                                    else
+                                    {
+                                        <label class="control-label"><button id="generateReceipt1" onclick="CreateReceipt(1)">Generate Receipt</button></label>
+                                    }
+                                </div>
+                            }
                         }
                     </div>
                     <div class="control-group row-fluid">
@@ -274,33 +274,33 @@
                                 <div class="bar" style="width:@Model.Quotation.SecondInsDueAtCompletion%">@Model.Quotation.SecondInsDueAtCompletion%</div>
                             </div>
                         </div>
-                        @if (@Model.Quotation.SecondInstallment != 0)
+                        @if (Model.Quotation.SecondInstallment != 0)
                         {
                             <div class="span3">
-                            <label class="control-label">
-                                @if (@Model.Quotation.SecondInstallmentStatus == "Paid")
-                                {
-                                    <a href="/CMS/Receipt/Detail/@Model.SecondReceiptId" id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a>
-                                }
-                                else
-                                {
-                                    <a id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a>
-                                }
-                            </label>
-                        </div>
-                        if (!@Model.Quotation.IsSecondInstallmentStatus)
-                        {
-                            <div class="span2">
-                                @if (Role == "Customer")
-                                {
-                                    <label class="control-label"><a class="btn" id="PayInstallment2" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=2">Pay</a></label>
-                                }
-                                else
-                                {
-                                    <label class="control-label"><button id="generateReceipt2" onclick="CreateReceipt(2)">Generate Receipt</button></label>
-                                }
+                                <label class="control-label">
+                                    @if (Model.Quotation.SecondInstallmentStatus == "Paid")
+                                    {
+                                        <a href="/CMS/Receipt/Detail/@Model.SecondReceiptId" id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a>
+                                    }
+                                    else
+                                    {
+                                        <a id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a>
+                                    }
+                                </label>
                             </div>
-                        }
+                            if (!Model.Quotation.IsSecondInstallmentStatus)
+                            {
+                                <div class="span2">
+                                    @if (Role == "Customer")
+                                    {
+                                        <label class="control-label"><a class="btn" id="PayInstallment2" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=2">Pay</a></label>
+                                    }
+                                    else
+                                    {
+                                        <label class="control-label"><button id="generateReceipt2" onclick="CreateReceipt(2)">Generate Receipt</button></label>
+                                    }
+                                </div>
+                            }
                         }
                     </div>
                     <div class="control-group row-fluid">
@@ -322,33 +322,33 @@
                                 <div class="bar" style="width:@Model.Quotation.ThirdInsDueAtCompletion%">@Model.Quotation.ThirdInsDueAtCompletion%</div>
                             </div>
                         </div>
-                        @if (@Model.Quotation.ThirdInstallment != 0)
+                        @if (Model.Quotation.ThirdInstallment != 0)
                         {
                             <div class="span3">
-                            <label class="control-label">
-                                @if (@Model.Quotation.ThirdInstallmentStatus == "Paid")
-                                {
-                                    <a href="/CMS/Receipt/Detail/@Model.ThirdReceiptId" id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a>
-                                }
-                                else
-                                {
-                                    <a id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a>
-                                }
-                            </label>
-                        </div>
-                        if (!@Model.Quotation.IsThirdInstallmentStatus)
-                        {
-                            <div class="span2">
-                                @if (Role == "Customer")
-                                {
-                                    <label class="control-label"><a class="btn" id="PayInstallment3" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=3">Pay</a></label>
-                                }
-                                else
-                                {
-                                    <label class="control-label"><button id="generateReceipt3" onclick="CreateReceipt(3)">Generate Receipt</button></label>
-                                }
+                                <label class="control-label">
+                                    @if (Model.Quotation.ThirdInstallmentStatus == "Paid")
+                                    {
+                                        <a href="/CMS/Receipt/Detail/@Model.ThirdReceiptId" id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a>
+                                    }
+                                    else
+                                    {
+                                        <a id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a>
+                                    }
+                                </label>
                             </div>
-                        }
+                            if (!Model.Quotation.IsThirdInstallmentStatus)
+                            {
+                                <div class="span2">
+                                    @if (Role == "Customer")
+                                    {
+                                        <label class="control-label"><a class="btn" id="PayInstallment3" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=3">Pay</a></label>
+                                    }
+                                    else
+                                    {
+                                        <label class="control-label"><button id="generateReceipt3" onclick="CreateReceipt(3)">Generate Receipt</button></label>
+                                    }
+                                </div>
+                            }
                         }
                     </div>
                     <div class="control-group row-fluid">
@@ -370,33 +370,33 @@
                                 <div class="bar" style="width:@Model.Quotation.FourthInsDueAtCompletion%">@Model.Quotation.FourthInsDueAtCompletion%</div>
                             </div>
                         </div>
-                        @if (@Model.Quotation.FourthInstallment != 0)
+                        @if (Model.Quotation.FourthInstallment != 0)
                         {
                             <div class="span3">
-                            <label class="control-label">
-                                @if (@Model.Quotation.FourthInstallmentStatus == "Paid")
-                                {
-                                    <a href="/CMS/Receipt/Detail/@Model.FourthReceiptId" id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a>
-                                }
-                                else
-                                {
-                                    <a id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a>
-                                }
-                            </label>
-                        </div>
-                        if (!@Model.Quotation.IsFourthInstallmentStatus)
-                        {
-                            <div class="span2">
-                                @if (Role == "Customer")
-                                {
-                                    <label class="control-label"><a class="btn" id="PayInstallment4" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=4">Pay</a></label>
-                                }
-                                else
-                                {
-                                    <label class="control-label"><button id="generateReceipt4" onclick="CreateReceipt(4)">Generate Receipt</button></label>
-                                }
+                                <label class="control-label">
+                                    @if (Model.Quotation.FourthInstallmentStatus == "Paid")
+                                    {
+                                        <a href="/CMS/Receipt/Detail/@Model.FourthReceiptId" id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a>
+                                    }
+                                    else
+                                    {
+                                        <a id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a>
+                                    }
+                                </label>
                             </div>
-                        }
+                            if (!Model.Quotation.IsFourthInstallmentStatus)
+                            {
+                                <div class="span2">
+                                    @if (Role == "Customer")
+                                    {
+                                        <label class="control-label"><a class="btn" id="PayInstallment4" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=4">Pay</a></label>
+                                    }
+                                    else
+                                    {
+                                        <label class="control-label"><button id="generateReceipt4" onclick="CreateReceipt(4)">Generate Receipt</button></label>
+                                    }
+                                </div>
+                            }
                         }
                     </div>
                     <div class="control-group row-fluid">
@@ -456,7 +456,10 @@
     });
 
     function CreateReceipt(id, e) {
-        debugger;
+        if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.GenerateReceiptConfirmation') == false) {
+            event.preventDefault();
+            return;
+        }
         event.preventDefault();
         var installmentId = id;
         var invoiceId = $('#invoiceId').val();

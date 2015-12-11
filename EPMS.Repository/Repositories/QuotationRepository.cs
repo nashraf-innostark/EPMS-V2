@@ -46,6 +46,7 @@ namespace EPMS.Repository.Repositories
                     {
                         { QuotationByColumn.SerialNumber,  c => c.SerialNumber},
                         { QuotationByColumn.ClientName,  c => c.Customer.CustomerNameE},
+                        { QuotationByColumn.RecCreatedDate,  c => c.RecCreatedDate},
                         //{ QuotationByColumn.OrderId, c => c.OrderId}
                     };
         #endregion

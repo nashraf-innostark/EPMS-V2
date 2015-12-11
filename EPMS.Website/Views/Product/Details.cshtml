@@ -129,27 +129,27 @@
                     }
                     <li>
                         @{
-                        if (ViewBag.From.ToString() == "Inventory")
-                        {
-                            @(direction == "ltr" ? Model.Product.ItemNameEn : Model.Product.ItemNameAr)
+                            if (ViewBag.From.ToString() == "Inventory")
+                            {
+                                @(direction == "ltr" ? Model.Product.ItemNameEn : Model.Product.ItemNameAr)
+                            }
+                            if (ViewBag.From.ToString() == "Sections")
+                            {
+                                @(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)
+                            }
                         }
-                        if (ViewBag.From.ToString() == "Sections")
-                        {
-                            @(direction == "ltr" ? Model.Product.ProductNameEn : Model.Product.ProductNameAr)
-                        }
-                    }
-                </li>
-            </ul>
-            <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
-        </div>
-        <div class="span6">
-            <div class="header-titles">
-                <h2>@Product.ProductsPage</h2>
+                    </li>
+                </ul>
+                <span id="current-date">@today.ToString("dddd, dd MMMM yyyy", CultureInfo.CreateSpecificCulture("en-US"))</span>
+            </div>
+            <div class="span6">
+                <div class="header-titles">
+                    <h2>@Product.ProductsPage</h2>
+                </div>
             </div>
         </div>
     </div>
-</div>
-<div class="shadowUP"></div>
+    <div class="shadowUP"></div>
 </div>
 <section id="content">
     <div class="container">
@@ -248,6 +248,7 @@
 
                         <div class="span5">
                             <div class="main-data">
+                                <input type="hidden" value="@Model.Product.ItemVariationId" id="Product_ItemVariationId" />
                                 <p class="name">
                                     @if (ViewBag.From != null)
                                     {
@@ -275,13 +276,22 @@
                                     <p>
                                         @Product.YouWillSave:
                                         @{
-                                            @: <strong>
-                                                                         var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
-                                                                         var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
-                                                                        @: @(actualPrice - discountedPrice)
-                                                                        @:( @Math.Round((actualPrice / discountedPrice), 2) %)
-                                                                        @: </strong>
+                                            var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
+                                            var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
+                                            var deductedPrice = actualPrice - discountedPrice;
+                                            var savingInPercentage = Math.Round((actualPrice/discountedPrice), 2);
                                         }
+                                        <strong>
+                                            @deductedPrice
+                                            @savingInPercentage %
+                                        </strong>
+                                    </p>
+                                }
+                                else
+                                {
+                                    <p class="regular_price">@Product.Price: </p>
+                                    <p class="price">
+                                        <span>@Model.Product.ProductPrice</span><span>SR</span>
                                     </p>
                                 }
 
@@ -302,7 +312,7 @@
                                             @Html.DropDownListFor(m => m.Product.ProductSize, new[]
                                             {
                                                 new SelectListItem {Value = "0", Text = Model.Product.ProductSize}
-                                            }, new { @id = "Size" })
+                                            }, new {@id = "Size"})
                                         </div>
                                     }
                                     <div class="quantitiy">
@@ -444,3 +454,15 @@
         </div>
     </div><!-- end page_header -->
 </section>
+
+<script>
+    var sizes = '@Html.Raw(Json.Encode(Model.ProductSizes))';
+    var productSize = JSON.parse(sizes);
+    $(document).ready(function () {
+        $('#Size').val('@Model.Product.ProductId');
+        $("#Size").on("change", function () {
+            var productId = parseInt($(this).val());
+            window.location.href = window.location.origin + "/Product/Details/" + productId + window.location.search;
+        });
+    });
+</script>
