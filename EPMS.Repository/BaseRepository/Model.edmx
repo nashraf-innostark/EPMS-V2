@@ -426,7 +426,7 @@
           <Key>
             <PropertyRef Name="EmployeeId" />
           </Key>
-          <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="EmployeeId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
           <Property Name="EmployeeFirstNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeMiddleNameE" Type="nvarchar" MaxLength="100" />
           <Property Name="EmployeeLastNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -773,6 +773,7 @@
           <Property Name="LastUpdatedDate" Type="datetime" />
           <Property Name="Email" Type="nvarchar" MaxLength="50" />
           <Property Name="MobileNumber" Type="nvarchar" MaxLength="20" />
+          <Property Name="CvPath" Type="nvarchar" MaxLength="400" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -2409,12 +2410,12 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemManufacturer_Manufacturer">
-          <End Role="Manufacturer" Type="Self.Manufacturer" Multiplicity="1" />
+        <Association Name="FK_ItemManufacturer_Vendor">
+          <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
           <ReferentialConstraint>
-            <Principal Role="Manufacturer">
-              <PropertyRef Name="ManufacturerId" />
+            <Principal Role="Vendor">
+              <PropertyRef Name="VendorId" />
             </Principal>
             <Dependent Role="ItemManufacturer">
               <PropertyRef Name="ManufacturerId" />
@@ -3309,18 +3310,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ReportQuotationInvoice_Report">
-          <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
-          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Reports">
-              <PropertyRef Name="ReportId" />
-            </Principal>
-            <Dependent Role="ReportQuotationInvoice">
-              <PropertyRef Name="ReportId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_ReportQuotationInvoice_Reports">
           <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
           <End Role="ReportQuotationOrder" Type="Self.ReportQuotationOrder" Multiplicity="*" />
@@ -3329,6 +3318,18 @@
               <PropertyRef Name="ReportId" />
             </Principal>
             <Dependent Role="ReportQuotationOrder">
+              <PropertyRef Name="ReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ReportQuotationInvoice_Reports1">
+          <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reports">
+              <PropertyRef Name="ReportId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoice">
               <PropertyRef Name="ReportId" />
             </Dependent>
           </ReferentialConstraint>
@@ -4313,8 +4314,8 @@
             <End Role="ItemVariation" EntitySet="ItemVariation" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemManufacturer_Manufacturer" Association="Self.FK_ItemManufacturer_Manufacturer">
-            <End Role="Manufacturer" EntitySet="Manufacturer" />
+          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="Self.FK_ItemManufacturer_Vendor">
+            <End Role="Vendor" EntitySet="Vendor" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
           <AssociationSet Name="FK_ItemRelease_Manager" Association="Self.FK_ItemRelease_Manager">
@@ -4613,13 +4614,13 @@
             <End Role="Reports" EntitySet="Reports" />
             <End Role="ReportProjectTask" EntitySet="ReportProjectTask" />
           </AssociationSet>
-          <AssociationSet Name="FK_ReportQuotationInvoice_Report" Association="Self.FK_ReportQuotationInvoice_Report">
-            <End Role="Reports" EntitySet="Reports" />
-            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
-          </AssociationSet>
           <AssociationSet Name="FK_ReportQuotationInvoice_Reports" Association="Self.FK_ReportQuotationInvoice_Reports">
             <End Role="Reports" EntitySet="Reports" />
             <End Role="ReportQuotationOrder" EntitySet="ReportQuotationOrder" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ReportQuotationInvoice_Reports1" Association="Self.FK_ReportQuotationInvoice_Reports1">
+            <End Role="Reports" EntitySet="Reports" />
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" Association="Self.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice">
             <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
@@ -5428,6 +5429,7 @@
           <NavigationProperty Name="ApplicantQualifications" Relationship="Self.FK_ApplicantQualification_JobApplicants" FromRole="JobApplicants" ToRole="ApplicantQualification" />
           <NavigationProperty Name="Department" Relationship="Self.FK_JobApplicants_Department" FromRole="JobApplicants" ToRole="Department" />
           <NavigationProperty Name="JobOffered" Relationship="Self.FK_JobApplicants_JobOffered" FromRole="JobApplicants" ToRole="JobOffered" />
+          <Property Name="CvPath" Type="String" MaxLength="400" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityType Name="JobOffered">
           <Key>
@@ -10389,6 +10391,7 @@
           <EntitySetMapping Name="JobApplicants">
             <EntityTypeMapping TypeName="EPMSInventoryModel.JobApplicant">
               <MappingFragment StoreEntitySet="JobApplicants">
+                <ScalarProperty Name="CvPath" ColumnName="CvPath" />
                 <ScalarProperty Name="ApplicantId" ColumnName="ApplicantId" />
                 <ScalarProperty Name="JobOfferedId" ColumnName="JobOfferedId" />
                 <ScalarProperty Name="ApplicantFirstNameE" ColumnName="ApplicantFirstNameE" />
@@ -12010,7 +12013,7 @@
     </Options>
     <!-- Diagram content (shape and connector positions) -->
     <Diagrams>
-      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="75">
+      <Diagram DiagramId="fa882b71210140fc951b67c40497f096" Name="Diagram1" ZoomLevel="70">
         <EntityTypeShape EntityType="EPMSInventoryModel.Allowance" Width="1.5" PointX="8.25" PointY="26.25" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantExperience" Width="1.5" PointX="15.5" PointY="25.125" IsExpanded="true" />
         <EntityTypeShape EntityType="EPMSInventoryModel.ApplicantQualification" Width="1.75" PointX="15.25" PointY="29.75" IsExpanded="true" />

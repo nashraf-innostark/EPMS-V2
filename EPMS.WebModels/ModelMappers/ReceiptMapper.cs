@@ -35,19 +35,6 @@ namespace EPMS.WebModels.ModelMappers
                 IsPaid = source.IsPaid,
                 PaypalId = source.PaypalId
             };
-            if (source.PaymentType == 2)
-            {
-                receipt.PaymentType = "Paypal";
-            }
-            else if (source.PaymentType == 3)
-            {
-                receipt.PaymentType = "Offline";
-            }
-            else if (source.PaymentType == 4)
-            {
-                receipt.PaymentType = "On Delivery";
-                
-            }
             return receipt;
         }
 

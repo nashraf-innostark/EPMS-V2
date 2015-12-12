@@ -23,6 +23,6 @@ namespace EPMS.WebModels.WebsiteModels
         public string CustomerNameE { get; set; }
         public string CustomerNameA { get; set; }
         public long CustomerId { get; set; }
-        public string PaymentType { get; set; }
+        //public string PaymentType { get; set; }
     }
 }

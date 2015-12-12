@@ -14,6 +14,7 @@
 
     <div class="container-fluid">
         @Html.HiddenFor(model => model.JobApplicant.JobOfferedId)
+        @Html.HiddenFor(model => model.JobApplicant.CvPath, new {@id = "cvPath"})
         
         <div class="control-group row-fluid">
             <div class="span3">
@@ -1840,9 +1841,9 @@
     // upload Image
     var errors = "";
     var siteUrl = $('#siteURL').val();
-    var url = siteUrl + "/Inventory/InventoryItem/UploadImage";
+    var url = "/HR/JobApplicant/UploadCv";
     $('#upload').mfupload({
-        type: 'jpg,png,tif,jpeg', //all types
+        type: 'doc,docx,pdf', //all types
         maxsize: 10,
         post_upload: url,
         folder: "./",
@@ -1862,7 +1863,7 @@
         loaded: function (result) {
             $("#PRO" + result.fileno).remove();
             $("#FILE" + result.fileno).html("Uploaded: " + result.filename + " (" + result.size + ")");
-            $("#ItemImagePath").val(result.filename);
+            $("#cvPath").val(result.filename);
         },
 
         progress: function (result) {

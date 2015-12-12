@@ -43,5 +43,6 @@ namespace EPMS.WebModels.WebsiteModels
         public string DepartmentNameA { get; set; }
         public string JobDescriptionE { get; set; }
         public string JobDescriptionA { get; set; }
+        public string CvPath { get; set; }
     }
 }
