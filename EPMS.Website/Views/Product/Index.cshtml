@@ -71,9 +71,7 @@
                                     {
                                         childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                                     }
-
-                                    {
-                                        if (productSection.InventoyDepartmentId != null)
+                                    if (productSection.InventoyDepartmentId != null)
                                         {
                                             link = siteURL + "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
                                         }
@@ -81,7 +79,6 @@
                                         {
                                             link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
                                         }
-                                    }
                                     <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
                                     <label for="item-0"><a href="@link">@childName</a></label>
                                     if (productSection.InventoryDepartment != null)

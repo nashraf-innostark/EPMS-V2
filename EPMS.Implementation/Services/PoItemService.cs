@@ -59,5 +59,10 @@ namespace EPMS.Implementation.Services
             repository.Delete(item);
             repository.SaveChanges();
         }
+
+        public IEnumerable<PurchaseOrderItem> GetPoItemsByVarId(long id)
+        {
+            return repository.GetPoItemsByVarId(id);
+        }
     }
 }

@@ -24,5 +24,11 @@ namespace EPMS.Repository.Repositories
             return
                 DbSet.Where(x => x.VendorId == vendorId);
         }
+
+        public IEnumerable<VendorItem> GetItemsByItemId(long itemId)
+        {
+            return
+                DbSet.Where(x => x.ItemVariationId == itemId);
+        }
     }
 }

@@ -17,9 +17,10 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Implementation.Services
 {
-    class ItemVariationService : IItemVariationService
+    internal class ItemVariationService : IItemVariationService
     {
         #region Private
+
         private readonly IItemVariationRepository variationRepository;
         private readonly ISizeRepository sizeRepository;
         private readonly IManufacturerRepository manufacturerRepository;
@@ -35,6 +36,8 @@ namespace EPMS.Implementation.Services
         private readonly ItemReleaseQuantityRepository itemReleaseQuantityRepository;
         private readonly InventoryDepartmentRepository inventoryDepartmentRepository;
         private readonly IVendorRepository vendorRepository;
+        private readonly IVendorItemsRepository itemRepository;
+        private readonly IPoItemRepository poItemRepository;
 
         #endregion
 
@@ -46,7 +49,9 @@ namespace EPMS.Implementation.Services
             IItemManufacturerRepository itemManufacturerRepository, IItemWarehouseRepository itemWarehouseRepository,
             INotificationService notificationService, IWarehouseService warehouseService,
             IInventoryItemRepository inventoryItemRepository, ItemWarehouseService itemWarehouseService,
-            ItemReleaseQuantityRepository itemReleaseQuantityRepository, InventoryDepartmentRepository inventoryDepartmentRepository, IVendorRepository vendorRepository)
+            ItemReleaseQuantityRepository itemReleaseQuantityRepository,
+            InventoryDepartmentRepository inventoryDepartmentRepository, IVendorRepository vendorRepository,
+            IVendorItemsRepository itemRepository, IPoItemRepository poItemRepository)
         {
             this.variationRepository = variationRepository;
             this.sizeRepository = sizeRepository;
@@ -63,11 +68,14 @@ namespace EPMS.Implementation.Services
             this.itemReleaseQuantityRepository = itemReleaseQuantityRepository;
             this.inventoryDepartmentRepository = inventoryDepartmentRepository;
             this.vendorRepository = vendorRepository;
+            this.itemRepository = itemRepository;
+            this.poItemRepository = poItemRepository;
         }
 
         #endregion
 
         #region Public
+
         /// <summary>
         /// Get All Item Variations
         /// </summary>
@@ -75,6 +83,7 @@ namespace EPMS.Implementation.Services
         {
             return variationRepository.GetAll();
         }
+
         /// <summary>
         /// Find Variation By Id
         /// </summary>
@@ -82,6 +91,7 @@ namespace EPMS.Implementation.Services
         {
             return variationRepository.Find(id);
         }
+
         /// <summary>
         /// Find Variation By BarCode
         /// </summary>
@@ -101,7 +111,8 @@ namespace EPMS.Implementation.Services
                     SKUDescriptionAr = item.SKUDescriptionAr,
                     ItemsInPackage = item.InventoryItem.QuantityInPackage ?? 0,
                     //TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity)
-                    TotalItemsCountInWarehouse = item.ItemWarehouses.Sum(x => x.Quantity) - item.ItemReleaseQuantities.Sum(x => x.Quantity),
+                    TotalItemsCountInWarehouse =
+                        item.ItemWarehouses.Sum(x => x.Quantity) - item.ItemReleaseQuantities.Sum(x => x.Quantity),
                 };
             }
             return null;
@@ -118,6 +129,7 @@ namespace EPMS.Implementation.Services
             }
             return variationIds;
         }
+
         /// <summary>
         /// Add Variation
         /// </summary>
@@ -127,6 +139,7 @@ namespace EPMS.Implementation.Services
             variationRepository.SaveChanges();
             return true;
         }
+
         /// <summary>
         /// Update Variation
         /// </summary>
@@ -136,6 +149,7 @@ namespace EPMS.Implementation.Services
             variationRepository.SaveChanges();
             return true;
         }
+
         /// <summary>
         /// Delete Variation
         /// </summary>
@@ -144,6 +158,7 @@ namespace EPMS.Implementation.Services
             variationRepository.Delete(itemVariation);
             variationRepository.SaveChanges();
         }
+
         /// <summary>
         /// Get Variations for Dropdown List
         /// </summary>
@@ -151,6 +166,7 @@ namespace EPMS.Implementation.Services
         {
             return variationRepository.GetItemVariationDropDownList();
         }
+
         /// <summary>
         /// Item Variation Response
         /// </summary>
@@ -165,6 +181,51 @@ namespace EPMS.Implementation.Services
             response.StatusesForDdl = statusRepository.GetAll();
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
+
+            response.PurchaseOrderItems = poItemRepository.GetPoItemsByVarId(id).ToList();
+            var manufacturerGroup = response.PurchaseOrderItems.GroupBy(x => x.VendorId);
+
+            //If POItems exists against this Variation but not in Item Manufacturer Table
+            foreach (var poItem in manufacturerGroup)
+            {
+                var record = poItem.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+                if (response.ItemVariation.ItemManufacturers.All(x => x.ManufacturerId != record.VendorId))
+                {
+                    if (poItem.FirstOrDefault() != null)
+                    {
+                        var newManufacturer = new ItemManufacturer
+                        {
+                            Quantity = record.ItemQty,
+                            Price = record.UnitPrice.ToString(),
+                            ManufacturerId = (long) record.VendorId,
+                            ItemVariationId = (long) record.ItemVariationId,
+                            Vendor = vendorRepository.Find((long) record.VendorId),
+                            ManuallyAdded = true
+                        };
+                        response.ItemVariation.ItemManufacturers.Add(newManufacturer);
+                    }
+                }
+            }
+
+            if (response.PurchaseOrderItems != null)
+                foreach (ItemManufacturer itemManufacturer in response.ItemVariation.ItemManufacturers)
+                {
+                    int oldQty = 0;
+                    if (!itemManufacturer.ManuallyAdded)
+                    {
+                        oldQty = (int) itemManufacturer.Quantity;
+                    }
+                    var record =
+                        response.PurchaseOrderItems.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault(x => x.VendorId == itemManufacturer.ManufacturerId);
+                    if (record != null)
+                    {
+                        itemManufacturer.Price = record.UnitPrice.ToString();
+                        itemManufacturer.Quantity = record.ItemQty;
+                    }
+                    itemManufacturer.TotalQuantity =
+                        (int)response.PurchaseOrderItems.Where(x => x.VendorId == itemManufacturer.ManufacturerId)
+                            .Sum(x => x.ItemQty) + oldQty;
+                }
 
             //response.ItemVariation.ItemWarehouses = new List<ItemWarehouse>();
             if (response.ItemVariation.ItemWarehouses != null)
@@ -194,7 +255,8 @@ namespace EPMS.Implementation.Services
             IEnumerable<ItemVariation> itemVariations = variationRepository.GetItemVariationByWarehouseId(warehouseId);
             if (itemVariations != null)
             {
-                IEnumerable<ItemVariation> variations = itemVariations as IList<ItemVariation> ?? itemVariations.ToList();
+                IEnumerable<ItemVariation> variations = itemVariations as IList<ItemVariation> ??
+                                                        itemVariations.ToList();
                 response.ItemVariationDropDownListItems =
                     variations
                         .Select(x => new ItemVariationDropDownListItem
@@ -224,6 +286,7 @@ namespace EPMS.Implementation.Services
         {
             return variationRepository.GetVariationsByInventoryItemId(inventoryItemId);
         }
+
         /// <summary>
         /// Save Item Variation from Client
         /// </summary>
@@ -231,7 +294,8 @@ namespace EPMS.Implementation.Services
         {
             variationToSave.ItemVariation.InventoryItem =
                 inventoryItemRepository.Find(variationToSave.ItemVariation.InventoryItemId);
-            ItemVariation itemVariationFromDatabase = variationRepository.Find(variationToSave.ItemVariation.ItemVariationId);
+            ItemVariation itemVariationFromDatabase =
+                variationRepository.Find(variationToSave.ItemVariation.ItemVariationId);
             var currentCulture = System.Threading.Thread.CurrentThread.CurrentCulture;
 
             System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo("en-US");
@@ -277,7 +341,7 @@ namespace EPMS.Implementation.Services
             // var dateNow = Convert.ToDateTime(DateTime.Now).ToString("dd/MM/yyyy HH:mm:ss", new CultureInfo("en-US"));
             //var datenow = DateTime.ParseExact(dateNow, "dd/MM/yyyy", new CultureInfo("en"));
 
-                        // Specify exactly how to interpret the string.
+            // Specify exactly how to interpret the string.
             variationToSave.ItemVariation.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
             variationToSave.ItemVariation.RecCreatedDt = DateTime.Now;
             variationToSave.ItemVariation.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -311,12 +375,17 @@ namespace EPMS.Implementation.Services
             var deptnameAr = "Dep";
             if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
             {
-                department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
+                department =
+                    inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
             }
             if (department != null)
             {
-                deptnameEn = department.DepartmentNameEn.Length < 3 ? department.DepartmentNameEn : department.DepartmentNameEn.Substring(0, 3);
-                deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
+                deptnameEn = department.DepartmentNameEn.Length < 3
+                    ? department.DepartmentNameEn
+                    : department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameAr.Length < 3
+                    ? department.DepartmentNameAr
+                    : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
             var statusEn = "Sta";
@@ -370,12 +439,17 @@ namespace EPMS.Implementation.Services
             var deptnameAr = "Dep";
             if (variationToSave.ItemVariation.InventoryItem.DepartmentId != null)
             {
-                department = inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
+                department =
+                    inventoryDepartmentRepository.Find((long)variationToSave.ItemVariation.InventoryItem.DepartmentId);
             }
             if (department != null)
             {
-                deptnameEn = department.DepartmentNameEn.Length < 3 ? department.DepartmentNameEn : department.DepartmentNameEn.Substring(0, 3);
-                deptnameAr = department.DepartmentNameAr.Length < 3 ? department.DepartmentNameAr : department.DepartmentNameAr.Substring(0, 3);
+                deptnameEn = department.DepartmentNameEn.Length < 3
+                    ? department.DepartmentNameEn
+                    : department.DepartmentNameEn.Substring(0, 3);
+                deptnameAr = department.DepartmentNameAr.Length < 3
+                    ? department.DepartmentNameAr
+                    : department.DepartmentNameAr.Substring(0, 3);
             }
             Status status = statusRepository.Find(Convert.ToInt64(variationToSave.StatusArrayList));
             var statusEn = "Sta";
@@ -389,6 +463,7 @@ namespace EPMS.Implementation.Services
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
             variationRepository.Update(variationToSave.ItemVariation);
         }
+
         /// <summary>
         /// Save Size List from Client
         /// </summary>
@@ -503,7 +578,9 @@ namespace EPMS.Implementation.Services
                     {
                         if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId))
                             continue;
-                        var itemToDelete = itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
+                        var itemToDelete =
+                            itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
+                                warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
                         itemWarehouseRepository.Delete(itemToDelete);
                     }
                 }
@@ -513,7 +590,9 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemWarehouse warehouseItem in dbList)
                 {
-                    var itemToDelete = itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
+                    var itemToDelete =
+                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
+                            warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
                     itemWarehouseRepository.Delete(itemToDelete);
                 }
             }
@@ -580,7 +659,9 @@ namespace EPMS.Implementation.Services
                     {
                         if (clientList.Any(x => x.ManufacturerId == manufacturerItem.ManufacturerId))
                             continue;
-                        var itemToDelete = itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
+                        var itemToDelete =
+                            itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(
+                                manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
                         itemManufacturerRepository.Delete(itemToDelete);
                     }
                 }
@@ -590,7 +671,9 @@ namespace EPMS.Implementation.Services
                 //Delete All Items if List from Client is Empty
                 foreach (ItemManufacturer manufacturerItem in dbList)
                 {
-                    var itemToDelete = itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
+                    var itemToDelete =
+                        itemManufacturerRepository.FindItemManufacturerByVariationAndManufacturerId(
+                            manufacturerItem.ItemVariationId, manufacturerItem.ManufacturerId);
                     itemManufacturerRepository.Delete(itemToDelete);
                 }
             }
@@ -713,6 +796,7 @@ namespace EPMS.Implementation.Services
                 }
             }
         }
+
         /// <summary>
         /// Add Images List from Client
         /// </summary>
@@ -734,6 +818,7 @@ namespace EPMS.Implementation.Services
                 //imageRepository.SaveChanges();
             }
         }
+
         /// <summary>
         /// Update Images List from Client
         /// </summary>
@@ -787,6 +872,7 @@ namespace EPMS.Implementation.Services
         #endregion
 
         #region Notification Send
+
         private void SendNotification(ItemVariation itemVariation)
         {
             NotificationViewModel notificationViewModel = new NotificationViewModel
@@ -795,15 +881,15 @@ namespace EPMS.Implementation.Services
                 {
                     TitleE = ConfigurationManager.AppSettings["ItemVariationE"],
                     TitleA = ConfigurationManager.AppSettings["ItemVariationA"],
-                    SubCategoryId = 3,//Item Variation
+                    SubCategoryId = 3, //Item Variation
                     AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ItemVariationAlertBefore"]),
-                    CategoryId = 7,//Inventory
+                    CategoryId = 7, //Inventory
                     ItemId = itemVariation.ItemVariationId,
                     AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")),
                     AlertDateType = 1,
                     SystemGenerated = true,
                     ForAdmin = false,
-                    ForRole = UserRole.InventoryManager//Inventory Manager
+                    ForRole = UserRole.InventoryManager //Inventory Manager
                 }
             };
 
@@ -813,6 +899,7 @@ namespace EPMS.Implementation.Services
 
             #endregion
         }
+
         #endregion
     }
 }

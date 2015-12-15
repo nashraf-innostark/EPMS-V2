@@ -15,10 +15,12 @@ namespace EPMS.Implementation.Services
     public class InventoryItemService : IInventoryItemService
     {
         private readonly IInventoryItemRepository inventoryItemRepository;
+        private readonly IPoItemRepository poItemRepository;
 
-        public InventoryItemService(IInventoryItemRepository inventoryItemRepository)
+        public InventoryItemService(IInventoryItemRepository inventoryItemRepository, IPoItemRepository poItemRepository)
         {
             this.inventoryItemRepository = inventoryItemRepository;
+            this.poItemRepository = poItemRepository;
         }
 
         public IEnumerable<InventoryItem> GetAll()
@@ -28,7 +30,9 @@ namespace EPMS.Implementation.Services
 
         public InventoryItem FindItemById(long id)
         {
-            return inventoryItemRepository.Find(id);
+            var inventoryItem =  inventoryItemRepository.Find(id);
+            CalculateQtyInHand(inventoryItem);
+            return inventoryItem;
         }
 
         public bool AddItem(InventoryItem item)
@@ -122,6 +126,56 @@ namespace EPMS.Implementation.Services
                 return true;
             }
             return false;
+        }
+
+        public void CalculateQtyInHand(InventoryItem item)
+        {
+            foreach (ItemVariation itemVariation in item.ItemVariations)
+            {
+                var poItems = poItemRepository.GetPoItemsByVarId(itemVariation.ItemVariationId);
+                var manufacturerGroup = poItems.GroupBy(x => x.VendorId);
+
+                foreach (var poItem in manufacturerGroup)
+                {
+                    var record = poItem.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+                    if (itemVariation.ItemManufacturers.All(x => x.ManufacturerId != record.VendorId))
+                    {
+                        if (poItem.FirstOrDefault() != null)
+                        {
+                            var newManufacturer = new ItemManufacturer
+                            {
+                                Quantity = record.ItemQty,
+                                Price = record.UnitPrice.ToString(),
+                                ManufacturerId = (long)record.VendorId,
+                                ItemVariationId = (long)record.ItemVariationId,
+                                ManuallyAdded = true
+                            };
+                            itemVariation.ItemManufacturers.Add(newManufacturer);
+                        }
+                    }
+                }
+
+                if (poItems != null)
+                    foreach (ItemManufacturer itemManufacturer in itemVariation.ItemManufacturers)
+                    {
+                        int oldQty = 0;
+                        if (!itemManufacturer.ManuallyAdded)
+                        {
+                            oldQty = (int)itemManufacturer.Quantity;
+                        }
+                        var record =
+                            poItems.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault(x => x.VendorId == itemManufacturer.ManufacturerId);
+                        if (record != null)
+                        {
+                            itemManufacturer.Price = record.UnitPrice.ToString();
+                            itemManufacturer.Quantity = record.ItemQty;
+                        }
+                        itemManufacturer.TotalQuantity =
+                            (int)poItems.Where(x => x.VendorId == itemManufacturer.ManufacturerId)
+                                .Sum(x => x.ItemQty) + oldQty;
+                    }
+
+            }
         }
     }
 }

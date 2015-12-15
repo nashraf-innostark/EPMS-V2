@@ -36,5 +36,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.PurchaseOrderId == id).ToList();
         }
+
+        public IEnumerable<PurchaseOrderItem> GetPoItemsByVarId(long id)
+        {
+            return DbSet.Where(x => x.ItemVariationId == id).ToList();
+        }
     }
 }

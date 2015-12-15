@@ -12,6 +12,7 @@ namespace EPMS.Models.ResponseModels
         public IEnumerable<Vendor> ManufacturersForDdl { get; set; }
         public IEnumerable<Status> StatusesForDdl { get; set; }
         public IEnumerable<Warehouse> WarehousesForDdl { get; set; }
+        public IEnumerable<PurchaseOrderItem> PurchaseOrderItems { get; set; }
         public InventoryItem InventoryItem { get; set; }
     }
 }

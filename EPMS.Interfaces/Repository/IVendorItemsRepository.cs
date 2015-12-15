@@ -6,6 +6,7 @@ namespace EPMS.Interfaces.Repository
     public interface IVendorItemsRepository : IBaseRepository<VendorItem, long>
     {
         IEnumerable<VendorItem> GetItemsByVendorId(long vendorId); 
+        IEnumerable<VendorItem> GetItemsByItemId(long itemId); 
 
     }
 }

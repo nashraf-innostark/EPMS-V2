@@ -6,5 +6,6 @@ namespace EPMS.Interfaces.Repository
     public interface IPoItemRepository : IBaseRepository<PurchaseOrderItem, long>
     {
         IEnumerable<PurchaseOrderItem> GetPoItemsByPoId(long id);
+        IEnumerable<PurchaseOrderItem> GetPoItemsByVarId(long id);
     }
 }

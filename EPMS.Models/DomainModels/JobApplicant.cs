@@ -35,6 +35,7 @@ namespace EPMS.Models.DomainModels
         public DateTime? LastUpdatedDate { get; set; }
         public string Email { get; set; }
         public string MobileNumber { get; set; }
+        public string CvPath { get; set; }
 
         public virtual ICollection<ApplicantExperience> ApplicantExperiences { get; set; }
         public virtual ICollection<ApplicantQualification> ApplicantQualifications { get; set; }
