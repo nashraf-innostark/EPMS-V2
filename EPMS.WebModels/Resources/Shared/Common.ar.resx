@@ -217,7 +217,7 @@
     <value>تسلسل</value>
   </data>
   <data name="RequiredDdlField" xml:space="preserve">
-    <value>Please select a value Ar</value>
+    <value>Please select a value.</value>
   </data>
   <data name="Edit" xml:space="preserve">
     <value>تحرير</value>
@@ -245,5 +245,8 @@
   </data>
   <data name="RequiredTreeField" xml:space="preserve">
     <value>Please select an item from tree.</value>
+  </data>
+  <data name="Employee" xml:space="preserve">
+    <value>موظف</value>
   </data>
 </root>

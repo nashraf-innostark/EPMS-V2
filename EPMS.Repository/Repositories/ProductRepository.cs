@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -70,7 +71,7 @@ namespace EPMS.Repository.Repositories
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
                     || !searchSpecified);
 
-                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariation.InventoryItemId);
+                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariationId);
                     foreach (var prod in products)
                     {
                         response.Products.Add(prod.FirstOrDefault());
@@ -146,6 +147,25 @@ namespace EPMS.Repository.Repositories
         public Product FindByVariationId(long variationId)
         {
             return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
+        }
+
+        public Product GetProductForCatalog(int pageNo)
+        {
+            int fromRow = pageNo-1;
+            int toRow = pageNo;
+
+            var dbset = DbSet.GroupBy(x=>x.ItemVariationId).OrderBy(x=>x.FirstOrDefault().ProductNameEn ?? x.FirstOrDefault().ItemVariation.InventoryItem.ItemNameEn).Skip(fromRow).Take(toRow);
+            return dbset.FirstOrDefault().FirstOrDefault();
+        }
+
+        public int GetProductsCount()
+        {
+            return DbSet.Count();
+        }
+
+        public IEnumerable<Product> GetAllSortedProducts()
+        {
+            return DbSet.OrderBy(x => x.ProductNameEn ?? x.ItemVariation.InventoryItem.ItemNameEn);
         }
     }
 }

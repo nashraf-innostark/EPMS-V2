@@ -160,15 +160,5 @@ namespace EPMS.Website.Controllers
         #endregion
 
         #endregion
-
-        //// GET: Product
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-        //public ActionResult Details(long id)
-        //{
-        //    return View();
-        //}
     }
 }

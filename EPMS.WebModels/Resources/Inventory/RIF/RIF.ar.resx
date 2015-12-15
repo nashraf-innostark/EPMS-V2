@@ -210,4 +210,13 @@
   <data name="RIFError" xml:space="preserve">
     <value>Error in saving Returned Item Form.</value>
   </data>
+  <data name="HistoryPageTitle" xml:space="preserve">
+    <value>History Returned Item Form (RIF)</value>
+  </data>
+  <data name="ReturnedQuantity" xml:space="preserve">
+    <value>Returned Quantity</value>
+  </data>
+  <data name="RIFItem_WarehouseId_Warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
 </root>

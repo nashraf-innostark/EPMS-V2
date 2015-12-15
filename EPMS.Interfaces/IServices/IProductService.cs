@@ -8,6 +8,9 @@ namespace EPMS.Interfaces.IServices
     public interface IProductService
     {
         IEnumerable<Product> GetAll();
+        IEnumerable<Product> GetAllSortedProducts();
+        int GetProductsCount();
+        Product GetProductForCatalog(int pageNo);
         Product FindProductById(long id);
         bool AddProduct(Product product);
         bool UpdateProduct(Product product);

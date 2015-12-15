@@ -493,6 +493,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomerReport.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Reports\Task.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Task.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
       <DependentUpon>RFI.ar.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1048,6 +1053,7 @@
     <EmbeddedResource Include="Resources\Common.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Common.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CP\Profile.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1299,6 +1305,7 @@
     <EmbeddedResource Include="Resources\Reports\Reports.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Reports.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Reports\CustomerReport.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1307,6 +1314,11 @@
     <EmbeddedResource Include="Resources\Reports\RfqOrder.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RfqOrder.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Task.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Task.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1466,6 +1478,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Cart.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

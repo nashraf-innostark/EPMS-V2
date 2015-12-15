@@ -2,8 +2,9 @@
 
 @{
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = Model.ProjectTasks.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.QOReportView : (direction == "ltr" ? Model.ProjectTasks.FirstOrDefault().TaskNameE : Model.ProjectTasks.FirstOrDefault().TaskNameE) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
-
+    ViewBag.Title = Model.ProjectTasks.Count() > 1 ? 
+        EPMS.WebModels.Resources.Reports.Reports.QOReportView : 
+        (direction == "ltr" ? Model.ProjectTasks.FirstOrDefault().TaskNameE : Model.ProjectTasks.FirstOrDefault().TaskNameE) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
     Layout = "~/Views/Shared/_Layout.cshtml";
     int serialX = 1;
     int serialY = 1;
@@ -18,7 +19,7 @@
         </li>
         <li>
             <a href="~/Report/ProjectsAndTasks/Index">
-                Project Management Report List
+                @EPMS.WebModels.Resources.Reports.Reports.ProjectManagementReportList
             </a>
         </li>
         <li class="current">
@@ -49,12 +50,12 @@
                     <table class="table table-striped table-responsive" id="tableProjectTasks">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Serial</th>
-                                <th>Task Name</th>
-                                <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Status</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.TaskName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.Cost</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -78,13 +79,13 @@
                     <table class="table table-striped table-responsive" id="tableProjectSubTasks">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Serial</th>
-                                <th>Sub Task Name</th>
-                                <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Assined to</th>
-                                <th>Status</th>
+                                <th>@EPMS.WebModels.Resources.Shared.Common.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.SubTaskName</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.Cost</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.PMS.Task.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.Assinedto</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -113,7 +114,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn disableBtn" href="~/Report/Task/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                <a class="btn disableBtn" href="~/Report/Task/GeneratePdf?ReportId=@Model.ReportId">@EPMS.WebModels.Resources.Reports.Reports.GenerateReportAsPDF</a>
                 @*<button type="button" class="btn">Generate Report As PDF</button>*@
             </div>
         </div>
