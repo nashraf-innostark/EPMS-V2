@@ -31,5 +31,10 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.Where(x => x.InvoiceId == invoiceId);
         }
+
+        public Receipt GetReceiptByInvoiceIdAndInstallmentNo(long invoiceId, int installmentNumber)
+        {
+            return DbSet.FirstOrDefault(x => x.InvoiceId == invoiceId && x.InstallmentNumber == installmentNumber);
+        }
     }
 }

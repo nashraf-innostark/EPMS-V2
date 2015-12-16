@@ -20,7 +20,8 @@ namespace EPMS.WebModels.ModelMappers
                 ClientNameE = source.Quotation.Customer.CustomerNameE,
                 ClientNameA = source.Quotation.Customer.CustomerNameA,
                 CustomerId = source.Quotation.CustomerId,
-                Quotation = source.Quotation.CreateFromServerToClientLv()
+                Quotation = source.Quotation.CreateFromServerToClientLv(),
+                Receipts = source.Receipts.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
 

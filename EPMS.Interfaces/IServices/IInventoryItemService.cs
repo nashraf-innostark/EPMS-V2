@@ -13,5 +13,6 @@ namespace EPMS.Interfaces.IServices
         bool UpdateItem(InventoryItem item);
         string DeleteItem(long itemId);
         SaveInventoryItemResponse SaveItem(InventoryItemRequest itemToSave);
+        InventoryItemResponse GetAllInventoryItems(InventoryItemSearchRequest searchRequest);
     }
 }

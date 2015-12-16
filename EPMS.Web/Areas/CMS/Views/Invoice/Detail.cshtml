@@ -232,7 +232,7 @@
                                 <label class="control-label">
                                     @if (Model.Quotation.FirstInstallmentStatus == "Paid")
                                     {
-                                        <a href="/CMS/Receipt/Detail/@Model.FirstReceiptId" id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus</a>
+                                        <a href="/CMS/Receipt/Detail/@Model.FirstReceiptId" id="installmentLabel1">@Model.Quotation.FirstInstallmentStatus (@Model.FirstType)</a>
                                     }
                                     else
                                     {
@@ -245,7 +245,10 @@
                                 <div class="span2">
                                     @if (Role == "Customer")
                                     {
-                                        <label class="control-label"><a class="btn" id="generateReceipt1" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=1">Pay</a></label>
+                                        if (Model.FirstReceiptId == 0 && !Model.FirstStatus)
+                                        {
+                                            <label class="control-label"><a class="btn" id="generateReceipt1" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=1">Pay</a></label>
+                                        }
                                     }
                                     else
                                     {
@@ -280,7 +283,7 @@
                                 <label class="control-label">
                                     @if (Model.Quotation.SecondInstallmentStatus == "Paid")
                                     {
-                                        <a href="/CMS/Receipt/Detail/@Model.SecondReceiptId" id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus</a>
+                                        <a href="/CMS/Receipt/Detail/@Model.SecondReceiptId" id="installmentLabel2">@Model.Quotation.SecondInstallmentStatus (@Model.SecondType)</a>
                                     }
                                     else
                                     {
@@ -293,7 +296,10 @@
                                 <div class="span2">
                                     @if (Role == "Customer")
                                     {
-                                        <label class="control-label"><a class="btn" id="PayInstallment2" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=2">Pay</a></label>
+                                        if (Model.SecondReceiptId == 0 && !Model.SecondStatus)
+                                        {
+                                            <label class="control-label"><a class="btn" id="PayInstallment2" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=2">Pay</a></label>
+                                        }
                                     }
                                     else
                                     {
@@ -328,7 +334,7 @@
                                 <label class="control-label">
                                     @if (Model.Quotation.ThirdInstallmentStatus == "Paid")
                                     {
-                                        <a href="/CMS/Receipt/Detail/@Model.ThirdReceiptId" id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus</a>
+                                        <a href="/CMS/Receipt/Detail/@Model.ThirdReceiptId" id="installmentLabel3">@Model.Quotation.ThirdInstallmentStatus (@Model.ThirdType)</a>
                                     }
                                     else
                                     {
@@ -341,7 +347,10 @@
                                 <div class="span2">
                                     @if (Role == "Customer")
                                     {
-                                        <label class="control-label"><a class="btn" id="PayInstallment3" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=3">Pay</a></label>
+                                        if (Model.ThirdReceiptId == 0 && !Model.ThirdStatus)
+                                        {
+                                            <label class="control-label"><a class="btn" id="PayInstallment3" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=3">Pay</a></label>
+                                        }
                                     }
                                     else
                                     {
@@ -376,7 +385,7 @@
                                 <label class="control-label">
                                     @if (Model.Quotation.FourthInstallmentStatus == "Paid")
                                     {
-                                        <a href="/CMS/Receipt/Detail/@Model.FourthReceiptId" id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus</a>
+                                        <a href="/CMS/Receipt/Detail/@Model.FourthReceiptId" id="installmentLabel4">@Model.Quotation.FourthInstallmentStatus (@Model.FourthType)</a>
                                     }
                                     else
                                     {
@@ -389,7 +398,10 @@
                                 <div class="span2">
                                     @if (Role == "Customer")
                                     {
-                                        <label class="control-label"><a class="btn" id="PayInstallment4" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=4">Pay</a></label>
+                                        if (Model.FourthReceiptId == 0 && !Model.FourthStatus)
+                                        {
+                                            <label class="control-label"><a class="btn" id="PayInstallment4" href="~/CMS/Payment/Index/@Model.Invoice.InvoiceId?ins=4">Pay</a></label>
+                                        }
                                     }
                                     else
                                     {

@@ -41,10 +41,12 @@
             <br />
             <a href="#" id="TreeSelector">@EPMS.WebModels.Resources.Website.Product.ProductIndex.ImportFromInventory</a>
         </div>
+        
+        @Html.HiddenFor(model => model.SearchRequest.SearchString, new { id = "searchString" })
 
         <div class="row-fluid">
             <div class="span12">
-                <table id="Product" class="table table-striped table-responsive">
+                <table id="Products" class="table table-striped table-responsive">
                     <thead>
                         <tr>
                             <th>@EPMS.WebModels.Resources.Website.Product.ProductIndex.Serial</th>
@@ -57,46 +59,6 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var item in Model.Products.ToList())
-                        {
-                            serial = serial + 1;
-                            <tr>
-                                <td>@serial</td>
-                                <td>
-                                    <a href="~/Website/Product/Create/@item.ProductId">
-                                        @(direction == "ltr" ? item.ProductNameEn : item.ProductNameAr)
-                                    </a>
-                                </td>
-                                <td>@item.ProductPrice</td>
-                                <td>@item.DiscountedPrice</td>
-                                <td class="descp_@item.ProductId"></td>
-                                <script>
-                                    var descp;
-                                    if ('@direction' == 'ltr') {
-                                        descp = '@Html.Raw(item.ProductDescEn)';
-                                    } else {
-                                        descp = '@Html.Raw(item.ProductDescAr)';
-                                    }
-                                    regex = /(<([^>]+)>)/ig;
-                                    result = descp.replace(regex, "");
-                                    $(".descp_@item.ProductId").text(result);
-                                </script>
-                                <td class="specify_@item.ProductId">@(direction == "ltr" ? item.ProductSpecificationEn : item.ProductSpecificationAr)</td>
-                                <script>
-                                    var descp;
-                                    if ('@direction' == 'ltr') {
-                                        descp = '@Html.Raw(item.ProductSpecificationEn)';
-                                    } else {
-                                        descp = '@Html.Raw(item.ProductSpecificationAr)';
-                                    }
-                                    regex = /(<([^>]+)>)/ig;
-                                    result = descp.replace(regex, "");
-                                    $(".specify_@item.ProductId").text(result);
-                                </script>
-
-                                <td class="delete"><a href="#" id="delete" onclick="deleteRow(@item.ProductId, this)">Delete</a></td>
-                            </tr>
-                        }
                     </tbody>
                 </table>
             </div>
@@ -112,6 +74,109 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
+    
+    $(document).ready(function () {
+        var oTable = $('#Products').dataTable({
+            "sPaginationType": "bootstrap",
+            "bProcessing": true,
+            "bServerSide": true,
+            "aoColumns": [
+                {
+                    "aTargets": [0],
+                    "sDefaultContent": "",
+                    "bVisible": true,
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [1],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        return full["ProductNameEn"];
+                    },
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [2],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        var name = full["ProductPrice"];
+                        var id = full["ItemId"];
+                        var element = '<a href="Create/' + id + '">' + name + '</a>';
+                        return element;
+                    },
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [3],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        return full["DiscountedPrice"];
+                    },
+                    "bSortable": true
+                },
+                {
+                    "aTargets": [4],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        return full["ProductDescEn"];
+                    },
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [5],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        return full["ProductSpecificationEn"];
+                    },
+                    "bSortable": false
+                },
+                {
+                    "aTargets": [6],
+                    "sDefaultContent": "",
+                    "mRender": function (data, type, full) {
+                        var name = "Delete";
+                        var id = full["ProductId"];
+                        var ele = '<a><span class="cursorHand" onclick="deleteRow(' + id + ')">' + name + '</span></a>';
+                        return ele;
+                    },
+                    "bSortable": true
+                }
+            ],
+            "fnServerParams": function (aaData) {
+                aaData.push({ "name": "search", "value": $('input').val() });
+            },
+            "sAjaxSource": "/Website/Product/Index",
+            "sServerMethod": "POST",
+            "oLanguage": {
+                "sLoadingRecords": "Please wait - loading records...",
+                "sZeroRecords": "No records to display.",
+                "sProcessing": "Processing...",
+                "sInfoEmpty": "No entries to display."
+            },
+            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+                $("td:first", nRow).html(iDisplayIndex + 1);
+                return nRow;
+            },
+        });
+
+        $(".dataTables_length select").select2({
+            dropdownCssClass: 'noSearch'
+        });
+        $(".dataTables_filter input").unbind()
+            .bind("input", function (e) {
+                // Bind our desired behavior
+                if (this.value.length >= 3 || e.keyCode == 13) {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                if (this.value == "") {
+                    $("#searchString").val(this.value);
+                    oTable.fnDraw();
+                }
+                return;
+            });
+    });
+
     var siteUrl;
     var selectedChildNodes;
     var selectedParentNodes;

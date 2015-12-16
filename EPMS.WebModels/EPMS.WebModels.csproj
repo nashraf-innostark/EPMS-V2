@@ -1466,6 +1466,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\ShoppingCart\Cart.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Cart.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Website\AboutUs\AboutUs.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

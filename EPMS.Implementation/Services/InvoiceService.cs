@@ -165,18 +165,49 @@ namespace EPMS.Implementation.Services
 
             if (receipts != null)
             {
+                //For First Receipt
                 response.FirstReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 1) != null
                     ? receipts.FirstOrDefault(x => x.InstallmentNumber == 1).ReceiptId
                     : 0;
+                response.FirstStatus = receipts.FirstOrDefault(x => x.InstallmentNumber == 1) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 1).IsPaid
+                    : false;
+                response.FirstType = receipts.FirstOrDefault(x => x.InstallmentNumber == 1) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 1).PaymentType
+                    : 1;
+
+                //For Second Receipt
                 response.SecondReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 2) != null
                     ? receipts.FirstOrDefault(x => x.InstallmentNumber == 2).ReceiptId
                     : 0;
+                response.SecondStatus = receipts.FirstOrDefault(x => x.InstallmentNumber == 2) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 2).IsPaid
+                    : false;
+                response.SecondType = receipts.FirstOrDefault(x => x.InstallmentNumber == 2) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 2).PaymentType
+                    : 1;
+
+                //For Third Receipt
                 response.ThirdReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 3) != null
                     ? receipts.FirstOrDefault(x => x.InstallmentNumber == 3).ReceiptId
                     : 0;
+                response.ThirdStatus = receipts.FirstOrDefault(x => x.InstallmentNumber == 3) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 3).IsPaid
+                    : false;
+                response.ThirdType = receipts.FirstOrDefault(x => x.InstallmentNumber == 3) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 3).PaymentType
+                    : 1;
+
+                //For Fourth Receipt
                 response.FourthReceiptId = receipts.FirstOrDefault(x => x.InstallmentNumber == 4) != null
                     ? receipts.FirstOrDefault(x => x.InstallmentNumber == 4).ReceiptId
                     : 0;
+                response.FourthStatus = receipts.FirstOrDefault(x => x.InstallmentNumber == 4) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 4).IsPaid
+                    : false;
+                response.FourthType = receipts.FirstOrDefault(x => x.InstallmentNumber == 4) != null
+                    ? receipts.FirstOrDefault(x => x.InstallmentNumber == 4).PaymentType
+                    : 1;
             }
 
             return response;

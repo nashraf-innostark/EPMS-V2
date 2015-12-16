@@ -19,5 +19,6 @@ namespace EPMS.Interfaces.IServices
         IList<long> RemoveDuplication(string[] itemVariationIds);
         ProductsListResponse GetProductsList(ProductSearchRequest request);
         ProductDetailResponse GetProductDetails(long id, string from);
+        ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest);
     }
 }

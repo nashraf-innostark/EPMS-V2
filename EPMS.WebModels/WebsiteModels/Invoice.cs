@@ -19,5 +19,6 @@ namespace EPMS.WebModels.WebsiteModels
         public long CustomerId { get; set; }
 
         public Quotation Quotation { get; set; }
+        public IList<Receipt> Receipts { get; set; }
     }
 }

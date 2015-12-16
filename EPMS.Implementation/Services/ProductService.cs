@@ -348,6 +348,11 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest)
+        {
+            return productRepository.GetAllProducts(searchRequest);
+        }
+
         private IEnumerable<InventoryDepartment> AllChildDepartments(InventoryDepartment department)
         {
             IList<InventoryDepartment> childDepartments = new List<InventoryDepartment>();

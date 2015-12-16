@@ -21,5 +21,17 @@ namespace EPMS.Models.RequestModels
                 iSortCol_0 = (short)value;
             }
         }
+
+        public ProductByColumn ProductByColumn
+        {
+            get
+            {
+                return (ProductByColumn)iSortCol_0;
+            }
+            set
+            {
+                iSortCol_0 = (short)value;
+            }
+        }
     }
 }

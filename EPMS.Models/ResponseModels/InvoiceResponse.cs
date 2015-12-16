@@ -15,7 +15,14 @@ namespace EPMS.Models.ResponseModels
         public long FourthReceiptId { get; set; }
         public string EmployeeNameE { get; set; }
         public string EmployeeNameA { get; set; }
-
+        public bool FirstStatus { get; set; }
+        public bool SecondStatus { get; set; }
+        public bool ThirdStatus { get; set; }
+        public bool FourthStatus { get; set; }
+        public int FirstType { get; set; }
+        public int SecondType { get; set; }
+        public int ThirdType { get; set; }
+        public int FourthType { get; set; }
 
     }
 }
