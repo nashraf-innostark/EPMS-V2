@@ -115,9 +115,33 @@
     margin: 0px 5px;
 }
 
+.department .titleRight {
+    float: right;
+    font-weight: bolder;
+    margin: 0px 15px;
+}
+
 .catalog .catalogDepartment {
     color: white;
     height: 40px;
     width: 100%;
     display: block;
+}
+
+.catalog p {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    text-align: justify !important;
+    font-size: 13px !important;
+    margin: 0 0 !important;
+    line-height: 22px;
+    text-indent: 18px;
+}
+
+.catalogue-footer h5 {
+    line-height: 15px;
+}
+
+.catalogDepartment h5 {
+    line-height: 15px;
+    padding-top: 10px;
 }

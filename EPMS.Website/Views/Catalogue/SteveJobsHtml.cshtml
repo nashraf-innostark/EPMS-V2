@@ -1,4 +1,6 @@
-﻿@using System.Configuration
+﻿@using System.Globalization
+@using System.Configuration
+
 @model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
@@ -6,9 +8,14 @@
     Layout = null;
     var Date = DateTime.Now;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
-    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var direction = ViewBag.Direction;
     int pageNo = 1;
     string imageSrc;
+}
+
+@if (direction == "rtl")
+{
+    <link rel="stylesheet" href="~/Content/arabic.css" media="all" />
 }
 <link rel="stylesheet" href="~/Content/bootstrap.css" type="text/css" />
 <link href="~/Content/font-awesome.css" rel="stylesheet" />
@@ -16,35 +23,50 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700,900&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font" />
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font_body" />
 
-<link href="~/Content/styleIST.css" rel="stylesheet"/>
+<link href="~/Content/styleIST.css" rel="stylesheet" />
 
 
 <form class="form-horizontal" id="validation_form">
     <div class="container-fluid">
         @if (Model.Products != null && Model.Products.Any())
         {
+            string dir = "";
+            if (direction == "rtl")
+            {
+                dir = "direction: rtl";
+            }
             foreach (var product in Model.Products)
             {
                 if (string.IsNullOrEmpty(product.DeptColor))
                 {
                     product.DeptColor = "rgb(8, 92, 101)";
                 }
-                <div class="control-group row-fluid catalog" style="background-color: white; height: 100%">
-                    <div class="catalogDepartment" style="background-color: @product.DeptColor !important; color: white !important;">
-                        <h5 class="titleLeft" style="color: white !important">
-                            @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
-                        </h5>
-                        <h5 class="titleRight" style="color: white !important">@product.PathTillParent</h5>
+                <div class="control-group row-fluid catalog" style="background-color: white; height: 98%; padding: 10px; @dir">
+                    <div class="catalogDepartment department" style="background-color: @product.DeptColor !important; color: white !important;">
+                        @if (direction == "ltr")
+                        {
+                            <h5 class="titleLeft" style="color: white !important">
+                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
+                            </h5>
+                            <h5 class="titleRight" style="color: white !important">@product.PathTillParent</h5>
+                        }
+                        else
+                        {
+                            <h5 class="titleRight" style="color: white !important">
+                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
+                            </h5>
+                            <h5 class="titleLeft" style="color: white !important">@product.PathTillParent</h5>
+                        }
                     </div>
-                    <div class="invoice-info">
+                    <div class="invoice-info" style="padding: 15px">
                         <div class="invoice-name" style="color: @product.DeptColor !important;">
                             @if (product.ItemVariationId != null)
                             {
-                                @product.ItemNameEn
+                                <h5>@(direction == "ltr" ? product.ItemNameEn : product.ItemNameAr)</h5>
                             }
                             else
                             {
-                                @product.ProductNameEn
+                                <h5>@(direction == "ltr" ? product.ProductNameEn : product.ProductNameAr)</h5>
                             }
                         </div>
                         @if (product.ItemVariationId != null)
@@ -73,24 +95,31 @@
                         <div class="control-group row-fluid">
                             <div class="span12">
                                 <div class="invoice-from">
-                                    <h3 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription</h3>
+                                    <h5 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription</h5>
                                     @if (product.ItemVariationId != null)
                                     {
-                                        <p style="text-align: justify"> @product.ItemDesc</p>
+                                        <p>@product.ItemDesc</p>
                                     }
                                     else
                                     {
-                                        <p style="text-align: justify"> @product.ProductDescEn</p>
+                                        <p>@(direction == "ltr" ? product.ProductDescEn : product.ProductDescAr)</p>
                                     }
                                 </div>
-                                <h3 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification</h3>
-                                <p>@product.ProductSpecificationEn</p>
+                                <h5 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification</h5>
+                                <p>@(direction == "ltr" ? product.ProductSpecificationEn : product.ProductSpecificationAr)</p>
                             </div>
                         </div>
                     </div>
                     <div class="catalogDepartment" style="background-color: @product.DeptColor !important; color: white !important;">
-                        <h5 class="" style="color: white !important; text-align: right; margin-right: 5px;">@(pageNo++)</h5>
+                        @if (direction == "ltr")
+                        {
+                            <h5 class="" style="color: white !important; text-align: right; margin-right: 15px;">@(pageNo++)</h5>
+                        }
+                        else{
+                            <h5 class="" style="color: white !important; text-align: left; margin-left: 15px;">@(pageNo++)</h5>
+                        }
                     </div>
+
                 </div>
             }
         }
