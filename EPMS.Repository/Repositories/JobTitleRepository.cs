@@ -56,7 +56,7 @@ namespace EPMS.Repository.Repositories
         public JobTitleResponse GetAllJobTitle(JobTitleSearchRequest jobTitleSearchRequest)
         {
             int fromRow = jobTitleSearchRequest.iDisplayStart;
-            int toRow = jobTitleSearchRequest.iDisplayStart + jobTitleSearchRequest.iDisplayLength;
+            int toRow = jobTitleSearchRequest.iDisplayLength;
 
             Expression<Func<JobTitle, bool>> query =
                 s => (((jobTitleSearchRequest.JobTitleId == 0) || s.JobTitleId == jobTitleSearchRequest.JobTitleId

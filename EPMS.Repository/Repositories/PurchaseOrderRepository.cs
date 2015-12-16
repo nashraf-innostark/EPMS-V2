@@ -67,7 +67,8 @@ namespace EPMS.Repository.Repositories
         public PurchaseOrderListResponse GetAllPoS(PurchaseOrderSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
+
             if (searchRequest.iSortCol_0 == 0)
             {
                 searchRequest.iSortCol_0 = 1;

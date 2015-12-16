@@ -69,8 +69,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             var viewModel = new InventoryItemListViewModel
             {
                 aaData = itemList,
-                iTotalRecords = Convert.ToInt32(items.TotalCount),
-                iTotalDisplayRecords = Convert.ToInt32(itemList.Count()),
+                iTotalRecords = items.TotalCount,
+                iTotalDisplayRecords = items.TotalCount,
                 sEcho = searchRequest.sEcho,
             };
 

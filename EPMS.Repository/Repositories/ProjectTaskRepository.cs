@@ -92,7 +92,7 @@ namespace EPMS.Repository.Repositories
                 searchRequest.iSortCol_0 = 2;
             }
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<ProjectTask, bool>> query;
             if (searchRequest.AllowedAll)
@@ -126,7 +126,7 @@ namespace EPMS.Repository.Repositories
                 searchRequest.iSortCol_0 = 2;
             }
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<ProjectTask, bool>> query =
                 s => (s.TaskEmployees.Any(y => y.EmployeeId == employeeId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
@@ -148,7 +148,7 @@ namespace EPMS.Repository.Repositories
                 searchRequest.iSortCol_0 = 2;
             }
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<ProjectTask, bool>> query =
                 s => (s.CustomerId == customerId && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||

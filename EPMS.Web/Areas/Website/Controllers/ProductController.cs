@@ -76,7 +76,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             {
                 aaData =  productList,
                 iTotalRecords = products.TotalCount,
-                iTotalDisplayRecords = Convert.ToInt32(productList.Count()),
+                iTotalDisplayRecords = products.TotalCount,
                 sEcho = searchRequest.sEcho,
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);

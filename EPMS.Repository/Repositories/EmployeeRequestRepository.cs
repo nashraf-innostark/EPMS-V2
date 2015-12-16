@@ -94,7 +94,7 @@ namespace EPMS.Repository.Repositories
         public EmployeeRequestResponse GetAllRequests(EmployeeRequestSearchRequest searchRequset)
         {
             int fromRow = searchRequset.iDisplayStart;
-            int toRow = searchRequset.iDisplayStart+searchRequset.iDisplayLength;
+            int toRow = searchRequset.iDisplayLength;
             Expression<Func<EmployeeRequest, bool>> query;
             IEnumerable<EmployeeRequest> employeeRequests;
             if (searchRequset.Requester == "Admin")

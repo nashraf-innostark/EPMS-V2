@@ -55,9 +55,7 @@ namespace EPMS.Repository.Repositories
         public QuotationResponse GetAllQuotation(QuotationSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
-
-            long rfqNo = Convert.ToInt64(searchRequest.SearchString);
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<Quotation, bool>> query;
             if (!searchRequest.AllowedAll)

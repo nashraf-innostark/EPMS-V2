@@ -18,7 +18,9 @@ namespace EPMS.Repository.Repositories
             : base(container)
         {
         }
+        #endregion
 
+        #region Protected
         /// <summary>
         /// Primary database set
         /// </summary>
@@ -27,6 +29,9 @@ namespace EPMS.Repository.Repositories
             get { return db.EmployeeJobHistory; }
         }
 
+        #endregion
+
+        #region Public
         public IEnumerable<EmployeeJobHistory> GetJobHistoryByEmployeeId(long empId)
         {
             return DbSet.Where(x => x.EmployeeId == empId);

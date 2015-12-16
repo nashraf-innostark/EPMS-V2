@@ -116,13 +116,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
             switch (type)
             {
                 case 1:
-                    return "Pending";
+                    return WebModels.Resources.WebsiteClient.ShoppingCart.Cart.Pending;
                 case 2:
-                    return "Paypal";
+                    return WebModels.Resources.WebsiteClient.ShoppingCart.Cart.Paypal;
                 case 3:
-                    return "Offline";
+                    return WebModels.Resources.WebsiteClient.ShoppingCart.Cart.Offline;
                 case 4:
-                    return "On Delivery";
+                    return WebModels.Resources.WebsiteClient.ShoppingCart.Cart.OnDelivery;
             }
             return "";
         }

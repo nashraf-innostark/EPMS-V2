@@ -51,7 +51,7 @@ namespace EPMS.Repository.Repositories
         public RifRequestResponse LoadAllRifs(RifSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             Expression<Func<RIF, bool>> query;
             IEnumerable<RIF> queryData;
             if (searchRequest.Requester == "Admin")

@@ -102,7 +102,7 @@ namespace EPMS.Repository.Repositories
         public ReportsListRequestResponse GetProjectsReports(ProjectReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -151,7 +151,7 @@ namespace EPMS.Repository.Repositories
         public TaskReportsListRequestResponse GetTasksReports(TaskReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -206,7 +206,7 @@ namespace EPMS.Repository.Repositories
         public ReportsListRequestResponse GetWarehousesReports(WarehouseReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -253,7 +253,7 @@ namespace EPMS.Repository.Repositories
         public ReportsListRequestResponse GetInventoryItemsReports(WarehouseReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -291,7 +291,7 @@ namespace EPMS.Repository.Repositories
         public ReportsListRequestResponse GetRFQOrdersReports(WarehouseReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -329,7 +329,7 @@ namespace EPMS.Repository.Repositories
         public ReportsListRequestResponse GetVendorsReports(VendorReportSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(searchRequest.SearchString))
                 Int64.TryParse(searchRequest.SearchString, out reportId);
@@ -376,7 +376,7 @@ namespace EPMS.Repository.Repositories
         public CustomerReportListResponse GetQuotationInvoiceReports(CustomerServiceReportsSearchRequest request)
         {
             int fromRow = request.iDisplayStart;
-            int toRow = request.iDisplayStart + request.iDisplayLength;
+            int toRow = request.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(request.SearchString))
                 Int64.TryParse(request.SearchString, out reportId);
@@ -421,7 +421,7 @@ namespace EPMS.Repository.Repositories
         public CustomerReportListResponse GetAllCustoemrReport(CustomerServiceReportsSearchRequest request)
         {
             int fromRow = request.iDisplayStart;
-            int toRow = request.iDisplayStart + request.iDisplayLength;
+            int toRow = request.iDisplayLength;
             long reportId = 0;
             if (!string.IsNullOrEmpty(request.SearchString))
                 Int64.TryParse(request.SearchString, out reportId);

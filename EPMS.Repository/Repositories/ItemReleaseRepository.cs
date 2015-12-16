@@ -56,7 +56,7 @@ namespace EPMS.Repository.Repositories
         public ItemReleaseResponse GetAllItemRelease(ItemReleaseSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             if (searchRequest.iSortCol_0 == 0)
             {
                 searchRequest.iSortCol_0 = 1;

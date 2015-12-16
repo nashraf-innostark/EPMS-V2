@@ -154,7 +154,8 @@
                 "sInfoEmpty": "No entries to display."
             },
             "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                $("td:first", nRow).html(iDisplayIndex + 1);
+                var oSettings = oTable.fnSettings();
+                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
                 return nRow;
             },
         });
@@ -186,35 +187,14 @@
     $(function () {
         siteUrl = $('#siteURL').val();
         dir = '@direction';
-        $.blockUI({
-            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-        });
-        url = siteUrl + "/Website/Product/GetTreeData/";
-        populateTreeJson(url, divId, dir);
-        $('#Product').dataTable({
-            "sPaginationType": "bootstrap",
-            "aoColumns": [
-                null,
-                null,
-                null,
-                null,
-                null,
-                null,
-                null
-            ],
-            "fnInitComplete": function () {
-                $(".dataTables_wrapper select").select2({
-                    dropdownCssClass: 'noSearch'
-                });
-            },
-        });
-        $("#simpleSelectBox").select2({
-            dropdownCssClass: 'noSearch'
-        });
-
-
+        
         $("#TreeSelector").click(function (event) {
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            url = siteUrl + "/Website/Product/GetTreeData/";
+            populateTreeJson(url, divId, dir);
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };

@@ -58,7 +58,7 @@ namespace EPMS.Repository.Repositories
         public OrdersResponse GetAllOrders(OrdersSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             
             Expression<Func<Order, bool>> query =
                 s => (searchRequest.CustomerId == 0 || s.Customer.CustomerId == searchRequest.CustomerId) && 

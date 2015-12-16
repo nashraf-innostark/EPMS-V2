@@ -51,7 +51,7 @@ namespace EPMS.Repository.Repositories
         public DifRequestResponse LoadAllDifs(DifSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
             Expression<Func<DIF, bool>> query;
             IEnumerable<DIF> queryData;
             if (searchRequest.Requester == "Admin")

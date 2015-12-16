@@ -52,7 +52,8 @@ namespace EPMS.Repository.Repositories
         public PhysicalCountResponse GetAllPhysicalCountResponse(PhysicalCountSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
+
             if (searchRequest.iSortCol_0 == 1)
             {
                 searchRequest.iSortCol_0 = 2;

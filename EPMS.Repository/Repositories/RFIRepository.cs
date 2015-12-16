@@ -52,7 +52,8 @@ namespace EPMS.Repository.Repositories
         public RfiRequestResponse LoadAllRfis(RfiSearchRequest rfiSearchRequest)
         {
             int fromRow = rfiSearchRequest.iDisplayStart;
-            int toRow = rfiSearchRequest.iDisplayStart + rfiSearchRequest.iDisplayLength;
+            int toRow = rfiSearchRequest.iDisplayLength;
+
             Expression<Func<RFI, bool>> query;
             IEnumerable<RFI> rfis;
             if (rfiSearchRequest.Requester == "Admin")

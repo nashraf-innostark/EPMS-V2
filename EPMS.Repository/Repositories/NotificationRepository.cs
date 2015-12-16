@@ -16,7 +16,7 @@ namespace EPMS.Repository.Repositories
 {
     public class NotificationRepository : BaseRepository<Notification>, INotificationRepository
     {
-           #region Constructor
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
@@ -57,7 +57,8 @@ namespace EPMS.Repository.Repositories
         public NotificationRequestResponse GetAllNotifications(NotificationListViewRequest searchRequset)
         {
             int fromRow = searchRequset.iDisplayStart;
-            int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
+            int toRow = searchRequset.iDisplayLength;
+
             Expression<Func<Notification, bool>> query;
             var today = DateTime.Now;
             if (searchRequset.NotificationRequestParams.SystemGenerated)
@@ -75,7 +76,7 @@ namespace EPMS.Repository.Repositories
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
-                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
+                          (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString)))
                           )
                           &&
                           (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey)
@@ -91,8 +92,8 @@ namespace EPMS.Repository.Repositories
             else
             {
                 query =
-                s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || 
-                    (s.TitleE.Contains(searchRequset.SearchString)) || 
+                s => (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
+                    (s.TitleE.Contains(searchRequset.SearchString)) ||
                     (s.TitleA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString)) ||
@@ -101,9 +102,9 @@ namespace EPMS.Repository.Repositories
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                     (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
-                    (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))) 
+                    (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString)))
                     &&
-                    (((s.NotificationRecipients.Any(r=>r.UserId == searchRequset.NotificationRequestParams.UserId))||(s.NotificationRecipients.Any(r=>r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) &&
+                    (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) || (s.NotificationRecipients.Any(r => r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) &&
                            (s.AlertAppearDate <= today))
                     );
             }
@@ -123,7 +124,7 @@ namespace EPMS.Repository.Repositories
                         isNotified = true;
                         if (searchRequset.NotificationRequestParams.SystemGenerated)
                         {
-                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.Any(r => r.IsRead == isNotified)) 
+                            query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.Any(r => r.IsRead == isNotified))
                             &&
                             (((s.ForRole == searchRequset.NotificationRequestParams.RoleKey) || (s.NotificationRecipients.FirstOrDefault().UserId == searchRequset.NotificationRequestParams.UserId) || (s.NotificationRecipients.FirstOrDefault().EmployeeId == searchRequset.NotificationRequestParams.EmployeeId)) &&
                            (s.AlertAppearDate <= today)));
@@ -131,7 +132,7 @@ namespace EPMS.Repository.Repositories
                         else
                         {
                             query = s => (((string.IsNullOrEmpty(searchRequset.SearchString)) || s.NotificationRecipients.Any(r => r.IsRead == isNotified))
-                                && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) || 
+                                && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) ||
                                 (s.NotificationRecipients.Any(r => r.EmployeeId == searchRequset.NotificationRequestParams.EmployeeId))) && (s.AlertAppearDate <= today))
                                 );
                         }
@@ -188,7 +189,7 @@ namespace EPMS.Repository.Repositories
                         }
                         break;
                 }
-                
+
                 notifications = searchRequset.sSortDir_0 == "asc"
                     ? DbSet
                         .Where(query).Select(a => new
@@ -260,7 +261,7 @@ namespace EPMS.Repository.Repositories
                             a.RecLastUpdatedDate,
                             isRead = a.NotificationRecipients.All(nr => nr.IsRead == false)
                         }
-                        ).OrderBy(n=>n.isRead).Skip(fromRow).Take(toRow).ToList().Select(n => new Notification
+                        ).OrderBy(n => n.isRead).Skip(fromRow).Take(toRow).ToList().Select(n => new Notification
                         {
                             NotificationId = n.NotificationId,
                             TitleE = n.TitleE,
@@ -297,7 +298,8 @@ namespace EPMS.Repository.Repositories
         public NotificationRequestResponse GetAllSentNotifications(NotificationListViewRequest searchRequset)
         {
             int fromRow = searchRequset.iDisplayStart;
-            int toRow = searchRequset.iDisplayStart + searchRequset.iDisplayLength;
+            int toRow = searchRequset.iDisplayLength;
+
             Expression<Func<Notification, bool>> query =
                    s =>
                        (((string.IsNullOrEmpty(searchRequset.SearchString)) ||
@@ -335,28 +337,28 @@ namespace EPMS.Repository.Repositories
         public int GetUnreadNotificationsCount(NotificationRequestParams requestParams)
         {
             var today = DateTime.Now;
-         
+
             Expression<Func<Notification, bool>> query;
 
             if (requestParams.SystemGenerated)
             {
-                query = s => 
+                query = s =>
                     (
                     (
                         (
                             (//s.ForAdmin == true || 
                             s.ForRole == requestParams.RoleKey)
-                            && 
+                            &&
                             (
                                 (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false)
-                                || 
+                                ||
                                 (s.NotificationRecipients.Count(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId) == 0)
                             )
-                        ) 
-                        || 
+                        )
+                        ||
                         (s.NotificationRecipients.FirstOrDefault(r => r.UserId == requestParams.UserId || r.EmployeeId == requestParams.EmployeeId).IsRead == false)
                     )
-                    && 
+                    &&
                     (s.AlertAppearDate <= today)
                     );
             }
@@ -370,7 +372,7 @@ namespace EPMS.Repository.Repositories
 
         public long GetNotificationsIdByCategories(int categoryId, long subCategoryId, long itemId)
         {
-            var notif=  DbSet.FirstOrDefault(x => x.CategoryId == categoryId && x.SubCategoryId == subCategoryId && x.ItemId==itemId);
+            var notif = DbSet.FirstOrDefault(x => x.CategoryId == categoryId && x.SubCategoryId == subCategoryId && x.ItemId == itemId);
             if (notif != null)
                 return notif.NotificationId;
             return 0;
@@ -378,8 +380,8 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<Notification> SendEmailNotifications()
         {
-            DateTime today= DateTime.Now;
-            return DbSet.Where(x => x.AlertAppearDate <= today && (x.IsEmailSent==false || x.IsSMSsent==false));
+            DateTime today = DateTime.Now;
+            return DbSet.Where(x => x.AlertAppearDate <= today && (x.IsEmailSent == false || x.IsSMSsent == false));
         }
     }
 }

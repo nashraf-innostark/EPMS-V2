@@ -43,7 +43,7 @@ namespace EPMS.Repository.Repositories
         public MeetingResponse GetAllMeetings(MeetingSearchRequest meetingSearchRequest)
         {
             int fromRow = meetingSearchRequest.iDisplayStart;
-            int toRow = meetingSearchRequest.iDisplayStart + meetingSearchRequest.iDisplayLength;
+            int toRow = meetingSearchRequest.iDisplayLength;
 
             Expression<Func<Meeting, bool>> query =
                 s =>

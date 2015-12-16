@@ -65,7 +65,7 @@ namespace EPMS.Repository.Repositories
         public InventoryItemResponse GetAllInventoryItems(InventoryItemSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<InventoryItem, bool>> query =
                 s =>

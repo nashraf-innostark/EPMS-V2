@@ -151,6 +151,24 @@ namespace EPMS.WebModels.Resources.WebsiteClient.ShoppingCart {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Offline.
+        /// </summary>
+        public static string Offline {
+            get {
+                return ResourceManager.GetString("Offline", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to On Delivery.
+        /// </summary>
+        public static string OnDelivery {
+            get {
+                return ResourceManager.GetString("OnDelivery", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to MASAR Scientific Company.
         /// </summary>
         public static string PageTitle {
@@ -169,6 +187,15 @@ namespace EPMS.WebModels.Resources.WebsiteClient.ShoppingCart {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Paypal.
+        /// </summary>
+        public static string Paypal {
+            get {
+                return ResourceManager.GetString("Paypal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Pay with Paypal.
         /// </summary>
         public static string PaypalPayment {
@@ -183,6 +210,15 @@ namespace EPMS.WebModels.Resources.WebsiteClient.ShoppingCart {
         public static string PayWithPaypal {
             get {
                 return ResourceManager.GetString("PayWithPaypal", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Pending.
+        /// </summary>
+        public static string Pending {
+            get {
+                return ResourceManager.GetString("Pending", resourceCulture);
             }
         }
         

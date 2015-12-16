@@ -177,4 +177,16 @@
   <data name="BodyTitle" xml:space="preserve">
     <value>سلة مشتريات</value>
   </data>
+  <data name="Offline" xml:space="preserve">
+    <value>Offline</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="OnDelivery" xml:space="preserve">
+    <value>On Delivery</value>
+  </data>
+  <data name="Paypal" xml:space="preserve">
+    <value>Paypal</value>
+  </data>
 </root>

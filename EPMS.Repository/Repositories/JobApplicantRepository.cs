@@ -53,7 +53,7 @@ namespace EPMS.Repository.Repositories
         public JobApplicantResponse GetAllJobApplicants(JobApplicantSearchRequest jobApplicantSearchRequest)
         {
             int fromRow = jobApplicantSearchRequest.iDisplayStart;
-            int toRow = jobApplicantSearchRequest.iDisplayStart + jobApplicantSearchRequest.iDisplayLength;
+            int toRow = jobApplicantSearchRequest.iDisplayLength;
             
             Expression<Func<JobApplicant, bool>> query =
                 s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) || (s.ApplicantFirstNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMiddleNameE.Contains(jobApplicantSearchRequest.SearchString)) ||

@@ -185,18 +185,15 @@ namespace EPMS.Repository.Repositories
         public ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest)
         {
             int fromRow = searchRequest.iDisplayStart;
-            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+            int toRow = searchRequest.iDisplayLength;
 
             Expression<Func<Product, bool>> query =
                 s =>
                     ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
-                     ((s.ProductNameEn.Contains(searchRequest.SearchString)) ||
-                      (s.ProductNameAr.Contains(searchRequest.SearchString))) ||
+                     (s.ProductNameEn.Contains(searchRequest.SearchString) || s.ProductNameAr.Contains(searchRequest.SearchString) ||
                      (s.ProductPrice.Contains(searchRequest.SearchString)) ||
-                     ((s.ProductDescEn.Contains(searchRequest.SearchString)) ||
-                      (s.ProductDescAr.Contains(searchRequest.SearchString))) ||
-                     ((s.ProductSpecificationEn.Contains(searchRequest.SearchString)) ||
-                      (s.ProductSpecificationAr.Contains(searchRequest.SearchString))));
+                     s.ProductDescEn.Contains(searchRequest.SearchString) || s.ProductDescAr.Contains(searchRequest.SearchString) ||
+                     s.ProductSpecificationEn.Contains(searchRequest.SearchString) || s.ProductSpecificationAr.Contains(searchRequest.SearchString)));
             IEnumerable<Product> products = searchRequest.sSortDir_0 == "asc"
                 ? DbSet
                     .Where(query)
