@@ -162,6 +162,25 @@ namespace EPMS.Repository.Repositories
             return DbSet.FirstOrDefault(x => x.ItemVariationId == variationId);
         }
 
+        public Product GetProductForCatalog(int pageNo)
+        {
+            int fromRow = pageNo-1;
+            int toRow = pageNo;
+
+            var dbset = DbSet.GroupBy(x=>x.ItemVariationId).OrderBy(x=>x.FirstOrDefault().ProductNameEn ?? x.FirstOrDefault().ItemVariation.InventoryItem.ItemNameEn).Skip(fromRow).Take(toRow);
+            return dbset.FirstOrDefault().FirstOrDefault();
+        }
+
+        public int GetProductsCount()
+        {
+            return DbSet.Count();
+        }
+
+        public IEnumerable<Product> GetAllSortedProducts()
+        {
+            return DbSet.OrderBy(x => x.ProductNameEn ?? x.ItemVariation.InventoryItem.ItemNameEn);
+        }
+
 
         public ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest)
         {
@@ -193,25 +212,6 @@ namespace EPMS.Repository.Repositories
                     .ToList();
 
             return new ProductListViewResponse {Products = products, TotalCount = DbSet.Count(query)};
-        }
-
-        public Product GetProductForCatalog(int pageNo)
-        {
-            int fromRow = pageNo-1;
-            int toRow = pageNo;
-
-            var dbset = DbSet.GroupBy(x=>x.ItemVariationId).OrderBy(x=>x.FirstOrDefault().ProductNameEn ?? x.FirstOrDefault().ItemVariation.InventoryItem.ItemNameEn).Skip(fromRow).Take(toRow);
-            return dbset.FirstOrDefault().FirstOrDefault();
-        }
-
-        public int GetProductsCount()
-        {
-            return DbSet.Count();
-        }
-
-        public IEnumerable<Product> GetAllSortedProducts()
-        {
-            return DbSet.OrderBy(x => x.ProductNameEn ?? x.ItemVariation.InventoryItem.ItemNameEn);
         }
     }
 }
