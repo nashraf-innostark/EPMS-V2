@@ -31,22 +31,29 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
         {
-            return DbSet.Select(x => new ItemVariationDropDownListItem
+            var variattions = DbSet;
+            IList<ItemVariationDropDownListItem> variationDropDownList = new List<ItemVariationDropDownListItem>();
+            foreach (var variation in variattions)
             {
-                ItemVariationId = x.ItemVariationId,
-                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
-                ItemCodeSKUCodeDescriptoinEn = x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
-                ItemCodeSKUCodeDescriptoinAr = x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
-                SKUCode = x.SKUCode,
-                ItemSKUDescriptoinEn = x.SKUDescriptionEn,
-                ItemSKUDescriptoinAr = x.SKUDescriptionAr,
-                ItemVariationDescriptionA = x.DescriptionAr,
-                ItemVariationDescriptionE = x.DescriptionEn,
-                ItemNameA = x.InventoryItem.ItemNameAr,
-                ItemNameE = x.InventoryItem.ItemNameEn,
-                DescriptionForQuotationEn = x.DescriptionForQuotationEn,
-                DescriptionForQuotationAr = x.DescriptionForQuotationAr
-            });
+                ItemVariationDropDownListItem item = new ItemVariationDropDownListItem
+                {
+                    ItemVariationId = variation.ItemVariationId,
+                    ItemCodeSKUCode = variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
+                    ItemCodeSKUCodeDescriptoinEn = RemoveCkEditorValues(variation.SKUDescriptionEn) + " - " + variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
+                    //ItemCodeSKUCodeDescriptoinAr = RemoveCkEditorValues(variation.SKUDescriptionAr) + " - " + variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
+                    SKUCode = variation.SKUCode,
+                    ItemSKUDescriptoinEn = RemoveCkEditorValues(variation.SKUDescriptionEn),
+                    //ItemSKUDescriptoinAr = RemoveCkEditorValues(variation.SKUDescriptionAr),
+                    ItemVariationDescriptionE = RemoveCkEditorValues(variation.DescriptionEn),
+                    //ItemVariationDescriptionA = RemoveCkEditorValues(variation.DescriptionAr),
+                    ItemNameE = variation.InventoryItem.ItemNameEn,
+                    //ItemNameA = variation.InventoryItem.ItemNameAr,
+                    DescriptionForQuotationEn = RemoveCkEditorValues(variation.DescriptionForQuotationEn),
+                    //DescriptionForQuotationAr = RemoveCkEditorValues(variation.DescriptionForQuotationAr)
+                };
+                variationDropDownList.Add(item);
+            }
+            return variationDropDownList;
         }
 
         public IEnumerable<ItemVariation> GetItemVariationByWarehouseId(long warehouseId)
@@ -65,5 +72,20 @@ namespace EPMS.Repository.Repositories
         {
             return DbSet.FirstOrDefault(x => x.ItemBarcode == barcode);
         }
+
+        #region Remove \r \n from CK editor values
+
+        private static string RemoveCkEditorValues(string value)
+        {
+            string retval = value;
+            if (!string.IsNullOrEmpty(retval))
+            {
+                retval = retval.Replace('\r', ' ');
+                retval = retval.Replace('\n', ' ');
+            }
+            return retval;
+        }
+
+        #endregion
     }
 }

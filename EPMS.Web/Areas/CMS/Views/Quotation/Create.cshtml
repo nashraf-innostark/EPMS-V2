@@ -415,8 +415,12 @@
     var rfqItems;
     var siteUrl;
     var dir;
+    var parsedRfiItems;
     var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
+        debugger;
+        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
+        parsedRfiItems = JSON.parse(rfiItems);
         dir = '@direction';
         CKEDITOR.replace('ExtraInformationEn', {
             filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html'
@@ -861,8 +865,7 @@
                 $("#selectedItemTreeValidation").removeClass("Error");
             }
             $("#ItemVariationTree").val("");
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
+            
             $.each(parsedRfiItems, function (key, value) {
                 if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
                     $("#ItemVariationTree").val(value.ItemVariationId);
@@ -903,9 +906,6 @@
             $("#QuotationItemDetails_" + index + "__ItemVariationId").val(itemVariationId);
 
             //set item sku and description in details text area
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
-
             $.each(parsedRfiItems, function (key, value) {
                 if (value.ItemVariationId == itemVariationId) {
                     $("#QuotationItemDetails_" + index + "__ItemDetails").val("");
