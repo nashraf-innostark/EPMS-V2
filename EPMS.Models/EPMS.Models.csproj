@@ -99,10 +99,12 @@
   <ItemGroup>
     <Compile Include="Common\CustomerReportByColumn.cs" />
     <Compile Include="Common\DepartmentByColumn.cs" />
+    <Compile Include="Common\InventoryItemByColumn.cs" />
     <Compile Include="Common\ItemReleaseByColumn.cs" />
     <Compile Include="Common\OrderStatus.cs" />
     <Compile Include="Common\PaymentType.cs" />
     <Compile Include="Common\PhysicalCountByColumn.cs" />
+    <Compile Include="Common\ProductByColumn.cs" />
     <Compile Include="Common\ProductByOption.cs" />
     <Compile Include="Common\ProductSize.cs" />
     <Compile Include="Common\PurchaseStatus.cs" />
@@ -239,6 +241,7 @@
     <Compile Include="ModelMapers\RIFItemMapper.cs" />
     <Compile Include="ModelMapers\TIRHistoryMapper.cs" />
     <Compile Include="ModelMapers\TIRItemHistoryMapper.cs" />
+    <Compile Include="RequestModels\InventoryItemSearchRequest.cs" />
     <Compile Include="RequestModels\QuotationStatusRequest.cs" />
     <Compile Include="RequestModels\Reports\CustomerReportDetailRequest.cs" />
     <Compile Include="RequestModels\Reports\CustomerServiceReportsSearchRequest.cs" />
@@ -389,8 +392,10 @@
     <Compile Include="ResponseModels\DifHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeJobHistoryResponse.cs" />
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
+    <Compile Include="ResponseModels\InventoryItemResponse.cs" />
     <Compile Include="ResponseModels\InvoiceResponse.cs" />
     <Compile Include="ResponseModels\MetaTagsResponse.cs" />
+    <Compile Include="ResponseModels\ProductListViewResponse.cs" />
     <Compile Include="ResponseModels\QuotationDetailResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\CustomerReportListResponse.cs" />
     <Compile Include="ResponseModels\ReportsResponseModels\CustomerReportResponse.cs" />

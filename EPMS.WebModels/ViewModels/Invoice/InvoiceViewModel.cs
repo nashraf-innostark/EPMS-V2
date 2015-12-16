@@ -18,5 +18,13 @@
         public long SecondReceiptId { get; set; }
         public long ThirdReceiptId { get; set; }
         public long FourthReceiptId { get; set; }
+        public bool FirstStatus { get; set; }
+        public bool SecondStatus { get; set; }
+        public bool ThirdStatus { get; set; }
+        public bool FourthStatus { get; set; }
+        public string FirstType { get; set; }
+        public string SecondType { get; set; }
+        public string ThirdType { get; set; }
+        public string FourthType { get; set; }
     }
 }

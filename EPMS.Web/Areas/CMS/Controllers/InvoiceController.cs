@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Models.Common;
 using EPMS.Models.ResponseModels;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
@@ -67,9 +68,17 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 viewModel.CompanyProfile = response.CompanyProfile != null ? response.CompanyProfile.CreateFromServerToClientForQuotation() : new CompanyProfile();
 
             viewModel.FirstReceiptId = response.FirstReceiptId;
+            viewModel.FirstStatus = response.FirstStatus;
+            viewModel.FirstType = GetPaymentType(response.FirstType);
             viewModel.SecondReceiptId = response.SecondReceiptId;
+            viewModel.SecondStatus = response.SecondStatus;
+            viewModel.SecondType = GetPaymentType(response.SecondType);
             viewModel.ThirdReceiptId = response.ThirdReceiptId;
+            viewModel.ThirdStatus = response.ThirdStatus;
+            viewModel.ThirdType = GetPaymentType(response.ThirdType);
             viewModel.FourthReceiptId = response.FourthReceiptId;
+            viewModel.FourthStatus = response.FourthStatus;
+            viewModel.FourthType = GetPaymentType(response.FourthType);
 
             ViewBag.LogoPath = ConfigurationManager.AppSettings["CompanyLogo"] +
                                viewModel.CompanyProfile.CompanyLogoPath;
@@ -91,17 +100,32 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     InstallmentNumber = installmentId,
                     InvoiceId = invoiceId,
                     AmountPaid = amountPaid,
-                    IsPaid = false
+                    IsPaid = true
                 }
             };
 
-            long receiptId = receiptService.AddReceipt(viewModel.Receipt.CreateFromClientToServer());
+            long receiptId = receiptService.GenerateReceipt(viewModel.Receipt.CreateFromClientToServer());
 
             return Json(receiptId);
         }
 
         #endregion
 
+        private string GetPaymentType(int type)
+        {
+            switch (type)
+            {
+                case 1:
+                    return "Pending";
+                case 2:
+                    return "Paypal";
+                case 3:
+                    return "Offline";
+                case 4:
+                    return "On Delivery";
+            }
+            return "";
+        }
         #endregion
     }
 }

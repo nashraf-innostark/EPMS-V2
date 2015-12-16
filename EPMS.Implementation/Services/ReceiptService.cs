@@ -49,12 +49,12 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<Receipt> GetAll()
         {
-            return receiptRepository.GetAll();
+            return receiptRepository.GetAll().Where(x => x.IsPaid);
         }
 
         public IEnumerable<Receipt> GetAll(string userId)
         {
-            return receiptRepository.GetAll().Where(x => x.Invoice.Quotation.Customer.AspNetUsers.FirstOrDefault().Id == userId);
+            return receiptRepository.GetAll().Where(x => x.Invoice.Quotation.Customer.AspNetUsers.FirstOrDefault().Id == userId && x.IsPaid);
         }
 
         public long AddReceipt(Receipt receipt)
@@ -240,6 +240,78 @@ namespace EPMS.Implementation.Services
                 return true;
             }
             return false;
+        }
+
+        public long GenerateReceipt(Receipt receipt)
+        {
+            var oldReceipt = receiptRepository.GetReceiptByInvoiceIdAndInstallmentNo(receipt.InvoiceId,
+                receipt.InstallmentNumber);
+
+            if (oldReceipt == null)
+            {
+                receipt.ReceiptNumber = GetReceiptNumber();
+                receipt.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+                receipt.RecCreatedDt = DateTime.Now;
+                receipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+                receipt.RecLastUpdatedDt = DateTime.Now;
+                // Add Receipt
+                receiptRepository.Add(receipt);
+                receiptRepository.SaveChanges();
+            }
+            else
+            {
+                oldReceipt.AmountPaid = receipt.AmountPaid;
+                oldReceipt.IsPaid = receipt.IsPaid;
+                oldReceipt.RecLastUpdatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
+                oldReceipt.RecLastUpdatedDt = DateTime.Now;
+                receiptRepository.Update(oldReceipt);
+                receiptRepository.SaveChanges();
+                receipt = oldReceipt;
+            }
+            
+            if (receipt.IsPaid)
+            {
+                Invoice invoice = invoiceRepository.Find(receipt.InvoiceId);
+                Quotation quotation = quotationRepository.Find(invoice.QuotationId);
+
+                if (receipt.InstallmentNumber == 1)
+                {
+                    quotation.FirstInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 2)
+                {
+                    quotation.SecondInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 3)
+                {
+                    quotation.ThirdInstallmentStatus = true;
+                }
+                if (receipt.InstallmentNumber == 4)
+                {
+                    quotation.FourthInstallmentStatus = true;
+                }
+                if (receipt.PaymentType == (short)PaymentType.OffLine || receipt.PaymentType == (short)PaymentType.OnDelivery)
+                {
+                    receipt.AmountPaid = GetAmountPaid(quotation, receipt.InstallmentNumber);
+                }
+                // Update Quotation
+                quotationRepository.Update(quotation);
+                quotationRepository.SaveChanges();
+
+                // Update Order
+                if (CheckIfNoPaymentDue(quotation))
+                {
+                    Order order = ordersRepository.GetOrderByQuotationId(quotation.QuotationId);
+                    if (order != null)
+                    {
+                        order.OrderStatus = (short)OrderStatus.Completed;
+                        ordersRepository.Update(order);
+                        ordersRepository.SaveChanges();
+                    }
+                }
+            }
+
+            return receipt.ReceiptId;
         }
 
         #endregion

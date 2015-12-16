@@ -8,5 +8,6 @@ namespace EPMS.Interfaces.Repository
     {
         Receipt GetLastReceipt();
         IEnumerable<Receipt> GetReceiptsByInvoiceId(long invoiceId);
+        Receipt GetReceiptByInvoiceIdAndInstallmentNo(long invoiceId, int installmentNumber);
     }
 }

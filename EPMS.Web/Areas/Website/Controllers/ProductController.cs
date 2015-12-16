@@ -16,6 +16,7 @@ using EPMS.WebModels.ModelMappers.Website.ProductSection;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using EPMS.WebModels.ViewModels.Product;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.WebModels.WebsiteModels.Common;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ViewModels.Common;
@@ -53,13 +54,34 @@ namespace EPMS.Web.Areas.Website.Controllers
         [SiteAuthorize(PermissionKey = "ProductIndex")]
         public ActionResult Index()
         {
+            var searchRequest = new ProductSearchRequest();
+            var viewModel = new ProductListViewModel
+            {
+                SearchRequest = searchRequest
+            };
             ViewBag.IsIncludeNewJsTree = true;
-            ProductListViewModel viewModel = new ProductListViewModel();
-            var product = productService.GetAll().ToList();
-            viewModel.Products = product.Select(x => x.CreateFromServerToClientForLv()).ToList();
             return View(viewModel);
+            
         }
 
+        [HttpPost]
+        public ActionResult Index(ProductSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            var products = productService.GetAllProducts(searchRequest);
+
+            List<Product> productList = products.Products.Select(x => x.CreateFromServerToClient()).ToList();
+
+            var viewModel = new ProductLvModel
+            {
+                aaData =  productList,
+                iTotalRecords = products.TotalCount,
+                iTotalDisplayRecords = Convert.ToInt32(productList.Count()),
+                sEcho = searchRequest.sEcho,
+            };
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
+
+        }
         #endregion
 
         #region Create

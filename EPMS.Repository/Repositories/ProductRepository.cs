@@ -50,6 +50,19 @@ namespace EPMS.Repository.Repositories
                         { ProductByOption.ProductNameAr,  c => c.ProductNameAr},
                         { ProductByOption.ProductPrice, c => c.ProductPrice},
                     };
+
+        private readonly Dictionary<ProductByColumn, Func<Product, object>> productClause =
+
+            new Dictionary<ProductByColumn, Func<Product, object>>
+            {
+                {ProductByColumn.ProductName, c => c.ProductNameEn},
+                {ProductByColumn.ProductPrice, c => c.ProductPrice},
+                {ProductByColumn.DiscountedPrice, c => c.DiscountedPrice},
+                {ProductByColumn.ProductDescription, c => c.ProductDescEn},
+                {ProductByColumn.ProductSpecification, c => c.ProductSpecificationEn},
+            };
+
+
         #endregion
 
         public ProductResponse GetByItemVariationId(IEnumerable<long> itemVariationIds, ProductSearchRequest request, long productSectionId)
@@ -166,6 +179,39 @@ namespace EPMS.Repository.Repositories
         public IEnumerable<Product> GetAllSortedProducts()
         {
             return DbSet.OrderBy(x => x.ProductNameEn ?? x.ItemVariation.InventoryItem.ItemNameEn);
+        }
+
+
+        public ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest)
+        {
+            int fromRow = searchRequest.iDisplayStart;
+            int toRow = searchRequest.iDisplayStart + searchRequest.iDisplayLength;
+
+            Expression<Func<Product, bool>> query =
+                s =>
+                    ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
+                     ((s.ProductNameEn.Contains(searchRequest.SearchString)) ||
+                      (s.ProductNameAr.Contains(searchRequest.SearchString))) ||
+                     (s.ProductPrice.Contains(searchRequest.SearchString)) ||
+                     ((s.ProductDescEn.Contains(searchRequest.SearchString)) ||
+                      (s.ProductDescAr.Contains(searchRequest.SearchString))) ||
+                     ((s.ProductSpecificationEn.Contains(searchRequest.SearchString)) ||
+                      (s.ProductSpecificationAr.Contains(searchRequest.SearchString))));
+            IEnumerable<Product> products = searchRequest.sSortDir_0 == "asc"
+                ? DbSet
+                    .Where(query)
+                    .OrderBy(productClause[searchRequest.ProductByColumn])
+                    .Skip(fromRow)
+                    .Take(toRow)
+                    .ToList()
+                : DbSet
+                    .Where(query)
+                    .OrderByDescending(productClause[searchRequest.ProductByColumn])
+                    .Skip(fromRow)
+                    .Take(toRow)
+                    .ToList();
+
+            return new ProductListViewResponse {Products = products, TotalCount = DbSet.Count(query)};
         }
     }
 }

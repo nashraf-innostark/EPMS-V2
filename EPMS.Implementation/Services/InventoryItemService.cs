@@ -96,6 +96,11 @@ namespace EPMS.Implementation.Services
             return new SaveInventoryItemResponse();
         }
 
+        public InventoryItemResponse GetAllInventoryItems(InventoryItemSearchRequest searchRequest)
+        {
+            return inventoryItemRepository.GetAllInventoryItems(searchRequest);
+        }
+
         private void SaveInventoryItem(InventoryItem inventoryItem)
         {
             inventoryItem.RecCreatedBy = ClaimsPrincipal.Current.Identity.GetUserId();
@@ -177,5 +182,7 @@ namespace EPMS.Implementation.Services
 
             }
         }
+
+
     }
 }

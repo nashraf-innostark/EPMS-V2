@@ -15,7 +15,9 @@ using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.InventoryItem;
 using EPMS.Web.Controllers;
 using EPMS.WebBase.Mvc;
+using EPMS.WebModels.WebsiteModels;
 using EPMS.WebModels.WebsiteModels.Common;
+using InventoryItem = EPMS.WebModels.WebsiteModels.InventoryItem;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -48,10 +50,31 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         [SiteAuthorize(PermissionKey = "InventoryItemIndex")]
         public ActionResult Index()
         {
-            return View(new InventoryItemViewModel
+            InventoryItemSearchRequest searchRequest = new InventoryItemSearchRequest();
+            return View(new InventoryItemListViewModel
             {
-                InventoryItems = inventoryItemService.GetAll().Select(x => x.CreateFromServerToClient())
+                SearchRequest = searchRequest
             });
+        }
+
+        [HttpPost]
+        public ActionResult Index(InventoryItemSearchRequest searchRequest)
+        {
+            searchRequest.SearchString = Request["search"];
+            var items = inventoryItemService.GetAllInventoryItems(searchRequest);
+
+            List<InventoryItemForListView> itemList =
+                items.InventoryItems.Select(x => x.CreateListFromServerToClient()).ToList();
+
+            var viewModel = new InventoryItemListViewModel
+            {
+                aaData = itemList,
+                iTotalRecords = Convert.ToInt32(items.TotalCount),
+                iTotalDisplayRecords = Convert.ToInt32(itemList.Count()),
+                sEcho = searchRequest.sEcho,
+            };
+
+            return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
 
         #endregion
