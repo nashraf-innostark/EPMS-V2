@@ -1,4 +1,6 @@
-﻿@using System.Configuration
+﻿@using System.Globalization
+@using System.Configuration
+
 @model EPMS.WebModels.ViewModels.Product.ProductListViewModel
 
 @{
@@ -6,102 +8,120 @@
     Layout = null;
     var Date = DateTime.Now;
     var cpLink = ConfigurationManager.AppSettings["CpLink"];
-    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    var direction = ViewBag.Direction;
     int pageNo = 1;
+    string imageSrc;
 }
 
+@if (direction == "rtl")
+{
+    <link rel="stylesheet" href="~/Content/arabic.css" media="all" />
+}
+<link rel="stylesheet" href="~/Content/bootstrap.css" type="text/css" />
+<link href="~/Content/font-awesome.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/responsive-devices.css" type="text/css" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Lato:300,400,700,900&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font" />
+<link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,700&amp;v1&mp;subset=latin,latin-ext" type="text/css" media="screen" id="google_font_body" />
 
-<section id="content">
-    <div class="container">
-        <div id="mainbody">
-            <div id="flipbook">
-               
-                @if (Model.Products != null && Model.Products.Any())
+<link href="~/Content/styleIST.css" rel="stylesheet" />
+
+
+<form class="form-horizontal" id="validation_form">
+    <div class="container-fluid">
+        @if (Model.Products != null && Model.Products.Any())
+        {
+            string dir = "";
+            if (direction == "rtl")
+            {
+                dir = "direction: rtl";
+            }
+            foreach (var product in Model.Products)
+            {
+                if (string.IsNullOrEmpty(product.DeptColor))
                 {
-                    foreach (var product in Model.Products)
-                    {
-                        <form class="form-horizontal" id="validation_form" style="font-size: 12px; ">
-                            <div class="container-fluid" style="background-color: white; height: 100%">
-                                <div class="control-group row-fluid">
-                                    @if (!string.IsNullOrEmpty(product.DeptColor))
+                    product.DeptColor = "rgb(8, 92, 101)";
+                }
+                <div class="control-group row-fluid catalog" style="background-color: white; height: 98%; padding: 10px; @dir">
+                    <div class="catalogDepartment department" style="background-color: @product.DeptColor !important; color: white !important;">
+                        @if (direction == "ltr")
+                        {
+                            <h5 class="titleLeft" style="color: white !important">
+                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
+                            </h5>
+                            <h5 class="titleRight" style="color: white !important">@product.PathTillParent</h5>
+                        }
+                        else
+                        {
+                            <h5 class="titleRight" style="color: white !important">
+                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
+                            </h5>
+                            <h5 class="titleLeft" style="color: white !important">@product.PathTillParent</h5>
+                        }
+                    </div>
+                    <div class="invoice-info" style="padding: 15px">
+                        <div class="invoice-name" style="color: @product.DeptColor !important;">
+                            @if (product.ItemVariationId != null)
+                            {
+                                <h5>@(direction == "ltr" ? product.ItemNameEn : product.ItemNameAr)</h5>
+                            }
+                            else
+                            {
+                                <h5>@(direction == "ltr" ? product.ProductNameEn : product.ProductNameAr)</h5>
+                            }
+                        </div>
+                        @if (product.ItemVariationId != null)
+                        {
+                            if (string.IsNullOrEmpty(product.ItemImage))
+                            {
+                                imageSrc = cpLink + "/Images/ProductImage/noimage_department.png";
+                            }
+                            else
+                            {
+                                imageSrc = cpLink + "/Images/ItemImage/" + product.ItemImage;
+                            }
+                        }
+                        else
+                        {
+                            if (string.IsNullOrEmpty(product.ProductImage))
+                            {
+                                imageSrc = cpLink + "/Images/ProductImage/noimage_department.png";
+                            }
+                            else
+                            {
+                                imageSrc = cpLink + "/Images/ProductImage/" + product.ProductImage;
+                            }
+                        }
+                        <img style="width: 175px; height: 175px; clear: both" src="@imageSrc" alt="EPMS">
+                        <div class="control-group row-fluid">
+                            <div class="span12">
+                                <div class="invoice-from">
+                                    <h5 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription</h5>
+                                    @if (product.ItemVariationId != null)
                                     {
-                                        <div class="catalogDepartment" style="background-color: @product.DeptColor !important; color: white !important;">
-                                            <h6 class="titleLeft" style="color: #ffffff !important; padding-left: 10px">
-                                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
-                                            </h6>
-                                            <h5 class="titleRight" style="color: #ffffff !important; padding-left: 10px">@product.PathTillParent</h5>
-                                        </div>
+                                        <p>@product.ItemDesc</p>
                                     }
                                     else
                                     {
-                                        <div class="catalogDepartment" style="background-color: @product.DeptColor !important; color: white !important;">
-                                            <h6 class="titleLeft" style="color: #000000 !important; padding-left: 10px">
-                                                @(direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr)
-                                            </h6>
-                                            <h5 class="titleRight" style="color: #000000 !important; padding-left: 10px">@product.PathTillParent</h5>
-                                        </div>
-                                    }
-
-                                    <div class="invoice-info">
-                                        <div class="invoice-name" style="color:@product.DeptColor !important;">
-                                            @if (product.ItemVariationId != null)
-                                            {
-                                                <h4><span style="float: left">@product.ItemNameEn</span></h4>
-                                            }
-                                            else
-                                            {
-                                                <h4><span style="float: left">@product.ProductNameEn</span></h4>
-                                            }
-                                        </div>
-                                        <br /><br /><br />
-                                        <div>
-                                            @if (string.IsNullOrEmpty(product.ItemImage))
-                                            {
-                                                <img style="width: 175px; height: 175px; clear: both" src="@cpLink/Images/ItemImage/noimage_department.png" alt="user" class="">
-                                            }
-                                            else
-                                            {
-                                                <img style="width: 175px; height: 175px; clear: both" src="@cpLink/Images/ItemImage/@product.ItemImage" alt="user" class="">
-                                            }
-                                        </div>
-                                        <div class="control-group row-fluid">
-                                            <div class="span12">
-                                                <div class="invoice-from">
-                                                    <h4 style="color:@product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription</h4>
-                                                    @if (product.ItemVariationId != null)
-                                                    {
-                                                        <p style="text-align: justify"> @product.ItemDesc</p>
-                                                    }
-                                                    else
-                                                    {
-                                                        <p style="text-align: justify"> @product.ProductDescEn</p>
-                                                    }
-                                                </div>
-                                                <h4 style="color:@product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification</h4>
-                                                <p style="text-align: justify">@product.ProductSpecificationEn</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    @*<div style="color: black; width: 2%"></div>*@
-                                    @if (!string.IsNullOrEmpty(product.DeptColor))
-                                    {
-                                        <div class="catalogDepartment" style="background-color:@product.DeptColor !important; color:white !important; margin-bottom: 5px">
-                                            <h5 class="" style="color:white !important;text-align:right;margin-right:5px;">@(pageNo++)</h5>
-                                        </div>
-                                    }
-                                    else
-                                    {
-                                        <div class="catalogDepartment" style="background-color:#000000 !important; margin-bottom: 5px">
-                                            <h5 class="" style="color:#ffffff !important;text-align:right;margin-right:5px;">@(pageNo++)</h5>
-                                        </div>
+                                        <p>@(direction == "ltr" ? product.ProductDescEn : product.ProductDescAr)</p>
                                     }
                                 </div>
+                                <h5 style="color: @product.DeptColor !important;">@EPMS.WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification</h5>
+                                <p>@(direction == "ltr" ? product.ProductSpecificationEn : product.ProductSpecificationAr)</p>
                             </div>
-                        </form>
-                    }
-                }
-            </div>
+                        </div>
+                    </div>
+                    <div class="catalogDepartment" style="background-color: @product.DeptColor !important; color: white !important;">
+                        @if (direction == "ltr")
+                        {
+                            <h5 class="" style="color: white !important; text-align: right; margin-right: 15px;">@(pageNo++)</h5>
+                        }
+                        else{
+                            <h5 class="" style="color: white !important; text-align: left; margin-left: 15px;">@(pageNo++)</h5>
+                        }
+                    </div>
 
-        </div><!-- end mainbody -->
+                </div>
+            }
+        }
     </div>
-</section><!-- end #content -->
+</form>

@@ -542,14 +542,12 @@
             });
         }
         $("#dualMulti").pickList({
-            sourceListLabel: "Tasks",
-            isRTL: true,
-            targetListLabel: "Prerquisit Tasks",
+            sourceListLabel: '@EPMS.WebModels.Resources.PMS.Task.Tasks',
+            targetListLabel: '@EPMS.WebModels.Resources.PMS.Task.Pre_ReqTask',
         });
         $("#dualMulti2").pickList({
-            sourceListLabel: "Employees - Number Of Tasks They Are Working On",
-            targetListLabel: "Added",
-            isRTL: true
+            sourceListLabel: '@EPMS.WebModels.Resources.PMS.Task.EmployeeWithNoOfTasks',
+            targetListLabel: '@EPMS.WebModels.Resources.PMS.Task.Added',
         });
 
         // to change position of source and target list in arabic culture

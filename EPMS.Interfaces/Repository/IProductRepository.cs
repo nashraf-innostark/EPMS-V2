@@ -13,5 +13,8 @@ namespace EPMS.Interfaces.Repository
         ProductResponse SearchInProducts(ProductSearchRequest request, string search);
         Product FindByVariationId(long variationId);
         ProductListViewResponse GetAllProducts(ProductSearchRequest searchRequest);
+        Product GetProductForCatalog(int pageNo);
+        int GetProductsCount();
+        IEnumerable<Product> GetAllSortedProducts();
     }
 }

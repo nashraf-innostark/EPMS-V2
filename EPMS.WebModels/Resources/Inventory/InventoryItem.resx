@@ -201,12 +201,6 @@
   <data name="UsageEn" xml:space="preserve">
     <value>Usage</value>
   </data>
-  <data name="NameValidation" xml:space="preserve">
-    <value>Item Name is required.</value>
-  </data>
-  <data name="NameLengthValidation" xml:space="preserve">
-    <value>Item Name cannot exceed 500 characters. </value>
-  </data>
   <data name="IsSaved" xml:space="preserve">
     <value>Inventory Item has been Added.</value>
   </data>
@@ -224,5 +218,11 @@
   </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
+  </data>
+  <data name="NameLengthValidation" xml:space="preserve">
+    <value>Item Name cannot exceed 500 characters. </value>
+  </data>
+  <data name="NameValidation" xml:space="preserve">
+    <value>Item Name is required.</value>
   </data>
 </root>

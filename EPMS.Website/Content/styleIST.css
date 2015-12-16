@@ -81,13 +81,13 @@
 }
 
 .book-size {
-    width:460px;
-	height:582px;
+    width: 460px;
+    height: 582px;
 }
 
 .sj-book .book-content p {
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
-    text-align: justify !important; 
+    text-align: justify !important;
     font-size: 12px !important;
     margin: 0 0 !important;
 }
@@ -96,4 +96,52 @@
     position: fixed;
     bottom: 10px;
     width: 87%;
+}
+
+.manual-product-size {
+    font-size: 20px;
+    margin-top: 1%;
+}
+
+.catalog .titleLeft {
+    float: left;
+    font-weight: bolder;
+    margin: 0px 5px;
+}
+
+.catalog .titleRight {
+    float: right;
+    font-weight: bolder;
+    margin: 0px 5px;
+}
+
+.department .titleRight {
+    float: right;
+    font-weight: bolder;
+    margin: 0px 15px;
+}
+
+.catalog .catalogDepartment {
+    color: white;
+    height: 40px;
+    width: 100%;
+    display: block;
+}
+
+.catalog p {
+    font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+    text-align: justify !important;
+    font-size: 13px !important;
+    margin: 0 0 !important;
+    line-height: 22px;
+    text-indent: 18px;
+}
+
+.catalogue-footer h5 {
+    line-height: 15px;
+}
+
+.catalogDepartment h5 {
+    line-height: 15px;
+    padding-top: 10px;
 }

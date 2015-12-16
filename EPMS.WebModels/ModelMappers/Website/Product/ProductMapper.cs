@@ -79,6 +79,87 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                         : department.DepartmentNameAr + ">";
                     department = department.ParentDepartment;
                 }
+                if (!string.IsNullOrEmpty(retVal.PathTillParent))
+                {
+                    var path = retVal.PathTillParent.Split('>');
+                    retVal.PathTillParent = "";
+                    for (int i = path.Length - 2; i >= 0; i--)
+                    {
+                        if (i != path.Length - 2)
+                        {
+                            retVal.PathTillParent += " > " + path[i];
+                        }
+                        else
+                        {
+                            retVal.PathTillParent += path[i];
+                        }
+                    }
+                }
+            }
+            else
+            {
+                var section = source.ProductSection;
+                while (section != null)
+                {
+                    retVal.PathTillParent += direction == "ltr" ? section.SectionNameEn + ">" : section.SectionNameAr + ">";
+                    section = section.ParentSection;
+                }
+                if (!string.IsNullOrEmpty(retVal.PathTillParent))
+                {
+                    var path = retVal.PathTillParent.Split('>');
+                    retVal.PathTillParent = "";
+                    for (int i = path.Length - 2; i >= 0; i--)
+                    {
+                        if (i != path.Length - 2)
+                        {
+                            retVal.PathTillParent += " > " + path[i];
+                        }
+                        else
+                        {
+                            retVal.PathTillParent += path[i];
+                        }
+                    }
+                }
+            }
+            return retVal;
+        }
+        public static WebsiteModels.Product CreateForCatalogue(this Models.DomainModels.Product source)
+        {
+            WebsiteModels.Product retVal = new WebsiteModels.Product();
+            retVal.ProductId = source.ProductId;
+            retVal.ProductNameEn = source.ProductNameEn;
+            retVal.ProductNameAr = source.ProductNameAr;
+            retVal.ItemVariationId = source.ItemVariationId;
+            retVal.ProductDescEn = RemoveCkEditorValues(source.ProductDescEn);
+            retVal.ProductDescAr = RemoveCkEditorValues(source.ProductDescAr);
+            retVal.ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice;
+            retVal.DiscountedPrice = source.DiscountedPrice;
+            retVal.ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn);
+            retVal.ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr);
+            retVal.ProductSize = source.ProductSize;
+            retVal.SKUCode = source.SKUCode;
+            retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
+            retVal.ItemNameEn = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemNameEn: "";
+            retVal.ItemNameAr = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemNameAr : "";
+            retVal.ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
+                source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "";
+            retVal.ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
+                source.ProductImages.FirstOrDefault().ProductImagePath : "";
+            retVal.DepartmentNameEn = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameEn : (source.ProductSection != null ? source.ProductSection.SectionNameEn : "");
+            retVal.DepartmentNameAr = source.ItemVariationId != null ?
+                source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentNameAr : (source.ProductSection != null ? source.ProductSection.SectionNameAr : "");
+            var direction = Resources.Shared.Common.TextDirection;
+            if (source.ItemVariationId != null)
+            {
+                var department = source.ItemVariation.InventoryItem.InventoryDepartment;
+                while (department != null)
+                {
+                    retVal.PathTillParent += direction == "ltr"
+                        ? department.DepartmentNameEn + ">"
+                        : department.DepartmentNameAr + ">";
+                    department = department.ParentDepartment;
+                }
                 var path = retVal.PathTillParent.Split('>');
                 retVal.PathTillParent = "";
                 for (int i = path.Length - 2; i >= 0; i--)

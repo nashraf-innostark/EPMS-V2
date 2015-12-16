@@ -1,4 +1,5 @@
 ﻿using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -21,28 +22,30 @@ namespace EPMS.Website.Controllers
 
         public ActionResult Index()
         {
-            ProductListViewModel viewModel = new ProductListViewModel
-            {
-                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
-            };
+            ViewBag.ProductsCount = productService.GetProductsCount();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
-            return View(viewModel);
+            return View(new ProductListViewModel());
         }
 
         // Generate PDF
-        public ActionResult Catalogue()
+        public ActionResult Catalogue(string direction)
         {
-            return new ActionAsPdf("SteveJobsHtml") { FileName = "EPMS Catalogue.pdf" };
+            return new ActionAsPdf("SteveJobsHtml", new { direction = direction }) { FileName = "EPMS Catalogue.pdf" };
             //return new ActionAsPdf("Table") { FileName = "Table.pdf" };
         }
 
         // view used to generate PDF
-        public ActionResult SteveJobsHtml()
+        public ActionResult SteveJobsHtml(string direction)
         {
+            ViewBag.Direction = direction ?? Common.TextDirection;
+            string language = ViewBag.Direction == "ltr" ? "en" : "ar";
+            System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(language);
+            System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(language);
             ProductListViewModel viewModel = new ProductListViewModel
             {
-                Products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList()
+                Products = productService.GetAllSortedProducts().Select(x => x.CreateForCatalogue()).ToList()
             };
+            
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }
@@ -56,8 +59,7 @@ namespace EPMS.Website.Controllers
         [HttpGet]
         public JsonResult LoadPage(int pageNo)
         {
-            var products = productService.GetAll().Select(x => x.CreateFromServerToClient()).ToList();
-            var product = products[pageNo - 1];
+            var product = productService.GetProductForCatalog(pageNo).CreateForCatalogue();
             var direction = Common.TextDirection;
             string cpLink = ConfigurationManager.AppSettings["CpLink"];
             var imageSrc = "";
@@ -65,7 +67,7 @@ namespace EPMS.Website.Controllers
             {
                 if (string.IsNullOrEmpty(product.ItemImage))
                 {
-                    imageSrc = cpLink + "/Images/ItemImage/noimage_department.png";
+                    imageSrc = cpLink + "/Images/ProductImage/noimage_department.png";
                 }
                 else
                 {
@@ -83,40 +85,48 @@ namespace EPMS.Website.Controllers
                     imageSrc = cpLink + "/Images/ProductImage/" + product.ProductImage;
                 }
             }
-            string html = product.ItemVariationId != null ? GetPageForInventoryItem(product, imageSrc, pageNo, direction) : 
+            string html = product.ItemVariationId != null ? GetPageForInventoryItem(product, imageSrc, pageNo, direction) :
                 GetPageForProductItem(product, imageSrc, pageNo, direction);
             return Json(html, JsonRequestBehavior.AllowGet);
         }
 
         public string GetPageForInventoryItem(WebModels.WebsiteModels.Product product, string imageSrc, int pageNo, string direction)
         {
-            string footer;
-            if (!string.IsNullOrEmpty(product.DeptColor))
+            string header;
+            string footerTextAlign;
+            if (direction == "ltr")
             {
-                footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
-                            "<h5 style=\"color: white; text-align: right; margin-right: 10px;\">" + pageNo + "</h5>" +
-                         "</div>";
+                header = "<h6 class=\"titleLeft\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6><h6 class=\"titleRight\">" + product.PathTillParent + "</h6>";
+                footerTextAlign = "text-align: right; margin-right: 10px";
             }
             else
             {
-                footer = "<div class=\"catalogue-footer\" style=\"background-color: #000000; \">" +
-                            "<h5 style=\"color: #ffffff; text-align: right; margin-right:10px;\">" + pageNo + "</h5>" +
-                         "</div>";
+                header = "<h6 class=\"titleLeft\">" + product.PathTillParent + "</h6><h6 class=\"titleRight\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>";
+                footerTextAlign = "text-align: left; margin-left: 10px";
             }
-            string html = "<div class=\"book-content\">" +
-                            "<div style=\"background-color: " + product.DeptColor + "; color: white;\">" +
-                                "<h6  style=\"padding-left: 10px\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>" +
-                                "<h6  style=\"padding-left: 10px\">" + product.PathTillParent + "</h6>" +
+            if (string.IsNullOrEmpty(product.DeptColor))
+                product.DeptColor = "rgb(8, 92, 101)";
+            var footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
+                            "<h5 style=\"color: white; " + footerTextAlign + "\">" + pageNo + "</h5>" +
+                            "</div>";
+            string dir = "";
+            if (direction == "rtl")
+            {
+                dir = "direction: rtl";
+            }
+            string html = "<div class=\"book-content catalog\" style=\"" + dir + "\">" +
+                            "<div class=\"catalogDepartment\" style=\"background-color: " + product.DeptColor + "; color: white;\">" +
+                                header +
                             "</div>" +
                             "<div style=\"color:" + product.DeptColor + ";\">" +
-                                "<h6><span style=\"float: left\">" + (direction == "ltr" ? product.ItemNameEn : product.ItemNameAr) + "</span></h6>" +
+                                "<h6>" + (direction == "ltr" ? product.ItemNameEn : product.ItemNameAr) + "</h6>" +
                             "</div>" +
                             "<br /><br />" +
                             "<img style=\"width: 125; height: 125px;\" src=\"" + imageSrc + "\" alt=\"user\">" +
                             "<h6 style=\"color:" + product.DeptColor + ";\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription + "</h6>" +
                             "<p>" + product.ItemDesc + "</p>" +
                             "<h6 style=\"color:" + product.DeptColor + ";\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification + "</h6>" +
-                            "<p>" + "No specification available" + "</p>" +
+                            "<p>" + (direction == "ltr" ? product.ProductSpecificationEn : product.ProductSpecificationAr) + "</p>" +
                             footer +
                         "</div>";
             return html;
@@ -124,32 +134,40 @@ namespace EPMS.Website.Controllers
 
         public string GetPageForProductItem(WebModels.WebsiteModels.Product product, string imageSrc, int pageNo, string direction)
         {
-            string footer;
-            if (!string.IsNullOrEmpty(product.DeptColor))
+            string header;
+            string footerTextAlign;
+            if (direction == "ltr")
             {
-                footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
-                            "<h5 style=\"color: white; text-align: right; margin-right: 10px;\">" + pageNo + "</h5>" +
-                         "</div>";
+                header = "<h6 class=\"titleLeft\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6><h6 class=\"titleRight\">" + product.PathTillParent + "</h6>";
+                footerTextAlign = "text-align: right; margin-right: 10px";
             }
             else
             {
-                footer = "<div class=\"catalogue-footer\" style=\"background-color: #000000; \">" +
-                            "<h5 style=\"color: #ffffff; text-align: right; margin-right:10px;\">" + pageNo + "</h5>" +
-                         "</div>";
+                header = "<h6 class=\"titleLeft\">" + product.PathTillParent + "</h6><h6 class=\"titleRight\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>";
+                footerTextAlign = "text-align: left; margin-left: 10px";
             }
-            string html = "<div class=\"book-content\">" +
-                            "<div style=\"background-color: black; color: white;\">" +
-                                "<h6 style=\"padding-left: 10px\">" + (direction == "ltr" ? product.DepartmentNameEn : product.DepartmentNameAr) + "</h6>" +
-                                "<h6 style=\"padding-left: 10px\">" + product.PathTillParent + "</h6>" +
+            if (string.IsNullOrEmpty(product.DeptColor))
+                product.DeptColor = "rgb(8, 92, 101)";
+            var footer = "<div class=\"catalogue-footer\" style=\"background-color:" + product.DeptColor + "; color: white;\">" +
+                            "<h5 style=\"color: white; " + footerTextAlign + "\">" + pageNo + "</h5>" +
+                            "</div>";
+            string dir = "";
+            if (direction == "rtl")
+            {
+                dir = "direction: rtl";
+            }
+            string html = "<div class=\"book-content catalog\" style=\"" + dir + "\">" +
+                            "<div class=\"catalogDepartment\" style=\"background-color: rgb(8, 92, 101); color: white;\">" +
+                                header +
                             "</div>" +
-                            "<div style=\"color: black;\">" +
-                                "<h6><span style=\"float: left\">" + (direction == "ltr" ? product.ProductNameEn : product.ProductNameAr) + "</span></h6>" +
+                            "<div style=\"color: " + product.DeptColor + "\">" +
+                                "<h6>" + (direction == "ltr" ? product.ProductNameEn : product.ProductNameAr) + "</h6>" +
                             "</div>" +
                             "<br /><br />" +
                             "<img style=\"width: 125px; height: 125px;\" src=\"" + imageSrc + "\" alt=\"user\">" +
-                            "<h6 style=\"color:black; \">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription + "</h6>" +
+                            "<h6 style=\"color: " + product.DeptColor + "\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductDescription + "</h6>" +
                             "<p>" + (direction == "ltr" ? product.ProductDescEn : product.ProductDescAr) + "</p>" +
-                            "<h6 style=\"color:black ;\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification + "</h6>" +
+                            "<h6 style=\"color: " + product.DeptColor + ";\">" + WebModels.Resources.WebsiteClient.Catalogue.Catalogue.ProductSpecification + "</h6>" +
                             "<p>" + (direction == "ltr" ? product.ProductSpecificationEn : product.ProductSpecificationAr) + "</p>" +
                             footer +
                         "</div>";

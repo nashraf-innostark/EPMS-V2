@@ -79,7 +79,7 @@
                                         {
                                             link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
                                         }
-                                    <input type="checkbox" id="item-0" />
+                                    <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
                                     <label for="item-0"><a href="@link">@childName</a></label>
                                     if (productSection.InventoryDepartment != null)
                                     {
@@ -90,7 +90,7 @@
                                                     @{
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
-                                                <input type="checkbox" id="item-0-0" />
+                                                <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
                                                         <label for="item-0-0"><a href="@link">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
@@ -102,7 +102,7 @@
                                                                     @{
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
-                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
                                                                         <label for="item-0-0-0"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
@@ -117,25 +117,25 @@
                                     if (productSection.ProductSections != null && productSection.ProductSections.Any())
                                     {
                                         <ul>
-                                            @foreach (var section in productSection.ProductSections)
+                                            @foreach (var subSection in productSection.ProductSections)
                                             {
                                                 <li class="phy">
                                                     @{
-                                                childName = direction == "ltr" ? section.SectionNameEn : section.SectionNameAr;
-                                                link = siteURL + "/Product/Index/" + section.SectionId + "?from=Sections";
-                                                <input type="checkbox" id="item-0-0" />
+                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
+                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
+                                                <input type="checkbox" id="item-0-0" class="sect_@subSection.SectionId" />
                                                         <label for="item-0-0"><a href="@link">@childName</a></label>
                                                     }
-                                                    @if (section.ProductSections.Any())
+                                                    @if (subSection.ProductSections.Any())
                                                     {
                                                         <ul>
-                                                            @foreach (var subSection in section.ProductSections)
+                                                            @foreach (var subSubSection in subSection.ProductSections)
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
-                                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
-                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
+                                                                link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
+                                                                <input type="checkbox" id="item-0-0-0" class="sect_@subSubSection.SectionId" />
                                                                         <label for="item-0-0-0"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
@@ -188,7 +188,7 @@
                                         <span>@Product.SortBy:</span>
                                         @if (direction == "ltr")
                                         {
-                                            @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
+                                        @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
                                             {
                                                 new SelectListItem {Value = "1", Text = Product.ByNameASC},
                                                 new SelectListItem {Value = "2", Text = Product.ByNameDesc},
@@ -198,7 +198,7 @@
                                         }
                                         else
                                         {
-                                            @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
+                                        @Html.DropDownListFor(model => model.SearchRequest.SortBy, new[]
                                             {
                                                 new SelectListItem {Value = "5", Text = Product.ByNameASC},
                                                 new SelectListItem {Value = "6", Text = Product.ByNameDesc},
@@ -214,14 +214,14 @@
                         {
                             for (int i = 0; i < Model.Products.Count; i += 3)
                             {
-                                <div class="row">
-                                    @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
+                        <div class="row">
+                            @for (int j = i; j < (i + 3) && j < Model.Products.Count; j++)
                                     {
-                                        <div class="span3">
-                                            <div class="product-list-item">
-                                                <span class="hover"></span>
-                                                <div class="image">
-                                                    @{
+                                    <div class="span3">
+                                        <div class="product-list-item">
+                                            <span class="hover"></span>
+                                            <div class="image">
+                                                @{
                                                         string path = "";
                                                         if (requestFrom == "Inventory")
                                                         {
@@ -233,85 +233,85 @@
                                                         }
                                                         if (Model.Products[j].ItemVariationId != null)
                                                         {
-                                                            <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">
-                                                                <img src="@path" alt="">
-                                                            </a>
+                                                    <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">
+                                                        <img src="@path" alt="">
+                                                    </a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
-                                                                <img src="@path" alt="">
-                                                            </a>
+                                                    <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">
+                                                        <img src="@path" alt="">
+                                                    </a>
                                                         }
-                                                    }
-                                                </div>
-                                                <div class="details fixclear">
-                                                    @if (direction == "ltr")
+                                                }
+                                            </div>
+                                            <div class="details fixclear">
+                                                @if (direction == "ltr")
                                                     {
-                                                        <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
+                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
                                                     }
                                                     else
                                                     {
-                                                        <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
+                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
                                                     }
-                                                    <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
-                                                    <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
-                                                    <div class="actions">
-                                                        <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
-                                                        @if (Model.Products[j].ItemVariationId != null)
+                                                <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
+                                                <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
+                                                <div class="actions">
+                                                    <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
+                                                    @if (Model.Products[j].ItemVariationId != null)
                                                         {
-                                                            <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">@Product.More</a>
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Inventory">@Product.More</a>
                                                         }
                                                         else
                                                         {
-                                                            <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
+                                                        <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
                                                         }
-                                                    </div>
-                                                    <div class="price">
-                                                        @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                </div>
+                                                <div class="price">
+                                                    @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
                                                         {
-                                                            <span>@Model.Products[j].DiscountedPrice</span>
-                                                            <span>SR</span>
-                                                            <small>@Model.Products[j].ProductPrice</small>
+                                                        <span>@Model.Products[j].DiscountedPrice</span>
+                                                        <span>SR</span>
+                                                        <small>@Model.Products[j].ProductPrice</small>
                                                         }
                                                         else
                                                         {
-                                                            <span>@Model.Products[j].ProductPrice</span>
-                                                            <span>SR</span>
+                                                        <span>@Model.Products[j].ProductPrice</span>
+                                                        <span>SR</span>
                                                         }
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                     }
-                                </div>
+                        </div>
                             }
-                            <div class="span4">
-                                <div class="pagination" id="pagination">
-                                    <a><div class="cursorHand first-page"><i class="fa fa-long-arrow-right"></i></div></a>
-                                    @for (int i = 0; i < Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
+                        <div class="span4">
+                            <div class="pagination" id="pagination">
+                                <a><div class="cursorHand first-page"><i class="fa fa-long-arrow-right"></i></div></a>
+                                @for (int i = 0; i < Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
                                     {
                                         if (i == Model.SearchRequest.iDisplayStart)
                                         {
-                                            <a class="active cursorHand"><div class="page-button">@pageNo</div></a>
+                                    <a class="active cursorHand"><div class="page-button">@pageNo</div></a>
                                         }
                                         else
                                         {
-                                            <a class="cursorHand"><div class="page-button">@pageNo</div></a>
+                                    <a class="cursorHand"><div class="page-button">@pageNo</div></a>
                                         }
                                         pageNo++;
                                     }
-                                    <a><div class="cursorHand last-page"><i class="fa fa-long-arrow-left"></i></div></a>
-                                </div>
+                                <a><div class="cursorHand last-page"><i class="fa fa-long-arrow-left"></i></div></a>
                             </div>
+                        </div>
                         }
                         else
                         {
-                            <div class="row" style="text-align: center">
-                                <h4>No product available.</h4>
-                            </div>
+                        <div class="row" style="text-align: center">
+                            <h4>No product available.</h4>
+                        </div>
                         }
-                        
+
                     </div>
                 }
             </div>
@@ -334,12 +334,12 @@
                                         {
                                             foreach (var newArrival in Model.NewArrivals)
                                             {
-                                                <li>
-                                                    <div class="product-list-item  ">
-                                                        <span class="hover"></span>
-                                                        <div class="image">
-                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
-                                                            @{
+                                    <li>
+                                        <div class="product-list-item  ">
+                                            <span class="hover"></span>
+                                            <div class="image">
+                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                @{
                                                 string path = "";
                                                 if (newArrival.ItemVariationId != null)
                                                 {
@@ -351,55 +351,55 @@
                                                 }
                                                 if (newArrival.ItemVariationId != null)
                                                 {
-                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Inventory">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Inventory">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
-                                                            }
-                                                        </div>
-                                                        <div class="details fixclear">
-                                                            @if (direction == "ltr")
+                                                }
+                                            </div>
+                                            <div class="details fixclear">
+                                                @if (direction == "ltr")
                                                             {
-                                                                <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameEn : newArrival.ProductNameEn)</h3>
+                                                            <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameEn : newArrival.ProductNameEn)</h3>
                                                             }
                                                             else
                                                             {
-                                                                <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameAr : newArrival.ProductNameAr)</h3>
+                                                            <h3>@(newArrival.ItemVariationId != null ? newArrival.ItemNameAr : newArrival.ProductNameAr)</h3>
                                                             }
-                                                            <p><strong>SKU:</strong> @newArrival.SKUCode</p>
-                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                            <div class="actions">
-                                                                <a class="cursorHand" onclick="addToCart(@newArrival.ProductId)">@Product.AddToCart</a>
-                                                                @if (newArrival.ItemVariationId != null)
+                                                <p><strong>SKU:</strong> @newArrival.SKUCode</p>
+                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                <div class="actions">
+                                                    <a class="cursorHand" onclick="addToCart(@newArrival.ProductId)">@Product.AddToCart</a>
+                                                    @if (newArrival.ItemVariationId != null)
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Inventory">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Inventory">@Product.More</a>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@newArrival.ProductId?from=Sections">@Product.More</a>
                                                                 }
-                                                            </div>
-                                                            <div class="price">
-                                                                @if (!string.IsNullOrEmpty(newArrival.DiscountedPrice))
+                                                </div>
+                                                <div class="price">
+                                                    @if (!string.IsNullOrEmpty(newArrival.DiscountedPrice))
                                                                 {
-                                                                    <span>@newArrival.DiscountedPrice</span>
-                                                                    <span>SR</span>
-                                                                    <small>@newArrival.ProductPrice</small>
+                                                                <span>@newArrival.DiscountedPrice</span>
+                                                                <span>SR</span>
+                                                                <small>@newArrival.ProductPrice</small>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span>@newArrival.ProductPrice</span><span>SR</span>
+                                                                <span>@newArrival.ProductPrice</span><span>SR</span>
                                                                 }
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end product-item -->
-                                                </li>
+                                                </div>
+                                            </div>
+                                        </div><!-- end product-item -->
+                                    </li>
                                             }
                                         }
                                     </ul><!-- shop product list -->
@@ -417,12 +417,12 @@
                                         {
                                             foreach (var bestSell in Model.BestSell)
                                             {
-                                                <li>
-                                                    <div class="product-list-item  ">
-                                                        <span class="hover"></span>
-                                                        <div class="image">
-                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
-                                                            @{
+                                    <li>
+                                        <div class="product-list-item  ">
+                                            <span class="hover"></span>
+                                            <div class="image">
+                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                @{
                                                 string path = "";
                                                 if (bestSell.ItemVariationId != null)
                                                 {
@@ -434,55 +434,55 @@
                                                 }
                                                 if (bestSell.ItemVariationId != null)
                                                 {
-                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Inventory">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Inventory">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
-                                                            }
-                                                        </div>
-                                                        <div class="details fixclear">
-                                                            @if (direction == "ltr")
+                                                }
+                                            </div>
+                                            <div class="details fixclear">
+                                                @if (direction == "ltr")
                                                             {
-                                                                <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameEn : bestSell.ProductNameEn)</h3>
+                                                            <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameEn : bestSell.ProductNameEn)</h3>
                                                             }
                                                             else
                                                             {
-                                                                <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameAr : bestSell.ProductNameAr)</h3>
+                                                            <h3>@(bestSell.ItemVariationId != null ? bestSell.ItemNameAr : bestSell.ProductNameAr)</h3>
                                                             }
-                                                            <p><strong>SKU:</strong> @bestSell.SKUCode</p>
-                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                            <div class="actions">
-                                                                <a class="cursorHand" onclick="addToCart(@bestSell.ProductId)">@Product.AddToCart</a>
-                                                                @if (bestSell.ItemVariationId != null)
+                                                <p><strong>SKU:</strong> @bestSell.SKUCode</p>
+                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                <div class="actions">
+                                                    <a class="cursorHand" onclick="addToCart(@bestSell.ProductId)">@Product.AddToCart</a>
+                                                    @if (bestSell.ItemVariationId != null)
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Inventory">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Inventory">@Product.More</a>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@bestSell.ProductId?from=Sections">@Product.More</a>
                                                                 }
-                                                            </div>
-                                                            <div class="price">
-                                                                @if (!string.IsNullOrEmpty(bestSell.DiscountedPrice))
+                                                </div>
+                                                <div class="price">
+                                                    @if (!string.IsNullOrEmpty(bestSell.DiscountedPrice))
                                                                 {
-                                                                    <span>@bestSell.DiscountedPrice</span>
-                                                                    <span>SR</span>
-                                                                    <small>@bestSell.ProductPrice</small>
+                                                                <span>@bestSell.DiscountedPrice</span>
+                                                                <span>SR</span>
+                                                                <small>@bestSell.ProductPrice</small>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span>@bestSell.ProductPrice</span><span>SR</span>
+                                                                <span>@bestSell.ProductPrice</span><span>SR</span>
                                                                 }
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end product-item -->
-                                                </li>
+                                                </div>
+                                            </div>
+                                        </div><!-- end product-item -->
+                                    </li>
                                             }
                                         }
                                     </ul><!-- shop product list -->
@@ -500,12 +500,12 @@
                                         {
                                             foreach (var randomProduct in Model.RandomProducts)
                                             {
-                                                <li>
-                                                    <div class="product-list-item  ">
-                                                        <span class="hover"></span>
-                                                        <div class="image">
-                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
-                                                            @{
+                                    <li>
+                                        <div class="product-list-item  ">
+                                            <span class="hover"></span>
+                                            <div class="image">
+                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                @{
                                                 string path = "";
                                                 if (randomProduct.ItemVariationId != null)
                                                 {
@@ -517,55 +517,55 @@
                                                 }
                                                 if (randomProduct.ItemVariationId != null)
                                                 {
-                                                    <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Inventory">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Inventory">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
-                                                            }
-                                                        </div>
-                                                        <div class="details fixclear">
-                                                            @if (direction == "ltr")
+                                                }
+                                            </div>
+                                            <div class="details fixclear">
+                                                @if (direction == "ltr")
                                                             {
-                                                                <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameEn : randomProduct.ProductNameEn)</h3>
+                                                            <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameEn : randomProduct.ProductNameEn)</h3>
                                                             }
                                                             else
                                                             {
-                                                                <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameAr : randomProduct.ProductNameAr)</h3>
+                                                            <h3>@(randomProduct.ItemVariationId != null ? randomProduct.ItemNameAr : randomProduct.ProductNameAr)</h3>
                                                             }
-                                                            <p><strong>SKU:</strong> @randomProduct.SKUCode</p>
-                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                            <div class="actions">
-                                                                <a class="cursorHand" onclick="addToCart(@randomProduct.ProductId)">@Product.AddToCart</a>
-                                                                @if (randomProduct.ItemVariationId != null)
+                                                <p><strong>SKU:</strong> @randomProduct.SKUCode</p>
+                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                <div class="actions">
+                                                    <a class="cursorHand" onclick="addToCart(@randomProduct.ProductId)">@Product.AddToCart</a>
+                                                    @if (randomProduct.ItemVariationId != null)
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Inventory">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Inventory">@Product.More</a>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@randomProduct.ProductId?from=Sections">@Product.More</a>
                                                                 }
-                                                            </div>
-                                                            <div class="price">
-                                                                @if (!string.IsNullOrEmpty(randomProduct.DiscountedPrice))
+                                                </div>
+                                                <div class="price">
+                                                    @if (!string.IsNullOrEmpty(randomProduct.DiscountedPrice))
                                                                 {
-                                                                    <span>@randomProduct.DiscountedPrice</span>
-                                                                    <span>SR</span>
-                                                                    <small>@randomProduct.ProductPrice</small>
+                                                                <span>@randomProduct.DiscountedPrice</span>
+                                                                <span>SR</span>
+                                                                <small>@randomProduct.ProductPrice</small>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span>@randomProduct.ProductPrice</span><span>SR</span>
+                                                                <span>@randomProduct.ProductPrice</span><span>SR</span>
                                                                 }
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end product-item -->
-                                                </li>
+                                                </div>
+                                            </div>
+                                        </div><!-- end product-item -->
+                                    </li>
                                             }
                                         }
                                     </ul><!-- shop product list -->
@@ -583,12 +583,12 @@
                                         {
                                             foreach (var featuredProduct in Model.FeaturedProducts)
                                             {
-                                                <li>
-                                                    <div class="product-list-item  ">
-                                                        <span class="hover"></span>
-                                                        <div class="image">
-                                                            @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
-                                                            @{
+                                    <li>
+                                        <div class="product-list-item  ">
+                                            <span class="hover"></span>
+                                            <div class="image">
+                                                @*<a href="pages-productitem.html"><img src="/images/shop_images/img1.png" alt=""></a>*@
+                                                @{
                                                 string path = "";
                                                 if (featuredProduct.ItemVariationId != null)
                                                 {
@@ -600,55 +600,55 @@
                                                 }
                                                 if (featuredProduct.ItemVariationId != null)
                                                 {
-                                                    <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Inventory">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Inventory">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
                                                 else
                                                 {
-                                                    <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">
-                                                        <img src="@path" alt="">
-                                                    </a>
+                                                            <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">
+                                                                <img src="@path" alt="">
+                                                            </a>
                                                 }
-                                                            }
-                                                        </div>
-                                                        <div class="details fixclear">
-                                                            @if (direction == "ltr")
+                                                }
+                                            </div>
+                                            <div class="details fixclear">
+                                                @if (direction == "ltr")
                                                             {
-                                                                <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameEn : featuredProduct.ProductNameEn)</h3>
+                                                            <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameEn : featuredProduct.ProductNameEn)</h3>
                                                             }
                                                             else
                                                             {
-                                                                <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameAr : featuredProduct.ProductNameAr)</h3>
+                                                            <h3>@(featuredProduct.ItemVariationId != null ? featuredProduct.ItemNameAr : featuredProduct.ProductNameAr)</h3>
                                                             }
-                                                            <p><strong>SKU:</strong> @featuredProduct.SKUCode</p>
-                                                            <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
-                                                            <div class="actions">
-                                                                <a class="cursorHand" onclick="addToCart(@featuredProduct.ProductId)">@Product.AddToCart</a>
-                                                                @if (featuredProduct.ItemVariationId != null)
+                                                <p><strong>SKU:</strong> @featuredProduct.SKUCode</p>
+                                                <p class="desc">Quisque sit amet est et sapien ullamcorper pharetra...</p>
+                                                <div class="actions">
+                                                    <a class="cursorHand" onclick="addToCart(@featuredProduct.ProductId)">@Product.AddToCart</a>
+                                                    @if (featuredProduct.ItemVariationId != null)
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Inventory">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Inventory">@Product.More</a>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">@Product.More</a>
+                                                                <a href="@siteURL/Product/Details/@featuredProduct.ProductId?from=Sections">@Product.More</a>
                                                                 }
-                                                            </div>
-                                                            <div class="price">
-                                                                @if (!string.IsNullOrEmpty(featuredProduct.DiscountedPrice))
+                                                </div>
+                                                <div class="price">
+                                                    @if (!string.IsNullOrEmpty(featuredProduct.DiscountedPrice))
                                                                 {
-                                                                    <span>@featuredProduct.DiscountedPrice</span>
-                                                                    <span>SR</span>
-                                                                    <small>@featuredProduct.ProductPrice</small>
+                                                                <span>@featuredProduct.DiscountedPrice</span>
+                                                                <span>SR</span>
+                                                                <small>@featuredProduct.ProductPrice</small>
                                                                 }
                                                                 else
                                                                 {
-                                                                    <span>@featuredProduct.ProductPrice</span><span>SR</span>
+                                                                <span>@featuredProduct.ProductPrice</span><span>SR</span>
                                                                 }
-                                                            </div>
-                                                        </div>
-                                                    </div><!-- end product-item -->
-                                                </li>
+                                                </div>
+                                            </div>
+                                        </div><!-- end product-item -->
+                                    </li>
                                             }
                                         }
                                     </ul><!-- shop product list -->
@@ -672,9 +672,32 @@
 {
     <script>
         var siteUrl;
+        var ele;
+        var firstParentCheckbox;
+        var secondParentCheckbox;
         $(document).ready(function() {
-            siteUrl = $("#siteURL").val();
-            // latest & bestsellers carousels
+            setTimeout(function () {
+                debugger;
+                // open css treeeview
+                var listItemToOpen = localStorage.getItem("css-treeview-li");
+                if (listItemToOpen != null) {
+                    ele = $("." + listItemToOpen).trigger("click");
+                    var firstParent = ele.parent().parent().parent();
+                    firstParentCheckbox = firstParent.find('input[type=checkbox]')[0];
+                    if (ele[0] != firstParentCheckbox && firstParentCheckbox != undefined) {
+                        $(firstParentCheckbox).trigger("click");
+                    }
+                    var secondParent = firstParent.parent().parent().parent();
+                    secondParentCheckbox = secondParent.find('input[type=checkbox]')[0];
+                    if (firstParentCheckbox != secondParentCheckbox && secondParentCheckbox != undefined) {
+                        $(secondParentCheckbox).trigger("click");
+                    }
+                    localStorage.setItem("css-treeview-li", listItemToOpen);
+                }
+            }, 500);
+
+            siteUrl = $("#siteURL").val;
+            // latest & bestsellers ... carousels
             $('.shop-latest-carousel > ul').each(function(index, element) {
                 $(this).carouFredSel({
                     responsive: true,
@@ -686,10 +709,11 @@
                     next: { button: $(this).parent().find('a.next'), key: "right" },
                 });
             });
-
-            //$(document).on('click', '.phy', function() {
-            //    alert(this);
-            //});
+            // on tree click save node in local storage
+            $('input:checkbox').change(function () {
+                var listItem = this.className;
+                localStorage.setItem("css-treeview-li", listItem);
+            });
         });
         $(document).on('change', '.filter', function() {
             var sortBy = parseInt($("#SortBy").val());

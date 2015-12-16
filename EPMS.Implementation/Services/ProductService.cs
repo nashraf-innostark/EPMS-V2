@@ -48,6 +48,22 @@ namespace EPMS.Implementation.Services
             return productRepository.GetAll();
         }
 
+        public IEnumerable<Product> GetAllSortedProducts()
+        {
+            return productRepository.GetAllSortedProducts();
+        }
+
+        public int GetProductsCount()
+        {
+            return productRepository.GetProductsCount();
+        }
+
+        public Product GetProductForCatalog(int pageNo)
+        {
+            var product = productRepository.GetProductForCatalog(pageNo);
+            return product;
+        }
+
         public Product FindProductById(long id)
         {
             return productRepository.Find(id);

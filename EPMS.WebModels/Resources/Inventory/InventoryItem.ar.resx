@@ -165,6 +165,12 @@
   <data name="IsError" xml:space="preserve">
     <value>Unable to delete Inventory Item.</value>
   </data>
+  <data name="IsSaved" xml:space="preserve">
+    <value>Inventory Item has been Added.</value>
+  </data>
+  <data name="IsUpdated" xml:space="preserve">
+    <value>Inventory Item has been Updated.</value>
+  </data>
   <data name="ItemCode" xml:space="preserve">
     <value>رقم المنتج</value>
   </data>
@@ -179,6 +185,12 @@
   </data>
   <data name="Label" xml:space="preserve">
     <value>قائمة المنتجات</value>
+  </data>
+  <data name="NameLengthValidation" xml:space="preserve">
+    <value>Item Name cannot exceed 500 characters. </value>
+  </data>
+  <data name="NameValidation" xml:space="preserve">
+    <value>Item Name is required.</value>
   </data>
   <data name="QOnHand" xml:space="preserve">
     <value>الكمية المتوفرة</value>

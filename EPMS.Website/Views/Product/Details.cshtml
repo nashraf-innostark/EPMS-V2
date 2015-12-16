@@ -42,71 +42,69 @@
 
     <script>
         var siteUrl;
-        jQuery(document).ready(function () {
+        $(document).ready(function () {
             siteUrl = jQuery("#siteURL").val();
             singleProduct();
+        });
+        function singleProduct() {
+            /* Product Images Carousel */
+            jQuery('#product-carousel').flexslider({
+                animation: "slide",
+                controlNav: false,
+                animationLoop: false,
+                directionNav: false,
+                slideshow: false,
+                itemWidth: 80,
+                itemMargin: 0,
+                start: function (slider) {
+                    setActive(jQuery('#product-carousel li:first-child img'));
+                    slider.find('.right-arrow').click(function () {
+                        slider.flexAnimate(slider.getTarget("next"));
+                    });
+                    slider.find('.left-arrow').click(function () {
+                        slider.flexAnimate(slider.getTarget("prev"));
+                    });
+                    slider.find('img').click(function () {
+                        var large = jQuery(this).attr('data-large');
+                        setActive(jQuery(this));
+                        jQuery('#product-slider img').fadeOut(300, changeImg(large, jQuery('#product-slider img')));
+                        jQuery('#product-slider a.fullscreen-button').attr('href', large);
+                    });
 
-            function singleProduct() {
-                /* Product Images Carousel */
-                jQuery('#product-carousel').flexslider({
-                    animation: "slide",
-                    controlNav: false,
-                    animationLoop: false,
-                    directionNav: false,
-                    slideshow: false,
-                    itemWidth: 80,
-                    itemMargin: 0,
-                    start: function (slider) {
-                        setActive(jQuery('#product-carousel li:first-child img'));
-                        slider.find('.right-arrow').click(function () {
-                            slider.flexAnimate(slider.getTarget("next"));
-                        });
-                        slider.find('.left-arrow').click(function () {
-                            slider.flexAnimate(slider.getTarget("prev"));
-                        });
-                        slider.find('img').click(function () {
-                            var large = jQuery(this).attr('data-large');
-                            setActive(jQuery(this));
-                            jQuery('#product-slider img').fadeOut(300, changeImg(large, jQuery('#product-slider img')));
-                            jQuery('#product-slider a.fullscreen-button').attr('href', large);
-                        });
+                    function changeImg(large, element) {
+                        var element = element;
+                        var large = large;
+                        setTimeout(function () { startF(); }, 300);
 
-                        function changeImg(large, element) {
-                            var element = element;
-                            var large = large;
-                            setTimeout(function () { startF(); }, 300);
-
-                            function startF() {
-                                element.attr('src', large);
-                                element.attr('data-large', large);
-                                element.fadeIn(300);
-                            }
-                        }
-
-                        function setActive(el) {
-                            var element = el;
-                            jQuery('#product-carousel img').removeClass('active-item');
-                            element.addClass('active-item');
+                        function startF() {
+                            element.attr('src', large);
+                            element.attr('data-large', large);
+                            element.fadeIn(300);
                         }
                     }
-                });
 
-                /* FullScreen Button */
-                jQuery('a.fullscreen-button').click(function (e) {
-                    e.preventDefault();
-                    var target = jQuery(this).attr('href');
-                    jQuery('#product-carousel a.fancybox[href="' + target + '"]').trigger('click');
-                });
-                /* Cloud Zoom */
-                jQuery("#zoom01").imagezoomsl({
-                    zoomrange: [3, 3],
-                    magnifierpos: "left"
-                });
-                /* FancyBox */
-                jQuery(".fancybox").fancybox();
-            }
+                    function setActive(el) {
+                        var element = el;
+                        jQuery('#product-carousel img').removeClass('active-item');
+                        element.addClass('active-item');
+                    }
+                }
+            });
 
-        });
+            /* FullScreen Button */
+            jQuery('a.fullscreen-button').click(function (e) {
+                e.preventDefault();
+                var target = jQuery(this).attr('href');
+                jQuery('#product-carousel a.fancybox[href="' + target + '"]').trigger('click');
+            });
+            /* Cloud Zoom */
+            jQuery("#zoom01").imagezoomsl({
+                zoomrange: [3, 3],
+                magnifierpos: "left"
+            });
+            /* FancyBox */
+            jQuery(".fancybox").fancybox();
+        }
     </script>
 }
 
@@ -266,7 +264,6 @@
                                 {
                                     <p><strong>@Product.SKU:</strong> @Model.Product.SKUCode</p>
                                 }
-                                <p class="small_desc">Pellentesque habitant morbi tristique senectus et netus et malesuada fames</p>
                                 @if (!string.IsNullOrEmpty(Model.Product.DiscountedPrice))
                                 {
                                     <p class="regular_price">@Product.Price: <span>@Model.Product.ProductPrice</span><span>SR</span></p>
@@ -308,11 +305,8 @@
                                     @if (Model.Product.ItemVariationId == null && !string.IsNullOrEmpty(Model.Product.ProductSize))
                                     {
                                         <div class="quantitiy">
-                                            <label for="qty">@Product.Size:</label>
-                                            @Html.DropDownListFor(m => m.Product.ProductSize, new[]
-                                            {
-                                                new SelectListItem {Value = "0", Text = Model.Product.ProductSize}
-                                            }, new {@id = "Size"})
+                                            <label for="qty">@Product.Size: </label>
+                                            <p class="manual-product-size">@Model.Product.ProductSize</p>
                                         </div>
                                     }
                                     <div class="quantitiy">
@@ -372,7 +366,7 @@
                                             link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
                                         }
                                     }
-                                    <input type="checkbox" id="item-0" />
+                                    <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
                                     <label for="item-0"><a href="@link">@childName</a></label>
                                     if (productSection.InventoryDepartment != null)
                                     {
@@ -383,7 +377,7 @@
                                                     @{
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
-                                                <input type="checkbox" id="item-0-0" />
+                                                <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
                                                         <label for="item-0-0"><a href="@link">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
@@ -395,7 +389,7 @@
                                                                     @{
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
-                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
                                                                         <label for="item-0-0-0"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
@@ -410,25 +404,25 @@
                                     if (productSection.ProductSections != null && productSection.ProductSections.Any())
                                     {
                                         <ul>
-                                            @foreach (var section in productSection.ProductSections)
+                                            @foreach (var subSection in productSection.ProductSections)
                                             {
                                                 <li class="phy">
                                                     @{
-                                                childName = direction == "ltr" ? section.SectionNameEn : section.SectionNameAr;
-                                                link = siteURL + "/Product/Index/" + section.SectionId + "?from=Sections";
-                                                <input type="checkbox" id="item-0-0" />
+                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
+                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
+                                                <input type="checkbox" id="item-0-0" class="sect_@subSection.SectionId" />
                                                         <label for="item-0-0"><a href="@link">@childName</a></label>
                                                     }
-                                                    @if (section.ProductSections.Any())
+                                                    @if (subSection.ProductSections.Any())
                                                     {
                                                         <ul>
-                                                            @foreach (var subSection in section.ProductSections)
+                                                            @foreach (var subSubSection in subSection.ProductSections)
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
-                                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
-                                                                <input type="checkbox" id="item-0-0-0" />
+                                                                childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
+                                                                link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
+                                                                <input type="checkbox" id="item-0-0-0" class="sect_@subSubSection.SectionId" />
                                                                         <label for="item-0-0-0"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
@@ -458,11 +452,38 @@
 <script>
     var sizes = '@Html.Raw(Json.Encode(Model.ProductSizes))';
     var productSize = JSON.parse(sizes);
+    var ele;
+    var firstParentCheckbox;
+    var secondParentCheckbox;
     $(document).ready(function () {
         $('#Size').val('@Model.Product.ProductId');
         $("#Size").on("change", function () {
             var productId = parseInt($(this).val());
             window.location.href = window.location.origin + "/Product/Details/" + productId + window.location.search;
+        });
+        setTimeout(function () {
+            debugger;
+            // open css treeeview
+            var listItemToOpen = localStorage.getItem("css-treeview-li");
+            if (listItemToOpen != null) {
+                ele = $("." + listItemToOpen).trigger("click");
+                var firstParent = ele.parent().parent().parent();
+                firstParentCheckbox = firstParent.find('input[type=checkbox]')[0];
+                if (ele[0] != firstParentCheckbox && firstParentCheckbox != undefined) {
+                    $(firstParentCheckbox).trigger("click");
+                }
+                var secondParent = firstParent.parent().parent().parent();
+                secondParentCheckbox = secondParent.find('input[type=checkbox]')[0];
+                if (firstParentCheckbox != secondParentCheckbox && secondParentCheckbox != undefined) {
+                    $(secondParentCheckbox).trigger("click");
+                }
+                localStorage.setItem("css-treeview-li", listItemToOpen);
+            }
+        }, 500);
+        // on tree click save node in local storage
+        $('input:checkbox').change(function () {
+            var listItem = this.className;
+            localStorage.setItem("css-treeview-li", listItem);
         });
     });
 </script>

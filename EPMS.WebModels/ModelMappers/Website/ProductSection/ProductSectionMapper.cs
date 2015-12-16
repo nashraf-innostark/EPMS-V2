@@ -14,8 +14,8 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 SectionNameAr = source.SectionNameAr,
                 InventoyDepartmentId = source.InventoyDepartmentId,
                 ParentSectionId = source.ParentSectionId,
-                SectionContentEn = source.SectionContentEn,
-                SectionContentAr = source.SectionContentAr,
+                SectionContentEn = RemoveCkEditorValues(source.SectionContentEn),
+                SectionContentAr = RemoveCkEditorValues(source.SectionContentAr),
                 ShowToPublic = source.ShowToPublic,
                 ShowToPublicForIndex = source.ShowToPublic ? "Yes" : "No",
                 RecCreatedBy = source.RecCreatedBy,
@@ -37,8 +37,8 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 SectionNameAr = source.SectionNameAr,
                 InventoyDepartmentId = source.InventoyDepartmentId,
                 ParentSectionId = source.ParentSectionId,
-                SectionContentEn = source.SectionContentEn,
-                SectionContentAr = source.SectionContentAr,
+                SectionContentEn = RemoveCkEditorValues(source.SectionContentEn),
+                SectionContentAr = RemoveCkEditorValues(source.SectionContentAr),
                 ShowToPublic = source.ShowToPublic,
                 InventoryDepartmentNameEn = source.InventoryDepartment !=null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
                 InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
@@ -59,8 +59,8 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 SectionNameAr = source.SectionNameAr,
                 InventoyDepartmentId = source.InventoyDepartmentId,
                 ParentSectionId = source.ParentSectionId,
-                SectionContentEn = source.SectionContentEn,
-                SectionContentAr = source.SectionContentAr,
+                SectionContentEn = RemoveCkEditorValues(source.SectionContentEn),
+                SectionContentAr = RemoveCkEditorValues(source.SectionContentAr),
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = !string.IsNullOrEmpty(source.RecCreatedDate) ? DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDt,
@@ -68,5 +68,19 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
+        #region Remove \r \n from CK editor values
+
+        private static string RemoveCkEditorValues(string value)
+        {
+            string retval = value;
+            if (!string.IsNullOrEmpty(retval))
+            {
+                retval = retval.Replace('\r', ' ');
+                retval = retval.Replace('\n', ' ');
+            }
+            return retval;
+        }
+
+        #endregion
     }
 }

@@ -313,7 +313,16 @@
                     updateValues(value);
                 }
             });
-            $("#content").show();
+            var descpEn = $("#ContentEn").val();
+            var regex = /(<([^>]+)>)/ig;
+            var result = descpEn.replace(regex, "");
+            $("#ContentEn").val(result);
+            var descpAr = $("#ContentAr").val();
+            regex = /(<([^>]+)>)/ig;
+            result = descpAr.replace(regex, "");
+            $("#content-area").show();
+            $("#content").hide();
+            $("#ContentAr").val(result);
             $("#ShowToPublicDiv").show();
             $("#Edit").show();
             $("#UpdateNode").hide();

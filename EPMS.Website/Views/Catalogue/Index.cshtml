@@ -36,7 +36,7 @@
         <div id="slider"></div>
     </div>
 </div>
-<a href="~/Catalogue/Catalogue" class="btn btn-pdf-steve">Export as PDF</a>
+<a href="~/Catalogue/Catalogue?direction=@direction" class="btn btn-pdf-steve">Export as PDF</a>
 
 <script type="text/javascript">
     @*var productsString = '@Html.Raw(Json.Encode(Model.Products))';
@@ -182,7 +182,7 @@
             autoCenter: true,
             gradients: true,
             duration: 1000,
-            pages: parseInt('@Model.Products.Count') + 4,
+            pages: parseInt('@ViewBag.ProductsCount') + 4,
             when: {
                 turning: function (e, page, view) {
 
