@@ -498,11 +498,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Task.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\RFI\RFI.ar.Designer.cs">
-      <DependentUpon>RFI.ar.resx</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
     <Compile Include="Resources\RFI\RFI.Designer.cs">
       <DependentUpon>RFI.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -1018,6 +1013,7 @@
       <LastGenOutput>Customer.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\CMS\Invoice.ar.resx" />
     <EmbeddedResource Include="Resources\CMS\Order.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Order.ar.Designer.cs</LastGenOutput>
@@ -1163,6 +1159,7 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Tasks.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.ar.resx" />
     <EmbeddedResource Include="Resources\Inventory\Barcode\Barcode.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Barcode.Designer.cs</LastGenOutput>
@@ -1320,10 +1317,7 @@
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\RFI\RFI.ar.resx">
-      <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>RFI.ar.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\RFI\RFI.ar.resx" />
     <EmbeddedResource Include="Resources\RFI\RFI.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RFI.Designer.cs</LastGenOutput>

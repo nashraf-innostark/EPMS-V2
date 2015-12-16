@@ -117,127 +117,28 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddMessage" xml:space="preserve">
-    <value>تمت إضافة مهمة</value>
+  <data name="Add" xml:space="preserve">
+    <value>اضافة</value>
   </data>
-  <data name="AddNewTask" xml:space="preserve">
-    <value>اضافة مهمة جديدة</value>
+  <data name="BarcodeValue" xml:space="preserve">
+    <value>باركود</value>
   </data>
-  <data name="AssignEmployee" xml:space="preserve">
-    <value>تعيين الموظفين</value>
+  <data name="Delete" xml:space="preserve">
+    <value>حذف</value>
   </data>
-  <data name="BtnCreate" xml:space="preserve">
-    <value>حفظ التعديلات</value>
+  <data name="Header" xml:space="preserve">
+    <value>طباعة الباركود</value>
   </data>
-  <data name="BtnDelete" xml:space="preserve">
-    <value>حذف المهمة</value>
+  <data name="ItemDetails" xml:space="preserve">
+    <value>تفاصيل المنتج</value>
   </data>
-  <data name="BtnTextCreate" xml:space="preserve">
-    <value>إنشاء مهمة</value>
+  <data name="ItemSKUDescriptoin" xml:space="preserve">
+    <value>اضافة اسم اس ك يو</value>
   </data>
-  <data name="BtnTextEdit" xml:space="preserve">
-    <value>حفظ التعديلات</value>
+  <data name="PageTitle" xml:space="preserve">
+    <value>طباعة الباركود</value>
   </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
-  <data name="Cost" xml:space="preserve">
-    <value>تكلفة المهمة</value>
-  </data>
-  <data name="Create" xml:space="preserve">
-    <value>إنشاء مهمة</value>
-  </data>
-  <data name="DeliveryDate" xml:space="preserve">
-    <value>تاريخ التسليم</value>
-  </data>
-  <data name="Description" xml:space="preserve">
-    <value>تفاصيل المهام بالانجليزي</value>
-  </data>
-  <data name="DescriptionA" xml:space="preserve">
-    <value>تفاصيل المهام بالعربي</value>
-  </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل المهام</value>
-  </data>
-  <data name="MyTasks" xml:space="preserve">
-    <value>مهم الخاصة بي</value>
-  </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات بالانجليزي</value>
-  </data>
-  <data name="NotesA" xml:space="preserve">
-    <value>ملاحظات بالعربي</value>
-  </data>
-  <data name="PageTitleCreate" xml:space="preserve">
-    <value>إنشاء مهمة</value>
-  </data>
-  <data name="PageTitleEdit" xml:space="preserve">
-    <value>تحرير العمل </value>
-  </data>
-  <data name="PageTitleIndex" xml:space="preserve">
-    <value>قائمة المهام</value>
-  </data>
-  <data name="Pre_ReqTask" xml:space="preserve">
-    <value>المهام المطلوبة مسبقا</value>
-  </data>
-  <data name="Progress" xml:space="preserve">
-    <value>مستوى التقدم</value>
-  </data>
-  <data name="ProjectName" xml:space="preserve">
-    <value>اسم المشروع</value>
-  </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>تاريخ البداية</value>
-  </data>
-  <data name="TaskName" xml:space="preserve">
-    <value>اسماء المهام</value>
-  </data>
-  <data name="TaskNameA" xml:space="preserve">
-    <value>اسم المهام بالعربي</value>
-  </data>
-  <data name="Tasks" xml:space="preserve">
-    <value>مهام</value>
-  </data>
-  <data name="TaskWeight" xml:space="preserve">
-    <value>وزن المهمة</value>
-  </data>
-  <data name="TotalCost" xml:space="preserve">
-    <value>تكلفة المهمة</value>
-  </data>
-  <data name="Detail" xml:space="preserve">
-    <value>تفاصيل المهمة</value>
-  </data>
-  <data name="PageTitleDetail" xml:space="preserve">
-    <value>التفاصيل </value>
-  </data>
-  <data name="ErrorDelete" xml:space="preserve">
-    <value>خطأ في حذف المهام.</value>
-  </data>
-  <data name="DeleteMessage" xml:space="preserve">
-    <value>لقد تم حذف مهمة</value>
-  </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث مهمة</value>
-  </data>
-  <data name="PageTitleMyTasks" xml:space="preserve">
-    <value>بلدي المهام</value>
-  </data>
-  <data name="TaskProgeress" xml:space="preserve">
-    <value>تقدم مهمة</value>
-  </data>
-  <data name="IsParent" xml:space="preserve">
-    <value>هو العمل الرئيسي</value>
-  </data>
-  <data name="ParentTask" xml:space="preserve">
-    <value>العمل الوالد</value>
-  </data>
-  <data name="ErrorSaving" xml:space="preserve">
-    <value>خطأ أثناء إنقاذ</value>
-  </data>
-  <data name="Added" xml:space="preserve">
-    <value>مضاف</value>
-  </data>
-  <data name="EmployeeWithNoOfTasks" xml:space="preserve">
-    <value>موظف – عدد المهام القائم عليها</value>
+  <data name="Print" xml:space="preserve">
+    <value>طباعة</value>
   </data>
 </root>

@@ -261,4 +261,16 @@
   <data name="QuotationCancelled" xml:space="preserve">
     <value>Quotation has been Cancelled.</value>
   </data>
+  <data name="DiscountRangeError" xml:space="preserve">
+    <value>يجب أن لا يتجاوز الخسم عن 100%</value>
+  </data>
+  <data name="FirstInsDueAtCompletionError" xml:space="preserve">
+    <value>Please provide completion of project for first intallment</value>
+  </data>
+  <data name="FirstInstallmentAmountError" xml:space="preserve">
+    <value>الرجاء إدخال قيمة الدفعة الأولى</value>
+  </data>
+  <data name="InstallmentRangeError" xml:space="preserve">
+    <value>الرجاء إدخال رقم بين 1-100</value>
+  </data>
 </root>

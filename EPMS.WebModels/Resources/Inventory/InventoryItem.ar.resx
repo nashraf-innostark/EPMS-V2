@@ -133,7 +133,7 @@
     <value>انشاء منتج جديد</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>حذف</value>
   </data>
   <data name="DeptInfo" xml:space="preserve">
     <value>معلومات الادارة</value>
@@ -157,19 +157,19 @@
     <value>الاخطار بالعربي</value>
   </data>
   <data name="IsAssociated" xml:space="preserve">
-    <value>Unable to Delete Inventory Item because it is Associated.</value>
+    <value>عدم القدرة على حذف منتج من المستودع لانة مرتبط</value>
   </data>
   <data name="IsDeleted" xml:space="preserve">
-    <value>Inventory Item Successfully Deleted.</value>
+    <value>تم حذف منتج من المستودع بنجاج</value>
   </data>
   <data name="IsError" xml:space="preserve">
-    <value>Unable to delete Inventory Item.</value>
+    <value>عدم القدرة على حذف منتج من المستودع</value>
   </data>
   <data name="IsSaved" xml:space="preserve">
-    <value>Inventory Item has been Added.</value>
+    <value>تم اضافة منتج للمستودع بنجاح</value>
   </data>
   <data name="IsUpdated" xml:space="preserve">
-    <value>Inventory Item has been Updated.</value>
+    <value>تم تحديث على منتج المستودع  بنجاح</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>رقم المنتج</value>
@@ -187,10 +187,10 @@
     <value>قائمة المنتجات</value>
   </data>
   <data name="NameLengthValidation" xml:space="preserve">
-    <value>Item Name cannot exceed 500 characters. </value>
+    <value>اسم المنتج لا يمكن أن يتجاوز 500 حرفا</value>
   </data>
   <data name="NameValidation" xml:space="preserve">
-    <value>Item Name is required.</value>
+    <value>اسم المنتج الزامي</value>
   </data>
   <data name="QOnHand" xml:space="preserve">
     <value>الكمية المتوفرة</value>

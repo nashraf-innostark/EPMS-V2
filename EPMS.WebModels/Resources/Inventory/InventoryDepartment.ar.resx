@@ -217,12 +217,12 @@
     <value>حذف</value>
   </data>
   <data name="IsDeleted" xml:space="preserve">
-    <value>Inventory Department successfully deleted.</value>
+    <value>تم حذف قسم المستودع بنجاح</value>
   </data>
   <data name="IsError" xml:space="preserve">
-    <value>Unable to delete Inventory Department.</value>
+    <value>عدم القدرة على حذف قسم المستودع</value>
   </data>
   <data name="IsAssociated" xml:space="preserve">
-    <value>Unable to delete Inventory Department because it is associated with Inventory Item.</value>
+    <value>عدم القدرة على حذف قسم المستودع لانه مرتبط بالمستودع</value>
   </data>
 </root>

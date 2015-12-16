@@ -117,127 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddMessage" xml:space="preserve">
-    <value>تمت إضافة مهمة</value>
-  </data>
-  <data name="AddNewTask" xml:space="preserve">
-    <value>اضافة مهمة جديدة</value>
-  </data>
-  <data name="AssignEmployee" xml:space="preserve">
-    <value>تعيين الموظفين</value>
-  </data>
-  <data name="BtnCreate" xml:space="preserve">
-    <value>حفظ التعديلات</value>
-  </data>
-  <data name="BtnDelete" xml:space="preserve">
-    <value>حذف المهمة</value>
-  </data>
-  <data name="BtnTextCreate" xml:space="preserve">
-    <value>إنشاء مهمة</value>
-  </data>
-  <data name="BtnTextEdit" xml:space="preserve">
-    <value>حفظ التعديلات</value>
-  </data>
   <data name="ClientName" xml:space="preserve">
     <value>اسم العميل</value>
   </data>
-  <data name="Cost" xml:space="preserve">
-    <value>تكلفة المهمة</value>
+  <data name="Due" xml:space="preserve">
+    <value>الدفعة المطلوبة عند وصول المشروع نسبة</value>
   </data>
-  <data name="Create" xml:space="preserve">
-    <value>إنشاء مهمة</value>
+  <data name="FInstallment" xml:space="preserve">
+    <value>الدفعة الاولى</value>
   </data>
-  <data name="DeliveryDate" xml:space="preserve">
-    <value>تاريخ التسليم</value>
+  <data name="FourthInstallment" xml:space="preserve">
+    <value>الدفعة الرابعة</value>
   </data>
-  <data name="Description" xml:space="preserve">
-    <value>تفاصيل المهام بالانجليزي</value>
+  <data name="InstallmentPlan" xml:space="preserve">
+    <value>خطة الدفعات</value>
   </data>
-  <data name="DescriptionA" xml:space="preserve">
-    <value>تفاصيل المهام بالعربي</value>
+  <data name="InvoiceTitle" xml:space="preserve">
+    <value>فواتير</value>
   </data>
-  <data name="Edit" xml:space="preserve">
-    <value>تعديل المهام</value>
+  <data name="Invoices" xml:space="preserve">
+    <value>فواتير</value>
   </data>
-  <data name="MyTasks" xml:space="preserve">
-    <value>مهم الخاصة بي</value>
+  <data name="InWords" xml:space="preserve">
+    <value>كتابة</value>
+  </data>
+  <data name="ItemDetail" xml:space="preserve">
+    <value>تفاصيل المنتج</value>
+  </data>
+  <data name="List" xml:space="preserve">
+    <value>قائمة الفواتير</value>
   </data>
   <data name="Notes" xml:space="preserve">
-    <value>ملاحظات بالانجليزي</value>
+    <value>ملاحظات بالانغليزي</value>
   </data>
-  <data name="NotesA" xml:space="preserve">
+  <data name="NotesAr" xml:space="preserve">
     <value>ملاحظات بالعربي</value>
   </data>
-  <data name="PageTitleCreate" xml:space="preserve">
-    <value>إنشاء مهمة</value>
+  <data name="Print" xml:space="preserve">
+    <value>اطبع</value>
   </data>
-  <data name="PageTitleEdit" xml:space="preserve">
-    <value>تحرير العمل </value>
+  <data name="Quantity" xml:space="preserve">
+    <value>الكمية</value>
   </data>
-  <data name="PageTitleIndex" xml:space="preserve">
-    <value>قائمة المهام</value>
+  <data name="SecondInstallment" xml:space="preserve">
+    <value>الدفعة الثانية</value>
   </data>
-  <data name="Pre_ReqTask" xml:space="preserve">
-    <value>المهام المطلوبة مسبقا</value>
+  <data name="Send" xml:space="preserve">
+    <value>ارسال للعميل</value>
   </data>
-  <data name="Progress" xml:space="preserve">
-    <value>مستوى التقدم</value>
+  <data name="ThirdInstallment" xml:space="preserve">
+    <value>الدفعة الثالثة</value>
   </data>
-  <data name="ProjectName" xml:space="preserve">
-    <value>اسم المشروع</value>
+  <data name="Total" xml:space="preserve">
+    <value>اجمالي</value>
   </data>
-  <data name="StartDate" xml:space="preserve">
-    <value>تاريخ البداية</value>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>السعرالافرادي</value>
   </data>
-  <data name="TaskName" xml:space="preserve">
-    <value>اسماء المهام</value>
+  <data name="EmpName" xml:space="preserve">
+    <value>موظف</value>
   </data>
-  <data name="TaskNameA" xml:space="preserve">
-    <value>اسم المهام بالعربي</value>
+  <data name="Date" xml:space="preserve">
+    <value>التاريخ</value>
   </data>
-  <data name="Tasks" xml:space="preserve">
-    <value>مهام</value>
+  <data name="Email" xml:space="preserve">
+    <value>البريد الالكتروني</value>
   </data>
-  <data name="TaskWeight" xml:space="preserve">
-    <value>وزن المهمة</value>
+  <data name="Greetings" xml:space="preserve">
+    <value>تحية</value>
   </data>
-  <data name="TotalCost" xml:space="preserve">
-    <value>تكلفة المهمة</value>
+  <data name="Phone" xml:space="preserve">
+    <value>هاتف</value>
   </data>
-  <data name="Detail" xml:space="preserve">
-    <value>تفاصيل المهمة</value>
+  <data name="QuotationNumber" xml:space="preserve">
+    <value>رقم عرض السعر</value>
   </data>
-  <data name="PageTitleDetail" xml:space="preserve">
-    <value>التفاصيل </value>
+  <data name="Website" xml:space="preserve">
+    <value>الموقع الالكتروني</value>
   </data>
-  <data name="ErrorDelete" xml:space="preserve">
-    <value>خطأ في حذف المهام.</value>
+  <data name="Paid" xml:space="preserve">
+    <value>تم الدفع</value>
   </data>
-  <data name="DeleteMessage" xml:space="preserve">
-    <value>لقد تم حذف مهمة</value>
-  </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث مهمة</value>
-  </data>
-  <data name="PageTitleMyTasks" xml:space="preserve">
-    <value>بلدي المهام</value>
-  </data>
-  <data name="TaskProgeress" xml:space="preserve">
-    <value>تقدم مهمة</value>
-  </data>
-  <data name="IsParent" xml:space="preserve">
-    <value>هو العمل الرئيسي</value>
-  </data>
-  <data name="ParentTask" xml:space="preserve">
-    <value>العمل الوالد</value>
-  </data>
-  <data name="ErrorSaving" xml:space="preserve">
-    <value>خطأ أثناء إنقاذ</value>
-  </data>
-  <data name="Added" xml:space="preserve">
-    <value>مضاف</value>
-  </data>
-  <data name="EmployeeWithNoOfTasks" xml:space="preserve">
-    <value>موظف – عدد المهام القائم عليها</value>
+  <data name="Unpaid" xml:space="preserve">
+    <value>غير مدفوع</value>
   </data>
 </root>

@@ -118,52 +118,52 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="Add" xml:space="preserve">
-    <value>Add Ar</value>
+    <value>اضافة</value>
   </data>
   <data name="Client" xml:space="preserve">
-    <value>Client Ar</value>
+    <value>عميل</value>
   </data>
   <data name="CreatedBy" xml:space="preserve">
-    <value>Created By Ar</value>
+    <value>المنشىء</value>
   </data>
   <data name="CreatePageBreadCrumb" xml:space="preserve">
-    <value>Inventory RFI Create Ar</value>
+    <value>انشاء طلب لاستخراج منتج من المستودع </value>
   </data>
   <data name="CreatePageHeading" xml:space="preserve">
-    <value>Inventory Items Addition Ar</value>
+    <value>اضافة منتج في المستودع</value>
   </data>
   <data name="CreatePageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Create Ar</value>
+    <value>انشاء مستودع</value>
   </data>
   <data name="EditPageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Edit Ar</value>
+    <value>تعديل مستودع</value>
   </data>
   <data name="ExcelImport" xml:space="preserve">
-    <value>Excel Import Ar</value>
+    <value>اضافة من اكس ال</value>
   </data>
   <data name="Import" xml:space="preserve">
-    <value>Import Ar</value>
+    <value>استيراد</value>
   </data>
   <data name="ImportItemsFromOrder" xml:space="preserve">
-    <value>Import Items From Order Ar</value>
+    <value>استيراد من طلب اخر</value>
   </data>
   <data name="OrderNameOrderNo" xml:space="preserve">
-    <value>OrderName - Order# Ar</value>
+    <value>رقم الطلب</value>
   </data>
   <data name="Submit" xml:space="preserve">
-    <value>Submit Ar</value>
+    <value>تقديم الطفب</value>
   </data>
   <data name="Usage" xml:space="preserve">
-    <value>Usage Ar</value>
+    <value>استخدامات بالانجيلزي</value>
   </data>
   <data name="UsageArabic" xml:space="preserve">
-    <value>Usage in arabic Ar</value>
+    <value>استخدامات بالعربي</value>
   </data>
   <data name="NotesA" xml:space="preserve">
-    <value>Notes arabic Ar</value>
+    <value>ملاحظات بالعربي</value>
   </data>
   <data name="NotesE" xml:space="preserve">
-    <value>Notes Ar</value>
+    <value>ملاحظات بالانجليزي</value>
   </data>
   <data name="Customer" xml:space="preserve">
     <value>العملاء</value>
@@ -172,73 +172,73 @@
     <value>الآن</value>
   </data>
   <data name="ListPageHeading" xml:space="preserve">
-    <value>Inventory Request for Item(RFI) List Ar</value>
+    <value>(RFI) قائمة طلبات استخراج منتج من المستودع</value>
   </data>
   <data name="ListPageTitle" xml:space="preserve">
-    <value>Inventory Warehouse Request for Item(RFI) List Ar</value>
+    <value>(RFI) قائمة طلبات استخراج منتج من المستودع</value>
   </data>
   <data name="Requester" xml:space="preserve">
-    <value>Requester Ar</value>
+    <value>الطالب</value>
   </data>
   <data name="RfiNo" xml:space="preserve">
-    <value>Request for Item(RFI) Number Ar</value>
+    <value>(RFI)  رقم طلب</value>
   </data>
   <data name="Serial" xml:space="preserve">
-    <value>Serial Ar</value>
+    <value>رقم التسلسل</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>الوضع</value>
   </data>
   <data name="AddItemDescription" xml:space="preserve">
-    <value>Add Item Description Ar</value>
+    <value>اضافة تفاصيل المنتج بالعربي</value>
   </data>
   <data name="AddItemSKU" xml:space="preserve">
-    <value>Add Item SKU Ar</value>
+    <value>اضافة اس ك يو للمنتج</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel Ar</value>
+    <value>الغاء</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>DeleteAr</value>
+    <value>حذف</value>
   </data>
   <data name="ItemDetails" xml:space="preserve">
-    <value>Item Details Ar</value>
+    <value>تفاصيل المنتج</value>
   </data>
   <data name="ItemSearch" xml:space="preserve">
-    <value>Item Search Ar</value>
+    <value>بحث عن منتج</value>
   </data>
   <data name="ItemTreeSelector" xml:space="preserve">
-    <value>Item Tree Selector Ar</value>
+    <value>شجرة المنتج</value>
   </data>
   <data name="PlaceInWarehouseTree" xml:space="preserve">
-    <value>Place in Department Tree Ar</value>
+    <value>المكان في شجرة المستودع</value>
   </data>
   <data name="Quantity" xml:space="preserve">
-    <value>QuantityAr</value>
+    <value>الكمية</value>
   </data>
   <data name="SaveChanges" xml:space="preserve">
-    <value>Save Changes Ar</value>
+    <value>حفظ التغييرات</value>
   </data>
   <data name="Select" xml:space="preserve">
-    <value>Select Ar</value>
+    <value>اختر</value>
   </data>
   <data name="SelectItem" xml:space="preserve">
-    <value>Select Item Ar</value>
+    <value>اختر منتج</value>
   </data>
   <data name="DetailsPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Request For Item View Ar</value>
+    <value>معاينة طلب لاستخراج منتج من المستودع </value>
   </data>
   <data name="DetailsPageHeading" xml:space="preserve">
-    <value>Request for Item (RFI) Ar</value>
+    <value>(RFI) طلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="DetailsPageTitle" xml:space="preserve">
-    <value>Details RFI (Request for Item) Ar</value>
+    <value> تفاصيل طلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="EmployeeId" xml:space="preserve">
-    <value>Employee Id A</value>
+    <value>رقم الوظيفي</value>
   </data>
   <data name="InventoryManagerName" xml:space="preserve">
-    <value>Inventory Manager Name A</value>
+    <value>مسؤول المستودع</value>
   </data>
   <data name="ItemCode" xml:space="preserve">
     <value>كود الصنف</value>
@@ -250,45 +250,45 @@
     <value>الكمية المطلوبة</value>
   </data>
   <data name="RequesterName" xml:space="preserve">
-    <value>Requester Name A</value>
+    <value>اسم الطالب</value>
   </data>
   <data name="RequestStatus" xml:space="preserve">
-    <value>Request Status Ar</value>
+    <value>حالة الطلب</value>
   </data>
   <data name="RFICreated" xml:space="preserve">
-    <value>Request for item has been created. Ar</value>
+    <value>تم انشاء طلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="RFINumber" xml:space="preserve">
-    <value>RFI# A</value>
+    <value>(RFI)  رقم طلب</value>
   </data>
   <data name="RFIReplied" xml:space="preserve">
-    <value>Request for item has been replied. Ar</value>
+    <value>تم رد على طلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="RFIUpdated" xml:space="preserve">
-    <value>Request for item has been updated. Ar</value>
+    <value>تم تحديث على طلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="SKUCode" xml:space="preserve">
     <value>مواصفات كود</value>
   </data>
   <data name="ClientName" xml:space="preserve">
-    <value>Client Name Ar</value>
+    <value>اسم العميل</value>
   </data>
   <data name="EmployeeName" xml:space="preserve">
-    <value>Employee Name Ar</value>
+    <value>اسم الموظف</value>
   </data>
   <data name="OrderNumber" xml:space="preserve">
-    <value>Order# Ar</value>
+    <value>رقم الطلب</value>
   </data>
   <data name="CreateRFILink" xml:space="preserve">
-    <value>Create New Request for Item(RFI) Form Ar</value>
+    <value> (RFI) امشاء طلب جديد لاستخراج منتج من المستودع  </value>
   </data>
   <data name="HistoryPageTitle" xml:space="preserve">
-    <value>History RFI (Request for Item)</value>
+    <value>معلومات قديمة لطلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="HistoryTableTitle" xml:space="preserve">
-    <value>Request for Item (RIF) History</value>
+    <value>معلومات قديمة لطلب لاستخراج منتج من المستودع</value>
   </data>
   <data name="ListPageBreadCrumb" xml:space="preserve">
-    <value>Inventory Request For Item List</value>
+    <value>(RFI) قائمة طلبات استخراج منتج من المستودع</value>
   </data>
 </root>
