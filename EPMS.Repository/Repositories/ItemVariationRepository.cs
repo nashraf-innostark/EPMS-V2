@@ -31,29 +31,32 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownList()
         {
-            var variattions = DbSet;
-            IList<ItemVariationDropDownListItem> variationDropDownList = new List<ItemVariationDropDownListItem>();
-            foreach (var variation in variattions)
+            return DbSet.Select(x => new ItemVariationDropDownListItem
             {
-                ItemVariationDropDownListItem item = new ItemVariationDropDownListItem
-                {
-                    ItemVariationId = variation.ItemVariationId,
-                    ItemCodeSKUCode = variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
-                    ItemCodeSKUCodeDescriptoinEn = RemoveCkEditorValues(variation.SKUDescriptionEn) + " - " + variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
-                    //ItemCodeSKUCodeDescriptoinAr = RemoveCkEditorValues(variation.SKUDescriptionAr) + " - " + variation.InventoryItem.ItemCode + " - " + variation.SKUCode,
-                    SKUCode = variation.SKUCode,
-                    ItemSKUDescriptoinEn = RemoveCkEditorValues(variation.SKUDescriptionEn),
-                    //ItemSKUDescriptoinAr = RemoveCkEditorValues(variation.SKUDescriptionAr),
-                    ItemVariationDescriptionE = RemoveCkEditorValues(variation.DescriptionEn),
-                    //ItemVariationDescriptionA = RemoveCkEditorValues(variation.DescriptionAr),
-                    ItemNameE = variation.InventoryItem.ItemNameEn,
-                    //ItemNameA = variation.InventoryItem.ItemNameAr,
-                    DescriptionForQuotationEn = RemoveCkEditorValues(variation.DescriptionForQuotationEn),
-                    //DescriptionForQuotationAr = RemoveCkEditorValues(variation.DescriptionForQuotationAr)
-                };
-                variationDropDownList.Add(item);
-            }
-            return variationDropDownList;
+                ItemVariationId = x.ItemVariationId,
+                ItemCodeSKUCodeDescriptoinEn = x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinAr = x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemVariationDescriptionA = x.DescriptionAr,
+                ItemVariationDescriptionE = x.DescriptionEn,
+                ItemNameA = x.InventoryItem.ItemNameAr,
+                ItemNameE = x.InventoryItem.ItemNameEn,
+                DescriptionForQuotationEn = x.DescriptionForQuotationEn,
+                DescriptionForQuotationAr = x.DescriptionForQuotationAr,
+                SKUCode = x.SKUCode,
+                ItemCodeSKUCode = x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemSKUDescriptoinEn = x.SKUDescriptionEn,
+                ItemSKUDescriptoinAr = x.SKUDescriptionAr,
+            });
+        }
+
+        public IEnumerable<ItemVariationDropDownListItem> GetItemVariationDropDownListItems()
+        {
+            return DbSet.Select(x => new ItemVariationDropDownListItem
+            {
+                ItemVariationId = x.ItemVariationId,
+                ItemCodeSKUCodeDescriptoinEn = x.SKUDescriptionEn + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+                ItemCodeSKUCodeDescriptoinAr = x.SKUDescriptionAr + " - " + x.InventoryItem.ItemCode + " - " + x.SKUCode,
+            });
         }
 
         public IEnumerable<ItemVariation> GetItemVariationByWarehouseId(long warehouseId)

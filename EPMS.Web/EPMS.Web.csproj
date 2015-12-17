@@ -294,6 +294,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Areas\Api\ApiAreaRegistration.cs" />
+    <Compile Include="Areas\Api\Controllers\ItemVariationController.cs" />
     <Compile Include="Areas\Api\Controllers\TreeController.cs" />
     <Compile Include="Areas\CMS\CMSAreaRegistration.cs" />
     <Compile Include="Areas\CMS\Controllers\InvoiceController.cs" />
@@ -1428,6 +1429,7 @@
     <Content Include="Scripts\App\Barcode\jquery-barcode.js" />
     <Content Include="Scripts\App\Barcode\jquery-barcode.min.js" />
     <Content Include="Scripts\App\Barcode\jquery.printElement.js" />
+    <Content Include="Scripts\Functions\get-item-variation.js" />
     <Content Include="Scripts\Functions\jsTreePopulate.js" />
     <Content Include="Scripts\html2canvas.js" />
     <Content Include="Scripts\html2canvas\html2canvas.js" />
@@ -3799,6 +3801,7 @@
   <ItemGroup>
     <Folder Include="App_Data\ProfileImages\" />
     <Folder Include="Areas\Api\Models\" />
+    <Folder Include="Areas\Api\Views\ItemVariation\" />
     <Folder Include="Areas\Api\Views\Shared\" />
     <Folder Include="Areas\Api\Views\Tree\" />
     <Folder Include="Areas\CMS\Models\" />

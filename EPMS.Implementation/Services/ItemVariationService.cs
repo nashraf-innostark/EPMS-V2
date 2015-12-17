@@ -279,6 +279,28 @@ namespace EPMS.Implementation.Services
             return response;
         }
 
+        public ItemVariationDetail GetItemVariationDetail(long variationId)
+        {
+            var variation = variationRepository.Find(variationId);
+            if (variation != null)
+            {
+                return new ItemVariationDetail
+                {
+                    ItemVariationId = variation.ItemVariationId,
+                    SKUCode = variation.SKUCode,
+                    ItemVariationDescriptionE = variation.DescriptionEn,
+                    ItemVariationDescriptionA = variation.DescriptionAr,
+                    ItemNameE = variation.InventoryItem.ItemNameEn,
+                    ItemNameA = variation.InventoryItem.ItemNameAr,
+                    DescriptionForQuotationEn = variation.DescriptionForQuotationEn,
+                    DescriptionForQuotationAr = variation.DescriptionForQuotationAr,
+                    ItemSKUDescriptoinEn = variation.SKUDescriptionEn,
+                    ItemSKUDescriptoinAr = variation.SKUDescriptionAr
+                };
+            }
+            return new ItemVariationDetail();
+        }
+
         /// <summary>
         /// Get all variations by ItemVariationId
         /// </summary>

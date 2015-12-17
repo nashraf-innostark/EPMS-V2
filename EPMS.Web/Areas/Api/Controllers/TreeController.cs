@@ -18,7 +18,7 @@ namespace EPMS.Web.Areas.Api.Controllers
         #endregion
 
         #region Constructor
-        public TreeController(IInventoryDepartmentService departmentService)
+        public TreeController(IInventoryDepartmentService departmentService, IItemVariationService variationService)
         {
             this.departmentService = departmentService;
         }
@@ -34,5 +34,7 @@ namespace EPMS.Web.Areas.Api.Controllers
             var serializedResult = serializer.Serialize(details);
             return Json(serializedResult, JsonRequestBehavior.AllowGet);
         }
+
+        
     }
 }

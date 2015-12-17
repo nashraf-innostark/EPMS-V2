@@ -74,7 +74,7 @@ namespace EPMS.Implementation.Services
         {
             POCreateResponse response = new POCreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList()
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownListItems()
             };
             if (id == null)
             {

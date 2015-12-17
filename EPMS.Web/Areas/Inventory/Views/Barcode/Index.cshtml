@@ -145,7 +145,7 @@
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
         });
         $("#selectDepartment").on("click", function () {
-            var selectedItem = $(".jstree-clicked").text();
+            var selectedItem = $(".jstree-clicked").attr('id');
             // validation
             if (selectedItem == "" || selectedItem == null) {
                 $("#selectedItemTreeValidation").text(errorMessageTree);
@@ -155,13 +155,12 @@
                 $("#selectedItemTreeValidation").text("");
                 $("#selectedItemTreeValidation").removeClass("Error");
             }
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
-            $.each(parsedRfiItems, function (key, value) {
-                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
-                    $("#ItemVariationTree").val(value.ItemVariationId);
-                }
-            });
+            $("#ItemVariationTree").val("");
+            if (selectedItem.indexOf("Item") >= 0) {
+                var variationId = selectedItem.split('_')[0];
+                $("#ItemVariationTree").val(variationId);
+            }
+
             var item = $("#ItemVariationTree").val();
             if (item == "" || item == 0 || item == null) {
                 $("#selectedItemTreeValidation").text(errorMessageTree);
@@ -208,32 +207,36 @@
             //set item's values
             var index = $("#ItemModalIndex").val();
 
-            //set item sku and description in details text area
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
-
-            $.each(parsedRfiItems, function (key, value) {
-                if (value.ItemVariationId == itemVariationId) {
-                    $("#Barcodes_" + index + "__ItemDetails").val("");
-                    var textToAppend = "";
-                    var barcodeValue;
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            var callback = function (value) {
+                //set item sku and description in details text area
+                $("#Barcodes_" + index + "__ItemDetails").val("");
+                var textToAppend = "";
+                var barcodeValue;
+                if ('@direction' == "ltr") {
+                    textToAppend = textToAppend + value.ItemNameE;
+                } else {
+                    textToAppend = textToAppend + value.ItemNameA;
+                }
+                if (isItemSku) {
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
-                    } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
-                    }
-                    if (isItemSku) {
-                        if ('@direction' == "ltr") {
+                        if (value.ItemSKUDescriptoinEn != null) {
                             textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinEn;
-                        } else {
+                        }
+                    } else {
+                        if (value.ItemSKUDescriptoinAr != null) {
                             textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinAr;
                         }
                     }
-                    barcodeValue = value.ItemCodeSKUCode;
-                    $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
-                    $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
                 }
-            });
+                barcodeValue = value.ItemCodeSKUCode;
+                $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
+                $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
+            }
+            getItemVariationDetail(itemVariationId, callback);
             generateBarcode(index);
             $('#itemSearcher').modal('toggle');
         }
@@ -245,40 +248,36 @@
             //set item's values
             var index = $("#ItemModalIndex").val();
 
-            //set item sku and description in details text area
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
-
-            $.each(parsedRfiItems, function (key, value) {
-                if (value.ItemVariationId == itemVariationId) {
-                    $("#Barcodes_" + index + "__ItemDetails").val("");
-                    var textToAppend = "";
-                    var barcodeValue;
+            $.blockUI({
+                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            });
+            var callback = function (value) {
+                //set item sku and description in details text area
+                $("#Barcodes_" + index + "__ItemDetails").val("");
+                var textToAppend = "";
+                var barcodeValue;
+                if ('@direction' == "ltr") {
+                    textToAppend = textToAppend + value.ItemNameE;
+                } else {
+                    textToAppend = textToAppend + value.ItemNameA;
+                }
+                if (isItemSku) {
                     if ('@direction' == "ltr") {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameE;
+                        if (value.ItemSKUDescriptoinEn != null) {
+                            textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinEn;
+                        }
                     } else {
-                        textToAppend = textToAppend + "Name: " + value.ItemNameA;
-                    }
-                    if (isItemSku) {
-                        if ('@direction' == "ltr") {
-                            if (value.ItemSKUDescriptoinEn == null) {
-                                textToAppend = textToAppend + "\nItem SKU description:";
-                            } else {
-                                textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinEn;
-                            }
-                        } else {
-                            if (value.ItemSKUDescriptoinAr == null) {
-                                textToAppend = textToAppend + "\nItem SKU description:";
-                            } else {
-                                textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinAr;
-                            }
+                        if (value.ItemSKUDescriptoinAr != null) {
+                            textToAppend = textToAppend + "\nItem SKU description: " + value.ItemSKUDescriptoinAr;
                         }
                     }
-                    barcodeValue = value.ItemCodeSKUCode;
-                    $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
-                    $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
                 }
-            });
+                barcodeValue = value.ItemCodeSKUCode;
+                $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
+                $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
+            }
+            getItemVariationDetail(itemVariationId, callback);
             generateBarcode(index);
             $('#itemSearcher').modal('toggle');
         }

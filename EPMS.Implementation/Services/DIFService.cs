@@ -178,7 +178,7 @@ namespace EPMS.Implementation.Services
         {
             DifCreateResponse response=new DifCreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownListItems(),
                 LastFormNumber = repository.GetLastFormNumber(),
                 Warehouses = warehouseRepository.GetAll()
             };

@@ -44,7 +44,7 @@ namespace EPMS.Implementation.Services
 
             TIRCreateResponse response = new TIRCreateResponse
             {
-                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownList(),
+                ItemVariationDropDownList = itemVariationRepository.GetItemVariationDropDownListItems(),
                 Warehouses = warehouseRepository.GetAll()
             };
             if (id == null)

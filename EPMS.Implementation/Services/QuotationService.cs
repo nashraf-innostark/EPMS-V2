@@ -79,7 +79,7 @@ namespace EPMS.Implementation.Services
             QuotationResponse response = new QuotationResponse
             {
                 Customers = customerService.GetAll().ToList(),
-                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList(),
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownListItems(),
             };
             if (quotationId != 0)
             {
@@ -99,7 +99,7 @@ namespace EPMS.Implementation.Services
                 Rfq = rfqRepository.FindByRfqId(rfqId),
                 Customers = customerService.GetAll().ToList(),
                 Rfqs = rfqRepository.GetAllPendingRfqs().ToList(),
-                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownList()
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownListItems()
             };
             return response;
         }

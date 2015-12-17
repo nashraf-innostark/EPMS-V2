@@ -20,5 +20,6 @@ namespace EPMS.Interfaces.IServices
 
         ItemVariationResponse ItemVariationResponse(long id, long itemVariationId);
         ItemVariationForWarehouse GetItemVariationByWarehouseId(long warehouseId);
+        ItemVariationDetail GetItemVariationDetail(long variationId);
     }
 }

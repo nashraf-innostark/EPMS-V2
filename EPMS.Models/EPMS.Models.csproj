@@ -394,6 +394,7 @@
     <Compile Include="ResponseModels\EmployeeListViewResponse.cs" />
     <Compile Include="ResponseModels\InventoryItemResponse.cs" />
     <Compile Include="ResponseModels\InvoiceResponse.cs" />
+    <Compile Include="ResponseModels\ItemVariationDetail.cs" />
     <Compile Include="ResponseModels\MetaTagsResponse.cs" />
     <Compile Include="ResponseModels\ProductListViewResponse.cs" />
     <Compile Include="ResponseModels\QuotationDetailResponse.cs" />

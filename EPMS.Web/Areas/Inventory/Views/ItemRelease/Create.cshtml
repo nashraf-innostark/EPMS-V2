@@ -421,7 +421,7 @@
             //reactivateCount();
         });
         reActivateDelete();
-        
+
         $("#Add").on("click", function () {
             var createFrom = $("input[name=ItemFrom]:checked").val();
             if (createFrom == "dropdown") {
@@ -458,14 +458,10 @@
                 var index = parseInt($("#ItemModalIndex").val());
                 $("#ItemReleaseDetails_" + index + "__PlaceInWarehouse").val(warehouse);
             }
-
-
-            
-
             return true;
         });
         $("#selectDepartment").on("click", function () {
-            var selectedItem = $(".jstree-clicked").text();
+            var selectedItem = $(".jstree-clicked").attr('id');
             // validation
             if (selectedItem == "" || selectedItem == null) {
                 $("#selectedItemTreeValidation").text(errorMessageTree);
@@ -476,15 +472,13 @@
                 $("#selectedItemTreeValidation").removeClass("Error");
             }
             $("#RFIItemVariationTree").val("");
-            var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-            var parsedRfiItems = JSON.parse(rfiItems);
-            $.each(parsedRfiItems, function(key, value) {
-                if (value.ItemCodeSKUCodeDescriptoinEn == selectedItem) {
-                    $("#RFIItemVariationTree").val(value.ItemVariationId);
-                }
-            });
+            if (selectedItem.indexOf("Item") >= 0) {
+                var variationId = selectedItem.split('_')[0];
+                $("#RFIItemVariationTree").val(variationId);
+            }
+
             var item = $("#RFIItemVariationTree").val();
-            if (item == "" || item == 0 || item ==null) {
+            if (item == "" || item == 0 || item == null) {
                 $("#selectedItemTreeValidation").text(errorMessageTree);
                 $("#selectedItemTreeValidation").addClass("Error");
                 return;
@@ -981,42 +975,41 @@
         $("#ItemReleaseDetails_" + index + "__IsItemSKU").val(isItemSku);
         $("#ItemReleaseDetails_" + index + "__ItemVariationId").val(itemVariationId);
 
-        //set item sku and description in details text area
-        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-        var parsedRfiItems = JSON.parse(rfiItems);
-
-        $.each(parsedRfiItems, function (key, value) {
-            if (value.ItemVariationId == itemVariationId) {
-                $("#RifItem_" + index + "__ItemDetails").val("");
-                var textToAppend = "";
+        $.blockUI({
+            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+        });
+        var callback = function (value) {
+            //set item sku and description in details text area
+            $("#RifItem_" + index + "__ItemDetails").val("");
+            var textToAppend = "";
+            if ('@direction' == "ltr") {
+                textToAppend = textToAppend + value.ItemNameE;
+            } else {
+                textToAppend = textToAppend + value.ItemNameA;
+            }
+            if (isItemSku) {
+                textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+            }
+            if (isItemDescription) {
                 if ('@direction' == "ltr") {
-                    textToAppend = textToAppend + value.ItemNameE;
-                } else {
-                    textToAppend = textToAppend + value.ItemNameA;
-                }
-                if (isItemSku) {
-                    textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
-                }
-                if (isItemDescription) {
-                    if ('@direction' == "ltr") {
-                        if (value.ItemVariationDescriptionE == null) {
-                            textToAppend = textToAppend + "\n";
-                        } else {
-                            textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
-                        }
-
+                    if (value.ItemVariationDescriptionE == null) {
+                        textToAppend = textToAppend + "\n";
                     } else {
-                        if (value.ItemVariationDescriptionA == null) {
-                            textToAppend = textToAppend + "\n";
-                        } else {
-                            textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
-                        }
+                        textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
+                    }
+
+                } else {
+                    if (value.ItemVariationDescriptionA == null) {
+                        textToAppend = textToAppend + "\n";
+                    } else {
+                        textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                     }
                 }
-                $("#ItemReleaseDetails_" + index + "__ItemDetails").val(textToAppend);
             }
-        });
-
+            $("#ItemReleaseDetails_" + index + "__ItemDetails").val(textToAppend);
+        }
+        getItemVariationDetail(itemVariationId, callback);
         $('#itemSearcher').modal('toggle');
     }
     function getModalControlsValuesForTree() {
@@ -1031,37 +1024,36 @@
         $("#ItemReleaseDetails_" + index + "__IsItemSKU").val(isItemSku);
         $("#ItemReleaseDetails_" + index + "__ItemVariationId").val(itemVariationId);
 
-        //set item sku and description in details text area
-        var rfiItems = '@Html.Raw(Json.Encode(Model.ItemVariationDropDownList))';
-        var parsedRfiItems = JSON.parse(rfiItems);
-
-        $.each(parsedRfiItems, function (key, value) {
-            if (value.ItemVariationId == itemVariationId) {
-                $("#RifItem_" + index + "__ItemDetails").val("");
-                var textToAppend = "";
+        $.blockUI({
+            message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+        });
+        var callback = function (value) {
+            //set item sku and description in details text area
+            $("#RifItem_" + index + "__ItemDetails").val("");
+            var textToAppend = "";
+            if ('@direction' == "ltr") {
+                textToAppend = textToAppend + value.ItemNameE;
+            } else {
+                textToAppend = textToAppend + value.ItemNameA;
+            }
+            if (isItemSku) {
+                textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
+            }
+            if (isItemDescription) {
                 if ('@direction' == "ltr") {
-                    textToAppend = textToAppend + value.ItemNameE;
+                    if (value.ItemVariationDescriptionE != null) {
+                        textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
+                    }
                 } else {
-                    textToAppend = textToAppend + value.ItemNameA;
-                }
-                if (isItemSku) {
-                    textToAppend = textToAppend + "\nSKU Code: " + value.SKUCode;
-                }
-                if (isItemDescription) {
-                    if ('@direction' == "ltr") {
-                        if (value.ItemVariationDescriptionE != null) {
-                            textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionE;
-                        }
-                    } else {
-                        if (value.ItemVariationDescriptionA != null) {
-                            textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
-                        }
+                    if (value.ItemVariationDescriptionA != null) {
+                        textToAppend = textToAppend + "\n" + value.ItemVariationDescriptionA;
                     }
                 }
-                $("#ItemReleaseDetails_" + index + "__ItemDetails").val(textToAppend);
             }
-        });
-
+            $("#ItemReleaseDetails_" + index + "__ItemDetails").val(textToAppend);
+        }
+        getItemVariationDetail(itemVariationId, callback);
         $('#itemSearcher').modal('toggle');
     }
     function reActivateDelete() {
