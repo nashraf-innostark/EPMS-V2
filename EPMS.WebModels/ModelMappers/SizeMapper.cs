@@ -15,5 +15,14 @@
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };
         }
+        public static WebsiteModels.Size CreateForSizeList(this Models.DomainModels.Size source)
+        {
+            return new WebsiteModels.Size
+            {
+                SizeId = source.SizeId,
+                SizeNameEn = source.SizeNameEn,
+                SizeNameAr = source.SizeNameAr,
+            };
+        }
     }
 }

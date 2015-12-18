@@ -50,6 +50,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Create
 
+        [SiteAuthorize(PermissionKey = "ProductSectionCreate")]
         public ActionResult Create(long? id)
         {
             var productSections = productSectionService.GetAll().Select(x => x.CreateFromServerToClientForTree());

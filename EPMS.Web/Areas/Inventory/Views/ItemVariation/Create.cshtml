@@ -236,7 +236,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @id = "QuantityInHand", @class = "tbdisable toBeRequired" })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @id = "QuantityInHand", @readonly = true })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -1271,15 +1271,19 @@
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
     var colorList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
     var parsedColor = JSON.parse(colorList);
-    var sizeList = '@Html.Raw(Json.Encode(Model.SizesForDdl))';
-    var parsedSize = JSON.parse(sizeList);
+    @*var sizeList = '@Html.Raw(Json.Encode(Model.SizesForDdl))';*@
+    var parsedSize;
     var statusList = '@Html.Raw(Json.Encode(Model.StatusesForDdl))';
     var parsedStatus = JSON.parse(statusList);
     var manufacturerList = '@Html.Raw(Json.Encode(Model.VendorsForDdl))';
     var parsedManufacturer = JSON.parse(manufacturerList);
     var selectedNodeId;
     $(document).ready(function () {
-
+        var callback = function(value) {
+            parsedSize = JSON.parse(value);
+        }
+        // get all colors
+        getAllSizes(callback);
         if (itemVarId == 0 || itemVarId == "") {
             //Auto Generated Number Calculation
             var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
