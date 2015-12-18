@@ -207,7 +207,7 @@ namespace EPMS.Implementation.Services
                 }
             }
 
-            if (response.PurchaseOrderItems != null)
+            if (response.PurchaseOrderItems != null && response.ItemVariation.ItemManufacturers != null)
                 foreach (ItemManufacturer itemManufacturer in response.ItemVariation.ItemManufacturers)
                 {
                     int oldQty = 0;
