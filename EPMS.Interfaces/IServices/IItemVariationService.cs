@@ -9,6 +9,8 @@ namespace EPMS.Interfaces.IServices
     {
         IEnumerable<ItemVariation> GetAll();
         ItemVariation FindVariationById(long id);
+        IEnumerable<Color> GetAllColors();
+        IEnumerable<Size> GetAllSizes();
         PCFromBarcodeResponse FindVariationByBarcode(string barcode);
         long[] GetItemVariationId(string[] items);
         bool AddVariation(ItemVariation itemVariation);

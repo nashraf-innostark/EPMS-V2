@@ -92,6 +92,16 @@ namespace EPMS.Implementation.Services
             return variationRepository.Find(id);
         }
 
+        public IEnumerable<Color> GetAllColors()
+        {
+            return colorRepository.GetAll();
+        }
+
+        public IEnumerable<Size> GetAllSizes()
+        {
+            return sizeRepository.GetAll();
+        }
+
         /// <summary>
         /// Find Variation By BarCode
         /// </summary>

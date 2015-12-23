@@ -266,6 +266,25 @@ function validateSelect2Ddl(control, errorMessage) {
     }
     return true;
 };
+function getAllSizes(callback) {
+    $.ajax({
+        url: $('#siteURL').val() + "/Api/ItemVariation/GetAllSizes",
+        type: 'GET',
+        dataType: "json",
+        data: {
+        },
+        success: function (data) {
+            if (typeof callback == "function") {
+                callback(data);
+            }
+            $.unblockUI();
+        },
+        error: function (e) {
+            $.unblockUI();
+            alert('Error=' + e.toString());
+        }
+    });
+}
 
 $(document).ready(function () {
     $('.select2me').select2({

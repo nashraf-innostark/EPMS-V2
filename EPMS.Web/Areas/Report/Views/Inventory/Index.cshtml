@@ -34,11 +34,11 @@
         <div class="control-group row-fluid span-inset">
             <ul class="nav nav-tabs" id="myTab">
                 <li class="active"><a data-toggle="tab" href="#tab-items">@EPMS.WebModels.Resources.Reports.Reports.ItemsReport</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-warehouses">@EPMS.WebModels.Resources.Reports.Reports.WarehouseReportTab</a></li>
+                @*<li class=""><a data-toggle="tab" href="#tab-warehouses">@EPMS.WebModels.Resources.Reports.Reports.WarehouseReportTab</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-vendors">@EPMS.WebModels.Resources.Reports.Reports.VendorReportTab</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-example4">Inventory Department Report</a></li>
                 <li class=""><a data-toggle="tab" href="#tab-example5">Perchase Order Report</a></li>
-                <li class=""><a data-toggle="tab" href="#tab-example6">Items Release Form Report</a></li>
+                <li class=""><a data-toggle="tab" href="#tab-example6">Items Release Form Report</a></li>*@
             </ul>
             <div class="tab-content">
                 <div id="tab-items" class="tab-pane fade active in">
@@ -68,7 +68,7 @@
                         </div>
                     </div><!-- end container -->
                 </div>
-                <div id="tab-warehouses" class="tab-pane fade">
+                @*<div id="tab-warehouses" class="tab-pane fade">
                     <input type="hidden" id="warehousesTableSearchString" />
                     <h3> <small><a href="~/Report/Warehouse/Create">@EPMS.WebModels.Resources.Reports.Reports.WarehouseCreateReport</a></small></h3>
                     <div class="container-fluid">
@@ -104,7 +104,6 @@
                                             <th>@EPMS.WebModels.Resources.Reports.Reports.Report</th>
                                             <th>@EPMS.WebModels.Resources.Reports.Reports.Createdby</th>
                                             <th>@EPMS.WebModels.Resources.Reports.Reports.Date</th>
-                                            @*<th>@EPMS.WebModels.Resources.Reports.Reports.Type</th>*@
                                             <th>@EPMS.WebModels.Resources.Reports.Reports.ReportDate</th>
                                         </tr>
                                     </thead>
@@ -113,7 +112,7 @@
                             </div>
                         </div>
                     </div><!-- end container -->
-                </div>
+                </div>*@
             </div>
         </div>
         <!--Tabs end-->
@@ -216,182 +215,182 @@
             });
 
         ///Warehouse Report
-        var warehousesTable = $('#warehousesTable').dataTable({
-            "sPaginationType": "bootstrap",
-            "bProcessing": true,
-            "bServerSide": true,
-            "aoColumns": [
-                {
-                    "aTargets": [0],
-                    "sDefaultContent": "",
-                    "bVisible": true,
-                    "bSortable": false
-                },
-                {
-                    "aTargets": [1],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var val = full["ReportId"];
-                        return '<a href="' + siteUrl + '/Report/Warehouse/Details?ReportId=' + val + '">' + val + '</a>';
-                    }
-                },
-                {
-                    "aTargets": [2],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportCreatedByName"];
-                    }
-                },
-                {
-                    "aTargets": [3],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
-                    }
-                },
-                {
-                    "aTargets": [4],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportCategoryItemTitle"];
-                    }
-                },
-                {
-                    "aTargets": [5],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportCreatedDateString"];
-                    }
-                }
-            ],
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "search", "value": $('input').val() });
-            },
-            "sAjaxSource": siteUrl + "/Report/Inventory/WarehouseIndex",
-            "sServerMethod": "POST",
-            "oLanguage": {
-                "sProcessing": "Fetching record(s)",
-                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
-                "sInfoEmpty": "No matching record(s) found",
-                "sEmptyTable": "No record(s) found",
-            },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                var oSettings = warehousesTable.fnSettings();
-                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
-                return nRow;
-            },
-        });
-        warehousesTable.on('order.dt search.dt', function () {
-            t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1;
-            });
-        }).fnDraw();
-        $(".dataTables_length select").select2({
-            dropdownCssClass: 'noSearch'
-        });
+        //var warehousesTable = $('#warehousesTable').dataTable({
+        //    "sPaginationType": "bootstrap",
+        //    "bProcessing": true,
+        //    "bServerSide": true,
+        //    "aoColumns": [
+        //        {
+        //            "aTargets": [0],
+        //            "sDefaultContent": "",
+        //            "bVisible": true,
+        //            "bSortable": false
+        //        },
+        //        {
+        //            "aTargets": [1],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                var val = full["ReportId"];
+        //                return '<a href="' + siteUrl + '/Report/Warehouse/Details?ReportId=' + val + '">' + val + '</a>';
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [2],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportCreatedByName"];
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [3],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [4],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportCategoryItemTitle"];
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [5],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportCreatedDateString"];
+        //            }
+        //        }
+        //    ],
+        //    "fnServerParams": function (aoData) {
+        //        aoData.push({ "name": "search", "value": $('input').val() });
+        //    },
+        //    "sAjaxSource": siteUrl + "/Report/Inventory/WarehouseIndex",
+        //    "sServerMethod": "POST",
+        //    "oLanguage": {
+        //        "sProcessing": "Fetching record(s)",
+        //        //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+        //        "sInfoEmpty": "No matching record(s) found",
+        //        "sEmptyTable": "No record(s) found",
+        //    },
+        //    "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+        //        var oSettings = warehousesTable.fnSettings();
+        //        $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+        //        return nRow;
+        //    },
+        //});
+        //warehousesTable.on('order.dt search.dt', function () {
+        //    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+        //        cell.innerHTML = i + 1;
+        //    });
+        //}).fnDraw();
+        //$(".dataTables_length select").select2({
+        //    dropdownCssClass: 'noSearch'
+        //});
 
-        $(".dataTables_filter input").unbind()
-            .bind("input", function (e) {
-                // Bind our desired behavior
-                if (this.value.length >= 1 || e.keyCode == 13) {
-                    $("#warehousesTableSearchString").val(this.value);
-                    warehousesTable.fnDraw();
-                }
-                if (this.value == "") {
-                    $("#warehousesTableSearchString").val(this.value);
-                    warehousesTable.fnDraw();
-                }
-                return;
-            });
+        //$(".dataTables_filter input").unbind()
+        //    .bind("input", function (e) {
+        //        // Bind our desired behavior
+        //        if (this.value.length >= 1 || e.keyCode == 13) {
+        //            $("#warehousesTableSearchString").val(this.value);
+        //            warehousesTable.fnDraw();
+        //        }
+        //        if (this.value == "") {
+        //            $("#warehousesTableSearchString").val(this.value);
+        //            warehousesTable.fnDraw();
+        //        }
+        //        return;
+        //    });
 
-        /////Vendors Table
-        var vendorsTable = $('#vendorsTable').dataTable({
-            "sPaginationType": "bootstrap",
-            "bProcessing": true,
-            "bServerSide": true,
-            "aoColumns": [
-                {
-                    "aTargets": [0],
-                    "sDefaultContent": "",
-                    "bVisible": true,
-                    "bSortable": false
-                },
-                {
-                    "aTargets": [1],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        var val = full["ReportId"];
-                        return '<a href="' + siteUrl + '/Report/Vendor/Details?ReportId=' + val + '">' + val + '</a>';
-                    }
-                },
-                {
-                    "aTargets": [2],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportCreatedByName"];
-                    }
-                },
-                {
-                    "aTargets": [3],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
-                    }
-                },
-                //{
-                //    "aTargets": [4],
-                //    "sDefaultContent": "No Data",
-                //    "mRender": function (data, type, full) {
-                //        return full["ReportCategoryItemTitle"];
-                //    }
-                //},
-                {
-                    "aTargets": [4],
-                    "sDefaultContent": "No Data",
-                    "mRender": function (data, type, full) {
-                        return full["ReportCreatedDateString"];
-                    }
-                }
-            ],
-            "fnServerParams": function (aoData) {
-                aoData.push({ "name": "search", "value": $('input').val() });
-            },
-            "sAjaxSource": siteUrl + "/Report/Inventory/VendorIndex",
-            "sServerMethod": "POST",
-            "oLanguage": {
-                "sProcessing": "Fetching record(s)",
-                //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
-                "sInfoEmpty": "No matching record(s) found",
-                "sEmptyTable": "No record(s) found",
-            },
-            "fnRowCallback": function (nRow, aData, iDisplayIndex) {
-                var oSettings = vendorsTable.fnSettings();
-                $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
-                return nRow;
-            },
-        });
-        vendorsTable.on('order.dt search.dt', function () {
-            t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
-                cell.innerHTML = i + 1;
-            });
-        }).fnDraw();
-        $(".dataTables_length select").select2({
-            dropdownCssClass: 'noSearch'
-        });
+        ///////Vendors Table
+        //var vendorsTable = $('#vendorsTable').dataTable({
+        //    "sPaginationType": "bootstrap",
+        //    "bProcessing": true,
+        //    "bServerSide": true,
+        //    "aoColumns": [
+        //        {
+        //            "aTargets": [0],
+        //            "sDefaultContent": "",
+        //            "bVisible": true,
+        //            "bSortable": false
+        //        },
+        //        {
+        //            "aTargets": [1],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                var val = full["ReportId"];
+        //                return '<a href="' + siteUrl + '/Report/Vendor/Details?ReportId=' + val + '">' + val + '</a>';
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [2],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportCreatedByName"];
+        //            }
+        //        },
+        //        {
+        //            "aTargets": [3],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportFromDateString"] + "-" + full["ReportToDateString"];
+        //            }
+        //        },
+        //        //{
+        //        //    "aTargets": [4],
+        //        //    "sDefaultContent": "No Data",
+        //        //    "mRender": function (data, type, full) {
+        //        //        return full["ReportCategoryItemTitle"];
+        //        //    }
+        //        //},
+        //        {
+        //            "aTargets": [4],
+        //            "sDefaultContent": "No Data",
+        //            "mRender": function (data, type, full) {
+        //                return full["ReportCreatedDateString"];
+        //            }
+        //        }
+        //    ],
+        //    "fnServerParams": function (aoData) {
+        //        aoData.push({ "name": "search", "value": $('input').val() });
+        //    },
+        //    "sAjaxSource": siteUrl + "/Report/Inventory/VendorIndex",
+        //    "sServerMethod": "POST",
+        //    "oLanguage": {
+        //        "sProcessing": "Fetching record(s)",
+        //        //"sProcessing": "<img alt=\"Unread\" id=\"ajaxLoadImg\" src=\"/Images\/Gallery\/ajax_loader_red_512.gif\" />",
+        //        "sInfoEmpty": "No matching record(s) found",
+        //        "sEmptyTable": "No record(s) found",
+        //    },
+        //    "fnRowCallback": function (nRow, aData, iDisplayIndex) {
+        //        var oSettings = vendorsTable.fnSettings();
+        //        $("td:first", nRow).html(oSettings._iDisplayStart + iDisplayIndex + 1);
+        //        return nRow;
+        //    },
+        //});
+        //vendorsTable.on('order.dt search.dt', function () {
+        //    t.column(0, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+        //        cell.innerHTML = i + 1;
+        //    });
+        //}).fnDraw();
+        //$(".dataTables_length select").select2({
+        //    dropdownCssClass: 'noSearch'
+        //});
 
-        $(".dataTables_filter input").unbind()
-            .bind("input", function (e) {
-                // Bind our desired behavior
-                if (this.value.length >= 1 || e.keyCode == 13) {
-                    $("#vendorsTableSearchString").val(this.value);
-                    vendorsTable.fnDraw();
-                }
-                if (this.value == "") {
-                    $("#vendorsTableSearchString").val(this.value);
-                    vendorsTable.fnDraw();
-                }
-                return;
-            });
+        //$(".dataTables_filter input").unbind()
+        //    .bind("input", function (e) {
+        //        // Bind our desired behavior
+        //        if (this.value.length >= 1 || e.keyCode == 13) {
+        //            $("#vendorsTableSearchString").val(this.value);
+        //            vendorsTable.fnDraw();
+        //        }
+        //        if (this.value == "") {
+        //            $("#vendorsTableSearchString").val(this.value);
+        //            vendorsTable.fnDraw();
+        //        }
+        //        return;
+        //    });
     });
 </script>
 

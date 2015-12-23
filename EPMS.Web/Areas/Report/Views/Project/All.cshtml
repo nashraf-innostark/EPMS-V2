@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    long reportId = (long) ViewBag.ReportId;
+    long reportId = ViewBag.ReportId != null ? (long) ViewBag.ReportId : 0;
     int serial = 1;
 }
 <!-- Navigation Bar Start-->
