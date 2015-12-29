@@ -190,7 +190,7 @@
                                                 {
                                                     <li>
                                                         @{
-                                                    string imagePath = itemImageFolder + image.ItemImagePath;
+                                                    string imagePath = image.ItemImagePath;
                                                     <a class="fancybox" rel="product-images" href="@imagePath"></a>
                                                             <img src="@imagePath" data-large="@imagePath" alt="" />
                                                         }
@@ -329,10 +329,22 @@
 
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="shop-tab1">
-                                        <p>@(direction == "ltr" ? Model.Product.ProductDescEn : Model.Product.ProductDescAr)</p>
+                                        <p class="desc_@Model.Product.ProductId"></p>
+                                        <script>
+                                            var descp = '@Html.Raw(direction == "ltr" ? Model.Product.ProductDescEn : Model.Product.ProductDescAr)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = descp.replace(regex, "");
+                                            $(".desc_@Model.Product.ProductId").text(result);
+                                        </script>
                                     </div>
                                     <div class="tab-pane" id="shop-tab2">
-                                        <p>@(direction == "ltr" ? Model.Product.ProductSpecificationEn : Model.Product.ProductSpecificationAr)</p>
+                                        <p class="spec_@Model.Product.ProductId"></p>
+                                        <script>
+                                            var spec = '@Html.Raw(direction == "ltr" ? Model.Product.ProductSpecificationEn : Model.Product.ProductSpecificationAr)';
+                                            var regex = /(<([^>]+)>)/ig;
+                                            var result = spec.replace(regex, "");
+                                            $(".spec_@Model.Product.ProductId").text(result);
+                                        </script>
                                     </div>
                                 </div>
                             </div>

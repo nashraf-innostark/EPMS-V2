@@ -55,9 +55,16 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                repository.Update(websiteDepartment);
-                repository.SaveChanges();
-                return true;
+                var oldData = repository.Find(websiteDepartment.DepartmentId);
+                if (oldData != null)
+                {
+                    websiteDepartment.RecCreatedBy = oldData.RecCreatedBy;
+                    websiteDepartment.RecCreatedDate = oldData.RecCreatedDate;
+                    repository.Update(websiteDepartment);
+                    repository.SaveChanges();
+                    return true;
+                }
+                return false;
             }
             catch (Exception)
             {

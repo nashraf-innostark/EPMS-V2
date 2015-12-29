@@ -70,6 +70,15 @@ namespace EPMS.WebModels.Resources.Website.Slider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slider has been added successfully..
+        /// </summary>
+        public static string AddMessage {
+            get {
+                return ResourceManager.GetString("AddMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Website Slider Addition.
         /// </summary>
         public static string AddTitle {
@@ -79,11 +88,29 @@ namespace EPMS.WebModels.Resources.Website.Slider {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Slider has been deleted successfully..
+        /// </summary>
+        public static string DeleteMessage {
+            get {
+                return ResourceManager.GetString("DeleteMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Website Slider Edit.
         /// </summary>
         public static string Edit {
             get {
                 return ResourceManager.GetString("Edit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error in saving Slider..
+        /// </summary>
+        public static string ErrorMessage {
+            get {
+                return ResourceManager.GetString("ErrorMessage", resourceCulture);
             }
         }
         
@@ -147,6 +174,15 @@ namespace EPMS.WebModels.Resources.Website.Slider {
         public static string TitleValidationError {
             get {
                 return ResourceManager.GetString("TitleValidationError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slider has been updated successfully..
+        /// </summary>
+        public static string UpdateMessage {
+            get {
+                return ResourceManager.GetString("UpdateMessage", resourceCulture);
             }
         }
         

@@ -84,7 +84,7 @@ namespace EPMS.Repository.Repositories
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
                     || !searchSpecified);
 
-                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariationId);
+                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariation.InventoryItem);
                     foreach (var prod in products)
                     {
                         response.Products.Add(prod.FirstOrDefault());

@@ -120,8 +120,14 @@
   <data name="Add" xml:space="preserve">
     <value>Website Department Add</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Department has been added successfully.</value>
+  </data>
   <data name="AddTitle" xml:space="preserve">
     <value>Website Department Addition</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Department has been deleted successfully.</value>
   </data>
   <data name="DepartmentName" xml:space="preserve">
     <value>Department Name</value>
@@ -138,8 +144,14 @@
   <data name="Edit" xml:space="preserve">
     <value>Website Department Edit</value>
   </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Error in saving Department.</value>
+  </data>
   <data name="ShowToPublic" xml:space="preserve">
     <value>Show to public?</value>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Department has been updated successfully.</value>
   </data>
   <data name="UpdateTitle" xml:space="preserve">
     <value>Website Department Updation</value>

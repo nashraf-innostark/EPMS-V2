@@ -1,4 +1,6 @@
-﻿namespace EPMS.WebModels.ModelMappers
+﻿using System.Configuration;
+
+namespace EPMS.WebModels.ModelMappers
 {
     public static class ItemImageMapper
     {
@@ -11,6 +13,13 @@
                 ImageOrder = source.ImageOrder,
                 ItemVariationId = source.ItemVariationId,
                 ShowImage = source.ShowImage
+            };
+        }
+        public static WebsiteModels.ItemImage CreateForImage(this Models.DomainModels.ItemImage source)
+        {
+            return new WebsiteModels.ItemImage
+            {
+                ItemImagePath = ConfigurationManager.AppSettings["ItemImage"] + source.ItemImagePath
             };
         }
     }

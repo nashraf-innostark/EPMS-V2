@@ -150,4 +150,16 @@
   <data name="UpdateTitle" xml:space="preserve">
     <value>تحديث السلايدر</value>
   </data>
+  <data name="AddMessage" xml:space="preserve">
+    <value>Slider has been added successfully.</value>
+  </data>
+  <data name="DeleteMessage" xml:space="preserve">
+    <value>Slider has been deleted successfully.</value>
+  </data>
+  <data name="ErrorMessage" xml:space="preserve">
+    <value>Error in saving Slider.</value>
+  </data>
+  <data name="UpdateMessage" xml:space="preserve">
+    <value>Slider has been updated successfully.</value>
+  </data>
 </root>

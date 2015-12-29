@@ -6,6 +6,12 @@ namespace EPMS.Models.ResponseModels
 {
     public class ProductDetailResponse
     {
+        public ProductDetailResponse()
+        {
+            Product = new Product();
+            ProductSizes = new List<ProductSize>();
+
+        }
         public Product Product { get; set; }
         public ItemVariation ItemVariation { get; set; }
         public IList<ProductSection> ProductSections { get; set; }

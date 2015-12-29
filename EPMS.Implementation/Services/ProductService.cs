@@ -148,11 +148,11 @@ namespace EPMS.Implementation.Services
                     AddProductImages(productToSave);
                 }
                 productRepository.SaveChanges();
-                return new ProductResponse{ Status = true };
+                return new ProductResponse { Status = true };
             }
             catch (Exception)
             {
-                return new ProductResponse{ Status = false };
+                return new ProductResponse { Status = false };
             }
         }
 
@@ -242,7 +242,7 @@ namespace EPMS.Implementation.Services
 
         private void AddProductImages(ProductRequest productToSave)
         {
-            if (productToSave.ProductImages !=null)
+            if (productToSave.ProductImages != null)
             {
                 foreach (ProductImage productImage in productToSave.ProductImages)
                 {
@@ -316,7 +316,7 @@ namespace EPMS.Implementation.Services
             ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>(),
-                AllProducts = productRepository.GetAll().OrderByDescending(x=>x.RecCreatedDt).Take(100).ToList(),
+                AllProducts = productRepository.GetAll().OrderByDescending(x => x.RecCreatedDt).Take(100).ToList(),
                 ProductSections = productSectionService.GetAll().ToList()
             };
             switch (request.From)
@@ -331,7 +331,7 @@ namespace EPMS.Implementation.Services
                     response.TotalCount = invProducts.TotalCount;
                     break;
                 case "Sections":
-                    var secProducts  = productRepository.GetByItemVariationId(null, request, request.Id);
+                    var secProducts = productRepository.GetByItemVariationId(null, request, request.Id);
                     response.Products = secProducts.Products;
                     response.TotalCount = secProducts.TotalCount;
                     break;
@@ -343,24 +343,37 @@ namespace EPMS.Implementation.Services
         {
             ProductDetailResponse response = new ProductDetailResponse
             {
-                Product = new Product(),
-                ProductSizes = new List<ProductSize>(),
                 ProductSections = productSectionRepository.GetAll().ToList()
             };
             response.Product = productRepository.Find(id);
-            var products = productRepository.GetAll();
-            foreach (var product in products)
+            if (response.Product != null && response.Product.ItemVariationId != null)
             {
-                if (product.ItemVariation != null && product.ItemVariation.Sizes.FirstOrDefault() != null)
+                foreach (var variation in response.Product.ItemVariation.InventoryItem.ItemVariations)
                 {
-                    response.ProductSizes.Add(new ProductSize
+                    if (variation.Sizes.FirstOrDefault() != null)
                     {
-                        ProductId = product.ProductId,
-                        VariationId = (long)product.ItemVariationId,
-                        SizeId = product.ItemVariation.Sizes.FirstOrDefault().SizeId
-                    });
+                        response.ProductSizes.Add(new ProductSize
+                        {
+                            ProductId = response.Product.ProductId,
+                            VariationId = variation.ItemVariationId,
+                            SizeId = variation.Sizes.FirstOrDefault().SizeId
+                        });
+                    }
                 }
             }
+            //var products = productRepository.GetAll();
+            //foreach (var product in products)
+            //{
+            //    if (product.ItemVariation != null && product.ItemVariation.Sizes.FirstOrDefault() != null)
+            //    {
+            //        response.ProductSizes.Add(new ProductSize
+            //        {
+            //            ProductId = product.ProductId,
+            //            VariationId = (long)product.ItemVariationId,
+            //            SizeId = product.ItemVariation.Sizes.FirstOrDefault().SizeId
+            //        });
+            //    }
+            //}
             return response;
         }
 

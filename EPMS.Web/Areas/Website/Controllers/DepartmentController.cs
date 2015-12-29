@@ -59,7 +59,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Department Updated",
+                            Message = WebModels.Resources.Website.Department.Department.UpdateMessage,
                             IsUpdated = true
                         };
                     }
@@ -75,7 +75,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                         departmentService.DeleteDepartment(viewModel.WebsiteDepartment.DepartmentId);
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Department Deleted",
+                            Message = WebModels.Resources.Website.Department.Department.DeleteMessage,
                             IsUpdated = true
                         };
                     }
@@ -95,8 +95,8 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Department Added",
-                            IsUpdated = true
+                            Message = WebModels.Resources.Website.Department.Department.AddMessage,
+                            IsSaved = true
                         };
                     }
                 }
@@ -104,6 +104,11 @@ namespace EPMS.Web.Areas.Website.Controllers
             }
             catch (Exception)
             {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.Website.Department.Department.ErrorMessage,
+                    IsError = true
+                };
                 return View(viewModel);
             }
         }

@@ -71,7 +71,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Updated",
+                            Message = WebModels.Resources.Website.Slider.Slider.UpdateMessage,
                             IsUpdated = true
                         };
                     }
@@ -90,7 +90,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                         sliderService.DeleteImageSlider(viewModel.ImageSlider.SliderId);
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Deleted",
+                            Message = WebModels.Resources.Website.Slider.Slider.DeleteMessage,
                             IsUpdated = true
                         };
                     }
@@ -110,8 +110,8 @@ namespace EPMS.Web.Areas.Website.Controllers
                     {
                         TempData["message"] = new MessageViewModel
                         {
-                            Message = "Slider Image Added",
-                            IsUpdated = true
+                            Message = WebModels.Resources.Website.Slider.Slider.AddMessage,
+                            IsSaved = true
                         };
                     }
                 }
@@ -119,6 +119,11 @@ namespace EPMS.Web.Areas.Website.Controllers
             }
             catch (Exception)
             {
+                TempData["message"] = new MessageViewModel
+                {
+                    Message = WebModels.Resources.Website.Slider.Slider.ErrorMessage,
+                    IsError = true
+                };
                 return View(viewModel);
             }
         }

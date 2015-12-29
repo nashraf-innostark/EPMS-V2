@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Globalization;
 using System.Linq;
-using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 using EPMS.WebModels.ModelMappers.Website.ProductImage;
+using EPMS.WebModels.WebsiteModels;
+using ItemVariation = EPMS.Models.DomainModels.ItemVariation;
 using Size = EPMS.WebModels.WebsiteModels.Size;
 
 namespace EPMS.WebModels.ModelMappers.Website.Product
@@ -139,7 +141,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             retVal.ProductSize = source.ProductSize;
             retVal.SKUCode = source.SKUCode;
             retVal.DeptColor = source.ItemVariation != null ? source.ItemVariation.InventoryItem.InventoryDepartment.DepartmentColor : "";
-            retVal.ItemNameEn = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemNameEn: "";
+            retVal.ItemNameEn = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemNameEn : "";
             retVal.ItemNameAr = source.ItemVariation != null ? source.ItemVariation.InventoryItem.ItemNameAr : "";
             retVal.ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
                 source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "";
@@ -207,8 +209,8 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ProductNameEn = source.ProductNameEn,
                 ProductNameAr = source.ProductNameAr,
                 ItemVariationId = source.ItemVariationId,
-                ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn),
-                ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr),
+                ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemVariation.InventoryItem.ItemDescriptionEn),
+                ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemVariation.InventoryItem.ItemDescriptionAr),
                 ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice,
                 DiscountedPrice = source.DiscountedPrice,
                 ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn),
@@ -224,13 +226,11 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ItemNameAr = source.ItemVariation != null && source.ItemVariation.InventoryItem != null ? source.ItemVariation.InventoryItem.ItemNameAr : "",
                 ProductImages = source.ProductImages != null ? source.ProductImages.Select(x => x.CreateFromServerToClient()).ToList() :
                                     new List<WebsiteModels.ProductImage>(),
-                ItemImage = source.ItemVariation != null && source.ItemVariation.ItemImages != null && source.ItemVariation.ItemImages.FirstOrDefault() != null ?
-                    source.ItemVariation.ItemImages.FirstOrDefault().ItemImagePath : "",
+                ItemImage = source.ItemVariation != null && source.ItemVariation.InventoryItem != null ?
+                    source.ItemVariation.InventoryItem.ItemImagePath : "",
                 ProductImage = source.ProductImages != null && source.ProductImages.Any() && source.ProductImages.FirstOrDefault() != null ?
                     source.ProductImages.FirstOrDefault().ProductImagePath : "",
                 SizeId = source.ItemVariation != null && source.ItemVariation.Sizes.FirstOrDefault() != null ? source.ItemVariation.Sizes.FirstOrDefault().SizeId : 0,
-                ItemImages = source.ItemVariation != null && source.ItemVariation.ItemImages != null ?
-                            source.ItemVariation.ItemImages.Select(x => x.CreateFromServerToClient()) : new List<WebsiteModels.ItemImage>(),
             };
             if (source.ItemVariation != null)
             {
@@ -240,7 +240,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                     if (variation.Sizes != null && variation.Sizes.Any())
                     {
                         var variat = variation.Sizes.FirstOrDefault();
-                        if (variat != null)
+                        if (variat != null && variation.Products.Any())
                         {
                             var size = new Size
                             {
@@ -250,6 +250,17 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                             };
                             retVal.Sizes.Add(size);
                         }
+                    }
+                }
+                retVal.ItemImages.Add(new ItemImage
+                {
+                    ItemImagePath = ConfigurationManager.AppSettings["InventoryImage"] + retVal.ItemImage,
+                });
+                foreach (var variation in source.ItemVariation.InventoryItem.ItemVariations)
+                {
+                    if (variation.ItemImages.FirstOrDefault() != null)
+                    {
+                        retVal.ItemImages.Add(variation.ItemImages.FirstOrDefault().CreateForImage());
                     }
                 }
             }
@@ -310,7 +321,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 source.ProductSection != null ? source.ProductSection.SectionNameAr : "";
             return retVal;
         }
-        
+
         public static ProductRequest CreateFromClientToServer(this WebsiteModels.Product source)
         {
             var product = new Models.DomainModels.Product
@@ -357,7 +368,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 ProductDescAr = RemoveCkEditorValues(source.InventoryItem.ItemDescriptionAr),
                 ProductPrice = source.UnitPrice.ToString(),
                 SKUCode = source.SKUCode,
-                ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()),
+                ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()).ToList(),
                 Sizes = source.Sizes.Select(x => x.CreateFromServerToClient()).ToList(),
                 ItemImage = source.ItemImages != null && source.ItemImages.FirstOrDefault() != null ?
                     source.ItemImages.FirstOrDefault().ItemImagePath : "",

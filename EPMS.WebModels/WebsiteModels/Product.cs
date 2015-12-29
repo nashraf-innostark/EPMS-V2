@@ -7,6 +7,12 @@ namespace EPMS.WebModels.WebsiteModels
     [Serializable]
     public class Product
     {
+        public Product()
+        {
+            ItemImages = new List<ItemImage>();
+            ProductImages = new List<ProductImage>();
+            Sizes = new List<Size>();
+        }
         public long ProductId { get; set; }
         public long? ItemVariationId { get; set; }
         [Required]
@@ -46,7 +52,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long InventoryItemId { get; set; }
         
         public List<ProductImage> ProductImages { get; set; }
-        public IEnumerable<ItemImage> ItemImages { get; set; }
+        public IList<ItemImage> ItemImages { get; set; }
         public IList<Size> Sizes { get; set; }
     }
 }
