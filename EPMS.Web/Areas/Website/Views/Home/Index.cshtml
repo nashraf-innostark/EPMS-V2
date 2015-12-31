@@ -56,6 +56,16 @@
             </div>
         </div>
 
+        <div class="control-group row-fluid ShowToPublicDiv">
+            <div class="span3">
+                <label class="control-label" for="ShowToPublic">@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.ShowProductPrice</label>
+            </div>
+            <div id="label2-toggle-switch" class="span9 span-inset" id="ShowToPublicDiv">
+                <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
+                    @Html.CheckBoxFor(model => model.ShowProductPrice, new { @id = "ShowProductPrice" })
+                </div>
+            </div>
+        </div>
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
             <strong>@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.Slider</strong>
@@ -237,12 +247,13 @@
 </form>
 
 <script>
+    var siteUrl;
     var sliderRow;
     var partnerRow;
     var departmentRow;
     $(document).ready(function () {
         var errors = "";
-        var siteUrl = '@ConfigurationManager.AppSettings["SiteURL"]';
+        siteUrl = '@ConfigurationManager.AppSettings["SiteURL"]';
         var url = siteUrl + "/Website/Home/UploadLogo";
         $('#upload').mfupload({
 
@@ -328,6 +339,27 @@
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
+            }
+        });
+        
+    });
+    $("#ShowProductPrice").change(function () {
+        
+    });
+    $('#label2-toggle-switch').on('switch-change', function (e, data) {
+        var serviceUrl = siteUrl + '/Website/Home/ShowHideProductPrice';
+        $.ajax({
+            url: serviceUrl,
+            type: "POST",
+            dataType: "json",
+            data: {
+                showPrice: data.value
+            },
+            success: function (result) {
+
+            },
+            error: function (result) {
+                alert(result.response);
             }
         });
     });

@@ -178,7 +178,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     model.CreatedByName = createdByName;
                     model.IsRFQManual = !response.Rfq.RFQItems.Any();
                 }
-                
+                model.ShowProductPrice = response.ShowProductPrice;
                 model.ItemVariationDropDownList = response.ItemVariationDropDownList;
                 ViewBag.IsIncludeNewJsTree = true;
                 return View(model);
@@ -202,6 +202,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             viewModel.OldItemDetailsCount = viewModel.QuotationItemDetails.Count;
             ViewBag.Rfqs = quotResponse.Rfqs.Any() ?
                         quotResponse.Rfqs.Select(x => x.CreateForDropDown()) : new List<RfqDropDown>();
+            viewModel.ShowProductPrice = quotResponse.ShowProductPrice;
             return View(viewModel);
         }
 

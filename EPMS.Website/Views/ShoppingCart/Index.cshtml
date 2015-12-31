@@ -51,8 +51,8 @@
                                     <th colspan="2">@Cart.ItemPictureAndName</th>
                                     <th>@Cart.ItemCode</th>
                                     <th>@Cart.Qty</th>
-                                    <th>@Cart.UnitPrice</th>
-                                    <th>@Cart.Total</th>
+                                    <th style="display: @(Model.ShowProductPrice ? "table-cell" : "none")">@Cart.UnitPrice</th>
+                                    <th style="display: @(Model.ShowProductPrice ? "table-cell" : "none")">@Cart.Total</th>
                                     <th>@Cart.Delete</th>
                                 </tr>
 
@@ -80,10 +80,10 @@
                                         </td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].UnitPrice)
-                                        <td><p class="cartPrice">@Model.ShoppingCart.ShoppingCartItems[i].UnitPrice</p></td>
+                                        <td style="display: @(Model.ShowProductPrice ? "table-cell" : "none")"><p class="cartPrice">@Model.ShoppingCart.ShoppingCartItems[i].UnitPrice</p></td>
 
                                         @Html.HiddenFor(model => model.ShoppingCart.ShoppingCartItems[i].ItemTotal, new { @id = "ItemTotal-" + Model.ShoppingCart.ShoppingCartItems[i].ProductId, @Value = Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice })
-                                        <td><p class="cartTotal Total_@Model.ShoppingCart.ShoppingCartItems[i].ProductId">@(Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice)</p></td>
+                                        <td style="display: @(Model.ShowProductPrice ? "table-cell" : "none")"><p class="cartTotal Total_@Model.ShoppingCart.ShoppingCartItems[i].ProductId">@(Model.ShoppingCart.ShoppingCartItems[i].Quantity * Model.ShoppingCart.ShoppingCartItems[i].UnitPrice)</p></td>
                                         <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
                                     </tr>
                                 }

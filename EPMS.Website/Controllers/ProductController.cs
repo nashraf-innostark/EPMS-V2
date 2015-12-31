@@ -52,6 +52,7 @@ namespace EPMS.Website.Controllers
                 SortDirection = "asc"
             };
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            viewModel.ShowProductPrice = productsList.ShowProductPrice;
             viewModel.ProductSections = productsList.ProductSections.ToList();
             if (productsList.Products.Any())
             {
@@ -96,6 +97,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Index(ProductListViewModel viewModel)
         {
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            viewModel.ShowProductPrice = productsList.ShowProductPrice;
             viewModel.ProductSections = productsList.ProductSections.ToList();
             if (productsList.Products.Any())
             {
@@ -153,6 +155,7 @@ namespace EPMS.Website.Controllers
             viewModel.ProductSections = productDetails.ProductSections;
             viewModel.Product = productDetails.Product.CreateFromServerToClientFromInventory();
             viewModel.ProductSizes = productDetails.ProductSizes;
+            viewModel.ShowProductPrice = productDetails.ShowProductPrice;
             ViewBag.From = from;
             return View(viewModel);
         }

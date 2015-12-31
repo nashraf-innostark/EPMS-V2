@@ -6,6 +6,7 @@ namespace EPMS.Models.ResponseModels
     public class QuotationResponse
     {
         public bool Status { get; set; }
+        public bool ShowProductPrice { get; set; }
         public IEnumerable<Quotation> Quotations { get; set; }
         public IEnumerable<RFQ> Rfqs { get; set; }
         public Quotation Quotation { get; set; }

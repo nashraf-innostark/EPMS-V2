@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.IServices
         WebsiteHomePageResponse GetHomePageResponse();
         WebsiteHomeResponse WebsiteHomeResponse();
         bool SaveLogo(WebsiteHomePage homePage);
+        bool UpdateShowProductPrice(bool showPrice);
         bool AddWebsiteLogo(WebsiteHomePage homePage);
         bool UpdateWebsiteLogo(WebsiteHomePage homePage);
         MetaTagsResponse GetMetaTags();

@@ -178,6 +178,15 @@ namespace EPMS.WebModels.Resources.Website.WebsiteMainPage {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show Product Price.
+        /// </summary>
+        public static string ShowProductPrice {
+            get {
+                return ResourceManager.GetString("ShowProductPrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slider.
         /// </summary>
         public static string Slider {

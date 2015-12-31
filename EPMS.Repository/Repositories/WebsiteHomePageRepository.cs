@@ -29,10 +29,11 @@ namespace EPMS.Repository.Repositories
         #endregion
 
         #region Public
-        public WebsiteHomePage GetHomePageLogo()
+        public WebsiteHomePage GetHomePageResponse()
         {
             return DbSet.FirstOrDefault();
         }
+
         #endregion
     }
 }

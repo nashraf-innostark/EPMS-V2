@@ -9,5 +9,6 @@ namespace EPMS.Models.ResponseModels
         public IList<Product> AllProducts { get; set; }
         public IEnumerable<ProductSection> ProductSections { get; set; }
         public int TotalCount { get; set; }
+        public bool ShowProductPrice { get; set; }
     }
 }

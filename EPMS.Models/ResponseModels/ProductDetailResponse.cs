@@ -10,8 +10,8 @@ namespace EPMS.Models.ResponseModels
         {
             Product = new Product();
             ProductSizes = new List<ProductSize>();
-
         }
+        public bool ShowProductPrice { get; set; }
         public Product Product { get; set; }
         public ItemVariation ItemVariation { get; set; }
         public IList<ProductSection> ProductSections { get; set; }

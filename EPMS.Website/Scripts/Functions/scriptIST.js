@@ -4,11 +4,13 @@
         quantity = 1;
     }
     var sizeId;
-    $.each(productSize, function (key, value) {
-        if (value.ProductId == id) {
-            sizeId = value.SizeId;
-        }
-    });
+    if (productSize != undefined) {
+        $.each(productSize, function (key, value) {
+            if (value.ProductId == id) {
+                sizeId = value.SizeId;
+            }
+        });
+    }
     if (sizeId == undefined || sizeId == "") {
         sizeId = 0;
     }

@@ -72,82 +72,82 @@
                                         childName = string.IsNullOrEmpty(productSection.SectionNameAr) ? productSection.InventoryDepartment.DepartmentNameAr : productSection.SectionNameAr;
                                     }
                                     if (productSection.InventoyDepartmentId != null)
-                                        {
-                                            link = siteURL + "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
-                                        }
-                                        else
-                                        {
-                                            link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
-                                        }
-                                <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
-                                <label for="item-0"><a href="@link">@childName</a></label>
+                                    {
+                                        link = siteURL + "/Product/Index/" + productSection.InventoyDepartmentId + "?from=Inventory";
+                                    }
+                                    else
+                                    {
+                                        link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
+                                    }
+                                    <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
+                                    <label for="item-0"><a href="@link">@childName</a></label>
                                     if (productSection.InventoryDepartment != null)
                                     {
-                                <ul>
-                                    @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
+                                        <ul>
+                                            @foreach (var department in productSection.InventoryDepartment.InventoryDepartments)
                                             {
-                                            <li class="phy">
-                                                @{
+                                                <li class="phy">
+                                                    @{
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
-                                                    <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
-                                                    <label for="item-0-0"><a href="@link">@childName</a></label>
-                                                }
-                                                @if (department.InventoryDepartments.Any())
+                                                <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
+                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                    }
+                                                    @if (department.InventoryDepartments.Any())
                                                     {
-                                                    <ul>
-                                                        @foreach (var childDepartment in department.InventoryDepartments)
+                                                        <ul>
+                                                            @foreach (var childDepartment in department.InventoryDepartments)
                                                             {
-                                                            <li class="phy">
-                                                                @{
+                                                                <li class="phy">
+                                                                    @{
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
-                                                                    <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
-                                                                    <label for="item-0-0-0"><a href="@link">@childName</a></label>
-                                                                }
-                                                            </li>
+                                                                <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
+                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                    }
+                                                                </li>
                                                             }
-                                                    </ul>
+                                                        </ul>
                                                     }
-                                            </li>
+                                                </li>
                                             }
 
-                                </ul>
+                                        </ul>
                                     }
                                     if (productSection.ProductSections != null && productSection.ProductSections.Any())
                                     {
-                                <ul>
-                                    @foreach (var subSection in productSection.ProductSections)
+                                        <ul>
+                                            @foreach (var subSection in productSection.ProductSections)
                                             {
-                                            <li class="phy">
-                                                @{
+                                                <li class="phy">
+                                                    @{
                                                 childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
                                                 link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
-                                                    <input type="checkbox" id="item-0-0" class="sect_@subSection.SectionId" />
-                                                    <label for="item-0-0"><a href="@link">@childName</a></label>
-                                                }
-                                                @if (subSection.ProductSections.Any())
+                                                <input type="checkbox" id="item-0-0" class="sect_@subSection.SectionId" />
+                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                    }
+                                                    @if (subSection.ProductSections.Any())
                                                     {
-                                                    <ul>
-                                                        @foreach (var subSubSection in subSection.ProductSections)
+                                                        <ul>
+                                                            @foreach (var subSubSection in subSection.ProductSections)
                                                             {
-                                                            <li class="phy">
-                                                                @{
+                                                                <li class="phy">
+                                                                    @{
                                                                 childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
                                                                 link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
-                                                                    <input type="checkbox" id="item-0-0-0" class="sect_@subSubSection.SectionId" />
-                                                                    <label for="item-0-0-0"><a href="@link">@childName</a></label>
-                                                                }
-                                                            </li>
+                                                                <input type="checkbox" id="item-0-0-0" class="sect_@subSubSection.SectionId" />
+                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                    }
+                                                                </li>
                                                             }
-                                                    </ul>
+                                                        </ul>
                                                     }
-                                            </li>
+                                                </li>
                                             }
 
-                                </ul>
+                                        </ul>
                                     }
-                                <br />
+                                    <br />
                                 }
                             </li>
 
@@ -274,16 +274,19 @@
                                                         }
                                                     </div>
                                                     <div class="price">
-                                                        @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                        @if (Model.ShowProductPrice)
                                                         {
-                                                            <span>@Model.Products[j].DiscountedPrice</span>
-                                                            <span>SR</span>
-                                                            <small>@Model.Products[j].ProductPrice</small>
-                                                        }
-                                                        else
-                                                        {
-                                                            <span>@Model.Products[j].ProductPrice</span>
-                                                            <span>SR</span>
+                                                            if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                            {
+                                                                <span>@Model.Products[j].DiscountedPrice</span>
+                                                                <span>SR</span>
+                                                                <small>@Model.Products[j].ProductPrice</small>
+                                                            }
+                                                            else
+                                                            {
+                                                                <span>@Model.Products[j].ProductPrice</span>
+                                                                <span>SR</span>
+                                                            }
                                                         }
                                                     </div>
                                                 </div>
@@ -681,11 +684,11 @@
     <script>
         var siteUrl;
         var ele;
+        var productSize;
         var firstParentCheckbox;
         var secondParentCheckbox;
         $(document).ready(function () {
             setTimeout(function () {
-                debugger;
                 // open css treeeview
                 var listItemToOpen = localStorage.getItem("css-treeview-li");
                 if (listItemToOpen != null) {
@@ -704,7 +707,7 @@
                 }
             }, 500);
 
-            siteUrl = $("#siteURL").val;
+            siteUrl = $("#siteURL").val();
             // latest & bestsellers ... carousels
             $('.shop-latest-carousel > ul').each(function (index, element) {
                 $(this).carouFredSel({

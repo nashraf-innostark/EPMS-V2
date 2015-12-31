@@ -39,7 +39,7 @@ namespace EPMS.Implementation.Services
         public WebsiteHomePageResponse GetHomePageResponse()
         {
             //MetaTagsResponse response = GetMetaTags();
-            var homePage = repository.GetHomePageLogo();
+            var homePage = repository.GetHomePageResponse();
             return new WebsiteHomePageResponse
             {
                 HomePage = homePage,
@@ -61,7 +61,7 @@ namespace EPMS.Implementation.Services
         {
             try
             {
-                var dbLogo = repository.GetHomePageLogo();
+                var dbLogo = repository.GetHomePageResponse();
                 if (dbLogo != null)
                 {
                     dbLogo.WebsiteLogoPath = homePage.WebsiteLogoPath;
@@ -70,6 +70,35 @@ namespace EPMS.Implementation.Services
                 }
                 else
                 {
+                    repository.Add(homePage);
+                    repository.SaveChanges();
+                }
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public bool UpdateShowProductPrice(bool showPrice)
+        {
+            try
+            {
+                var dbData = repository.GetHomePageResponse();
+                if (dbData != null)
+                {
+                    dbData.ShowProductPrice = showPrice;
+                    repository.Update(dbData);
+                    repository.SaveChanges();
+                }
+                else
+                {
+                    WebsiteHomePage homePage = new WebsiteHomePage
+                    {
+                        WebsiteLogoPath = "",
+                        ShowProductPrice = showPrice
+                    };
                     repository.Add(homePage);
                     repository.SaveChanges();
                 }

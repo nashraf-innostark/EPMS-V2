@@ -9,7 +9,8 @@ namespace EPMS.WebModels.ModelMappers.Website.HomePage
             return new WebsiteHomePage
             {
                 Id = source.Id,
-                WebsiteLogoPath = source.WebsiteLogoPath
+                WebsiteLogoPath = source.WebsiteLogoPath,
+                ShowProductPrice = source.ShowProductPrice
             };
         }
 
@@ -18,7 +19,8 @@ namespace EPMS.WebModels.ModelMappers.Website.HomePage
             return new WebsiteModels.WebsiteHomePage
             {
                 Id = source.Id,
-                WebsiteLogoPath = source.WebsiteLogoPath
+                WebsiteLogoPath = source.WebsiteLogoPath,
+                ShowProductPrice = source.ShowProductPrice
             };
         }
     }

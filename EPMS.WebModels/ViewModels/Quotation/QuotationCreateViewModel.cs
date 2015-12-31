@@ -49,5 +49,6 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public IList<WebsiteModels.QuotationItemDetail> QuotationItemDetails { get; set; }
         // items for inventory pop up
         public IEnumerable<ItemVariationDropDownListItem> ItemVariationDropDownList { get; set; }
+        public bool ShowProductPrice { get; set; }
     }
 }

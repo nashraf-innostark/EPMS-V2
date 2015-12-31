@@ -3,6 +3,7 @@ using System.Configuration;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
+using EPMS.Interfaces.Repository;
 using EPMS.Models.Common;
 using EPMS.WebModels.ModelMappers.Website.Product;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
@@ -19,16 +20,18 @@ namespace EPMS.Website.Controllers
         private readonly IShoppingCartService cartService;
         private readonly IShoppingCartItemService cartItemService;
         private readonly IProductService productService;
+        private readonly IWebsiteHomePageService homePageService;
 
         #endregion
 
         #region Constructor
 
-        public ShoppingCartController(IShoppingCartService cartService, IProductService productService, IShoppingCartItemService cartItemService)
+        public ShoppingCartController(IShoppingCartService cartService, IProductService productService, IShoppingCartItemService cartItemService, IWebsiteHomePageService homePageService)
         {
             this.cartService = cartService;
             this.productService = productService;
             this.cartItemService = cartItemService;
+            this.homePageService = homePageService;
         }
 
         #endregion
@@ -37,11 +40,14 @@ namespace EPMS.Website.Controllers
         // GET: ShoppingCart
         public ActionResult Index()
         {
-            ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel();
+            ShoppingCartListViewModel viewModel = new ShoppingCartListViewModel
+            {
+                ShowProductPrice = homePageService.GetHomePageResponse().HomePage.ShowProductPrice
+            };
             string cartId = GetCartId();
             // check DB
             var shoppingCart = cartService.FindByUserCartId(cartId);
-
+            
             viewModel.ShoppingCart = shoppingCart != null
                     ? shoppingCart.CreateFromServerToClient()
                     : new ShoppingCart();

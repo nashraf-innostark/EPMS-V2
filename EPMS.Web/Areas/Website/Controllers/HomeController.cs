@@ -49,8 +49,8 @@ namespace EPMS.Web.Areas.Website.Controllers
             {
                 ImageSlider = response.ImageSlider.Select(x => x.CreateFromServerToClient()).ToList(),
                 Partners = response.Partners.Select(x => x.CreateFromServerToClient()).ToList(),
-                WebsiteDepartments = response.WebsiteDepartments.Select(x => x.CreateFromServerToClient()).ToList()
-
+                WebsiteDepartments = response.WebsiteDepartments.Select(x => x.CreateFromServerToClient()).ToList(),
+                ShowProductPrice = response.ShowProductPrice
             };
             IEnumerable<Position> actionTypes = Enum.GetValues(typeof(Position))
                                                        .Cast<Position>();
@@ -83,7 +83,8 @@ namespace EPMS.Web.Areas.Website.Controllers
                     image.SaveAs(savedFileName);
                     WebsiteHomePage logo = new WebsiteHomePage
                     {
-                        WebsiteLogoPath = filename
+                        WebsiteLogoPath = filename,
+                        ShowProductPrice = false
                     };
                     var logoToAdd = logo.CreateFromClientToServer();
                     homePageService.SaveLogo(logoToAdd);
@@ -111,6 +112,31 @@ namespace EPMS.Web.Areas.Website.Controllers
         }
         #endregion
 
+        #region ShowHideProductPrice
+
+        public JsonResult ShowHideProductPrice(bool showPrice)
+        {
+            bool status = homePageService.UpdateShowProductPrice(showPrice);
+            if (status)
+            {
+                return
+                Json(
+                    new
+                    {
+                        response = "Successfully uploaded!",
+                        status = (int)HttpStatusCode.OK
+                    }, JsonRequestBehavior.AllowGet);
+            }
+            return
+                    Json(
+                        new
+                        {
+                            response = "Error in updating record.",
+                            status = (int)HttpStatusCode.BadRequest
+                        }, JsonRequestBehavior.AllowGet);
+        }
+        #endregion
+        
         #endregion
     }
 }

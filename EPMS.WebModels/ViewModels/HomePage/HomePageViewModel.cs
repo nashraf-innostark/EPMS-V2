@@ -9,6 +9,7 @@ namespace EPMS.WebModels.ViewModels.HomePage
         {
             Position = new List<SelectListItem>();
         }
+        public bool ShowProductPrice { get; set; }
         public IList<WebsiteModels.ImageSlider> ImageSlider { get; set; }
         public IList<WebsiteModels.Partner> Partners { get; set; }
         public IList<WebsiteModels.WebsiteDepartment> WebsiteDepartments { get; set; }

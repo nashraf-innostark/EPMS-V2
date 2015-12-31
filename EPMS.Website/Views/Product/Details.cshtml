@@ -264,32 +264,35 @@
                                 {
                                     <p><strong>@Product.SKU:</strong> @Model.Product.SKUCode</p>
                                 }
-                                @if (!string.IsNullOrEmpty(Model.Product.DiscountedPrice))
+                                @if (Model.ShowProductPrice)
                                 {
-                                    <p class="regular_price">@Product.Price: <span>@Model.Product.ProductPrice</span><span>SR</span></p>
-                                    <p class="price">
-                                        <span>@Model.Product.DiscountedPrice</span><span>SR</span>
-                                    </p>
-                                    <p>
-                                        @Product.YouWillSave:
-                                        @{
-                                            var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
-                                            var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
-                                            var deductedPrice = actualPrice - discountedPrice;
-                                            var savingInPercentage = Math.Round((actualPrice/discountedPrice), 2);
-                                        }
-                                        <strong>
-                                            @deductedPrice
-                                            @savingInPercentage %
-                                        </strong>
-                                    </p>
-                                }
-                                else
-                                {
-                                    <p class="regular_price">@Product.Price: </p>
-                                    <p class="price">
-                                        <span>@Model.Product.ProductPrice</span><span>SR</span>
-                                    </p>
+                                    if (!string.IsNullOrEmpty(Model.Product.DiscountedPrice))
+                                    {
+                                        <p class="regular_price">@Product.Price: <span>@Model.Product.ProductPrice</span><span>SR</span></p>
+                                        <p class="price">
+                                            <span>@Model.Product.DiscountedPrice</span><span>SR</span>
+                                        </p>
+                                        <p>
+                                            @Product.YouWillSave:
+                                            @{
+                                        var actualPrice = Convert.ToDecimal(Model.Product.ProductPrice);
+                                        var discountedPrice = Convert.ToDecimal(Model.Product.DiscountedPrice);
+                                        var deductedPrice = actualPrice - discountedPrice;
+                                        var savingInPercentage = Math.Round((actualPrice / discountedPrice), 2);
+                                            }
+                                            <strong>
+                                                @deductedPrice
+                                                @savingInPercentage %
+                                            </strong>
+                                        </p>
+                                    }
+                                    else
+                                    {
+                                        <p class="regular_price">@Product.Price: </p>
+                                        <p class="price">
+                                            <span>@Model.Product.ProductPrice</span><span>SR</span>
+                                        </p>
+                                    }
                                 }
 
                                 <div class="to_cart">

@@ -24,12 +24,13 @@ namespace EPMS.Implementation.Services
         private readonly IInventoryDepartmentRepository inventoryDepartmentRepository;
         private readonly IItemVariationRepository itemVariationRepository;
         private readonly IProductSectionService productSectionService;
+        private readonly IWebsiteHomePageRepository homePageRepository;
 
         #endregion
 
         #region Constructor
 
-        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository, IItemVariationRepository itemVariationRepository, IProductSectionService productSectionService)
+        public ProductService(IProductRepository productRepository, IProductSectionRepository productSectionRepository, IProductImageRepository productImageRepository, IInventoryDepartmentRepository inventoryDepartmentRepository, IItemVariationRepository itemVariationRepository, IProductSectionService productSectionService, IWebsiteHomePageRepository homePageRepository)
         {
             this.productRepository = productRepository;
             this.productSectionRepository = productSectionRepository;
@@ -37,6 +38,7 @@ namespace EPMS.Implementation.Services
             this.inventoryDepartmentRepository = inventoryDepartmentRepository;
             this.itemVariationRepository = itemVariationRepository;
             this.productSectionService = productSectionService;
+            this.homePageRepository = homePageRepository;
         }
 
         #endregion
@@ -317,7 +319,8 @@ namespace EPMS.Implementation.Services
             {
                 Products = new List<Product>(),
                 AllProducts = productRepository.GetAll().OrderByDescending(x => x.RecCreatedDt).Take(100).ToList(),
-                ProductSections = productSectionService.GetAll().ToList()
+                ProductSections = productSectionService.GetAll().ToList(),
+                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
             switch (request.From)
             {
@@ -343,37 +346,29 @@ namespace EPMS.Implementation.Services
         {
             ProductDetailResponse response = new ProductDetailResponse
             {
-                ProductSections = productSectionRepository.GetAll().ToList()
+                ProductSections = productSectionRepository.GetAll().ToList(),
+                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
             response.Product = productRepository.Find(id);
+            // size id for add to cart on changing product size
             if (response.Product != null && response.Product.ItemVariationId != null)
             {
                 foreach (var variation in response.Product.ItemVariation.InventoryItem.ItemVariations)
                 {
                     if (variation.Sizes.FirstOrDefault() != null)
                     {
-                        response.ProductSizes.Add(new ProductSize
-                        {
-                            ProductId = response.Product.ProductId,
-                            VariationId = variation.ItemVariationId,
-                            SizeId = variation.Sizes.FirstOrDefault().SizeId
-                        });
+                        Product firstOrDefault = variation.Products.FirstOrDefault();
+                        if (firstOrDefault != null)
+                            response.ProductSizes.Add(new ProductSize
+                            {
+                                //ProductId = response.Product.ProductId,
+                                ProductId = firstOrDefault.ProductId,
+                                VariationId = variation.ItemVariationId,
+                                SizeId = variation.Sizes.FirstOrDefault().SizeId
+                            });
                     }
                 }
             }
-            //var products = productRepository.GetAll();
-            //foreach (var product in products)
-            //{
-            //    if (product.ItemVariation != null && product.ItemVariation.Sizes.FirstOrDefault() != null)
-            //    {
-            //        response.ProductSizes.Add(new ProductSize
-            //        {
-            //            ProductId = product.ProductId,
-            //            VariationId = (long)product.ItemVariationId,
-            //            SizeId = product.ItemVariation.Sizes.FirstOrDefault().SizeId
-            //        });
-            //    }
-            //}
             return response;
         }
 

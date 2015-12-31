@@ -19,6 +19,7 @@ namespace EPMS.Implementation.Services
 {
     public class QuotationService : IQuotationService
     {
+        #region Private
         private readonly INotificationRepository notificationRepository;
         private readonly IAspNetUserRepository aspNetUserRepository;
         private readonly IQuotationRepository Repository;
@@ -31,11 +32,15 @@ namespace EPMS.Implementation.Services
         private readonly IOrdersService ordersService;
         private readonly IInvoiceService invoiceService;
         private readonly IInvoiceRepository invoiceRepository;
+        private readonly IWebsiteHomePageRepository homePageRepository;
 
+        #endregion
+
+        #region Constructor
         /// <summary>
         /// Constructor
         /// </summary>
-        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService, IInvoiceRepository invoiceRepository)
+        public QuotationService(INotificationRepository notificationRepository, IAspNetUserRepository aspNetUserRepository, IQuotationRepository repository, INotificationService notificationService, ICustomerService customerService, IRFQRepository rfqRepository, IItemVariationRepository variationRepository, IQuotationItemRepository itemRepository, ICompanyProfileRepository cpRepository, IOrdersService ordersService, IInvoiceService invoiceService, IInvoiceRepository invoiceRepository, IWebsiteHomePageRepository homePageRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -49,7 +54,9 @@ namespace EPMS.Implementation.Services
             this.ordersService = ordersService;
             this.invoiceService = invoiceService;
             this.invoiceRepository = invoiceRepository;
+            this.homePageRepository = homePageRepository;
         }
+        #endregion
 
         public QuotationDetailResponse GetQuotationDetail(long quotationId)
         {
@@ -80,6 +87,7 @@ namespace EPMS.Implementation.Services
             {
                 Customers = customerService.GetAll().ToList(),
                 ItemVariationDropDownList = variationRepository.GetItemVariationDropDownListItems(),
+                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
             if (quotationId != 0)
             {
@@ -99,7 +107,8 @@ namespace EPMS.Implementation.Services
                 Rfq = rfqRepository.FindByRfqId(rfqId),
                 Customers = customerService.GetAll().ToList(),
                 Rfqs = rfqRepository.GetAllPendingRfqs().ToList(),
-                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownListItems()
+                ItemVariationDropDownList = variationRepository.GetItemVariationDropDownListItems(),
+                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
             return response;
         }
@@ -119,7 +128,7 @@ namespace EPMS.Implementation.Services
             try
             {
                 quotation.SerialNumber = !quotation.FromOrder ? GetQuotationSerialNumber() : "";
-                quotation.Status = (short) QuotationStatus.QuotationCreated;
+                quotation.Status = (short)QuotationStatus.QuotationCreated;
                 Repository.Add(quotation);
                 Repository.SaveChanges();
                 if (quotation.RFQId != null)

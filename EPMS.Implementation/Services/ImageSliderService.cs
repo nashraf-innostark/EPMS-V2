@@ -16,6 +16,7 @@ namespace EPMS.Implementation.Services
         private readonly IImageSliderRepository repository;
         private readonly IPartnerRepository partnerRepository;
         private readonly IWebsiteDepartmentRepository departmentRepository;
+        private readonly IWebsiteHomePageRepository homePageRepository;
         
         #endregion
         
@@ -23,11 +24,12 @@ namespace EPMS.Implementation.Services
         /// <summary>
         /// Constructor
         /// </summary>
-        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository, IWebsiteDepartmentRepository departmentRepository)
+        public ImageSliderService(IImageSliderRepository repository, IPartnerRepository partnerRepository, IWebsiteDepartmentRepository departmentRepository, IWebsiteHomePageRepository homePageRepository)
         {
             this.repository = repository;
             this.partnerRepository = partnerRepository;
             this.departmentRepository = departmentRepository;
+            this.homePageRepository = homePageRepository;
         }
 
         #endregion
@@ -38,7 +40,8 @@ namespace EPMS.Implementation.Services
             {
                 ImageSlider = repository.GetAll().OrderBy(x=>x.ImageOrder),
                 Partners = partnerRepository.GetAll().OrderBy(x=>x.ImageOrder),
-                WebsiteDepartments = departmentRepository.GetAll().OrderBy(x=>x.DepartmentOrder)
+                WebsiteDepartments = departmentRepository.GetAll().OrderBy(x=>x.DepartmentOrder),
+                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
             return response;
         }

@@ -415,8 +415,11 @@
     var rfqItems;
     var siteUrl;
     var dir;
+    var showPrice;
     var errorMessageTree = '@EPMS.WebModels.Resources.Shared.Common.RequiredTreeField';
     $(document).ready(function () {
+        showPrice = '@Model.ShowProductPrice';
+        
         dir = '@direction';
         siteUrl = $('#siteURL').val();
         CKEDITOR.replace('ExtraInformationEn', {
@@ -464,6 +467,9 @@
             $('.readonly-from-rfq:input').attr('readonly', true);
             // hide Add new item button
             $(".add-item-row").hide();
+        }
+        if (showPrice == 'False') {
+            $(".n2:input").attr('readonly', false);
         }
 
         if ('@ViewBag.ShowExcelImport' == 'True') {
