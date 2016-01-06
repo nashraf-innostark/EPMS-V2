@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using EPMS.Models.Common;
-using EPMS.Models.DashboardModels;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
 using System.Configuration;
@@ -15,7 +14,10 @@ using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Inventory.RFI;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.RFI;
+using EPMS.WebModels.WebsiteModels;
 using Microsoft.AspNet.Identity;
+using Customer = EPMS.Models.DashboardModels.Customer;
+using Order = EPMS.Models.DashboardModels.Order;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
@@ -24,10 +26,12 @@ namespace EPMS.Web.Areas.Inventory.Controllers
     public class RFIController : BaseController
     {
         private readonly IRFIService rfiService;
+        private readonly IOrdersService ordersService;
 
-        public RFIController(IRFIService rfiService)
+        public RFIController(IRFIService rfiService, IOrdersService ordersService)
         {
             this.rfiService = rfiService;
+            this.ordersService = ordersService;
         }
 
         // GET: Inventory/RFI
@@ -216,7 +220,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View();
+                return View(rfiViewModel);
             }
             catch
             {
@@ -290,6 +294,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 ViewBag.HasCustomerModule = false;
                 return false;
             }
+        }
+
+        [HttpGet]
+        public JsonResult GetOrderItems(long orderId)
+        {
+            var order = ordersService.GetOrderByOrderId(orderId);
+            if (order != null && order.Quotation != null)
+            {
+                if (order.Quotation.QuotationItemDetails.Any())
+                {
+                    return Json(order.Quotation.QuotationItemDetails.Select(x=>x.CreateForRfi()), JsonRequestBehavior.AllowGet);
+                }
+            }
+            return Json(new QuotationItemDetail(), JsonRequestBehavior.AllowGet);
         }
     }
 }

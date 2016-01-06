@@ -81,7 +81,7 @@ namespace EPMS.Web.Controllers
         /// <param name="complaintService"></param>
         /// <param name="preferencesService"></param>
         /// <param name="menuRightsService"></param>
-        public DashboardController(IWarehouseService warehouseService,IItemReleaseService itemReleaseService,IRIFService rifService,IDIFService difService, ITIRService tirService, IPurchaseOrderService purchaseOrderService, IProjectTaskService projectTaskService,IRFIService rfiService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
+        public DashboardController(IWarehouseService warehouseService, IItemReleaseService itemReleaseService, IRIFService rifService, IDIFService difService, ITIRService tirService, IPurchaseOrderService purchaseOrderService, IProjectTaskService projectTaskService, IRFIService rfiService, IMeetingService meetingService, IProjectService projectService, IPayrollService payrollService, IDepartmentService departmentService, IJobOfferedService jobOfferedService, IOrdersService ordersService, IEmployeeRequestService employeeRequestService, IEmployeeService employeeService, ICustomerService customerService, IComplaintService complaintService, IDashboardWidgetPreferencesService preferencesService, IMenuRightsService menuRightsService, IQuickLaunchItemService quickLaunchItemService)
         {
             this.warehouseService = warehouseService;
             this.itemReleaseService = itemReleaseService;
@@ -135,21 +135,24 @@ namespace EPMS.Web.Controllers
 
             switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
             {
-                    case UserRole.Admin:
+                case UserRole.Admin:
                     requester = "Admin";
-                        break;
-                    case UserRole.InventoryManager:
-                        requester = "Admin";
-                        break;
-                    case UserRole.WarehouseManager:
-                        requester = "Admin";
-                        break;
-                    case UserRole.Employee:
-                        requester = Session["EmployeeID"].ToString();
-                        break;
-                    case UserRole.Customer:
-                        requester = Session["CustomerID"].ToString();
-                        break;
+                    break;
+                case UserRole.PM:
+                    requester = "Admin";
+                    break;
+                case UserRole.InventoryManager:
+                    requester = "Admin";
+                    break;
+                case UserRole.WarehouseManager:
+                    requester = "Admin";
+                    break;
+                case UserRole.Employee:
+                    requester = Session["EmployeeID"].ToString();
+                    break;
+                case UserRole.Customer:
+                    requester = Session["CustomerID"].ToString();
+                    break;
             }
 
             #region Employee Requests Widget
@@ -244,7 +247,7 @@ namespace EPMS.Web.Controllers
                 {
                     dashboardViewModel.RFI = GetRFI(0, requester);// status 0 means all
                 }
-                
+
             }
             #endregion
 
@@ -404,10 +407,10 @@ namespace EPMS.Web.Controllers
             return ordersService.GetRecentOrders(requester, status).Select(x => x.CreateForDashboard());
         }
 
-        private IEnumerable<RFIWidget> GetRFI(int status,string requester, DateTime date=new DateTime())
+        private IEnumerable<RFIWidget> GetRFI(int status, string requester, DateTime date = new DateTime())
         {
-            var rfis = rfiService.GetRecentRFIs(status,requester,date);
-            if(rfis.Any())
+            var rfis = rfiService.GetRecentRFIs(status, requester, date);
+            if (rfis.Any())
                 return rfis.Select(x => x.CreateRFIWidget());
             return new List<RFIWidget>();
         }
@@ -598,18 +601,18 @@ namespace EPMS.Web.Controllers
             }
             //if (result.Any())
             //{
-                // Add
-                int i = 1;
-                foreach (var pref in userPreferences)
+            // Add
+            int i = 1;
+            foreach (var pref in userPreferences)
+            {
+                DashboardWidgetPreference preference = new DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
+                var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
+                if (PreferencesService.AddPreferences(preferenceToUpdate))
                 {
-                    DashboardWidgetPreference preference = new DashboardWidgetPreference { UserId = userId, WidgetId = pref, SortNumber = i };
-                    var preferenceToUpdate = preference.CreateFromClientToServerWidgetPreferences();
-                    if (PreferencesService.AddPreferences(preferenceToUpdate))
-                    {
-                        i++;
-                    }
+                    i++;
                 }
-                return Json("Success", JsonRequestBehavior.AllowGet);
+            }
+            return Json("Success", JsonRequestBehavior.AllowGet);
             //}
             //else
             //{
@@ -798,7 +801,7 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadRFI(int status, string requester, string date)
         {
-            DateTime rfiCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date); 
+            DateTime rfiCreatedDate = string.IsNullOrEmpty(date) ? new DateTime() : Convert.ToDateTime(date);
             switch ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))
             {
                 case UserRole.Employee:
@@ -808,7 +811,7 @@ namespace EPMS.Web.Controllers
                     if (string.IsNullOrEmpty(requester))
                         requester = "Admin";
                     orders = GetRFI(status, requester, rfiCreatedDate);// status 0 means all
-                     return Json(orders, JsonRequestBehavior.AllowGet);
+                    return Json(orders, JsonRequestBehavior.AllowGet);
             }
         }
 

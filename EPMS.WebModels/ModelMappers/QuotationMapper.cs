@@ -188,6 +188,22 @@ namespace EPMS.WebModels.ModelMappers
             };
         }
 
+        public static WebsiteModels.QuotationItemDetail CreateForRfi(this QuotationItemDetail source)
+        {
+            return new WebsiteModels.QuotationItemDetail
+            {
+                ItemId = source.ItemId,
+                QuotationId = source.QuotationId,
+                ItemVariationId = source.ItemVariationId,
+                IsItemSKU = source.IsItemSKU,
+                IsItemDescription = source.IsItemDescription,
+                ItemDetails = source.ItemDetails,
+                ItemQuantity = source.ItemQuantity,
+                UnitPrice = source.UnitPrice,
+                TotalPrice = source.TotalPrice,
+            };
+        }
+
         public static WebsiteModels.QuotationItemDetail CreateForPayment(this QuotationItemDetail source)
         {
             var direction = Resources.Shared.Common.TextDirection;
