@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Web.UI;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
 using EPMS.Repository.BaseRepository;
@@ -25,11 +26,11 @@ namespace EPMS.Repository.Repositories
             if (department.DepartmentId > 0) //Already in the System
             {
                 return DbSet.Any(
-                    dept => department.DepartmentId != dept.DepartmentId &&
+                    dept => department.DepartmentId != dept.DepartmentId && dept.ParentId == null &&
                         (dept.DepartmentNameEn == department.DepartmentNameEn || dept.DepartmentNameAr == department.DepartmentNameAr));
             }
             return DbSet.Any(
-                    dept =>
+                    dept => dept.ParentId == null &&
                         (dept.DepartmentNameEn == department.DepartmentNameEn || dept.DepartmentNameAr == department.DepartmentNameAr));
         }
 
