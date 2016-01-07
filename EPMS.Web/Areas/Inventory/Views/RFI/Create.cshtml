@@ -556,12 +556,12 @@
 
     function appendOrderItems(data) {
         for (var i = 0; i < data.length; i++) {
-            var index = $("#RFIItemsTableBody").children("tr").length + 1;
+            var index = $("#RFIItemsTableBody").children("tr").length;
             var indexCell = "<td style='display:none'>" +
                 "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
-                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' value=" + data[i].IsItemDescription + "/>" +
-                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' value=" + data[i].IsItemSKU + "/>" +
-                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value=" + data[i].ItemVariationId + "/>" +
+                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' value='" + data[i].IsItemDescription + "' />" +
+                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' value='" + data[i].IsItemSKU + "' />" +
+                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value='" + data[i].ItemVariationId + "' />" +
                 "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
                 "</td>";
             //RfiItem
@@ -577,7 +577,7 @@
                 '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
                 '</td>' +
                 '<td class="quantity"> ' +
-                '<input class="n1" type="text" readonly="true" id="RfiItem_' + index + '_ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value=' + data[i].ItemQuantity + '>' +
+                '<input class="n1" type="text" readonly="true" id="RfiItem_' + index + '_ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value="' + data[i].ItemQuantity + '" />' +
                 '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
                 '</td>' +
                 '<td class="delete"> <i class="icon-photon minus" style="margin-top: 20px;"></i>' +
