@@ -41,8 +41,17 @@ namespace EPMS.WebModels.ModelMappers
             model.SKUDescriptionEn = source.SKUDescriptionEn;
             model.SKUDescriptionAr = source.SKUDescriptionAr;
             //model.QuantityInHand = (source.ItemWarehouses.Sum(x=>x.Quantity) - source.ItemReleaseDetails.Sum(x=>x.ItemQty) + source.DIFItems.Sum(x=>x.ItemQty)).ToString();
-            model.QuantityInHand = (source.ItemManufacturers.Sum(x=>x.TotalQuantity) - source.ItemReleaseDetails.Sum(x=>x.ItemQty) + source.DIFItems.Sum(x=>x.ItemQty)).ToString();
-            var qtySold = source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId).Sum(x => x.Quantity);
+            if (Convert.ToInt64(source.QuantityInHand) != 0)
+            {
+                model.QtyInHand = true;
+            }
+            model.QuantityInHand = (Convert.ToInt64(source.QuantityInHand) +
+                                    source.ItemManufacturers.Sum(x => x.TotalQuantity) -
+                                    source.ItemReleaseDetails.Sum(x => x.ItemQty) +
+                                    source.DIFItems.Sum(x => x.ItemQty)).ToString();
+            var qtySold =
+                source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId)
+                    .Sum(x => x.Quantity);
             model.QuantitySold = qtySold;
             model.ReorderPoint = source.ReorderPoint;
             model.QuantityInManufacturing = source.QuantityInManufacturing;
@@ -91,7 +100,7 @@ namespace EPMS.WebModels.ModelMappers
             model.Statuses = source.Status.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemManufacturers = source.ItemManufacturers.Select(x => x.CreateFromServerToClient()).ToList();
             model.ItemImages = source.ItemImages.Select(x => x.CreateFromServerToClient()).ToList();
-            
+
             model.ItemWarehouses = source.ItemWarehouses.Select(x => x.CreateForItemWarehouse()).ToList();
             var descEn = source.InventoryItem.ItemDescriptionEn;
             if (!string.IsNullOrEmpty(descEn))
@@ -110,31 +119,46 @@ namespace EPMS.WebModels.ModelMappers
 
             model.ItemDescForIndexEn = descEn;
             model.ItemDescForIndexAr = descAr;
-            model.SizeNameEn = source.Sizes != null && source.Sizes.Count > 0 ? source.Sizes.FirstOrDefault().SizeNameEn : "";
-            model.SizeNameAr = source.Sizes != null && source.Sizes.Count > 0 ? source.Sizes.FirstOrDefault().SizeNameAr : "";
-            model.ColorNameEn = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameEn: "";
-            model.ColorNameAr = source.Colors != null && source.Colors.Count > 0 ? source.Colors.FirstOrDefault().ColorNameAr: "";
-            model.StatusNameEn = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameEn : "";
-            model.StatusNameAr = source.Status != null && source.Status.Count > 0 ? source.Status.FirstOrDefault().StatusNameAr : "";
-            var totalCost = source.ItemManufacturers.Sum(y => y.Quantity * Convert.ToDouble(y.Price));
+            model.SizeNameEn = source.Sizes != null && source.Sizes.Count > 0
+                ? source.Sizes.FirstOrDefault().SizeNameEn
+                : "";
+            model.SizeNameAr = source.Sizes != null && source.Sizes.Count > 0
+                ? source.Sizes.FirstOrDefault().SizeNameAr
+                : "";
+            model.ColorNameEn = source.Colors != null && source.Colors.Count > 0
+                ? source.Colors.FirstOrDefault().ColorNameEn
+                : "";
+            model.ColorNameAr = source.Colors != null && source.Colors.Count > 0
+                ? source.Colors.FirstOrDefault().ColorNameAr
+                : "";
+            model.StatusNameEn = source.Status != null && source.Status.Count > 0
+                ? source.Status.FirstOrDefault().StatusNameEn
+                : "";
+            model.StatusNameAr = source.Status != null && source.Status.Count > 0
+                ? source.Status.FirstOrDefault().StatusNameAr
+                : "";
+            var totalCost = source.ItemManufacturers.Sum(y => y.Quantity*Convert.ToDouble(y.Price));
             var totalQuantity = source.ItemManufacturers.Sum(y => y.Quantity);
             if (totalCost > 0 && totalQuantity > 0)
             {
-                model.UnitCost = Math.Round((double) (totalCost / totalQuantity), 2);
+                model.UnitCost = Math.Round((double) (totalCost/totalQuantity), 2);
             }
             else
             {
                 model.UnitCost = 0;
             }
             var manufacturerCount = model.ItemManufacturers.Count;
-            model.AverageCost = model.UnitCost / manufacturerCount;
+            model.AverageCost = model.UnitCost/manufacturerCount;
             var defectedItemQuantity = source.DIFItems.Sum(x => x.ItemQty);
             var returnItemQuantity = source.RIFItems.Sum(x => x.ItemQty);
             model.TotalQuantityInHand = (Convert.ToDouble(source.QuantityInHand) +
-                                        source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity) - (qtySold + defectedItemQuantity);
+                                         source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity) -
+                                        (qtySold + defectedItemQuantity);
             return model;
         }
-        public static WebsiteModels.ItemVariation CreateFromServerToClient(this Models.DomainModels.ItemVariation source, IEnumerable<ItemWarehouse> itemWarehouses)
+
+        public static WebsiteModels.ItemVariation CreateFromServerToClient(
+            this Models.DomainModels.ItemVariation source, IEnumerable<ItemWarehouse> itemWarehouses)
         {
             WebsiteModels.ItemVariation model = new WebsiteModels.ItemVariation();
             model.ItemVariationId = source.ItemVariationId;

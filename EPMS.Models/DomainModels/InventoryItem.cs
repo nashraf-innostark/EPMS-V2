@@ -37,7 +37,7 @@ namespace EPMS.Models.DomainModels
             {
                 if (ItemVariations != null)
                 {
-                    return (double) (ItemVariations.Sum(x => x.ItemManufacturers.Sum(y=>y.Quantity)) +
+                    return (double) (ItemVariations.Sum(x => Convert.ToDouble(x.QuantityInHand)) + ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity)) +
                                      ItemVariations.Sum(x => x.PurchaseOrderItems.Sum(y => Convert.ToDouble(y.ItemQty)))
                                      + ItemVariations.Sum(x => x.RIFItems.Sum(y => y.ItemQty)) -
                                      (ItemVariations.Sum(x => x.ItemReleaseQuantities.Sum(y => Convert.ToDouble(y.Quantity)))

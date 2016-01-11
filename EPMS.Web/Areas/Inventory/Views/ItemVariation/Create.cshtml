@@ -236,7 +236,7 @@
             </div>
             <div class="span9">
                 <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @id = "QuantityInHand", @readonly = true })
+                    @Html.TextBoxFor(m => m.ItemVariation.QuantityInHand, new { @id = "QuantityInHand", @class = "tbdisable" })
                     @Html.ValidationMessageFor(m => m.ItemVariation.QuantityInHand, "", new { @class = "required" })
                 </div>
             </div>
@@ -1269,6 +1269,7 @@
     var itemsCount;
     var myTree;
     var itemVarId = parseInt($('#ItemVariation_ItemVariationId').val());
+    var qtyInHand = '@Model.ItemVariation.QtyInHand';
     var colorList = '@Html.Raw(Json.Encode(Model.ColorsForDdl))';
     var parsedColor = JSON.parse(colorList);
     @*var sizeList = '@Html.Raw(Json.Encode(Model.SizesForDdl))';*@
@@ -1321,7 +1322,13 @@
             itemsCount = parseInt('@Model.ItemVariation.ItemImages.Count');
         }
         $("#edit").click(function (event) {
+            debugger;
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
+            if (qtyInHand) {
+                $('#QuantityInHand').attr('disabled', true);
+            } else {
+                $('#QuantityInHand').attr('disabled', false);
+            }
             $("#savebtn").show();
             $("#cancel").show();
             $("#edit").hide();

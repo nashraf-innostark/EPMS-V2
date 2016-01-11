@@ -55,6 +55,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string ColorNameAr { get; set; }
         public double? AverageCost { get; set; }
         public double? TotalQuantityInHand { get; set; }
+        public bool QtyInHand { get; set; }
 
         public List<ItemManufacturer> ItemManufacturers { get; set; }
         public List<Status> Statuses { get; set; }
