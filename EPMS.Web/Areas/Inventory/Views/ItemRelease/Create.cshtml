@@ -902,24 +902,23 @@
                                 "</div>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + details + "</textarea>" +
-                                "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#itemSearcher\">+</button>" +
+                                "<textarea rows=\"2\" readonly='readonly' id='ItemReleaseDetails_" + index + "__ItemDetails' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Item Details field is required.\" name=\"ItemReleaseDetails[" + index + "].ItemDetails\">" + details + "</textarea>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].ItemDetails\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td>" +
-                                "<textarea rows=\"2\" id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + warehouse + "</textarea>" +
+                                "<textarea rows=\"2\" readonly='readonly' id='ItemReleaseDetails_" + index + "__PlaceInWarehouse' class=\"auto-resize toBeDisable\" data-val=\"true\" data-val-required=\"The Warehouse field is required.\" name=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\">" + warehouse + "</textarea>" +
                                 "<button type=\"button\" class=\"btn itemAdder btnDisable\" data-toggle=\"modal\" data-target=\"#warhouseSelector\">+</button>" +
                                 "<span class=\"field-validation-valid required\" data-valmsg-for=\"ItemReleaseDetails[" + index + "].PlaceInWarehouse\" data-valmsg-replace=\"true\"></span>" +
                             "</td>" +
                             "<td class=\"quantity\">" +
-                                "<input id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + 0 + "\" readonly class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
+                                "<input readonly='readonly' id='ItemReleaseDetails_" + index + "__ItemQty' value=\"" + 0 + "\" readonly class='n1 disableOnLoad' type='text' name='ItemReleaseDetails[" + index + "].ItemQty' data-val='true' data-val-number='The field Item Qty must be a number.' data-val-range='Please enter valid quantity' data-val-range-max='2147483647' data-val-range-min='1' data-val-required='The Item Qty field is required.'>" +
                                 "<span class='field-validation-valid required' data-valmsg-for='ItemReleaseDetails[" + index + "].ItemQty' data-valmsg-replace='true'></span>" +
                             "</td>" +
                             "<td>" +
                                 "<label id='RequestedQuantity_" + index + "' class='tableLabel'>" + value.ItemQty + "</label>" +
                             "</td>" +
                             "<td class='delete'>" +
-                                "<i class='icon-photon minus deleteRow btnDisable'></i>" +
+                                "<i class='icon-photon minus btnDisable' style='margin-top:20px'></i>" +
                             "</td>" +
                         "</tr>";
         $('.qouteAdd').append(html1);

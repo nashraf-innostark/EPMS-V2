@@ -209,8 +209,16 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     var newNodeToAdd = model.CreateFromClientToServerModel();
                     if (departmentService.AddDepartment(newNodeToAdd))
                     {
-                        const string responseMessage = "Departments Saved";
-                        return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                        if (newNodeToAdd.ParentId == null)
+                        {
+                            const string responseMessage = "Departments Saved";
+                            return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                        }
+                        else
+                        {
+                            const string responseMessage = "Section Saved";
+                            return Json(responseMessage, JsonRequestBehavior.AllowGet);
+                        }
                     }
                 }
             }

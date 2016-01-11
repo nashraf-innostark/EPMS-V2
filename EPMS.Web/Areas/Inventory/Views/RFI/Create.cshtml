@@ -34,7 +34,7 @@
 <!--Notifications end-->
 @using (Html.BeginForm("Create", "RFI", FormMethod.Post, new { @id = "RFIForm", @class = "form-horizontal", role = "form" }))
 {
-    @Html.HiddenFor(x=>x.Rfi.RFIId)
+    @Html.HiddenFor(x => x.Rfi.RFIId)
     @Html.HiddenFor(x => x.Rfi.FormNumber)
     @Html.HiddenFor(x => x.Rfi.ManagerId)
     @Html.HiddenFor(x => x.Rfi.RecCreatedBy)
@@ -72,7 +72,7 @@
                 </div>
             </div>
         }
-        
+
         <!--Input Field begin-->
         <div class="control-group row-fluid">
             <div class="span3">
@@ -112,7 +112,6 @@
             </div>
         </div>
         <!--Input Field end-->
-        
         <!--Basic Responsive Table begin-->
         <div class="row-fluid" id="ress">
             <div class="span12">
@@ -134,7 +133,7 @@
                                 <tr data-id=@i>
                                     <td style='display:none'>
                                         <input name='RfiItem.Index' type='hidden' value=@i />
-                                        
+
                                         @Html.HiddenFor(m => m.RfiItem[i].IsItemDescription)
                                         @Html.HiddenFor(m => m.RfiItem[i].IsItemSKU)
                                         @Html.HiddenFor(m => m.RfiItem[i].ItemVariationId)
@@ -144,19 +143,19 @@
                                     <td>
                                         <div class="control-group row-fluid">
                                             <div class="span1">
-                                                <label class="control-label serialNumber">@(i+1)</label>
+                                                <label class="control-label serialNumber">@(i + 1)</label>
                                             </div>
                                         </div>
                                     </td>
                                     <td>
-                                        @Html.TextAreaFor(m => m.RfiItem[i].ItemDetails, new { @class = "auto-resize",@rows=2 })
-                                        
+                                        @Html.TextAreaFor(m => m.RfiItem[i].ItemDetails, new { @class = "auto-resize", @rows = 2 })
+
                                         <button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher">+</button>
                                         @Html.ValidationMessageFor(m => m.RfiItem[i].ItemDetails)
                                     </td>
                                     <td class="quantity">
                                         @Html.TextBoxFor(m => m.RfiItem[i].ItemQty, new { @class = "n1", @rows = 2 })
-                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemQty,null, new { @class = "required"})
+                                        @Html.ValidationMessageFor(m => m.RfiItem[i].ItemQty, null, new { @class = "required" })
                                     </td>
 
 
@@ -199,7 +198,7 @@
                                 </td>
                             </tr>
                         }
-                        
+
                     </tbody>
                 </table>
             </div>
@@ -232,7 +231,7 @@
                 </div>
             </div>
         </div>
-       
+
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
                 <button type="submit" class="btn" onclick="validateForm(event)">@EPMS.WebModels.Resources.RFI.RFI.Submit</button>
@@ -292,6 +291,31 @@
             $('.select2me').select2({
                 placeholder: "Select",
             });
+        });
+        $("#OrderNo").on("change", function () {
+            $('.qouteAdd').empty();
+            var orderId = $(this).val();
+            if (orderId != "" && orderId != 0) {
+                var url = siteUrl + "/Inventory/RFI/GetOrderItems";
+                ajaxLoader();
+                $.ajax({
+                    url: url,
+                    type: 'GET',
+                    dataType: "json",
+                    data: {
+                        orderId: orderId
+                    },
+                    success: function (data) {
+                        appendOrderItems(data);
+                    },
+                    error: function (e) {
+                        $.unblockUI();
+                        alert('Error=' + e.toString());
+                    }
+                });
+            } else {
+                appendEmptyRow();
+            }
         });
 
         $("#btnTreeSelector").click(function (event) {
@@ -504,32 +528,7 @@
         });
         reActivateDelete();
 
-        function reActivateDelete() {
-            $('.deleteRow').on("click", function () {
-                var count = $('.qouteAdd tr').length;
-                if (count > 1) {
-                    $(this).parent().parent().remove();
-                }
-                activateSerial();
-            });
-        }
-        function reActivateDeleteOnly() {
-            $('.deleteRow').on("click", function () {
-                var count = $('.qouteAdd tr').length;
-                if (count > 1) {
-                    $(this).parent().parent().remove();
-                }
-            });
-        }
 
-        function activateSerial() {
-            var count = $('.qouteAdd tr').length;
-            var add = 0;
-            $('.qouteAdd tr').each(function () {
-                add++;
-                $(this).find(".serialNumber").text(add);
-            });
-        }
         var $radios = $('input:radio[name=ItemFrom]');
         $radios.filter('[value=dropdown]').prop('checked', true);
         $("#Simple_Select_Box_with_Filter_Search").show();
@@ -554,6 +553,116 @@
         height: 200,
         toolbar: 'tiny'
     });
+
+    function appendOrderItems(data) {
+        for (var i = 0; i < data.length; i++) {
+            var index = $("#RFIItemsTableBody").children("tr").length;
+            var indexCell = "<td style='display:none'>" +
+                "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+                "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' value='" + data[i].IsItemDescription + "' />" +
+                "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' value='" + data[i].IsItemSKU + "' />" +
+                "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' value='" + data[i].ItemVariationId + "' />" +
+                "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
+                "</td>";
+            //RfiItem
+            var html = ' <tr data-id=' + index + '>' +
+                indexCell +
+                '<td>' +
+                '<div class="control-group row-fluid">' +
+                '<div class="span1">' +
+                '<label class="control-label serialNumber"  ></label>' +
+                '</div></div>' +
+                '</td>' +
+                '<td> <textarea rows="2"  class="auto-resize" readonly="true" id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required.">' + data[i].ItemDetails + '</textarea>' +
+                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+                '</td>' +
+                '<td class="quantity"> ' +
+                '<input class="n1" type="text" readonly="true" id="RfiItem_' + index + '_ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." value="' + data[i].ItemQuantity + '" />' +
+                '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+                '</td>' +
+                '<td class="delete"> <i class="icon-photon minus" style="margin-top: 20px;"></i>' +
+                '</td></tr>';
+
+            $('.qouteAdd').append(html);
+        }
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
+
+        activateSerial();
+        reActivateDelete();
+        $.unblockUI();
+    }
+
+    function appendEmptyRow() {
+        var index = 0;
+        var indexCell = "<td style='display:none'>" +
+            "<input name='RfiItem.Index' type='hidden' value='" + index + "' />" +
+            "<input name='RfiItem[" + index + "].IsItemDescription' id='RfiItem_" + index + "__IsItemDescription' type='hidden' />" +
+            "<input name='RfiItem[" + index + "].IsItemSKU' id='RfiItem_" + index + "__IsItemSKU' type='hidden' />" +
+            "<input name='RfiItem[" + index + "].ItemVariationId' id='RfiItem_" + index + "__ItemVariationId' type='hidden' />" +
+            "<input name='RfiItem[" + index + "].PlaceInDepartment' id='RfiItem_" + index + "__PlaceInDepartment' type='hidden' />" +
+            "</td>";
+        //RfiItem
+        var html = ' <tr data-id=' + index + '>' +
+            indexCell +
+            '<td>' +
+            '<div class="control-group row-fluid">' +
+            '<div class="span1">' +
+            '<label class="control-label serialNumber"  ></label>' +
+            '</div></div>' +
+            '</td>' +
+            '<td> <textarea rows="2"  class="auto-resize" id="RfiItem_' + index + '__ItemDetails" name="RfiItem[' + index + '].ItemDetails" data-val="true" data-val-required="The Item Details field is required."></textarea>' +
+            '<button type="button" class="btn itemAdder" data-toggle="modal" data-target="#itemSearcher" >+</button>' +
+            '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemDetails" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td class="quantity"> ' +
+            '<input class="n1" type="text" id="RfiItem_' + index + '_ItemQty" name="RfiItem[' + index + '].ItemQty" data-val="true" data-val-number="The field Item Qty must be a number." data-val-range="Please enter valid quantity" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Item Qty field is required." >' +
+            '<span class="field-validation-valid required" data-valmsg-for="RfiItem[' + index + '].ItemQty" data-valmsg-replace="true"></span>' +
+            '</td>' +
+            '<td class="delete"> <i class="icon-photon minus" style="margin-top: 20px;"></i>' +
+            '</td></tr>';
+
+        $('.qouteAdd').append(html);
+        //remove validation
+        $("form").removeData("validator").removeData("unobtrusiveValidation");
+
+        //Parse the form again to apply new validations
+        $.validator.unobtrusive.parse("form");
+
+        activateSerial();
+        reActivateDelete();
+        $.unblockUI();
+    }
+
+    function reActivateDelete() {
+        $('.deleteRow').on("click", function () {
+            var count = $('.qouteAdd tr').length;
+            if (count > 1) {
+                $(this).parent().parent().remove();
+            }
+            activateSerial();
+        });
+    }
+    function reActivateDeleteOnly() {
+        $('.deleteRow').on("click", function () {
+            var count = $('.qouteAdd tr').length;
+            if (count > 1) {
+                $(this).parent().parent().remove();
+            }
+        });
+    }
+
+    function activateSerial() {
+        var count = $('.qouteAdd tr').length;
+        var add = 0;
+        $('.qouteAdd tr').each(function () {
+            add++;
+            $(this).find(".serialNumber").text(add);
+        });
+    }
     function getItemVariationIds(excelItems, callback) {
         var url = siteUrl + "/Inventory/ItemVariation/GetItemVariationId";
         $.ajax({

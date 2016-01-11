@@ -659,7 +659,7 @@ namespace IdentitySample.Controllers
             switch (roleName)
             {
                 case "Admin":
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < adminWidgets.Length; i++)
                     {
                         DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
@@ -672,7 +672,7 @@ namespace IdentitySample.Controllers
                     }
                     break;
                 case "Employee":
-                    for (int i = 0; i < 5; i++)
+                    for (int i = 0; i < employeeWidgets.Length; i++)
                     {
                         DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
@@ -685,7 +685,7 @@ namespace IdentitySample.Controllers
                     }
                     break;
                 case "Customer":
-                    for (int i = 0; i < 3; i++)
+                    for (int i = 0; i < customerWidgets.Length; i++)
                     {
                         DashboardWidgetPreference preferences = new DashboardWidgetPreference
                         {
@@ -728,7 +728,6 @@ namespace IdentitySample.Controllers
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        //[EPMS.WebBase.Mvc.SiteAuthorize(PermissionKey = "UserAddEdit")]
         public async Task<ActionResult> Signup(SignupViewModel signupViewModel)
         {
             // Add new User
