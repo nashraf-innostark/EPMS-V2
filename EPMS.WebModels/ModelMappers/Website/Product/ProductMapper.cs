@@ -125,6 +125,24 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             }
             return retVal;
         }
+
+        public static WebsiteModels.Product CreateFromServerToClientForListView(this Models.DomainModels.Product source)
+        {
+            return new WebsiteModels.Product
+            {
+                ProductId = source.ProductId,
+                ProductNameEn = !string.IsNullOrEmpty(source.ProductNameEn) ? source.ProductNameEn : source.ItemVariation.SKUDescriptionEn,
+                ProductNameAr = !string.IsNullOrEmpty(source.ProductNameAr) ? source.ProductNameAr : source.ItemVariation.SKUDescriptionAr,
+                ItemVariationId = source.ItemVariationId,
+                ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemDescriptionEn),
+                ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemDescriptionAr),
+                ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice,
+                DiscountedPrice = source.DiscountedPrice,
+                ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn),
+                ProductSpecificationAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationAr) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoAr)
+            };
+        }
+
         public static WebsiteModels.Product CreateForCatalogue(this Models.DomainModels.Product source)
         {
             WebsiteModels.Product retVal = new WebsiteModels.Product();
@@ -264,7 +282,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                     }
                 }
             }
-            
+
             var direction = Resources.Shared.Common.TextDirection;
             if (source.ItemVariationId != null)
             {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -19,6 +20,7 @@ namespace EPMS.WebModels.ModelMappers
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 VendorId = Convert.ToInt64(source.VendorId),
@@ -50,12 +52,12 @@ namespace EPMS.WebModels.ModelMappers
                 VendorId = source.VendorId,
                 UnitPrice = source.UnitPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = !string.IsNullOrEmpty(source.RecCreatedDateStr) ? DateTime.ParseExact(source.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
         }
-        public static PurchaseOrderItem CreateFromClientToServer(this WebsiteModels.PurchaseOrderItem source, long poId, string createdBy, DateTime createdDate, DateTime updatedDate)
+        public static PurchaseOrderItem CreateFromClientToServer(this WebsiteModels.PurchaseOrderItem source, long poId, string createdBy, string createdDate, DateTime updatedDate)
         {
             return new PurchaseOrderItem
             {
@@ -72,7 +74,7 @@ namespace EPMS.WebModels.ModelMappers
                 PurchaseOrderId = poId,
 
                 RecCreatedBy = createdBy,
-                RecCreatedDate = createdDate,
+                RecCreatedDate = DateTime.ParseExact(createdDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = createdBy,
                 RecUpdatedDate = updatedDate,
             };

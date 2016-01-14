@@ -24,6 +24,7 @@ namespace EPMS.WebModels.ModelMappers
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
@@ -66,7 +67,7 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = !string.IsNullOrEmpty(source.RecCreatedDateStr) ? DateTime.ParseExact(source.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -96,10 +97,10 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = !string.IsNullOrEmpty(source.RecCreatedDateStr) ? DateTime.ParseExact(source.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDate,
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
-                PurchaseOrderItems = poItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrderId, source.RecCreatedBy, source.RecCreatedDate, source.RecUpdatedDate)).ToList()
+                PurchaseOrderItems = poItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrderId, source.RecCreatedBy, source.RecCreatedDateStr, source.RecUpdatedDate)).ToList()
             };
         }
         public static PurchaseOrderStatus CreateForStatus(this WebsiteModels.PurchaseOrder source)
@@ -152,10 +153,10 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.Order.ManagerId,
                 Status = source.Order.Status,
                 RecCreatedBy = source.Order.RecCreatedBy,
-                RecCreatedDate = source.Order.RecCreatedDate,
+                RecCreatedDate = !string.IsNullOrEmpty(source.Order.RecCreatedDateStr) ? DateTime.ParseExact(source.Order.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.Order.RecCreatedDate,
                 RecUpdatedBy = source.Order.RecUpdatedBy,
                 RecUpdatedDate = source.Order.RecUpdatedDate,
-                PurchaseOrderItems = source.PoItems.Select(x => x.CreateFromClientToServer(source.Order.PurchaseOrderId, source.Order.RecCreatedBy, source.Order.RecCreatedDate, source.Order.RecUpdatedDate)).ToList()
+                PurchaseOrderItems = source.PoItems.Select(x => x.CreateFromClientToServer(source.Order.PurchaseOrderId, source.Order.RecCreatedBy, source.Order.RecCreatedDateStr, source.Order.RecUpdatedDate)).ToList()
             };
         }
         public static PurchaseOrder CreateFromClientToServer(this PurchaseOrderDetailsViewModel source)
@@ -183,10 +184,10 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.PurchaseOrder.ManagerId,
                 Status = source.PurchaseOrder.Status,
                 RecCreatedBy = source.PurchaseOrder.RecCreatedBy,
-                RecCreatedDate = source.PurchaseOrder.RecCreatedDate,
+                RecCreatedDate = !string.IsNullOrEmpty(source.PurchaseOrder.RecCreatedDateStr) ? DateTime.ParseExact(source.PurchaseOrder.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.PurchaseOrder.RecCreatedDate,
                 RecUpdatedBy = source.PurchaseOrder.RecUpdatedBy,
                 RecUpdatedDate = source.PurchaseOrder.RecUpdatedDate,
-                PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrder.PurchaseOrderId, source.PurchaseOrder.RecCreatedBy, source.PurchaseOrder.RecCreatedDate, source.PurchaseOrder.RecUpdatedDate)).ToList()
+                PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrder.PurchaseOrderId, source.PurchaseOrder.RecCreatedBy, source.PurchaseOrder.RecCreatedDateStr, source.PurchaseOrder.RecUpdatedDate)).ToList()
             };
         }
 

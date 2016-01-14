@@ -184,17 +184,21 @@
     var url;
     var divId = "jstree";
     var dir;
+    var isTreeDataLoaded;
     $(function () {
+        isTreeDataLoaded = false;
         siteUrl = $('#siteURL').val();
         dir = '@direction';
         
         $("#TreeSelector").click(function (event) {
-            $.blockUI({
-                message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-                css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-            });
-            url = siteUrl + "/Website/Product/GetTreeData/";
-            populateTreeJson(url, divId, dir);
+            if (isTreeDataLoaded === false) {
+                $.blockUI({
+                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+                });
+                url = siteUrl + "/Website/Product/GetTreeData/";
+                populateTreeJson(url, divId, dir);
+            }
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };

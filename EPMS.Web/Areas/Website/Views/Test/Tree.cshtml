@@ -24,7 +24,9 @@
         var url;
         var divId = "jstree";
         var selectedChildNodes = new Array();
+        var isTreeDataLoaded;
         $(function () {
+            isTreeDataLoaded = false;
             $.jstree.path = "/Scripts/plugins/";
             url = "/Website/Test/GetTreeData/";
             populateTreeJson(url, divId);

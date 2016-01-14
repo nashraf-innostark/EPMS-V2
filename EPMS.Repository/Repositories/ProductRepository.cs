@@ -191,7 +191,8 @@ namespace EPMS.Repository.Repositories
                 s =>
                     ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
                      (s.ProductNameEn.Contains(searchRequest.SearchString) || s.ProductNameAr.Contains(searchRequest.SearchString) ||
-                     (s.ProductPrice.Contains(searchRequest.SearchString)) ||
+                     s.ItemVariation.SKUDescriptionEn.Contains(searchRequest.SearchString) ||
+                     s.ProductPrice.Contains(searchRequest.SearchString) ||
                      s.ProductDescEn.Contains(searchRequest.SearchString) || s.ProductDescAr.Contains(searchRequest.SearchString) ||
                      s.ProductSpecificationEn.Contains(searchRequest.SearchString) || s.ProductSpecificationAr.Contains(searchRequest.SearchString)));
             IEnumerable<Product> products = searchRequest.sSortDir_0 == "asc"

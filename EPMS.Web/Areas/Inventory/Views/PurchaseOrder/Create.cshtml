@@ -58,6 +58,7 @@
     @Html.HiddenFor(model => model.Order.Status)
     @Html.HiddenFor(model => model.Order.RecCreatedBy)
     @Html.HiddenFor(model => model.Order.RecCreatedDate)
+    @Html.HiddenFor(model => model.Order.RecCreatedDateStr)
     <div class="container-fluid">
         <div class="control-group row-fluid">
             <div class="span3">
@@ -96,6 +97,7 @@
                                         @Html.HiddenFor(m => m.PoItems[i].PlaceInDepartment)
                                         @Html.HiddenFor(m => m.PoItems[i].RecCreatedBy)
                                         @Html.HiddenFor(m => m.PoItems[i].RecCreatedDate)
+                                        @Html.HiddenFor(m => m.PoItems[i].RecCreatedDateStr)
                                     </td>
                                     <td>
                                         <div class="control-group row-fluid">

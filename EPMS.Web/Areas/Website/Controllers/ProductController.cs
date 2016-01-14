@@ -70,7 +70,7 @@ namespace EPMS.Web.Areas.Website.Controllers
             searchRequest.SearchString = Request["search"];
             var products = productService.GetAllProducts(searchRequest);
 
-            List<Product> productList = products.Products.Select(x => x.CreateFromServerToClient()).ToList();
+            List<Product> productList = products.Products.Select(x => x.CreateFromServerToClientForListView()).ToList();
 
             var viewModel = new ProductLvModel
             {

@@ -82,6 +82,7 @@ function populateTreeJson(url, divId, dir) {
             direction: dir
         },
         success: function (data) {
+            isTreeDataLoaded = true;
             var tree = JSON.parse(data);
             $("#" + divId).jstree({
                 'core': {

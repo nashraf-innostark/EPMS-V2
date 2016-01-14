@@ -44,6 +44,7 @@
         @Html.HiddenFor(model => model.RecentPo.ManagerId)
         @Html.HiddenFor(model => model.RecentPo.RecCreatedBy)
         @Html.HiddenFor(model => model.RecentPo.RecCreatedDate)
+        @Html.HiddenFor(model => model.RecentPo.RecCreatedDateStr)
 
         <div class="control-group row-fluid">
             <div class="form-legend centTitle">
@@ -138,6 +139,7 @@
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].PlaceInDepartment)
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].RecCreatedBy)
                                         @Html.HiddenFor(m => m.PurchaseOrdersItems[po].RecCreatedDate)
+                                        @Html.HiddenFor(m => m.PurchaseOrdersItems[po].RecCreatedDateStr)
                                         <tr id="@i">
                                             <td>@(i + 1)</td>
                                             <td>@Html.DisplayFor(m => m.PurchaseOrdersItems[po].ItemName)</td>

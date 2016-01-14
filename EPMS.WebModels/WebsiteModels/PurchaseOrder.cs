@@ -19,6 +19,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string RequesterNameAr { get; set; }
         public string ManagerName { get; set; }
         public string ManagerNameAr { get; set; }
+        public string RecCreatedDateStr { get; set; }
         public string RecCreatedDateString { get; set; }
     }
 }
