@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace EPMS.WebModels.WebsiteModels
 {
@@ -20,8 +21,9 @@ namespace EPMS.WebModels.WebsiteModels
         public string ItemCode { get; set; }
         public string PlaceInDepartment { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDateStr { get; set; }
         public string RecUpdatedBy { get; set; }
-        public System.DateTime RecUpdatedDate { get; set; }
+        public DateTime RecUpdatedDate { get; set; }
     }
 }
