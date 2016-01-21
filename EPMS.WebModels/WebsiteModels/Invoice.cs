@@ -11,7 +11,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string Notes { get; set; }
         public string NotesA { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public string ClientNameE { get; set; }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
@@ -92,7 +93,7 @@ namespace EPMS.WebModels.ModelMappers
             }
             model.AdditionalInfoAr = infoAr;
             model.RecCreatedBy = source.RecCreatedBy;
-            model.RecCreatedDt = source.RecCreatedDt;
+            model.RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             model.RecLastUpdatedBy = source.RecLastUpdatedBy;
             model.RecLastUpdatedDt = source.RecLastUpdatedDt;
             model.Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList();
@@ -190,7 +191,7 @@ namespace EPMS.WebModels.ModelMappers
             model.AdditionalInfoEn = source.AdditionalInfoEn;
             model.AdditionalInfoAr = source.AdditionalInfoAr;
             model.RecCreatedBy = source.RecCreatedBy;
-            model.RecCreatedDt = source.RecCreatedDt;
+            model.RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             model.RecLastUpdatedBy = source.RecLastUpdatedBy;
             model.RecLastUpdatedDt = source.RecLastUpdatedDt;
             model.Colors = source.Colors.Select(x => x.CreateFromServerToClient()).ToList();
@@ -250,7 +251,7 @@ namespace EPMS.WebModels.ModelMappers
                 AdditionalInfoEn = source.AdditionalInfoEn,
                 AdditionalInfoAr = source.AdditionalInfoAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

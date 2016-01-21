@@ -12,7 +12,7 @@ namespace EPMS.WebModels.WebsiteModels
         public int Status { get; set; }
         public string ManagerId { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
         public string RequesterName { get; set; }

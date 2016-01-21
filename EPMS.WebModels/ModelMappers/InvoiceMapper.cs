@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -14,7 +16,7 @@ namespace EPMS.WebModels.ModelMappers
                 NotesA = source.NotesA,
                 QuotationId = source.QuotationId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ClientNameE = source.Quotation.Customer.CustomerNameE,
@@ -50,7 +52,7 @@ namespace EPMS.WebModels.ModelMappers
                 NotesA = source.NotesA,
                 QuotationId = source.QuotationId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };

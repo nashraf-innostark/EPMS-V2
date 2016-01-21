@@ -12,5 +12,6 @@
         public string DescriptionForQuotationAr { get; set; }
         public string ItemSKUDescriptoinEn { get; set; }
         public string ItemSKUDescriptoinAr { get; set; }
+        public double? UnitPrice { get; set; }
     }
 }

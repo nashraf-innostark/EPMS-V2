@@ -934,6 +934,7 @@
                     }
                 }
                 $("#QuotationItemDetails_" + index + "__ItemDetails").val(textToAppend);
+                $("#QuotationItemDetails_" + index + "__UnitPrice").val(value.UnitPrice);
             }
             getItemVariationDetail(itemVariationId, callback);
             $('#itemSearcher').modal('toggle');
@@ -978,6 +979,7 @@
                     }
                 }
                 $("#QuotationItemDetails_" + index + "__ItemDetails").val(textToAppend);
+                $("#QuotationItemDetails_" + index + "__UnitPrice").val(value.UnitPrice);
             }
             getItemVariationDetail(itemVariationId, callback);
             $('#itemSearcher').modal('toggle');

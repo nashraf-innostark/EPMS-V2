@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -102,7 +103,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 else
                 {
                     viewModel.ImageSlider.RecCreatedBy = User.Identity.GetUserId();
-                    viewModel.ImageSlider.RecCreatedDate = DateTime.Now;
+                    viewModel.ImageSlider.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     viewModel.ImageSlider.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.ImageSlider.RecUpdatedDate = DateTime.Now;
                     ImageSlider imageSliderToAdd = viewModel.ImageSlider.CreateFromClientToServer();

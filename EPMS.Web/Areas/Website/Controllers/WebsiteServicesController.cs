@@ -146,7 +146,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 {
                     // Add
                     viewModel.WebsiteService.RecCreatedBy = User.Identity.GetUserId();
-                    viewModel.WebsiteService.RecCreatedDate = DateTime.Now;
+                    viewModel.WebsiteService.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     viewModel.WebsiteService.RecLastUpdatedBy = User.Identity.GetUserId();
                     viewModel.WebsiteService.RecLastUpdatedDate = DateTime.Now;
                     var dataToUpdate = viewModel.WebsiteService.CreateFromClientToServer();

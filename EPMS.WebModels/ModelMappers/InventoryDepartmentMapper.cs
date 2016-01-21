@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.RequestModels;
 using EPMS.WebModels.WebsiteModels.Common;
@@ -21,7 +23,7 @@ namespace EPMS.WebModels.ModelMappers
                 ParentDepartmentAr = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameAr : "",
                 NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new WebsiteModels.InventorySections(),
@@ -41,7 +43,7 @@ namespace EPMS.WebModels.ModelMappers
                 ParentDepartmentAr = source.ParentDepartment != null ? source.ParentDepartment.DepartmentNameAr : "",
                 NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 ParentSection = source.ParentDepartment != null ? source.ParentDepartment.CreateFromServerToClientSections() : new WebsiteModels.InventorySections(),
@@ -69,7 +71,7 @@ namespace EPMS.WebModels.ModelMappers
             retVal.ParentDepartmentAr = parent != null ? parent.DepartmentNameAr : "None";
             retVal.NoOfSections = source.InventoryDepartments.Any() ? source.InventoryDepartments.Count : 0;
             retVal.RecCreatedBy = source.RecCreatedBy;
-            retVal.RecCreatedDt = source.RecCreatedDt;
+            retVal.RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             retVal.RecLastUpdatedBy = source.RecLastUpdatedBy;
             retVal.RecLastUpdatedDt = source.RecLastUpdatedDt;
             retVal.InventoryDepartments = source.InventoryDepartments.Any()
@@ -100,7 +102,7 @@ namespace EPMS.WebModels.ModelMappers
             dept.DepartmentColor = source.DepartmentColor;
             dept.DepartmentDesc = source.DepartmentDesc;
             dept.RecCreatedBy = source.RecCreatedBy;
-            dept.RecCreatedDt = source.RecCreatedDt;
+            dept.RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en"));
             dept.RecLastUpdatedBy = source.RecLastUpdatedBy;
             dept.RecLastUpdatedDt = source.RecLastUpdatedDt;
             var request = new InventoryDepartmentRequest {InventoryDepartment = dept};
@@ -116,7 +118,7 @@ namespace EPMS.WebModels.ModelMappers
             dept.DepartmentColor = source.DepartmentColor;
             dept.DepartmentDesc = source.DepartmentDesc;
             dept.RecCreatedBy = source.RecCreatedBy;
-            dept.RecCreatedDt = source.RecCreatedDt;
+            dept.RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en"));
             dept.RecLastUpdatedBy = source.RecLastUpdatedBy;
             dept.RecLastUpdatedDt = source.RecLastUpdatedDt;
             return dept;

@@ -27,12 +27,13 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
                 RecUpdatedBy = source.Rfi.RecUpdatedBy,
                 RecUpdatedDate = source.Rfi.RecUpdatedDate,
 
-                RFIItems = source.RfiItem.Select(x => x.CreateRfiItemClientToServer(source.Rfi.RFIId, source.Rfi.RecCreatedBy, source.Rfi.RecCreatedDateStr, source.Rfi.RecUpdatedDate)).ToList()
+                // 
             };
+            rfi.RFIItems = source.RfiItem.Select(x => x.CreateRfiItemClientToServer(rfi.RFIId, rfi.RecCreatedBy, rfi.RecCreatedDate, rfi.RecUpdatedDate)).ToList();
             return rfi;
         }
 
-        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this WebsiteModels.RFIItem source, long rfiId, string createdBy, string createdDate, DateTime updatedDate)
+        public static EPMS.Models.DomainModels.RFIItem CreateRfiItemClientToServer(this WebsiteModels.RFIItem source, long rfiId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
             var rfiItem = new EPMS.Models.DomainModels.RFIItem
             {
@@ -46,7 +47,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
                 PlaceInDepartment = source.PlaceInDepartment,
 
                 RecCreatedBy = createdBy,
-                RecCreatedDate = DateTime.ParseExact(createdDate, "dd/MM/yyyy", new CultureInfo("en")),
+                RecCreatedDate = createdDate,
                 RecUpdatedBy = createdBy,
                 RecUpdatedDate = updatedDate
             };
@@ -150,7 +151,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
@@ -177,7 +178,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RFI
                 ItemDetails = source.ItemDetails,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Configuration;
+using System.Globalization;
 using System.IO;
 using System.Net;
 using System.Web;
@@ -87,7 +88,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 else
                 {
                     viewModel.WebsiteDepartment.RecCreatedBy = User.Identity.GetUserId();
-                    viewModel.WebsiteDepartment.RecCreatedDate = DateTime.Now;
+                    viewModel.WebsiteDepartment.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     viewModel.WebsiteDepartment.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.WebsiteDepartment.RecUpdatedDate = DateTime.Now;
                     EPMS.Models.DomainModels.WebsiteDepartment departmentToAdd = viewModel.WebsiteDepartment.CreateFromClientToServer();

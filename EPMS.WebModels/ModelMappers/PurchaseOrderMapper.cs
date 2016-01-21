@@ -23,7 +23,7 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedDateStr = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
@@ -67,7 +67,7 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = !string.IsNullOrEmpty(source.RecCreatedDateStr) ? DateTime.ParseExact(source.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -88,7 +88,7 @@ namespace EPMS.WebModels.ModelMappers
                 notesA = notesA.Replace("\t", "");
                 notesA = notesA.Replace("\n", "");
             }
-            return new PurchaseOrder
+            var po = new PurchaseOrder
             {
                 PurchaseOrderId = source.PurchaseOrderId,
                 FormNumber = source.FormNumber,
@@ -97,11 +97,12 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.ManagerId,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = !string.IsNullOrEmpty(source.RecCreatedDateStr) ? DateTime.ParseExact(source.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
-                PurchaseOrderItems = poItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrderId, source.RecCreatedBy, source.RecCreatedDateStr, source.RecUpdatedDate)).ToList()
             };
+            po.PurchaseOrderItems = poItems.Select(x => x.CreateFromClientToServer(po.PurchaseOrderId, po.RecCreatedBy, po.RecCreatedDate, po.RecUpdatedDate)).ToList();
+            return po;
         }
         public static PurchaseOrderStatus CreateForStatus(this WebsiteModels.PurchaseOrder source)
         {
@@ -144,7 +145,7 @@ namespace EPMS.WebModels.ModelMappers
                 notesA = notesA.Replace("\t", "");
                 notesA = notesA.Replace("\n", "");
             }
-            return new PurchaseOrder
+            var po = new PurchaseOrder
             {
                 PurchaseOrderId = source.Order.PurchaseOrderId,
                 FormNumber = source.Order.FormNumber,
@@ -153,11 +154,13 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.Order.ManagerId,
                 Status = source.Order.Status,
                 RecCreatedBy = source.Order.RecCreatedBy,
-                RecCreatedDate = !string.IsNullOrEmpty(source.Order.RecCreatedDateStr) ? DateTime.ParseExact(source.Order.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.Order.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Order.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Order.RecUpdatedBy,
                 RecUpdatedDate = source.Order.RecUpdatedDate,
-                PurchaseOrderItems = source.PoItems.Select(x => x.CreateFromClientToServer(source.Order.PurchaseOrderId, source.Order.RecCreatedBy, source.Order.RecCreatedDateStr, source.Order.RecUpdatedDate)).ToList()
+                
             };
+            po.PurchaseOrderItems = source.PoItems.Select(x => x.CreateFromClientToServer(po.PurchaseOrderId, po.RecCreatedBy, po.RecCreatedDate, po.RecUpdatedDate)).ToList();
+            return po;
         }
         public static PurchaseOrder CreateFromClientToServer(this PurchaseOrderDetailsViewModel source)
         {
@@ -175,7 +178,7 @@ namespace EPMS.WebModels.ModelMappers
                 notesA = notesA.Replace("\t", "");
                 notesA = notesA.Replace("\n", "");
             }
-            return new PurchaseOrder
+            var po = new PurchaseOrder
             {
                 PurchaseOrderId = source.PurchaseOrder.PurchaseOrderId,
                 FormNumber = source.PurchaseOrder.FormNumber,
@@ -184,11 +187,12 @@ namespace EPMS.WebModels.ModelMappers
                 ManagerId = source.PurchaseOrder.ManagerId,
                 Status = source.PurchaseOrder.Status,
                 RecCreatedBy = source.PurchaseOrder.RecCreatedBy,
-                RecCreatedDate = !string.IsNullOrEmpty(source.PurchaseOrder.RecCreatedDateStr) ? DateTime.ParseExact(source.PurchaseOrder.RecCreatedDateStr, "dd/MM/yyyy", new CultureInfo("en")) : source.PurchaseOrder.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.PurchaseOrder.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.PurchaseOrder.RecUpdatedBy,
                 RecUpdatedDate = source.PurchaseOrder.RecUpdatedDate,
-                PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(source.PurchaseOrder.PurchaseOrderId, source.PurchaseOrder.RecCreatedBy, source.PurchaseOrder.RecCreatedDateStr, source.PurchaseOrder.RecUpdatedDate)).ToList()
             };
+            po.PurchaseOrderItems = source.OrderItems.Select(x => x.CreateFromClientToServer(po.PurchaseOrderId, po.RecCreatedBy, po.RecCreatedDate, po.RecUpdatedDate)).ToList();
+            return po;
         }
 
         public static POWidget CreateWidget(this PurchaseOrder source)

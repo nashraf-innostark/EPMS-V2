@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Website.AboutUs
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Website.AboutUs
 {
     public static class AboutUsMapper
     {
@@ -17,7 +20,7 @@
                 MetaKeywordsAr = source.MetaKeywordsAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };
@@ -38,7 +41,7 @@
                 MetaKeywordsAr = source.MetaKeywordsAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

@@ -223,6 +223,10 @@ namespace EPMS.Implementation.Services
 
         public IList<long> RemoveDuplication(string[] itemVariationIds)
         {
+            //foreach (var variationId in itemVariationIds)
+            //{
+            //    variationId = variationId.Split('_')[0];
+            //}
             IList<long> noDuplication = new List<long>();
             if (itemVariationIds != null)
             {

@@ -38,7 +38,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string DescriptionForQuotationEn { get; set; }
         public string DescriptionForQuotationAr { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public long InventoryItemId { get; set; }

@@ -202,7 +202,7 @@ namespace EPMS.Web.Areas.PMS.Controllers
                 else//New
                 {
                     projectViewModel.Project.RecCreatedBy = User.Identity.GetUserId();
-                    projectViewModel.Project.RecCreatedDate = DateTime.Now;
+                    projectViewModel.Project.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     projectViewModel.Project.RecLastUpdatedBy = User.Identity.GetUserId();
                     projectViewModel.Project.RecLastUpdatedDate = DateTime.Now;
 

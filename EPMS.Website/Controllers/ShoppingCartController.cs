@@ -66,6 +66,7 @@ namespace EPMS.Website.Controllers
                 }
             }
             ViewBag.IsAuthenticated = User.Identity.IsAuthenticated;
+            ViewBag.UserId = User.Identity.GetUserId();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
         }

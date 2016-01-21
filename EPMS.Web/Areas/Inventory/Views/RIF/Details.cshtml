@@ -38,6 +38,7 @@
 {
     @Html.HiddenFor(x => x.Rif.RIFId)
     @Html.HiddenFor(x => x.Rif.FormNumber)
+    @Html.HiddenFor(x => x.Rif.IRFId)
     @Html.HiddenFor(x => x.Rif.OrderId)
     @Html.HiddenFor(x => x.Rif.ManagerId)
     @Html.HiddenFor(x => x.Rif.ReasonE)
@@ -95,7 +96,7 @@
                                     {
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.RFI.RFI.Date:</th>
-                                            <td>@Model.Rif.RecCreatedDate.ToShortDateString()</td>
+                                            <td>@Model.Rif.RecCreatedDate</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.RFI.RFI.RequesterName:</th>
@@ -106,7 +107,7 @@
                                     {
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.RFI.RFI.Date:</th>
-                                            <td>@Model.Rif.RecCreatedDate.ToShortDateString()</td>
+                                            <td>@Model.Rif.RecCreatedDate</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.RFI.RFI.ClientName:</th>

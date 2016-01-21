@@ -66,7 +66,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 NotesForCustomerE = notesForCusE,
                 NotesForCustomerA = notesForCusA,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationId = source.QuotationId
@@ -130,7 +130,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
             project.NotesForCustomerE = notesForCusE;
             project.NotesForCustomerA = notesForCusA;
             project.RecCreatedBy = source.RecCreatedBy;
-            project.RecCreatedDate = source.RecCreatedDate;
+            project.RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en"));
             project.RecLastUpdatedBy = source.RecLastUpdatedBy;
             project.RecLastUpdatedDate = source.RecLastUpdatedDate;
             if (source.CustomerId > 0)
@@ -177,7 +177,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 OtherCost = Convert.ToInt64(source.OtherCost + source.ReportProjectTasks.Sum(x => x.TotalCost)),
                 Status = source.Status,
                 TotalTasks = source.ReportProjectTasks.Count,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };
 
@@ -207,7 +207,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
                 OtherCost = Convert.ToInt64(source.OtherCost + source.ReportProjectTasks.Sum(x => x.TotalCost)),
                 Status = source.Status,
                 TotalTasks = source.ReportProjectTasks.Count,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 CustomerNameE = Thread.CurrentThread.CurrentCulture.ToString() == "en"
                     ? source.CustomerNameE

@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Website.Department
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Website.Department
 {
     public static class WebsiteDepartmentMapper
     {
@@ -28,7 +31,7 @@
                 DescriptionAr = descpAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
@@ -48,7 +51,7 @@
                 DescriptionAr = source.DescriptionAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 
 namespace EPMS.WebModels.ModelMappers
@@ -22,7 +23,7 @@ namespace EPMS.WebModels.ModelMappers
                 InstallmentNumber = source.InstallmentNumber,
                 OrderNumber = source.Invoice.Quotation.Orders.FirstOrDefault().OrderNo,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 InvoiceNumber = source.Invoice.InvoiceNumber,
@@ -47,7 +48,7 @@ namespace EPMS.WebModels.ModelMappers
                 AmountPaid = source.AmountPaid,
                 InstallmentNumber = source.InstallmentNumber,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 PaymentType = source.PaymentType,

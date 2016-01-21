@@ -1,4 +1,7 @@
-﻿namespace EPMS.WebModels.ModelMappers.Website.ContactUs
+﻿using System;
+using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers.Website.ContactUs
 {
     public static class ContactUsMapper
     {
@@ -22,7 +25,7 @@
                 POBox = source.POBox,
                 Phone = source.Phone,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };
@@ -48,7 +51,7 @@
                 POBox = source.POBox,
                 Phone = source.Phone,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

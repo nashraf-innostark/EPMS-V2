@@ -305,7 +305,8 @@ namespace EPMS.Implementation.Services
                     DescriptionForQuotationEn = variation.DescriptionForQuotationEn,
                     DescriptionForQuotationAr = variation.DescriptionForQuotationAr,
                     ItemSKUDescriptoinEn = variation.SKUDescriptionEn,
-                    ItemSKUDescriptoinAr = variation.SKUDescriptionAr
+                    ItemSKUDescriptoinAr = variation.SKUDescriptionAr,
+                    UnitPrice = variation.UnitPrice
                 };
             }
             return new ItemVariationDetail();

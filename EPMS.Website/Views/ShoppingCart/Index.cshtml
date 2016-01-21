@@ -9,7 +9,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = Common.TextDirection;
     DateTime today = DateTime.Now;
-    var checkoutUrl = ConfigurationManager.AppSettings["CpLink"]+"/CMS/Quotation/RFQ?from=Client&C_Id="+Session["UserID"];
+    var checkoutUrl = ConfigurationManager.AppSettings["CpLink"] + "/Account/CustomAuthenticationOfUserFromWeb?from=Client&C_Id=" + ViewBag.UserId;
 }
 <link href="~/Content/pnotify.core.min.css" rel="stylesheet" />
 

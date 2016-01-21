@@ -25,7 +25,7 @@ namespace EPMS.WebModels.ModelMappers
                 FromWarehouseId = source.FromWarehouseId,
                 ToWarehouseId = source.ToWarehouseId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
@@ -74,7 +74,7 @@ namespace EPMS.WebModels.ModelMappers
                 FromWarehouseId = source.FromWarehouseId,
                 ToWarehouseId = source.ToWarehouseId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -108,7 +108,7 @@ namespace EPMS.WebModels.ModelMappers
                 FromWarehouseId = source.Tir.FromWarehouseId,
                 ToWarehouseId = source.Tir.ToWarehouseId,
                 RecCreatedBy = source.Tir.RecCreatedBy,
-                RecCreatedDate = source.Tir.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Tir.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Tir.RecUpdatedBy,
                 RecUpdatedDate = source.Tir.RecUpdatedDate,
                 TIRItems = source.TirItems.Select(x => x.CreateFromClientToServer(source.Tir.Id, source.Tir.RecCreatedBy, source.Tir.RecCreatedDate, source.Tir.RecUpdatedDate)).ToList()

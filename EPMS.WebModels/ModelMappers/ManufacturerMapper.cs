@@ -1,4 +1,6 @@
-﻿namespace EPMS.WebModels.ModelMappers
+﻿using System.Globalization;
+
+namespace EPMS.WebModels.ModelMappers
 {
     public static class ManufacturerMapper
     {
@@ -10,7 +12,7 @@
                 ManufacturerNameEn = source.ManufacturerNameEn,
                 ManufacturerNameAr = source.ManufacturerNameAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

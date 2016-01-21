@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Script.Serialization;
 using EPMS.Models.Common;
@@ -192,7 +193,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 else
                 {
                     rifViewModel.Dif.RecCreatedBy = User.Identity.GetUserId();
-                    rifViewModel.Dif.RecCreatedDate = DateTime.Now;
+                    rifViewModel.Dif.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
 
                     rifViewModel.Dif.RecUpdatedBy = User.Identity.GetUserId();
                     rifViewModel.Dif.RecUpdatedDate = DateTime.Now;

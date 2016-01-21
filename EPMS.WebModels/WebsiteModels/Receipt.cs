@@ -10,7 +10,7 @@ namespace EPMS.WebModels.WebsiteModels
         public decimal AmountPaid { get; set; }
         public int InstallmentNumber { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public short PaymentType { get; set; }

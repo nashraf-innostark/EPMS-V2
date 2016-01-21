@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DashboardModels;
 using EPMS.Models.DomainModels;
@@ -28,7 +29,7 @@ namespace EPMS.WebModels.ModelMappers
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 Notes = source.Notes,
@@ -85,7 +86,7 @@ namespace EPMS.WebModels.ModelMappers
                 ShipmentDetails = source.ShipmentDetails,
                 Status = source.Status,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ManagerId = source.ManagerId,

@@ -156,13 +156,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 // Save Quotation
                 viewModel.FromOrder = true;
                 viewModel.RecCreatedBy = User.Identity.GetUserId();
-                viewModel.RecCreatedDate = DateTime.Now;
+                viewModel.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                 viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
                 viewModel.RecLastUpdatedDate = DateTime.Now;
                 foreach (var detail in viewModel.QuotationItemDetails)
                 {
                     detail.RecCreatedBy = User.Identity.GetUserId();
-                    detail.RecCreatedDate = DateTime.Now;
+                    detail.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     detail.RecLastUpdatedBy = User.Identity.GetUserId();
                     detail.RecLastUpdatedDate = DateTime.Now;
                 }

@@ -1,4 +1,5 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -20,7 +21,7 @@ namespace EPMS.WebModels.ModelMappers
                 Status = source.Status,
                 Requests = request,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 RFQItems = source.RFQItems.Select(x=>x.CreateFromClientToServer()).ToList()
@@ -38,7 +39,7 @@ namespace EPMS.WebModels.ModelMappers
                 Status = source.Status,
                 Requests = source.Requests,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 RFQItems = source.RFQItems.Select(x=>x.CreateFromServerToClient()).ToList(),

@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Globalization;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -25,7 +27,7 @@ namespace EPMS.WebModels.ModelMappers
                 Description = descp,
                 Link = source.Link,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };
@@ -45,7 +47,7 @@ namespace EPMS.WebModels.ModelMappers
                 Description = source.Description,
                 Link = source.Link,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
             };

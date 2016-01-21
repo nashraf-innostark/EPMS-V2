@@ -224,7 +224,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             catch
             {
-                return View();
+                return View(rfiViewModel);
             }
         }
 

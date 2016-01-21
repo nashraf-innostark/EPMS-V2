@@ -226,7 +226,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 else
                 {
                     rifViewModel.Rif.RecCreatedBy = User.Identity.GetUserId();
-                    rifViewModel.Rif.RecCreatedDate = DateTime.Now;
+                    rifViewModel.Rif.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
 
                     rifViewModel.Rif.RecUpdatedBy = User.Identity.GetUserId();
                     rifViewModel.Rif.RecUpdatedDate = DateTime.Now;
@@ -298,11 +298,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     return RedirectToAction("Index");
                 }
                 //failed to save
-                return View();
+                return View(viewModel);
             }
             catch (Exception)
             {
-                return View();
+                return View(viewModel);
             }
         }
         #endregion

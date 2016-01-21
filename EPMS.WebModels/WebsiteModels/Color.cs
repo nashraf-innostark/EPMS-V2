@@ -9,7 +9,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string ColorNameAr { get; set; }
         public string ColorCode { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
     }

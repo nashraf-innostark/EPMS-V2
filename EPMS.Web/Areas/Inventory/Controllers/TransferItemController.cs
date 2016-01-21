@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -174,7 +175,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     // Add
                     viewModel.Tir.Status = 3;
                     viewModel.Tir.RecCreatedBy = User.Identity.GetUserId();
-                    viewModel.Tir.RecCreatedDate = DateTime.Now;
+                    viewModel.Tir.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
 
                     viewModel.Tir.RecUpdatedBy = User.Identity.GetUserId();
                     viewModel.Tir.RecUpdatedDate = DateTime.Now;

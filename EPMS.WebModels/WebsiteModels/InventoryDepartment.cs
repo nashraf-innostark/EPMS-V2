@@ -28,7 +28,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long NoOfSections { get; set; }
         public long NoOfSubSections { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
 

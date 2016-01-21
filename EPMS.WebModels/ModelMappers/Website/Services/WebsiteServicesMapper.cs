@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,7 +28,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Services
                 MetaDescriptionAr = source.MetaDescriptionAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecCreatedDateStr = source.RecCreatedDate.ToShortDateString(),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
@@ -73,7 +74,7 @@ namespace EPMS.WebModels.ModelMappers.Website.Services
                 MetaDescriptionAr = source.MetaDescriptionAr,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };

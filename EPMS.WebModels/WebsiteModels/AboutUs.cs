@@ -20,7 +20,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string MetaDescAr { get; set; }
         public bool ShowToPublic { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
     }

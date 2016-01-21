@@ -83,7 +83,7 @@
                                     {
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Date:</th>
-                                            <td>@Model.RecentPo.RecCreatedDate.ToShortDateString()</td>
+                                            <td>@Model.RecentPo.RecCreatedDate</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.PO.PO.RequesterName:</th>
@@ -94,7 +94,7 @@
                                     {
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Date:</th>
-                                            <td>@Model.RecentPo.RecCreatedDate.ToShortDateString()</td>
+                                            <td>@Model.RecentPo.RecCreatedDate</td>
                                         </tr>
                                         <tr>
                                             <th>@EPMS.WebModels.Resources.Inventory.PO.PO.InventoryManagerName:</th>
@@ -210,7 +210,7 @@
                                                 @(direction == "ltr" ? itemRelease.RequesterName : itemRelease.RequesterNameAr)
                                             </td>
                                             <td>
-                                                @itemRelease.RecCreatedDate.ToShortDateString()
+                                                @itemRelease.RecCreatedDate
                                             </td>
                                             <td>
                                                 @if (itemRelease.Status == 3)

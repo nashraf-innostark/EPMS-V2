@@ -211,5 +211,10 @@ namespace EPMS.Repository.Repositories
 
             return new ProductListViewResponse {Products = products, TotalCount = DbSet.Count(query)};
         }
+
+        //IList<long> RemoveDuplication()
+        //{
+            
+        //}
     }
 }

@@ -57,7 +57,7 @@ namespace EPMS.WebModels.ModelMappers
                 RecUpdatedDate = source.RecUpdatedDate,
             };
         }
-        public static PurchaseOrderItem CreateFromClientToServer(this WebsiteModels.PurchaseOrderItem source, long poId, string createdBy, string createdDate, DateTime updatedDate)
+        public static PurchaseOrderItem CreateFromClientToServer(this WebsiteModels.PurchaseOrderItem source, long poId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
             return new PurchaseOrderItem
             {
@@ -74,7 +74,7 @@ namespace EPMS.WebModels.ModelMappers
                 PurchaseOrderId = poId,
 
                 RecCreatedBy = createdBy,
-                RecCreatedDate = DateTime.ParseExact(createdDate, "dd/MM/yyyy", new CultureInfo("en")),
+                RecCreatedDate = createdDate,
                 RecUpdatedBy = createdBy,
                 RecUpdatedDate = updatedDate,
             };

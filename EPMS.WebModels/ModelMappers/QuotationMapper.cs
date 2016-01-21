@@ -36,7 +36,7 @@ namespace EPMS.WebModels.ModelMappers
                 Status = source.Status,
                 FromOrder = source.FromOrder,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };
@@ -76,7 +76,7 @@ namespace EPMS.WebModels.ModelMappers
                 Status = source.Status,
                 FromOrder = source.FromOrder,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),
@@ -105,7 +105,7 @@ namespace EPMS.WebModels.ModelMappers
                 RFQId = source.RFQId,
                 SerialNumber = source.SerialNumber,
                 Customers = source.Customer.CreateFromServerToClient(),
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 GreetingsEn = source.GreetingsEn,
                 GreetingsAr = source.GreetingsAr,
                 FirstInstallement = source.FirstInstallement,
@@ -161,7 +161,7 @@ namespace EPMS.WebModels.ModelMappers
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
@@ -182,7 +182,7 @@ namespace EPMS.WebModels.ModelMappers
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
@@ -276,7 +276,7 @@ namespace EPMS.WebModels.ModelMappers
                 NotesAr = source.NotesAr,
                 FromOrder = source.FromOrder,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 QuotationItemDetails = source.QuotationItemDetails.Select(x => x.CreateFromServerToClient()).ToList(),

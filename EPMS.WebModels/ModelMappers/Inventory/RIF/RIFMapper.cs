@@ -27,12 +27,11 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 ManagerId = source.Rif.ManagerId,
                 IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
-                RecCreatedDate = source.Rif.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Rif.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
                 RecUpdatedDate = source.Rif.RecUpdatedDate,
-
-                RIFItems = source.RifItem.Select(x => x.CreateRifItemClientToServer(source.Rif.RIFId, source.Rif.RecCreatedBy, source.Rif.RecCreatedDate, source.Rif.RecUpdatedDate)).ToList()
             };
+            rif.RIFItems = source.RifItem.Select(x => x.CreateRifItemClientToServer(rif.RIFId, rif.RecCreatedBy, rif.RecCreatedDate, rif.RecUpdatedDate)).ToList();
             return rif;
         }
         public static EPMS.Models.DomainModels.RIFItem CreateRifItemClientToServer(this WebsiteModels.RIFItem source, long rifId, string createdBy, DateTime createdDate, DateTime updatedDate)
@@ -71,7 +70,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 ManagerId = source.Rif.ManagerId,
                 IRFId = source.Rif.IRFId,
                 RecCreatedBy = source.Rif.RecCreatedBy,
-                RecCreatedDate = source.Rif.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Rif.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Rif.RecUpdatedBy,
                 RecUpdatedDate = source.Rif.RecUpdatedDate
             };
@@ -92,7 +91,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 ManagerId = source.ManagerId,
                 IRFId = source.IRFId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -136,7 +135,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 CustomerName = source.Order.Customer.CustomerNameE,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
 
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate
@@ -167,11 +166,10 @@ namespace EPMS.WebModels.ModelMappers.Inventory.RIF
                 rifItem.ItemVariationId = source.ItemVariationId;
                 rifItem.ItemSKUCode = source.ItemVariation.SKUCode;
             }
-            ItemReleaseDetail itemReleaseDetail = source.RIF.ItemRelease.ItemReleaseDetails.FirstOrDefault(x => x.ItemVariationId == source.ItemVariationId);
-            if (
-                itemReleaseDetail != null)
-                rifItem.ReleasedQty =
-                    itemReleaseDetail.ItemQty;
+            ItemReleaseDetail itemReleaseDetail =
+                source.RIF.ItemRelease != null ? source.RIF.ItemRelease.ItemReleaseDetails.FirstOrDefault(x => x.ItemVariationId == source.ItemVariationId) : null;
+            if (itemReleaseDetail != null)
+                rifItem.ReleasedQty = itemReleaseDetail.ItemQty;
 
             return rifItem;
         }

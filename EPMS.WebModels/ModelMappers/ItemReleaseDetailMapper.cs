@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -24,7 +26,7 @@ namespace EPMS.WebModels.ModelMappers
                 PlaceInDepartment = source.PlaceInDepartment,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ItemReleaseQuantities = source.ItemReleaseQuantities != null ? source.ItemReleaseQuantities.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebsiteModels.ItemReleaseQuantity>()
@@ -59,7 +61,7 @@ namespace EPMS.WebModels.ModelMappers
                 PlaceInDepartment = source.PlaceInDepartment,
                 PlaceInWarehouse = source.PlaceInWarehouse,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
                 ItemReleaseQuantities = source.ItemReleaseQuantities.Select(x => x.CreateFromServerToClient(source.IRFDetailId)).ToList()

@@ -81,7 +81,7 @@
                                 <tbody>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.Date</th>
-                                        <td>@Model.RecentIrf.RecCreatedDate.ToShortDateString()</td>
+                                        <td>@Model.RecentIrf.RecCreatedDate</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.IRF.View.IRFView.RequesterName</th>
@@ -174,7 +174,7 @@
                                         @itemRelease.CreatedBy
                                     </td>
                                     <td>
-                                        @itemRelease.RecCreatedDate.ToShortDateString()
+                                        @itemRelease.RecCreatedDate
                                     </td>
                                     <td>
                                         @if (itemRelease.Status == 3)

@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using EPMS.Models.RequestModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -19,7 +21,7 @@ namespace EPMS.WebModels.ModelMappers
                 DetailsEn = source.DetailsEn,
                 DetailsAr = source.DetailsAr,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 PurchaseOrderItems = source.PurchaseOrderItems.Select(x=>x.CreateFromServerToClient()).ToList()
@@ -40,7 +42,7 @@ namespace EPMS.WebModels.ModelMappers
             vendor.DetailsEn = source.DetailsEn;
             vendor.DetailsAr = source.DetailsAr;
             vendor.RecCreatedBy = source.RecCreatedBy;
-            vendor.RecCreatedDt = source.RecCreatedDt;
+            vendor.RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en"));
             vendor.RecLastUpdatedBy = source.RecLastUpdatedBy;
             vendor.RecLastUpdatedDt = source.RecLastUpdatedDt;
             var request = new VendorRequest();

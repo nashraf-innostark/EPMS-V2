@@ -192,15 +192,68 @@ namespace IdentitySample.Controllers
 
         #region Login & Logoff
 
-        private async Task<ClaimsIdentity> CustomAuthenticationOfUser(string returnUrl)
+        public async Task<ClaimsIdentity> CustomAuthenticationOfUser(string returnUrl)
         {
             Uri myUri = new Uri(ConfigurationManager.AppSettings["CpLink"]+returnUrl);
             string clientId = HttpUtility.ParseQueryString(myUri.Query).Get("C_Id");
             var user = await UserManager.FindByIdAsync(clientId);
             if (user != null)
             {
-                return await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-               
+                var userIdentity = await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+                return null;
+            }
+            return null;
+        }
+
+        //public async Task<bool> CustomAuthenticationOfUser(string returnUrl, bool isAuthenticated, HttpContextBase httpContext)
+        //{
+        //    var customAuthenticationManager = httpContext.GetOwinContext().Authentication;
+        //    var customUserManager = httpContext.GetOwinContext().GetUserManager<ApplicationUserManager>();
+        //    if (isAuthenticated)
+        //    {
+        //        customAuthenticationManager.SignOut();
+        //        httpContext.Session.Abandon();
+        //    }
+        //    Uri myUri = new Uri(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
+        //    string clientId = HttpUtility.ParseQueryString(myUri.Query).Get("C_Id");
+        //    var user = await customUserManager.FindByIdAsync(clientId);
+        //    if (user != null)
+        //    {
+        //        var userIdentity = await customUserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+        //        customAuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+        //        return true;
+        //    }
+        //    return false;
+        //}
+        public async Task<ActionResult> CustomAuthenticationOfUserFromWeb(string from, string C_Id)
+        {
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                string loggedInUser = HttpContext.User.Identity.GetUserId();
+                if (loggedInUser != C_Id)
+                {
+                    // logout previous user
+                    AuthenticationManager.SignOut();
+                    Session.Abandon();
+
+                    // log in this user C_Id
+                    var user = await UserManager.FindByIdAsync(C_Id);
+                    if (user != null)
+                    {
+                        var userIdentity =
+                            await UserManager.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+                        AuthenticationManager.SignIn(new AuthenticationProperties() {IsPersistent = true}, userIdentity);
+                        return RedirectToAction("RFQ", "Quotation", new { area = "CMS", from = from});
+                    }
+                }
+            }
+            var aspNetUser = await UserManager.FindByIdAsync(C_Id);
+            if (aspNetUser != null)
+            {
+                var userIdentity = await UserManager.CreateIdentityAsync(aspNetUser, DefaultAuthenticationTypes.ApplicationCookie);
+                AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+                return RedirectToAction("RFQ", "Quotation", new { area = "CMS", from = from });
             }
             return null;
         }
@@ -213,7 +266,7 @@ namespace IdentitySample.Controllers
                 if (returnUrl != null && returnUrl.Contains("C_Id"))
                 {
                     var userIdentity = await CustomAuthenticationOfUser(returnUrl);
-                    AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
+                    //AuthenticationManager.SignIn(new AuthenticationProperties() { IsPersistent = true }, userIdentity);
 
                     return Redirect(ConfigurationManager.AppSettings["CpLink"] + returnUrl);
                 }

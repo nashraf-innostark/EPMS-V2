@@ -1,4 +1,6 @@
-﻿using EPMS.Models.DomainModels;
+﻿using System;
+using System.Globalization;
+using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers
 {
@@ -15,7 +17,7 @@ namespace EPMS.WebModels.ModelMappers
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };
@@ -32,7 +34,7 @@ namespace EPMS.WebModels.ModelMappers
                 UnitPrice = source.UnitPrice,
                 TotalPrice = source.TotalPrice,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
             };

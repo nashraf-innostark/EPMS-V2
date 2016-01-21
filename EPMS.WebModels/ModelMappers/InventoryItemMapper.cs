@@ -151,7 +151,7 @@ namespace EPMS.WebModels.ModelMappers
             inventoryItem.DepartmentId = source.DepartmentId;
             inventoryItem.WarehouseID = source.WarehouseID;
             inventoryItem.RecCreatedBy = source.RecCreatedBy;
-            inventoryItem.RecCreatedDt = source.RecCreatedDt;
+            inventoryItem.RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en"));
             inventoryItem.RecLastUpdatedBy = source.RecLastUpdatedBy;
             inventoryItem.RecLastUpdatedDt = source.RecLastUpdatedDt;
             inventoryItem.ItemVariations = source.ItemVariations.Select(x => x.CreateFromServerToClient()).ToList();

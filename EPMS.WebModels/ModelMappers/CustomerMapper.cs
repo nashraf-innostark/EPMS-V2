@@ -23,7 +23,7 @@ namespace EPMS.WebModels.ModelMappers
                 EmployeeId = source.EmployeeId,
                 OrdersCount = source.Orders.Count,
                 ComplaintsCount = source.Complaints.Count,
-                Email = source.AspNetUsers != null ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
+                Email = source.AspNetUsers != null && source.AspNetUsers.Any() ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
                 LatestComplaint =
                     (source.Complaints != null && source.Complaints.Any(c => c.CustomerId == source.CustomerId))
                         ? source.Complaints.Where(c => c.CustomerId == source.CustomerId)

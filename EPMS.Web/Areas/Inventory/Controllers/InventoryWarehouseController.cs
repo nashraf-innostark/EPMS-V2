@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -133,7 +134,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     {
                         // Add
                         model.Warehouse.RecCreatedBy = User.Identity.GetUserId();
-                        model.Warehouse.RecCreatedDt = DateTime.Now;
+                        model.Warehouse.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                         model.Warehouse.RecLastUpdatedBy = User.Identity.GetUserId();
                         model.Warehouse.RecLastUpdatedDt = DateTime.Now;
                         var warehouseToAdd = model.Warehouse.CreateFromClientToServer();

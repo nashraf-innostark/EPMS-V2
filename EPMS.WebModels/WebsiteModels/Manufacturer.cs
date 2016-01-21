@@ -8,7 +8,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string ManufacturerNameEn { get; set; }
         public string ManufacturerNameAr { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
     }

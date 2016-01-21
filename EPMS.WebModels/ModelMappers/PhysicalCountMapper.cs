@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Globalization;
+using System.Linq;
 using EPMS.Models.DomainModels;
 using EPMS.WebModels.ViewModels.PhysicalCount;
 
@@ -20,7 +22,7 @@ namespace EPMS.WebModels.ModelMappers
                 PCId = source.PCId,
                 RecCreatedBy = source.RecCreatedBy,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
                 NotesEn = source.NotesEn,
                 NotesAr = source.NotesAr,
@@ -35,7 +37,7 @@ namespace EPMS.WebModels.ModelMappers
                 PCId = source.PhysicalCount.PCId,
                 RecCreatedBy = source.PhysicalCount.RecCreatedBy,
                 RecLastUpdatedBy = source.PhysicalCount.RecLastUpdatedBy,
-                RecCreatedDate = source.PhysicalCount.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.PhysicalCount.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedDate = source.PhysicalCount.RecLastUpdatedDate,
                 NotesEn = source.PhysicalCount.NotesEn,
                 NotesAr = source.PhysicalCount.NotesAr,

@@ -68,15 +68,15 @@
                                     }
                                     <td>
                                         @{
-                                            switch (rfq.Status)
-                                            {
-                                                case 1:
-                                                    @:Qoutation Created
+                                switch (rfq.Status)
+                                {
+                                    case 1:
+                                        @:Qoutation Created
                                                                 break;
-                                                case 2:
-                                                @:Pending
+                                    case 2:
+                                    @:Pending
                                                                 break;
-                                            }
+                                }
                                         }
                                     </td>
                                 </tr>
@@ -110,18 +110,23 @@
                                         <td><a href="~/CMS/Quotation/RFQDetail/@rfq.RFQId">@rfq.SerialNumber</a></td>
                                     }
                                     <td>@(direction == "ltr" ? rfq.CustomerNameEn : rfq.CustomerNameAr)</td>
-                                    <td>@rfq.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")) - @rfq.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("ar"))</td>
                                     <td>
                                         @{
-                                            switch ((RFQStatus)rfq.Status)
-                                            {
-                                                case RFQStatus.QoutationCreated:
-                                                    @EPMS.WebModels.Resources.CMS.RFQ.QoutationCreated
-                                                    break;
-                                                case RFQStatus.Pending:
-                                                    @EPMS.WebModels.Resources.CMS.RFQ.Pending
-                                                    break;
-                                            }
+                                            DateTime date = DateTime.ParseExact(rfq.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en"));
+                                        }
+                                        @date.ToString("dd/MM/yyyy", new CultureInfo("en")) - @date.ToString("dd/MM/yyyy", new CultureInfo("ar"))
+                                    </td>
+                                    <td>
+                                        @{
+                                switch ((RFQStatus)rfq.Status)
+                                {
+                                    case RFQStatus.QoutationCreated:
+                                        @EPMS.WebModels.Resources.CMS.RFQ.QoutationCreated
+                                        break;
+                                    case RFQStatus.Pending:
+                                    @EPMS.WebModels.Resources.CMS.RFQ.Pending
+                                        break;
+                                }
                                         }
                                     </td>
                                 </tr>

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using EPMS.Models.DomainModels;
 
 namespace EPMS.WebModels.ModelMappers
@@ -18,7 +19,7 @@ namespace EPMS.WebModels.ModelMappers
                 TIRId = source.TIRId,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -45,12 +46,12 @@ namespace EPMS.WebModels.ModelMappers
                 TIRId = source.TIRId,
                 PlaceInDepartment = source.PlaceInDepartment,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
         }
-        public static TIRItem CreateFromClientToServer(this WebsiteModels.TIRItem source, long tirId, string createdBy, DateTime createdDate, DateTime updatedDate)
+        public static TIRItem CreateFromClientToServer(this WebsiteModels.TIRItem source, long tirId, string createdBy, string createdDate, DateTime updatedDate)
         {
             return new TIRItem
             {
@@ -65,7 +66,7 @@ namespace EPMS.WebModels.ModelMappers
                 TIRId = tirId,
 
                 RecCreatedBy = createdBy,
-                RecCreatedDate = createdDate,
+                RecCreatedDate = DateTime.ParseExact(createdDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = createdBy,
                 RecUpdatedDate = updatedDate,
             };

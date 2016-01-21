@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -65,7 +66,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         {
             PhysicalCountViewModel physicalCountViewModel = new PhysicalCountViewModel
             {
-                PhysicalCount = { RecCreatedDate = DateTime.Now }
+                PhysicalCount = { RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en")) }
             };
             var pcResponse = physicalCountService.LoadPhysicalCountResponseData(id, Session["UserID"].ToString());
 
@@ -105,7 +106,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 else
                 {
                     physicalCountViewModel.PhysicalCount.RecCreatedBy = userId;
-                    physicalCountViewModel.PhysicalCount.RecCreatedDate = date;
+                    physicalCountViewModel.PhysicalCount.RecCreatedDate = date.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedBy = userId;
                     physicalCountViewModel.PhysicalCount.RecLastUpdatedDate = date;
                     
@@ -126,7 +127,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     {
                         physicalCountItemModel.PcId = physicalCountViewModel.PhysicalCount.PCId;
                         physicalCountItemModel.RecCreatedBy = userId;
-                        physicalCountItemModel.RecCreatedDate = date;
+                        physicalCountItemModel.RecCreatedDate = date.ToString("dd/MM/yyyy", new CultureInfo("en"));
                         physicalCountItemModel.RecLastUpdatedBy = userId;
                         physicalCountItemModel.RecLastUpdatedDate = date;
                     }

@@ -19,7 +19,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string Link { get; set; }
         public int? Position { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public DateTime RecUpdatedDate { get; set; }
     }

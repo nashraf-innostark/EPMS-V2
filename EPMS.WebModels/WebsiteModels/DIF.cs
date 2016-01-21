@@ -12,7 +12,7 @@ namespace EPMS.WebModels.WebsiteModels
         [Display(Name = "Defectiveness in arabic")]
         public string DefectivenessA { get; set; }
         public string RecCreatedBy { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecCreatedDateString { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }

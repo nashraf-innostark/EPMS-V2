@@ -39,6 +39,7 @@
     <div class="container-fluid">
         @Html.HiddenFor(x => x.RecentRif.RIFId)
         @Html.HiddenFor(x => x.RecentRif.FormNumber)
+        @Html.HiddenFor(x => x.RecentRif.IRFId)
         @Html.HiddenFor(x => x.RecentRif.OrderId)
         @Html.HiddenFor(x => x.RecentRif.ReasonE)
         @Html.HiddenFor(x => x.RecentRif.ReasonA)
@@ -86,7 +87,7 @@
                                 <tbody>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.Date:</th>
-                                        <td>@Model.RecentRif.RecCreatedDate.ToShortDateString()</td>
+                                        <td>@Model.RecentRif.RecCreatedDate</td>
                                     </tr>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.RFI.RFI.RequesterName:</th>

@@ -29,7 +29,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string OrderNo { get; set; }
         public string RecCreatedBy { get; set; }
         public string RecCreatedDateString { get; set; }
-        public System.DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecUpdatedBy { get; set; }
         public System.DateTime RecUpdatedDate { get; set; }
         public string ManagerId { get; set; }

@@ -26,7 +26,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long? TotalItemsCountInWarehouse { get; set; }
         public string RecCreatedByName { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
     }

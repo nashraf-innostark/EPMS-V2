@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -206,7 +207,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     else
                     {
                         itemReleaseDetail.RecCreatedBy = User.Identity.GetUserId();
-                        itemReleaseDetail.RecCreatedDate = DateTime.Now;
+                        itemReleaseDetail.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                         itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
                         itemReleaseDetail.RecUpdatedDate = DateTime.Now;
                     }
@@ -227,7 +228,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 // Add
                 viewModel.ItemRelease.Status = 3;
                 viewModel.ItemRelease.RecCreatedBy = User.Identity.GetUserId();
-                viewModel.ItemRelease.RecCreatedDate = DateTime.Now;
+                viewModel.ItemRelease.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                 viewModel.ItemRelease.RecUpdatedBy = User.Identity.GetUserId();
                 viewModel.ItemRelease.RecUpdatedDate = DateTime.Now;
                 var itemReleaseToAdd = viewModel.ItemRelease.CreateFromClientToServer();
@@ -236,7 +237,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 {
                     itemReleaseToAdd.QuantityReleased += itemReleaseDetail.ItemQty;
                     itemReleaseDetail.RecCreatedBy = User.Identity.GetUserId();
-                    itemReleaseDetail.RecCreatedDate = DateTime.Now;
+                    itemReleaseDetail.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     itemReleaseDetail.RecUpdatedBy = User.Identity.GetUserId();
                     itemReleaseDetail.RecUpdatedDate = DateTime.Now;
                 }

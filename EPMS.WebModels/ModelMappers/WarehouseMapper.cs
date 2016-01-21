@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DashboardModels;
 using EPMS.Models.DomainModels;
@@ -28,7 +30,7 @@ namespace EPMS.WebModels.ModelMappers
                 NoOfSectoinsInShalves = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x => x.NodeLevel == 4) : 0,
                 NoOfSpaces = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Count(x=>x.NodeLevel == 5) : 0,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = source.RecCreatedDt.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
                 WarehouseDetails = source.WarehouseDetails != null && source.WarehouseDetails.Any() ? source.WarehouseDetails.Select(x => x.CreateFromServerToClient()).ToList() : new List<WebsiteModels.WarehouseDetail>()
@@ -85,7 +87,7 @@ namespace EPMS.WebModels.ModelMappers
                 WarehouseLocation = location,
                 ParentId = source.ParentId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = source.RecCreatedDt,
+                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };

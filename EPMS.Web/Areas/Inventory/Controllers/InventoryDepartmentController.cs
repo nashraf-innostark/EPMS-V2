@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -174,7 +175,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     descp = descp.Replace("\"", "'");
                     model.DepartmentDesc = descp;
                     model.RecCreatedBy = User.Identity.GetUserId();
-                    model.RecCreatedDt = DateTime.Now;
+                    model.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.RecLastUpdatedDt = DateTime.Now;
                     var nodeToUpdate = model.CreateFromClientToServerModel();
@@ -203,7 +204,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     descp = descp.Replace("\r", "");
                     model.DepartmentDesc = descp;
                     model.RecCreatedBy = User.Identity.GetUserId();
-                    model.RecCreatedDt = DateTime.Now;
+                    model.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.RecLastUpdatedDt = DateTime.Now;
                     var newNodeToAdd = model.CreateFromClientToServerModel();
@@ -295,7 +296,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     descp = descp.Replace("\"", "'");
                     model.DepartmentDesc = descp;
                     model.RecCreatedBy = User.Identity.GetUserId();
-                    model.RecCreatedDt = DateTime.Now;
+                    model.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.RecLastUpdatedDt = DateTime.Now;
                     var nodeToUpdate = model.CreateFromClientToServerModel();
@@ -324,7 +325,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                     descp = descp.Replace("\r", "");
                     model.DepartmentDesc = descp;
                     model.RecCreatedBy = User.Identity.GetUserId();
-                    model.RecCreatedDt = DateTime.Now;
+                    model.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.RecLastUpdatedDt = DateTime.Now;
                     var newNodeToAdd = model.CreateFromClientToServerModel();

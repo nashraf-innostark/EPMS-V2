@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Globalization;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
@@ -12,12 +13,14 @@ using EPMS.Models.ResponseModels;
 using EPMS.Web.EncryptDecrypt;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Website.ShoppingCart;
+using EPMS.WebModels.Resources.PMS;
 using EPMS.WebModels.ViewModels.Quotation;
 using EPMS.Web.Controllers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ViewModels.RFQ;
 using EPMS.WebModels.WebsiteModels;
+using IdentitySample.Controllers;
 using Microsoft.AspNet.Identity;
 using Order = EPMS.WebModels.WebsiteModels.Order;
 using Quotation = EPMS.WebModels.Resources.CMS.Quotation;
@@ -37,6 +40,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private readonly IShoppingCartService cartService;
         private readonly ICompanyProfileService companyProfileService;
         private readonly ICustomerService customerService;
+        private readonly AccountController accountController;
 
         private bool CheckHasInventoryModule()
         {
@@ -55,7 +59,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Constructor
 
-        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService, ICustomerService customerService)
+        public QuotationController(IOrdersService ordersService, IQuotationService quotationService, IRFQService rfqService, IQuotationItemService quotationItemService, IShoppingCartService cartService, ICompanyProfileService companyProfileService, ICustomerService customerService, AccountController accountController)
         {
             this.ordersService = ordersService;
             this.quotationService = quotationService;
@@ -64,6 +68,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             this.cartService = cartService;
             this.companyProfileService = companyProfileService;
             this.customerService = customerService;
+            this.accountController = accountController;
         }
 
         #endregion
@@ -125,10 +130,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "RFQIndex")]
         public ActionResult RFQIndex()
         {
-
+            var rfqs = rfqService.GetAllRfqs();
+            string userId = User.Identity.GetUserId();
+            if (Session["RoleName"].ToString() == "Customer")
+            {
+                rfqs = rfqs.Where(x => x.RecCreatedBy == userId);
+            }
             RFQListViewModel viewModel = new RFQListViewModel
             {
-                Rfqs = rfqService.GetAllRfqs().Select(x => x.CreateFromServerToClient()),
+                Rfqs = rfqs.Select(x => x.CreateFromServerToClient()),
             };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
@@ -163,7 +173,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                             ItemDetails = rfqItem.ItemDetails,
                             ItemQuantity = rfqItem.ItemQuantity,
                             UnitPrice = rfqItem.UnitPrice,
-                            TotalPrice = (rfqItem.ItemQuantity * rfqItem.UnitPrice)
+                            TotalPrice = (rfqItem.ItemQuantity * rfqItem.UnitPrice),
+                            IsItemSKU = true
                         };
                         model.QuotationItemDetails.Add(item);
                     }
@@ -223,7 +234,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     {
                         detail.QuotationId = viewModel.QuotationId;
                         detail.RecCreatedBy = User.Identity.GetUserId();
-                        detail.RecCreatedDate = DateTime.Now;
+                        detail.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     }
                     detail.RecLastUpdatedBy = User.Identity.GetUserId();
                     detail.RecLastUpdatedDate = DateTime.Now;
@@ -245,13 +256,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 // Add case
                 // Save Quotation
                 viewModel.RecCreatedBy = User.Identity.GetUserId();
-                viewModel.RecCreatedDate = DateTime.Now;
+                viewModel.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                 viewModel.RecLastUpdatedBy = User.Identity.GetUserId();
                 viewModel.RecLastUpdatedDate = DateTime.Now;
                 foreach (var detail in viewModel.QuotationItemDetails)
                 {
                     detail.RecCreatedBy = User.Identity.GetUserId();
-                    detail.RecCreatedDate = DateTime.Now;
+                    detail.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     detail.RecLastUpdatedBy = User.Identity.GetUserId();
                     detail.RecLastUpdatedDate = DateTime.Now;
                 }
@@ -316,7 +327,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
                     {
                         RFQItem item = new RFQItem
                         {
-                            ItemDetails = direction == "ltr" ? shoppingCartItem.ItemNameEn : shoppingCartItem.ItemNameAr,
+                            ItemDetails = direction == "ltr" ?
+                                shoppingCartItem.ItemNameEn + "\nSKU Code: " + shoppingCartItem.SkuCode : shoppingCartItem.ItemNameAr + "\nSKU Code: " + shoppingCartItem.SkuCode,
                             ItemQuantity = shoppingCartItem.Quantity,
                             UnitPrice = shoppingCartItem.UnitPrice,
                             TotalPrice = (shoppingCartItem.Quantity * shoppingCartItem.UnitPrice)
@@ -362,13 +374,13 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 else
                 {
                     model.Rfq.RecCreatedBy = User.Identity.GetUserId();
-                    model.Rfq.RecCreatedDate = DateTime.Now;
+                    model.Rfq.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.Rfq.RecLastUpdatedDate = DateTime.Now;
                     foreach (var rfqItem in model.Rfq.RFQItems)
                     {
                         rfqItem.RecCreatedBy = User.Identity.GetUserId();
-                        rfqItem.RecCreatedDate = DateTime.Now;
+                        rfqItem.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                         rfqItem.RecLastUpdatedBy = User.Identity.GetUserId();
                         rfqItem.RecLastUpdatedDate = DateTime.Now;
                     }
@@ -414,7 +426,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 else
                 {
                     model.Rfq.RecCreatedBy = User.Identity.GetUserId();
-                    model.Rfq.RecCreatedDate = DateTime.Now;
+                    model.Rfq.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     model.Rfq.RecLastUpdatedBy = User.Identity.GetUserId();
                     model.Rfq.RecLastUpdatedDate = DateTime.Now;
                     model.Rfq.Status = (int)RFQStatus.Pending;
@@ -517,7 +529,7 @@ namespace EPMS.Web.Areas.CMS.Controllers
             long quotatioId = 0;
             if (id != null)
             {
-                quotatioId = (long) id;
+                quotatioId = (long)id;
             }
             QuotationDetailResponse response = quotationService.GetQuotationDetail(quotatioId);
             viewModel.Profile = response.Profile != null ? response.Profile.CreateFromServerToClientForQuotation() : new CompanyProfile();
@@ -545,9 +557,9 @@ namespace EPMS.Web.Areas.CMS.Controllers
                 };
                 var orders = ordersService.GetAll().OrderBy(x => x.RecCreatedDate).ToList();
                 order.OrderNo = Utility.GetOrderNumber(orders);
-                order.OrderStatus = (short) OrderStatus.Pending;
+                order.OrderStatus = (short)OrderStatus.Pending;
                 order.RecCreatedBy = User.Identity.GetUserId();
-                order.RecCreatedDate = DateTime.Now;
+                order.RecCreatedDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                 order.RecLastUpdatedBy = User.Identity.GetUserId();
                 order.RecLastUpdatedDate = DateTime.Now;
                 var orderToAdd = order.CreateFromClientToServer();
@@ -599,8 +611,8 @@ namespace EPMS.Web.Areas.CMS.Controllers
             //    IsError= true
             //};
             viewModel.Profile = new CompanyProfile();
-            viewModel.Quotation = new WebModels.WebsiteModels.Quotation {Customers = new Customer()};
-            ViewBag.MessageVM = (MessageViewModel) TempData["message"];
+            viewModel.Quotation = new WebModels.WebsiteModels.Quotation { Customers = new Customer() };
+            ViewBag.MessageVM = (MessageViewModel)TempData["message"];
             return View(viewModel);
         }
 

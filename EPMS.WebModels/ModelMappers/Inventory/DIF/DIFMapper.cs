@@ -12,7 +12,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.DIF
         #region Client to Server
         public static EPMS.Models.DomainModels.DIF CreateDifClientToServer(this DIFViewModel source)
         {
-            var rif = new EPMS.Models.DomainModels.DIF
+            var dif = new EPMS.Models.DomainModels.DIF
             {
                 Id = source.Dif.Id,
                 FormNumber = source.Dif.FormNumber,
@@ -24,13 +24,12 @@ namespace EPMS.WebModels.ModelMappers.Inventory.DIF
                 ManagerId = source.Dif.ManagerId,
                 WarehouseId = source.Dif.WarehouseId,
                 RecCreatedBy = source.Dif.RecCreatedBy,
-                RecCreatedDate = source.Dif.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Dif.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Dif.RecUpdatedBy,
                 RecUpdatedDate = source.Dif.RecUpdatedDate,
-
-                DIFItems = source.DifItem.Select(x => x.CreateDifItemClientToServer(source.Dif.Id, source.Dif.RecCreatedBy, source.Dif.RecCreatedDate, source.Dif.RecUpdatedDate)).ToList()
             };
-            return rif;
+            dif.DIFItems = source.DifItem.Select(x => x.CreateDifItemClientToServer(dif.Id, dif.RecCreatedBy, dif.RecCreatedDate, dif.RecUpdatedDate)).ToList();
+            return dif;
         }
         public static EPMS.Models.DomainModels.DIFItem CreateDifItemClientToServer(this DIFItem source, long rifId, string createdBy, DateTime createdDate, DateTime updatedDate)
         {
@@ -66,7 +65,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.DIF
                 ManagerId = source.Dif.ManagerId,
                 WarehouseId = source.Dif.WarehouseId,
                 RecCreatedBy = source.Dif.RecCreatedBy,
-                RecCreatedDate = source.Dif.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.Dif.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.Dif.RecUpdatedBy,
                 RecUpdatedDate = source.Dif.RecUpdatedDate
             };
@@ -86,7 +85,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.DIF
                 ManagerId = source.ManagerId,
                 WarehouseId = source.WarehouseId,
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate,
             };
@@ -130,7 +129,7 @@ namespace EPMS.WebModels.ModelMappers.Inventory.DIF
                 RequesterName = source.AspNetUser != null ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : string.Empty,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
 
                 RecUpdatedBy = source.RecUpdatedBy,
                 RecUpdatedDate = source.RecUpdatedDate

@@ -134,7 +134,7 @@ namespace EPMS.Implementation.Services
                     // add quantity to warehouse
                     addStatus = AddQuantityToWarehouse(tir.TIRItems, tir.ToWarehouseId);
                 }
-                if (deductStatus && addStatus)
+                if (deductStatus && addStatus || status.Status == 2)
                 {
                     tir.NotesE = status.NotesEn;
                     tir.NotesA = status.NotesAr;

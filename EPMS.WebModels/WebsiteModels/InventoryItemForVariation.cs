@@ -26,7 +26,7 @@ namespace EPMS.WebModels.WebsiteModels
         public long? DepartmentId { get; set; }
         public long? WarehouseID { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDt { get; set; }
+        public string RecCreatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDt { get; set; }
         public double? AveragePrice { get; set; }

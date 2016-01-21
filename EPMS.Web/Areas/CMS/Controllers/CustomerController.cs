@@ -40,9 +40,11 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "CustomerIndex")]
         public ActionResult Index()
         {
+            var customers = customerService.GetAll();
+            var customersList = customers.Select(cus => cus.CreateFromServerToClient());
             return View(new CustomerViewModel
             {
-                CustomerList = customerService.GetAll().Select(x => x.CreateFromServerToClient())
+                CustomerList = customersList
             });
         }
 

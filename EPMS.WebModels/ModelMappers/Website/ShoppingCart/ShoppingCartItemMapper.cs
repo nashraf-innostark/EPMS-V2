@@ -35,12 +35,12 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
                 CartItemId = source.CartItemId,
                 CartId = source.CartId,
                 ProductId = source.ProductId,
-                UnitPrice = source.Product.ItemVariationId != null ? Convert.ToDecimal(source.Product.ItemVariation.UnitPrice) : Convert.ToDecimal(source.Product.ProductPrice),
+                UnitPrice = source.Product.ItemVariation != null ? Convert.ToDecimal(source.Product.ItemVariation.UnitPrice) : Convert.ToDecimal(source.Product.ProductPrice),
                 Quantity = source.Quantity,
                 SizeId = source.SizeId,
-                ItemNameEn = source.Product.ItemVariationId != null ? source.Product.ItemVariation.InventoryItem.ItemNameEn : source.Product.ProductNameEn,
-                ItemNameAr = source.Product.ItemVariationId != null ? source.Product.ItemVariation.InventoryItem.ItemNameAr : source.Product.ProductNameAr,
-                SkuCode = source.Product.ItemVariationId != null ? source.Product.ItemVariation.SKUCode : source.Product.SKUCode,
+                ItemNameEn = source.Product.ItemVariation != null ? source.Product.ItemVariation.InventoryItem.ItemNameEn : source.Product.ProductNameEn,
+                ItemNameAr = source.Product.ItemVariation != null ? source.Product.ItemVariation.InventoryItem.ItemNameAr : source.Product.ProductNameAr,
+                SkuCode = source.Product.ItemVariation != null ? source.Product.ItemVariation.SKUCode : source.Product.SKUCode,
                 ImagePath = itemImageFolder,
             };
         }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Linq;
 using EPMS.Models.DomainModels;
 
@@ -21,7 +22,7 @@ namespace EPMS.WebModels.ModelMappers
                 ItemDetailsAr = source.ItemVariation.InventoryItem.ItemNameAr + " - " + source.ItemVariation.SKUDescriptionAr,
 
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = source.RecCreatedDate.ToString("dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
 
@@ -48,7 +49,7 @@ namespace EPMS.WebModels.ModelMappers
                 NoOfPackagesInWarehouse = source.NoOfPackagesInWarehouse,
 
                 RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDate = source.RecCreatedDate,
+                RecCreatedDate = DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")),
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate
             };

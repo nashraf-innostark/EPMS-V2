@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
@@ -68,7 +69,7 @@ namespace EPMS.Web.Areas.Website.Controllers
                 else
                 {
                     contactUsViewModel.ContactUs.RecCreatedBy = User.Identity.GetUserId();
-                    contactUsViewModel.ContactUs.RecCreatedDt = DateTime.Now;
+                    contactUsViewModel.ContactUs.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
                     contactUsViewModel.ContactUs.RecLastUpdatedBy = User.Identity.GetUserId();
                     contactUsViewModel.ContactUs.RecLastUpdatedDt = DateTime.Now;
                     ContactUs detailToUpdate = contactUsViewModel.ContactUs.CreateFromClientToServer();

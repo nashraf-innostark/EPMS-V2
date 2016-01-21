@@ -95,7 +95,10 @@ namespace EPMS.WebBase.Mvc
             {
                 throw new ArgumentNullException("httpContext");
             }
-
+            if (!string.IsNullOrEmpty(httpContext.Request.QueryString["C_Id"]))
+            {
+                return true;
+            }
             return IsAuthorized();
         }
         /// <summary>

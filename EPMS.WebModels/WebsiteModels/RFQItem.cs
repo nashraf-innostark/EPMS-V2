@@ -11,7 +11,7 @@ namespace EPMS.WebModels.WebsiteModels
         public decimal UnitPrice { get; set; }
         public decimal TotalPrice { get; set; }
         public string RecCreatedBy { get; set; }
-        public DateTime RecCreatedDate { get; set; }
+        public string RecCreatedDate { get; set; }
         public string RecLastUpdatedBy { get; set; }
         public DateTime RecLastUpdatedDate { get; set; }
     }
