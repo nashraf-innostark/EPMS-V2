@@ -13,5 +13,6 @@
         public string ItemSKUDescriptoinEn { get; set; }
         public string ItemSKUDescriptoinAr { get; set; }
         public double? UnitPrice { get; set; }
+        public string ItemCodeSKUCode { get; set; }
     }
 }
