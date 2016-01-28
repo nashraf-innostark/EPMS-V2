@@ -75,7 +75,7 @@
                                 <tbody>
                                     <tr>
                                         <th>@EPMS.WebModels.Resources.Inventory.PC.PhysicalCount.Date:</th>
-                                        <td>@Model.PhysicalCount.RecCreatedDate.ToShortDateString()</td>
+                                        <td>@(direction == "ltr" ? Model.PhysicalCount.RecCreatedDate : Model.PhysicalCount.RecCreatedDateAr)</td>
                                     </tr>
 
                                     <tr>

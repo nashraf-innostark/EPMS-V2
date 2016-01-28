@@ -235,9 +235,9 @@
                 barcodeValue = value.ItemCodeSKUCode;
                 $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
                 $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
+                generateBarcode(index);
             }
             getItemVariationDetail(itemVariationId, callback);
-            generateBarcode(index);
             $('#itemSearcher').modal('toggle');
         }
         function getModalControlsValuesForTree() {
@@ -276,9 +276,9 @@
                 barcodeValue = value.ItemCodeSKUCode;
                 $("#Barcodes_" + index + "__ItemDetails").val(textToAppend);
                 $("#Barcodes_" + index + "__BarcodeValue").val(barcodeValue);
+                generateBarcode(index);
             }
             getItemVariationDetail(itemVariationId, callback);
-            generateBarcode(index);
             $('#itemSearcher').modal('toggle');
         }
         reActivatePrint();
