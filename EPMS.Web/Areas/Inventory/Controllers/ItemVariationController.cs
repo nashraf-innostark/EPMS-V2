@@ -95,7 +95,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             variationViewModel.ColorsForDdl = response.ColorsForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.SizesForDdl = response.SizesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             //variationViewModel.ManufacturersForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
-            variationViewModel.VendorsForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClient()).ToList();
+            variationViewModel.VendorsForDdl = response.ManufacturersForDdl.Select(x => x.CreateFromServerToClientForDdl()).ToList();
             variationViewModel.StatusesForDdl = response.StatusesForDdl.Select(x => x.CreateFromServerToClient()).ToList();
             variationViewModel.WarehousesForDdl = response.WarehousesForDdl.Select(x => x.CreateFromItemVariationDropDown()).ToList();
 

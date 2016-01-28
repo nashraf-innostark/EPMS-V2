@@ -27,6 +27,21 @@ namespace EPMS.WebModels.ModelMappers
                 PurchaseOrderItems = source.PurchaseOrderItems.Select(x=>x.CreateFromServerToClient()).ToList()
             };
         }
+        public static WebsiteModels.Vendor CreateFromServerToClientForDdl(this Models.DomainModels.Vendor source)
+        {
+            return new WebsiteModels.Vendor
+            {
+                VendorId = source.VendorId,
+                VendorNameEn = source.VendorNameEn,
+                VendorNameAr = source.VendorNameAr,
+                ContactPerson = source.ContactPerson,
+                VendorEmail = source.VendorEmail,
+                VendorContact = source.VendorContact,
+                VendorField = source.VendorField,
+                DetailsEn = source.DetailsEn,
+                DetailsAr = source.DetailsAr,
+            };
+        }
 
         public static VendorRequest CreateFromClientToServer(this WebsiteModels.Vendor source)
         {
