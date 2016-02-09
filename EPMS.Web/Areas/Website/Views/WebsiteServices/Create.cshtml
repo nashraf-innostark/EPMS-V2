@@ -301,6 +301,12 @@
     });
     $("#edit").click(function (event) {
         enableControls();
+        CKEDITOR.replace('DescriptionEn', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
+        CKEDITOR.replace('DescriptionAr', {
+            filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
+        });
         $("#CKDescp").show();
         $("#UpdateNode").show();
         $("#Descp").hide();

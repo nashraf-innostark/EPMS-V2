@@ -235,7 +235,14 @@
 
     function applyDatatable(oTable, nTr) {
         var oData = oTable.fnGetData(nTr);
-        var aData = oData.SubTasks;
+        var aData = [];
+        for (var i = 0; i < oData.SubTasks.length; i++)
+        {
+            if (oData.SubTasks[i].IsDeleted != true) {
+                aData.push(oData.SubTasks[i]);
+            }
+        }
+        
         $('#' + oData.TaskId+ "_Parent").dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,

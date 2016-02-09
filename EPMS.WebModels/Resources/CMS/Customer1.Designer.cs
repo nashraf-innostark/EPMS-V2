@@ -115,6 +115,15 @@ namespace EPMS.WebModels.Resources.CMS {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Details.
+        /// </summary>
+        public static string Details {
+            get {
+                return ResourceManager.GetString("Details", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -156,6 +165,15 @@ namespace EPMS.WebModels.Resources.CMS {
         public static string LatestOrder {
             get {
                 return ResourceManager.GetString("LatestOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name (Arabic).
+        /// </summary>
+        public static string NameA {
+            get {
+                return ResourceManager.GetString("NameA", resourceCulture);
             }
         }
         

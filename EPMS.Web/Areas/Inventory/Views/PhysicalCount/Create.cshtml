@@ -155,14 +155,12 @@
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, new { @class = "n1 tableDbM NoOfPackages disableOnLoad" })
-                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfPackagesInWarehouse, null, new { @class = "required" })
                                     </td>
                                     <td>
                                         <label class="n1 tableDbM" id='TotalItemsInPackages_@i'>@Model.PhysicalCountItems[i].TotalItemsInPackages</label>
                                     </td>
                                     <td>
                                         @Html.TextBoxFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, new { @class = "n1 tableDbM NoOfItems disableOnLoad" })
-                                        @Html.ValidationMessageFor(m => m.PhysicalCountItems[i].NoOfItemInWarehouse, null, new { @class = "required" })
                                     </td>
                                     <td>
                                         <label class="n1 tableDbM" id='TotalItemsCount_@i'>@Model.PhysicalCountItems[i].TotalItemsCount</label>
@@ -205,15 +203,17 @@
                                     <label class="n1 tableDbM" id='ItemsInPackage_0'></label>
                                 </td>
                                 <td>
-                                    <input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' data-val="true" data-val-number="The Number of Packages in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Packages in Wharewhouse field is required." />
-                                    <span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfPackagesInWarehouse" data-valmsg-replace="true"></span>
+                                    <input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' />
+                                    @*<input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name='PhysicalCountItems[0].NoOfPackagesInWarehouse' id='PhysicalCountItems_0__NoOfPackagesInWarehouse' data-val="true" data-val-number="The Number of Packages in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Packages in Wharewhouse field is required." />*@
+                                    @*<span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfPackagesInWarehouse" data-valmsg-replace="true"></span>*@
                                 </td>
                                 <td>
                                     <label class="n1 tableDbM" id='TotalItemsInPackages_0'></label>
                                 </td>
                                 <td>
-                                    <input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' data-val="true" data-val-number="The Number of Items in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Items in Wharewhouse field is required." />
-                                    <span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfItemInWarehouse" data-valmsg-replace="true"></span>
+                                    <input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' />
+                                    @*<input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name='PhysicalCountItems[0].NoOfItemInWarehouse' id='PhysicalCountItems_0__NoOfItemInWarehouse' data-val="true" data-val-number="The Number of Items in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Items in Wharewhouse field is required." />
+                                    <span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[0].NoOfItemInWarehouse" data-valmsg-replace="true"></span>*@
                                 </td>
                                 <td>
                                     <label class="n1 tableDbM" id='TotalItemsCount_0'></label>
@@ -428,15 +428,13 @@
                                     '<label class="n1 tableDbM" id="ItemsInPackage_' + index + '"></label>' +
                                 '</td>' +
                                 '<td>' +
-                                    '<input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name="PhysicalCountItems[' + index + '].NoOfPackagesInWarehouse" id="PhysicalCountItems_' + index + '__NoOfPackagesInWarehouse" data-val="true" data-val-number="The Number of Packages in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Packages in Wharewhouse field is required." />' +
-                                    '<span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[' + index + '].NoOfPackagesInWarehouse" data-valmsg-replace="true"></span>' +
+                                    '<input type="text" class="n1 tableDbM NoOfPackages disableOnLoad" name="PhysicalCountItems[' + index + '].NoOfPackagesInWarehouse" id="PhysicalCountItems_' + index + '__NoOfPackagesInWarehouse" />' +
                                 '</td>' +
                                 '<td>' +
                                     '<label class="n1 tableDbM" id="TotalItemsInPackages_' + index + '"></label>' +
                                 '</td>' +
                                 '<td>' +
-                                    '<input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name="PhysicalCountItems[' + index + '].NoOfItemInWarehouse" id="PhysicalCountItems_' + index + '__NoOfItemInWarehouse" data-val="true" data-val-number="The Number of Items in Wharewhouse field must be a number." data-val-range="Please enter valid number" data-val-range-max="2147483647" data-val-range-min="1" data-val-required="The Number of Items in Wharewhouse field is required." />' +
-                                    '<span class="field-validation-valid required" data-valmsg-for="PhysicalCountItems[' + index + '].NoOfItemInWarehouse" data-valmsg-replace="true"></span>' +
+                                    '<input type="text" class="n1 tableDbM NoOfItems disableOnLoad" name="PhysicalCountItems[' + index + '].NoOfItemInWarehouse" id="PhysicalCountItems_' + index + '__NoOfItemInWarehouse" />' +
                                 '</td>' +
                                 '<td>' +
                                     '<label class="n1 tableDbM" id="TotalItemsCount_' + index + '"></label>' +

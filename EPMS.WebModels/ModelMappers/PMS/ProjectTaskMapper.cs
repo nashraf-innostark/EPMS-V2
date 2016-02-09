@@ -41,6 +41,7 @@ namespace EPMS.WebModels.ModelMappers.PMS
             projectTask.TaskNameA = source.TaskNameA;
             projectTask.IsParent = source.IsParent;
             projectTask.ParentTask = source.ParentTask;
+            projectTask.IsDeleted = source.IsDeleted;
             string descpEn = "";
             if (!String.IsNullOrEmpty(source.DescriptionE))
             {

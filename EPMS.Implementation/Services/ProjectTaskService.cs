@@ -62,13 +62,16 @@ namespace EPMS.Implementation.Services
             if (id > 0)
             {
                 response.ProjectTask = Repository.FindTaskWithPreRequisites(id);
-                if (response.ProjectTask.CustomerId != null)
+                if (response.ProjectTask != null && response.ProjectTask.CustomerId != null)
                 {
                     response.Projects = projectService.FindProjectByCustomerId((long) response.ProjectTask.CustomerId);
                 }
-                response.ProjectTasks = Repository.FindProjectTaskByProjectId(response.ProjectTask.ProjectId,
-                    response.ProjectTask.TaskId);
-                response.AllParentTasks = Repository.GetAllParentTasksOfProject(response.ProjectTask.ProjectId).ToList();
+                if (response.ProjectTask != null)
+                {
+                    response.ProjectTasks = Repository.FindProjectTaskByProjectId(response.ProjectTask.ProjectId,
+                        response.ProjectTask.TaskId);
+                    response.AllParentTasks = Repository.GetAllParentTasksOfProject(response.ProjectTask.ProjectId).ToList();
+                }
             }
             else
             {
