@@ -11,6 +11,7 @@ namespace EPMS.WebModels.ModelMappers.Website.AboutUs
             contentE = contentE.Replace("\n", "");
             string contentA = source.ContentAr.Replace("\r", "");
             contentA = contentA.Replace("\n", "");
+            var aboutUs = new WebsiteModels.AboutUs()
             {
                 AboutUsId = source.AboutUsId,
                 Title = source.Title,

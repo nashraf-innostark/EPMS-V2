@@ -3,6 +3,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.ContactUs;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.ContactUs;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
@@ -29,7 +30,7 @@ namespace EPMS.Website.Controllers
         {
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();
             var contactUs = contactUsService.GetDetailForWebsite();
-            if (contactUs.ShowToPublic)
+            if (contactUs.ShowToPublic || contactUs.RecCreatedBy == User.Identity.GetUserId())
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();
             }
