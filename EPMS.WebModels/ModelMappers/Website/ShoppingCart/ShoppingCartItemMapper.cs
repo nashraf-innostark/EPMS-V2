@@ -28,7 +28,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
             string productImageName = productImage != null ? productImage.ProductImagePath : "noimage_department.png";
 
             string itemImageFolder = source.Product.ItemVariationId != null
-                ? ConfigurationManager.AppSettings["InventoryImage"] + itemImageName
+                ? ConfigurationManager.AppSettings["ItemImage"] + itemImageName
                 : ConfigurationManager.AppSettings["ProductImage"] + productImageName;
             return new WebsiteModels.ShoppingCartItem
             {
@@ -42,6 +42,19 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
                 ItemNameAr = source.Product.ItemVariation != null ? source.Product.ItemVariation.InventoryItem.ItemNameAr : source.Product.ProductNameAr,
                 SkuCode = source.Product.ItemVariation != null ? source.Product.ItemVariation.SKUCode : source.Product.SKUCode,
                 ImagePath = itemImageFolder,
+            };
+        }
+        public static WebsiteModels.ShoppingCartItem CreateFromServerToClientForPrice(this DomainModels.ShoppingCartItem source)
+        {
+            return new WebsiteModels.ShoppingCartItem
+            {
+                CartItemId = source.CartItemId,
+                CartId = source.CartId,
+                ProductId = source.ProductId,
+                UnitPrice = source.Product.ItemVariation != null ? Convert.ToDecimal(source.Product.ItemVariation.UnitPrice) : Convert.ToDecimal(source.Product.ProductPrice),
+                Quantity = source.Quantity,
+                SizeId = source.SizeId,
+                SkuCode = source.Product.ItemVariation != null ? source.Product.ItemVariation.SKUCode : source.Product.SKUCode,
             };
         }
     }

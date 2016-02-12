@@ -39,7 +39,8 @@
             <div class="span12">
                 <table class="table table-striped table-responsive" id="ItemReleaseTable">
                     <thead class="cf sorthead">
-                        @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager)
+                        @if ((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.InventoryManager ||
+                            (UserRole)Convert.ToInt32(Session["RoleKey"].ToString()) == UserRole.Admin)
                         {
                             <tr>
                                 <th>@EPMS.WebModels.Resources.Inventory.PO.PO.Serial</th>
@@ -72,7 +73,8 @@
     var dir = '@direction';
     $(document).ready(function () {
         var siteUrl = $('#siteURL').val();
-        if ('@((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))' == '@(UserRole.InventoryManager)') {
+        if ('@((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))' == '@(UserRole.InventoryManager)' ||
+            '@((UserRole)Convert.ToInt32(Session["RoleKey"].ToString()))' == '@(UserRole.Admin)') {
             oTable = $('#ItemReleaseTable').dataTable({
                 "sPaginationType": "bootstrap",
                 "bProcessing": true,

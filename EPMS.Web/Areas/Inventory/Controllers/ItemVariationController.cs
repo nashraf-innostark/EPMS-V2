@@ -9,6 +9,7 @@ using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.DomainModels;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.Models.RequestModels;
 using EPMS.Models.ResponseModels;
@@ -61,6 +62,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #region Public
 
         #region Create
+        [SiteAuthorize(PermissionKey = "CreateItemVariation,ViewItemVariation")]
         public ActionResult Create(long? id, long inventoryItemId)
         {
 

@@ -16,19 +16,19 @@ namespace EPMS.Models.ModelMapers
             project.NameAShort = source.NameA.Length > 5 ? source.NameA.Substring(0, 5) + "..." : source.NameA;
             project.NameE = source.NameE;
             project.NameEShort = source.NameE.Length > 5 ? source.NameE.Substring(0, 5) + "..." : source.NameE;
-            //project.ProgressTotal = source.ProjectTasks != null && source.ProjectTasks.Any()
-            //    ? source.ProjectTasks.Sum(projectTask => (Convert.ToDouble(projectTask.TaskProgress) * Convert.ToDouble(projectTask.TotalWeight)) / 100)
-            //    : 0;
+            project.ProgressTotal = source.ProjectTasks != null && source.ProjectTasks.Any()
+                ? source.ProjectTasks.Sum(projectTask => Convert.ToDouble(projectTask.TaskProgress))
+                : 0;
             //project.ProgressTotal = Math.Ceiling(project.ProgressTotal);
-            foreach (var projectTask in source.ProjectTasks)
-            {
-                decimal progress = 0;
-                if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)
-                {
-                    progress = (decimal)projectTask.TaskProgress;
-                }
-                project.ProgressTotal += Convert.ToDouble(progress);
-            }
+            //foreach (var projectTask in source.ProjectTasks)
+            //{
+            //    decimal progress = 0;
+            //    if (projectTask.TotalWeight > 0 && projectTask.ParentTask == null)
+            //    {
+            //        progress = (decimal)projectTask.TaskProgress;
+            //    }
+            //    project.ProgressTotal += Convert.ToDouble(progress);
+            //}
             return project;
         }
 

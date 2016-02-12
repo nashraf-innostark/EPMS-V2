@@ -51,6 +51,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(x => x.CustomerId == customerId && x.Status == (int) RFQStatus.Pending);
         }
 
+        public IEnumerable<RFQ> GetAll(string customerId)
+        {
+            return DbSet.Where(x => x.RecCreatedBy == customerId);
+        }
+
         public IEnumerable<RFQ> GetAllRFQsByCustomerId(QOReportCreateOrDetailsRequest request)
         {
             return DbSet.Include("RFQItems").Where(quot => quot.CustomerId == request.CustomerId && quot.RecCreatedDate >= request.From && quot.RecCreatedDate <= request.To);

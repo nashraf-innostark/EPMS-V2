@@ -117,7 +117,8 @@ namespace EPMS.WebModels.ModelMappers
                 JobDescriptionE = source.JobOffered.JobTitle.JobTitleNameE,
                 JobDescriptionA = source.JobOffered.JobTitle.JobTitleNameA,
                 Email = source.Email,
-                MobileNumber = source.MobileNumber
+                MobileNumber = source.MobileNumber,
+                CvPath = source.CvPath
             };
         }
 

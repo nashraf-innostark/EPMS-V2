@@ -277,6 +277,8 @@ namespace EPMS.Website.Controllers
             {
                 CustomerNameE = viewModel.SignUp.CustomerNameEn,
                 CustomerNameA = viewModel.SignUp.CustomerNameEn,
+                RecCreatedDt = DateTime.Now,
+                RecLastUpdatedDt = DateTime.Now,
             };
             var customer = customerService.AddCustomer(customerToAdd);
 

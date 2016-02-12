@@ -104,12 +104,13 @@
                         jQuery("#user-id").val(userId);
                     }, 400);
                 }
-            } else {
-                setTimeout(function () {
-                    jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
-                    jQuery.prettyPhoto.open("#" + divId);
-                }, 300);
             }
+            //else {
+            //    setTimeout(function () {
+            //        jQuery.fn.prettyPhoto({ social_tools: false, deeplinking: false, show_title: false, default_width: width, theme: 'pp_kalypso' });
+            //        jQuery.prettyPhoto.open("#" + divId);
+            //    }, 300);
+            //}
         }
         // ** partners carousel
         $('#partners_carousel').carouFredSel({

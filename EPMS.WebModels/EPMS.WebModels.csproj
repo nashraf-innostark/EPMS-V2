@@ -1281,6 +1281,7 @@
     <EmbeddedResource Include="Resources\PMS\Project.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Project.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\PMS\Task.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1294,6 +1295,7 @@
     <EmbeddedResource Include="Resources\Reports\CustomerServiceList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerServiceList.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Reports\QuotationInvoice.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -1429,6 +1431,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Menu\Menu.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Menu.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\NewsAndArticles\NewsAndArticles.ar.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

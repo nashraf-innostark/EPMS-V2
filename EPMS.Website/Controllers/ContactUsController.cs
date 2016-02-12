@@ -3,6 +3,7 @@ using EPMS.Interfaces.IServices;
 using EPMS.WebModels.ModelMappers.Website.ContactUs;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.ContactUs;
+using Microsoft.AspNet.Identity;
 
 namespace EPMS.Website.Controllers
 {
@@ -28,11 +29,12 @@ namespace EPMS.Website.Controllers
         public ActionResult Detail()
         {
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();
-            var contactUs = contactUsService.GetDetail();
-            if (contactUs !=null)
+            var contactUs = contactUsService.GetDetailForWebsite();
+            if (contactUs.ShowToPublic || contactUs.RecCreatedBy == User.Identity.GetUserId())
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();
             }
+            contactUsViewModel.ReceiverEmail = contactUs.FormEmail;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(contactUsViewModel);
         }

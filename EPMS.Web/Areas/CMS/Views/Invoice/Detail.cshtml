@@ -252,7 +252,7 @@
                                     }
                                     else
                                     {
-                                        <label class="control-label"><button id="generateReceipt1" onclick="CreateReceipt(1)">Generate Receipt</button></label>
+                                        <label class="control-label"><button id="generateReceipt1" onclick="CreateReceipt(1, @Model.FirstReceiptId)">Generate Receipt</button></label>
                                     }
                                 </div>
                             }
@@ -303,7 +303,7 @@
                                     }
                                     else
                                     {
-                                        <label class="control-label"><button id="generateReceipt2" onclick="CreateReceipt(2)">Generate Receipt</button></label>
+                                        <label class="control-label"><button id="generateReceipt2" onclick="CreateReceipt(2,@Model.SecondReceiptId)">Generate Receipt</button></label>
                                     }
                                 </div>
                             }
@@ -354,7 +354,7 @@
                                     }
                                     else
                                     {
-                                        <label class="control-label"><button id="generateReceipt3" onclick="CreateReceipt(3)">Generate Receipt</button></label>
+                                        <label class="control-label"><button id="generateReceipt3" onclick="CreateReceipt(3, @Model.ThirdReceiptId)">Generate Receipt</button></label>
                                     }
                                 </div>
                             }
@@ -405,7 +405,7 @@
                                     }
                                     else
                                     {
-                                        <label class="control-label"><button id="generateReceipt4" onclick="CreateReceipt(4)">Generate Receipt</button></label>
+                                        <label class="control-label"><button id="generateReceipt4" onclick="CreateReceipt(4, @Model.FourthReceiptId)">Generate Receipt</button></label>
                                     }
                                 </div>
                             }
@@ -467,7 +467,7 @@
         //}
     });
 
-    function CreateReceipt(id, e) {
+    function CreateReceipt(id, receiptId) {
         if (confirm('@EPMS.WebModels.Resources.Website.Common.Common.GenerateReceiptConfirmation') == false) {
             event.preventDefault();
             return;
@@ -478,9 +478,10 @@
         var amountPaid = $('#Installment' + id).val();
 
         var dataToPost = {
-            installmentId: installmentId,
-            invoiceId: invoiceId,
-            amountPaid: amountPaid,
+            ReceiptId: receiptId,
+            InstallmentNumber: installmentId,
+            InvoiceId: invoiceId,
+            AmountPaid: amountPaid,
         };
         var url = "/CMS/Invoice/CreateReceipt";
         $.ajax({
@@ -489,9 +490,11 @@
             dataType: "json",
             data: dataToPost,
             success: function (data) {
-                $('#installmentLabel' + id).text("Paid");
-                $('#generateReceipt' + id).hide();
-                $('#installmentLabel' + id).attr("href", "/CMS/Receipt/Detail/" + data);
+                if (data > 0) {
+                    $('#installmentLabel' + id).text("Paid");
+                    $('#generateReceipt' + id).hide();
+                    $('#installmentLabel' + id).attr("href", "/CMS/Receipt/Detail/" + data);
+                }
             },
             error: function (e) {
                 alert('Error=' + e.toString());

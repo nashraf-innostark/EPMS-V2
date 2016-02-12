@@ -29,16 +29,15 @@ namespace EPMS.WebModels.ModelMappers
                 RecUpdatedDate = source.RecUpdatedDate,
                 RecCreatedDateString = Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("en")) + "-" + Convert.ToDateTime(source.RecCreatedDate).ToString("dd/MM/yyyy", new CultureInfo("ar")),
                 RequesterName = direction == "ltr" ?
-                source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE :
-                source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA,
-                EmpJobId = source.AspNetUser.Employee.EmployeeJobId
+                source.AspNetUser.Employee != null ? source.AspNetUser.Employee.EmployeeFirstNameE + " " + source.AspNetUser.Employee.EmployeeMiddleNameE + " " + source.AspNetUser.Employee.EmployeeLastNameE : "" :
+                source.AspNetUser.Employee != null ? source.AspNetUser.Employee.EmployeeFirstNameA + " " + source.AspNetUser.Employee.EmployeeMiddleNameA + " " + source.AspNetUser.Employee.EmployeeLastNameA : "",
+                EmpJobId = source.AspNetUser.Employee != null ? source.AspNetUser.Employee.EmployeeJobId : ""
             };
-            if (source.Manager != null)
+            if (source.Manager != null && source.Manager.Employee != null)
             {
                 purchaseOrder.ManagerName = direction == "ltr" ?
                 source.Manager.Employee.EmployeeFirstNameE + " " + source.Manager.Employee.EmployeeMiddleNameE + " " + source.Manager.Employee.EmployeeLastNameE
                 : source.Manager.Employee.EmployeeFirstNameA + " " + source.Manager.Employee.EmployeeMiddleNameA + " " + source.Manager.Employee.EmployeeLastNameA;
-                
             }
             return purchaseOrder;
         }

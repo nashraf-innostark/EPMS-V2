@@ -84,8 +84,7 @@ namespace EPMS.WebModels.WebsiteModels
     public class ResetPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         public string Email { get; set; }
 
         [Required]
@@ -105,8 +104,7 @@ namespace EPMS.WebModels.WebsiteModels
     public class ForgotPasswordViewModel
     {
         [Required]
-        [EmailAddress]
-        [Display(Name = "Email")]
+        [Display(Name = "UserName")]
         public string Email { get; set; }
     }
 }

@@ -23,8 +23,8 @@ namespace EPMS.Models.ModelMapers
                 NoOfTasks = source.ProjectTasks.Count,
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                CustomerNameE = source.Customer.CustomerNameE,
-                CustomerNameA = source.Customer.CustomerNameA,
+                CustomerNameE = source.Customer != null ? source.Customer.CustomerNameE : string.Empty,
+                CustomerNameA = source.Customer != null ? source.Customer.CustomerNameA : string.Empty,
 
                 NotesA = source.NotesA,
                 NotesE = source.NotesE,
@@ -35,10 +35,43 @@ namespace EPMS.Models.ModelMapers
                 SerialNo = source.SerialNo,
                 RecCreatedBy = source.RecCreatedBy,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
-                ReportProjectTasks = source.ProjectTasks.Select(x=>x.MapProjectTaskToReportProjectTask()).ToList()
+                ReportProjectTasks = source.ProjectTasks.Where(x=> !x.IsDeleted && x.IsParent).Select(x=>x.MapParentProjectTaskToReportProjectTask()).ToList()
             };
 
             return project;
+        }
+        public static ReportProjectTask MapParentProjectTaskToReportProjectTask(this ProjectTask source)
+        {
+            ReportProjectTask projectTask = new ReportProjectTask
+            {
+                TaskId = source.TaskId,
+                TaskNameE = source.TaskNameE,
+                StartDate = Convert.ToDateTime(source.StartDate),
+                EndDate = Convert.ToDateTime(source.EndDate),
+                TotalCost = source.TotalCost,
+                TotalWeight = source.TotalWeight,
+                TaskProgress = source.TaskProgress,
+                NotesA = source.NotesA,
+                NotesE = source.NotesE,
+                DeletedDate = source.DeletedDate,
+                IsDeleted = source.IsDeleted,
+                DescriptionA = source.DescriptionA,
+                DescriptionE = source.DescriptionE,
+                IsParent = source.IsParent,
+                NoOfSubTasks = source.SubTasks.Count,
+                ProjectId = source.ProjectId,
+                TaskNameA = source.TaskNameA,
+                RecCreatedBy = source.RecCreatedBy,
+                RecCreatedDt = source.RecCreatedDt,
+                RecLastUpdatedBy = source.RecLastUpdatedBy,
+                RecLastUpdatedDt = source.RecLastUpdatedDt,
+                ParentTask = source.ParentTask,
+                //ReportProjectSubTasks = source.SubTasks.ToList().Select(x => x.MapProjectTaskToReportProjectTask()).ToList(),
+                ReportTaskEmployees = source.TaskEmployees.Select(x=>x.MapTaskEmployeeToReportTaskEmployee()).ToList()
+            };
+
+
+            return projectTask;
         }
         public static ReportProjectTask MapProjectTaskToReportProjectTask(this ProjectTask source)
         {

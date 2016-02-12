@@ -115,7 +115,7 @@
 
 <script>
     var siteUrl;
-    var cartItemList = '@Html.Raw(Json.Encode(Model.ShoppingCart.ShoppingCartItems))';
+    var cartItemList = '@Html.Raw(Json.Encode(Model.ShoppingCart.ShoppingCartItemsForPrice))';
     var cartList = JSON.parse(cartItemList);
     jQuery(document).ready(function () {
         siteUrl = jQuery("#siteURL").val();

@@ -591,31 +591,37 @@ namespace EPMS.Implementation.Services
             //If Client List contains Entries
             if (clientList != null && clientList.Any())
             {
+                //Delete Items from DB List which are not in Client List
+                foreach (ItemWarehouse warehouseItem in dbList)
+                {
+                    if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId && warehouseItem.ItemVariationId == null))
+                        continue;
+                    var itemToDelete =
+                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
+                            warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
+                    itemWarehouseRepository.Delete(itemToDelete);
+                }
+
                 //Add New Items
                 foreach (ItemWarehouse itemWarehouse in clientList)
                 {
                     //Add New Items from Client list
-                    if (dbList.Any(a => a.WarehouseId == itemWarehouse.WarehouseId))
-                        continue;
-                    ItemWarehouse itemToAdd = new ItemWarehouse
+                    if (itemWarehouse.WarehouseId> 0 && itemWarehouse.ItemVariationId > 0)
                     {
-                        ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
-                        WarehouseId = itemWarehouse.WarehouseId,
-                        Quantity = itemWarehouse.Quantity,
-                        PlaceInWarehouse = itemWarehouse.PlaceInWarehouse,
-                        WarehouseDetailId = itemWarehouse.WarehouseDetailId
-                    };
-                    itemWarehouseRepository.Add(itemToAdd);
-
-                    //Delete Items from DB List which are not in Client List
-                    foreach (ItemWarehouse warehouseItem in dbList)
+                        //Update Items
+                        itemWarehouseRepository.Update(itemWarehouse);
+                    }
+                    else
                     {
-                        if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId))
-                            continue;
-                        var itemToDelete =
-                            itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
-                                warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
-                        itemWarehouseRepository.Delete(itemToDelete);
+                        ItemWarehouse itemToAdd = new ItemWarehouse
+                        {
+                            ItemVariationId = variationToSave.ItemVariation.ItemVariationId,
+                            WarehouseId = itemWarehouse.WarehouseId,
+                            Quantity = itemWarehouse.Quantity,
+                            PlaceInWarehouse = itemWarehouse.PlaceInWarehouse,
+                            WarehouseDetailId = itemWarehouse.WarehouseDetailId
+                        };
+                        itemWarehouseRepository.Add(itemToAdd);
                     }
                 }
             }

@@ -51,7 +51,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Create
-        [SiteAuthorize(PermissionKey = "VendorCreate")]
+        [SiteAuthorize(PermissionKey = "VendorCreate,ViewVendor")]
         public ActionResult Create(long? id)
         {
             VendorViewModel vendorViewModel = new VendorViewModel();

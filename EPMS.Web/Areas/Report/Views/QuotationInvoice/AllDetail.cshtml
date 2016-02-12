@@ -4,7 +4,7 @@
     ViewBag.Title = EPMS.WebModels.Resources.Reports.QuotationInvoice.Detail;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-    var serial = 0;
+    var serial = 1;
 }
 <!-- Navigation Bar Start-->
 <div class="breadcrumb-container">
@@ -54,7 +54,7 @@
                         @foreach (var qo in Model.ReportQuotationInvoices)
                         {
                             <tr>
-                                <td>1</td>
+                                <td>@(serial++)</td>
                                 <td>
                                     @(direction == "ltr" ? qo.EmployeeNameE : qo.EmployeeNameA)
                                 </td>

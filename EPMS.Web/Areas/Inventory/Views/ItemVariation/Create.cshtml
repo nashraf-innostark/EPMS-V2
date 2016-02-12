@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -93,7 +94,7 @@
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.CostCalculation</label>
             </div>
-            <div class="span9 span-inset">
+            <div class="span9 span-inset disabled-switch">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
                     @Html.CheckBoxFor(model => model.ItemVariation.CostCalculation, new { @id = "CostCalculation" })
                 </div>
@@ -111,12 +112,12 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AddToAveragePrice</label>
             </div>
-            <div class="span9 span-inset">
+            <div class="span9 span-inset disabled-switch">
                 <div data-on-label="YES" data-off-label="NO" class="switch switch-small" data-on="success" data-off="danger">
                     @Html.CheckBoxFor(model => model.ItemVariation.PriceCalculation, new { @id = "PriceCalculation" })
                 </div>
@@ -181,7 +182,7 @@
                 </div>
             </div>
         </div>
-        
+
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Inventory.InventoryItem.DescForQuotationEn</label>
@@ -241,18 +242,18 @@
                 </div>
             </div>
         </div>
-        
+
         @*<div class="control-group row-fluid">
-            <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.QtySold</label>
-            </div>
-            <div class="span9">
-                <div class="controls">
-                    @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @id = "TotalQuantityInHand", @readonly = "true" })
-                    @Html.ValidationMessageFor(m => m.ItemVariation.TotalQuantityInHand, "", new { @class = "required" })
+                <div class="span3">
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.QtySold</label>
                 </div>
-            </div>
-        </div>*@
+                <div class="span9">
+                    <div class="controls">
+                        @Html.TextBoxFor(m => m.ItemVariation.TotalQuantityInHand, new { @id = "TotalQuantityInHand", @readonly = "true" })
+                        @Html.ValidationMessageFor(m => m.ItemVariation.TotalQuantityInHand, "", new { @class = "required" })
+                    </div>
+                </div>
+            </div>*@
 
         <div class="control-group row-fluid">
             <div class="span3">
@@ -341,7 +342,7 @@
         <div id="CKEditorDescp">
             <div class="control-group row-fluid">
                 <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesEn</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -352,7 +353,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesAr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -363,7 +364,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoEn</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -375,7 +376,7 @@
             </div>
             <div class="control-group row-fluid">
                 <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
+                    <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.AdditionalInfoAr</label>
                 </div>
                 <div class="span9">
                     <div class="controls">
@@ -385,8 +386,8 @@
                 </div>
             </div>
         </div>
-        
-        <div id ="noCkEditor">
+
+        <div id="noCkEditor">
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.WebModels.Resources.Inventory.ItemVariation.NotesEn</label>
@@ -455,7 +456,11 @@
         </div>
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Size</strong><a href="#sizeModule" data-toggle="modal" id="addNewSize">Add New Size</a>
+            <strong>Size</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#sizeModule" data-toggle="modal" id="addNewSize">Add New Size</a>
+            }
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -471,22 +476,22 @@
                     <tbody class="sizeTable">
                         @foreach (var item in Model.ItemVariation.Sizes.ToList())
                         {
-                            <tr class="gradeX sizeTableRow">
-                                <input type="hidden" class="sizeIdHidden" value="@item.SizeId" />
-                                @if (direction == "ltr")
+                        <tr class="gradeX sizeTableRow">
+                            <input type="hidden" class="sizeIdHidden" value="@item.SizeId" />
+                            @if (direction == "ltr")
                                 {
-                                    <td>@item.SizeNameEn</td>
+                                <td>@item.SizeNameEn</td>
                                 }
                                 else
                                 {
-                                    <td>@item.SizeNameAr</td>
+                                <td>@item.SizeNameAr</td>
                                 }
 
-                                <td>
-                                    <i class="icon-photon minus deleteSize"></i>
-                                </td>
+                            <td>
+                                <i class="icon-photon minus deleteSize"></i>
+                            </td>
 
-                            </tr>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -496,7 +501,11 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Warehouse</strong><a href="#wherehouseModule" data-toggle="modal">Add Warehouse</a>
+            <strong>Warehouse</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#wherehouseModule" data-toggle="modal">Add Warehouse</a>
+            }
         </div>
 
         <!--Sortable Responsive Table begin-->
@@ -523,25 +532,25 @@
                             {
                                 serial = serial + 1;
 
-                                <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseDetailId, new { @class = "auto-resize", @hidden = "true" })
-                                    <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
-                                    <td>
-                                        <label class="control-label serialNumber">@serial</label>
-                                    </td>
-                                    <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "WarehouseNo" })</td>
-                                    <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
-                                    </td>
-                                    <td><i class="icon-photon minus deleteWarehouse"></i></td>
-                                </tr>
+                        <tr class="gradeX" data-id="@i">
+                            @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
+                            @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "warehouseId" })
+                            @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseDetailId, new { @class = "auto-resize", @hidden = "true" })
+                            <td style='display:none'><input name='ItemVariation.ItemWarehouses.Index' type='hidden' value='@i' /></td>
+                            <td>
+                                <label class="control-label serialNumber">@serial</label>
+                            </td>
+                            <td>@Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].WarehouseNo, new { @class = "WarehouseNo" })</td>
+                            <td>
+                                @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
+                                @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].Quantity, new { @class = "Quantity" })
+                            </td>
+                            <td>
+                                @Html.HiddenFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
+                                @Html.DisplayFor(model => model.ItemVariation.ItemWarehouses[i].PlaceInWarehouse, new { @class = "PlaceInWarehouse" })
+                            </td>
+                            <td><i class="icon-photon minus deleteWarehouse"></i></td>
+                        </tr>
                             }
                         }
                     </tbody>
@@ -552,7 +561,11 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Manufacturer</strong><a href="#manufacturModule" data-toggle="modal" id="addNewManufacturer">Add Manufacturer</a>
+            <strong>Manufacturer</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#manufacturModule" data-toggle="modal" id="addNewManufacturer">Add Manufacturer</a>
+            }
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -579,33 +592,33 @@
                             {
                                 serial = serial + 1;
 
-                                <tr class="gradeX" data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize idsofMan", @hidden = "true" })
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
-                                    <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
-                                    <td>
-                                        <label class="control-label">@serial</label>
-                                    </td>
-                                    <td>
-                                        @if (direction == "ltr")
+                        <tr class="gradeX" data-id="@i">
+                            @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerId, new { @class = "auto-resize idsofMan", @hidden = "true" })
+                            @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].ItemVariationId, new { @class = "auto-resize", @hidden = "true", @id = "manufacturerId" })
+                            <td style='display:none'><input name='ItemVariation.ItemManufacturers.Index' type='hidden' value='@i' /></td>
+                            <td>
+                                <label class="control-label">@serial</label>
+                            </td>
+                            <td>
+                                @if (direction == "ltr")
                                         {
-                                            @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameEn, new { @class = "auto-resize Price" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameEn, new { @class = "auto-resize Price" })
                                         }
                                         else
                                         {
-                                            @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameAr, new { @class = "auto-resize Price" })
+                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].ManufacturerNameAr, new { @class = "auto-resize Price" })
                                         }
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
-                                    </td>
-                                    <td>
-                                        @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
-                                        @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
-                                    </td>
-                                    <td><i class="icon-photon minus deleteManufacturer"></i></td>
-                                </tr>
+                            </td>
+                            <td>
+                                @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
+                                @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Price, new { @class = "auto-resize Price" })
+                            </td>
+                            <td>
+                                @Html.HiddenFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
+                                @Html.DisplayFor(model => model.ItemVariation.ItemManufacturers[i].Quantity, new { @class = "auto-resize Quantity" })
+                            </td>
+                            <td><i class="icon-photon minus deleteManufacturer"></i></td>
+                        </tr>
                             }
                         }
                     </tbody>
@@ -616,7 +629,12 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Status</strong><a href="#itemStatusModule" data-toggle="modal" id="addNewStatus">Add New Status</a>
+            <strong>Item Status</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#itemStatusModule" data-toggle="modal" id="addNewStatus">Add New Status</a>
+            }
+
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -632,20 +650,20 @@
                     <tbody class="statusTable">
                         @foreach (var item in Model.ItemVariation.Statuses.ToList())
                         {
-                            <tr class="gradeX statusTableRow">
-                                <input type="hidden" class="statusIdHidden" value="@item.StatusId" />
-                                @if (direction == "ltr")
+                        <tr class="gradeX statusTableRow">
+                            <input type="hidden" class="statusIdHidden" value="@item.StatusId" />
+                            @if (direction == "ltr")
                                 {
-                                    <td>@item.StatusNameEn</td>
+                                <td>@item.StatusNameEn</td>
                                 }
                                 else
                                 {
-                                    <td>@item.StatusNameAr</td>
+                                <td>@item.StatusNameAr</td>
                                 }
-                                <td>
-                                    <i class="icon-photon minus deleteStatus"></i>
-                                </td>
-                            </tr>
+                            <td>
+                                <i class="icon-photon minus deleteStatus"></i>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -655,7 +673,12 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Color</strong><a href="#itemColorModule" data-toggle="modal" id="addNewColor">Add New Color</a>
+            <strong>Item Color</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#itemColorModule" data-toggle="modal" id="addNewColor">Add New Color</a>
+            }
+
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -671,19 +694,19 @@
                     <tbody class="colorTable">
                         @foreach (var item in Model.ItemVariation.Colors.ToList())
                         {
-                            <tr class="gradeX">
-                                @if (direction == "ltr")
+                        <tr class="gradeX">
+                            @if (direction == "ltr")
                                 {
-                                    <td>@item.ColorNameEn</td>
+                                <td>@item.ColorNameEn</td>
                                 }
                                 else
                                 {
-                                    <td>@item.ColorNameAr</td>
+                                <td>@item.ColorNameAr</td>
                                 }
-                                <td>
-                                    <i class="icon-photon minus deleteColor"></i>
-                                </td>
-                            </tr>
+                            <td>
+                                <i class="icon-photon minus deleteColor"></i>
+                            </td>
+                        </tr>
                         }
                     </tbody>
                 </table>
@@ -693,7 +716,12 @@
 
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>Item Images</strong><a href="#ItemImagerModule" data-toggle="modal">Add New Image</a>
+            <strong>Item Images</strong>
+            @if (userPermissionsSet.Contains("CreateItemVariation"))
+            {
+            <a href="#ItemImagerModule" data-toggle="modal">Add New Image</a>
+            }
+
         </div>
         <!--Sortable Responsive Table begin-->
 
@@ -720,30 +748,30 @@
 
                                 serial = serial + 1;
 
-                                <tr data-id="@i">
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemImagePath)
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ImageId)
-                                    @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemVariationId)
-                                    <td style='display:none'><input name='ItemVariation.ItemImages.Index' type='hidden' value='@i' /></td>
-                                    <td>
-                                        <label class="control-label serialNumber">@serial</label>
-                                    </td>
-                                    <td>
-                                        <img class="itemImg" src='/Images/ItemImage/@Url.Content(Model.ItemVariation.ItemImages[i].ItemImagePath)' alt="user" />
-                                    </td>
-                                    <td>
-                                        <div class="span2">
-                                            <div class="controls">
-                                                @Html.TextBoxFor(model => model.ItemVariation.ItemImages[i].ImageOrder, new { @class = "auto-resize ImageOrder" })
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        @Html.CheckBoxFor(model => model.ItemVariation.ItemImages[i].ShowImage)
-                                        Show
-                                    </td>
-                                    <td><i class="icon-photon minus deleteImage"></i></td>
-                                </tr>
+                        <tr data-id="@i">
+                            @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemImagePath)
+                            @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ImageId)
+                            @Html.HiddenFor(model => model.ItemVariation.ItemImages[i].ItemVariationId)
+                            <td style='display:none'><input name='ItemVariation.ItemImages.Index' type='hidden' value='@i' /></td>
+                            <td>
+                                <label class="control-label serialNumber">@serial</label>
+                            </td>
+                            <td>
+                                <img class="itemImg" src='/Images/ItemImage/@Url.Content(Model.ItemVariation.ItemImages[i].ItemImagePath)' alt="user" />
+                            </td>
+                            <td>
+                                <div class="span2">
+                                    <div class="controls">
+                                        @Html.TextBoxFor(model => model.ItemVariation.ItemImages[i].ImageOrder, new { @class = "auto-resize ImageOrder" })
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                @Html.CheckBoxFor(model => model.ItemVariation.ItemImages[i].ShowImage)
+                                Show
+                            </td>
+                            <td><i class="icon-photon minus deleteImage"></i></td>
+                        </tr>
                             }
                         }
                     </tbody>
@@ -755,6 +783,8 @@
         <input type="hidden" id="ManufacturerArrayList" value="" name="ManufacturerArrayList" /> @*This is for posting*@
         <input type="hidden" id="StatusArrayList" value="" name="StatusArrayList" /> @*This is for posting*@
         <input type="hidden" id="ColorArrayList" value="" name="ColorArrayList" /> @*This is for posting*@
+        @if (userPermissionsSet.Contains("CreateItemVariation"))
+        {
         <div class="control-group row-fluid">
             <div class="span3">
                 <div class="span3 span-inset">
@@ -766,6 +796,8 @@
                 </div>
             </div>
         </div>
+        }
+
 
     </div>
 
@@ -1281,7 +1313,18 @@
     var parsedManufacturer = JSON.parse(manufacturerList);
     var selectedNodeId;
     $(document).ready(function () {
-        var callback = function(value) {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("CreateItemVariation")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            //$("#edit-panel").hide();
+            $(".disabled-switch").addClass("disableList");
+        }
+        var callback = function (value) {
             parsedSize = JSON.parse(value);
         }
         // get all colors

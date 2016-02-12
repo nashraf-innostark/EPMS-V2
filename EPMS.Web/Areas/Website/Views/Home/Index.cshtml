@@ -341,12 +341,22 @@
                 });
             }
         });
-        
+
     });
     $("#ShowProductPrice").change(function () {
-        
+
     });
     $('#label2-toggle-switch').on('switch-change', function (e, data) {
+        debugger;
+        var message = "";
+        if (data.value == true) {
+            message = '@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.ShowPriceConfirmation';
+        } else {
+            message = '@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.HidePriceConfirmation';
+        }
+        if (confirm(message) == false) {
+            return;
+        }
         var serviceUrl = siteUrl + '/Website/Home/ShowHideProductPrice';
         $.ajax({
             url: serviceUrl,
@@ -356,10 +366,14 @@
                 showPrice: data.value
             },
             success: function (result) {
-
+                var m = $(".alert-success");
+                m.children("span").text('@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.PriceShowHideSuccess');
+                m.show();
             },
             error: function (result) {
-                alert(result.response);
+                var m = $(".alert-error");
+                m.children("span").text('@EPMS.WebModels.Resources.Website.WebsiteMainPage.WebsiteMainPage.PriceShowHideError');
+                m.show();
             }
         });
     });

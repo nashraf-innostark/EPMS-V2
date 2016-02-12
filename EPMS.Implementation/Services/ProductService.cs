@@ -322,7 +322,7 @@ namespace EPMS.Implementation.Services
             ProductsListResponse response = new ProductsListResponse
             {
                 Products = new List<Product>(),
-                AllProducts = productRepository.GetAll().OrderByDescending(x => x.RecCreatedDt).Take(100).ToList(),
+                AllProducts = productRepository.GetAll().OrderByDescending(x => x.RecCreatedDt).ToList(),
                 ProductSections = productSectionService.GetAll().ToList(),
                 ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
@@ -330,6 +330,8 @@ namespace EPMS.Implementation.Services
             {
                 case "Inventory":
                     var department = inventoryDepartmentRepository.Find(request.Id);
+                    response.ProductSectionContentEn = department.ProductSections.Any() && department.ProductSections.FirstOrDefault() != null ? department.ProductSections.FirstOrDefault().SectionContentEn : "";
+                    response.ProductSectionContentAr = department.ProductSections.Any() && department.ProductSections.FirstOrDefault() != null ? department.ProductSections.FirstOrDefault().SectionContentAr : "";
                     IEnumerable<InventoryDepartment> departmentsForProduct = AllChildDepartments(department);
                     IEnumerable<long> itemVariationIds = GetAllItemVariationIds(departmentsForProduct);
                     var invProducts = productRepository.GetByItemVariationId(itemVariationIds, request, 0);

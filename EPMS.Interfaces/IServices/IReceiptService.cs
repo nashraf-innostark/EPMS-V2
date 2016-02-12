@@ -10,6 +10,7 @@ namespace EPMS.Interfaces.IServices
         IEnumerable<Receipt> GetAll(string userId);
         long AddReceipt(Receipt receipt);
         long GenerateReceipt(Receipt receipt);
+        long UpdateReceiptByAdmin(Receipt receipt);
         Receipt FindReceiptById(long id);
         ReceiptResponse GetReceiptDetails(long id);
     }

@@ -6,6 +6,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -16,8 +17,8 @@
             </a>
         </li>
         <li>
-            <a href="~/Website/NewsAndArticle/Index">
-                @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.NewsTitle
+            <a href="~/Website/NewsAndArticle/Articles">
+                @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.ArticlesTitle
             </a>
         </li>
         <li class="current">
@@ -86,7 +87,7 @@
             </div>
         </div>
 
-        <div id="Drag_And_Drop_Upload" class="control-group row-fluid">
+        <div id="Drag_And_Drop_Upload" class="control-group row-fluid disabled-switch">
             <div class="span3">
                 <label class="control-label">
                     @EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 1MB"><i class="icon-photon info-circle"></i></a>
@@ -219,7 +220,7 @@
             </div>
         </div>
 
-        <div class="control-group row-fluid">
+        <div class="control-group row-fluid disabled-switch">
             <div class="span3">
                 <label class="control-label">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.ShowToPublic</label>
             </div>
@@ -229,25 +230,37 @@
                 </div>
             </div>
         </div>
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.SaveButton</button>
-                </div>
-                <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/NewsAndArticle/Index'" type="reset">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.CancelButton</button>
+        @if (userPermissionsSet.Contains("ArticleCreate"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <div class="span3 span-inset">
+                        <button id="edit" class="btn">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.EditButton</button>
+                        <button id="savebtn" class="btn" type="submit">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.SaveButton</button>
+                    </div>
+                    <div class="span3 span-inset">
+                        <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Website/NewsAndArticle/Index'" type="reset">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticleCreate.CancelButton</button>
+                    </div>
                 </div>
             </div>
-        </div>
-
+        }
     </div>
 }
 
 <script src="~/RTE/ckeditor.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("ArticleCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            //$("#edit-panel").hide();
+            $(".disabled-switch").addClass("disableList");
+        }
         var siteUrl = $("#siteURL").val();
         $("#JobTitleForm").validate({
             errorElement: "span",

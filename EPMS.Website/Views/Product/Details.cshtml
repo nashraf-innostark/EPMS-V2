@@ -314,7 +314,7 @@
                                     }
                                     <div class="quantitiy">
                                         <label for="qty">@Product.Quantity:</label>
-                                        <input type="text" id="Quantity" class="inputbox">
+                                        <input type="text" id="Quantity" class="inputbox" value="1">
                                     </div>
                                     <a class="addtocart btn btn-flat" onclick="addToCart(@Model.Product.ProductId)">@Product.AddToCart</a>
                                     <div class="clear"></div>
@@ -332,22 +332,10 @@
 
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="shop-tab1">
-                                        <p class="desc_@Model.Product.ProductId"></p>
-                                        <script>
-                                            var descp = '@Html.Raw(direction == "ltr" ? Model.Product.ProductDescEn : Model.Product.ProductDescAr)';
-                                            var regex = /(<([^>]+)>)/ig;
-                                            var result = descp.replace(regex, "");
-                                            $(".desc_@Model.Product.ProductId").text(result);
-                                        </script>
+                                        @(direction == "ltr" ? Html.Raw(Model.Product.ProductDescEn) : Html.Raw(Model.Product.ProductDescAr))
                                     </div>
                                     <div class="tab-pane" id="shop-tab2">
-                                        <p class="spec_@Model.Product.ProductId"></p>
-                                        <script>
-                                            var spec = '@Html.Raw(direction == "ltr" ? Model.Product.ProductSpecificationEn : Model.Product.ProductSpecificationAr)';
-                                            var regex = /(<([^>]+)>)/ig;
-                                            var result = spec.replace(regex, "");
-                                            $(".spec_@Model.Product.ProductId").text(result);
-                                        </script>
+                                        @(direction == "ltr" ? Html.Raw(Model.Product.ProductSpecificationEn) : Html.Raw(Model.Product.ProductSpecificationAr))
                                     </div>
                                 </div>
                             </div>
@@ -382,7 +370,16 @@
                                         }
                                     }
                                     <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
-                                    <label for="item-0"><a href="@link">@childName</a></label>
+                                    {
+                                        if (productSection.InventoryDepartment != null)
+                                        {
+                                            <label for="item-0" style="color: @productSection.InventoryDepartment.DepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
+                                        }
+                                        else
+                                        {
+                                            <label for="item-0"><a href="@link">@childName</a></label>
+                                        }
+                                    }
                                     if (productSection.InventoryDepartment != null)
                                     {
                                         <ul>
@@ -393,7 +390,7 @@
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                                 <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
-                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                        <label for="item-0-0" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -405,7 +402,7 @@
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                                 <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
-                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                        <label for="item-0-0-0" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
                                                                     }
                                                                 </li>
                                                             }

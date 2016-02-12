@@ -726,11 +726,11 @@
                                                              <li class="dashTask">
                                                                  @if (direction == "ltr")
                                                                  {
-                                                                     <a data-task="@task.TaskProgress" title="@task.TaskNameE">@task.TaskNameEShort</a>
+                                                                     <a data-task="@task.TaskProgressPercentage" title="@task.TaskNameE">@task.TaskNameEShort</a>
                                                                  }
                                                                  else
                                                                  {
-                                                                     <a data-task="@task.TaskProgress" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
+                                                                     <a data-task="@task.TaskProgressPercentage" title="@task.TaskNameA">@(task.TaskNameA.Length > 15 ? task.TaskNameA.Substring(0, 15) : task.TaskNameA)</a>
                                                                  }
                                                              </li>
                                                          }

@@ -5,7 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var Date = DateTime.Now;
-    var title = Model.Type == 1  ? EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles : 
+    var title = Model.Type == 1 ? EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurArticles :
         EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.OurNews;
     int pageNo = 1;
     var imagePath = ConfigurationManager.AppSettings["NewsAndArticleImage"];
@@ -70,7 +70,7 @@
                                         </div>
                                     </div><!-- end itemheader -->
                                     <div class="itemBody ">
-                                        <p>
+                                        <p class="pull-left">
                                             <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
                                                 @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
                                                 {
@@ -83,7 +83,7 @@
                                             </a>
                                         </p>
                                         <p style="text-align: justify">
-                                            @newsOrArticle.ContentEn
+                                            @Html.Raw(newsOrArticle.ContentEn)
                                             <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
                                         </p>
                                     </div><!-- end item body -->
@@ -98,24 +98,26 @@
                                         <div class="post_details">
                                             <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer:  <a rel="author" href="#">@newsOrArticle.AuthorNameAr</a></span>
                                             <span class="infSep"> / </span>
-                                            <span class="itemDateCreated"><span class="icon-calendar"> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span></span>
+                                            <span class="itemDateCreated"><span class="icon-calendar"></span> @newsOrArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy") </span>
                                         </div>
                                     </div><!-- end itemheader -->
                                     <div class="itemBody ">
-                                        <p><a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
-                                               @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
-                                               {
-                                                <img src="~/Images/noimage_department.png" />
-                                               }
-                                               else
-                                               {
-                                                <img src="@imagePath@Url.Content(newsOrArticle.ImagePath)" />
-                                               }
-                                           </a></p>
-                                        <p style="text-align: justify">
-                                            @newsOrArticle.ContentAr
+                                        <p class="pull-right">
+                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="hoverBorder pull-left">
+                                                @if (string.IsNullOrEmpty(newsOrArticle.ImagePath))
+                                                {
+                                                    <img src="~/Images/noimage_department.png" />
+                                                }
+                                                else
+                                                {
+                                                    <img src="@imagePath@Url.Content(newsOrArticle.ImagePath)" />
+                                                }
+                                            </a>
                                         </p>
-                                        <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                        <p style="text-align: justify">
+                                            @Html.Raw(newsOrArticle.ContentAr)
+                                            <a href="/NewsAndArticle/Detail/@newsOrArticle.NewsArticleId" class="moreListing">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.More...</a>
+                                        </p>
                                     </div><!-- end item body -->
                                     <div class="clear"></div>
                                 </div>

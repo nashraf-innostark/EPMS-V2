@@ -7,6 +7,7 @@
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     var serial = 0;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -37,7 +38,11 @@
     <div class="container-fluid">
         <div class="alert alert-info alert-block">
             <i class="icon-alert icon-alert-info"></i>
-            <strong>@ViewBag.Title</strong><a href="~/Website/NewsAndArticle/Create">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.AddNewNews</a>
+            <strong>@ViewBag.Title</strong>
+            @if (userPermissionsSet.Contains("NewsCreate"))
+            {
+                <a href="~/Website/NewsAndArticle/Create">@EPMS.WebModels.Resources.Website.NewsAndArticles.NewsAndArticlesList.AddNewNews</a>
+            }
         </div>
 
         <div class="row-fluid">

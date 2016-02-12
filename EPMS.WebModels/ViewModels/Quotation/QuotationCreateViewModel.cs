@@ -17,10 +17,10 @@ namespace EPMS.WebModels.ViewModels.Quotation
         public string GreetingsAr { get; set; }
         [Range(0, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "DiscountRangeError")]
         public short? QuotationDiscount { get; set; }
-        [Required(ErrorMessageResourceType = typeof (Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInstallmentAmountError")]
-        [Range(1, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "InstallmentRangeError")]
+        [Required(ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInstallmentAmountError")]
+        //[Range(1, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "InstallmentRangeError")]
         public decimal FirstInstallement { get; set; }
-        [Required(ErrorMessageResourceType = typeof (Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInsDueAtCompletionError")]
+        [Required(ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "FirstInsDueAtCompletionError")]
         public short FirstInsDueAtCompletion { get; set; }
         public decimal? SecondInstallment { get; set; }
         public short? SecondInsDueAtCompletion { get; set; }

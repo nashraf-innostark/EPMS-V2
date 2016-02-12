@@ -67,27 +67,31 @@ namespace IdentitySample.Controllers
         }
         private void SetCultureInfo(string userId)
         {
-            var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
-
-            //check last saved culture and newley if changed from login page
-            //if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
-            //{
-            //    userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
-            //}
-            if (Session["Culture"] == null)
+            if (userId != null)
             {
-                userPrefrencesService.AddUpdateCulture(userId, "en");
+                var userPrefrences = userPrefrencesService.LoadPrefrencesByUserId(userId);
+
+                //check last saved culture and newley if changed from login page
+                //if (Session["Culture"] != null && Session["Culture"].ToString() != userPrefrences.Culture.ToString())
+                //{
+                //    userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+                //}
+                if (Session["Culture"] == null)
+                {
+                    userPrefrencesService.AddUpdateCulture(userId, "en");
+                }
+                else
+                {
+                    userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
+                }
+                CultureInfo info = userPrefrences != null
+                     ? new CultureInfo(userPrefrences.Culture)
+                     : new CultureInfo("en");
+                Session["Culture"] = info.Name;
+                info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
+                System.Threading.Thread.CurrentThread.CurrentCulture = info;
+                System.Threading.Thread.CurrentThread.CurrentUICulture = info;
             }
-            else {
-                userPrefrencesService.AddUpdateCulture(userId, Session["Culture"].ToString());
-            }
-           CultureInfo info = userPrefrences != null
-                ? new CultureInfo(userPrefrences.Culture)
-                : new CultureInfo("en");
-            Session["Culture"] = info.Name;
-            info.DateTimeFormat.ShortDatePattern = "dd/MM/yyyy";
-            System.Threading.Thread.CurrentThread.CurrentCulture = info;
-            System.Threading.Thread.CurrentThread.CurrentUICulture = info;
         }
         #endregion
 
@@ -439,10 +443,10 @@ namespace IdentitySample.Controllers
         [SiteAuthorize(PermissionKey = "User")]
         public ActionResult Users()
         {
-            //if (Session["UserID"] == null)
-            //{
-            //    return RedirectToAction("Login");
-            //}
+            if (Session["UserID"] == null)
+            {
+                return RedirectToAction("Login");
+            }
             List<AspNetUser> oList = HttpContext.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.ToList();
             //var roleManager = new RoleManager<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>(new RoleStore<IdentityRole>());
             var roleManager = HttpContext.GetOwinContext().Get<ApplicationRoleManager>();
@@ -458,7 +462,8 @@ namespace IdentitySample.Controllers
                     {
                         EmailConfirmed = item.EmailConfirmed,
                         Email = item.Email,
-                        FirstName = item.Employee.EmployeeFirstNameE + " " + item.Employee.EmployeeMiddleNameE + " " + item.Employee.EmployeeLastNameE,
+                        NameEn = item.Employee.EmployeeFirstNameE + " " + item.Employee.EmployeeMiddleNameE + " " + item.Employee.EmployeeLastNameE,
+                        NameAr = item.Employee.EmployeeFirstNameA + " " + item.Employee.EmployeeMiddleNameA + " " + item.Employee.EmployeeLastNameA,
                         KeyId = item.Id,
                         Role = roleManager.FindById(item.AspNetRoles.ToList()[0].Id).Name,
                         Username = item.UserName

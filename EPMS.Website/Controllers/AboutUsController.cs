@@ -29,7 +29,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Detail()
         {
             AboutUsViewModel aboutUsViewModel = new AboutUsViewModel();
-            var aboutus = aboutUsService.GetDetail();
+            var aboutus = aboutUsService.GetDetailForWebsite();
             if (aboutus != null)
             {
                 aboutUsViewModel.AboutUs = aboutus.CreateFromServerToClient();

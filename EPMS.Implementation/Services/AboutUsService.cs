@@ -41,6 +41,11 @@ namespace EPMS.Implementation.Services
         {
             return aboutUsRepository.GetAboutUs();
         }
+
+        public AboutUs GetDetailForWebsite()
+        {
+            return aboutUsRepository.GetAboutUsForWebsite();
+        }
         #endregion
     }
 }

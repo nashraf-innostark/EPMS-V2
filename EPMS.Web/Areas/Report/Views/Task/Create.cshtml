@@ -71,8 +71,8 @@
 
         $("#ProjectId").on("change", function () {
             var projId = parseInt($("#ProjectId").val());
+            $("#TaskId").empty();
             if (isNaN(projId)) {
-                $("#TaskId").empty();
                 $("#TaskId").append(
                         $('<option></option>').val(0).html("All")
                     );
@@ -81,6 +81,12 @@
                 });
             } else {
                 if (tasksList.length > 0) {
+                    $("#TaskId").append(
+                        $('<option></option>').val(0).html("All")
+                    );
+                    $(".select2me").select2("destroy");
+                    $('.select2me').select2({
+                    });
                     $.each(tasksList, function (key, value) {
                         if (value.ProjectId == projId) {
                             $("#TaskId").append(
