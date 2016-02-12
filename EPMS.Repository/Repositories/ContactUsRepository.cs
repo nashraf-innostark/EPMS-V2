@@ -24,7 +24,7 @@ namespace EPMS.Repository.Repositories
 
         public ContactUs GetContactUs()
         {
-            return DbSet.FirstOrDefault(x=>x.ShowToPublic);
+            return DbSet.FirstOrDefault();
         }
 
         public ContactUs SearchContactUs(string search)

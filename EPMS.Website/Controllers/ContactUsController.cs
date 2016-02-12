@@ -29,10 +29,11 @@ namespace EPMS.Website.Controllers
         {
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();
             var contactUs = contactUsService.GetDetail();
-            if (contactUs !=null)
+            if (contactUs.ShowToPublic)
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();
             }
+            contactUsViewModel.ReceiverEmail = contactUs.FormEmail;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(contactUsViewModel);
         }

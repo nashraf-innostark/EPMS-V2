@@ -7,7 +7,7 @@ namespace EPMS.WebModels.ModelMappers.Website.AboutUs
     {
         public static WebsiteModels.AboutUs CreateFromServerToClient(this Models.DomainModels.AboutUs source)
         {
-            return new WebsiteModels.AboutUs
+            var aboutUs =  new WebsiteModels.AboutUs
             {
                 AboutUsId = source.AboutUsId,
                 Title = source.Title,
@@ -24,6 +24,26 @@ namespace EPMS.WebModels.ModelMappers.Website.AboutUs
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDt = source.RecLastUpdatedDt,
             };
+
+            var infoEn = source.ContentAr;
+            if (!string.IsNullOrEmpty(infoEn))
+            {
+                infoEn = infoEn.Replace("\r", "");
+                infoEn = infoEn.Replace("\t", "");
+                infoEn = infoEn.Replace("\n", "");
+            }
+            aboutUs.ContentEn = infoEn;
+
+            var infoAr = source.ContentAr;
+            if (!string.IsNullOrEmpty(infoAr))
+            {
+                infoAr = infoAr.Replace("\r", "");
+                infoAr = infoAr.Replace("\t", "");
+                infoAr = infoAr.Replace("\n", "");
+            }
+            aboutUs.ContentAr = infoAr;
+
+            return aboutUs;
         }
 
         public static Models.DomainModels.AboutUs CreateFromClientToServer(this WebsiteModels.AboutUs source)

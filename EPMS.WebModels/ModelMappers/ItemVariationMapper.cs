@@ -222,39 +222,37 @@ namespace EPMS.WebModels.ModelMappers
 
         public static ItemVariationRequest CreateFromClientToServer(this WebsiteModels.ItemVariation source)
         {
-            var item = new ItemVariation
-            {
-                ItemVariationId = source.ItemVariationId,
-                InventoryItemId = source.InventoryItemId,
-                ItemBarcode = source.ItemBarcode,
-                SKUCode = source.SKUCode,
-                UnitCost = source.UnitCost,
-                CostCalculation = source.CostCalculation,
-                UnitPrice = source.UnitPrice,
-                QuantityInPackage = source.QuantityInPackage,
-                PackagePrice = source.PackagePrice,
-                PriceCalculation = source.PriceCalculation,
-                DescriptionForQuotationEn = source.DescriptionForQuotationEn,
-                DescriptionForQuotationAr = source.DescriptionForQuotationAr,
-                SKUDescriptionEn = source.SKUDescriptionEn,
-                SKUDescriptionAr = source.SKUDescriptionAr,
-                QuantityInHand = source.QuantityInHand,
-                QuantitySold = Convert.ToString(source.QuantitySold),
-                ReorderPoint = source.ReorderPoint,
-                QuantityInManufacturing = source.QuantityInManufacturing,
-                Weight = source.Weight,
-                Height = source.Height,
-                Width = source.Width,
-                Depth = source.Depth,
-                NotesEn = source.NotesEn,
-                NotesAr = source.NotesAr,
-                AdditionalInfoEn = source.AdditionalInfoEn,
-                AdditionalInfoAr = source.AdditionalInfoAr,
-                RecCreatedBy = source.RecCreatedBy,
-                RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en")),
-                RecLastUpdatedBy = source.RecLastUpdatedBy,
-                RecLastUpdatedDt = source.RecLastUpdatedDt,
-            };
+            var item = new ItemVariation();
+            item.ItemVariationId = source.ItemVariationId;
+            item.InventoryItemId = source.InventoryItemId;
+            item.ItemBarcode = source.ItemBarcode;
+            item.SKUCode = source.SKUCode;
+            item.UnitCost = source.UnitCost;
+            item.CostCalculation = source.CostCalculation;
+            item.UnitPrice = source.UnitPrice;
+            item.QuantityInPackage = source.QuantityInPackage;
+            item.PackagePrice = source.PackagePrice;
+            item.PriceCalculation = source.PriceCalculation;
+            item.DescriptionForQuotationEn = source.DescriptionForQuotationEn;
+            item.DescriptionForQuotationAr = source.DescriptionForQuotationAr;
+            item.SKUDescriptionEn = source.SKUDescriptionEn;
+            item.SKUDescriptionAr = source.SKUDescriptionAr;
+            item.QuantityInHand = source.QuantityInHand;
+            item.QuantitySold = Convert.ToString(source.QuantitySold);
+            item.ReorderPoint = source.ReorderPoint;
+            item.QuantityInManufacturing = source.QuantityInManufacturing;
+            item.Weight = source.Weight;
+            item.Height = source.Height;
+            item.Width = source.Width;
+            item.Depth = source.Depth;
+            item.NotesEn = source.NotesEn;
+            item.NotesAr = source.NotesAr;
+            item.AdditionalInfoEn = source.AdditionalInfoEn;
+            item.AdditionalInfoAr = source.AdditionalInfoAr;
+            item.RecCreatedBy = source.RecCreatedBy;
+            item.RecCreatedDt = DateTime.ParseExact(source.RecCreatedDt, "dd/MM/yyyy", new CultureInfo("en"));
+            item.RecLastUpdatedBy = source.RecLastUpdatedBy;
+            item.RecLastUpdatedDt = source.RecLastUpdatedDt;
             var request = new ItemVariationRequest();
             request.ItemVariation = item;
             request.ItemImages = new List<ItemImage>(source.ItemImages.Select(x => x.CreateFrom()));
