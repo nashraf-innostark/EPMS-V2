@@ -135,6 +135,9 @@
   <data name="CustomerName" xml:space="preserve">
     <value>اسم العميل</value>
   </data>
+  <data name="Details" xml:space="preserve">
+    <value>تفاصيل</value>
+  </data>
   <data name="Email" xml:space="preserve">
     <value>البريد الالكتروني</value>
   </data>
@@ -142,13 +145,16 @@
     <value>موظف</value>
   </data>
   <data name="IndexLabel" xml:space="preserve">
-    <value>Customers List</value>
+    <value> قائمة العميل</value>
   </data>
   <data name="LatestComplaint" xml:space="preserve">
     <value>شكوى جديدة</value>
   </data>
   <data name="LatestOrder" xml:space="preserve">
     <value>اخر طلب</value>
+  </data>
+  <data name="NameA" xml:space="preserve">
+    <value>الاسم</value>
   </data>
   <data name="NameAr" xml:space="preserve">
     <value>الاسم بالعربي</value>

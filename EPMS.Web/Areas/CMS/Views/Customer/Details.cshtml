@@ -1,7 +1,7 @@
 ﻿@model EPMS.WebModels.ViewModels.Customer.CustomerViewModel
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = EPMS.WebModels.Resources.CMS.Customer.Details;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string ReturnUrl = "";
     if (ViewBag.ReturnUrl != null)
@@ -69,7 +69,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.CustomerName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.NameEn</label>
             </div>
             <div class="span9">
                 <div class="controls">
@@ -80,7 +80,7 @@
         </div>
         <div class="control-group row-fluid">
             <div class="span3">
-                <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.CustomerName</label>
+                <label class="control-label">@EPMS.WebModels.Resources.CMS.Customer.NameAr</label>
             </div>
             <div class="span9">
                 <div class="controls">

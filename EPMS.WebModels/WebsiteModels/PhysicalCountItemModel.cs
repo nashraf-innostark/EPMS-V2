@@ -9,11 +9,11 @@ namespace EPMS.WebModels.WebsiteModels
         public long PcId { get; set; }
         public long ItemVariationId { get; set; }
         public long WarehouseId { get; set; }
-        [Required]
-        [Display(Name = "Number of Packages In Warehouse")]
+        //[Required]
+        //[Display(Name = "Number of Packages In Warehouse")]
         public long NoOfPackagesInWarehouse { get; set; }
-        [Required]
-        [Display(Name = "Number of Item In Warehouse")]
+        //[Required]
+        //[Display(Name = "Number of Item In Warehouse")]
         public long NoOfItemInWarehouse { get; set; }
         [Required]
         [Display(Name = "Item Barcode")]

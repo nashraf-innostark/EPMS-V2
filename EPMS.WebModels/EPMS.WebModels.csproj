@@ -163,10 +163,10 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Compile Include="Resources\CMS\Customer.Designer.cs">
-      <DependentUpon>Customer.resx</DependentUpon>
+    <Compile Include="Resources\CMS\Customer1.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
+      <DependentUpon>Customer.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\CMS\Order.ar.Designer.cs">
       <DependentUpon>Order.ar.resx</DependentUpon>
@@ -1010,8 +1010,8 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Customer.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Customer.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
+      <LastGenOutput>Customer1.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\CMS\Invoice.ar.resx" />
     <EmbeddedResource Include="Resources\CMS\Order.ar.resx">

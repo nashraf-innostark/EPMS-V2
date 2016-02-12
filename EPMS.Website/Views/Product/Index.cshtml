@@ -273,10 +273,11 @@
                                                             <a href="@siteURL/Product/Details/@Model.Products[j].ProductId?from=Sections">@Product.More</a>
                                                         }
                                                     </div>
-                                                    <div class="price">
-                                                        @if (Model.ShowProductPrice)
-                                                        {
-                                                            if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+
+                                                    @if (Model.ShowProductPrice)
+                                                    {
+                                                        <div class="price">
+                                                            @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
                                                             {
                                                                 <span>@Model.Products[j].DiscountedPrice</span>
                                                                 <span>SR</span>
@@ -287,8 +288,8 @@
                                                                 <span>@Model.Products[j].ProductPrice</span>
                                                                 <span>SR</span>
                                                             }
-                                                        }
-                                                    </div>
+                                                        </div>
+                                                    }
                                                 </div>
                                             </div>
                                         </div>
