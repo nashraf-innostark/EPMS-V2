@@ -452,7 +452,7 @@
             var result = descpE.replace(regex, "");
             $("#NotesEn").val(result);
         } else {
-            var descpA = $("#NotesAr");
+            var descpA = $("#NotesAr").val();
             var regex = /(<([^>]+)>)/ig;
             var result = descpA.replace(regex, "");
             $("#NotesAr").val(result);
