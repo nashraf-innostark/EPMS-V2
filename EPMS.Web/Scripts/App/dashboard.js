@@ -781,12 +781,13 @@ function LoadComplaints(control) {
 function LoadOrders(control) {
     Loader(control);
     var siteUrl = $('#siteURL').val();
-    var id = $("#customerIdForOrder").val();
-    var status = $("#orderStatus").val();
-    if (control.className == "refresher" || id == "") {
+    var id = $("#customerIdForOrder").val() == "" ? "0" : $("#customerIdForOrder").val();
+    var status = $("#orderStatusFilter").val() == "" ? "0" : $("#orderStatusFilter").val();
+    if (control.className == "refresher") {
         id = 0;
         status = 0;
     }
+  
     var url = siteUrl + "/Dashboard/LoadOrders";
     $.ajax({
         url: url,
