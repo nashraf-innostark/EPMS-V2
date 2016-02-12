@@ -426,7 +426,7 @@
           <Key>
             <PropertyRef Name="EmployeeId" />
           </Key>
-          <Property Name="EmployeeId" Type="bigint" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="EmployeeId" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="EmployeeFirstNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="EmployeeMiddleNameE" Type="nvarchar" MaxLength="100" />
           <Property Name="EmployeeLastNameE" Type="nvarchar" MaxLength="100" Nullable="false" />
@@ -736,7 +736,7 @@
           <Property Name="WarehouseId" Type="bigint" Nullable="false" />
           <Property Name="ItemVariationId" Type="bigint" Nullable="false" />
           <Property Name="Quantity" Type="bigint" Nullable="false" />
-          <Property Name="PlaceInWarehouse" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="PlaceInWarehouse" Type="nvarchar(max)" />
           <Property Name="WarehouseDetailId" Type="bigint" />
         </EntityType>
         <EntityType Name="JobApplicants">
@@ -2410,7 +2410,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_ItemManufacturer_Vendor">
+        <Association Name="FK_ItemManufacturer_Manufacturer">
           <End Role="Vendor" Type="Self.Vendor" Multiplicity="1" />
           <End Role="ItemManufacturer" Type="Self.ItemManufacturer" Multiplicity="*" />
           <ReferentialConstraint>
@@ -3310,6 +3310,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_ReportQuotationInvoice_Report">
+          <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
+          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Reports">
+              <PropertyRef Name="ReportId" />
+            </Principal>
+            <Dependent Role="ReportQuotationInvoice">
+              <PropertyRef Name="ReportId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_ReportQuotationInvoice_Reports">
           <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
           <End Role="ReportQuotationOrder" Type="Self.ReportQuotationOrder" Multiplicity="*" />
@@ -3318,18 +3330,6 @@
               <PropertyRef Name="ReportId" />
             </Principal>
             <Dependent Role="ReportQuotationOrder">
-              <PropertyRef Name="ReportId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_ReportQuotationInvoice_Reports1">
-          <End Role="Reports" Type="Self.Reports" Multiplicity="1" />
-          <End Role="ReportQuotationInvoice" Type="Self.ReportQuotationInvoice" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Reports">
-              <PropertyRef Name="ReportId" />
-            </Principal>
-            <Dependent Role="ReportQuotationInvoice">
               <PropertyRef Name="ReportId" />
             </Dependent>
           </ReferentialConstraint>
@@ -4314,7 +4314,7 @@
             <End Role="ItemVariation" EntitySet="ItemVariation" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
-          <AssociationSet Name="FK_ItemManufacturer_Vendor" Association="Self.FK_ItemManufacturer_Vendor">
+          <AssociationSet Name="FK_ItemManufacturer_Manufacturer" Association="Self.FK_ItemManufacturer_Manufacturer">
             <End Role="Vendor" EntitySet="Vendor" />
             <End Role="ItemManufacturer" EntitySet="ItemManufacturer" />
           </AssociationSet>
@@ -4614,13 +4614,13 @@
             <End Role="Reports" EntitySet="Reports" />
             <End Role="ReportProjectTask" EntitySet="ReportProjectTask" />
           </AssociationSet>
+          <AssociationSet Name="FK_ReportQuotationInvoice_Report" Association="Self.FK_ReportQuotationInvoice_Report">
+            <End Role="Reports" EntitySet="Reports" />
+            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
+          </AssociationSet>
           <AssociationSet Name="FK_ReportQuotationInvoice_Reports" Association="Self.FK_ReportQuotationInvoice_Reports">
             <End Role="Reports" EntitySet="Reports" />
             <End Role="ReportQuotationOrder" EntitySet="ReportQuotationOrder" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ReportQuotationInvoice_Reports1" Association="Self.FK_ReportQuotationInvoice_Reports1">
-            <End Role="Reports" EntitySet="Reports" />
-            <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
           </AssociationSet>
           <AssociationSet Name="FK_ReportQuotationInvoiceItem_ReportQuotationInvoice" Association="Self.FK_ReportQuotationInvoiceItem_ReportQuotationInvoice">
             <End Role="ReportQuotationInvoice" EntitySet="ReportQuotationInvoice" />
@@ -7868,7 +7868,7 @@
           <Property Name="WarehouseId" Type="Int64" Nullable="false" />
           <Property Name="ItemVariationId" Type="Int64" Nullable="false" />
           <Property Name="Quantity" Type="Int64" Nullable="false" />
-          <Property Name="PlaceInWarehouse" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="PlaceInWarehouse" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="ItemVariation" Relationship="EPMSInventoryModel.FK_ItemWarehouse_ItemVariation" FromRole="ItemWarehouse" ToRole="ItemVariation" />
           <NavigationProperty Name="Warehouse" Relationship="EPMSInventoryModel.FK_ItemWarehouse_Warehouse" FromRole="ItemWarehouse" ToRole="Warehouse" />
           <Property Name="WarehouseDetailId" Type="Int64" />
