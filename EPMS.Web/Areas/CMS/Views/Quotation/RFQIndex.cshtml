@@ -68,14 +68,14 @@
                                     }
                                     <td>
                                         @{
-                                switch (rfq.Status)
+                                switch ((RFQStatus)rfq.Status)
                                 {
-                                    case 1:
-                                        @:Qoutation Created
-                                                                break;
-                                    case 2:
-                                    @:Pending
-                                                                break;
+                                    case RFQStatus.QoutationCreated:
+                                        @EPMS.WebModels.Resources.CMS.RFQ.QoutationCreated
+                                        break;
+                                    case RFQStatus.Pending:
+                                    @EPMS.WebModels.Resources.CMS.RFQ.Pending
+                                        break;
                                 }
                                         }
                                     </td>
@@ -168,6 +168,7 @@
                 "sPaginationType": "bootstrap",
                 "aoColumns": [
                     { "bVisible": true, "bSortable": false },
+                      null,
                       null,
                       null,
                       null
