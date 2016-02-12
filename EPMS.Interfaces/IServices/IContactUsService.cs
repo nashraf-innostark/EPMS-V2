@@ -17,5 +17,6 @@ namespace EPMS.Interfaces.IServices
         /// Get ContactUs Details
         /// </summary>
         ContactUs GetDetail();
+        ContactUs GetDetailForWebsite();
     }
 }

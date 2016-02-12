@@ -80,7 +80,17 @@
                                         link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
                                     }
                                     <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
-                                    <label for="item-0"><a href="@link">@childName</a></label>
+                                    {
+                                        if (productSection.InventoryDepartment != null)
+                                        {
+                                            <label for="item-0" style="color: @productSection.InventoryDepartment.DepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
+                                        }
+                                        else
+                                        {
+                                            <label for="item-0"><a href="@link">@childName</a></label>
+                                        }
+                                    }
+
                                     if (productSection.InventoryDepartment != null)
                                     {
                                         <ul>
@@ -91,7 +101,7 @@
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                                 <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
-                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                        <label for="item-0-0" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -103,7 +113,7 @@
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                                 <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
-                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                        <label for="item-0-0-0" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
                                                                     }
                                                                 </li>
                                                             }
@@ -165,9 +175,11 @@
                     @Html.HiddenFor(model => model.SearchRequest.iSortCol_0, new { @id = "sortCol" })
                     @Html.HiddenFor(model => model.SearchRequest.iDisplayStart, new { @id = "displayStart" })
                     <div class="span9 directionR">
-                        <h1 class="page-title">@Product.Products</h1>
+                        <div class="linebot">
+                            @(direction == "ltr" ? Html.Raw(Model.ProductSectionContentEn) : Html.Raw(Model.ProductSectionContentAr))
+                        </div>
                         <div class="row">
-                            <div class="span9 linebot center-sm margintopLess10">
+                            <div class="span9 linebot center-sm margin-top-10">
                                 <div class="filtersgroup">
                                     <div class="limit">
                                         <span>@Product.Search:</span>
@@ -177,9 +189,9 @@
                                         <span>@Product.Show:</span>
                                         @Html.DropDownListFor(model => model.SearchRequest.iDisplayLength, new[]
                                         {
-                                            new SelectListItem { Value = "3" , Text = "3" },
-                                            new SelectListItem { Value = "6" , Text = "6" },
                                             new SelectListItem { Value = "9" , Text = "9" },
+                                            new SelectListItem { Value = "15" , Text = "15" },
+                                            new SelectListItem { Value = "30" , Text = "30" },
                                             new SelectListItem { Value = "60" , Text = "60" },
                                             new SelectListItem { Value = "90" , Text = "90" }
                                         }, new { @id = "displayLength", @class = "filter" })
@@ -255,13 +267,7 @@
                                                         <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
                                                     }
                                                     <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
-                                                    <p class="desc desc_@Model.Products[j].ProductId"></p>
-                                                    <script>
-                                                        var descp = '@Html.Raw(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)';
-                                                        var regex = /(<([^>]+)>)/ig;
-                                                        var result = descp.replace(regex, "");
-                                                        $(".desc_@Model.Products[j].ProductId").text(result);
-                                                    </script>
+                                                    @(direction == "ltr" ? Html.Raw(Model.Products[j].ProductDescEn) : Html.Raw(Model.Products[j].ProductDescAr))
                                                     <div class="actions">
                                                         <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
                                                         @if (Model.Products[j].ItemVariationId != null)
@@ -296,7 +302,7 @@
                                     }
                                 </div>
                             }
-                            <div class="span4">
+                            <div class="span9">
                                 <div class="pagination" id="pagination">
                                     <a><div class="cursorHand first-page"><i class="fa fa-long-arrow-right"></i></div></a>
                                     @for (int i = 0; i < Model.SearchRequest.TotalCount; i += Model.SearchRequest.iDisplayLength)
@@ -318,7 +324,7 @@
                         else
                         {
                             <div class="row" style="text-align: center">
-                                <h4>No product available.</h4>
+                                <h4>@EPMS.WebModels.Resources.Common.NoRecordsFound</h4>
                             </div>
                         }
 

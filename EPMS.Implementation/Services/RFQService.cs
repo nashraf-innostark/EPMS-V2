@@ -31,6 +31,31 @@ namespace EPMS.Implementation.Services
         {
             return rfqRepository.GetAll();
         }
+        public IEnumerable<RFQ> GetAllRfqs(string customerId, long employeeId)
+        {
+            string id = "";
+            if (!string.IsNullOrEmpty(customerId))
+            {
+                if (customerId == "Admin")
+                {
+                    return rfqRepository.GetAll();
+                }
+                id = customerId;
+            }
+            if (employeeId > 0)
+            {
+                var customer = customerRepository.GetCustomerByEmployeeId(employeeId);
+                if (customer != null)
+                {
+                    id = customer.AspNetUsers.FirstOrDefault().Id;
+                }
+            }
+            if (!string.IsNullOrEmpty(id))
+            {
+                return rfqRepository.GetAll(id);
+            }
+            return null;
+        }
 
         public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)
         {

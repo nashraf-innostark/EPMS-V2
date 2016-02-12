@@ -52,7 +52,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region News Create
 
-        [SiteAuthorize(PermissionKey = "NewsCreate")]
+        [SiteAuthorize(PermissionKey = "NewsCreate,ViewNews")]
         public ActionResult Create(long? id)
         {
             NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel();
@@ -124,7 +124,7 @@ namespace EPMS.Web.Areas.Website.Controllers
 
         #region Article Create
 
-        [SiteAuthorize(PermissionKey = "ArticleCreate")]
+        [SiteAuthorize(PermissionKey = "ArticleCreate,ViewArticle")]
         public ActionResult ArticleCreate(long? id)
         {
             NewsAndArticleViewModel newsAndArticleViewModel = new NewsAndArticleViewModel();

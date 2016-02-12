@@ -10,9 +10,8 @@
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The User Name field is required." id="LoginUserName" name="Login.UserName" placeholder="UserName" type="text" value="">' +
                 '<input class="toBeRequired inputbox " data-val="true" data-val-required="The Password field is required." id="LoginPassword" name="Login.Password" placeholder="Password" type="password">' +
                 '<input type="submit" id="login" name="submit" value="LOG IN" onclick="setSignUpFromValue(1)">' +
-                ' <a href="#" class="login_facebook">login with facebook</a>' +
                 '</form>' +
-            '<div class="links"><a href="#" onclick="ppOpen(\'#forgot_panel\', \'350\');">FORGOT YOUR PASSWORD?</a> / <a href="#" onclick="ppOpen(\'#resetpassword_panel\', \'350\');">RESET YOUR PASSWORD?</a></div>' +
+            '<div class="links"><a href="#" onclick="ppOpen(\'#forgot_panel\', \'350\');">FORGOT YOUR PASSWORD?</a></div>' +
             ' </div>' +
         '</div><!-- end login panel -->' +
         '<div id="register_panel">' +

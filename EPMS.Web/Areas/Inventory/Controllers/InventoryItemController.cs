@@ -80,7 +80,7 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         #endregion
 
         #region Create
-        [SiteAuthorize(PermissionKey = "InventoryItemCreate")]
+        [SiteAuthorize(PermissionKey = "InventoryItemCreate,ViewInventoryItem")]
         public ActionResult Create(long? id)
         {
             InventoryItemViewModel itemViewModel = new InventoryItemViewModel();

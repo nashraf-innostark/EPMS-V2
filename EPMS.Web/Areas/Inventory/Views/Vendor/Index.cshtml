@@ -5,6 +5,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -24,7 +25,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Inventory/Vendor/Create">@EPMS.WebModels.Resources.Inventory.Vendor.AddNew</a></small></h3>
+    @if (userPermissionsSet.Contains("VendorCreate"))
+    {
+        <h3> <small><a href="~/Inventory/Vendor/Create">@EPMS.WebModels.Resources.Inventory.Vendor.AddNew</a></small></h3>
+    }
 </header>
 
 <!--Notifications begin-->
@@ -33,7 +37,7 @@
 
 <form class="form-horizontal">
     <div id="English" class="container-fluid">
-        
+
         <div class="row-fluid">
             <div class="span12">
                 <table id="Vendors" class="table table-striped table-responsive">

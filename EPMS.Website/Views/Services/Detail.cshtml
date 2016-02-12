@@ -61,19 +61,15 @@
                             <div class="itemBody">
                                 @if (Model.WebsiteService.ImagePath != null)
                                 {
-                                    <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
+                                    <p>
+                                        <a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a>
+                                    </p>
                                 }
                                 else
                                 {
                                     <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
                                 }
-                                <p style="text-align: justify" class="@Model.WebsiteService.ServiceId"></p>
-                                <script>
-                                    var descp = '@Html.Raw(Model.WebsiteService.DescriptionEn)';
-                                    var regex = /(<([^>]+)>)/ig;
-                                    var result = descp.replace(regex, "");
-                                    $("." + '@Model.WebsiteService.ServiceId').text(result);
-                                </script>
+                                <p style="text-align: justify">@Html.Raw(Model.WebsiteService.DescriptionEn)</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>
@@ -96,11 +92,11 @@
                             <div class="itemBody">
                                 @if (Model.WebsiteService.ImagePath != null)
                                 {
-                                    <p><a href="#" class="hoverBorder pull-left"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
+                                    <p><a href="#" class="hoverBorder pull-right"><img style="height: 186px; width: 280px" src="@link/@Url.Content(@Model.WebsiteService.ImagePath)" /></a></p>
                                 }
                                 else
                                 {
-                                    <p><a href="#" class="hoverBorder pull-left"><img src="@noImage/NoImageWebsite.png" /></a></p>
+                                    <p><a href="#" class="hoverBorder pull-right"><img src="@noImage/NoImageWebsite.png" /></a></p>
                                 }
                                 <p style="text-align: justify" class="@Model.WebsiteService.ServiceId"></p>
                                 <script>

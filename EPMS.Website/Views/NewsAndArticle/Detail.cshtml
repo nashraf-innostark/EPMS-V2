@@ -61,7 +61,7 @@
                                 <div class="post_details">
                                     <span class="itemAuthor">@EPMS.WebModels.Resources.WebsiteClient.NewsAndArticles.NewsAndArticles.Writer: <a rel="author" href="#">@Model.NewsAndArticle.AuthorNameEn</a></span>
                                     <span class="infSep"> / </span>
-                                    <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.NewsAndArticle.RecCreatedDt.ToString("MMMM dd, yyyy")</span>
+                                    <span class="itemDateCreated"><span class="icon-calendar"></span> @Model.NewsAndArticle.RecCreatedDt.ToString("dddd, dd MMMM yyyy")</span>
 
                                 </div>
                             </div><!-- end itemheader -->
@@ -78,7 +78,7 @@
                                         }
                                     </a>
                                 </p>
-                                <p style="text-align: justify">@Model.NewsAndArticle.ContentEn</p>
+                                <p style="text-align: justify">@Html.Raw(Model.NewsAndArticle.ContentEn)</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>
@@ -103,7 +103,7 @@
                             </div><!-- end itemheader -->
                             <div class="itemBody">
                                 <p>
-                                    <a href="#" class="hoverBorder pull-left">
+                                    <a href="#" class="hoverBorder pull-right">
                                         @if (string.IsNullOrEmpty(Model.NewsAndArticle.ImagePath))
                                         {
                                             <img style="height: 186px; width: 280px" src="~/Images/noimage_department.png" />
@@ -114,7 +114,7 @@
                                         }
                                     </a>
                                 </p>
-                                <p style="text-align: justify">@Model.NewsAndArticle.ContentAr</p>
+                                <p style="text-align: justify">@Html.Raw(Model.NewsAndArticle.ContentAr)</p>
                             </div><!-- end item body -->
                             <div class="clear"></div>
                         </div>

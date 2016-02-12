@@ -7,13 +7,17 @@ namespace EPMS.WebModels.ModelMappers.Website.AboutUs
     {
         public static WebsiteModels.AboutUs CreateFromServerToClient(this Models.DomainModels.AboutUs source)
         {
+            string contentE = source.ContentEn.Replace("\r", "");
+            contentE = contentE.Replace("\n", "");
+            string contentA = source.ContentAr.Replace("\r", "");
+            contentA = contentA.Replace("\n", "");
             return new WebsiteModels.AboutUs
             {
                 AboutUsId = source.AboutUsId,
                 Title = source.Title,
                 TitleAr = source.TitleAr,
-                ContentAr = source.ContentAr,
-                ContentEn = source.ContentEn,
+                ContentAr = contentA,
+                ContentEn = contentE,
                 MetaDesc = source.MetaDesc,
                 MetaDescAr = source.MetaDescAr,
                 MetaKeywords = source.MetaKeywords,
@@ -28,13 +32,17 @@ namespace EPMS.WebModels.ModelMappers.Website.AboutUs
 
         public static Models.DomainModels.AboutUs CreateFromClientToServer(this WebsiteModels.AboutUs source)
         {
+            string contentE = source.ContentEn.Replace("\r", "");
+            contentE = contentE.Replace("\n", "");
+            string contentA = source.ContentAr.Replace("\r", "");
+            contentA = contentA.Replace("\n", "");
             return new Models.DomainModels.AboutUs
             {
                 AboutUsId = source.AboutUsId,
                 Title = source.Title,
                 TitleAr = source.TitleAr,
-                ContentAr = source.ContentAr,
-                ContentEn = source.ContentEn,
+                ContentAr = contentA,
+                ContentEn = contentE,
                 MetaDesc = source.MetaDesc,
                 MetaDescAr = source.MetaDescAr,
                 MetaKeywords = source.MetaKeywords,

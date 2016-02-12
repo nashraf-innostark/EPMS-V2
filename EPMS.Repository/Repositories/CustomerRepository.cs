@@ -31,5 +31,10 @@ namespace EPMS.Repository.Repositories
             var response = DbSet.Include(x=>x.Complaints).Where(x => x.RecCreatedDt >= request.StartDate && x.RecCreatedDt <= request.EndDate);
             return response;
         }
+
+        public Customer GetCustomerByEmployeeId(long employeeId)
+        {
+            return DbSet.FirstOrDefault(cus => cus.EmployeeId == employeeId);
+        }
     }
 }

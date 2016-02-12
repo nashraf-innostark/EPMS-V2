@@ -5,8 +5,8 @@ namespace EPMS.WebModels.WebsiteModels
     public class SystemUser
     {
         public string KeyId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
+        public string NameEn { get; set; }
+        public string NameAr { get; set; }
         public string Telephone { get; set; }
         public string UserName { get; set; }
         public string Address { get; set; }

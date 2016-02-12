@@ -47,8 +47,15 @@ namespace EPMS.Web.Areas.HR.Controllers
         #region Public
 
         [AllowAnonymous]
-        public ActionResult Jobs()
+        public ActionResult Jobs(string dir)
         {
+            if (!string.IsNullOrEmpty(dir))
+            {
+                string culture = dir == "ltr" ? "en" : "ar";
+                System.Threading.Thread.CurrentThread.CurrentCulture = new CultureInfo(culture);
+                System.Threading.Thread.CurrentThread.CurrentUICulture = new CultureInfo(culture);
+                Session["Culture"] = culture;
+            }
             JobApplicantViewModel viewModel = new JobApplicantViewModel
             {
                 JobOfferedList = jobOfferedService.GetAll().Select(x => x.CreateFromServerToClientForJobs())

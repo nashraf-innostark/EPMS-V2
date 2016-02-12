@@ -7,6 +7,10 @@ namespace EPMS.WebModels.ModelMappers.Website.NewsAndArticles
     {
         public static WebsiteModels.NewsAndArticle CreateFromServerToClient(this Models.DomainModels.NewsAndArticle source)
         {
+            var contentE = source.ContentEn.Replace("\n", "");
+            contentE = contentE.Replace("\r", "");
+            var contentA = source.ContentAr.Replace("\n", "");
+            contentA = contentA.Replace("\r", "");
             return new WebsiteModels.NewsAndArticle
             {
                 NewsArticleId = source.NewsArticleId,
@@ -19,8 +23,8 @@ namespace EPMS.WebModels.ModelMappers.Website.NewsAndArticles
                 ImagePath = source.ImagePath,
                 AuthorNameAr = source.AuthorNameAr,
                 AuthorNameEn = source.AuthorNameEn,
-                ContentAr =  source.ContentAr,
-                ContentEn = source.ContentEn,
+                ContentAr =  contentA,
+                ContentEn = contentE,
                 ShowToPublic = source.ShowToPublic,
                 MetaDesc = source.MetaDesc,
                 MetaDescAr = source.MetaDescAr,

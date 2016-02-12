@@ -17,5 +17,7 @@ namespace EPMS.Interfaces.IServices
         /// Get AboutUs Details
         /// </summary>
         AboutUs GetDetail();
+
+        AboutUs GetDetailForWebsite();
     }
 }

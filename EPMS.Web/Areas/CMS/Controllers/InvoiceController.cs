@@ -1,4 +1,6 @@
-﻿using System.Configuration;
+﻿using System;
+using System.Configuration;
+using System.Globalization;
 using System.Linq;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
@@ -91,21 +93,33 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         #region Create Receipt
 
-        public ActionResult CreateReceipt(int installmentId, long invoiceId, decimal amountPaid)
+        public ActionResult CreateReceipt(Receipt receipt)
         {
-            ReceiptViewModel viewModel = new ReceiptViewModel
+            long receiptId;
+            receipt.IsPaid = true;
+            if (receipt.ReceiptId > 0)
             {
-                Receipt =
+                // update receipt
+                EPMS.Models.DomainModels.Receipt receiptToUpdate = new EPMS.Models.DomainModels.Receipt
                 {
-                    InstallmentNumber = installmentId,
-                    InvoiceId = invoiceId,
-                    AmountPaid = amountPaid,
-                    IsPaid = true
-                }
-            };
-
-            long receiptId = receiptService.GenerateReceipt(viewModel.Receipt.CreateFromClientToServer());
-
+                    ReceiptId = receipt.ReceiptId,
+                    AmountPaid = receipt.AmountPaid,
+                    IsPaid = receipt.IsPaid,
+                    InvoiceId = receipt.InvoiceId,
+                    InstallmentNumber = receipt.InstallmentNumber
+                };
+                receiptId = receiptService.UpdateReceiptByAdmin(receiptToUpdate);
+            }
+            else
+            {
+                // generate receipt
+                receipt.PaymentType = (short) PaymentType.OffLine;
+                receipt.RecCreatedBy = User.Identity.GetUserId();
+                receipt.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+                receipt.RecLastUpdatedBy = User.Identity.GetUserId();
+                receipt.RecLastUpdatedDt = DateTime.Now;
+                receiptId = receiptService.GenerateReceipt(receipt.CreateFromClientToServer());
+            }
             return Json(receiptId);
         }
 

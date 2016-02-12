@@ -28,7 +28,7 @@ namespace EPMS.Website.Controllers
         public ActionResult Detail()
         {
             ContactUsViewModel contactUsViewModel = new ContactUsViewModel();
-            var contactUs = contactUsService.GetDetail();
+            var contactUs = contactUsService.GetDetailForWebsite();
             if (contactUs !=null)
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();

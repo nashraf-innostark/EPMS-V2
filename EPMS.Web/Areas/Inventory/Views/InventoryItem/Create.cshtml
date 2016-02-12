@@ -7,6 +7,7 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.MessageVM = TempData["message"];
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -424,7 +425,11 @@
             <span id="itemVariationTable">
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
-                    <strong>Item Variations</strong><a href="/Inventory/ItemVariation/Create?inventoryItemId=@Model.InventoryItem.ItemId">Create New Item Variation</a>
+                    <strong>Item Variations</strong>
+                    @if (userPermissionsSet.Contains("CreateItemVariation"))
+                    {
+                        <a href="/Inventory/ItemVariation/Create?inventoryItemId=@Model.InventoryItem.ItemId">Create New Item Variation</a>
+                    }
                 </div>
 
                 <!--Sortable Responsive Table begin-->
@@ -512,21 +517,25 @@
                 <!--Sortable Responsive Table end-->
             </span>
         }
-
-        <div class="control-group row-fluid">
-            <div class="span3">
-                <div class="span3 span-inset">
-                    <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
-                    <button id="savebtn" class="btn" type="submit" name="Save">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
-                </div>
-                <div class="span3 span-inset">
-                    <button id="delete" class="btn" type="submit" name="Delete">@EPMS.WebModels.Resources.Inventory.Vendor.DeleteButton</button>
-                </div>
-                <div class="span3 span-inset">
-                    <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
+        
+        @if (userPermissionsSet.Contains("InventoryItemCreate"))
+        {
+            <div class="control-group row-fluid">
+                <div class="span3">
+                    <div class="span3 span-inset">
+                        <button id="edit" class="btn">@EPMS.WebModels.Resources.Inventory.Vendor.EditButton</button>
+                        <button id="savebtn" class="btn" type="submit" name="Save">@EPMS.WebModels.Resources.Inventory.Vendor.SaveButton</button>
+                    </div>
+                    <div class="span3 span-inset">
+                        <button id="delete" class="btn" type="submit" name="Delete">@EPMS.WebModels.Resources.Inventory.Vendor.DeleteButton</button>
+                    </div>
+                    <div class="span3 span-inset">
+                        <button id="cancel" class="btn" onclick="window.location.href = '@(ConfigurationManager.AppSettings["SiteURL"])/Inventory/InventoryItem/Index'" type="reset">@EPMS.WebModels.Resources.HR.JobTitle.CancelButton</button>
+                    </div>
                 </div>
             </div>
-        </div>
+        }
+        
 
     </div>
 }
@@ -567,6 +576,17 @@
     var itemId = parseInt($('#InventoryItem_ItemId').val());
     var siteUrl = $("#siteURL").val();
     $(document).ready(function () {
+        var isDetail;
+        var val = '@userPermissionsSet.Contains("InventoryItemCreate")';
+        if (val == 'True') {
+            isDetail = false;
+        } else {
+            isDetail = true;
+        }
+        if (isDetail == true) {
+            //$("#edit-panel").hide();
+            $("#Drag_And_Drop_Upload").addClass("disableList");
+        }
         $('#tableSortableVariations').dataTable({
             "sPaginationType": "bootstrap",
             "fnInitComplete": function() {

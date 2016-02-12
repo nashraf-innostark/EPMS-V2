@@ -6,6 +6,7 @@
     ViewBag.MessageVM = TempData["message"];
     Layout = "~/Views/Shared/_Layout.cshtml";
     var serial = 0;
+    string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
 <div class="breadcrumb-container">
@@ -26,7 +27,10 @@
 <header>
     <i class="icon-big-notepad"></i>
     <h2><small>@ViewBag.Title</small></h2>
-    <h3> <small><a href="~/Inventory/InventoryItem/Create">@EPMS.WebModels.Resources.Inventory.InventoryItem.CreateNew</a></small></h3>
+    @if (userPermissionsSet.Contains("InventoryItemCreate"))
+    {
+        <h3> <small><a href="~/Inventory/InventoryItem/Create">@EPMS.WebModels.Resources.Inventory.InventoryItem.CreateNew</a></small></h3>
+    }
 </header>
 
 <!--Notifications begin-->

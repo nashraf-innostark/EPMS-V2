@@ -42,6 +42,11 @@ namespace EPMS.Implementation.Services
             return contactUsRepository.GetContactUs();
         }
 
+        public ContactUs GetDetailForWebsite()
+        {
+            return contactUsRepository.GetContactUsForWebsite();
+        }
+
         #endregion
     }
 }

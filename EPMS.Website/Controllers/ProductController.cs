@@ -47,11 +47,13 @@ namespace EPMS.Website.Controllers
                 Id = productId,
                 From = from,
                 SearchString = "",
-                iDisplayLength = 3,
+                iDisplayLength = 9,
                 SortBy = 1,
                 SortDirection = "asc"
             };
             ProductsListResponse productsList = productService.GetProductsList(viewModel.SearchRequest);
+            viewModel.ProductSectionContentEn = productsList.ProductSectionContentEn;
+            viewModel.ProductSectionContentAr = productsList.ProductSectionContentAr;
             viewModel.ShowProductPrice = productsList.ShowProductPrice;
             viewModel.ProductSections = productsList.ProductSections.ToList();
             if (productsList.Products.Any())

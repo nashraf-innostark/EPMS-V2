@@ -39,7 +39,8 @@ namespace EPMS.WebModels.ModelMappers.Website.ShoppingCart
                 RecCreatedDate = source.RecCreatedDate,
                 RecLastUpdatedBy = source.RecLastUpdatedBy,
                 RecLastUpdatedDate = source.RecLastUpdatedDate,
-                ShoppingCartItems = source.ShoppingCartItems.Select(x => x.CreateFromServerToClient()).ToList()
+                ShoppingCartItems = source.ShoppingCartItems.Select(x => x.CreateFromServerToClient()).ToList(),
+                ShoppingCartItemsForPrice = source.ShoppingCartItems.Select(x => x.CreateFromServerToClientForPrice()).ToList()
             };
         }
     }

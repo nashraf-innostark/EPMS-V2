@@ -773,19 +773,19 @@
                 $(this).val(0);
                 return;
             } else {
-                dueAt = dueAt + parseInt($('#DueAt2').val());
+                dueAt = parseInt($('#DueAt2').val());
                 if (dueAt > 100 || isNaN(dueAt)) {
                     noteItb();
                     $(this).val(0);
                     return;
                 } else {
-                    dueAt = dueAt + parseInt($('#DueAt3').val());
+                    dueAt = parseInt($('#DueAt3').val());
                     if (dueAt > 100 || isNaN(dueAt)) {
                         noteItb();
                         $(this).val(0);
                         return;
                     } else {
-                        dueAt = dueAt + parseInt($('#DueAt4').val());
+                        dueAt = parseInt($('#DueAt4').val());
                         if (dueAt > 100 || isNaN(dueAt)) {
                             noteItb();
                             $(this).val(0);

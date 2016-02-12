@@ -22,6 +22,8 @@ namespace EPMS.WebModels.ViewModels.Product
         public IList<WebsiteModels.Product> FeaturedProducts { get; set; }
         public ProductSearchRequest SearchRequest { get; set; }
         public IEnumerable<Models.DomainModels.ProductSection> ProductSections { get; set; }
+        public string ProductSectionContentEn { get; set; }
+        public string ProductSectionContentAr { get; set; }
     }
 
     public class ProductLvModel

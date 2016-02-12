@@ -8,5 +8,6 @@
         public string TaskNameEShort { get; set; }
         public string TaskNameAShort { get; set; }
         public decimal? TaskProgress { get; set; }
+        public decimal? TaskProgressPercentage { get; set; }
     }
 }

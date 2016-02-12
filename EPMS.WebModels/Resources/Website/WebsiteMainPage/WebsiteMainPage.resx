@@ -138,6 +138,9 @@
   <data name="Description" xml:space="preserve">
     <value>Description</value>
   </data>
+  <data name="HidePriceConfirmation" xml:space="preserve">
+    <value>Are you sure to hide price ?</value>
+  </data>
   <data name="HomePageCreate" xml:space="preserve">
     <value>Home Page Create</value>
   </data>
@@ -155,6 +158,15 @@
   </data>
   <data name="Position" xml:space="preserve">
     <value>Position</value>
+  </data>
+  <data name="PriceShowHideError" xml:space="preserve">
+    <value>Error in Show/Hide Price.</value>
+  </data>
+  <data name="PriceShowHideSuccess" xml:space="preserve">
+    <value>Show/Hide Price has been successfully done.</value>
+  </data>
+  <data name="ShowPriceConfirmation" xml:space="preserve">
+    <value>Are you sure to show price ?</value>
   </data>
   <data name="ShowProductPrice" xml:space="preserve">
     <value>Show Product Price</value>

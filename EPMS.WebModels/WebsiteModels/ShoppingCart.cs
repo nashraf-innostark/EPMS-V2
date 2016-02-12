@@ -22,5 +22,6 @@ namespace EPMS.WebModels.WebsiteModels
         public DateTime RecLastUpdatedDate { get; set; }
 
         public IList<ShoppingCartItem> ShoppingCartItems { get; set; }
+        public IList<ShoppingCartItem> ShoppingCartItemsForPrice { get; set; }
     }
 }

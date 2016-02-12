@@ -130,15 +130,27 @@ namespace EPMS.Web.Areas.CMS.Controllers
         [SiteAuthorize(PermissionKey = "RFQIndex")]
         public ActionResult RFQIndex()
         {
-            var rfqs = rfqService.GetAllRfqs();
-            string userId = User.Identity.GetUserId();
-            if (Session["RoleName"].ToString() == "Customer")
+            string customerUserId = "";
+            long employeeId = 0;
+            switch (Session["RoleName"].ToString())
             {
-                rfqs = rfqs.Where(x => x.RecCreatedBy == userId);
+                case "Admin":
+                    customerUserId = "Admin";
+                    employeeId = 0;
+                    break;
+                case "Customer":
+                    customerUserId = User.Identity.GetUserId();
+                    employeeId = 0;
+                    break;
+                case "Employee":
+                    employeeId = Convert.ToInt64(Session["EmployeeID"]);
+                    customerUserId = "";
+                    break;
             }
+            var rfqs = rfqService.GetAllRfqs(customerUserId, employeeId).ToList();
             RFQListViewModel viewModel = new RFQListViewModel
             {
-                Rfqs = rfqs.Select(x => x.CreateFromServerToClient()),
+                Rfqs = rfqs.Any() ? rfqs.Select(x => x.CreateFromServerToClient()) : new List<RFQ>(),
             };
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewModel);
