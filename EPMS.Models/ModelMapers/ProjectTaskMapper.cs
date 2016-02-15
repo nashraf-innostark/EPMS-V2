@@ -24,6 +24,10 @@ namespace EPMS.Models.ModelMapers
             source.RecCreatedDt = projectTask.RecCreatedDt;
             source.RecLastUpdatedBy = projectTask.RecLastUpdatedBy;
             source.RecLastUpdatedDt = projectTask.RecLastUpdatedDt;
+            source.IsParent = projectTask.IsParent;
+            source.ParentTask = projectTask.ParentTask;
+            source.IsDeleted = source.IsDeleted;
+            source.DeletedDate = source.DeletedDate;
             return source;
         }
         public static TaskEmployee CreateFromServerToClient(this TaskEmployee source)

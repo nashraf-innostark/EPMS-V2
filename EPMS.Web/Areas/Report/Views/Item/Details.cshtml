@@ -70,14 +70,14 @@
                     <table class="table table-striped table-responsive" id="tableSortableResMed">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Serial</th>
-                                <th>Item Name/SKU</th>
-                                <th>Cost</th>
-                                <th>Price</th>
-                                <th>Sold Number</th>
-                                <th>Defective Number</th>
-                                <th>Best Price Vendor</th>
-                                <th>Most Bought Vendor</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Reports.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.ItemNameSKU</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.Cost</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.Price</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.SoldNumber</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.DefectiveNumber</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.BestPriceVendor</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Item.MostBoughtVendor</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +86,7 @@
                             {
                                 <tr class="gradeX">
                                     <td>@(serial++)</td>
-                                    <td>@item.NameE</td>
+                                    <td>@(direction == "ltr" ? item.NameE : item.NameA)</td>
                                     <td>
                                         @item.Cost
                                     </td>
@@ -116,7 +116,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn" href="~/Report/Item/GeneratePdfAll?ReportId=@reportId">Generate Report As PDF</a>
+                <a class="btn" href="~/Report/Item/GeneratePdfAll?ReportId=@reportId">@EPMS.WebModels.Resources.Reports.Reports.GenerateReportAsPDF</a>
             </div>
 
         </div>

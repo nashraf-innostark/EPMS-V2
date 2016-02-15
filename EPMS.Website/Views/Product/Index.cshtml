@@ -694,29 +694,41 @@
         var productSize;
         var firstParentCheckbox;
         var secondParentCheckbox;
-        $(document).ready(function () {
-            setTimeout(function () {
+        $(document).ready(function() {
+            setTimeout(function() {
                 // open css treeeview
                 var listItemToOpen = localStorage.getItem("css-treeview-li");
                 if (listItemToOpen != null) {
+                    //var list = listItemToOpen.split(';');
+                    //for (var i = list.length; i > list.length-3; i--) {
+                    //    var ele = list[i - 1];
+                    //    if(ele != "")
+                    //        $("." + ele).trigger("click");
+                    //}
+                    //localStorage.setItem("css-treeview-li", listItemToOpen);
                     ele = $("." + listItemToOpen).trigger("click");
-                    var firstParent = ele.parent().parent().parent();
-                    firstParentCheckbox = firstParent.find('input[type=checkbox]')[0];
-                    if (ele[0] != firstParentCheckbox && firstParentCheckbox != undefined) {
-                        $(firstParentCheckbox).trigger("click");
+                    if (ele[0].className.indexOf("sect") > -1) {
+                        return;
+                    } else {
+                        var firstParent = ele.parent();
                     }
-                    var secondParent = firstParent.parent().parent().parent();
-                    secondParentCheckbox = secondParent.find('input[type=checkbox]')[0];
-                    if (firstParentCheckbox != secondParentCheckbox && secondParentCheckbox != undefined) {
-                        $(secondParentCheckbox).trigger("click");
-                    }
-                    localStorage.setItem("css-treeview-li", listItemToOpen);
+                    //var firstParent = ele.parent().parent().parent();
+                    //firstParentCheckbox = firstParent.find('input[type=checkbox]')[0];
+                    //if (ele[0] != firstParentCheckbox && firstParentCheckbox != undefined) {
+                    //    $(firstParentCheckbox).trigger("click");
+                    //}
+                    //var secondParent = firstParent.parent();
+                    //secondParentCheckbox = secondParent.prev().prev();
+                    //if (firstParentCheckbox != secondParentCheckbox && secondParentCheckbox != undefined) {
+                    //    $(secondParentCheckbox).trigger("click");
+                    //}
+                    //localStorage.setItem("css-treeview-li", listItemToOpen);
                 }
             }, 500);
 
             siteUrl = $("#siteURL").val();
             // latest & bestsellers ... carousels
-            $('.shop-latest-carousel > ul').each(function (index, element) {
+            $('.shop-latest-carousel > ul').each(function(index, element) {
                 $(this).carouFredSel({
                     responsive: true,
                     scroll: 1,
@@ -728,12 +740,14 @@
                 });
             });
             // on tree click save node in local storage
-            $('input:checkbox').change(function () {
-                var listItem = this.className;
-                localStorage.setItem("css-treeview-li", listItem);
+            $('input:checkbox').change(function() {
+                var clicked = this.className;
+                //var list = localStorage.getItem("css-treeview-li");
+                //var listItems = list + ';' + clicked;
+                localStorage.setItem("css-treeview-li", clicked);
             });
         });
-        $(document).on('change', '.filter', function () {
+        $(document).on('change', '.filter', function() {
             var sortBy = parseInt($("#SortBy").val());
             if (sortBy == 1 || sortBy == 3 || sortBy == 5) {
                 $("#SortDirection").val("asc");
@@ -750,7 +764,7 @@
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.page-button', function () {
+        $(document).on('click', '.page-button', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var pageNo = parseInt(this.textContent);
@@ -760,14 +774,14 @@
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.first-page', function () {
+        $(document).on('click', '.first-page', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             $('#displayStart').val(0);
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.last-page', function () {
+        $(document).on('click', '.last-page', function() {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var totalCount = parseInt('@Model.SearchRequest.TotalCount');

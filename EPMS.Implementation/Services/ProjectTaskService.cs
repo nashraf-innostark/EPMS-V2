@@ -25,6 +25,7 @@ namespace EPMS.Implementation.Services
         private readonly ICustomerService customerService;
         private readonly IEmployeeService employeeService;
         private readonly IProjectService projectService;
+        private readonly IAspNetUserRepository aspNetUserRepository;
 
         /// <summary>
         /// Constructor
@@ -33,7 +34,7 @@ namespace EPMS.Implementation.Services
         /// <param name="repository"></param>
         /// <param name="taskEmployeeService"></param>
         /// <param name="notificationService"></param>
-        public ProjectTaskService(INotificationRepository notificationRepository, IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService, INotificationService notificationService, ICustomerService customerService, IEmployeeService employeeService, IProjectService projectService)
+        public ProjectTaskService(INotificationRepository notificationRepository, IProjectTaskRepository repository, ITaskEmployeeService taskEmployeeService, INotificationService notificationService, ICustomerService customerService, IEmployeeService employeeService, IProjectService projectService, IAspNetUserRepository aspNetUserRepository)
         {
             this.notificationRepository = notificationRepository;
             Repository = repository;
@@ -42,6 +43,7 @@ namespace EPMS.Implementation.Services
             this.customerService = customerService;
             this.employeeService = employeeService;
             this.projectService = projectService;
+            this.aspNetUserRepository = aspNetUserRepository;
         }
 
         public TaskResponse GetAllTasks(TaskSearchRequest searchRequest)
@@ -64,7 +66,7 @@ namespace EPMS.Implementation.Services
                 response.ProjectTask = Repository.FindTaskWithPreRequisites(id);
                 if (response.ProjectTask != null && response.ProjectTask.CustomerId != null)
                 {
-                    response.Projects = projectService.FindProjectByCustomerId((long) response.ProjectTask.CustomerId);
+                    response.Projects = projectService.FindProjectByCustomerIdForEdit((long) response.ProjectTask.CustomerId);
                 }
                 if (response.ProjectTask != null)
                 {
@@ -120,7 +122,7 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<ProjectTask> GetAll()
         {
-            return Repository.GetAll();
+            return Repository.GetAll().Where(x => !x.IsDeleted);
         }
 
         public IEnumerable<ProjectTask> GetTasksByProjectId(long projectId)
@@ -201,7 +203,7 @@ namespace EPMS.Implementation.Services
                     double otherTasksProgress = 0;
                     foreach (var projectTask in parentTask.SubTasks)
                     {
-                        if (projectTask.TaskId != task.TaskId)
+                        if (projectTask.TaskId != task.TaskId && !projectTask.IsDeleted)
                         {
                             otherTasksProgress += Convert.ToDouble(projectTask.TaskProgress);
                         }
@@ -320,12 +322,25 @@ namespace EPMS.Implementation.Services
                 }
                 #endregion
 
+                // set IsDeleted to true for TaskEmployee if Task progress is equal to its weight
+                if (task.TaskProgress == task.TotalWeight)
+                {
+                    var taskEmployees = TaskEmployeeService.GetTaskEmployeeByTaskId(task.TaskId).ToList();
+                    foreach (var taskEmployee in taskEmployees)
+                    {
+                        taskEmployee.IsDeleted = true;
+                        taskEmployee.DeletedDate = DateTime.Now;
+                        TaskEmployeeService.UpdateTaskEmployeeWithOutNotification(taskEmployee);
+                    }
+                }
+
                 #endregion
 
                 Repository.Update(tasks);
                 Repository.SaveChanges();
 
                 SendNotification(task, clientEmployeeList);
+                SendInstallmentNotification(tasks);
 
                 return true;
             }
@@ -420,6 +435,126 @@ namespace EPMS.Implementation.Services
 
             notificationService.AddUpdateMeetingNotification(notificationViewModel, employeeIds);
             #endregion
+        }
+
+        public void SendInstallmentNotification(ProjectTask task)
+        {
+            Quotation quotation = new Quotation();
+            decimal projectProgress = GetProjectProgress(task.Project);
+            if (task.Project.OrderId != null)
+            {
+                quotation = task.Project.Order.Quotation;
+            }
+            if (task.Project.QuotationId != null)
+            {
+                quotation = task.Project.Quotation;
+            }
+            NotificationViewModel notificationViewModel = new NotificationViewModel
+            {
+                NotificationResponse = { SystemGenerated = true, ForAdmin = true, ForRole = UserRole.Admin }
+            };
+            // check which notification needs to send
+            if (quotation.FirstInsDueAtCompletion > 0)
+            {
+                if (projectProgress >= quotation.FirstInsDueAtCompletion)
+                {
+                    notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 11, quotation.QuotationId);
+
+                    if (notificationViewModel.NotificationResponse.NotificationId == 0)
+                    {
+                        notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["FirstInsDueE"];
+                        notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["FirstInsDueA"];
+                        notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["FirstInsDueAlertBefore"]); //Days
+
+                        notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                        notificationViewModel.NotificationResponse.SubCategoryId = 11;//First Installment Due
+                        notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                        notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+                        notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                        notificationViewModel.NotificationResponse.UserId =
+                            aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                        notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+                    }
+                }
+            }
+            if (quotation.SecondInsDueAtCompletion > 0)
+            {
+                if (projectProgress >= quotation.SecondInsDueAtCompletion)
+                {
+                    notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 12, quotation.QuotationId);
+
+                    if (notificationViewModel.NotificationResponse.NotificationId == 0)
+                    {
+                        notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["SecondInsDueE"];
+                        notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["SecondInsDueA"];
+                        notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["SecondInsDueAlertBefore"]); //Days
+
+                        notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                        notificationViewModel.NotificationResponse.SubCategoryId = 12; // Second Installment Due
+                        notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                        notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+                        notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                        notificationViewModel.NotificationResponse.UserId =
+                            aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                        notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+                    }
+                }
+            }
+            if (quotation.ThirdInsDueAtCompletion > 0)
+            {
+                if (projectProgress >= quotation.ThirdInsDueAtCompletion)
+                {
+                    notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 13, quotation.QuotationId);
+
+                    if (notificationViewModel.NotificationResponse.NotificationId == 0)
+                    {
+                        notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["ThirdInsDueE"];
+                        notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["ThirdInsDueA"];
+                        notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["ThirdInsDueAlertBefore"]); //Days
+
+                        notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                        notificationViewModel.NotificationResponse.SubCategoryId = 13; //third Installment Due
+                        notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                        notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+                        notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                        notificationViewModel.NotificationResponse.UserId =
+                            aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                        notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+                    }
+                }
+            }
+            if (quotation.FourthInsDueAtCompletion > 0)
+            {
+                if (projectProgress >= quotation.FourthInsDueAtCompletion)
+                {
+                    notificationViewModel.NotificationResponse.NotificationId =
+                        notificationRepository.GetNotificationsIdByCategories(5, 14, quotation.QuotationId);
+
+                    if (notificationViewModel.NotificationResponse.NotificationId == 0)
+                    {
+                        notificationViewModel.NotificationResponse.TitleE = ConfigurationManager.AppSettings["FourthInsDueE"];
+                        notificationViewModel.NotificationResponse.TitleA = ConfigurationManager.AppSettings["FourthInsDueA"];
+                        notificationViewModel.NotificationResponse.AlertBefore = Convert.ToInt32(ConfigurationManager.AppSettings["FourthInsDueAlertBefore"]); //Days
+
+                        notificationViewModel.NotificationResponse.CategoryId = 5; //Other
+                        notificationViewModel.NotificationResponse.SubCategoryId = 14; //fourth Installment Due
+                        notificationViewModel.NotificationResponse.ItemId = quotation.QuotationId;
+                        notificationViewModel.NotificationResponse.AlertDate = DateTime.Now.ToString("dd/MM/yyyy", new CultureInfo("en"));
+                        notificationViewModel.NotificationResponse.AlertDateType = 1; //0=Hijri, 1=Gregorian
+                        notificationViewModel.NotificationResponse.UserId =
+                            aspNetUserRepository.GetUserIdByCustomerId(quotation.CustomerId);
+                        notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
+                    }
+                }
+            }
+        }
+
+        public decimal GetProjectProgress(Models.DomainModels.Project project)
+        {
+            return project.ProjectTasks.Where(x => x.ParentTask == null).Sum(x => x.TaskProgress != null ? (decimal)x.TaskProgress : 0);
         }
     }
 }

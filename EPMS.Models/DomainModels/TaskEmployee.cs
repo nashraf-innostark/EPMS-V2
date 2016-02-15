@@ -11,6 +11,8 @@ namespace EPMS.Models.DomainModels
         public string RecCreatedBy { get; set; }
         public DateTime? RecLastUpdatedDt { get; set; }
         public string RecLastUpdatedBy { get; set; }
+        public bool IsDeleted { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
         public virtual ProjectTask ProjectTask { get; set; }
         public virtual Employee Employee { get; set; }

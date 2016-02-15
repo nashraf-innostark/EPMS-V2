@@ -8,6 +8,7 @@ namespace EPMS.Interfaces.IServices
     {
         Project FindProjectById(long id);
         IEnumerable<Project> FindProjectByCustomerId(long id);
+        IEnumerable<Project> FindProjectByCustomerIdForEdit(long id);
         long AddProject(Project complaint);
         long UpdateProject(Project complaint);
         IEnumerable<Project> LoadAllUnfinishedProjects();

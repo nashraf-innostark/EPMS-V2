@@ -225,4 +225,172 @@
   <data name="NameValidation" xml:space="preserve">
     <value>Item Name is required.</value>
   </data>
+  <data name="AddItemImage" xml:space="preserve">
+    <value>Add Item Image</value>
+  </data>
+  <data name="AddManufacturer" xml:space="preserve">
+    <value>Add Manufacturer</value>
+  </data>
+  <data name="AddNewColor" xml:space="preserve">
+    <value>Add New Color</value>
+  </data>
+  <data name="AddNewImage" xml:space="preserve">
+    <value>Add New Image</value>
+  </data>
+  <data name="AddNewItemSize" xml:space="preserve">
+    <value>Add New Item Size</value>
+  </data>
+  <data name="AddNewItemStatus" xml:space="preserve">
+    <value>Add New Item Status</value>
+  </data>
+  <data name="AddNewManufacturer" xml:space="preserve">
+    <value>Add New Manufacturer</value>
+  </data>
+  <data name="AddNewSize" xml:space="preserve">
+    <value>Add New Size</value>
+  </data>
+  <data name="AddNewStatus" xml:space="preserve">
+    <value>Add New Status</value>
+  </data>
+  <data name="AddNewWarehouse" xml:space="preserve">
+    <value>Add New Warehouse</value>
+  </data>
+  <data name="AddWarehouse" xml:space="preserve">
+    <value>Add Warehouse</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="ColorInArabic" xml:space="preserve">
+    <value>Color in Arabic</value>
+  </data>
+  <data name="CreateNewColor" xml:space="preserve">
+    <value>Create New Color</value>
+  </data>
+  <data name="CreateNewManufacturer" xml:space="preserve">
+    <value>Create New Manufacturer</value>
+  </data>
+  <data name="CreateNewSize" xml:space="preserve">
+    <value>Create New Size</value>
+  </data>
+  <data name="CreateNewStatus" xml:space="preserve">
+    <value>Create New Status</value>
+  </data>
+  <data name="CreateNewWarehouse" xml:space="preserve">
+    <value>Create New Warehouse</value>
+  </data>
+  <data name="Image" xml:space="preserve">
+    <value>Image</value>
+  </data>
+  <data name="InventoryItemLabel" xml:space="preserve">
+    <value>Inventory Item</value>
+  </data>
+  <data name="ItemColor" xml:space="preserve">
+    <value>Item Color</value>
+  </data>
+  <data name="ItemImage" xml:space="preserve">
+    <value>Item Image</value>
+  </data>
+  <data name="ItemImages" xml:space="preserve">
+    <value>Item Images</value>
+  </data>
+  <data name="ItemSize" xml:space="preserve">
+    <value>Item Size</value>
+  </data>
+  <data name="ItemStatus" xml:space="preserve">
+    <value>Item Status</value>
+  </data>
+  <data name="ItemStatusAddition" xml:space="preserve">
+    <value>Item Status Addition</value>
+  </data>
+  <data name="ItemStatusInArabic" xml:space="preserve">
+    <value>Item Status in Arabic</value>
+  </data>
+  <data name="Location" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="LocationTreeSelector" xml:space="preserve">
+    <value>Location Tree Selector</value>
+  </data>
+  <data name="Manufacturer" xml:space="preserve">
+    <value>Manufacturer</value>
+  </data>
+  <data name="ManufacturerName" xml:space="preserve">
+    <value>Manufacturer Name</value>
+  </data>
+  <data name="ManufacturerNameInArabic" xml:space="preserve">
+    <value>Manufacturer Name in Arabic</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="PlaceInWarehouse" xml:space="preserve">
+    <value>Place In Warehouse</value>
+  </data>
+  <data name="Price" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="Quantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="QuantityInWarehouse" xml:space="preserve">
+    <value>Quantity In Warehouse</value>
+  </data>
+  <data name="SaveNewColor" xml:space="preserve">
+    <value>Save New Color</value>
+  </data>
+  <data name="SaveNewSize" xml:space="preserve">
+    <value>Save New Size</value>
+  </data>
+  <data name="Select" xml:space="preserve">
+    <value>Select</value>
+  </data>
+  <data name="Show" xml:space="preserve">
+    <value>Show</value>
+  </data>
+  <data name="Size" xml:space="preserve">
+    <value>Size</value>
+  </data>
+  <data name="SizeInArabic" xml:space="preserve">
+    <value>Size in Arabic</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Warehouse" xml:space="preserve">
+    <value>Warehouse</value>
+  </data>
+  <data name="WarehouseTreeSelector" xml:space="preserve">
+    <value>Warehouse Tree Selector</value>
+  </data>
+  <data name="Barcode" xml:space="preserve">
+    <value>Barcode</value>
+  </data>
+  <data name="Condition" xml:space="preserve">
+    <value>Condition</value>
+  </data>
+  <data name="Department" xml:space="preserve">
+    <value>Department</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="OnhandQuantity" xml:space="preserve">
+    <value>On-hand Quantity</value>
+  </data>
+  <data name="PackagePrice" xml:space="preserve">
+    <value>Package Price</value>
+  </data>
+  <data name="QuantityUsedInManufacturing" xml:space="preserve">
+    <value>Quantity Used in Manufacturing</value>
+  </data>
+  <data name="SKUCodeSKUDescription" xml:space="preserve">
+    <value>(SKU)Code - SKU Description</value>
+  </data>
+  <data name="UnitPrice" xml:space="preserve">
+    <value>Unit Price</value>
+  </data>
 </root>

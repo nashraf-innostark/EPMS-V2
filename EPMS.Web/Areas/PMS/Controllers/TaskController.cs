@@ -157,20 +157,11 @@ namespace EPMS.Web.Areas.PMS.Controllers
             viewModel.PreRequisitTasks = viewModel.ProjectTask.RequisitTasks.ToList();
             viewModel.OldAssignedEmployees = viewModel.ProjectTask.TaskEmployees.Select(x => x.EmployeeId).ToList();
             viewModel.ProjectsForDdls = response.Projects.Select(x => x.CreateFromServerToClientForDdl());
-            //viewModel.ProjectAllTasks = response.ProjectTasks.Select(x => x.CreateFromServerToClient());
             viewModel.ProjectAllTasks = response.ProjectTasks.Where(x => x.ParentTask == null).Select(x => x.CreateFromServerToClientCreate());
             viewModel.AllEmployees = response.Employees.Select(x => x.CreateFromServerToClientForTask());
             viewModel.BtnText = Task.BtnTextEdit;
             string userRole = (string)Session["RoleName"];
-            string taskName = "";
-            if (direction == "ltr")
-            {
-                taskName = viewModel.ProjectTask.TaskNameE;
-            }
-            else if (direction == "rtl")
-            {
-                taskName = viewModel.ProjectTask.TaskNameA;
-            }
+            string taskName = direction == "ltr" ? viewModel.ProjectTask.TaskNameE : viewModel.ProjectTask.TaskNameA;
             if (userRole == "Customer")
             {
                 viewModel.PageTitle = taskName + Task.PageTitleDetail;

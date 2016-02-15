@@ -1742,6 +1742,8 @@
           <Property Name="RecCreatedBy" Type="nvarchar" MaxLength="200" />
           <Property Name="RecLastUpdatedDt" Type="datetime" />
           <Property Name="RecLastUpdatedBy" Type="nvarchar" MaxLength="200" />
+          <Property Name="IsDeleted" Type="bit" Nullable="false" />
+          <Property Name="DeletedDate" Type="datetime" />
         </EntityType>
         <EntityType Name="TIR">
           <Key>
@@ -5752,6 +5754,8 @@
           <Property Name="RecLastUpdatedBy" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="Self.FK_TaskEmployee_Employee" FromRole="TaskEmployee" ToRole="Employee" />
           <NavigationProperty Name="ProjectTask" Relationship="EPMSInventoryModel.FK_TaskEmployee_Task" FromRole="TaskEmployee" ToRole="ProjectTask" />
+          <Property Name="IsDeleted" Type="Boolean" Nullable="false" />
+          <Property Name="DeletedDate" Type="DateTime" Precision="3" />
         </EntityType>
         <EntityType Name="UserPrefrence">
           <Key>
@@ -10719,6 +10723,8 @@
           <EntitySetMapping Name="TaskEmployees">
             <EntityTypeMapping TypeName="EPMSInventoryModel.TaskEmployee">
               <MappingFragment StoreEntitySet="TaskEmployee">
+                <ScalarProperty Name="DeletedDate" ColumnName="DeletedDate" />
+                <ScalarProperty Name="IsDeleted" ColumnName="IsDeleted" />
                 <ScalarProperty Name="TaskEmployeeId" ColumnName="TaskEmployeeId" />
                 <ScalarProperty Name="TaskId" ColumnName="TaskId" />
                 <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />

@@ -184,8 +184,28 @@
     var dir;
     var jsTree;
     var divId;
+    var siteUrl;
+    var treeData;
+    var sections;
+    var childs;
     var productToShow;
     $().ready(function () {
+        siteUrl = $("#siteURL").val();
+        // get Product Sections
+        var url = siteUrl + "/Website/ProductSection/GetProductSectionData";
+        ajaxLoader();
+        $.ajax({
+            url: url,
+            type: 'GET',
+            dataType: "json",
+            success: function (data) {
+                loadSuccess(data);
+            },
+            error: function (e) {
+                $.unblockUI();
+                alert('Error=' + e.toString());
+            }
+        });
         if (parseInt('@ViewBag.ProductId') == 0) {
             CKEDITOR.replace('SectionContentEn', {
                 filebrowserBrowseUrl: $("#siteURL").val() + '/RTB/ckfinder.html',
@@ -202,8 +222,13 @@
         dir = '@direction';
         divId = "jstree";
         $("#layoutMainContent").removeClass("main-content");
-        var list = '@Html.Raw(ViewBag.JsTree)';
-        var treeData = JSON.parse(list);
+        @*var list = '@Html.Raw(ViewBag.JsTree)';
+        treeData = JSON.parse(list);*@
+    });
+    function loadSuccess(model) {
+        treeData = JSON.parse(model.jsTree);
+        sections = JSON.parse(model.productSections);
+        childs = JSON.parse(model.productSectionsChildList);
         jsTree = $("#" + divId).on('changed.jstree', function (e, data) {
             var m = $(".alert-error");
             m.children("span").text("");
@@ -223,7 +248,7 @@
             },
             "plugins": ["themes", "json_data", "ui"],
         });
-        @*setTimeout(function () {
+        setTimeout(function () {
             var temp = '@ViewBag.ProductId';
             if (temp != '') {
                 productToShow = '@ViewBag.ProductId';
@@ -234,8 +259,9 @@
             } else {
                 $("#content").show();
             }
-        }, 500);*@
-    });
+        }, 500);
+        $.unblockUI();
+    }
     function updateView(r) {
         if (CKEDITOR.instances.SectionContentEn) CKEDITOR.instances.SectionContentEn.destroy();
         if (CKEDITOR.instances.SectionContentAr) CKEDITOR.instances.SectionContentAr.destroy();
@@ -251,10 +277,6 @@
         }
         $("#ShowToPublicDiv").show();
         var productId;
-        var productSectionsList = '@Html.Raw(Json.Encode(Model.ProductSections))';
-        var sections = JSON.parse(productSectionsList);
-        var childList = '@Html.Raw(Json.Encode(Model.ProductSectionsChildList))';
-        var childs = JSON.parse(childList);
         var isContains = id.indexOf("Imported") >= 0;
         if (isContains) {
             if (id.indexOf("SubSub") >= 0) {

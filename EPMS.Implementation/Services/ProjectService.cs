@@ -49,6 +49,11 @@ namespace EPMS.Implementation.Services
             return projectRepository.FindProjectByCustomerId(id);
         }
 
+        public IEnumerable<Project> FindProjectByCustomerIdForEdit(long id)
+        {
+            return projectRepository.FindProjectByCustomerIdForEdit(id);
+        }
+
         public IEnumerable<Project> GetAllProjects()
         {
             return projectRepository.GetAll();

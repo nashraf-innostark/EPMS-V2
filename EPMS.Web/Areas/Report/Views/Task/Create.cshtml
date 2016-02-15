@@ -30,8 +30,7 @@
 <!--Notifications begin-->
 @Html.Partial("_Alert")
 <!--Notifications end-->
-
-@using (Html.BeginForm("Details", "Task", new {area="Report"}, FormMethod.Post, new {@class = "form-horizontal", role = "form"}))
+@using (Html.BeginForm("Details", "Task", new { area = "Report" }, FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     <div class="container-fluid">
         <div class="control-group row-fluid">
@@ -40,7 +39,7 @@
             </div>
             <div class="span2">
                 <div class="controls">
-                    @Html.DropDownListFor(model => model.ProjectId, direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), EPMS.WebModels.Resources.Reports.Task.All, new {@class = "select2me"})
+                    @Html.DropDownListFor(model => model.ProjectId, direction == "ltr" ? new SelectList(Model.Projects, "ProjectId", "NameE") : new SelectList(Model.Projects, "ProjectId", "NameA"), EPMS.WebModels.Resources.Reports.Task.All, new { @class = "select2me" })
                 </div>
             </div>
         </div>
@@ -89,9 +88,16 @@
                     });
                     $.each(tasksList, function (key, value) {
                         if (value.ProjectId == projId) {
-                            $("#TaskId").append(
-                                $('<option></option>').val(value.TaskId).html(value.TaskNameE)
-                            );
+                            if ('@direction' == 'ltr') {
+                                $("#TaskId").append(
+                                    $('<option></option>').val(value.TaskId).html(value.TaskNameE)
+                                );
+                            } else {
+                                $("#TaskId").append(
+                                  $('<option></option>').val(value.TaskId).html(value.TaskNameA)
+                              );
+                            }
+
                         }
                     });
                 } else {

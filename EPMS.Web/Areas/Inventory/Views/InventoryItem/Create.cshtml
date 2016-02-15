@@ -98,7 +98,7 @@
         <div id="Drag_And_Drop_Upload" class="control-group row-fluid ignore">
             <div class="span3">
                 <label class="control-label">
-                    Item Image<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
+                    @EPMS.WebModels.Resources.Inventory.InventoryItem.ItemImage<a href="javascript:;" class="bootstrap-tooltip" data-placement="top" data-original-title="file size shouldn't exceed 10MB"><i class="icon-photon info-circle"></i></a>
                 </label>
             </div>
             <div class="span9 row-fluid">
@@ -438,21 +438,19 @@
                         <table class="table table-striped table-responsive" id="tableSortableVariations">
                             <thead>
                                 <tr>
-                                    <th> Serial</th>
-                                    <th>Barcode</th>
-                                    <th>(SKU)Code - SKU Description</th>
-                                    <th>Description</th>
-                                    <th>Size</th>
-                                    <th>Condition</th>
-                                    <th>Color</th>
-                                    <th>Unit Price</th>
-                                    <th>Average Cost</th>
-                                    <th>Package Price</th>
-                                    <th>On-hand Quantity</th>
-                                    <th>Quantity Sold</th>
-                                    <th>Quantity Used in Manufacturing</th>
-
-
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Serial</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Barcode</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.SKUCodeSKUDescription</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Description</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Size</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Condition</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.Color</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.UnitPrice</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.AverageCost</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.PackagePrice</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.OnhandQuantity</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.QuantitySold</th>
+                                    <th>@EPMS.WebModels.Resources.Inventory.InventoryItem.QuantityUsedInManufacturing</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -545,7 +543,7 @@
     <div id="modal-dialog" class="modal hide fade treeSelector">
     <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h3>Department</h3>
+        <h3>@EPMS.WebModels.Resources.Inventory.InventoryItem.Department</h3>
     </div>
     <div class="modal-body ">
         <form class="form-horizontal">

@@ -473,6 +473,16 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CustomerServiceList.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Reports\Item.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Item.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Reports\Project.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Project.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Reports\QuotationInvoice.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -813,6 +823,7 @@
     <Compile Include="ViewModels\PhysicalCount\PhysicalCountViewModel.cs" />
     <Compile Include="ViewModels\ProductImage\ProductImageViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionCreateViewModel.cs" />
+    <Compile Include="ViewModels\ProductSection\ProductSectionJavaScriptSerializer.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionListViewModel.cs" />
     <Compile Include="ViewModels\ProductSection\ProductSectionViewModel.cs" />
     <Compile Include="ViewModels\Product\ProductDetailViewModel.cs" />
@@ -1297,9 +1308,18 @@
       <LastGenOutput>CustomerServiceList.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Item.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Item.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Project.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Project.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Reports\QuotationInvoice.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QuotationInvoice.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Reports\Reports.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>

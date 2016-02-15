@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Configuration;
 using System.Globalization;
 
 namespace EPMS.WebModels.ModelMappers.Website.ProductSection
@@ -25,7 +26,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 InventoryDepartmentNameEn = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
                 InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
                 //if DepartmentId is null, it means the Section is Manually created.
-                IsManuallyCreated = source.InventoyDepartmentId == null ? "Yes":"No"
+                IsManuallyCreated = source.InventoyDepartmentId == null ? "Yes" : "No"
             };
         }
         public static WebsiteModels.ProductSection CreateFromServerToClientForTree(this Models.DomainModels.ProductSection source)
@@ -40,7 +41,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 SectionContentEn = RemoveCkEditorValues(source.SectionContentEn),
                 SectionContentAr = RemoveCkEditorValues(source.SectionContentAr),
                 ShowToPublic = source.ShowToPublic,
-                InventoryDepartmentNameEn = source.InventoryDepartment !=null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
+                InventoryDepartmentNameEn = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameEn : string.Empty,
                 InventoryDepartmentNameAr = source.InventoryDepartment != null ? source.InventoryDepartment.DepartmentNameAr : string.Empty,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = source.RecCreatedDt,
@@ -52,6 +53,10 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
         }
         public static Models.DomainModels.ProductSection CreateFromClientToServer(this WebsiteModels.ProductSection source)
         {
+            var contentE = RemoveCkEditorValues(source.SectionContentEn);
+            contentE = SetAbsolutePath(contentE);
+            var contentA = RemoveCkEditorValues(source.SectionContentAr);
+            contentA = SetAbsolutePath(contentA);
             return new Models.DomainModels.ProductSection
             {
                 SectionId = source.SectionId,
@@ -59,8 +64,8 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 SectionNameAr = source.SectionNameAr,
                 InventoyDepartmentId = source.InventoyDepartmentId,
                 ParentSectionId = source.ParentSectionId,
-                SectionContentEn = RemoveCkEditorValues(source.SectionContentEn),
-                SectionContentAr = RemoveCkEditorValues(source.SectionContentAr),
+                SectionContentEn = contentE,
+                SectionContentAr = contentA,
                 ShowToPublic = source.ShowToPublic,
                 RecCreatedBy = source.RecCreatedBy,
                 RecCreatedDt = !string.IsNullOrEmpty(source.RecCreatedDate) ? DateTime.ParseExact(source.RecCreatedDate, "dd/MM/yyyy", new CultureInfo("en")) : source.RecCreatedDt,
@@ -68,7 +73,7 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
                 RecLastUpdatedDt = source.RecLastUpdatedDt
             };
         }
-        #region Remove \r \n from CK editor values
+        #region Remove \r \n from CK editor value
 
         private static string RemoveCkEditorValues(string value)
         {
@@ -81,6 +86,21 @@ namespace EPMS.WebModels.ModelMappers.Website.ProductSection
             return retval;
         }
 
+        #endregion
+
+        #region Set Absolute Path of CKEditor value
+
+        private static string SetAbsolutePath(string content)
+        {
+            string toreturn = "";
+            if (!string.IsNullOrEmpty(content))
+            {
+                string cpLink = ConfigurationManager.AppSettings["CpLink"];
+                string path = "src=\"" + cpLink + "/ckfinder";
+                toreturn = content.Replace("src=\"/ckfinder", path);
+            }
+            return toreturn;
+        }
         #endregion
     }
 }

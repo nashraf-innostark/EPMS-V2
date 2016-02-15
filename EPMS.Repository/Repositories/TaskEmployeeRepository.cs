@@ -31,11 +31,16 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<TaskEmployee> GetTaskEmployeeByEmployeeId(long employeeId)
         {
-            return DbSet.Where(x => x.EmployeeId == employeeId).ToList();
+            return DbSet.Where(x => x.EmployeeId == employeeId && !x.IsDeleted).ToList();
         }
         public int CountTasksByEmployeeId(long id)
         {
-            return DbSet.Count(x => x.EmployeeId == id);
+            return DbSet.Count(x => x.EmployeeId == id && !x.IsDeleted);
+        }
+
+        public IEnumerable<TaskEmployee> GetTaskEmployeeByTaskId(long id)
+        {
+            return DbSet.Where(x => x.TaskId == id);
         }
     }
 }

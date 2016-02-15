@@ -61,6 +61,105 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Add Item Image.
+        /// </summary>
+        public static string AddItemImage {
+            get {
+                return ResourceManager.GetString("AddItemImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Manufacturer.
+        /// </summary>
+        public static string AddManufacturer {
+            get {
+                return ResourceManager.GetString("AddManufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Color.
+        /// </summary>
+        public static string AddNewColor {
+            get {
+                return ResourceManager.GetString("AddNewColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Image.
+        /// </summary>
+        public static string AddNewImage {
+            get {
+                return ResourceManager.GetString("AddNewImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Item Size.
+        /// </summary>
+        public static string AddNewItemSize {
+            get {
+                return ResourceManager.GetString("AddNewItemSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Item Status.
+        /// </summary>
+        public static string AddNewItemStatus {
+            get {
+                return ResourceManager.GetString("AddNewItemStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Manufacturer.
+        /// </summary>
+        public static string AddNewManufacturer {
+            get {
+                return ResourceManager.GetString("AddNewManufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Size.
+        /// </summary>
+        public static string AddNewSize {
+            get {
+                return ResourceManager.GetString("AddNewSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Status.
+        /// </summary>
+        public static string AddNewStatus {
+            get {
+                return ResourceManager.GetString("AddNewStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add New Warehouse.
+        /// </summary>
+        public static string AddNewWarehouse {
+            get {
+                return ResourceManager.GetString("AddNewWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Add Warehouse.
+        /// </summary>
+        public static string AddWarehouse {
+            get {
+                return ResourceManager.GetString("AddWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Average Cost.
         /// </summary>
         public static string AverageCost {
@@ -88,11 +187,101 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Barcode.
+        /// </summary>
+        public static string Barcode {
+            get {
+                return ResourceManager.GetString("Barcode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cancel.
+        /// </summary>
+        public static string Cancel {
+            get {
+                return ResourceManager.GetString("Cancel", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color.
+        /// </summary>
+        public static string Color {
+            get {
+                return ResourceManager.GetString("Color", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Color in Arabic.
+        /// </summary>
+        public static string ColorInArabic {
+            get {
+                return ResourceManager.GetString("ColorInArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Condition.
+        /// </summary>
+        public static string Condition {
+            get {
+                return ResourceManager.GetString("Condition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Create New.
         /// </summary>
         public static string CreateNew {
             get {
                 return ResourceManager.GetString("CreateNew", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Color.
+        /// </summary>
+        public static string CreateNewColor {
+            get {
+                return ResourceManager.GetString("CreateNewColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Manufacturer.
+        /// </summary>
+        public static string CreateNewManufacturer {
+            get {
+                return ResourceManager.GetString("CreateNewManufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Size.
+        /// </summary>
+        public static string CreateNewSize {
+            get {
+                return ResourceManager.GetString("CreateNewSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Status.
+        /// </summary>
+        public static string CreateNewStatus {
+            get {
+                return ResourceManager.GetString("CreateNewStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Create New Warehouse.
+        /// </summary>
+        public static string CreateNewWarehouse {
+            get {
+                return ResourceManager.GetString("CreateNewWarehouse", resourceCulture);
             }
         }
         
@@ -111,6 +300,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string Delete {
             get {
                 return ResourceManager.GetString("Delete", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department.
+        /// </summary>
+        public static string Department {
+            get {
+                return ResourceManager.GetString("Department", resourceCulture);
             }
         }
         
@@ -138,6 +336,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string DescForQuotationEn {
             get {
                 return ResourceManager.GetString("DescForQuotationEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Description.
+        /// </summary>
+        public static string Description {
+            get {
+                return ResourceManager.GetString("Description", resourceCulture);
             }
         }
         
@@ -174,6 +381,24 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string HazardousEn {
             get {
                 return ResourceManager.GetString("HazardousEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Image.
+        /// </summary>
+        public static string Image {
+            get {
+                return ResourceManager.GetString("Image", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Inventory Item.
+        /// </summary>
+        public static string InventoryItemLabel {
+            get {
+                return ResourceManager.GetString("InventoryItemLabel", resourceCulture);
             }
         }
         
@@ -232,6 +457,33 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Color.
+        /// </summary>
+        public static string ItemColor {
+            get {
+                return ResourceManager.GetString("ItemColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Image.
+        /// </summary>
+        public static string ItemImage {
+            get {
+                return ResourceManager.GetString("ItemImage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Images.
+        /// </summary>
+        public static string ItemImages {
+            get {
+                return ResourceManager.GetString("ItemImages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Name.
         /// </summary>
         public static string ItemName {
@@ -259,11 +511,92 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Item Size.
+        /// </summary>
+        public static string ItemSize {
+            get {
+                return ResourceManager.GetString("ItemSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Status.
+        /// </summary>
+        public static string ItemStatus {
+            get {
+                return ResourceManager.GetString("ItemStatus", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Status Addition.
+        /// </summary>
+        public static string ItemStatusAddition {
+            get {
+                return ResourceManager.GetString("ItemStatusAddition", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Item Status in Arabic.
+        /// </summary>
+        public static string ItemStatusInArabic {
+            get {
+                return ResourceManager.GetString("ItemStatusInArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Inventory Items List.
         /// </summary>
         public static string Label {
             get {
                 return ResourceManager.GetString("Label", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location.
+        /// </summary>
+        public static string Location {
+            get {
+                return ResourceManager.GetString("Location", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Location Tree Selector.
+        /// </summary>
+        public static string LocationTreeSelector {
+            get {
+                return ResourceManager.GetString("LocationTreeSelector", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manufacturer.
+        /// </summary>
+        public static string Manufacturer {
+            get {
+                return ResourceManager.GetString("Manufacturer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manufacturer Name.
+        /// </summary>
+        public static string ManufacturerName {
+            get {
+                return ResourceManager.GetString("ManufacturerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Manufacturer Name in Arabic.
+        /// </summary>
+        public static string ManufacturerNameInArabic {
+            get {
+                return ResourceManager.GetString("ManufacturerNameInArabic", resourceCulture);
             }
         }
         
@@ -286,6 +619,51 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to On-hand Quantity.
+        /// </summary>
+        public static string OnhandQuantity {
+            get {
+                return ResourceManager.GetString("OnhandQuantity", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Package Price.
+        /// </summary>
+        public static string PackagePrice {
+            get {
+                return ResourceManager.GetString("PackagePrice", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Place In Warehouse.
+        /// </summary>
+        public static string PlaceInWarehouse {
+            get {
+                return ResourceManager.GetString("PlaceInWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Price.
+        /// </summary>
+        public static string Price {
+            get {
+                return ResourceManager.GetString("Price", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity On Hand.
         /// </summary>
         public static string QOnHand {
@@ -300,6 +678,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string QSold {
             get {
                 return ResourceManager.GetString("QSold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity.
+        /// </summary>
+        public static string Quantity {
+            get {
+                return ResourceManager.GetString("Quantity", resourceCulture);
             }
         }
         
@@ -322,11 +709,29 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Quantity In Warehouse.
+        /// </summary>
+        public static string QuantityInWarehouse {
+            get {
+                return ResourceManager.GetString("QuantityInWarehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Quantity Sold.
         /// </summary>
         public static string QuantitySold {
             get {
                 return ResourceManager.GetString("QuantitySold", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Quantity Used in Manufacturing.
+        /// </summary>
+        public static string QuantityUsedInManufacturing {
+            get {
+                return ResourceManager.GetString("QuantityUsedInManufacturing", resourceCulture);
             }
         }
         
@@ -340,6 +745,33 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save New Color.
+        /// </summary>
+        public static string SaveNewColor {
+            get {
+                return ResourceManager.GetString("SaveNewColor", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save New Size.
+        /// </summary>
+        public static string SaveNewSize {
+            get {
+                return ResourceManager.GetString("SaveNewSize", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select.
+        /// </summary>
+        public static string Select {
+            get {
+                return ResourceManager.GetString("Select", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Serial.
         /// </summary>
         public static string Serial {
@@ -349,11 +781,65 @@ namespace EPMS.WebModels.Resources.Inventory {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show.
+        /// </summary>
+        public static string Show {
+            get {
+                return ResourceManager.GetString("Show", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size.
+        /// </summary>
+        public static string Size {
+            get {
+                return ResourceManager.GetString("Size", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Size in Arabic.
+        /// </summary>
+        public static string SizeInArabic {
+            get {
+                return ResourceManager.GetString("SizeInArabic", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to (SKU)Code - SKU Description.
+        /// </summary>
+        public static string SKUCodeSKUDescription {
+            get {
+                return ResourceManager.GetString("SKUCodeSKUDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Item Variation (SkU) Description.
         /// </summary>
         public static string SkuDesc {
             get {
                 return ResourceManager.GetString("SkuDesc", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Status.
+        /// </summary>
+        public static string Status {
+            get {
+                return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Unit Price.
+        /// </summary>
+        public static string UnitPrice {
+            get {
+                return ResourceManager.GetString("UnitPrice", resourceCulture);
             }
         }
         
@@ -381,6 +867,24 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string UsageEn {
             get {
                 return ResourceManager.GetString("UsageEn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse.
+        /// </summary>
+        public static string Warehouse {
+            get {
+                return ResourceManager.GetString("Warehouse", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warehouse Tree Selector.
+        /// </summary>
+        public static string WarehouseTreeSelector {
+            get {
+                return ResourceManager.GetString("WarehouseTreeSelector", resourceCulture);
             }
         }
     }

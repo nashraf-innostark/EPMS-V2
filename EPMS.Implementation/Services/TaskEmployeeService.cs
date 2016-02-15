@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using EPMS.Interfaces.IServices;
 using EPMS.Interfaces.Repository;
 using EPMS.Models.DomainModels;
-using EPMS.Models.ResponseModels.NotificationResponseModel;
 
 namespace EPMS.Implementation.Services
 {
@@ -22,6 +22,12 @@ namespace EPMS.Implementation.Services
         {
             return taskEmployeeRepository.Find(id);
         }
+
+        public IEnumerable<TaskEmployee> GetTaskEmployeeByTaskId(long id)
+        {
+            return taskEmployeeRepository.GetTaskEmployeeByTaskId(id);
+        }
+
         public int CountTasksByEmployeeId(long id)
         {
             return taskEmployeeRepository.CountTasksByEmployeeId(id);
@@ -29,7 +35,7 @@ namespace EPMS.Implementation.Services
 
         public IEnumerable<TaskEmployee> GetAll()
         {
-            return taskEmployeeRepository.GetAll();
+            return taskEmployeeRepository.GetAll().Where(x => !x.IsDeleted);
         }
         public IEnumerable<TaskEmployee> GetTaskEmployeeByEmployeeId(long employeeId)
         {
@@ -57,6 +63,19 @@ namespace EPMS.Implementation.Services
                 taskEmployeeRepository.Update(employee);
                 taskEmployeeRepository.SaveChanges();
                 //SendNotification(employee);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        public bool UpdateTaskEmployeeWithOutNotification(TaskEmployee employee)
+        {
+            try
+            {
+                taskEmployeeRepository.Update(employee);
+                taskEmployeeRepository.SaveChanges();
                 return true;
             }
             catch (Exception)

@@ -112,6 +112,11 @@ namespace EPMS.Repository.Repositories
             return DbSet.Where(project => project.CustomerId == id && project.Status != 4);
         }
 
+        public IEnumerable<Project> FindProjectByCustomerIdForEdit(long id)
+        {
+            return DbSet.Where(project => project.CustomerId == id);
+        }
+
         public IEnumerable<Project> GetAllProjects(string requester, int status)
         {
             if (requester == "Admin")

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
@@ -53,20 +54,19 @@ namespace EPMS.Web.Areas.Website.Controllers
         [SiteAuthorize(PermissionKey = "ProductSectionCreate")]
         public ActionResult Create(long? id)
         {
-            var productSections = productSectionService.GetAll().Select(x => x.CreateFromServerToClientForTree());
-            var productSectionCreate = ProductSectionCreate(productSections);
-            ProductSectionViewModel viewModel = new ProductSectionViewModel
-            {
-                ProductSections = productSectionCreate.ProductSections,
-                ProductSectionsChildList = productSectionCreate.ProductSectionsChildList
-            };
-            // Javascript Serializer
-            var serializer = new JavaScriptSerializer();
-            ViewBag.JsTree = serializer.Serialize(productSectionCreate.JsTreeJsons);
+            //var productSections = productSectionService.GetAll().Select(x => x.CreateFromServerToClientForTree());
+            //var productSectionCreate = ProductSectionCreate(productSections);
+            //ProductSectionViewModel viewModel = new ProductSectionViewModel
+            //{
+            //    ProductSections = productSectionCreate.ProductSections,
+            //    ProductSectionsChildList = productSectionCreate.ProductSectionsChildList
+            //};
+            //var serializer = new JavaScriptSerializer();
+            //ViewBag.JsTree = serializer.Serialize(productSectionCreate.JsTreeJsons);
             // use new version of JsTree
             ViewBag.IsIncludeNewJsTree = true;
             ViewBag.ProductId = id != null ? (long)id : 0;
-            return View(viewModel);
+            return View(new ProductSectionViewModel());
         }
 
         [HttpPost]
@@ -135,6 +135,24 @@ namespace EPMS.Web.Areas.Website.Controllers
             return Json(new { response = "ERROR" }, JsonRequestBehavior.AllowGet);
         }
 
+        #endregion
+
+        #region Get Product Section Data
+        
+        [HttpGet]
+        public JsonResult GetProductSectionData()
+        {
+            var productSections = productSectionService.GetAll().Select(x => x.CreateFromServerToClientForTree());
+            var productSectionCreate = ProductSectionCreate(productSections);
+            var serializer = new JavaScriptSerializer();
+            ProductSectionJavaScriptSerializer model = new ProductSectionJavaScriptSerializer
+            {
+                ProductSections = serializer.Serialize(productSectionCreate.ProductSections),
+                ProductSectionsChildList = serializer.Serialize(productSectionCreate.ProductSectionsChildList),
+                JsTree = serializer.Serialize(productSectionCreate.JsTreeJsons)
+            };
+            return Json(new { jsTree = model.JsTree, productSections = model.ProductSections, productSectionsChildList = model.ProductSectionsChildList }, JsonRequestBehavior.AllowGet);
+        }
         #endregion
 
         #region JsTree

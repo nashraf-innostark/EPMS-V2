@@ -3,8 +3,8 @@
 @model EPMS.WebModels.ViewModels.Reports.DetailVeiwModel
 @{
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-    ViewBag.Title = Model.Projects.Count() > 1 ? EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport : (direction == "ltr" ? Model.Projects.FirstOrDefault().NameE : Model.Projects.FirstOrDefault().NameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
-    
+    ViewBag.Title = Model.Projects.Count() > 1 ? 
+        EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport : (direction == "ltr" ? Model.Projects.FirstOrDefault().NameE : Model.Projects.FirstOrDefault().NameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
     Layout = "~/Views/Shared/_Layout.cshtml";
     int taskSerial = 1;
 }
@@ -263,14 +263,14 @@
                     <table class="table table-striped table-responsive" id="tableSortableResMed">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Serial</th>
-                                <th>Project Name</th>
-                                <th>Price</th>
-                                <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Total Number of Tasks</th>
-                                <th>Status</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Reports.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.ProjectName</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.Price</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.Cost</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.TotalNumberofTasks</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -280,7 +280,7 @@
                                 <tr class="gradeX">
 
                                     <td>1</td>
-                                    <td>@project.NameE</td>
+                                    <td>@(direction == "ltr" ? project.NameE : project.NameA)</td>
                                     <td>
                                         @project.Price
                                     </td>
@@ -314,13 +314,12 @@
                     <table class="table table-striped table-responsive" id="tableSortableResMed2">
                         <thead class="cf sorthead">
                             <tr>
-                                <th>Serial</th>
-                                <th>Task Name</th>
-
-                                <th>Cost</th>
-                                <th>Start Date</th>
-                                <th>Delivery Date</th>
-                                <th>Status</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Reports.Serial</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.TaskName</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.Cost</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.StartDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Project.DeliveryDate</th>
+                                <th>@EPMS.WebModels.Resources.Reports.Task.Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -329,7 +328,7 @@
                                 <tr class="gradeX">
 
                                     <td>@(taskSerial++)</td>
-                                    <td>@task.TaskNameE</td>
+                                    <td>@(direction == "ltr" ? task.TaskNameE : task.TaskNameA)</td>
                                     <td>
                                         @task.TotalCost
                                     </td>
@@ -364,7 +363,7 @@
 
         <div class="control-group row-fluid">
             <div class="span3 span-inset">
-                <a class="btn disableBtn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">Generate Report As PDF</a>
+                <a class="btn disableBtn" href="~/Report/Project/GeneratePdf?ReportId=@Model.ReportId">@EPMS.WebModels.Resources.Reports.Reports.GenerateReportAsPDF</a>
             </div>
         </div>
     </div><!-- end form -->
