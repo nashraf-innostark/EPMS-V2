@@ -13,7 +13,9 @@ namespace EPMS.WebModels.ViewModels.Quotation
         }
         public long QuotationId { get; set; }
         public long? RFQId { get; set; }
+        [Required]
         public string GreetingsEn { get; set; }
+        [Required]
         public string GreetingsAr { get; set; }
         [Range(0, 100, ErrorMessageResourceType = typeof(Resources.CMS.Quotation), ErrorMessageResourceName = "DiscountRangeError")]
         public short? QuotationDiscount { get; set; }

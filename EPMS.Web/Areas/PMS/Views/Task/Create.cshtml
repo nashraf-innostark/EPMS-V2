@@ -406,6 +406,7 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
     var projAllTasksList;
+    var parentTasksForDateChecks;
     $(document).ready(function () {
         // this is task weight saved. need in case user update task weight then we have to minus this weight from sum of project tasks weight
         var taskWeight = parseFloat('@Model.ProjectTask.TotalWeight');
@@ -416,7 +417,7 @@
             $('.' + 'disableOnLoad' + ':input').attr('disabled', true);
         }
 
-        
+
 
         // diable fields if permission not contain TaskCreate
         var isDetail;
@@ -531,10 +532,10 @@
 
             var employeeList = '@Html.Raw(Json.Encode(Model.ProjectTask.TaskEmployees))';
             parsed = JSON.parse(employeeList);
-            $("#dualMulti2 option").each(function(key, value) {
+            $("#dualMulti2 option").each(function (key, value) {
                 var id = parseInt($(this).val());
                 var element = $(this);
-                $.each(parsed, function(key, value) {
+                $.each(parsed, function (key, value) {
                     if (value.EmployeeId == id) {
                         $(element).attr("selected", "selected");
                     }
@@ -836,46 +837,53 @@
         var parentTaskEndDt;
         var parentTaskStartDate;
         var parentTaskEndDate;
-        var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
-        var parsed = JSON.parse(parentTasksList);
-        $.each(parsed, function (key, value) {
-            if (value.TaskId == $("#ParentTaskId").val()) {
-                parentTaskStartDt = value.StartDate;
-                parentTaskEndDt = value.EndDate;
+        if ($("#ParentTaskId").val() > 0) {
+            var parsed;
+            if ($("#TaskId").val() > 0) {
+                var parentTasksList = '@Html.Raw(Json.Encode(Model.AllParentTasks))';
+                parsed = JSON.parse(parentTasksList);
+            } else {
+                parsed = parentTasksForDateChecks;
             }
-        });
-        var tempTaskStartDate = parentTaskStartDt.split('/');
-        parentTaskStartDate = new Date(tempTaskStartDate[2], tempTaskStartDate[1], tempTaskStartDate[0]);
-        var tempTaskEndDate = parentTaskEndDt.split('/');
-        parentTaskEndDate = new Date(tempTaskEndDate[2], tempTaskEndDate[1], tempTaskEndDate[0]);
-        if (taskStartDate < parentTaskStartDate || taskStartDate > parentTaskEndDate) {
-            $("#TaskStartDate").val("");
-            $("#TaskStartDateAr").val("");
-            $("#projectStartDateValidation").text("Please select Task start date according to Parent Task start and end date.(" + parentTaskStartDt + "|" + parentTaskEndDt + ")");
-            $("#projectStartDateValidation").addClass("required");
-            $('html,body').animate({
-                scrollTop: $(".startDate").offset().top
-            }, 'slow');
-            event.preventDefault();
-            return false;
-        } else {
-            $("#projectStartDateValidation").text("");
-            $("#projectStartDateValidation").removeClass("required");
-        }
-        if (taskEndDate > parentTaskEndDate || taskEndDate < parentTaskStartDate) {
-            $("#TaskEndDate").val("");
-            $("#TaskEndDateAr").val("");
-            $("#projectEndDateValidation").text("Please select Task delivery date according to Parent task start and end date.(" + parentTaskStartDt + "|" + parentTaskEndDt + ")");
-            $("#projectEndDateValidation").addClass("required");
-            $('html,body').animate({
-                scrollTop: $(".startDate").offset().top
-            }, 'slow');
-            event.preventDefault();
-            return false;
-        }
-        else {
-            $("#projectEndDateValidation").text("");
-            $("#projectEndDateValidation").removeClass("required");
+            $.each(parsed, function (key, value) {
+                if (value.TaskId == $("#ParentTaskId").val()) {
+                    parentTaskStartDt = value.StartDate;
+                    parentTaskEndDt = value.EndDate;
+                }
+            });
+            var tempTaskStartDate = parentTaskStartDt.split('/');
+            parentTaskStartDate = new Date(tempTaskStartDate[2], tempTaskStartDate[1], tempTaskStartDate[0]);
+            var tempTaskEndDate = parentTaskEndDt.split('/');
+            parentTaskEndDate = new Date(tempTaskEndDate[2], tempTaskEndDate[1], tempTaskEndDate[0]);
+            if (taskStartDate < parentTaskStartDate || taskStartDate > parentTaskEndDate) {
+                $("#TaskStartDate").val("");
+                $("#TaskStartDateAr").val("");
+                $("#projectStartDateValidation").text("Please select Task start date according to Parent Task start and end date.(" + parentTaskStartDt + "|" + parentTaskEndDt + ")");
+                $("#projectStartDateValidation").addClass("required");
+                $('html,body').animate({
+                    scrollTop: $(".startDate").offset().top
+                }, 'slow');
+                event.preventDefault();
+                return false;
+            } else {
+                $("#projectStartDateValidation").text("");
+                $("#projectStartDateValidation").removeClass("required");
+            }
+            if (taskEndDate > parentTaskEndDate || taskEndDate < parentTaskStartDate) {
+                $("#TaskEndDate").val("");
+                $("#TaskEndDateAr").val("");
+                $("#projectEndDateValidation").text("Please select Task delivery date according to Parent task start and end date.(" + parentTaskStartDt + "|" + parentTaskEndDt + ")");
+                $("#projectEndDateValidation").addClass("required");
+                $('html,body').animate({
+                    scrollTop: $(".startDate").offset().top
+                }, 'slow');
+                event.preventDefault();
+                return false;
+            }
+            else {
+                $("#projectEndDateValidation").text("");
+                $("#projectEndDateValidation").removeClass("required");
+            }
         }
         /// scetion ends -----Task dates compared to Parent Task dates----- ///
 
@@ -934,6 +942,7 @@
         var currTaskId = parseInt('@Model.ProjectTask.TaskId');
         $("#ParentTaskId").empty();
         if (data.length > 0) {
+            parentTasksForDateChecks = data;
             $("#ParentTaskId").append(
                 $('<option></option>').val(0).html("--Select--")
             );

@@ -96,6 +96,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.GreetingsEn, new { @id = "GreetingEn", @class = "" })
+                    @Html.ValidationMessageFor(m => m.GreetingsEn, string.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>
@@ -106,6 +107,7 @@
             <div class="span9">
                 <div class="controls">
                     @Html.TextBoxFor(model => model.GreetingsAr, new { @id = "GreetingAr", @class = "" })
+                    @Html.ValidationMessageFor(m => m.GreetingsAr, string.Empty, new { @class = "required" })
                 </div>
             </div>
         </div>

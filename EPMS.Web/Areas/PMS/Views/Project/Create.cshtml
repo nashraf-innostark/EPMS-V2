@@ -551,6 +551,8 @@
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <script>
+    var listOfQuotations;
+    var listOfOrders;
     $(document).ready(function () {
         if ('@Model.Project.OrderId' == 0) {
             $("#orderControl").hide();
@@ -705,12 +707,26 @@
         });
         //set order's no as a project name
         $("#OrderNo").on("change", function () {
-            var orderTitle = $("#OrderNo option:selected").text();
-            SetNames(orderTitle);
+            var orderId = $(this).val();
+            if (listOfOrders != undefined && listOfOrders.length > 0) {
+                $.each(listOfOrders, function (key, value) {
+                    if (value.OrderId == orderId) {
+                        $("#ProjectSerialNo").val(value.OrderNo);
+                        return;
+                    }
+                });
+            }
         });
         $("#QuotationId").on("change", function () {
-            var quotTitle = "2015000" + $("#QuotationId").val();
-            SetNames(quotTitle);
+            var quotId = $(this).val();
+            if (listOfQuotations != undefined && listOfQuotations.length > 0) {
+                $.each(listOfQuotations, function (key, value) {
+                    if (value.QuotationId == quotId) {
+                        $("#ProjectSerialNo").val(value.SerialNumber);
+                        return;
+                    }
+                });
+            }
         });
         $("input[name=CreateFrom]:radio").change(function () {
             if ($(this).val() == "order") {
@@ -724,12 +740,12 @@
             $("#Client").val(0);
             $("#OrderNo").empty();
             $("#OrderNo").append(
-                    $('<option></option>').val("").html("none")
-                );
+                $('<option></option>').val("").html("none")
+            );
             $("#QuotationId").empty();
             $("#QuotationId").append(
-                    $('<option></option>').val("").html("none")
-                );
+                $('<option></option>').val("").html("none")
+            );
             $(".select2me").select2("destroy");
             $('.select2me').select2({
                 placeholder: "Select",
@@ -758,18 +774,20 @@
     function populateDDL(data) {
         $("#OrderNo").empty();
         if (data.length > 0) {
+            $("#OrderNo").append(
+                    $('<option></option>').val(0).html("--Select--")
+                );
             for (var i = 0; i < data.length; i++) {
                 $("#OrderNo").append(
                     $('<option></option>').val(data[i].OrderId).html(data[i].OrderNo)
                 );
             }
-            //set first order's no as a project name
-            var orderTitle = data[0].OrderNo;
-            SetNames(orderTitle);
+            //set listOfOrders
+            listOfOrders = data;
         } else {
             $("#OrderNo").append(
-                    $('<option></option>').val("").html("none")
-                );
+                $('<option></option>').val("").html("none")
+            );
             SetNames("");
         }
         $(".select2me").select2("destroy");
@@ -781,18 +799,20 @@
     function populateQuotDDL(data) {
         $("#QuotationId").empty();
         if (data.length > 0) {
+            $("#QuotationId").append(
+                    $('<option></option>').val(0).html("--Select--")
+                );
             for (var i = 0; i < data.length; i++) {
                 $("#QuotationId").append(
                     $('<option></option>').val(data[i].QuotationId).html(data[i].GreetingsEn)
                 );
             }
-            //set first order's no as a project name
-            var orderTitle = "2015000" + data[0].QuotationId;
-            SetNames(orderTitle);
+            //set listOfQuotations
+            listOfQuotations = data;
         } else {
             $("#QuotationId").append(
-                    $('<option></option>').val("").html("none")
-                );
+                $('<option></option>').val("").html("none")
+            );
             SetNames("");
         }
         $(".select2me").select2("destroy");

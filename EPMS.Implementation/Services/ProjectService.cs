@@ -21,13 +21,14 @@ namespace EPMS.Implementation.Services
         private readonly IProjectRepository projectRepository;
         private readonly IOrdersRepository ordersRepository;
         private readonly IProjectTaskRepository projectTaskRepository;
+        private readonly IQuotationRepository quotationRepository;
 
         #region Constructor
 
         /// <summary>
         /// Constructor
         /// </summary>
-        public ProjectService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,INotificationService notificationService,IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository)
+        public ProjectService(INotificationRepository notificationRepository,IAspNetUserRepository aspNetUserRepository,INotificationService notificationService,IProjectRepository projectRepository,IOrdersRepository ordersRepository,IProjectTaskRepository projectTaskRepository, IQuotationRepository quotationRepository)
         {
             this.notificationRepository = notificationRepository;
             this.aspNetUserRepository = aspNetUserRepository;
@@ -35,6 +36,7 @@ namespace EPMS.Implementation.Services
             this.projectRepository = projectRepository;
             this.ordersRepository = ordersRepository;
             this.projectTaskRepository = projectTaskRepository;
+            this.quotationRepository = quotationRepository;
         }
 
         #endregion
@@ -64,6 +66,7 @@ namespace EPMS.Implementation.Services
             projectRepository.Add(project);
             projectRepository.SaveChanges();
             SetOrderStatus(project);
+            SetQuotationStatus(project);
             SendNotification(project);
             return project.ProjectId;
         }
@@ -74,6 +77,14 @@ namespace EPMS.Implementation.Services
             if (order == null) return;
             order.OrderStatus = (short) OrderStatus.OnGoing;
             ordersRepository.Update(order);
+            ordersRepository.SaveChanges();
+        }
+        private void SetQuotationStatus(Project project)
+        {
+            var quotation = quotationRepository.Find(Convert.ToInt32(project.QuotationId));
+            if (quotation == null) return;
+            quotation.Status = (short) QuotationStatus.ProjectCreated;
+            quotationRepository.Update(quotation);
             ordersRepository.SaveChanges();
         }
 

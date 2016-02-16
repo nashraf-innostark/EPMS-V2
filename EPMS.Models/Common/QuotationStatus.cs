@@ -4,6 +4,7 @@
     {
         QuotationCreated=1,
         QuotationCancelled=2,
-        OrderCreated=3
+        OrderCreated=3,
+        ProjectCreated=4
     }
 }
