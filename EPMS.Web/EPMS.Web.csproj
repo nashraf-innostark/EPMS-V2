@@ -467,6 +467,8 @@
     <Content Include="NotificationsTextFiles\InsuranceCertificateExpiryDateSMS.txt" />
     <Content Include="NotificationsTextFiles\JobApplicationEmail.txt" />
     <Content Include="NotificationsTextFiles\JobApplicationSMS.txt" />
+    <Content Include="NotificationsTextFiles\ManualNotificationNotEmployeeEmail.txt" />
+    <Content Include="NotificationsTextFiles\ManualNotificationNotEmployeeSMS.txt" />
     <Content Include="NotificationsTextFiles\MeetingEmail.txt" />
     <Content Include="NotificationsTextFiles\MeetingSMS.txt" />
     <Content Include="NotificationsTextFiles\ProjectDeliveryNearEmail.txt" />

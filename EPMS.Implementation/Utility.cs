@@ -9,34 +9,41 @@ namespace EPMS.Implementation
 {
     public class Utility
     {
-        public static void SendEmail(string email, string subject, string body)
+        public static bool SendEmail(string email, string subject, string body)
         {
-
-            string fromAddress = ConfigurationManager.AppSettings["FromAddress"];
-            string fromPwd = ConfigurationManager.AppSettings["FromPassword"];
-            string fromDisplayName = ConfigurationManager.AppSettings["FromDisplayNameA"];
-            //string cc = ConfigurationManager.AppSettings["CC"];
-            //string bcc = ConfigurationManager.AppSettings["BCC"];
-
-            MailMessage oEmail = new MailMessage
+            try
             {
-                From = new MailAddress(fromAddress, fromDisplayName),
-                Subject = subject,
-                IsBodyHtml = true,
-                Body = body,
-                Priority = MailPriority.High
-            };
-            oEmail.To.Add(email);
-            string smtpServer = ConfigurationManager.AppSettings["SMTPServer"];
-            string smtpPort = ConfigurationManager.AppSettings["SMTPPort"];
-            string enableSsl = ConfigurationManager.AppSettings["EnableSSL"];
-            SmtpClient client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort))
-            {
-                EnableSsl = enableSsl == "1",
-                Credentials = new NetworkCredential(fromAddress, fromPwd)
-            };
+                string fromAddress = ConfigurationManager.AppSettings["FromAddress"];
+                string fromPwd = ConfigurationManager.AppSettings["FromPassword"];
+                string fromDisplayName = ConfigurationManager.AppSettings["FromDisplayNameA"];
+                //string cc = ConfigurationManager.AppSettings["CC"];
+                //string bcc = ConfigurationManager.AppSettings["BCC"];
 
-            client.Send(oEmail);
+                MailMessage oEmail = new MailMessage
+                {
+                    From = new MailAddress(fromAddress, fromDisplayName),
+                    Subject = subject,
+                    IsBodyHtml = true,
+                    Body = body,
+                    Priority = MailPriority.High
+                };
+                oEmail.To.Add(email);
+                string smtpServer = ConfigurationManager.AppSettings["SMTPServer"];
+                string smtpPort = ConfigurationManager.AppSettings["SMTPPort"];
+                string enableSsl = ConfigurationManager.AppSettings["EnableSSL"];
+                SmtpClient client = new SmtpClient(smtpServer, Convert.ToInt32(smtpPort))
+                {
+                    EnableSsl = enableSsl == "1",
+                    Credentials = new NetworkCredential(fromAddress, fromPwd)
+                };
+
+                client.Send(oEmail);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
         public static bool SendNotificationSms(string smsText, string mobileNo)
         {

@@ -137,6 +137,31 @@ namespace EPMS.Implementation.Services
             //Save Notification recipient, if there is no recipient, it means notification is for administrations
             if (!(string.IsNullOrEmpty(notificationResponse.UserId) && notificationResponse.EmployeeId == 0))
                 AddNotificationRecipient(notificationResponse.CreateRecipientFromClientToServer());
+            if (notificationResponse.EmployeeId == 0)
+            {
+                AddNotificationRecipient(notificationResponse.CreateRecipientFromClientToServer());
+                //SendEmailNotifications();
+                var notification = notificationRepository.Find(notificationResponse.NotificationId);
+                if (notification != null)
+                {
+                    string subject = notification.AlertDateType == 1 ? notification.TitleE : notification.TitleA;
+                    notificationResponse.NotificationCode = "9999";
+                    // send Email and SMS
+                    if (!string.IsNullOrEmpty(notificationResponse.Email))
+                    {
+                        GenerateNotificationDescription(notificationResponse);
+                        notification.IsEmailSent = Utility.SendEmail(notificationResponse.Email, subject, notificationResponse.EmailText);
+                    }
+                    if (!string.IsNullOrEmpty(notificationResponse.MobileNo))
+                    {
+                        GenerateNotificationDescription(notificationResponse);
+                        notification.IsSMSsent = Utility.SendNotificationSms(notificationResponse.SmsText, notificationResponse.MobileNo);
+                    }
+                    // update notification
+                    notificationRepository.Update(notification);
+                    notificationRepository.SaveChanges();
+                }
+            }
             return true;
         }
 
@@ -573,6 +598,12 @@ namespace EPMS.Implementation.Services
                     emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\FourthInsDueEmail.txt");
                     notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
                     break;
+                case "9999":
+                    smsText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\ManualNotificationNotEmployeeSMS.txt");
+                    notificationResponse.SmsText = ReplaceTags(smsText, notificationResponse);
+                    emailText = System.IO.File.ReadAllText(AppDomain.CurrentDomain.BaseDirectory + @"\NotificationsTextFiles\ManualNotificationNotEmployeeEmail.txt");
+                    notificationResponse.EmailText = ReplaceTags(emailText, notificationResponse);
+                    break;
             }
         }
 
@@ -662,6 +693,27 @@ namespace EPMS.Implementation.Services
                     fileText = fileText.Replace("[MeetingTopicAr]", meeting.TopicNameAr);
                 }
 
+            }
+            else if (notificationResponse.NotificationCode == "9999")
+            {
+                switch (notificationResponse.CategoryId)
+                {
+                    case 1:
+                        fileText = fileText.Replace("[Category]", "Company");
+                        break;
+                    case 2:
+                        fileText = fileText.Replace("[Category]", "Document");
+                        break;
+                    case 3:
+                        fileText = fileText.Replace("[Category]", "Employee");
+                        break;
+                    case 4:
+                        fileText = fileText.Replace("[Category]", "Meeting");
+                        break;
+                    case 5:
+                        fileText = fileText.Replace("[Category]", "Other");
+                        break;
+                }
             }
             return fileText;
         }
