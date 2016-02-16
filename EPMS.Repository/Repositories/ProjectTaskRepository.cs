@@ -98,16 +98,16 @@ namespace EPMS.Repository.Repositories
             if (searchRequest.AllowedAll)
             {
                 query =
-                s => ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
-                    (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString)))) && s.IsDeleted == false;
+                s => (string.IsNullOrEmpty(searchRequest.SearchString) || (s.TaskNameE.Contains(searchRequest.SearchString) ||
+                    s.TaskNameA.Contains(searchRequest.SearchString) || s.Project.NameE.Contains(searchRequest.SearchString) ||
+                    s.Project.NameA.Contains(searchRequest.SearchString))) && s.IsDeleted == false && s.ParentTask == null;
             }
             else
             {
                 query =
                 s => (s.RecCreatedBy.Equals(searchRequest.UserId) && ((string.IsNullOrEmpty(searchRequest.SearchString)) || ((s.TaskNameE.Contains(searchRequest.SearchString)) ||
                     (s.TaskNameA.Contains(searchRequest.SearchString)) || (s.Project.NameE.Contains(searchRequest.SearchString)) ||
-                    (s.Project.NameA.Contains(searchRequest.SearchString))))) && s.IsDeleted == false;
+                    (s.Project.NameA.Contains(searchRequest.SearchString)))) && s.IsDeleted == false && s.ParentTask == null);
             }
 
             IEnumerable<ProjectTask> tasks = searchRequest.sSortDir_0 == "asc" ?
