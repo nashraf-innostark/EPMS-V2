@@ -708,21 +708,26 @@
                     //localStorage.setItem("css-treeview-li", listItemToOpen);
                     ele = $("." + listItemToOpen).trigger("click");
                     if (ele[0].className.indexOf("sect") > -1) {
+                        localStorage.setItem("css-treeview-li", listItemToOpen);
                         return;
                     } else {
-                        var firstParent = ele.parent();
+                        var firstParent = ele.parent().parent().prev().prev();
+                        if (firstParent != undefined) {
+                            ele = firstParent[0].className;
+                            firstParent = $("." + ele).trigger("click");
+                            if (ele.indexOf("sect") > -1) {
+                                localStorage.setItem("css-treeview-li", listItemToOpen);
+                                return;
+                            } else {
+                                var secondParent = firstParent.parent().parent().prev().prev();
+                                if (secondParent != undefined) {
+                                    ele = secondParent[0].className;
+                                    $("." + ele).trigger("click");
+                                }
+                            }
+                        }
                     }
-                    //var firstParent = ele.parent().parent().parent();
-                    //firstParentCheckbox = firstParent.find('input[type=checkbox]')[0];
-                    //if (ele[0] != firstParentCheckbox && firstParentCheckbox != undefined) {
-                    //    $(firstParentCheckbox).trigger("click");
-                    //}
-                    //var secondParent = firstParent.parent();
-                    //secondParentCheckbox = secondParent.prev().prev();
-                    //if (firstParentCheckbox != secondParentCheckbox && secondParentCheckbox != undefined) {
-                    //    $(secondParentCheckbox).trigger("click");
-                    //}
-                    //localStorage.setItem("css-treeview-li", listItemToOpen);
+                    localStorage.setItem("css-treeview-li", listItemToOpen);
                 }
             }, 500);
 
