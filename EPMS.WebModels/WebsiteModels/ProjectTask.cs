@@ -32,7 +32,7 @@ namespace EPMS.WebModels.WebsiteModels
         public string EndDateAr { get; set; }
         public decimal TotalCost { get; set; }
         [Required(ErrorMessage = "Total Weight is required.")]
-        [Range(0, 100, ErrorMessage = "Value for Task Wight must be between {1} and {2}.")]
+        [Range(1, 100, ErrorMessage = "Value for Task Wight must be between {1} and {2}.")]
         public string TotalWeight { get; set; }
         public string NotesE { get; set; }
         public string NotesA { get; set; }
