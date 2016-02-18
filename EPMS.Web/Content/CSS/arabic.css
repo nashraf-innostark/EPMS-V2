@@ -311,8 +311,9 @@ body td, body th {
 .span-inset .switch {
     direction: ltr;
 }
+
 .span-inset .switch {
-  direction: ltr;
+    direction: ltr;
 }
 
 .pickList {
@@ -349,7 +350,7 @@ body td, body th {
         -webkit-order: 2;
         order: 2;
     }
-    
+
     .pickList .pickList_targetListContainer {
         -webkit-box-ordinal-group: 3;
         -moz-box-ordinal-group: 3;
@@ -357,4 +358,12 @@ body td, body th {
         -webkit-order: 3;
         order: 3;
     }
-    
+
+
+.nav-tabs > li, .nav-pills > li {
+    float: right;
+}
+
+.tab-content > .tab-pane, .pill-content > .pill-pane {
+    direction: rtl;
+}

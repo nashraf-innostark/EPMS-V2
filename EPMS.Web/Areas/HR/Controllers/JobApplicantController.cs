@@ -139,6 +139,8 @@ namespace EPMS.Web.Areas.HR.Controllers
             ViewBag.MessageVM = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.JobApplicant.ErrorJobApplicant, IsError = true };
             return View(jobApplicantViewModel);
         }
+
+        [AllowAnonymous]
         public ActionResult UploadCv()
         {
             HttpPostedFileBase userCv = Request.Files[0];

@@ -428,7 +428,9 @@
     <Content Include="Content\CSS\photon.css" />
     <Content Include="Content\CSS\plugins\jstree\default\style.css" />
     <Content Include="Content\CSS\print.css" />
+    <Content Include="Content\CSS\responsive-devices.css" />
     <Content Include="Content\CSS\screen.css" />
+    <Content Include="Content\CSS\template.css" />
     <Content Include="Content\plugins\jstree\default\style.css" />
     <Content Include="Content\themes\default-dark\32px.png" />
     <Content Include="Content\themes\default-dark\40px.png" />
@@ -3537,7 +3539,6 @@
     <Content Include="RichTextEditor\samples\plugins\htmlwriter\assets\outputforflash\outputforflash.fla" />
     <Content Include="RichTextEditor\samples\sample_posteddata.php" />
     <Content Include="RichTextEditor\skins\moono\readme.md" />
-    <Content Include="RTB\plugins\fileeditor\codemirror\LICENSE" />
     <Content Include="RTB\userfiles\.htaccess" />
     <None Include="Scripts\jquery-2.1.0.intellisense.js" />
     <Content Include="Scripts\bootstrap\application.js" />

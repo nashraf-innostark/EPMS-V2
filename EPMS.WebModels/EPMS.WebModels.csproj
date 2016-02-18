@@ -1303,24 +1303,30 @@
       <LastGenOutput>Task.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\CustomerReport.ar.resx" />
+    <EmbeddedResource Include="Resources\Reports\CustomerServiceList.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\CustomerServiceList.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerServiceList.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Item.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\Item.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Item.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Project.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\Project.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Project.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\QuotationInvoice.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\QuotationInvoice.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>QuotationInvoice.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Reports.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\Reports.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Reports.Designer.cs</LastGenOutput>
@@ -1330,10 +1336,12 @@
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>CustomerReport.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\RfqOrder.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\RfqOrder.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>RfqOrder.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Reports\Task.ar.resx" />
     <EmbeddedResource Include="Resources\Reports\Task.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Task.Designer.cs</LastGenOutput>

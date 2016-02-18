@@ -117,76 +117,46 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddMessage" xml:space="preserve">
-    <value>اضافة رسالة</value>
+  <data name="CreatedBy" xml:space="preserve">
+    <value>انشىء من قبل</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>العودة</value>
+  <data name="CreateQI" xml:space="preserve">
+    <value>انشاء تقرير موظف  -  عروض اسعار /  فاتورة  </value>
   </data>
-  <data name="BtnCreate" xml:space="preserve">
-    <value>انشاء و ارسال الطلب</value>
+  <data name="CustomerList" xml:space="preserve">
+    <value>قائمة العملاء</value>
   </data>
-  <data name="BtnUpdate" xml:space="preserve">
-    <value>تحديث طلب عرض سعر</value>
-  </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
-  <data name="CreateQuotation" xml:space="preserve">
-    <value>انشاء عرض سعر</value>
-  </data>
-  <data name="CreateRfq" xml:space="preserve">
-    <value>انشاء طلب عرض سعر جديد</value>
+  <data name="CustomerRO" xml:space="preserve">
+    <value>تقرير عميل  -  طلب عرض سعر / طلب</value>
   </data>
   <data name="Date" xml:space="preserve">
     <value>تاريخ</value>
   </data>
-  <data name="DeleteItemError" xml:space="preserve">
-    <value>حصل خطأ: لا يمكن حدف طلب عرض سعر</value>
+  <data name="EmployeeQI" xml:space="preserve">
+    <value>موظف  - عروض اسعار /  فاتورة</value>
   </data>
-  <data name="DeleteItemNoAccess" xml:space="preserve">
-    <value>حصل خطأ: لست مخول للحدف</value>
+  <data name="Report" xml:space="preserve">
+    <value>تقرير</value>
   </data>
-  <data name="DiscountLimit" xml:space="preserve">
-    <value>نسبة الخصم يجب ان يكون ما بين 1-100 و يكون رقم فقط</value>
+  <data name="ReportDate" xml:space="preserve">
+    <value>تاريخ التقرير</value>
   </data>
-  <data name="Header" xml:space="preserve">
-    <value>طلب عرض سعر</value>
+  <data name="Serial" xml:space="preserve">
+    <value>رقم تسلسل</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات</value>
+  <data name="Title" xml:space="preserve">
+    <value>تقارير خدمة العملاء</value>
   </data>
-  <data name="PageTitleCreate" xml:space="preserve">
-    <value>انشاء طلب عرض سعر</value>
+  <data name="Type" xml:space="preserve">
+    <value>نوع</value>
   </data>
-  <data name="PageTitleIndex" xml:space="preserve">
-    <value>قائمة طلب عروض اسعار</value>
+  <data name="CustomerServiceReportList" xml:space="preserve">
+    <value>قائمة تقارير خدمة العملاء</value>
   </data>
-  <data name="Pending" xml:space="preserve">
-    <value>قيد الانتظار</value>
+  <data name="CreateCL" xml:space="preserve">
+    <value>انشاء قائمةالعملاء</value>
   </data>
-  <data name="QoutationCreated" xml:space="preserve">
-    <value>عرض سعر انشىء</value>
-  </data>
-  <data name="Quotation" xml:space="preserve">
-    <value>عرض سعر</value>
-  </data>
-  <data name="RequestforQoutation" xml:space="preserve">
-    <value>طلب عرض سعر</value>
-  </data>
-  <data name="Requests" xml:space="preserve">
-    <value>طلبات</value>
-  </data>
-  <data name="RfqNo" xml:space="preserve">
-    <value>رقم طلب عرض سعر</value>
-  </data>
-  <data name="Status" xml:space="preserve">
-    <value>الحالة</value>
-  </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث طلب عرض سعر بنجاح</value>
-  </data>
-  <data name="UpdateQuotation" xml:space="preserve">
-    <value>تحديث طلب عرض سعر</value>
+  <data name="CreateRO" xml:space="preserve">
+    <value>انشاء تقرير عميل  -  طلب عرض سعر / طلب</value>
   </data>
 </root>

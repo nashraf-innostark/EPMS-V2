@@ -52,6 +52,7 @@ namespace EPMS.WebModels.ModelMappers
             retVal.AcceptAgreement = source.AcceptAgreement;
             retVal.Email = source.Email;
             retVal.MobileNumber = source.MobileNumber;
+            retVal.CvPath = source.CvPath;
             retVal.CreatedBy = source.CreatedBy;
             retVal.CreatedDate = source.CreatedDate;
             retVal.LastUpdatedBy = source.LastUpdatedBy;

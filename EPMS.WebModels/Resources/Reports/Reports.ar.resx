@@ -117,76 +117,145 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="AddMessage" xml:space="preserve">
-    <value>اضافة رسالة</value>
+  <data name="Createdby" xml:space="preserve">
+    <value>انشىء من قبل</value>
   </data>
-  <data name="Back" xml:space="preserve">
-    <value>العودة</value>
-  </data>
-  <data name="BtnCreate" xml:space="preserve">
-    <value>انشاء و ارسال الطلب</value>
-  </data>
-  <data name="BtnUpdate" xml:space="preserve">
-    <value>تحديث طلب عرض سعر</value>
-  </data>
-  <data name="ClientName" xml:space="preserve">
-    <value>اسم العميل</value>
-  </data>
-  <data name="CreateQuotation" xml:space="preserve">
-    <value>انشاء عرض سعر</value>
-  </data>
-  <data name="CreateRfq" xml:space="preserve">
-    <value>انشاء طلب عرض سعر جديد</value>
+  <data name="CreatProjectReport" xml:space="preserve">
+    <value>انشاء تقرير المشروع</value>
   </data>
   <data name="Date" xml:space="preserve">
-    <value>تاريخ</value>
+    <value>التاريخ</value>
   </data>
-  <data name="DeleteItemError" xml:space="preserve">
-    <value>حصل خطأ: لا يمكن حدف طلب عرض سعر</value>
+  <data name="Report" xml:space="preserve">
+    <value>تقرير</value>
   </data>
-  <data name="DeleteItemNoAccess" xml:space="preserve">
-    <value>حصل خطأ: لست مخول للحدف</value>
+  <data name="ReportDate" xml:space="preserve">
+    <value>تاريخ التقرير</value>
   </data>
-  <data name="DiscountLimit" xml:space="preserve">
-    <value>نسبة الخصم يجب ان يكون ما بين 1-100 و يكون رقم فقط</value>
+  <data name="Type" xml:space="preserve">
+    <value>نوع</value>
   </data>
-  <data name="Header" xml:space="preserve">
-    <value>طلب عرض سعر</value>
+  <data name="ProjectManagementReportListPageHeading" xml:space="preserve">
+    <value>تقارير المشاريع</value>
   </data>
-  <data name="Notes" xml:space="preserve">
-    <value>ملاحظات</value>
+  <data name="ProjectReportTab" xml:space="preserve">
+    <value>تقرير المشروع</value>
   </data>
-  <data name="PageTitleCreate" xml:space="preserve">
-    <value>انشاء طلب عرض سعر</value>
+  <data name="ProjectManagementReportList" xml:space="preserve">
+    <value>قائمة تقارير المشاريع</value>
   </data>
-  <data name="PageTitleIndex" xml:space="preserve">
-    <value>قائمة طلب عروض اسعار</value>
+  <data name="ProjectReport" xml:space="preserve">
+    <value>تقرير المشروع</value>
   </data>
-  <data name="Pending" xml:space="preserve">
-    <value>قيد الانتظار</value>
+  <data name="ViewProjectReport" xml:space="preserve">
+    <value>معانة تقرير المشروع</value>
   </data>
-  <data name="QoutationCreated" xml:space="preserve">
-    <value>عرض سعر انشىء</value>
+  <data name="All" xml:space="preserve">
+    <value>كل</value>
   </data>
-  <data name="Quotation" xml:space="preserve">
-    <value>عرض سعر</value>
+  <data name="ItemsReport" xml:space="preserve">
+    <value>تقرير المنتجات</value>
   </data>
-  <data name="RequestforQoutation" xml:space="preserve">
-    <value>طلب عرض سعر</value>
+  <data name="ProjectsReport" xml:space="preserve">
+    <value>تقرير المشاريع</value>
   </data>
-  <data name="Requests" xml:space="preserve">
-    <value>طلبات</value>
+  <data name="TasksReport" xml:space="preserve">
+    <value>تقرير المهمة</value>
   </data>
-  <data name="RfqNo" xml:space="preserve">
-    <value>رقم طلب عرض سعر</value>
+  <data name="InventorySystemListPageHeading" xml:space="preserve">
+    <value>تقرير المستودع</value>
   </data>
-  <data name="Status" xml:space="preserve">
-    <value>الحالة</value>
+  <data name="InventorySystemReportList" xml:space="preserve">
+    <value>قائمة تقارير المستودع</value>
   </data>
-  <data name="UpdateMessage" xml:space="preserve">
-    <value>تم تحديث طلب عرض سعر بنجاح</value>
+  <data name="ProjectName" xml:space="preserve">
+    <value>اسم المشروع</value>
   </data>
-  <data name="UpdateQuotation" xml:space="preserve">
-    <value>تحديث طلب عرض سعر</value>
+  <data name="ViewWarehouseReport" xml:space="preserve">
+    <value>مقاينة تقرير المستودع</value>
+  </data>
+  <data name="WarehouseCreateReport" xml:space="preserve">
+    <value>انشاء تقرير المستودع</value>
+  </data>
+  <data name="WarehouseName" xml:space="preserve">
+    <value>اسم المستودع</value>
+  </data>
+  <data name="WarehouseReport" xml:space="preserve">
+    <value>تقرير المستودع</value>
+  </data>
+  <data name="WarehouseReportTab" xml:space="preserve">
+    <value>تقرير المستودع</value>
+  </data>
+  <data name="Full" xml:space="preserve">
+    <value>كامل</value>
+  </data>
+  <data name="NotFull" xml:space="preserve">
+    <value>غير مكتمل</value>
+  </data>
+  <data name="CreateVendorReport" xml:space="preserve">
+    <value>انشاء تقرير البائع</value>
+  </data>
+  <data name="VendorName" xml:space="preserve">
+    <value>اسم البائع</value>
+  </data>
+  <data name="VendorReport" xml:space="preserve">
+    <value>تقرير البائع</value>
+  </data>
+  <data name="VendorReportTab" xml:space="preserve">
+    <value>تقارير البائع</value>
+  </data>
+  <data name="ViewVendorReport" xml:space="preserve">
+    <value>مقاينة تقرير البائع</value>
+  </data>
+  <data name="Serial" xml:space="preserve">
+    <value>رقم التسلسل</value>
+  </data>
+  <data name="ItemCreateReport" xml:space="preserve">
+    <value>انشاء تقرير المنتج</value>
+  </data>
+  <data name="ItemName" xml:space="preserve">
+    <value>اسم المنتج</value>
+  </data>
+  <data name="ItemReport" xml:space="preserve">
+    <value>تقرير المنتج</value>
+  </data>
+  <data name="ItemReportTab" xml:space="preserve">
+    <value>تقرير المنتجات</value>
+  </data>
+  <data name="ViewItemReport" xml:space="preserve">
+    <value>معاينة تقرير المنتج</value>
+  </data>
+  <data name="GenerateReport" xml:space="preserve">
+    <value>انشاء تقرير</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>اسم البائع</value>
+  </data>
+  <data name="QOCreateReport" xml:space="preserve">
+    <value>انشاء تقرير - طلب عرض سعر / طلب</value>
+  </data>
+  <data name="QOReportTab" xml:space="preserve">
+    <value>طلب عروض اسعار / طلب انشىء</value>
+  </data>
+  <data name="QOReportView" xml:space="preserve">
+    <value>مقاينة تقرير  العميل - طلب عرض سعر / طلب</value>
+  </data>
+  <data name="QOReportViewAll" xml:space="preserve">
+    <value>مقاينة تقرير  العملاء - طلب عرض سعر / طلب</value>
+  </data>
+  <data name="QOFromTo" xml:space="preserve">
+    <value>من - الى</value>
+  </data>
+  <data name="QONoOfOrders" xml:space="preserve">
+    <value>عدد الطلبات</value>
+  </data>
+  <data name="QONoOfRFQs" xml:space="preserve">
+    <value>عدد طلبات عروض اسعار</value>
+  </data>
+  <data name="ViewAllItemsReport" xml:space="preserve">
+    <value>تقرير كل المنتجات</value>
+  </data>
+  <data name="GenerateReportAsPDF" xml:space="preserve">
+    <value>انشاء تقرير كملف بي دي اف</value>
   </data>
 </root>
