@@ -28,6 +28,9 @@
     DateTime today = DateTime.Now;
     var rootProducts = Model.ProductSections.Where(x => x.ParentSectionId == null).ToList();
     string link;
+    int parent = 0;
+    int child = 0;
+    int subChild = 0;
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -79,16 +82,14 @@
                                     {
                                         link = siteURL + "/Product/Index/" + productSection.SectionId + "?from=Sections";
                                     }
-                                    <input type="checkbox" id="item-0" class="sect_@productSection.SectionId" />
+                                    <input type="checkbox" id="item-@parent" class="sect_@productSection.SectionId" />
+                                    if (productSection.InventoryDepartment != null)
                                     {
-                                        if (productSection.InventoryDepartment != null)
-                                        {
-                                            <label for="item-0" style="color: @productSection.InventoryDepartment.DepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
-                                        }
-                                        else
-                                        {
-                                            <label for="item-0"><a href="@link">@childName</a></label>
-                                        }
+                                        <label for="item-@(parent)" style="color: @productSection.InventoryDepartment.DepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
+                                    }
+                                    else
+                                    {
+                                        <label for="item-@(parent)"><a href="@link">@childName</a></label>
                                     }
 
                                     if (productSection.InventoryDepartment != null)
@@ -100,8 +101,8 @@
                                                     @{
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
-                                                <input type="checkbox" id="item-0-0" class="dep_@department.DepartmentId" />
-                                                        <label for="item-0-0" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
+                                                <input type="checkbox" id="item-@parent-@child" class="dep_@department.DepartmentId" />
+                                                        <label for="item-@parent-@child" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -112,14 +113,20 @@
                                                                     @{
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
-                                                                <input type="checkbox" id="item-0-0-0" class="dep_@childDepartment.DepartmentId" />
-                                                                        <label for="item-0-0-0" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
+                                                                <input type="checkbox" id="item-@parent-@child-@subChild" class="dep_@childDepartment.DepartmentId" />
+                                                                        <label for="item-@parent-@child-@subChild" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
                                                                     }
                                                                 </li>
+                                                                {
+                                                                    subChild += 1;
+                                                                }
                                                             }
                                                         </ul>
                                                     }
                                                 </li>
+                                                    {
+                                                        child += 1;
+                                                    }
                                             }
 
                                         </ul>
@@ -131,10 +138,10 @@
                                             {
                                                 <li class="phy">
                                                     @{
-                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
-                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
-                                                <input type="checkbox" id="item-0-0" class="sect_@subSection.SectionId" />
-                                                        <label for="item-0-0"><a href="@link">@childName</a></label>
+                                                        childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
+                                                        link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
+                                                        <input type="checkbox" id="item-@parent-@child" class="sect_@subSection.SectionId" />
+                                                        <label for="item-@parent-@child"><a href="@link">@childName</a></label>
                                                     }
                                                     @if (subSection.ProductSections.Any())
                                                     {
@@ -143,20 +150,27 @@
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
-                                                                link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
-                                                                <input type="checkbox" id="item-0-0-0" class="sect_@subSubSection.SectionId" />
-                                                                        <label for="item-0-0-0"><a href="@link">@childName</a></label>
+                                                                        childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
+                                                                        link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
+                                                                        <input type="checkbox" id="item-@parent-@child-@subChild" class="sect_@subSubSection.SectionId" />
+                                                                        <label for="item-@parent-@child-@subChild"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
+                                                                {
+                                                                    subChild += 1;
+                                                                }
                                                             }
                                                         </ul>
                                                     }
                                                 </li>
+                                                {
+                                                    child += 1;
+                                                }
                                             }
 
                                         </ul>
                                     }
+                                    { parent++; }
                                     <br />
                                 }
                             </li>
@@ -694,18 +708,11 @@
         var productSize;
         var firstParentCheckbox;
         var secondParentCheckbox;
-        $(document).ready(function() {
-            setTimeout(function() {
+        $(document).ready(function () {
+            setTimeout(function () {
                 // open css treeeview
                 var listItemToOpen = localStorage.getItem("css-treeview-li");
                 if (listItemToOpen != null) {
-                    //var list = listItemToOpen.split(';');
-                    //for (var i = list.length; i > list.length-3; i--) {
-                    //    var ele = list[i - 1];
-                    //    if(ele != "")
-                    //        $("." + ele).trigger("click");
-                    //}
-                    //localStorage.setItem("css-treeview-li", listItemToOpen);
                     ele = $("." + listItemToOpen).trigger("click");
                     if (ele[0].className.indexOf("sect") > -1) {
                         localStorage.setItem("css-treeview-li", listItemToOpen);
@@ -733,7 +740,7 @@
 
             siteUrl = $("#siteURL").val();
             // latest & bestsellers ... carousels
-            $('.shop-latest-carousel > ul').each(function(index, element) {
+            $('.shop-latest-carousel > ul').each(function (index, element) {
                 $(this).carouFredSel({
                     responsive: true,
                     scroll: 1,
@@ -745,14 +752,12 @@
                 });
             });
             // on tree click save node in local storage
-            $('input:checkbox').change(function() {
+            $('input:checkbox').change(function () {
                 var clicked = this.className;
-                //var list = localStorage.getItem("css-treeview-li");
-                //var listItems = list + ';' + clicked;
                 localStorage.setItem("css-treeview-li", clicked);
             });
         });
-        $(document).on('change', '.filter', function() {
+        $(document).on('change', '.filter', function () {
             var sortBy = parseInt($("#SortBy").val());
             if (sortBy == 1 || sortBy == 3 || sortBy == 5) {
                 $("#SortDirection").val("asc");
@@ -769,7 +774,7 @@
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.page-button', function() {
+        $(document).on('click', '.page-button', function () {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var pageNo = parseInt(this.textContent);
@@ -779,14 +784,14 @@
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.first-page', function() {
+        $(document).on('click', '.first-page', function () {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             $('#displayStart').val(0);
             // submit from
             $("#filter-products").submit();
         });
-        $(document).on('click', '.last-page', function() {
+        $(document).on('click', '.last-page', function () {
             $('#pagination a').removeClass("active");
             this.parentElement.classList.add("active");
             var totalCount = parseInt('@Model.SearchRequest.TotalCount');
