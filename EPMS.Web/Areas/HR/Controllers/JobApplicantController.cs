@@ -74,6 +74,7 @@ namespace EPMS.Web.Areas.HR.Controllers
             }
             JobApplicantResponse response = jobOfferedService.GetJobOfferedResponse((long)id);
             jobApplicantViewModel.Departments = response.Departments.Select(x => x.CreateFrom());
+            jobApplicantViewModel.JobApplicant.DepartmentId = response.JobOffered.JobTitle.DepartmentId;
             jobApplicantViewModel.JobApplicant.JobOfferedId = (long)id;
             return View(jobApplicantViewModel);
         }
