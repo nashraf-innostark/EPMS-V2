@@ -210,7 +210,7 @@ namespace EPMS.Models.ModelMapers.NotificationMapper
                         employee.EmployeeLastNameA;
                     notificationListResponse.EmployeeName = System.Threading.Thread.CurrentThread.CurrentCulture.ToString() == "en" ? employeeFullNameE : employeeFullNameA;
                 }
-                else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer != null)
+                else if (notification.NotificationRecipients.FirstOrDefault().AspNetUser != null && notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer != null)
                 {
                     notificationListResponse.MobileNo = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Customer.CustomerMobile;
                     notificationListResponse.Email = notification.NotificationRecipients.FirstOrDefault().AspNetUser.Email;

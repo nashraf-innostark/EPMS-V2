@@ -54,7 +54,7 @@ namespace EPMS.Implementation.Services
             {
                 return rfqRepository.GetAll(id);
             }
-            return null;
+            return new List<RFQ>();
         }
 
         public IEnumerable<RFQ> GetPendingRfqsByCustomerId(long customerId)

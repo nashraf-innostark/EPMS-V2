@@ -101,7 +101,7 @@
     <script type="text/javascript" src="~/Scripts/plugins/jquery.cookie.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/bootstrap-fileupload.min.js"></script>
     <script type="text/javascript" src="~/Scripts/plugins/prettify/prettify.js"></script>
-    
+
     <script type="text/javascript" src="~/Scripts/plugins/mfupload.js"></script>
     <script type="text/javascript" src="~/Scripts/common.js"></script>
     <script type="text/javascript" src="~/Scripts/jquery.leanModal.min.js"></script>
@@ -191,17 +191,15 @@
     </div>
     <!--- Sidebar navigation -->
     <div class="nav-fixed-left" style="visibility: hidden" dir="ltr">
-        <div class="nav-fixed-left" style="visibility: hidden">
-            <ul class="nav nav-side-menu">
-                <li class="shadow-layer"></li>
-                @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
-                <li class="nav-logout">
-                    <a href="~/Account/Logoff">
-                        <i class="icon-photon key_stroke"></i><span class="nav-selection">@EPMS.WebModels.Resources.Shared.Common.LogOut @User.Identity.Name</span>
-                    </a>
-                </li>
-            </ul>
-        </div>
+        <ul class="nav nav-side-menu">
+            <li class="shadow-layer"></li>
+            @{ Html.RenderAction("LoadMenu", "Menu", new { area = "" }); }
+            <li class="nav-logout">
+                <a href="~/Account/Logoff">
+                    <i class="icon-photon key_stroke"></i><span class="nav-selection">@EPMS.WebModels.Resources.Shared.Common.LogOut @User.Identity.Name</span>
+                </a>
+            </li>
+        </ul>
     </div>
 
     <!-- Page content starts -->
