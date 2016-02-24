@@ -1445,6 +1445,7 @@
     <EmbeddedResource Include="Resources\WebsiteClient\Home\Home.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Home.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\WebsiteClient\Login\Login.ar.resx" />
     <EmbeddedResource Include="Resources\WebsiteClient\Login\Login.resx">

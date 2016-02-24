@@ -146,10 +146,18 @@ namespace EPMS.Implementation.Services
                 if (response.RecentPo.AspNetUser != null)
                 {
                     var employee = response.RecentPo.AspNetUser.Employee;
-                    response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
+                    if (employee != null)
+                    {
+                        response.RequesterNameEn = employee.EmployeeFirstNameE + " " + employee.EmployeeMiddleNameE + " " +
                                            employee.EmployeeLastNameE;
-                    response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
-                                           employee.EmployeeLastNameA;
+                        response.RequesterNameAr = employee.EmployeeFirstNameA + " " + employee.EmployeeMiddleNameA + " " +
+                                               employee.EmployeeLastNameA;
+                    }
+                    else
+                    {
+                        response.RequesterNameEn = "Admin";
+                        response.RequesterNameAr = "مدير";
+                    }
                 }
             }
             response.Vendors = vendorRepository.GetAll();

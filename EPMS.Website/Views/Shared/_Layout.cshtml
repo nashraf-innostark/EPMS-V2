@@ -9,15 +9,28 @@
 
     <meta charset="utf-8">
     @{
-        if (ViewBag.MetaTagsEn != null)
+        string direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
+        if (direction == "ltr")
         {
-            var metaTagsEn = (MetaTagsResponse)ViewBag.MetaTagsEn;
-            <meta name="@metaTagsEn.Name" content="@metaTagsEn.Description">
+            if (ViewBag.MetaKeywordsEn != null)
+            {
+                <meta name="keywords" content="@ViewBag.MetaKeywordsEn" />
+            }
+            if (ViewBag.MetaDescriptionEn != null)
+            {
+                <meta name="description" content="@ViewBag.MetaDescriptionEn" />
+            }
         }
-        if (ViewBag.MetaTagsAr != null)
+        else
         {
-            var metaTagsAr = (MetaTagsResponse)ViewBag.MetaTagsAr;
-            <meta name="@metaTagsAr.Name" content="@metaTagsAr.Description">
+            if (ViewBag.MetaKeywordsAr != null)
+            {
+                <meta name="keywords" content="@ViewBag.MetaKeywordsAr" />
+            }
+            if (ViewBag.MetaDescriptionAr != null)
+            {
+                <meta name="description" content="@ViewBag.MetaDescriptionAr" />
+            }
         }
     }
     

@@ -31,16 +31,10 @@ namespace EPMS.Website.Controllers
             {
                 WebsiteService = websiteServicesService.FindWebsiteServiceById(id).CreateFromServerToClient()
             };
-            ViewBag.MetaTagsEn = new MetaTagsResponse
-            {
-                Name = viewmodel.WebsiteService.MetaKeywordsEn,
-                Description = viewmodel.WebsiteService.MetaDescriptionEn
-            };
-            ViewBag.MetaTagsAr = new MetaTagsResponse
-            {
-                Name = viewmodel.WebsiteService.MetaKeywordsAr,
-                Description = viewmodel.WebsiteService.MetaDescriptionAr
-            };
+            ViewBag.MetaKeywordsEn = viewmodel.WebsiteService.MetaKeywordsEn;
+            ViewBag.MetaKeywordsAr = viewmodel.WebsiteService.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = viewmodel.WebsiteService.MetaKeywordsEn;
+            ViewBag.MetaDescriptionAr = viewmodel.WebsiteService.MetaKeywordsAr;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewmodel);
         }

@@ -155,7 +155,7 @@ namespace EPMS.WebModels.ModelMappers
                 Allowances = source.Allowances.Select(x => x.CreateFromServerToClient()),
                 JobTitle = (source.JobTitle != null) ? source.JobTitle.CreateFrom() : (new WebsiteModels.JobTitle()),
             };
-            var noOfTasks = source.TaskEmployees.Count(x => x.EmployeeId == employee.EmployeeId && !x.IsDeleted);
+            var noOfTasks = source.TaskEmployees.Count(x => x.EmployeeId == employee.EmployeeId && !x.IsDeleted && !x.ProjectTask.IsDeleted);
             employee.EmployeeFullNameE = source.EmployeeFirstNameE + " " + source.EmployeeMiddleNameE + " " + source.EmployeeLastNameE + " - " + noOfTasks;
             employee.EmployeeFullNameA = source.EmployeeFirstNameA + " " + source.EmployeeMiddleNameA + " " + source.EmployeeLastNameA + " - " + noOfTasks;
             return employee;

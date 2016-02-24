@@ -117,7 +117,8 @@ namespace EPMS.WebModels.ModelMappers
                 CustomerAddress = source.CustomerAddress,
                 CustomerMobile = source.CustomerMobile,
                 EmployeeId = source.EmployeeId,
-                Email = source.AspNetUsers != null ? source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
+                Email = source.AspNetUsers.Any() && source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId) != null ?
+                    source.AspNetUsers.FirstOrDefault(x => x.CustomerId == source.CustomerId).Email : "",
             };
         }
     }

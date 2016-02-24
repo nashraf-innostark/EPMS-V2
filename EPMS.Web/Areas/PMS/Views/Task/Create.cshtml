@@ -474,7 +474,7 @@
             $("#CKEditorNotes").show();
         }
         if ('@Model.ProjectTask.IsParent' == 'True') {
-            $('.' + 'toBeDisabled' + ':input').attr('disabled', true);
+            $('.' + 'toBeDisabled' + ':input').attr('readonly', true);
         }
         // Set project start and end date
         var projId = parseInt($("#ProjectId").val());

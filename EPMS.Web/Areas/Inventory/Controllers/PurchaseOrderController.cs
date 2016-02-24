@@ -19,8 +19,11 @@ namespace EPMS.Web.Areas.Inventory.Controllers
 {
     public class PurchaseOrderController : BaseController
     {
+        #region Private
         private readonly IPurchaseOrderService orderService;
-
+        
+        #endregion
+        
         #region Construcor
         public PurchaseOrderController(IPurchaseOrderService orderService)
         {
@@ -28,7 +31,10 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         }
 
         #endregion
-        
+
+        #region Public
+
+        #region List
         /// <summary>
         /// GET: Inventory/PurchaseOrder
         /// </summary>
@@ -65,7 +71,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             };
             return Json(viewModel, JsonRequestBehavior.AllowGet);
         }
+        #endregion
 
+        #region Details
         /// <summary>
         /// GET: Inventory/PurchaseOrder
         /// </summary>
@@ -114,7 +122,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             return View(viewModel);
         }
+        #endregion
 
+        #region Create
         /// <summary>
         /// Create: Inventory/PurchaseOrder
         /// </summary>
@@ -197,7 +207,9 @@ namespace EPMS.Web.Areas.Inventory.Controllers
                 return View(viewModel);
             }
         }
+        #endregion
 
+        #region History
         [SiteAuthorize(PermissionKey = "POHistory")]
         public ActionResult History(long? id)
         {
@@ -242,5 +254,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             ViewBag.IsManager = userPermissionsSet.Contains("PODetailsUpdation");
             return View(viewModel);
         }
+        #endregion
+
+        #endregion
     }
 }

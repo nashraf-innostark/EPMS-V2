@@ -173,13 +173,21 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             if (source.ItemVariationId != null)
             {
                 var department = source.ItemVariation.InventoryItem.InventoryDepartment;
+                // add department name till parent
                 while (department != null)
                 {
                     retVal.PathTillParent += direction == "ltr"
                         ? department.DepartmentNameEn + ">"
                         : department.DepartmentNameAr + ">";
+                    // set department color for catalogue
+                    if (string.IsNullOrEmpty(retVal.DeptColor) &&
+                        !string.IsNullOrEmpty(department.DepartmentColor))
+                    {
+                        retVal.DeptColor = department.DepartmentColor;
+                    }
                     department = department.ParentDepartment;
                 }
+                // reverse the list
                 var path = retVal.PathTillParent.Split('>');
                 retVal.PathTillParent = "";
                 for (int i = path.Length - 2; i >= 0; i--)
