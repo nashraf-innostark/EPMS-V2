@@ -6,6 +6,7 @@
     ViewBag.Title = Model.Projects.Count() > 1 ? 
         EPMS.WebModels.Resources.Reports.Reports.ViewProjectReport : (direction == "ltr" ? Model.Projects.FirstOrDefault().NameE : Model.Projects.FirstOrDefault().NameA) + " " + EPMS.WebModels.Resources.Reports.Reports.Report;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int projSerial = 1;
     int taskSerial = 1;
 }
 <!-- Navigation Bar Start-->
@@ -279,8 +280,8 @@
                             {
                                 <tr class="gradeX">
 
-                                    <td>1</td>
-                                    <td>@(direction == "ltr" ? project.NameE : project.NameA)</td>
+                                    <td>@(projSerial++)</td>
+                                    <td>@(project.NameE)</td>
                                     <td>
                                         @project.Price
                                     </td>
@@ -328,7 +329,7 @@
                                 <tr class="gradeX">
 
                                     <td>@(taskSerial++)</td>
-                                    <td>@(direction == "ltr" ? task.TaskNameE : task.TaskNameA)</td>
+                                    <td>@(task.TaskNameE)</td>
                                     <td>
                                         @task.TotalCost
                                     </td>
