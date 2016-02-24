@@ -71,16 +71,10 @@ namespace EPMS.Website.Controllers
             {
                 NewsAndArticle = newsAndArticleService.FindNewsAndArticleById(id).CreateFromServerToClient()
             };
-            ViewBag.MetaTagsEn = new MetaTagsResponse
-            {
-                Name = newsAndArticleViewModel.NewsAndArticle.MetaKeywords,
-                Description = newsAndArticleViewModel.NewsAndArticle.MetaDesc
-            };
-            ViewBag.MetaTagsAr = new MetaTagsResponse
-            {
-                Name = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr,
-                Description = newsAndArticleViewModel.NewsAndArticle.MetaDescAr
-            };
+            ViewBag.MetaKeywordsEn = newsAndArticleViewModel.NewsAndArticle.MetaKeywords;
+            ViewBag.MetaKeywordsAr = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = newsAndArticleViewModel.NewsAndArticle.MetaKeywords;
+            ViewBag.MetaDescriptionAr = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr;
             return View(newsAndArticleViewModel);
         }
 

@@ -34,16 +34,10 @@ namespace EPMS.Website.Controllers
             {
                 aboutUsViewModel.AboutUs = aboutus.CreateFromServerToClient();
             }
-            ViewBag.MetaTagsEn = new MetaTagsResponse
-            {
-                Name = aboutUsViewModel.AboutUs.MetaKeywords,
-                Description = aboutUsViewModel.AboutUs.MetaDesc
-            };
-            ViewBag.MetaTagsAr = new MetaTagsResponse
-            {
-                Name = aboutUsViewModel.AboutUs.MetaKeywordsAr,
-                Description = aboutUsViewModel.AboutUs.MetaDescAr
-            };
+            ViewBag.MetaKeywordsEn = aboutUsViewModel.AboutUs.MetaKeywords;
+            ViewBag.MetaKeywordsAr = aboutUsViewModel.AboutUs.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = aboutUsViewModel.AboutUs.MetaKeywords;
+            ViewBag.MetaDescriptionAr = aboutUsViewModel.AboutUs.MetaKeywordsAr;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(aboutUsViewModel);
         }

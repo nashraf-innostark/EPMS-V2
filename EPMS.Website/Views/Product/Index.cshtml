@@ -31,6 +31,7 @@
     int parent = 0;
     int child = 0;
     int subChild = 0;
+    string parentDepartmentColor = "";
 }
 
 <div id="page_header" class="gradient bottom-shadow">
@@ -85,7 +86,8 @@
                                     <input type="checkbox" id="item-@parent" class="sect_@productSection.SectionId" />
                                     if (productSection.InventoryDepartment != null)
                                     {
-                                        <label for="item-@(parent)" style="color: @productSection.InventoryDepartment.DepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
+                                        parentDepartmentColor = productSection.InventoryDepartment.DepartmentColor;
+                                        <label for="item-@(parent)" style="color: @parentDepartmentColor"><a href="@link" style="color: @productSection.InventoryDepartment.DepartmentColor">@childName</a></label>
                                     }
                                     else
                                     {
@@ -102,7 +104,14 @@
                                                 childName = direction == "ltr" ? department.DepartmentNameEn : department.DepartmentNameAr;
                                                 link = siteURL + "/Product/Index/" + department.DepartmentId + "?from=Inventory";
                                                 <input type="checkbox" id="item-@parent-@child" class="dep_@department.DepartmentId" />
-                                                        <label for="item-@parent-@child" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
+                                                if (!string.IsNullOrEmpty(department.DepartmentColor))
+                                                {
+                                                    <label for="item-@parent-@child" style="color: @department.DepartmentColor"><a href="@link" style="color: @department.DepartmentColor">@childName</a></label>
+                                                }
+                                                else
+                                                {
+                                                    <label for="item-@parent-@child" style="color: @parentDepartmentColor"><a href="@link" style="color: @parentDepartmentColor">@childName</a></label>
+                                                }
                                                     }
                                                     @if (department.InventoryDepartments.Any())
                                                     {
@@ -114,7 +123,14 @@
                                                                 childName = direction == "ltr" ? childDepartment.DepartmentNameEn : childDepartment.DepartmentNameAr;
                                                                 link = siteURL + "/Product/Index/" + childDepartment.DepartmentId + "?from=Inventory";
                                                                 <input type="checkbox" id="item-@parent-@child-@subChild" class="dep_@childDepartment.DepartmentId" />
-                                                                        <label for="item-@parent-@child-@subChild" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
+                                                                if (!string.IsNullOrEmpty(childDepartment.DepartmentColor))
+                                                                {
+                                                                    <label for="item-@parent-@child-@subChild" style="color: @childDepartment.DepartmentColor"><a href="@link" style="color: @childDepartment.DepartmentColor">@childName</a></label>
+                                                                }
+                                                                else
+                                                                {
+                                                                    <label for="item-@parent-@child-@subChild" style="color: @parentDepartmentColor"><a href="@link" style="color: @parentDepartmentColor">@childName</a></label>
+                                                                }
                                                                     }
                                                                 </li>
                                                                 {
@@ -138,9 +154,9 @@
                                             {
                                                 <li class="phy">
                                                     @{
-                                                        childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
-                                                        link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
-                                                        <input type="checkbox" id="item-@parent-@child" class="sect_@subSection.SectionId" />
+                                                childName = direction == "ltr" ? subSection.SectionNameEn : subSection.SectionNameAr;
+                                                link = siteURL + "/Product/Index/" + subSection.SectionId + "?from=Sections";
+                                                <input type="checkbox" id="item-@parent-@child" class="sect_@subSection.SectionId" />
                                                         <label for="item-@parent-@child"><a href="@link">@childName</a></label>
                                                     }
                                                     @if (subSection.ProductSections.Any())
@@ -150,9 +166,9 @@
                                                             {
                                                                 <li class="phy">
                                                                     @{
-                                                                        childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
-                                                                        link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
-                                                                        <input type="checkbox" id="item-@parent-@child-@subChild" class="sect_@subSubSection.SectionId" />
+                                                                childName = direction == "ltr" ? subSubSection.SectionNameEn : subSubSection.SectionNameAr;
+                                                                link = siteURL + "/Product/Index/" + subSubSection.SectionId + "?from=Sections";
+                                                                <input type="checkbox" id="item-@parent-@child-@subChild" class="sect_@subSubSection.SectionId" />
                                                                         <label for="item-@parent-@child-@subChild"><a href="@link">@childName</a></label>
                                                                     }
                                                                 </li>
@@ -163,9 +179,9 @@
                                                         </ul>
                                                     }
                                                 </li>
-                                                {
-                                                    child += 1;
-                                                }
+                                                    {
+                                                        child += 1;
+                                                    }
                                             }
 
                                         </ul>

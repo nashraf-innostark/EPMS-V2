@@ -33,8 +33,8 @@ namespace EPMS.Website.Controllers
             if (contactUs.ShowToPublic || contactUs.RecCreatedBy == User.Identity.GetUserId())
             {
                 contactUsViewModel.ContactUs = contactUs.CreateFromServerToClient();
+                contactUsViewModel.ReceiverEmail = contactUs.FormEmail;
             }
-            contactUsViewModel.ReceiverEmail = contactUs.FormEmail;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(contactUsViewModel);
         }

@@ -163,7 +163,7 @@
                                                 </div>
                                             </td>
                                             <td>
-                                                @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].ItemQty, new { @class = "tableDbM toBeDisabled" })
+                                                @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].ItemQty, new { @class = "tableDbM toBeDisabled", @readonly = true })
                                             </td>
                                             <td>
                                                 @Html.TextBoxFor(m => m.PurchaseOrdersItems[po].UnitPrice, new { @class = "tableDbM UnitPrice toBeDisabled" })
@@ -299,7 +299,7 @@
                 {
                     <div id="SubmitTir" class="control-group row-fluid">
                         <div class="span3 span-inset">
-                            <button type="submit" class="btn">@EPMS.WebModels.Resources.Inventory.PO.PO.Submit</button>
+                            <button type="submit" class="btn" onclick="validateVendors(event)">@EPMS.WebModels.Resources.Inventory.PO.PO.Submit</button>
                         </div>
                     </div>
                     if (userPermissionsSet.Contains("POCreate"))
@@ -359,6 +359,7 @@
         });
     });
     function validateVendors(event) {
+        // check vendors if user is accepting PO
         if ('@ViewBag.IsManager' == "True" && parseInt($("#Status").val()) == 1) {
             var index = $("#POTableBody").children("tr").length;
             for (var i = 0; i < index; i++) {

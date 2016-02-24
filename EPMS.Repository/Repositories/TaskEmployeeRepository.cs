@@ -31,7 +31,7 @@ namespace EPMS.Repository.Repositories
 
         public IEnumerable<TaskEmployee> GetTaskEmployeeByEmployeeId(long employeeId)
         {
-            return DbSet.Where(x => x.EmployeeId == employeeId && !x.IsDeleted).ToList();
+            return DbSet.Where(x => x.EmployeeId == employeeId && !x.IsDeleted && !x.ProjectTask.IsDeleted).ToList();
         }
         public int CountTasksByEmployeeId(long id)
         {

@@ -744,7 +744,8 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadProjects(long projectId)
         {
-            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            string role = Session["RoleName"].ToString();
+            var requester = role == "Admin" || role == "PM" ? "Admin" : Session["CustomerID"].ToString();
             var projects = GetProjects(requester, projectId);
             projects.RoleName = Session["RoleName"].ToString();
             return Json(projects, JsonRequestBehavior.AllowGet);
