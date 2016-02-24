@@ -207,9 +207,9 @@ namespace EPMS.Implementation.Services
                         {
                             Quantity = record.ItemQty,
                             Price = record.UnitPrice.ToString(),
-                            ManufacturerId = (long) record.VendorId,
-                            ItemVariationId = (long) record.ItemVariationId,
-                            Vendor = vendorRepository.Find((long) record.VendorId),
+                            ManufacturerId = (long)record.VendorId,
+                            ItemVariationId = (long)record.ItemVariationId,
+                            Vendor = vendorRepository.Find((long)record.VendorId),
                             ManuallyAdded = true
                         };
                         response.ItemVariation.ItemManufacturers.Add(newManufacturer);
@@ -223,7 +223,7 @@ namespace EPMS.Implementation.Services
                     int oldQty = 0;
                     if (!itemManufacturer.ManuallyAdded)
                     {
-                        oldQty = (int) itemManufacturer.Quantity;
+                        oldQty = (int)itemManufacturer.Quantity;
                     }
                     var record =
                         response.PurchaseOrderItems.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault(x => x.VendorId == itemManufacturer.ManufacturerId);
@@ -606,7 +606,7 @@ namespace EPMS.Implementation.Services
                 foreach (ItemWarehouse itemWarehouse in clientList)
                 {
                     //Add New Items from Client list
-                    if (itemWarehouse.WarehouseId> 0 && itemWarehouse.ItemVariationId > 0)
+                    if (itemWarehouse.WarehouseId > 0 && itemWarehouse.ItemVariationId > 0)
                     {
                         //Update Items
                         itemWarehouseRepository.Update(itemWarehouse);

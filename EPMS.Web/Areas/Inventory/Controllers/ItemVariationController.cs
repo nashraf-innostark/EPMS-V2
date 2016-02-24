@@ -126,6 +126,8 @@ namespace EPMS.Web.Areas.Inventory.Controllers
             }
             else
             {
+                variationViewModel.ItemVariation.RecCreatedDt = DateTime.Now.ToString("dd/MM/yyyy",
+                    new CultureInfo("en"));
                 ItemVariationRequest itemToSave = variationViewModel.ItemVariation.CreateFromClientToServer();
                 itemToSave.SizeArrayList = variationViewModel.SizeArrayList;
                 itemToSave.ManufacturerArrayList = variationViewModel.ManufacturerArrayList;

@@ -1293,7 +1293,6 @@
 
 <script src="~/RichTextEditor/ckeditor.js"></script>
 <script>
-    debugger
     var siteUrl = $("#siteURL").val();
     var textTillParent = "";
     var dir = '@direction';
@@ -1356,25 +1355,29 @@
             showCkEditors();
             $('#noCkEditor').hide();
         } else {
-            var url1 = "/Inventory/ItemVariation/GetLastItemSKuCode";
-            $.ajax({
-                data: itemVarId,
-                url: url1,
-                type: "POST",
-                dataType: "json",
-                success: function (data) {
-                    if (data[0] == null) {
-                        $('#SKUCode').val(101101);
-                        $('#ItemBarcode').val(100010001 + ' - ' + 101101);
-                    } else {
-                        $('#SKUCode').val(++data[0]);
-                        $('#ItemBarcode').val(data[1] + ' - ' + data[0]);
+            var skuCode = '@Model.ItemVariation.SKUCode';
+            debugger;
+            if (skuCode == null || skuCode == "") {
+                var url3 = "/Inventory/ItemVariation/GetLastItemSKuCode";
+                $.ajax({
+                    data: itemVarId,
+                    url: url3,
+                    type: "POST",
+                    dataType: "json",
+                    success: function (data) {
+                        if (data[0] == null) {
+                            $('#SKUCode').val(101101);
+                            $('#ItemBarcode').val(100010001 + ' - ' + 101101);
+                        } else {
+                            $('#SKUCode').val(++data[0]);
+                            $('#ItemBarcode').val(data[1] + ' - ' + data[0]);
+                        }
+                    },
+                    error: function () {
+                        alert("An error has occured!!!");
                     }
-                },
-                error: function () {
-                    alert("An error has occured!!!");
-                }
-            });
+                });
+            }
             $('.' + 'tbdisable' + ':input').attr('disabled', true);
             $("#savebtn").hide();
             $("#cancel").hide();
