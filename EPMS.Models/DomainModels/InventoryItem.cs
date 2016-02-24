@@ -37,15 +37,24 @@ namespace EPMS.Models.DomainModels
             {
                 if (ItemVariations != null)
                 {
-                    return (double) (ItemVariations.Sum(x => Convert.ToDouble(x.QuantityInHand)) + ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity)) +
-                                     ItemVariations.Sum(x => x.PurchaseOrderItems.Sum(y => Convert.ToDouble(y.ItemQty)))
-                                     + ItemVariations.Sum(x => x.RIFItems.Sum(y => y.ItemQty)) -
-                                     (ItemVariations.Sum(x => x.ItemReleaseQuantities.Sum(y => Convert.ToDouble(y.Quantity)))
-                                      + ItemVariations.Sum(x=>x.DIFItems.Sum(y=>y.ItemQty))));
+                    var itemVarQty = (ItemVariations.Sum(x => Convert.ToDouble(x.QuantityInHand)));
+                    var manufacturerQty = ItemVariations.Sum(x => x.ItemManufacturers.Sum(y => y.Quantity));
+                    var poItemQty = ItemVariations.Sum(
+                        x =>
+                            x.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+                                .Sum(y => Convert.ToDouble(y.ItemQty)));
+                    var rifQty = ItemVariations.Sum(x => x.RIFItems.Sum(y => y.ItemQty));
+                    var itemReleaseQty =
+                        (ItemVariations.Sum(x => x.ItemReleaseQuantities.Sum(y => Convert.ToDouble(y.Quantity))));
+                    var difQty = ItemVariations.Sum(x => x.DIFItems.Sum(y => y.ItemQty));
+
+                    return
+                        (double) ( itemVarQty + manufacturerQty + poItemQty + rifQty - itemReleaseQty + difQty);
                 }
                 return 0;
             }
         }
+
         public virtual InventoryDepartment InventoryDepartment { get; set; }
         public virtual ICollection<Report> Reports { get; set; }
     }
