@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using EPMS.Models.DomainModels;
 using EPMS.Models.RequestModels;
 
@@ -17,7 +18,8 @@ namespace EPMS.WebModels.ModelMappers
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
             model.CostCalculation = source.CostCalculation;
-            model.UnitPrice = source.UnitPrice;
+            var avgPrice = ((double)source.UnitPrice + (double) source.PurchaseOrderItems.Sum(x => x.UnitPrice))/2;
+            model.UnitPrice = Math.Round((double) (avgPrice), 2);
             model.QuantityInPackage = source.QuantityInPackage;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
@@ -150,11 +152,18 @@ namespace EPMS.WebModels.ModelMappers
             }
             var manufacturerCount = model.ItemManufacturers.Count;
             model.AverageCost = model.UnitCost/manufacturerCount;
+
+            var itemReleaseQty =
+                source.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
+                    .Sum(x => x.Quantity);
+            var poItems = source.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+                                .Sum(y => Convert.ToDouble(y.ItemQty));
             var defectedItemQuantity = source.DIFItems.Sum(x => x.ItemQty);
             var returnItemQuantity = source.RIFItems.Sum(x => x.ItemQty);
+
             model.TotalQuantityInHand = (Convert.ToDouble(source.QuantityInHand) +
-                                         source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity) -
-                                        (qtySold + defectedItemQuantity);
+                                         source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
+                                        ( itemReleaseQty+ defectedItemQuantity);
             return model;
         }
 

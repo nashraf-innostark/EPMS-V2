@@ -591,17 +591,6 @@ namespace EPMS.Implementation.Services
             //If Client List contains Entries
             if (clientList != null && clientList.Any())
             {
-                //Delete Items from DB List which are not in Client List
-                foreach (ItemWarehouse warehouseItem in dbList)
-                {
-                    if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId && warehouseItem.ItemVariationId == null))
-                        continue;
-                    var itemToDelete =
-                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
-                            warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
-                    itemWarehouseRepository.Delete(itemToDelete);
-                }
-
                 //Add New Items
                 foreach (ItemWarehouse itemWarehouse in clientList)
                 {
@@ -623,6 +612,17 @@ namespace EPMS.Implementation.Services
                         };
                         itemWarehouseRepository.Add(itemToAdd);
                     }
+                }
+
+                //Delete Items from DB List which are not in Client List
+                foreach (ItemWarehouse warehouseItem in dbList)
+                {
+                    if (clientList.Any(x => x.WarehouseId == warehouseItem.WarehouseId))
+                        continue;
+                    var itemToDelete =
+                        itemWarehouseRepository.FindItemWarehouseByVariationAndManufacturerId(
+                            warehouseItem.ItemVariationId, warehouseItem.WarehouseId);
+                    itemWarehouseRepository.Delete(itemToDelete);
                 }
             }
             else

@@ -43,13 +43,13 @@ namespace EPMS.Models.DomainModels
                         x =>
                             x.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
                                 .Sum(y => Convert.ToDouble(y.ItemQty)));
-                    var rifQty = ItemVariations.Sum(x => x.RIFItems.Sum(y => y.ItemQty));
+                    var rifQty = ItemVariations.Sum(x => x.RIFItems.Where(y=>y.RIF.Status == 2).Sum(y => y.ItemQty));
                     var itemReleaseQty =
-                        (ItemVariations.Sum(x => x.ItemReleaseQuantities.Sum(y => Convert.ToDouble(y.Quantity))));
-                    var difQty = ItemVariations.Sum(x => x.DIFItems.Sum(y => y.ItemQty));
+                        (ItemVariations.Sum(x => x.ItemReleaseQuantities.Where(z=>z.ItemReleaseDetail.ItemRelease.Status ==1).Sum(y => Convert.ToDouble(y.Quantity))));
+                    var difQty = ItemVariations.Sum(x => x.DIFItems.Where(y=>y.DIF.Status == 2).Sum(y => y.ItemQty));
 
                     return
-                        (double) ( itemVarQty + manufacturerQty + poItemQty + rifQty - itemReleaseQty + difQty);
+                        (double) ( itemVarQty + manufacturerQty + poItemQty + rifQty - itemReleaseQty - difQty);
                 }
                 return 0;
             }
