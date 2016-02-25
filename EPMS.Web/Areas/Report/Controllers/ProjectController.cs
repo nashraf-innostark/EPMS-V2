@@ -185,15 +185,21 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
         private static long GetJavascriptTimestamp(DateTime input)
         {
-            TimeSpan span = new TimeSpan(DateTime.Parse("1/1/1970").Ticks);
+            string dir = WebModels.Resources.Shared.Common.TextDirection;
+            string date = dir == "ltr" ? "1/1/1970" : "22/10/1389";
+            TimeSpan span = new TimeSpan(DateTime.Parse(date).Ticks);
             DateTime time = input.Subtract(span);
             return (time.Ticks / 10000);
         }
         private DetailVeiwModel SetGraphData(DetailVeiwModel detailVeiwModel)
         {
             var project = detailVeiwModel.Projects.FirstOrDefault();
-            detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(project.StartDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
-            detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(DateTime.ParseExact(project.EndDate.ToString(), "dd/MM/yyyy", new CultureInfo("en")));
+
+            DateTime projectStart = DateTime.ParseExact(project.StartDate, "dd/MM/yyyy", new CultureInfo("en"));
+            DateTime projectEnd = DateTime.ParseExact(project.EndDate, "dd/MM/yyyy", new CultureInfo("en"));
+            
+            detailVeiwModel.GrpahStartTimeStamp = GetJavascriptTimestamp(projectStart);
+            detailVeiwModel.GrpahEndTimeStamp = GetJavascriptTimestamp(projectEnd);
 
             detailVeiwModel.GraphItems.Add(new GraphItem
             {
