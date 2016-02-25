@@ -73,8 +73,8 @@ namespace EPMS.Website.Controllers
             };
             ViewBag.MetaKeywordsEn = newsAndArticleViewModel.NewsAndArticle.MetaKeywords;
             ViewBag.MetaKeywordsAr = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr;
-            ViewBag.MetaDescriptionEn = newsAndArticleViewModel.NewsAndArticle.MetaKeywords;
-            ViewBag.MetaDescriptionAr = newsAndArticleViewModel.NewsAndArticle.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = newsAndArticleViewModel.NewsAndArticle.MetaDesc;
+            ViewBag.MetaDescriptionAr = newsAndArticleViewModel.NewsAndArticle.MetaDescAr;
             return View(newsAndArticleViewModel);
         }
 

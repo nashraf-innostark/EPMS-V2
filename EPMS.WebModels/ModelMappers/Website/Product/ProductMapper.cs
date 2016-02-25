@@ -284,10 +284,14 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
                 });
                 foreach (var variation in source.ItemVariation.InventoryItem.ItemVariations)
                 {
-                    if (variation.ItemImages.FirstOrDefault() != null)
+                    foreach (var itemImage in variation.ItemImages)
                     {
-                        retVal.ItemImages.Add(variation.ItemImages.FirstOrDefault().CreateForImage());
+                        retVal.ItemImages.Add(itemImage.CreateForImage());
                     }
+                    //if (variation.ItemImages.FirstOrDefault() != null)
+                    //{
+                    //    retVal.ItemImages.Add(variation.ItemImages.FirstOrDefault().CreateForImage());
+                    //}
                 }
             }
 
