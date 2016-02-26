@@ -297,7 +297,9 @@
                                                         <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
                                                     }
                                                     <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
-                                                    @(direction == "ltr" ? Html.Raw(Model.Products[j].ProductDescEn) : Html.Raw(Model.Products[j].ProductDescAr))
+                                                    <p class="desc">
+                                                        @(direction == "ltr" ? Html.Raw(Model.Products[j].ProductDescEn) : Html.Raw(Model.Products[j].ProductDescAr))
+                                                    </p>
                                                     <div class="actions">
                                                         <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
                                                         @if (Model.Products[j].ItemVariationId != null)
