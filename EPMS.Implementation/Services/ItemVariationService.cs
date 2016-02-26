@@ -193,7 +193,7 @@ namespace EPMS.Implementation.Services
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
             response.PurchaseOrderItems = poItemRepository.GetPoItemsByVarId(id).ToList();
-            var manufacturerGroup = response.PurchaseOrderItems.GroupBy(x => x.VendorId);
+            var manufacturerGroup = response.PurchaseOrderItems.Where(x=>x.PurchaseOrder.Status == 1).GroupBy(x => x.VendorId);
 
             //If POItems exists against this Variation but not in Item Manufacturer Table
             foreach (var poItem in manufacturerGroup)
@@ -438,6 +438,14 @@ namespace EPMS.Implementation.Services
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
+
+            var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => x.Quantity);
+            var priceFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Price));
+
+            var qtyInHand = Convert.ToDouble(variationToSave.ItemVariation.QuantityInHand) +
+                            variationToSave.ItemManufacturers.Sum(x => x.Quantity);
+            variationToSave.ItemVariation.UnitCost = Convert.ToDouble(qtyInHand)/priceFromManufacturer;
+
             variationRepository.Add(variationToSave.ItemVariation);
             //Item variation Notification
             SendNotification(variationToSave.ItemVariation);
@@ -502,6 +510,8 @@ namespace EPMS.Implementation.Services
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
+
+
             variationRepository.Update(variationToSave.ItemVariation);
         }
 
@@ -948,5 +958,6 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
     }
 }

@@ -187,13 +187,16 @@ namespace EPMS.Implementation.Services
         {
             if (purchaseOrder.PurchaseOrderId > 0)
             {
+
+                if (purchaseOrder.Status == 1)
+                    UpdateUnitCost(purchaseOrder);
                 //update
                 if (UpdatePO(purchaseOrder)) //if RFI updated, then update the items
                 {
                     PoItemUpdation(purchaseOrder);
                     if (purchaseOrder.Status == 1)
                     {
-                        SendNotification(purchaseOrder);
+                        SendNotification(purchaseOrder);;
                     }
                 }
             }
@@ -287,6 +290,49 @@ namespace EPMS.Implementation.Services
             notificationService.AddUpdateNotification(notificationViewModel.NotificationResponse);
 
             #endregion
+        }
+
+        private void UpdateUnitCost(PurchaseOrder purchaseOrder)
+        {
+            var itemVariations = itemVariationRepository.GetVariationsByPurchaseOrder(purchaseOrder);
+            foreach (var itemVariation in itemVariations)
+            {
+                //for calculation of Quantity in Hand
+                var itemReleaseQty =
+                itemVariation.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
+                    .Sum(x => x.Quantity);
+                var poItems = itemVariation.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+                                    .Sum(y => Convert.ToDouble(y.ItemQty));
+                var defectedItemQuantity = itemVariation.DIFItems.Where(x => x.DIF.Status == 2).Sum(x => x.ItemQty);
+                var returnItemQuantity = itemVariation.RIFItems.Where(x => x.RIF.Status == 2).Sum(x => x.ItemQty);
+
+                //Current Quantity in Hand
+                var qtyInHand = (Convert.ToDouble(itemVariation.QuantityInHand) +
+                                                         itemVariation.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
+                                                        (itemReleaseQty + defectedItemQuantity);
+                //Unit Cost before PO Item
+                var oldTotalCost = qtyInHand*itemVariation.UnitCost;
+
+                //Purchase Order Item Cost
+                var poItemUCost =
+                    purchaseOrder.PurchaseOrderItems.Where(x => x.ItemVariationId == itemVariation.ItemVariationId)
+                        .Sum(x => x.UnitPrice);
+                //Purchase Order Item Quantity
+                var poItemQty =
+                    purchaseOrder.PurchaseOrderItems.Where(x => x.ItemVariationId == itemVariation.ItemVariationId)
+                        .Sum(x => x.ItemQty);
+
+                //Purchase Order Total Cost (poQty * poCost)
+                var poItemTotalCost = poItemQty * poItemUCost;
+
+                //Adjusting Unit Cost on Item Variation
+                var totalItemVariationCost = oldTotalCost + (double) poItemTotalCost;
+                var totalItemVariationQty = qtyInHand + poItemQty;
+                itemVariation.UnitCost = Math.Round((double)(totalItemVariationCost / totalItemVariationQty), 2);
+
+                itemVariationRepository.Update(itemVariation);
+            }
+            itemVariationRepository.SaveChanges();
         }
     }
 }
