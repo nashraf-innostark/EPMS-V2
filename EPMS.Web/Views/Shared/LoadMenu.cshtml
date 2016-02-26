@@ -6,45 +6,57 @@
 @{
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     Layout = null;
-    string[] module = (string[])Session["UserModules"];
-    if (module != null)
+    string[] modules = (string[])Session["UserModules"];
+    if (modules != null)
     {
-        for (int i = 0; i < module.Count(); i++)
+        for (int i = 0; i < modules.Count(); i++)
         {
-            switch (module[i])
+            switch (modules[i])
             {
                 case "Dashboard":
-                    module[i] = "Dashboard";
+                    modules[i] = "Dashboard";
                     break;
                 case "HRS":
-                    module[i] = "Human Resources System";
+                    modules[i] = "Human Resources System";
                     break;
                 case "PMS":
-                    module[i] = "Project Management System";
+                    modules[i] = "Project Management System";
                     break;
                 case "IS":
-                    module[i] = "Inventory System";
+                    modules[i] = "Inventory System";
                     break;
                 case "NS":
-                    module[i] = "Alert System";
+                    modules[i] = "Alert System";
                     break;
                 case "CL":
-                    module[i] = "Contacts List";
+                    modules[i] = "Contacts List";
                     break;
                 case "CP":
-                    module[i] = "Company Profile";
+                    modules[i] = "Company Profile";
                     break;
                 case "CS":
-                    module[i] = "Customer Service";
+                    modules[i] = "Customer Service";
                     break;
                 case "Mt":
-                    module[i] = "Meetings";
+                    modules[i] = "Meetings";
                     break;
                 case "HI":
-                    module[i] = "Help";
+                    modules[i] = "Help";
                     break;
-                case "Reporting":
-                    module[i] = "Reports";
+                case "Reports":
+                    modules[i] = "Reports";
+                    break;
+                case "ProjectsTasksReport":
+                    modules[i] = "ProjectsTasksReport";
+                    break;
+                case "CustomerServiceReport":
+                    modules[i] = "CustomerServiceReport";
+                    break;
+                case "InventorySystemReports":
+                    modules[i] = "InventorySystemReports";
+                    break;
+                case "Website":
+                    modules[i] = "Website";
                     break;
                 default:
                     break;
@@ -61,7 +73,7 @@
         {
             // get child items with respect to menu header
             IList<MenuRight> menuRightchildList = Model.MenuRights.Where(menuright => menuright.Menu.ParentItem != null && menuright.Menu.ParentItem.MenuId == header.Menu.MenuId).OrderBy(c => c.Menu.SortOrder).ToList();
-            if (module.Contains(header.Menu.MenuTitle) || (header.Menu.MenuTitle == "User Management" || header.Menu.MenuTitle == "Contacts List" || header.Menu.MenuTitle == "Company Profile" || header.Menu.MenuTitle == "Help"))
+            if (modules.Contains(header.Menu.MenuTitle) || (header.Menu.MenuTitle == "User Management"))
             {
                 <li class="@header.Menu.MenuItemClass">
                     <a href="@(String.IsNullOrEmpty(header.Menu.MenuTargetController) ? "#" : (ConfigurationManager.AppSettings["SiteURL"].ToString()) + "/" + header.Menu.MenuTargetController + "/" + header.Menu.MenuFunction)" class="sub-nav-container">
@@ -87,17 +99,75 @@
                     // display childs
                     if (direction == "ltr")
                     {
-                        <li>
-                            @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
-                        </li>
+                        switch (menuRight.Menu.MenuTitle)
+                        {
+                            case "Projects and Tasks Report":
+                                if (modules.Contains("ProjectsTasksReport"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                                    </li>
+                                }
+                                break;
+                            case "Customer Service":
+                                if (modules.Contains("CustomerServiceReport"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                                    </li>
+                                }
+                                break;
+                            case "Inventory System":
+                                if (modules.Contains("InventorySystemReports"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                                    </li>
+                                }
+                                break;
+                            default:
+                            <li>
+                                @Html.ActionLink(menuRight.Menu.MenuTitle, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                            </li>
+                                break;
+                        }
                     }
                     else
                     {
-                        <li>
-                        @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
-                    </li>
+                        switch (menuRight.Menu.MenuTitleA)
+                        {
+                            case "تقارير المشاريع و المهام":
+                                if (modules.Contains("ProjectsTasksReport"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
+                                    </li>
+                                }
+                                break;
+                            case "خدمة العملاء":
+                                if (modules.Contains("CustomerServiceReport"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
+                                    </li>
+                                }
+                                break;
+                            case "نظام مستودعات":
+                                if (modules.Contains("InventorySystemReports"))
+                                {
+                                    <li>
+                                        @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new {@class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : ""})
+                                    </li>
+                                }
+                                break;
+                            default:
+                                <li>
+                                    @Html.ActionLink(menuRight.Menu.MenuTitleA, menuRight.Menu.MenuFunction, menuRight.Menu.MenuTargetController, null, new { @class = Request.Url.ToString().Contains(menuRight.Menu.MenuTargetController + "/" + menuRight.Menu.MenuFunction) == true ? "active innerSelected" : "" })
+                                </li>
+                                break;
+                        }
                     }
-                    
+
                 }
                             }
                         </ul>

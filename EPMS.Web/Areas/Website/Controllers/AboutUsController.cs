@@ -12,6 +12,7 @@ using AboutUs = EPMS.Models.DomainModels.AboutUs;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
+    [SiteAuthorize(PermissionKey = "Website", IsModule = true)]
     public class AboutUsController : BaseController
     {
 

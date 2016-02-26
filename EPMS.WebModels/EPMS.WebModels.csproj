@@ -1069,6 +1069,7 @@
     <EmbeddedResource Include="Resources\CP\Profile.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Profile.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.ar.resx" />
     <EmbeddedResource Include="Resources\Dashboard\Dashboard.resx">

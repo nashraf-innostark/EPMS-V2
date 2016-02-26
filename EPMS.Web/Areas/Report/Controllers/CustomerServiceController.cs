@@ -4,11 +4,13 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CustomerServiceReport", IsModule = true)]
     public class CustomerServiceController : BaseController
     {
         #region Private
@@ -29,7 +31,7 @@ namespace EPMS.Web.Areas.Report.Controllers
         #region Public
 
         #region Index
-        //[SiteAuthorize(PermissionKey = "CustomerServiceReport")]
+        [SiteAuthorize(PermissionKey = "CustomerServiceReport")]
         public ActionResult Index()
         {
             CustomerServiceReportsSearchRequest searchRequest = new CustomerServiceReportsSearchRequest();
@@ -41,7 +43,6 @@ namespace EPMS.Web.Areas.Report.Controllers
         }
 
         [HttpPost]
-
         public ActionResult QIIndex(CustomerServiceReportsSearchRequest searchRequest)
         {
             searchRequest.SearchString = Request["search"];

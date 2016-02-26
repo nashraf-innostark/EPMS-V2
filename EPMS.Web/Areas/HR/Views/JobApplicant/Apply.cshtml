@@ -1844,11 +1844,11 @@
     var url = "/HR/JobApplicant/UploadCv";
     $('#upload').mfupload({
         type: 'doc,docx,pdf', //all types
-        maxsize: 10,
+        maxsize: 1024,
         post_upload: url,
         folder: "./",
-        ini_text: "Drag your file here or click (max: 10MB)",
-        over_text: "Drop Here",
+        ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
+        over_text: "@EPMS.WebModels.Resources.CP.Profile.DropHere",
         over_col: '#666666',
         over_bkcol: '#f0f0f0',
 

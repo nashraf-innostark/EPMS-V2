@@ -10,6 +10,7 @@ using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.ResponseModels;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Website.Department;
 using EPMS.WebModels.ModelMappers.Website.HomePage;
@@ -22,6 +23,7 @@ using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
+    [SiteAuthorize(PermissionKey = "Website", IsModule = true)]
     public class HomeController : BaseController
     {
         #region Private

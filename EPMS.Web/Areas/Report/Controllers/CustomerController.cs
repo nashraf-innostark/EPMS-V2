@@ -1,19 +1,18 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
-using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
 using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CustomerServiceReport", IsModule = true)]
     public class CustomerController : BaseController
     {
 

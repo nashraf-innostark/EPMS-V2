@@ -161,7 +161,7 @@
 
 <script src="~/RTE/ckeditor.js"></script>
 <script type="text/javascript">
-    $().ready(function() {
+    $().ready(function () {
         if (parseInt('@Model.Partner.PartnerId') > 0 || '@userPermissionsSet.Contains("PartnerCreate")' == 'False') {
             $('.' + 'toBeDisable' + ':input').attr('disabled', true);
             $('#image').addClass('disableList');
@@ -189,11 +189,11 @@
         var url = $('#siteURL').val() + "/Website/Partner/UploadImage";
         $('#upload').mfupload({
             type: '', //all types
-            maxsize: 10,
+            maxsize: 1024,
             post_upload: url,
             folder: "./",
-            ini_text: "Drag your file here or click (max: 1MB)",
-            over_text: "Drop Here",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
+            over_text: "@EPMS.WebModels.Resources.CP.Profile.DropHere",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
             init: function() {

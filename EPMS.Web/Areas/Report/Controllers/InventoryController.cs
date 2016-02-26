@@ -10,6 +10,7 @@ using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "InventorySystemReports", IsModule = true)]
     public class InventoryController : BaseController
     {
         private readonly IReportService reportService;

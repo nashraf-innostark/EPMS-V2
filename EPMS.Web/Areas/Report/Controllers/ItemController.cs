@@ -10,6 +10,7 @@ using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "InventorySystemReports", IsModule = true)]
     public class ItemController : BaseController
     {
         private readonly IInventoryItemService inventoryItemService;

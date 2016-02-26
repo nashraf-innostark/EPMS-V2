@@ -587,7 +587,7 @@
         }
         $('#tableSortableVariations').dataTable({
             "sPaginationType": "bootstrap",
-            "fnInitComplete": function() {
+            "fnInitComplete": function () {
                 $(".dataTables_wrapper select").select2({
                     dropdownCssClass: 'noSearch'
                 });
@@ -600,14 +600,14 @@
                 url: url,
                 type: "POST",
                 dataType: "json",
-                success: function(data) {
+                success: function (data) {
                     if (data == null) {
                         $('#ItemCode').val(10001000);
                     } else {
                         $('#ItemCode').val(++data);
                     }
                 },
-                error: function() {
+                error: function () {
                     alert("An error has occured!!!");
                 }
             });
@@ -637,11 +637,11 @@
         var url = siteUrl + "/Inventory/InventoryItem/UploadImage";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', //all types
-            maxsize: 10,
+            maxsize: 1024,
             post_upload: url,
             folder: "./",
-            ini_text: "Drag your file here or click (max: 10MB)",
-            over_text: "Drop Here",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
+            over_text: "@EPMS.WebModels.Resources.CP.Profile.DropHere",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
 
