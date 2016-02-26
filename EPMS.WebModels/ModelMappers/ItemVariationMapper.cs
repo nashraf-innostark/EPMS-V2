@@ -18,8 +18,9 @@ namespace EPMS.WebModels.ModelMappers
             model.ItemBarcode = source.ItemBarcode;
             model.SKUCode = source.SKUCode;
             model.CostCalculation = source.CostCalculation;
-            var avgPrice = ((double)source.UnitPrice + (double) source.PurchaseOrderItems.Sum(x => x.UnitPrice))/2;
-            model.UnitPrice = Math.Round((double) (avgPrice), 2);
+            //var avgPrice = ((double)source.UnitPrice + (double) source.PurchaseOrderItems.Sum(x => x.UnitPrice))/2;
+
+            model.UnitPrice = source.UnitPrice;
             model.QuantityInPackage = source.QuantityInPackage;
             model.PackagePrice = source.PackagePrice;
             model.PriceCalculation = source.PriceCalculation;
@@ -48,14 +49,8 @@ namespace EPMS.WebModels.ModelMappers
             {
                 model.QtyInHand = true;
             }
-            model.QuantityInHand = (Convert.ToInt64(source.QuantityInHand) +
-                                    source.ItemManufacturers.Sum(x => x.TotalQuantity) -
-                                    source.ItemReleaseDetails.Sum(x => x.ItemQty) +
-                                    source.DIFItems.Sum(x => x.ItemQty)).ToString();
-            var qtySold =
-                source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId)
-                    .Sum(x => x.Quantity);
-            model.QuantitySold = qtySold;
+            
+           
             model.ReorderPoint = source.ReorderPoint;
             model.QuantityInManufacturing = source.QuantityInManufacturing;
             model.Weight = source.Weight;
@@ -158,12 +153,20 @@ namespace EPMS.WebModels.ModelMappers
                     .Sum(x => x.Quantity);
             var poItems = source.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
                                 .Sum(y => Convert.ToDouble(y.ItemQty));
-            var defectedItemQuantity = source.DIFItems.Sum(x => x.ItemQty);
-            var returnItemQuantity = source.RIFItems.Sum(x => x.ItemQty);
+            var defectedItemQuantity = source.DIFItems.Where(x=>x.DIF.Status == 2).Sum(x => x.ItemQty);
+            var returnItemQuantity = source.RIFItems.Where(x=>x.RIF.Status == 2).Sum(x => x.ItemQty);
 
-            model.TotalQuantityInHand = (Convert.ToDouble(source.QuantityInHand) +
+            var qty = (Convert.ToDouble(source.QuantityInHand) +
                                          source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
-                                        ( itemReleaseQty+ defectedItemQuantity);
+                                        (itemReleaseQty + defectedItemQuantity);
+            model.TotalQuantityInHand = qty;
+            model.QuantityInHand = qty.ToString();
+
+            var qtySold =
+                source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId && y.ItemReleaseDetail.ItemRelease.Status == 1)
+                    .Sum(x => x.Quantity) - 
+                    source.RIFItems.Where(x=>x.RIF.Status == 2 && x.ItemVariationId == source.ItemVariationId).Sum(x=>x.ItemQty);
+            model.QuantitySold = qtySold;
             return model;
         }
 

@@ -237,7 +237,7 @@ namespace EPMS.Implementation.Services
                             .Sum(x => x.ItemQty) + oldQty;
                 }
 
-            //response.ItemVariation.ItemWarehouses = new List<ItemWarehouse>();
+            // to adjust item warehouse quantity
             if (response.ItemVariation.ItemWarehouses != null)
             {
                 var releaseQtyList = itemReleaseQuantityRepository.GetAll();
@@ -247,15 +247,22 @@ namespace EPMS.Implementation.Services
                         releaseQtyList.Where(
                             x =>
                                 x.WarehouseId == itemWarehouse.WarehouseId &&
-                                x.ItemVariationId == itemWarehouse.ItemVariationId).Sum(y => y.Quantity);
-                    var rifQty = itemWarehouse.ItemVariation.RIFItems.Sum(x => x.ItemQty);
-                    var difQty = itemWarehouse.ItemVariation.DIFItems.Sum(x => x.ItemQty);
+                                x.ItemVariationId == itemWarehouse.ItemVariationId &&
+                                x.ItemReleaseDetail.ItemRelease.Status == 1).Sum(y => y.Quantity);
+                    var rifQty = itemWarehouse.ItemVariation.RIFItems.Where(x=>x.RIF.Status == 2 && x.ItemVariationId == itemWarehouse.ItemVariationId && x.WarehouseId == itemWarehouse.WarehouseId).Sum(x => x.ItemQty);
+                    var difQty = itemWarehouse.ItemVariation.DIFItems.Where(x=>x.DIF.Status == 2 && x.ItemVariationId == itemWarehouse.ItemVariationId && x.DIF.WarehouseId == itemWarehouse.WarehouseId).Sum(x => x.ItemQty);
+                    //var tifFromQty = itemWarehouse.ItemVariation.TIRItems.Where(x=>x.TIR.Status == 1 && x.TIR.FromWarehouseId == itemWarehouse.WarehouseId).Sum(x=>x.ItemQty);
                     if (itemReleaseQuantity != null)
                     {
                         itemWarehouse.Quantity = itemWarehouse.Quantity + rifQty - (itemReleaseQuantity + difQty);
                     }
+                    else
+                    {
+                        itemWarehouse.Quantity = itemWarehouse.Quantity + rifQty - difQty;
+                    }
                 }
             }
+
             return response;
         }
 

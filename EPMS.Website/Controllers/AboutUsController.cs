@@ -36,8 +36,8 @@ namespace EPMS.Website.Controllers
             }
             ViewBag.MetaKeywordsEn = aboutUsViewModel.AboutUs.MetaKeywords;
             ViewBag.MetaKeywordsAr = aboutUsViewModel.AboutUs.MetaKeywordsAr;
-            ViewBag.MetaDescriptionEn = aboutUsViewModel.AboutUs.MetaKeywords;
-            ViewBag.MetaDescriptionAr = aboutUsViewModel.AboutUs.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = aboutUsViewModel.AboutUs.MetaDesc;
+            ViewBag.MetaDescriptionAr = aboutUsViewModel.AboutUs.MetaDescAr;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(aboutUsViewModel);
         }

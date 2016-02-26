@@ -33,8 +33,8 @@ namespace EPMS.Website.Controllers
             };
             ViewBag.MetaKeywordsEn = viewmodel.WebsiteService.MetaKeywordsEn;
             ViewBag.MetaKeywordsAr = viewmodel.WebsiteService.MetaKeywordsAr;
-            ViewBag.MetaDescriptionEn = viewmodel.WebsiteService.MetaKeywordsEn;
-            ViewBag.MetaDescriptionAr = viewmodel.WebsiteService.MetaKeywordsAr;
+            ViewBag.MetaDescriptionEn = viewmodel.WebsiteService.MetaDescriptionEn;
+            ViewBag.MetaDescriptionAr = viewmodel.WebsiteService.MetaDescriptionAr;
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
             return View(viewmodel);
         }
