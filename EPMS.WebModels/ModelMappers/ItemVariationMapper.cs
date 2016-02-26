@@ -19,7 +19,6 @@ namespace EPMS.WebModels.ModelMappers
             model.SKUCode = source.SKUCode;
             model.CostCalculation = source.CostCalculation;
             //var avgPrice = ((double)source.UnitPrice + (double) source.PurchaseOrderItems.Sum(x => x.UnitPrice))/2;
-
             model.UnitPrice = source.UnitPrice;
             model.QuantityInPackage = source.QuantityInPackage;
             model.PackagePrice = source.PackagePrice;
@@ -137,14 +136,15 @@ namespace EPMS.WebModels.ModelMappers
                 : "";
             var totalCost = source.ItemManufacturers.Sum(y => y.Quantity*Convert.ToDouble(y.Price));
             var totalQuantity = source.ItemManufacturers.Sum(y => y.Quantity);
-            if (totalCost > 0 && totalQuantity > 0)
-            {
-                model.UnitCost = Math.Round((double) (totalCost/totalQuantity), 2);
-            }
-            else
-            {
-                model.UnitCost = 0;
-            }
+            model.UnitCost = source.UnitCost;
+            //if (totalCost > 0 && totalQuantity > 0)
+            //{
+            //    model.UnitCost = Math.Round((double) (totalCost/totalQuantity), 2);
+            //}
+            //else
+            //{
+            //    model.UnitCost = 0;
+            //}
             var manufacturerCount = model.ItemManufacturers.Count;
             model.AverageCost = model.UnitCost/manufacturerCount;
 

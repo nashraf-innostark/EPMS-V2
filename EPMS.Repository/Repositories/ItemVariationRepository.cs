@@ -59,6 +59,13 @@ namespace EPMS.Repository.Repositories
             });
         }
 
+        public List<ItemVariation> GetVariationsByPurchaseOrder(PurchaseOrder purchaseOrder)
+        {
+            var test = purchaseOrder.PurchaseOrderItems.Select(x => x.ItemVariationId);
+            return
+                DbSet.Where(x => test.Contains(x.ItemVariationId)).ToList();
+        }
+
         public IEnumerable<ItemVariation> GetItemVariationByWarehouseId(long warehouseId)
         {
             var itemVariation = DbSet.Where(x => x.ItemWarehouses.Any(y => y.WarehouseId == warehouseId));

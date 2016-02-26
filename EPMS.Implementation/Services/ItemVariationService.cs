@@ -193,7 +193,7 @@ namespace EPMS.Implementation.Services
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
             response.PurchaseOrderItems = poItemRepository.GetPoItemsByVarId(id).ToList();
-            var manufacturerGroup = response.PurchaseOrderItems.Where(x=>x.PurchaseOrder.Status == 2).GroupBy(x => x.VendorId);
+            var manufacturerGroup = response.PurchaseOrderItems.Where(x=>x.PurchaseOrder.Status == 1).GroupBy(x => x.VendorId);
 
             //If POItems exists against this Variation but not in Item Manufacturer Table
             foreach (var poItem in manufacturerGroup)
@@ -958,5 +958,6 @@ namespace EPMS.Implementation.Services
         }
 
         #endregion
+
     }
 }
