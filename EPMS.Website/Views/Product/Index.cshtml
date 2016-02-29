@@ -299,7 +299,7 @@
                                                     <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
                                                     <p class="desc text_@Model.Products[j].ProductId">
                                                         <script>
-                                                            var descp = '@(direction == "ltr" ? Html.Raw(Model.Products[j].ProductDescEn) : Html.Raw(Model.Products[j].ProductDescAr))';
+                                                            var descp = '@(direction == "ltr" ? Html.Raw(HttpUtility.HtmlDecode(Model.Products[j].ProductDescEn)) : Html.Raw(HttpUtility.HtmlDecode(Model.Products[j].ProductDescAr)))';
                                                             var regex = /(<([^>]+)>)/ig;
                                                             var result = descp.replace(regex, "");
                                                             $(".text_" + @Model.Products[j].ProductId).text(result);
