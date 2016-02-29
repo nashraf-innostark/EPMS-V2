@@ -206,12 +206,15 @@ and (max-width : 768px) {
 	body {padding: 0px;}
 	.row {padding: 0 10px; margin-bottom:20px;}
 	.row [class*="span"] {margin-bottom:20px;}
+	.header2 #logo a {
+    margin-top: 0px;
+}
 	
 	#slideshow .container,
 	#page_header .container {padding-top:30px;}
 	
 	#header {position: relative; height: auto;}
-	.topnav.navRight {display:none;}
+	
 	#search {margin-right:10px;}
 	nav#main_menu {margin: 10px 10px 0 0;}
 	.topnav.navLeft > li:first-child {margin-left:15px;}
@@ -311,6 +314,9 @@ padding: 10px 0 0;}
 	#logo {float: none;text-align: center;}
 	nav#main_menu {float: none; margin: 10px;}
 	select.mobileMenu {width: 100%; margin-top: 10px;}
+	.header2 #logo a {
+    margin-top: 0px;
+}
 	
 	.iosSlider .slider .item .caption { 
 	transform:scale(0.5); transform-origin:50% 100%;
