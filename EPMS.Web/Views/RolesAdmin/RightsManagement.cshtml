@@ -6,6 +6,7 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     string[] modules = (string[])Session["UserModules"];
     bool ispermissionToModule = false;
+    bool ispermissionToSubModule = false;
 }
 
 <style>
@@ -52,9 +53,10 @@
                     @Html.DropDownListFor(x => x.SelectedRoleId, new SelectList(Model.Roles, "Id", "Name"), new { @class = " mandatory form-control", onchange = "this.form.submit();" })
                 </div>
             </div>
-            @foreach (var item in @Model.Rights.Where(item => item.IsParent))
+            @foreach (var item in Model.Rights.Where(item => item.IsParent))
             {
-                switch (item.MenuTitle)
+                string menuTitle = item.MenuTitle;
+                switch (menuTitle)
                 {
                     case "Dashboard":
                         ispermissionToModule = modules.Contains("Dashboard");
@@ -115,44 +117,93 @@
                             }
                             @*<label style="padding-left:10px;font-weight: 700">@item.MenuTitle</label>*@
                         </div>
-                        @foreach (var childItems in @Model.Rights.Where(childItem => childItem.ParentId == item.MenuId))
+                        @foreach (var childItems in Model.Rights.Where(childItem => childItem.ParentId == item.MenuId))
                         {
-                            switch (childItems.MenuTitle)
+                            string key = childItems.PermissionKey;
+                            switch (key)
                             {
-                            }
-                            <div class="control-group row-fluid childItem">
-                                <div class="span12">
-                                    @*<label class="controllerLabel">@childItems.MenuTitle</label>*@
-                                    @if (direction == "ltr")
-                                    {
-                                        @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
-                                        <h5 class="controllerLabel">@childItems.MenuTitle</h5>
-                                    }
-                                    else
-                                    {
-                                        @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox chkbMargin" })
-                                        <h5 class="controllerLabel">@childItems.MenuTitleA</h5>
-                                    }
+                                case "ProjectsTasksReport":
+                                    ispermissionToSubModule = modules.Contains("ProjectsTasksReport");
+                                    break;
+                                case "CustomerServiceReport":
+                                    ispermissionToSubModule = modules.Contains("CustomerServiceReport");
+                                    break;
+                                case "InventorySystemReports":
+                                    ispermissionToSubModule = modules.Contains("InventorySystemReports");
+                                    break;
+                                default:
                                     <div class="control-group row-fluid childItem">
-                                        @foreach (var actions in @Model.Rights.Where(actions => actions.ParentId == childItems.MenuId))
-                                        {
-                                            <div class="span2">
-                                                @if (direction == "ltr")
+                                        <div class="span12">
+                                            @*<label class="controllerLabel">@childItems.MenuTitle</label>*@
+                                            @if (direction == "ltr")
+                                            {
+                                                @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
+                                                <h5 class="controllerLabel">@childItems.MenuTitle</h5>
+                                            }
+                                            else
+                                            {
+                                                @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox chkbMargin" })
+                                                <h5 class="controllerLabel">@childItems.MenuTitleA</h5>
+                                            }
+                                            <div class="control-group row-fluid childItem">
+                                                @foreach (var actions in @Model.Rights.Where(actions => actions.ParentId == childItems.MenuId))
                                                 {
-                                                    @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek" })
-                                                    <label class="actionLabel">@actions.MenuTitle</label>
-                                                }
-                                                else
-                                                {
-                                                    @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek chkbMargin" })
-                                                    <label class="actionLabel">@actions.MenuTitleA</label>
+                                                    <div class="span2">
+                                                        @if (direction == "ltr")
+                                                        {
+                                                            @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek" })
+                                                            <label class="actionLabel">@actions.MenuTitle</label>
+                                                        }
+                                                        else
+                                                        {
+                                                            @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek chkbMargin" })
+                                                            <label class="actionLabel">@actions.MenuTitleA</label>
+                                                        }
+                                                    </div>
                                                 }
                                             </div>
-                                        }
-                                    </div>
-                                </div>
+                                        </div>
 
-                            </div>
+                                    </div>
+                                                break;
+                            }
+                            if (ispermissionToSubModule)
+                            {
+                                <div class="control-group row-fluid childItem">
+                                    <div class="span12">
+                                        @*<label class="controllerLabel">@childItems.MenuTitle</label>*@
+                                        @if (direction == "ltr")
+                                        {
+                                            @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox" })
+                                            <h5 class="controllerLabel">@childItems.MenuTitle</h5>
+                                        }
+                                        else
+                                        {
+                                            @Html.CheckBoxFor(m => childItems.IsSelected, new { value = childItems.MenuId, @class = "childCheckbox chkbMargin" })
+                                            <h5 class="controllerLabel">@childItems.MenuTitleA</h5>
+                                        }
+                                        <div class="control-group row-fluid childItem">
+                                            @foreach (var actions in @Model.Rights.Where(actions => actions.ParentId == childItems.MenuId))
+                                            {
+                                                <div class="span2">
+                                                    @if (direction == "ltr")
+                                                    {
+                                                        @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek" })
+                                                        <label class="actionLabel">@actions.MenuTitle</label>
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.CheckBoxFor(m => actions.IsSelected, new { value = actions.MenuId, @class = "childCheckbox actionChek chkbMargin" })
+                                                        <label class="actionLabel">@actions.MenuTitleA</label>
+                                                    }
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+
+                                </div>
+                            }
+
 
                         }
                     </div>
@@ -160,7 +211,7 @@
             }
             <div class="control-group row-fluid">
                 <div class="span3 span-inset">
-                    @Html.ActionLink( EPMS.WebModels.Resources.UserManagement.RightsManagement.Btn_Save, "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
+                    @Html.ActionLink(EPMS.WebModels.Resources.UserManagement.RightsManagement.Btn_Save, "PostRightsManagement", new { roleValue = "SelectedRoleValue", selectedList = "SelectedListValues" }, new { @class = "btn", id = "btnSave" })
                 </div>
             </div>
         </div>
