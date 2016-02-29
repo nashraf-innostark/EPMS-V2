@@ -67,8 +67,9 @@
 </form>
 
 <script>
+    var oTable;
     $(document).ready(function () {
-        var oTable = $('#InventoryItems').dataTable({
+        oTable = $('#InventoryItems').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
@@ -218,15 +219,14 @@
             },
             success: function (data) {
                 if (data == "Deleted") {
+                    // remove the row from table
+                    oTable.fnDraw();
+                    // show toaster
                     $.pnotify({
                         title: 'Success',
                         type: 'success',
                         text: 'Record has been Deleted.'
                     });
-                    var row = $("." + inventoryItemId).parent().get(0);
-                    var atable = $('#InventoryItems').dataTable();
-                    var pos = atable.fnGetPosition(row);
-                    atable.fnDeleteRow(pos);
                 } else {
                     $.pnotify({
                         title: 'Failure',

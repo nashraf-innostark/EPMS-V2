@@ -166,15 +166,26 @@ namespace EPMS.Implementation.Services
                 string userId = "";
                 foreach (var product in products)
                 {
+                    //var prod = productRepository.FindByVariationId((long)product.ItemVariationId);
+                    //if (prod != null)
+                    //{
+                    //    product.ProductId = prod.ProductId;
+                    //    product.RecCreatedBy = prod.RecCreatedBy;
+                    //    product.RecCreatedDt = prod.RecCreatedDt;
+                    //    productRepository.Update(product);
+                    //}
+                    //else
+                    //{
                     productRepository.Add(product);
+                    //}
                     userId = product.RecCreatedBy;
-                    productRepository.SaveChanges();
                     var item = itemVariationRepository.Find((long)product.ItemVariationId);
                     if (item != null)
                     {
                         items.Add(item);
                     }
                 }
+                productRepository.SaveChanges();
                 AddProductSections(items, userId);
                 return true;
             }
