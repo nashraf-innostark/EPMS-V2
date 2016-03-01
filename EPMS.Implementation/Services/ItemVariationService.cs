@@ -439,13 +439,16 @@ namespace EPMS.Implementation.Services
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
 
-            var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => x.Quantity);
             var priceFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Price));
+            var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Quantity));
 
-            var qtyInHand = Convert.ToDouble(variationToSave.ItemVariation.QuantityInHand) +
-                            variationToSave.ItemManufacturers.Sum(x => x.Quantity);
-            variationToSave.ItemVariation.UnitCost = Convert.ToDouble(qtyInHand)/priceFromManufacturer;
-
+            var totalQtyInHand = variationToSave.ItemManufacturers.Sum(x => x.Quantity) * priceFromManufacturer;
+            //var qtyInHand = Convert.ToDouble(variationToSave.ItemVariation.QuantityInHand) +
+            //                variationToSave.ItemManufacturers.Sum(x => x.Quantity);
+            if (totalQtyInHand != null && totalQtyInHand != 0)
+            {
+                variationToSave.ItemVariation.UnitCost = Math.Round((double)Convert.ToDouble(totalQtyInHand) / qtyFromManufacturer, 2);
+            }
             variationRepository.Add(variationToSave.ItemVariation);
             //Item variation Notification
             SendNotification(variationToSave.ItemVariation);
@@ -510,8 +513,13 @@ namespace EPMS.Implementation.Services
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
-
-
+            if (variationToSave.ItemVariation.UnitCost == null)
+            {
+                var priceFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Price));
+                var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Quantity));
+                var totalQtyInHand = variationToSave.ItemManufacturers.Sum(x => x.Quantity) * priceFromManufacturer;
+                variationToSave.ItemVariation.UnitCost = Math.Round((double)Convert.ToDouble(totalQtyInHand) / qtyFromManufacturer, 2);
+            }
             variationRepository.Update(variationToSave.ItemVariation);
         }
 
