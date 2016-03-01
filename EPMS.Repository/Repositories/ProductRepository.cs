@@ -136,7 +136,7 @@ namespace EPMS.Repository.Repositories
             {
                 TotalCount = DbSet.Count(x => (x.ItemVariationId != null && (x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
                         x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
-                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) ||
+                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(search) ||
                         x.ItemVariation.SKUDescriptionEn.Contains(search) || x.ItemVariation.SKUDescriptionAr.Contains(search))
                         ) ||
                         (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
@@ -147,7 +147,7 @@ namespace EPMS.Repository.Repositories
                     x =>
                         (x.ItemVariationId != null && (x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
                         x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
-                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) ||
+                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(search) ||
                         x.ItemVariation.SKUDescriptionEn.Contains(search) || x.ItemVariation.SKUDescriptionAr.Contains(search))
                         ) || 
                         (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
@@ -194,6 +194,7 @@ namespace EPMS.Repository.Repositories
                     ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
                      (s.ProductNameEn.Contains(searchRequest.SearchString) || s.ProductNameAr.Contains(searchRequest.SearchString) ||
                      s.ItemVariation.SKUDescriptionEn.Contains(searchRequest.SearchString) ||
+                     s.ItemVariation.SKUDescriptionAr.Contains(searchRequest.SearchString) ||
                      s.ProductPrice.Contains(searchRequest.SearchString) ||
                      s.ProductDescEn.Contains(searchRequest.SearchString) || s.ProductDescAr.Contains(searchRequest.SearchString) ||
                      s.ProductSpecificationEn.Contains(searchRequest.SearchString) || s.ProductSpecificationAr.Contains(searchRequest.SearchString)));

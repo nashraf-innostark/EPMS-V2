@@ -61,9 +61,11 @@ namespace EPMS.Repository.Repositories
                     //(s.RFIId.Equals(Convert.ToInt64(rfiSearchRequest.SearchString))) ||
                     //(s.RecCreatedDate.ToShortDateString().Contains(rfiSearchRequest.SearchString))||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
-                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString))
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString))
                     
                     );
             }

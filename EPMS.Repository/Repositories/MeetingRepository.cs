@@ -49,6 +49,7 @@ namespace EPMS.Repository.Repositories
                 s =>
                     ((string.IsNullOrEmpty(meetingSearchRequest.SearchString)) ||
                       (s.TopicName.Contains(meetingSearchRequest.SearchString)) ||
+                      (s.TopicNameAr.Contains(meetingSearchRequest.SearchString)) ||
                       (s.RelatedProject.Contains(meetingSearchRequest.SearchString)) ||
                       (s.Date.ToString().Contains(meetingSearchRequest.SearchString)));
             IEnumerable<Meeting> meetings = meetingSearchRequest.sSortDir_0=="asc" ?

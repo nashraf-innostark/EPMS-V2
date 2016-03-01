@@ -1,4 +1,4 @@
-﻿/*
+/*
 Title:   Main Template Css File
 Author:  http://themeforest.net/user/hogash // Marius Hogas  */
 
@@ -1334,7 +1334,7 @@ width: 100%; text-align: left; position:relative;}
 /* TESTIMONIALS FADER */
 .testimonials_fader ul {margin:0; padding:0; list-style:none; border-left:1px solid #e2e2e2; position:relative;}
 .testimonials_fader li {position:relative; padding:0 0 0 100px}
-.testimonials_fader ul li:after {content:'â€œ'; position:absolute; top:-10px; left:30px; font-size:150px; color:#e2e2e2; line-height:1; font-family: tahoma;}
+.testimonials_fader ul li:after {content:'“'; position:absolute; top:-10px; left:30px; font-size:150px; color:#e2e2e2; line-height:1; font-family: tahoma;}
 .testimonials_fader li blockquote {margin:0; padding:0; border:0; font:italic 20px/1.4 Georgia, Arial, sans-serif;}
 .testimonials_fader li blockquote + h6 {font-weight:normal; font-size:11px; font-style:italic;}
 
@@ -1836,10 +1836,9 @@ filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', end
 .product-list-item.promo-sale:before {content:''; border:3px solid transparent; border-top-color: #c51212;  position:absolute; left:27px; top:39px; z-index:1;}
 .product-list-item > .hover {position:absolute; left:0; top:0; right:0; bottom:0; pointer-events: none; box-shadow:inset 0 0 0 2px #e8e8e8; }
 .product-list-item .image {text-align:center; line-height:251px; max-height: 251px;}
-.product-list-item .image  a img{width:200px;height:200px;}
 .product-list-item .details {background:#f3f3f3; padding:15px; border-top: 1px solid #E8E8E8;}
 .product-list-item .details h3 {font-size:14px; color:#2f2f2f; line-height:1.3; margin:0 0 10px}
-.product-list-item .details p.desc {font-size:12px; font-style:italic; color:#939393; line-height:1.3;white-space: nowrap;    overflow: hidden;    text-overflow: ellipsis;}
+.product-list-item .details p.desc {font-size:12px; font-style:italic; color:#939393; line-height:1.3;}
 .product-list-item .details .actions {text-align:right; position:absolute; right:0px; bottom:10px; width:0; overflow:hidden;line-height: 1;}
 .product-list-item .details .actions a {display:inline-block; background:#cd2122; color:#fff; font-size:10px; line-height: 1; padding: 4px 6px; white-space:nowrap;margin-bottom: 3px;}
 .product-list-item .details .actions a:hover {background:#333; }
@@ -2295,6 +2294,9 @@ margin-top:-10px;
 .margintop10{
 margin-top:30px;
 }
+.margin-top-10{
+margin-top:10px;
+}
 
 
 
@@ -2363,7 +2365,7 @@ margin-top:30px;
 #product-carousel img{
 	height:80px;
 	background:#fff;
-	margin-top:10px;
+	padding:10px;
 	cursor:pointer;
 	opacity:0.5;
 	-webkit-opacity:0.5;

@@ -59,9 +59,11 @@ namespace EPMS.Repository.Repositories
                 query =
                 s => ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameE.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeMiddleNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequest.SearchString)) ||
                     (s.AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequest.SearchString)) ||
-                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString))
+                    (s.AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequest.SearchString)) ||
+                    (s.AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequest.SearchString))
                     
                     );
             }

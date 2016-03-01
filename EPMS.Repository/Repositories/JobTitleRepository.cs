@@ -62,7 +62,7 @@ namespace EPMS.Repository.Repositories
                 s => (((jobTitleSearchRequest.JobTitleId == 0) || s.JobTitleId == jobTitleSearchRequest.JobTitleId
                     || s.JobTitleId.Equals(jobTitleSearchRequest.JobTitleId)) &&
                     (string.IsNullOrEmpty(jobTitleSearchRequest.JobTitleName)
-                    || (s.JobTitleNameE.Contains(jobTitleSearchRequest.JobTitleName))));
+                    || (s.JobTitleNameE.Contains(jobTitleSearchRequest.JobTitleName))|| (s.JobTitleNameA.Contains(jobTitleSearchRequest.JobTitleName))));
 
             IEnumerable<JobTitle> jobTitles = jobTitleSearchRequest.sSortDir_0=="asc" ?
                 DbSet

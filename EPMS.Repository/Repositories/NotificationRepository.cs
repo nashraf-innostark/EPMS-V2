@@ -74,7 +74,7 @@ namespace EPMS.Repository.Repositories
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
                           (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
-                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString)))
                           )
@@ -164,7 +164,7 @@ namespace EPMS.Repository.Repositories
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
                           (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
-                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))))
                             &&
@@ -180,7 +180,7 @@ namespace EPMS.Repository.Repositories
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString) ||
                           (s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString) ||
                           s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString) ||
-                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) ||
+                          s.NotificationRecipients.FirstOrDefault().AspNetUser.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().MobileNo.Contains(searchRequset.SearchString)) ||
                           (s.NotificationRecipients.FirstOrDefault().Email.Contains(searchRequset.SearchString))))
                                 && (((s.NotificationRecipients.Any(r => r.UserId == searchRequset.NotificationRequestParams.UserId)) ||
