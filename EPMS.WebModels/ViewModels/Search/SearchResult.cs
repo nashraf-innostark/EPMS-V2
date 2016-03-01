@@ -25,5 +25,6 @@ namespace EPMS.WebModels.ViewModels.Search
         public WebModel.ContactUs ContactUs { get; set; }
 
         public string searchText { get; set; }
+        public bool ShowProductPrice { get; set; }
     }
 }

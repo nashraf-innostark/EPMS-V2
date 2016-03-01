@@ -84,24 +84,24 @@ namespace EPMS.Repository.Repositories
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
                     || !searchSpecified);
 
-                    var products = DbSet.Where(query).GroupBy(x=>x.ItemVariation.InventoryItem);
+                    var products = DbSet.Where(query).GroupBy(x => x.ItemVariation.InventoryItem);
                     foreach (var prod in products)
                     {
                         response.Products.Add(prod.FirstOrDefault());
                     }
-                    response.Products = request.SortDirection == "asc" ? 
-                        response.Products.AsQueryable().OrderBy(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList() : 
+                    response.Products = request.SortDirection == "asc" ?
+                        response.Products.AsQueryable().OrderBy(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList() :
                         response.Products.AsQueryable().OrderByDescending(inventoryClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList();
                     response.TotalCount = products.Count();
-                    
+
                     break;
                 case "Sections":
                     Expression<Func<Product, bool>> queery =
-                        x => x.ProductSectionId == productSectionId  && ((searchSpecified && (x.ItemVariationId.HasValue &&
+                        x => x.ProductSectionId == productSectionId && ((searchSpecified && (x.ItemVariationId.HasValue &&
                     x.ItemVariation.InventoryItem.ItemNameEn.Contains(request.SearchString) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(request.SearchString) ||
                     x.ProductNameEn.Contains(request.SearchString) || x.ProductNameAr.Contains(request.SearchString)))
                     || !searchSpecified);
-                    
+
                     response.Products = request.SortDirection == "asc" ?
                         DbSet.Where(queery).OrderBy(sectionClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList() :
                         DbSet.Where(queery).OrderByDescending(sectionClause[request.ProductByOption]).Skip(fromRow).Take(toRow).ToList();
@@ -131,31 +131,29 @@ namespace EPMS.Repository.Repositories
         {
             int fromRow = productSearchRequest.iDisplayStart;
             int toRow = productSearchRequest.iDisplayLength;
-
             ProductResponse response = new ProductResponse
             {
-                TotalCount = DbSet.Count(x => (x.ItemVariationId != null && (x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
+                Products = new List<Product>()
+            };
+
+            Expression<Func<Product, bool>> query =
+                    x => (x.ItemVariationId != null && (x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
                         x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
                         x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(search) ||
                         x.ItemVariation.SKUDescriptionEn.Contains(search) || x.ItemVariation.SKUDescriptionAr.Contains(search))
                         ) ||
                         (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
                         x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
-                        x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
-                    )),
-                    Products = DbSet.Where(
-                    x =>
-                        (x.ItemVariationId != null && (x.ItemVariation.DescriptionEn.Contains(search) || x.ItemVariation.DescriptionAr.Contains(search) ||
-                        x.ItemVariation.AdditionalInfoEn.Contains(search) || x.ItemVariation.AdditionalInfoAr.Contains(search) ||
-                        x.ItemVariation.InventoryItem.ItemNameEn.Contains(search) || x.ItemVariation.InventoryItem.ItemNameAr.Contains(search) ||
-                        x.ItemVariation.SKUDescriptionEn.Contains(search) || x.ItemVariation.SKUDescriptionAr.Contains(search))
-                        ) || 
-                        (x.ProductNameEn.Contains(search) || x.ProductNameAr.Contains(search) ||
-                         x.ProductDescEn.Contains(search) || x.ProductDescAr.Contains(search) ||
-                         x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search)
-                        )
-                       ).OrderBy(x => x.ProductId).Skip(fromRow).Take(toRow).ToList(),
-            };
+                        x.ProductSpecificationEn.Contains(search) || x.ProductSpecificationAr.Contains(search));
+
+            var count = DbSet.Count(query);
+            var products = DbSet.Where(query).GroupBy(x => x.ItemVariation.InventoryItem);
+            foreach (var prod in products)
+            {
+                response.Products.Add(prod.FirstOrDefault());
+            }
+            response.Products = response.Products.AsQueryable().OrderBy(x => x.ProductId).Skip(fromRow).Take(toRow).ToList();
+            response.TotalCount = count;
             return response;
         }
 
@@ -166,10 +164,10 @@ namespace EPMS.Repository.Repositories
 
         public Product GetProductForCatalog(int pageNo)
         {
-            int fromRow = pageNo-1;
+            int fromRow = pageNo - 1;
             int toRow = pageNo;
 
-            var dbset = DbSet.GroupBy(x=>x.ItemVariationId).OrderBy(x=>x.FirstOrDefault().ProductNameEn ?? x.FirstOrDefault().ItemVariation.InventoryItem.ItemNameEn).Skip(fromRow).Take(toRow);
+            var dbset = DbSet.GroupBy(x => x.ItemVariationId).OrderBy(x => x.FirstOrDefault().ProductNameEn ?? x.FirstOrDefault().ItemVariation.InventoryItem.ItemNameEn).Skip(fromRow).Take(toRow);
             return dbset.FirstOrDefault().FirstOrDefault();
         }
 
@@ -212,12 +210,12 @@ namespace EPMS.Repository.Repositories
                     .Take(toRow)
                     .ToList();
 
-            return new ProductListViewResponse {Products = products, TotalCount = DbSet.Count(query)};
+            return new ProductListViewResponse { Products = products, TotalCount = DbSet.Count(query) };
         }
 
         //IList<long> RemoveDuplication()
         //{
-            
+
         //}
     }
 }

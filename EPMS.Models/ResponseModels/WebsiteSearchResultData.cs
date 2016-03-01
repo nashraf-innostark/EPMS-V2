@@ -13,5 +13,6 @@ namespace EPMS.Models.ResponseModels
         public ProductResponse ProductResponse { get; set; }
         public AboutUs AboutUs { get; set; }
         public ContactUs ContactUs { get; set; }
+        public bool ShowProductPrice { get; set; }
     }
 }
