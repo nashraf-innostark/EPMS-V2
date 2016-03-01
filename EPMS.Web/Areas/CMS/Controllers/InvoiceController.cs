@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class InvoiceController : BaseController
     {
         #region Private

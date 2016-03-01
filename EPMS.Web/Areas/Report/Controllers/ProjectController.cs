@@ -20,7 +20,7 @@ using Project = EPMS.WebModels.WebsiteModels.Project;
 namespace EPMS.Web.Areas.Report.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
+    [SiteAuthorize(PermissionKey = "ProjectsTasksReport", IsModule = true)]
     public class ProjectController : BaseController
     {
         private readonly IProjectService projectService;

@@ -23,6 +23,7 @@ using RFI = EPMS.WebModels.WebsiteModels.RFI;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class ItemReleaseController : BaseController
     {
         #region Private

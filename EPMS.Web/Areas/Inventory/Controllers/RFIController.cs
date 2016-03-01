@@ -22,7 +22,7 @@ using Order = EPMS.Models.DashboardModels.Order;
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "IS", IsModule = true)]
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class RFIController : BaseController
     {
         private readonly IRFIService rfiService;

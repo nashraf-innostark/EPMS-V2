@@ -99,7 +99,7 @@
                 </div>
                 <div class="span9">
                     <div class="controls">
-                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "toBeDiabled", Value = "#FFF8BE" })
+                        @Html.TextBoxFor(model => model.InventoryDepartment.DepartmentColor, new { @id = "color", @class = "toBeDiabled" })
                         <div id="colorpicker"></div>
                     </div>
                 </div>
@@ -168,7 +168,7 @@
         $("#colorpicker").addClass('disableList');
         $("#CKEditorDescp").hide();
         $("#Descp").show();
-        $('#colorpicker').farbtastic('#color');
+        //$('#colorpicker').farbtastic('#color');
         var treeInitialData;
         if (dir == "ltr") {
             treeInitialData = [
@@ -285,6 +285,8 @@
                         var result = descpE.replace(regex, "");
                         $("#descpEn").val(result);
                         $('.panel, .main-content').toggleClass('retracted');
+                        // activate color picker
+                        $('#colorpicker').farbtastic('#color');
                     }
                 });
             }
@@ -345,6 +347,10 @@
             $("#DeleteNode").hide();
             $("#Edit").hide();
             //$("#InventoryDepartmentForm").valid();
+            // activate color picker
+            $('#colorpicker').farbtastic('#color');
+            // set pointer in color picker
+            $.farbtastic('#colorpicker').setColor("#FFF8BE");
             return true;
         }
         $.each(parsed, function (key, value) {
@@ -359,6 +365,10 @@
                 $("#description").val(value.DepartmentDesc);
                 $("#descpEn").val(value.DepartmentDesc);
                 $("#ParentId").val(value.ParentId);
+                // activate color picker
+                $('#colorpicker').farbtastic('#color');
+                // set pointer in color picker
+                $.farbtastic('#colorpicker').setColor(value.DepartmentColor);
             }
         });
         AddEdit();

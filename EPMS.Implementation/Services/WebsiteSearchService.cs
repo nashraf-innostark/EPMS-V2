@@ -35,10 +35,8 @@ namespace EPMS.Implementation.Services
             WebsiteSearchResultData searchResultData = new WebsiteSearchResultData
             {
                 ProductResponse = productRepository.SearchInProducts(productSearchRequest, search),
-                NewsAndArticleResponse =
-                    newsAndArticleRepository.GetNewsAndArticleListForSearch(newsAndArticleSearchRequest, search),
-                WebsiteSearchResponse =
-                    websiteServicesRepository.SearchInWebsiteService(websiteServiceSearchRequest, search),
+                NewsAndArticleResponse = newsAndArticleRepository.GetNewsAndArticleListForSearch(newsAndArticleSearchRequest, search),
+                WebsiteSearchResponse = websiteServicesRepository.SearchInWebsiteService(websiteServiceSearchRequest, search),
                 AboutUs = aboutUsRepository.SearchAboutUs(search),
                 ContactUs = contactUsRepository.SearchContactUs(search)
             };

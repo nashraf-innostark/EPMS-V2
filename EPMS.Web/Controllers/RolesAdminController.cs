@@ -259,6 +259,7 @@ namespace IdentitySample.Controllers
                             MenuTitleA = m.MenuTitleA,
                             IsParent = m.IsRootItem,
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            PermissionKey = m.PermissionKey,
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             ViewBag.MessageVM = TempData["message"] as MessageViewModel;
@@ -305,6 +306,7 @@ namespace IdentitySample.Controllers
                             MenuTitle = m.MenuTitle,
                             IsParent = m.IsRootItem,
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            PermissionKey = m.PermissionKey,
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null
                         }).ToList();
             viewModel.SelectedRoleId = roleValue;
@@ -359,6 +361,7 @@ namespace IdentitySample.Controllers
                             MenuTitleA = m.MenuTitleA,
                             IsParent = m.IsRootItem,
                             IsSelected = userMenuRights.MenuRights.Any(menu => menu.Menu.MenuId == m.MenuId),
+                            PermissionKey = m.PermissionKey,
                             ParentId = m.ParentItem != null ? m.ParentItem.MenuId : (int?)null,
                         }).ToList();
             viewModel.SelectedRoleId = RoleId;

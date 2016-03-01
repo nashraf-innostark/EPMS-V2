@@ -753,7 +753,8 @@ namespace EPMS.Web.Controllers
         [HttpGet]
         public JsonResult LoadProjectsDDL(int projectStatus)
         {
-            var requester = Session["RoleName"].ToString() == "Admin" ? "Admin" : Session["CustomerID"].ToString();
+            string role = Session["RoleName"].ToString();
+            var requester = role == "Admin" || role == "PM" ? "Admin" : Session["CustomerID"].ToString();
             var projects = GetProjectsDDL(requester, projectStatus);
             return Json(projects, JsonRequestBehavior.AllowGet);
         }

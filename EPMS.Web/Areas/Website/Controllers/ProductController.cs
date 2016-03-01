@@ -24,6 +24,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
+    [SiteAuthorize(PermissionKey = "Website", IsModule = true)]
     public class ProductController : BaseController
     {
         #region Private
@@ -205,6 +206,7 @@ namespace EPMS.Web.Areas.Website.Controllers
         public JsonResult ImportProducts(string[] itemVariationIds, string[] sectionIds)
         {
             bool isProductAdded = false;
+            //var itemVariations = itemVariationIds.Where(x => x.Contains("Item")).Select(x => Convert.ToInt64(x.Split('_')[0]));
             // select products that are not in DB
             IList<long> noItemDuplication = productService.RemoveDuplication(itemVariationIds);
             // save Products

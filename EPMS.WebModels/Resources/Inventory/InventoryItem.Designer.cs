@@ -315,6 +315,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         /// <summary>
         ///   Looks up a localized string similar to Department Information.
         /// </summary>
+        public static string DepartmentInformation {
+            get {
+                return ResourceManager.GetString("DepartmentInformation", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Department Information.
+        /// </summary>
         public static string DeptInfo {
             get {
                 return ResourceManager.GetString("DeptInfo", resourceCulture);
@@ -831,6 +840,15 @@ namespace EPMS.WebModels.Resources.Inventory {
         public static string Status {
             get {
                 return ResourceManager.GetString("Status", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Tree Selector.
+        /// </summary>
+        public static string TreeSelector {
+            get {
+                return ResourceManager.GetString("TreeSelector", resourceCulture);
             }
         }
         

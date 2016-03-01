@@ -72,7 +72,9 @@ namespace EPMS.Repository.Repositories
                     ((string.IsNullOrEmpty(searchRequest.SearchString)) ||
                      (s.ItemCode.Contains(searchRequest.SearchString)) ||
                      (s.ItemNameEn.Contains(searchRequest.SearchString)) ||
-                     (s.DescriptionForQuotationEn.Contains(searchRequest.SearchString)));
+                     (s.ItemNameAr.Contains(searchRequest.SearchString)) ||
+                     (s.DescriptionForQuotationEn.Contains(searchRequest.SearchString)) ||
+                     (s.DescriptionForQuotationAr.Contains(searchRequest.SearchString)));
             IEnumerable<InventoryItem> inventoryItems = searchRequest.sSortDir_0 == "asc"
                 ? DbSet
                     .Where(query)

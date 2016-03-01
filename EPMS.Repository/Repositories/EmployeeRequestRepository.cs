@@ -101,8 +101,8 @@ namespace EPMS.Repository.Repositories
             {
                 query =
                 s => ((string.IsNullOrEmpty(searchRequset.SearchString)) || (s.RequestTopic.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.EmployeeFirstNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeMiddleNameE.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeLastNameE.Contains(searchRequset.SearchString)) ||
-                    (s.Employee.EmployeeFirstNameA.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeMiddleNameA.Contains(searchRequset.SearchString)) || (s.Employee.EmployeeLastNameA.Contains(searchRequset.SearchString)) ||
+                    (searchRequset.SearchString.Contains(s.Employee.EmployeeFirstNameE)) || (searchRequset.SearchString.Contains(s.Employee.EmployeeMiddleNameE)) || (searchRequset.SearchString.Contains(s.Employee.EmployeeLastNameE)) ||
+                    (searchRequset.SearchString.Contains(s.Employee.EmployeeFirstNameA)) || (searchRequset.SearchString.Contains(s.Employee.EmployeeMiddleNameA)) || (searchRequset.SearchString.Contains(s.Employee.EmployeeLastNameA)) ||
                     (s.Employee.EmployeeJobId.Contains(searchRequset.SearchString)) ||
                     (s.Employee.JobTitle.Department.DepartmentNameA.Contains(searchRequset.SearchString)) || (s.Employee.JobTitle.Department.DepartmentNameE.Contains(searchRequset.SearchString))
                     );

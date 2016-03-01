@@ -17,6 +17,7 @@ using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "ProjectsTasksReport", IsModule = true)]
     public class TaskController : BaseController
     {
         private readonly IProjectTaskService taskService;

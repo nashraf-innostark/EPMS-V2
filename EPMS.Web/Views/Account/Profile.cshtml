@@ -104,11 +104,11 @@
         var url = $('#siteURL').val() + "/Account/UploadUserPhoto";
         $('#upload').mfupload({
             type: 'jpg,png,tif,jpeg', // type: '', for all types
-            maxsize: 1, //file size in MBs
+            maxsize: 1024, //file size in MBs
             post_upload: url,
             folder: "./",
-            ini_text: "Drag your file here or click (max: 1MB)",
-            over_text: "Drop Here",
+            ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
+            over_text: "@EPMS.WebModels.Resources.CP.Profile.DropHere",
             over_col: '#666666',
             over_bkcol: '#f0f0f0',
 

@@ -56,7 +56,9 @@ namespace EPMS.Repository.Repositories
             int toRow = jobApplicantSearchRequest.iDisplayLength;
             
             Expression<Func<JobApplicant, bool>> query =
-                s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) || (s.ApplicantFirstNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.ApplicantMiddleNameE.Contains(jobApplicantSearchRequest.SearchString)) ||
+                s => ((string.IsNullOrEmpty(jobApplicantSearchRequest.SearchString)) ||
+                    (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantFirstNameE)) || (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantMiddleNameE)) || (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantFamilyNameE)) ||
+                    (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantFirstNameA)) || (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantMiddleNameA)) || (jobApplicantSearchRequest.SearchString.Contains(s.ApplicantFamilyNameA)) ||
                     (s.Email.Contains(jobApplicantSearchRequest.SearchString)) || (s.MobileNumber.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.JobTitleNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.JobTitleNameA.Contains(jobApplicantSearchRequest.SearchString)) ||
                     (s.JobOffered.JobTitle.Department.DepartmentNameE.Contains(jobApplicantSearchRequest.SearchString)) || (s.JobOffered.JobTitle.Department.DepartmentNameA.Contains(jobApplicantSearchRequest.SearchString)));

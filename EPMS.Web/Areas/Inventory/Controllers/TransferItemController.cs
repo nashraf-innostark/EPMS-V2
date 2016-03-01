@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class TransferItemController : BaseController
     {
         #region Private

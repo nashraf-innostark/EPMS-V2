@@ -74,9 +74,9 @@
 <script src="~/Scripts/plugins/jquery.blockUI.js"></script>
 <link href="~/Content/CSS/jsTreeCheckbox/style.css" rel="stylesheet" />
 <script>
-    
+    var oTable;
     $(document).ready(function () {
-        var oTable = $('#Products').dataTable({
+        oTable = $('#Products').dataTable({
             "sPaginationType": "bootstrap",
             "bProcessing": true,
             "bServerSide": true,
@@ -136,7 +136,7 @@
                     "mRender": function (data, type, full) {
                         var name = "Delete";
                         var id = full["ProductId"];
-                        var ele = '<a><span class="cursorHand" onclick="deleteRow(' + id + ')">' + name + '</span></a>';
+                        var ele = '<a><span class="cursorHand" onclick="deleteRow(' + id + ', this)">' + name + '</span></a>';
                         return ele;
                     },
                     "bSortable": true
@@ -176,6 +176,8 @@
                 }
                 return;
             });
+        
+        
     });
 
     var siteUrl;
@@ -186,23 +188,26 @@
     var dir;
     var isTreeDataLoaded;
     $(function () {
-        isTreeDataLoaded = false;
         siteUrl = $('#siteURL').val();
         dir = '@direction';
-        
+        isTreeDataLoaded = false;
+        if (isTreeDataLoaded === false) {
+            url = siteUrl + "/Website/Product/GetTreeData/";
+            populateTreeJson(url, divId, dir);
+        }
         $("#TreeSelector").click(function (event) {
-            if (isTreeDataLoaded === false) {
-                $.blockUI({
-                    message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
-                    css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
-                });
-                url = siteUrl + "/Website/Product/GetTreeData/";
-                populateTreeJson(url, divId, dir);
-            }
+            //if (isTreeDataLoaded === false) {
+            //    $.blockUI({
+            //        message: '<img src="' + siteUrl + '/Images/Gallery/ajax_loader.gif" style="width:75px; height:75"/>',
+            //        css: { backgroundColor: '#FFFAFA', left: "47%", width: "6%" }
+            //    });
+            //    url = siteUrl + "/Website/Product/GetTreeData/";
+            //    populateTreeJson(url, divId, dir);
+            //}
             $('#itemTreeSelector').modal('show');
             event.preventDefault();
             $.fn.modal.Constructor.prototype.enforceFocus = function () { };
-            
+
         });
         $("#import").click(function (event) {
             selectedChildNodes = new Array();
@@ -244,12 +249,11 @@
             data: {
                 productId: productId
             },
-            success: function (data) {
+            success: function(data) {
                 if (data.response == "OK") {
-                    var row = $(elem).parent().parent().get(0);
-                    var atable = $('#Product').dataTable();
-                    var pos = atable.fnGetPosition(row);
-                    atable.fnDeleteRow(pos);
+                    // remove the row from table
+                    oTable.fnDraw();
+                    // show toaster
                     $.pnotify({
                         title: 'Success',
                         type: 'info',

@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = EPMS.WebModels.Resources.HR.Request.Label;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     int i = 0;
 }
 <!-- Navigation Bar -->
@@ -93,8 +94,15 @@
                     {
                         "aTargets": [2],
                         "sDefaultContent": "No Data",
-                        "mRender": function(data, type, full) {
-                            return full["EmployeeNameE"];
+                        "mRender": function (data, type, full) {
+                            var name = "" +
+                                "";
+                            if ('@direction' == 'ltr') {
+                                name = full["EmployeeNameE"];
+                            } else {
+                                name = full["EmployeeNameA"];
+                            }
+                            return name;
                         }
                     },
                     {

@@ -22,6 +22,7 @@ using WebsiteService = EPMS.WebModels.WebsiteModels.WebsiteService;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
+    [SiteAuthorize(PermissionKey = "Website", IsModule = true)]
     public class WebsiteServicesController : BaseController
     {
         #region Private

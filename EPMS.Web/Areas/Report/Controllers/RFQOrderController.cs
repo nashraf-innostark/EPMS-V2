@@ -12,6 +12,7 @@ using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CustomerServiceReport", IsModule = true)]
     public class RFQOrderController : BaseController
     {
         #region Private

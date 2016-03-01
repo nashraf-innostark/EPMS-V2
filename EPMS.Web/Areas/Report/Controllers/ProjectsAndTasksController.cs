@@ -11,6 +11,7 @@ using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "ProjectsTasksReport", IsModule = true)]
     public class ProjectsAndTasksController : BaseController
     {
         private readonly IReportService reportService;

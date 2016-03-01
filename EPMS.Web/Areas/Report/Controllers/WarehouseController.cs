@@ -3,13 +3,14 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Reports;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
     [Authorize]
-    //[SiteAuthorize(PermissionKey = "Reports", IsModule = true)]
+    [SiteAuthorize(PermissionKey = "InventorySystemReports", IsModule = true)]
     public class WarehouseController : BaseController
     {
         private readonly IReportService reportService;

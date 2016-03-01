@@ -14,6 +14,7 @@ using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CustomerServiceReport", IsModule = true)]
     public class QuotationOrderController : BaseController
     {
         #region Private

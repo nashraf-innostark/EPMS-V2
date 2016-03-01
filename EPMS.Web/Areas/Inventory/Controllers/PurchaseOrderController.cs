@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Inventory.Controllers
 {
+    [SiteAuthorize(PermissionKey = "IS", IsModule = true)]
     public class PurchaseOrderController : BaseController
     {
         #region Private

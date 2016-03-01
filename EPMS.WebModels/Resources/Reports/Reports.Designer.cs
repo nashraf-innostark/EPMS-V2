@@ -160,6 +160,15 @@ namespace EPMS.WebModels.Resources.Reports {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Inventory System Reports.
+        /// </summary>
+        public static string InventorySystemReports {
+            get {
+                return ResourceManager.GetString("InventorySystemReports", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Creat Item Report.
         /// </summary>
         public static string ItemCreateReport {

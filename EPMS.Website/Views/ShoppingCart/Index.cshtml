@@ -87,7 +87,7 @@
                                         <td><a href="javascript:void(0);" class="cartDelete"><i class="fa fa-close"></i></a></td>
                                     </tr>
                                 }
-                                <tr class="">
+                                <tr id="GrandTotalDiv">
                                     @Html.HiddenFor(model => model.GrandTotal, new { @id = "GrandTotal" })
                                     <td class="cartTotalCount" colspan="5"><strong>@Cart.GrandTotal</strong></td>
                                     <td><strong><p class="cartGTotal">0</p></strong></td>
@@ -158,6 +158,9 @@
         });
         $("#GrandTotal").val(gtotal);
         jQuery(".cartGTotal").text(gtotal);
+        if ('@Model.ShowProductPrice' == 'False' || gtotal == 0) {
+            $("#GrandTotalDiv").hide();
+        }
         return true;
     }
     function deleteCartItem(productId, row) {

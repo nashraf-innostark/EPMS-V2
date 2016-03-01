@@ -4,6 +4,7 @@ using System.Web.Mvc;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.Common;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ViewModels.Common;
 using EPMS.WebModels.ViewModels.Payment;
@@ -11,6 +12,7 @@ using EPMS.WebModels.WebsiteModels;
 
 namespace EPMS.Web.Areas.CMS.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CS", IsModule = true)]
     public class PaymentController : BaseController
     {
         #region Private

@@ -320,7 +320,7 @@
             $("#content-area").show();
             $("#content-ck").hide();
         }
-        $("#edit").click(function(event) {
+        $("#edit").click(function (event) {
             $('.' + 'tbdisable' + ':input').attr('disabled', false);
             $("#savebtn").show();
             $("#cancel").show();
@@ -343,11 +343,11 @@
     var url = siteUrl + "/Website/NewsAndArticle/UploadImage";
     $('#upload').mfupload({
         type: 'jpg,png,tif,jpeg', //all types
-        maxsize: 10,
+        maxsize: 1024,
         post_upload: url,
         folder: "./",
-        ini_text: "Drag your file here or click (max: 1MB)",
-        over_text: "Drop Here",
+        ini_text: "@EPMS.WebModels.Resources.CP.Profile.UploadBox",
+        over_text: "@EPMS.WebModels.Resources.CP.Profile.DropHere",
         over_col: '#666666',
         over_bkcol: '#f0f0f0',
 

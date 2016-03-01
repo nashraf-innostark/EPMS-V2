@@ -311,7 +311,7 @@ namespace EPMS.Implementation.Services
                                                          itemVariation.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
                                                         (itemReleaseQty + defectedItemQuantity);
                 //Unit Cost before PO Item
-                var oldTotalCost = qtyInHand*itemVariation.UnitCost;
+                var oldTotalCost = qtyInHand*(itemVariation.UnitCost ?? 0);
 
                 //Purchase Order Item Cost
                 var poItemUCost =

@@ -156,6 +156,9 @@
   <data name="CompanyProfile" xml:space="preserve">
     <value>السيرة الذاتية للشركة</value>
   </data>
+  <data name="DropHere" xml:space="preserve">
+    <value>اضغط هنا</value>
+  </data>
   <data name="ExpiryDate" xml:space="preserve">
     <value>تاريخ الانتهاء</value>
   </data>
@@ -256,7 +259,7 @@
     <value>تويتر</value>
   </data>
   <data name="UploadBox" xml:space="preserve">
-    <value>سحب الملف الخاص بك هنا أو اضغط ( الحد الأقصى: 1 ميغا)</value>
+    <value>اسحب ملف الخاص بك (ق ) هنا أو اضغط</value>
   </data>
   <data name="Username" xml:space="preserve">
     <value>اسم المستخدم</value>

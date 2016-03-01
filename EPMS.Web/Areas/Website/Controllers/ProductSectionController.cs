@@ -17,6 +17,7 @@ using Microsoft.AspNet.Identity;
 
 namespace EPMS.Web.Areas.Website.Controllers
 {
+    [SiteAuthorize(PermissionKey = "Website", IsModule = true)]
     public class ProductSectionController : BaseController
     {
         #region Private

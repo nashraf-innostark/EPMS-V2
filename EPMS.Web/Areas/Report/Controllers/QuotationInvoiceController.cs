@@ -8,6 +8,7 @@ using System.Web.WebPages.Scope;
 using EPMS.Interfaces.IServices;
 using EPMS.Models.RequestModels.Reports;
 using EPMS.Web.Controllers;
+using EPMS.WebBase.Mvc;
 using EPMS.WebModels.ModelMappers;
 using EPMS.WebModels.ModelMappers.Reports;
 using EPMS.WebModels.ViewModels.Reports;
@@ -15,6 +16,7 @@ using Rotativa;
 
 namespace EPMS.Web.Areas.Report.Controllers
 {
+    [SiteAuthorize(PermissionKey = "CustomerServiceReport", IsModule = true)]
     public class QuotationInvoiceController : BaseController
     {
         #region Private
