@@ -20,7 +20,7 @@
         breadcrumb = ViewBag.Title;
         pageheading = EPMS.WebModels.Resources.PMS.Project.AddNewProject;
     }
-    string[] module = (string[])Session["UserModules"];
+    //string[] module = (string[])Session["UserModules"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <style>
@@ -103,8 +103,8 @@
                 </div>
             </div>
         </div>
-        @if (ViewBag.HasModule)
-        {
+        @*@if (ViewBag.HasModule)
+        {*@
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label">@EPMS.WebModels.Resources.PMS.Project.ClientName</label>
@@ -151,7 +151,7 @@
                     </div>
                 </div>
             </div>
-        }
+        @*}*@
 
 
         <div class="control-group row-fluid">
@@ -339,8 +339,8 @@
                 </div>
             </div>
 
-            if (module.Contains("Customer Service") || module.Contains("CS"))
-            {
+            @*if (module.Contains("Customer Service") || module.Contains("CS"))
+            {*@
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
                     <strong>@EPMS.WebModels.Resources.PMS.Project.InstallmentPlan</strong>
@@ -431,7 +431,7 @@
                     </div>
                 </div>
                 <!--Sortable Responsive Table end-->
-            }
+            @*}*@
         }
 
 

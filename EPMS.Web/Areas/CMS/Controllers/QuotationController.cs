@@ -45,15 +45,15 @@ namespace EPMS.Web.Areas.CMS.Controllers
         private bool CheckHasInventoryModule()
         {
             // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = licenseKey.Split('|');
-            string[] modules = splitLicenseKey[4].Split(';');
-            if (modules.Contains("IS") || modules.Contains("Inventory System") || modules.Contains("نظام المخزون"))
-            {
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            //var splitLicenseKey = licenseKey.Split('|');
+            //string[] modules = splitLicenseKey[4].Split(';');
+            //if (modules.Contains("IS") || modules.Contains("Inventory System") || modules.Contains("نظام المخزون"))
+            //{
                 return true;
-            }
-            return false;
+            //}
+            //return false;
         }
         #endregion
 
@@ -687,16 +687,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         bool CheckInventoryModule()
         {
-            string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
-            string[] splitLicenseKey = licenseKey.Split('|');
-            string modules = splitLicenseKey[4];
-            string[] splitModules = modules.Split(';');
-            if (splitModules.Contains("IS"))
-            {
+            //string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
+            //string[] splitLicenseKey = licenseKey.Split('|');
+            //string modules = splitLicenseKey[4];
+            //string[] splitModules = modules.Split(';');
+            //if (splitModules.Contains("IS"))
+            //{
                 return true;
-            }
-            return false;
+            //}
+            //return false;
         }
 
         #endregion

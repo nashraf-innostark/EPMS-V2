@@ -161,21 +161,21 @@ namespace EPMS.Web.Areas.PMS.Controllers
         private void CheckHasCustomerModule(ProjectViewModel projectViewModel, IEnumerable<Customer> customers, IEnumerable<Order> orders)
         {
             // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = LicenseKey.Split('|');
-            string[] Modules = splitLicenseKey[4].Split(';');
-            if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
-            {
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            //var splitLicenseKey = LicenseKey.Split('|');
+            //string[] Modules = splitLicenseKey[4].Split(';');
+            //if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
+            //{
                 projectViewModel.Customers = customers.Select(x => x.CreateFromServerToClient());
                 projectViewModel.Orders = orders.Select(x => x.CreateFromServerToClient());
                 projectViewModel.Quotations = quotationService.GetAllQuotationByCustomerId(Convert.ToInt32(projectViewModel.Project.CustomerId)).Select(x=>x.CreateFromServerToClientForProject());
                 ViewBag.HasModule = true;
-            }
-            else
-            {
-                ViewBag.HasModule = false;
-            }
+            //}
+            //else
+            //{
+            //    ViewBag.HasModule = false;
+            //}
         }
 
         [HttpPost]

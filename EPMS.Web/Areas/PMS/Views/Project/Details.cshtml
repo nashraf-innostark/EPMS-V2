@@ -6,7 +6,7 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     Layout = "~/Views/Shared/_Layout.cshtml";
     string roleName = Convert.ToString(Session["RoleName"]);
-    string[] module = (string[])Session["UserModules"];
+    //string[] module = (string[])Session["UserModules"];
 }
 <style>
     .form-horizontal input {
@@ -337,8 +337,8 @@
 
 
 
-            if (module.Contains("Customer Service") || module.Contains("CS"))
-            {
+            @*if (module.Contains("Customer Service") || module.Contains("CS"))
+            {*@
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
                     <strong>@EPMS.WebModels.Resources.PMS.Project.InstallmentPlan</strong>
@@ -428,7 +428,7 @@
                     </div>
                 </div>
                 <!--Sortable Responsive Table end-->
-            }
+            @*}*@
         }
 
 

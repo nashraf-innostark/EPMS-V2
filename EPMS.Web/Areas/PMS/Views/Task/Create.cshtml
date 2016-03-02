@@ -5,7 +5,7 @@
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
     ViewBag.Title = Model.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
-    string[] module = (string[])Session["UserModules"];
+    //string[] module = (string[])Session["UserModules"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 
@@ -61,8 +61,8 @@
         }
     }
     <div class="container-fluid">
-        @if (module.Contains("Customer Service") || module.Contains("CS"))
-        {
+        @*@if (module.Contains("Customer Service") || module.Contains("CS"))
+        {*@
             <div class="control-group row-fluid">
                 <div class="span3">
                     <label class="control-label" for="Client">@EPMS.WebModels.Resources.PMS.Task.ClientName</label>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
             </div>
-        }
+        @*}*@
         <div class="control-group row-fluid">
             <div class="span3">
                 <label class="control-label" for="">@EPMS.WebModels.Resources.PMS.Task.ProjectName</label>

@@ -211,16 +211,16 @@ namespace EPMS.Web.Areas.CMS.Controllers
 
         bool CheckInventoryModule()
         {
-            string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
-            string[] splitLicenseKey = licenseKey.Split('|');
-            string modules = splitLicenseKey[4];
-            string[] splitModules = modules.Split(';');
-            if (splitModules.Contains("IS"))
-            {
+            //string licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //string licenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
+            //string[] splitLicenseKey = licenseKey.Split('|');
+            //string modules = splitLicenseKey[4];
+            //string[] splitModules = modules.Split(';');
+            //if (splitModules.Contains("IS"))
+            //{
                 return true;
-            }
-            return false;
+            //}
+            //return false;
         }
 
         #endregion

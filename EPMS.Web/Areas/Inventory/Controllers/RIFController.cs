@@ -309,20 +309,20 @@ namespace EPMS.Web.Areas.Inventory.Controllers
         private bool CheckHasCustomerModule()
         {
             // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = LicenseKey.Split('|');
-            string[] Modules = splitLicenseKey[4].Split(';');
-            if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
-            {
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //string LicenseKey = StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            //var splitLicenseKey = LicenseKey.Split('|');
+            //string[] Modules = splitLicenseKey[4].Split(';');
+            //if (Modules.Contains("CS") || Modules.Contains("Customer Service"))
+            //{
                 ViewBag.HasCustomerModule = true;
                 return true;
-            }
-            else
-            {
-                ViewBag.HasCustomerModule = false;
-                return false;
-            }
+            //}
+            //else
+            //{
+            //    ViewBag.HasCustomerModule = false;
+            //    return false;
+            //}
         }
 
         #endregion

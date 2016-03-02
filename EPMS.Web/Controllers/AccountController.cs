@@ -399,14 +399,15 @@ namespace IdentitySample.Controllers
             EPMS.Models.IdentityModels.ViewModels.RegisterViewModel Result = new EPMS.Models.IdentityModels.ViewModels.RegisterViewModel();
             // Check allowed no of users
             // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
-            var splitLicenseKey = LicenseKey.Split('|');
-            var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //var LicenseKey = EPMS.Web.EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123");
+            //var splitLicenseKey = LicenseKey.Split('|');
+            //var NoOfUsers = Convert.ToInt32(splitLicenseKey[2]);
+            
             // get count of users
-            var countOfUsers = UserManager.Users.Count();
-            if (countOfUsers < NoOfUsers)
-            {
+            //var countOfUsers = UserManager.Users.Count();
+            //if (countOfUsers < NoOfUsers)
+            //{
                 if (!string.IsNullOrEmpty(userName))
                 {
                     AspNetUser userToEdit = UserManager.FindByName(userName);
@@ -426,15 +427,15 @@ namespace IdentitySample.Controllers
                 Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin") && !r.Name.Equals("Customer")).OrderBy(r => r.Name).ToList();
                 Result.EmployeesDDL = employeeService.GetAll().Select(x => x.CreateFromServerToClientForDropDownList()).ToList();
                 return View(Result);
-            }
-            else
-            {
-                ViewBag.UserLimitReach = "Yes";
-                TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.UserLimitMessage, IsError = true };
-                Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
-                Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
-                return View(Result);
-            }
+            //}
+            //else
+            //{
+            //    ViewBag.UserLimitReach = "Yes";
+            //    TempData["message"] = new MessageViewModel { Message = EPMS.WebModels.Resources.HR.Account.UserLimitMessage, IsError = true };
+            //    Result.Roles = RoleManager.Roles.Where(r => !r.Name.Equals("SuperAdmin")).OrderBy(r => r.Name).ToList();
+            //    Result.Employees = employeeService.GetAll().Select(x => x.ServerToServer()).ToList();
+            //    return View(Result);
+            //}
             return null;
         }
 

@@ -4,7 +4,7 @@
     ViewBag.Title = Model.EmployeeViewModel.PageTitle;
     Layout = "~/Views/Shared/_Layout.cshtml";
     var direction = EPMS.WebModels.Resources.Shared.Common.TextDirection;
-    string[] module = (string[])Session["UserModules"];
+    //string[] module = (string[])Session["UserModules"];
     string[] userPermissionsSet = (string[])HttpContext.Current.Session["UserPermissionSet"];
 }
 <!-- Navigation Bar -->
@@ -1033,8 +1033,8 @@
                     </div>
                 </div>
             }
-            if (module.Contains("Human Resources System") || module.Contains("HRS"))
-            {
+            @*if (module.Contains("Human Resources System") || module.Contains("HRS"))
+            {*@
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
                     <strong>@EPMS.WebModels.Resources.HR.Employee.ReqHistory</strong>
@@ -1074,12 +1074,12 @@
                         </table>
                     </div>
                 </div>
-            }
+            @*}
 
 
 
             if (module.Contains("Project Management System") || module.Contains("PMS"))
-            {
+            {*@
                 <!--Sortable Responsive Table end-->
                 <div class="alert alert-info alert-block">
                     <i class="icon-alert icon-alert-info"></i>
@@ -1120,7 +1120,7 @@
                         </table>
                     </div>
                 </div>
-            }
+            @*}*@
         }
         @if (userPermissionsSet.Contains("EmployeeCreate") && Model.EmployeeViewModel.Employee.EmployeeId > 0)
         {

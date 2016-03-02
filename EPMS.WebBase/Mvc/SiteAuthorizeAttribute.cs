@@ -24,14 +24,14 @@ namespace EPMS.WebBase.Mvc
         private bool IsAuthorized()
         {
             // check license
-            var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
-            LicenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
-            var splitLicenseKey = LicenseKey.Split('|');
-            Domain = splitLicenseKey[0];
-            MacAddress = splitLicenseKey[1];
-            NoOfUsers = splitLicenseKey[2];
-            ExpiryDate = DateTime.ParseExact(splitLicenseKey[3], "dd/MM/yyyy", new CultureInfo("en"));
-            Modules = splitLicenseKey[4].Split(';');
+            //var licenseKeyEncrypted = ConfigurationManager.AppSettings["LicenseKey"].ToString(CultureInfo.InvariantCulture);
+            //LicenseKey = EncryptDecrypt.StringCipher.Decrypt(licenseKeyEncrypted, "123"); //DesertStarts
+            //var splitLicenseKey = LicenseKey.Split('|');
+            //Domain = splitLicenseKey[0];
+            //MacAddress = splitLicenseKey[1];
+            //NoOfUsers = splitLicenseKey[2];
+            //ExpiryDate = DateTime.ParseExact(splitLicenseKey[3], "dd/MM/yyyy", new CultureInfo("en"));
+            //Modules = splitLicenseKey[4].Split(';');
 
             // check MAC Address
             /*string userMacAddress = GetMacAddress();
@@ -48,11 +48,11 @@ namespace EPMS.WebBase.Mvc
             //}
 
             //// check license expiry date
-            DateTime currDate = DateTime.Now;
-            if (currDate > ExpiryDate)
-            {
-                return false;
-            }
+            //DateTime currDate = DateTime.Now;
+            //if (currDate > ExpiryDate)
+            //{
+            //    return false;
+            //}
 
             object userPermissionSet = HttpContext.Current.Session["UserPermissionSet"];
             var permissionToSpecificController = false;
@@ -71,13 +71,13 @@ namespace EPMS.WebBase.Mvc
             }
             // check allowed modules
             bool permissionToModule = true;
-            if (IsModule)
-            {
-                if (!Modules.Contains(PermissionKey))
-                {
-                    permissionToModule = false;
-                }
-            }
+            //if (IsModule)
+            //{
+            //    if (!Modules.Contains(PermissionKey))
+            //    {
+            //        permissionToModule = false;
+            //    }
+            //}
 
             if (permissionToModule && permissionToSpecificController)
             {
