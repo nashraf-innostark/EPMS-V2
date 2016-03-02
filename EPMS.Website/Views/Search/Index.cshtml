@@ -167,17 +167,49 @@
                                                                 }
                                                             </div>
                                                             <div class="details fixclear">
-                                                                <h3>@(direction == "ltr" ? Model.Products[j].ProductNameEn : Model.Products[j].ProductNameAr)</h3>
+
+                                                                @{
+                                                                    if (direction == "ltr")
+                                                                    {
+                                                                        if (Model.Products[j].ItemVariationId != null)
+                                                                        {
+                                                                            <h3>@Model.Products[j].ItemNameEn</h3>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <h3>@Model.Products[j].ProductNameEn</h3>
+                                                                        }
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        if (Model.Products[j].ItemVariationId != null)
+                                                                        {
+                                                                            <h3>@Model.Products[j].ItemNameAr</h3>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            <h3>@Model.Products[j].ProductNameAr</h3>
+                                                                        }
+                                                                    }
+}
+
                                                                 @*@if (direction == "ltr")
-                                                                {
-                                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
-                                                                }
-                                                                else
-                                                                {
-                                                                    <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
-                                                                }*@
+                                                                    {
+                                                                        <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameEn : Model.Products[j].ProductNameEn)</h3>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <h3>@(Model.Products[j].ItemVariationId != null ? Model.Products[j].ItemNameAr : Model.Products[j].ProductNameAr)</h3>
+                                                                    }*@
                                                                 <p><strong>@Product.SKU:</strong> @Model.Products[j].SKUCode</p>
-                                                                <p class="desc">@(direction == "ltr" ? Model.Products[j].ProductDescEn : Model.Products[j].ProductDescAr)</p>
+                                                                <p class="desc text_@Model.Products[j].ProductId">
+                                                                    <script>
+                                                                        var descp = '@(direction == "ltr" ? Html.Raw(HttpUtility.HtmlDecode(Model.Products[j].ProductDescEn)) : Html.Raw(HttpUtility.HtmlDecode(Model.Products[j].ProductDescAr)))';
+                                                                        var regex = /(<([^>]+)>)/ig;
+                                                                        var result = descp.replace(regex, "");
+                                                                        $(".text_" + @Model.Products[j].ProductId).text(result);
+                                                                    </script>
+                                                                </p>
                                                                 <div class="actions">
                                                                     <a class="cursorHand" onclick="addToCart(@Model.Products[j].ProductId) ">@Product.AddToCart</a>
                                                                     @if (Model.Products[j].ItemVariationId != null)
@@ -190,16 +222,22 @@
                                                                     }
                                                                 </div>
                                                                 <div class="price">
-                                                                    @if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                                    @if (Model.ShowProductPrice)
                                                                     {
-                                                                        <span>@Model.Products[j].DiscountedPrice</span>
-                                                                        <span>SR</span>
-                                                                        <small>@Model.Products[j].ProductPrice</small>
-                                                                    }
-                                                                    else
-                                                                    {
-                                                                        <span>@Model.Products[j].ProductPrice</span>
-                                                                        <span>SR</span>
+                                                                        if (!string.IsNullOrEmpty(Model.Products[j].DiscountedPrice))
+                                                                        {
+                                                                            <span>@Model.Products[j].DiscountedPrice</span>
+                                                                            <span>SR</span>
+                                                                            <small>@Model.Products[j].ProductPrice</small>
+                                                                        }
+                                                                        else
+                                                                        {
+                                                                            if (!string.IsNullOrEmpty(Model.Products[j].ProductPrice))
+                                                                            {
+                                                                                <span>@Model.Products[j].ProductPrice</span>
+                                                                                <span>SR</span>
+                                                                            }
+                                                                        }
                                                                     }
                                                                 </div>
                                                             </div>

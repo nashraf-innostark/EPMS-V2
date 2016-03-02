@@ -150,8 +150,8 @@ namespace EPMS.WebModels.ModelMappers.Website.Product
             retVal.ProductNameEn = source.ProductNameEn;
             retVal.ProductNameAr = source.ProductNameAr;
             retVal.ItemVariationId = source.ItemVariationId;
-            retVal.ProductDescEn = RemoveCkEditorValues(source.ProductDescEn);
-            retVal.ProductDescAr = RemoveCkEditorValues(source.ProductDescAr);
+            retVal.ProductDescEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescEn) : RemoveCkEditorValues(source.ItemVariation.InventoryItem.ItemDescriptionEn) ;
+            retVal.ProductDescAr = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductDescAr) : RemoveCkEditorValues(source.ItemVariation.InventoryItem.ItemDescriptionAr);
             retVal.ProductPrice = source.ItemVariationId != null ? source.ItemVariation.UnitPrice.ToString() : source.ProductPrice;
             retVal.DiscountedPrice = source.DiscountedPrice;
             retVal.ProductSpecificationEn = source.ItemVariationId == null ? RemoveCkEditorValues(source.ProductSpecificationEn) : RemoveCkEditorValues(source.ItemVariation.AdditionalInfoEn);
