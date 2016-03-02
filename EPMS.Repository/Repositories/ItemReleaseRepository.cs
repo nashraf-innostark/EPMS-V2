@@ -129,7 +129,7 @@ namespace EPMS.Repository.Repositories
 
         public string GetLastFormNumber()
         {
-            ItemRelease itemRelease = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            ItemRelease itemRelease = DbSet.OrderByDescending(x => x.ItemReleaseId).FirstOrDefault();
             if (itemRelease != null)
                 return itemRelease.FormNumber;
             return "IR00000000";
