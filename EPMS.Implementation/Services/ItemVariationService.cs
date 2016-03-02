@@ -192,6 +192,20 @@ namespace EPMS.Implementation.Services
             response.WarehousesForDdl = warehouseService.GetAll();
             response.InventoryItem = inventoryItemRepository.Find(itemVariationId);
 
+
+            var itemReleaseQty =
+                response.ItemVariation.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
+                    .Sum(x => x.Quantity);
+            var poItems = response.ItemVariation.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+                                .Sum(y => Convert.ToDouble(y.ItemQty));
+            var defectedItemQuantity = response.ItemVariation.DIFItems.Where(x => x.DIF.Status == 2).Sum(x => x.ItemQty);
+            var returnItemQuantity = response.ItemVariation.RIFItems.Where(x => x.RIF.Status == 2).Sum(x => x.ItemQty);
+
+            response.ItemVariation.QuantityInHand = ((Convert.ToDouble(response.ItemVariation.QuantityInHand) +
+                                                      response.ItemVariation.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
+                                                     (itemReleaseQty + defectedItemQuantity)).ToString();
+
+
             response.PurchaseOrderItems = poItemRepository.GetPoItemsByVarId(id).ToList();
             var manufacturerGroup = response.PurchaseOrderItems.Where(x=>x.PurchaseOrder.Status == 1).GroupBy(x => x.VendorId);
 
@@ -445,7 +459,7 @@ namespace EPMS.Implementation.Services
             var totalQtyInHand = variationToSave.ItemManufacturers.Sum(x => x.Quantity) * priceFromManufacturer;
             //var qtyInHand = Convert.ToDouble(variationToSave.ItemVariation.QuantityInHand) +
             //                variationToSave.ItemManufacturers.Sum(x => x.Quantity);
-            if (totalQtyInHand != null && totalQtyInHand != 0)
+            if (totalQtyInHand != null || totalQtyInHand != 0)
             {
                 variationToSave.ItemVariation.UnitCost = Math.Round((double)Convert.ToDouble(totalQtyInHand) / qtyFromManufacturer, 2);
             }
@@ -513,7 +527,7 @@ namespace EPMS.Implementation.Services
             }
             variationToSave.ItemVariation.SKUDescriptionEn = itemNameEn + deptnameEn + colorEn + sizeEn + statusEn;
             variationToSave.ItemVariation.SKUDescriptionAr = itemNameAr + deptnameAr + colorAr + sizeAr + statusAr;
-            if (variationToSave.ItemVariation.UnitCost == null)
+            if (variationToSave.ItemVariation.UnitCost == null || variationToSave.ItemVariation.UnitCost == 0)
             {
                 var priceFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Price));
                 var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Quantity));

@@ -148,19 +148,19 @@ namespace EPMS.WebModels.ModelMappers
             var manufacturerCount = model.ItemManufacturers.Count;
             model.AverageCost = model.UnitCost/manufacturerCount;
 
-            var itemReleaseQty =
-                source.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
-                    .Sum(x => x.Quantity);
-            var poItems = source.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
-                                .Sum(y => Convert.ToDouble(y.ItemQty));
-            var defectedItemQuantity = source.DIFItems.Where(x=>x.DIF.Status == 2).Sum(x => x.ItemQty);
-            var returnItemQuantity = source.RIFItems.Where(x=>x.RIF.Status == 2).Sum(x => x.ItemQty);
+            //var itemReleaseQty =
+            //    source.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
+            //        .Sum(x => x.Quantity);
+            //var poItems = source.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+            //                    .Sum(y => Convert.ToDouble(y.ItemQty));
+            //var defectedItemQuantity = source.DIFItems.Where(x=>x.DIF.Status == 2).Sum(x => x.ItemQty);
+            //var returnItemQuantity = source.RIFItems.Where(x=>x.RIF.Status == 2).Sum(x => x.ItemQty);
 
-            var qty = (Convert.ToDouble(source.QuantityInHand) +
-                                         source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
-                                        (itemReleaseQty + defectedItemQuantity);
-            model.TotalQuantityInHand = qty;
-            model.QuantityInHand = qty.ToString();
+            //var qty = (Convert.ToDouble(source.QuantityInHand) +
+            //                             source.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
+            //                            (itemReleaseQty + defectedItemQuantity);
+            //model.TotalQuantityInHand = qty;
+            model.QuantityInHand = source.QuantityInHand;
 
             var qtySold =
                 source.ItemReleaseQuantities.Where(y => y.ItemVariationId == source.ItemVariationId && y.ItemReleaseDetail.ItemRelease.Status == 1)
