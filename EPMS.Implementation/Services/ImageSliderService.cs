@@ -41,8 +41,12 @@ namespace EPMS.Implementation.Services
                 ImageSlider = repository.GetAll().OrderBy(x=>x.ImageOrder),
                 Partners = partnerRepository.GetAll().OrderBy(x=>x.ImageOrder),
                 WebsiteDepartments = departmentRepository.GetAll().OrderBy(x=>x.DepartmentOrder),
-                ShowProductPrice = homePageRepository.GetHomePageResponse().ShowProductPrice
             };
+            var homePage = homePageRepository.GetHomePageResponse();
+            if (homePage != null)
+            {
+                response.ShowProductPrice = homePage.ShowProductPrice;
+            }
             return response;
         }
 

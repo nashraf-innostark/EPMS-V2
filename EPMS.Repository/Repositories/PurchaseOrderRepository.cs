@@ -211,7 +211,7 @@ namespace EPMS.Repository.Repositories
 
         public string GetLastFormNumber()
         {
-            PurchaseOrder po = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            PurchaseOrder po = DbSet.OrderByDescending(x => x.PurchaseOrderId).FirstOrDefault();
             if (po != null)
                 return po.FormNumber;
             return "PO00000000";

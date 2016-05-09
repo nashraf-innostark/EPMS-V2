@@ -217,7 +217,7 @@ namespace EPMS.Repository.Repositories
 
         public string GetLastFormNumber()
         {
-            TIR tir = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            TIR tir = DbSet.OrderByDescending(x => x.Id).FirstOrDefault();
             if (tir != null)
                 return tir.FormNumber;
             return "TI00000000";

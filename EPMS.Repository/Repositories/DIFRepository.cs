@@ -113,7 +113,7 @@ namespace EPMS.Repository.Repositories
 
         public string GetLastFormNumber()
         {
-            DIF dif = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            DIF dif = DbSet.OrderByDescending(x => x.Id).FirstOrDefault();
             if (dif != null)
                 return dif.FormNumber;
             return "DI00000000";

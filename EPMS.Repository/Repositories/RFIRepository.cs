@@ -117,7 +117,7 @@ namespace EPMS.Repository.Repositories
 
         public string GetLastFormNumber()
         {
-            RFI rfi = DbSet.OrderByDescending(x => x.RecCreatedDate).FirstOrDefault();
+            RFI rfi = DbSet.OrderByDescending(x => x.RFIId).FirstOrDefault();
             if (rfi != null)
                 return rfi.FormNumber;
             return "RF00000000";
