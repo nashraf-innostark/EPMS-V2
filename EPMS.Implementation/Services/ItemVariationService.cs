@@ -194,15 +194,15 @@ namespace EPMS.Implementation.Services
 
 
             var itemReleaseQty =
-                response.ItemVariation.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
-                    .Sum(x => x.Quantity);
-            var poItems = response.ItemVariation.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
-                                .Sum(y => Convert.ToDouble(y.ItemQty));
-            var defectedItemQuantity = response.ItemVariation.DIFItems.Where(x => x.DIF.Status == 2).Sum(x => x.ItemQty);
-            var returnItemQuantity = response.ItemVariation.RIFItems.Where(x => x.RIF.Status == 2).Sum(x => x.ItemQty);
+                response.ItemVariation.ItemReleaseQuantities != null ? response.ItemVariation.ItemReleaseQuantities.Where(x => x.ItemReleaseDetail.ItemRelease.Status == 1)
+                .Sum(x => x.Quantity) : 0;
+            var poItems = response.ItemVariation.PurchaseOrderItems != null ? response.ItemVariation.PurchaseOrderItems.Where(y => y.PurchaseOrder.Status == 1)
+                .Sum(y => Convert.ToDouble(y.ItemQty)) : 0;
+            var defectedItemQuantity = response.ItemVariation.DIFItems != null ? response.ItemVariation.DIFItems.Where(x => x.DIF.Status == 2).Sum(x => x.ItemQty) : 0;
+            var returnItemQuantity = response.ItemVariation.RIFItems != null ? response.ItemVariation.RIFItems.Where(x => x.RIF.Status == 2).Sum(x => x.ItemQty) : 0;
 
-            response.ItemVariation.QuantityInHand = ((Convert.ToDouble(response.ItemVariation.QuantityInHand) +
-                                                      response.ItemVariation.ItemManufacturers.Sum(x => x.Quantity) + returnItemQuantity + poItems) -
+            response.ItemVariation.QuantityInHand = ((Convert.ToDouble(response.ItemVariation.QuantityInHand != null ? response.ItemVariation.QuantityInHand : 0.ToString()) +
+                (response.ItemVariation.ItemManufacturers != null ? response.ItemVariation.ItemManufacturers.Sum(x => x.Quantity): 0) + returnItemQuantity + poItems) -
                                                      (itemReleaseQty + defectedItemQuantity)).ToString();
 
 
