@@ -459,7 +459,7 @@ namespace EPMS.Implementation.Services
             var totalQtyInHand = variationToSave.ItemManufacturers.Sum(x => x.Quantity) * priceFromManufacturer;
             //var qtyInHand = Convert.ToDouble(variationToSave.ItemVariation.QuantityInHand) +
             //                variationToSave.ItemManufacturers.Sum(x => x.Quantity);
-            if (totalQtyInHand != null || totalQtyInHand != 0)
+            if (totalQtyInHand != null && totalQtyInHand != 0)
             {
                 variationToSave.ItemVariation.UnitCost = Math.Round((double)Convert.ToDouble(totalQtyInHand) / qtyFromManufacturer, 2);
             }
@@ -532,6 +532,7 @@ namespace EPMS.Implementation.Services
                 var priceFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Price));
                 var qtyFromManufacturer = variationToSave.ItemManufacturers.Sum(x => Convert.ToInt64(x.Quantity));
                 var totalQtyInHand = variationToSave.ItemManufacturers.Sum(x => x.Quantity) * priceFromManufacturer;
+                if (priceFromManufacturer != 0 && qtyFromManufacturer != 0)
                 variationToSave.ItemVariation.UnitCost = Math.Round((double)Convert.ToDouble(totalQtyInHand) / qtyFromManufacturer, 2);
             }
             variationRepository.Update(variationToSave.ItemVariation);
